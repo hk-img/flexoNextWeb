@@ -39,7 +39,7 @@ const CoworkingSpaces = () => {
           
         </div>
         <div className="w-full lg:w-2/3">
-          <EmblaCarousel options={{ loop: false, showButton: true }}>
+          <EmblaCarousel options={{ loop: true,autoplay:false,showButton: true }}>
             {/* Har slide me 2 images */}
             {Array.from({ length: Math.ceil(cities.length / 2) }).map(
               (_, colIdx) => (

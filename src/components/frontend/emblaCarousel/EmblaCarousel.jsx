@@ -4,15 +4,25 @@ import React from "react"
 import useEmblaCarousel from "embla-carousel-react"
 import Autoplay from "embla-carousel-autoplay"
 import { usePrevNextButtons, PrevButton, NextButton } from "./EmblaCarouselArrowButtons"
+import AutoScroll from "embla-carousel-auto-scroll"
 
 export default function EmblaCarousel({ children, options }) {
   const plugins = []
 
-  if (options?.loop) {
+  if(options?.autoplay) {
     plugins.push(Autoplay({ delay: 3000, stopOnInteraction: false }))
   }
 
-  const [emblaRef, emblaApi] = useEmblaCarousel(options, plugins)
+  if(options?.autoscroll) {
+    plugins.push(AutoScroll({
+        playOnInit: true,
+        stopOnInteraction: false,
+        stopOnHover: false,
+        speed: 0.8,
+    }))
+  }
+
+  const [emblaRef, emblaApi] = useEmblaCarousel({...options,loop: options?.loop ?? false}, plugins)
   const { prevBtnDisabled, nextBtnDisabled, onPrevButtonClick, onNextButtonClick } =
     usePrevNextButtons(emblaApi)
 

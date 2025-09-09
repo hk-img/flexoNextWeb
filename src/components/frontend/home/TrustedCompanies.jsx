@@ -1,12 +1,7 @@
 "use client";
 import React from "react";
-import dynamic from "next/dynamic";
-
-// load dynamically so SSR crash na ho Turbopack me
-const EmblaAutoScrollCarousel = dynamic(
-  () => import("../emblaCarousel/EmblaAutoScrollCarousel"),
-  { ssr: false }
-);
+import EmblaCarousel from "../emblaCarousel/EmblaCarousel";
+import Image from "next/image";
 
 const TrustedCompanies = () => {
   const companies = [
@@ -45,7 +40,22 @@ const TrustedCompanies = () => {
         </h2>
 
         {/* Carousel */}
-        <EmblaAutoScrollCarousel slides={companies} options={OPTIONS} />
+        <EmblaCarousel options={{ loop: true, autoscroll: true}}>
+          {companies.map((s, i) => (
+            <div
+              key={i}
+              className="embla__slide flex-[0_0_auto] basis-auto px-6 flex items-center justify-center"
+            >
+              <Image
+                src={s.src}
+                alt={s.alt}
+                width={120}
+                height={50}
+                className="object-contain transition w-[145px]"
+              />
+            </div>
+          ))}
+        </EmblaCarousel>
       </div>
     </section>
   );

@@ -5,9 +5,15 @@ import AutoScroll from "embla-carousel-auto-scroll";
 import Image from "next/image";
 
 const EmblaAutoScrollCarousel = ({ slides, options }) => {
-  const plugins =
+   const plugins =
     slides.length > 3
-      ? [AutoScroll({ playOnInit: true, stopOnInteraction: false })]
+      ? [
+          AutoScroll({
+            playOnInit: true,
+            stopOnInteraction: false,
+            speed: 0.8, 
+          }),
+        ]
       : [];
   const [emblaRef, emblaApi] = useEmblaCarousel(options, plugins);
 
@@ -31,7 +37,7 @@ const EmblaAutoScrollCarousel = ({ slides, options }) => {
                 alt={s.alt}
                 width={120}
                 height={50}
-                className="object-contain grayscale hover:grayscale-0 transition h-12 w-auto"
+                className="object-contain transition w-[145px] "
               />
             </div>
           ))}

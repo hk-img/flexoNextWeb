@@ -21,6 +21,17 @@ const TrustedCompanies = () => {
     { src: "/images/trusted-logo4.webp", alt: "Arnold Holdings Ltd." },
     { src: "/images/trusted-logo5.webp", alt: "Eicher" },
     { src: "/images/trusted-logo6.webp", alt: "InMobi" },
+    { src: "/images/trusted-logo1.webp", alt: "Amethyst Partners" },
+    { src: "/images/trusted-logo2.webp", alt: "Arvind Mafatlal Group" },
+    { src: "/images/trusted-logo3.webp", alt: "BeerBiceps" },
+    { src: "/images/trusted-logo4.webp", alt: "Arnold Holdings Ltd." },
+    { src: "/images/trusted-logo5.webp", alt: "Eicher" },
+    { src: "/images/trusted-logo6.webp", alt: "InMobi" },
+    { src: "/images/trusted-logo2.webp", alt: "Arvind Mafatlal Group" },
+    { src: "/images/trusted-logo3.webp", alt: "BeerBiceps" },
+    { src: "/images/trusted-logo4.webp", alt: "Arnold Holdings Ltd." },
+    { src: "/images/trusted-logo5.webp", alt: "Eicher" },
+    { src: "/images/trusted-logo6.webp", alt: "InMobi" },
   ];
 
   const OPTIONS = { loop: true };

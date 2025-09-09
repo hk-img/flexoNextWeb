@@ -22,25 +22,25 @@ const CoworkingSpaces = () => {
 
       <div className="mt-10 flex flex-col lg:flex-row gap-[6px]">
         <div className="w-full lg:w-1/3">
-          <div className="relative rounded-sm overflow-hidden">
-            <div className="before:content-[''] before:w-full before:h-full before:absolute before:top-0 before:left-0 before:bg-[#0000002b]" />
-            <div>
-              <img
-                src="/images/mumbai.webp"
-                alt="mumbai coworking"
-                className="h-[250px] md:h-[350px] lg:h-[405px] w-full object-cover"
-                loading="lazy"
-              />
+          <a href="#">
+            <div className="relative rounded-sm overflow-hidden">
+              <div className="before:content-[''] before:w-full before:h-full before:absolute before:top-0 before:left-0 before:bg-[#0000002b]" />
+              <div>
+                <img
+                  src="/images/mumbai.webp"
+                  alt="mumbai coworking"
+                  className="h-[250px] md:h-[350px] lg:h-[405px] w-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+              <div className="absolute bottom-1 left-1 text-white font-semibold text-2xl  px-2 py-1 rounded-md">
+                Mumbai
+              </div>
             </div>
-            <div className="absolute bottom-1 left-1 text-white font-semibold text-2xl  px-2 py-1 rounded-md">
-              Mumbai
-            </div>
-          </div>
-          
+          </a>
         </div>
         <div className="w-full lg:w-2/3">
           <EmblaCarousel options={{ loop: true,autoplay:false,showButton: true }}>
-            {/* Har slide me 2 images */}
             {Array.from({ length: Math.ceil(cities.length / 2) }).map(
               (_, colIdx) => (
                 <div
@@ -52,22 +52,24 @@ const CoworkingSpaces = () => {
                     {cities
                       .slice(colIdx * 2, colIdx * 2 + 2)
                       .map((city, idx) => (
-                        <div
-                          key={idx}
-                          className="relative rounded-sm overflow-hidden shadow-md"
-                        >
-                          <div className="before:content-[''] before:w-full before:h-full before:absolute before:top-0 before:left-0 before:bg-[#0000002b]" />
-                          <img
-                            src={city.image}
-                            alt={city.name}
-                            className="w-full h-[160px] md:h-[180px] lg:h-[200px] object-cover"
-                            loading="lazy"
-                          />
-                          
-                          <div className="absolute bottom-1 left-1 text-white font-semibold text-2xl  px-2 py-1 rounded-md">
-                            {city.name}
+                        <a  key={idx} href="#">
+                          <div
+                           
+                            className="relative rounded-sm overflow-hidden shadow-md"
+                          >
+                            <div className="before:content-[''] before:w-full before:h-full before:absolute before:top-0 before:left-0 before:bg-[#0000002b]" />
+                            <img
+                              src={city.image}
+                              alt={city.name}
+                              className="w-full h-[160px] md:h-[180px] lg:h-[200px] object-cover"
+                              loading="lazy"
+                            />
+                            
+                            <div className="absolute bottom-1 left-1 text-white font-semibold text-2xl  px-2 py-1 rounded-md">
+                              {city.name}
+                            </div>
                           </div>
-                        </div>
+                        </a>
                       ))}
                   </div>
                 </div>

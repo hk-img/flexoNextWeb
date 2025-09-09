@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
+import Svg from '@/components/svg'
 
 export const usePrevNextButtons = (emblaApi) => {
   const [prevBtnDisabled, setPrevBtnDisabled] = useState(true)
@@ -39,20 +40,11 @@ export const PrevButton = (props) => {
 
   return (
     <button
-      className="flex items-center justify-center w-9 h-9 rounded-full border border-[#d0c2c2] bg-white text-[#d0c2c2] hover:border-[#f76900] hover:text-[#f76900]"
+      className="flex items-center justify-center w-9 h-9 rounded-full border border-[#d0c2c2] bg-white text-[#d0c2c2] hover:border-[#f76900] hover:text-[#f76900] transition-all duration-300 ease-in-out"
       type="button"
       {...restProps}
     >
-      <svg
-        className="size-3.5"
-        viewBox="0 0 532 532"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          fill="currentColor"
-          d="M355.66 11.354c13.793-13.805 36.208-13.805 50.001 0 13.785 13.804 13.785 36.238 0 50.034L201.22 266l204.442 204.61c13.785 13.805 13.785 36.239 0 50.044-13.793 13.796-36.208 13.796-50.002 0a5994246.277 5994246.277 0 0 0-229.332-229.454 35.065 35.065 0 0 1-10.326-25.126c0-9.2 3.393-18.26 10.326-25.2C172.192 194.973 332.731 34.31 355.66 11.354Z"
-        />
-      </svg>
+       <Svg name="leftArrow" className="size-[20px] flex items-center justify-center" />
       {children}
     </button>
   )
@@ -63,20 +55,11 @@ export const NextButton = (props) => {
 
   return (
     <button
-      className="flex items-center justify-center w-9 h-9 rounded-full border border-[#d0c2c2] bg-white text-[#d0c2c2] hover:border-[#f76900] hover:text-[#f76900]"
+      className="flex items-center justify-center w-9 h-9 rounded-full border border-[#d0c2c2] bg-white text-[#d0c2c2] hover:border-[#f76900] hover:text-[#f76900] transition-all duration-300 ease-in-out"
       type="button"
       {...restProps}
     >
-      <svg
-        className="size-3.5"
-        viewBox="0 0 532 532"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          fill="currentColor"
-          d="M176.34 520.646c-13.793 13.805-36.208 13.805-50.001 0-13.785-13.804-13.785-36.238 0-50.034L330.78 266 126.34 61.391c-13.785-13.805-13.785-36.239 0-50.044 13.793-13.796 36.208-13.796 50.002 0 22.928 22.947 206.395 206.507 229.332 229.454a35.065 35.065 0 0 1 10.326 25.126c0 9.2-3.393 18.26-10.326 25.2-45.865 45.901-206.404 206.564-229.332 229.52Z"
-        />
-      </svg>
+      <Svg name="rightArrow" className="size-[20px] flex items-center justify-center" />
       {children}
     </button>
   )

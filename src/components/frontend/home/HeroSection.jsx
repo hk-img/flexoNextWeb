@@ -14,13 +14,13 @@ const HeroSection = () => {
   ];
 
   const texts = [
-    "coworking Spaces",
-    "desk Rooms",
-    "managed Offices",
-    "meeting Rooms",
+    "Coworking Spaces",
+    "Desk Rooms",
+    "Managed Offices",
+    "Meeting Rooms",
     "Private Cabins",
-    "Private offices",
-    "workspaces",
+    "Private Offices",
+    "Workspaces",
   ];
 
   const [currentImage, setCurrentImage] = useState(0);

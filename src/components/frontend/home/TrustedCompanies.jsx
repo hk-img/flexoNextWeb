@@ -35,7 +35,7 @@ const TrustedCompanies = () => {
     <section className="py-10 bg-white">
       <div className="max-w-6xl mx-auto text-center px-4">
         {/* Heading */}
-        <h2 className="text-2xl md:text-3xl font-semibold text-gray-800 mb-8">
+        <h2 className="text-2xl md:text-3xl font-semibold text-[#333] mb-8">
           Trusted By Leading Companies in India
         </h2>
 

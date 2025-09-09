@@ -39,12 +39,12 @@ export const PrevButton = (props) => {
 
   return (
     <button
-      className="flex items-center justify-center w-10 h-10 rounded-full bg-white shadow-md text-gray-800 hover:bg-gray-200 disabled:opacity-50"
+      className="flex items-center justify-center w-9 h-9 rounded-full border border-[#d0c2c2] bg-white text-[#d0c2c2] hover:border-[#f76900] hover:text-[#f76900]"
       type="button"
       {...restProps}
     >
       <svg
-        className="w-5 h-5"
+        className="size-3.5"
         viewBox="0 0 532 532"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -63,12 +63,12 @@ export const NextButton = (props) => {
 
   return (
     <button
-      className="flex items-center justify-center w-10 h-10 rounded-full bg-white shadow-md text-gray-800 hover:bg-gray-200 disabled:opacity-50"
+      className="flex items-center justify-center w-9 h-9 rounded-full border border-[#d0c2c2] bg-white text-[#d0c2c2] hover:border-[#f76900] hover:text-[#f76900]"
       type="button"
       {...restProps}
     >
       <svg
-        className="w-5 h-5"
+        className="size-3.5"
         viewBox="0 0 532 532"
         xmlns="http://www.w3.org/2000/svg"
       >

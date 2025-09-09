@@ -5,22 +5,43 @@ import AutoScroll from "embla-carousel-auto-scroll";
 import Image from "next/image";
 
 const EmblaAutoScrollCarousel = ({ slides, options }) => {
-   const plugins =
+  const plugins =
     slides.length > 3
       ? [
           AutoScroll({
             playOnInit: true,
             stopOnInteraction: false,
-            speed: 0.8, 
+            stopOnHover: false,
+            speed: 0.8,
           }),
         ]
       : [];
+
   const [emblaRef, emblaApi] = useEmblaCarousel(options, plugins);
 
   useEffect(() => {
     if (!emblaApi) return;
-    const plugins = emblaApi?.plugins?.();
-    plugins ? plugins.autoScroll : null;
+    const autoScroll = emblaApi.plugins().autoScroll;
+
+    if (!autoScroll) return;
+
+    const keepPlaying = () => {
+      autoScroll.play();
+    };
+
+    emblaApi
+      .on("pointerDown", keepPlaying)
+      .on("pointerUp", keepPlaying)
+      .on("select", keepPlaying)
+      .on("settle", keepPlaying);
+
+    return () => {
+      emblaApi
+        .off("pointerDown", keepPlaying)
+        .off("pointerUp", keepPlaying)
+        .off("select", keepPlaying)
+        .off("settle", keepPlaying);
+    };
   }, [emblaApi]);
 
   return (
@@ -37,7 +58,7 @@ const EmblaAutoScrollCarousel = ({ slides, options }) => {
                 alt={s.alt}
                 width={120}
                 height={50}
-                className="object-contain transition w-[145px] "
+                className="object-contain transition w-[145px]"
               />
             </div>
           ))}

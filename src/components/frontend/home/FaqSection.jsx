@@ -19,7 +19,7 @@ const FaqSection = () => {
   };
 
   return (
-   <section className="max-w-6xl xl:px-1 lg:px-10 md:px-6 px-6 mx-auto py-8">
+   <section className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto py-8">
         <div>
             <h2 className="text-3xl md:text-[32px] font-medium mb-2 text-center text-[#333]">
                Frequently Asked Question

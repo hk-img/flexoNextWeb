@@ -24,7 +24,7 @@ const CoworkingBrands = () => {
   }
 
   return (
-    <div className="max-w-6xl xl:px-1 lg:px-10 md:px-6 px-6 mx-auto py-8">
+    <div className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto py-8">
        <h2 className="md:text-[32px] text-xl font-medium text-center text-[#333] mb-8">
         Top Coworking Brands, All in One Place
       </h2>

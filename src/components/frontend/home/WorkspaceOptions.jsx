@@ -38,7 +38,7 @@ const coworkingSpaces = [
 const WorkspaceOptions = () => {
 
   return (
-    <div className="max-w-6xl xl:px-1 lg:px-10 md:px-6 px-6 mx-auto py-12">
+    <div className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto py-12">
       <div className='max-w-[800px] px-6 mx-auto'>
         <h2 className="md:text-[32px] text-xl font-medium text-center text-[#333]">
           With <span className="text-[#f76900]">1800+</span> Workspace Options, We have the Right Space for Every Team

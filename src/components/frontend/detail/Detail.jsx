@@ -1,59 +1,28 @@
 import Svg from '@/components/svg'
+import Image from 'next/image'
 import React from 'react'
 
 const Detail = () => {
   return (
     <>
       <section className="relative w-full mt-[82px] ">
-        <div>
-          <div className="grid grid-cols-2 gap-[2px]">
-            <div>
-              <iframe className='w-full h-full' src="https://www.youtube.com/embed/hxvOFKFqQLk?si=qR2XPRzDJJBua9_k" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+        <div className='relative'>
+          <div className="grid md:grid-cols-2 grid-cols-1 gap-[2px]">
+            <div className='max-md:relative max-md:overflow-hidden max-md:pt-[66.45%] max-md:w-full'>
+              <iframe className='w-full h-full max-md:absolute max-md:inset-0 ' src="https://www.youtube.com/embed/hxvOFKFqQLk?si=qR2XPRzDJJBua9_k" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
             </div>
             <div>
-              <div className="grid grid-cols-2 gap-[2px]">
+              <div className="grid md:grid-cols-2 grid-cols-4 gap-[2px]">
                 <div>
                   <a href="#">
                   <img src="/images/detail-1.webp" alt="" />
                   </a>
                 </div>
-                <div className='relative'>
+                <div>
                   <a href="#">
                     <img src="/images/detail-2.webp" alt="" />
                   </a>
-                  <div className='absolute top-7 right-6  flex items-center justify-center gap-3'>
-                    <div className='bg-white w-[34px] h-[34px] flex items-center justify-center rounded-full'>
-                      <a href="#">
-                      <Svg
-                          name="heartTransparent"
-                          className="size-[18px] text-black"
-                        />
-                        </a>
-                    </div>
-                      <div className="relative group">
-                        <div className="bg-white w-[34px] h-[34px] flex items-center justify-center rounded-full cursor-pointer shadow">
-                          <Svg name="share" className="size-[18px] text-black" />
-                        </div>
-                        <div className="absolute -right-25 -translate-x-1/2 mt-2 flex items-center gap-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                          <div className="bg-white w-[34px] h-[34px] flex items-center justify-center rounded-full shadow ">
-                            <Svg name="facebook" className="size-[18px] text-[#f76900]" />
-                          </div>
-                          <div className="bg-white w-[34px] h-[34px] flex items-center justify-center rounded-full shadow ">
-                            <Svg name="linkedin" className="size-[18px] text-[#f76900]" />
-                          </div>
-                          <div className="bg-white w-[34px] h-[34px] flex items-center justify-center rounded-full shadow ">
-                            <Svg name="whatsapp" className="size-[18px] text-[#f76900]" />
-                          </div>
-                          <div className="bg-white w-[34px] h-[34px] flex items-center justify-center rounded-full shadow ">
-                            <Svg name="instagram" className="size-[18px] text-[#f76900]" />
-                          </div>
-                          <div className="bg-white w-[34px] h-[34px] flex items-center justify-center rounded-full shadow ">
-                            <Svg name="copy" className="size-[18px] text-[#f76900]" />
-                          </div>
-                        </div>
-                      </div>
-
-                  </div>
+                  
                 </div>
                 <div>
                   <a href="#">
@@ -69,11 +38,45 @@ const Detail = () => {
             </div>
           </div>
         </div>
+        <div>
+          <div className='absolute top-7 right-6  flex items-center justify-center gap-3'>
+            <div className='bg-white w-[34px] h-[34px] flex items-center justify-center rounded-full'>
+              <a href="#">
+              <Svg
+                  name="heartTransparent"
+                  className="size-[18px] text-black"
+                />
+                </a>
+            </div>
+            <div className="relative group">
+              <div className="bg-white w-[34px] h-[34px] flex items-center justify-center rounded-full cursor-pointer shadow">
+                <Svg name="share" className="size-[18px] text-black" />
+              </div>
+              <div className="absolute -right-25 -translate-x-1/2 mt-2 flex items-center gap-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                <div className="bg-white w-[34px] h-[34px] flex items-center justify-center rounded-full shadow ">
+                  <Svg name="facebook" className="size-[18px] text-[#f76900]" />
+                </div>
+                <div className="bg-white w-[34px] h-[34px] flex items-center justify-center rounded-full shadow ">
+                  <Svg name="linkedin" className="size-[18px] text-[#f76900]" />
+                </div>
+                <div className="bg-white w-[34px] h-[34px] flex items-center justify-center rounded-full shadow ">
+                  <Svg name="whatsapp" className="size-[18px] text-[#f76900]" />
+                </div>
+                <div className="bg-white w-[34px] h-[34px] flex items-center justify-center rounded-full shadow ">
+                  <Svg name="instagram" className="size-[18px] text-[#f76900]" />
+                </div>
+                <div className="bg-white w-[34px] h-[34px] flex items-center justify-center rounded-full shadow ">
+                  <Svg name="copy" className="size-[18px] text-[#f76900]" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
-      <section className="max-w-6xl xl:px-1 lg:px-10 md:px-6 px-4 mx-auto md:py-6">
-        <div className="flex">
-          <div className='w-2/3'>
-            <ol className="text-sm  mb-1 flex items-center gap-2">
+      <section className="max-w-6xl xl:px-1 lg:px-10 md:px-6 px-4 mx-auto py-6">
+        <div className='flex flex-wrap'>
+          <div className='md:w-2/3'>
+             <ol className="text-sm  mb-1 flex items-center gap-2">
               <li className='text-[#141414] hover:text-[#777]'><a href="#">Coworking Space In Mumbai </a></li>
                 <li><Svg name="rightArrow" className="size-2 text-gray-500" /></li>
               <li className='text-[#141414] hover:text-[#777]'><a href="#" >Goregaon </a></li>
@@ -84,7 +87,7 @@ const Detail = () => {
                 <Svg name="location2" className="size-5 text-[#f76900]" />
                 <span>Goregaon</span>
               </div>
-              <div className='flex items-center justify-between'>
+              <div className='flex md:flex-row flex-col md:space-y-0 space-y-3 md:items-center justify-between mb-8'>
                 <div className="flex items-center space-x-10 text-sm text-[#646464]">
                   <div className="flex gap-2 items-center ">
                     <Svg name="user2" className="size-3.5 text-[#7f7f7f]" />
@@ -107,133 +110,301 @@ const Detail = () => {
                 </div>
               </div>
             </div>
-            <div>
-            <div className="border-t border-b border-gray-200">
-              <div className="flex justify-between max-w-4xl mx-auto px-4">
-                <a href="#about" className="py-4 text-sm font-medium text-gray-600 hover:text-orange-500 transition">
-                  About the Space
-                </a>
-                <a href="#pricing" className="py-4 text-sm font-medium text-gray-600 hover:text-orange-500 transition">
-                  Pricing
-                </a>
-                <a href="#location" className="py-4 text-sm font-medium text-orange-600 border-b-2 border-orange-500">
-                  Location
-                </a>
-                <a href="#hours" className="py-4 text-sm font-medium text-gray-600 hover:text-orange-500 transition">
-                  Business Hours
-                </a>
-                <a href="#reviews" className="py-4 text-sm font-medium text-gray-600 hover:text-orange-500 transition">
-                  Reviews
-                </a>
-              </div>
-              <div>
-                <div id="about" className="py-6 bprder-b border-[#dbdbdb]">
-                  <div>
-                    <h2 className="text-xl font-medium text-[#141414] mb-2">About the Space</h2>
-                    <p className='text-[#777] text-base leading-[1.8]'>Here's an elegant coworking space in the plush suburbs of Goregaon East. The workspace stands gracefully among elite residential buildings allowing 100+ people to sit, walk, network, chat, close deals, discuss business, interview, relax, and sip on a warm coffee. The private offices, shared desks, dedicated desks, conference halls, event spaces, and full-floor workstations make it a comprehensive workspace solution. This coworking space in Goregaon East is cleaned daily to ensure you have a safe and hygienic work environment.</p>
-                  </div>
-                  <div className='pt-12'>
-                    <h2 className="text-xl font-medium text-[#141414] mb-6">Amenities</h2>
-                    <div className="grid md:grid-cols-3 grid-cols-2 space-y-5">
-                      <div className='flex items-center gap-3'>
-                        <div>
-                          <Svg name="clock" className="size-3.5 text-[#f76900]" />
-                        </div>
-                        <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
-                      </div>
-                      <div className='flex items-center gap-3'>
-                        <div>
-                          <Svg name="clock" className="size-3.5 text-[#f76900]" />
-                        </div>
-                        <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
-                      </div>
-                      <div className='flex items-center gap-3'>
-                        <div>
-                          <Svg name="clock" className="size-3.5 text-[#f76900]" />
-                        </div>
-                        <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
-                      </div>
-                      <div className='flex items-center gap-3'>
-                        <div>
-                          <Svg name="clock" className="size-3.5 text-[#f76900]" />
-                        </div>
-                        <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
-                      </div>
-                      <div className='flex items-center gap-3'>
-                        <div>
-                          <Svg name="clock" className="size-3.5 text-[#f76900]" />
-                        </div>
-                        <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
-                      </div>
-                      <div className='flex items-center gap-3'>
-                        <div>
-                          <Svg name="clock" className="size-3.5 text-[#f76900]" />
-                        </div>
-                        <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
-                      </div>
-                      <div className='flex items-center gap-3'>
-                        <div>
-                          <Svg name="clock" className="size-3.5 text-[#f76900]" />
-                        </div>
-                        <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
-                      </div>
-                      <div className='flex items-center gap-3'>
-                        <div>
-                          <Svg name="clock" className="size-3.5 text-[#f76900]" />
-                        </div>
-                        <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
-                      </div>
-                      <div className='flex items-center gap-3'>
-                        <div>
-                          <Svg name="clock" className="size-3.5 text-[#f76900]" />
-                        </div>
-                        <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
-                      </div>
-                      <div className='flex items-center gap-3'>
-                        <div>
-                          <Svg name="clock" className="size-3.5 text-[#f76900]" />
-                        </div>
-                        <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
-                      </div>
-                      <div className='flex items-center gap-3'>
-                        <div>
-                          <Svg name="clock" className="size-3.5 text-[#f76900]" />
-                        </div>
-                        <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
-                      </div>
-                      <div className='flex items-center gap-3'>
-                        <div>
-                          <Svg name="clock" className="size-3.5 text-[#f76900]" />
-                        </div>
-                        <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
-                      </div>
-                      <div className='flex items-center gap-3'>
-                        <div>
-                          <Svg name="clock" className="size-3.5 text-[#f76900]" />
-                        </div>
-                        <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
-                      </div>
+          </div>
+        </div>
+        <div className="flex flex-wrap">
 
+          <div className='md:w-2/3 w-full md:order-1 order-2'>
+            <div>
+              <div className="">
+                <div className=" justify-between max-w-4xl mx-auto px-4 border-t border-b border-gray-200 md:flex hidden">
+                  <a href="#about" className="py-4 text-sm font-medium  transition">
+                    About the Space
+                  </a>
+                  <a href="#pricing" className="py-4 text-sm font-medium  transition">
+                    Pricing
+                  </a>
+                  <a href="#location" className="py-4 text-sm font-medium">
+                    Location
+                  </a>
+                  <a href="#hours" className="py-4 text-sm font-medium  transition">
+                    Business Hours
+                  </a>
+                  <a href="#reviews" className="py-4 text-sm font-medium  transition">
+                    Reviews
+                  </a>
+                </div>
+                <div>
+                  <div id="about" className="md:pt-10 pt-5 md:pb-14 pb-7  border-b border-[#dbdbdb]">
+                    <div>
+                      <h2 className="text-xl font-medium text-[#141414] mb-2">About the Space</h2>
+                      <p className='text-[#777] text-base leading-[1.8]'>Here's an elegant coworking space in the plush suburbs of Goregaon East. The workspace stands gracefully among elite residential buildings allowing 100+ people to sit, walk, network, chat, close deals, discuss business, interview, relax, and sip on a warm coffee. The private offices, shared desks, dedicated desks, conference halls, event spaces, and full-floor workstations make it a comprehensive workspace solution. This coworking space in Goregaon East is cleaned daily to ensure you have a safe and hygienic work environment.</p>
+                    </div>
+                    <div className='pt-12'>
+                      <h2 className="text-xl font-medium text-[#141414] mb-6">Amenities</h2>
+                      <div className="grid md:grid-cols-3 grid-cols-2 space-y-5">
+                        <div className='flex items-center gap-3'>
+                          <div>
+                            <Svg name="clock" className="size-3.5 text-[#f76900]" />
+                          </div>
+                          <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
+                        </div>
+                        <div className='flex items-center gap-3'>
+                          <div>
+                            <Svg name="clock" className="size-3.5 text-[#f76900]" />
+                          </div>
+                          <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
+                        </div>
+                        <div className='flex items-center gap-3'>
+                          <div>
+                            <Svg name="clock" className="size-3.5 text-[#f76900]" />
+                          </div>
+                          <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
+                        </div>
+                        <div className='flex items-center gap-3'>
+                          <div>
+                            <Svg name="clock" className="size-3.5 text-[#f76900]" />
+                          </div>
+                          <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
+                        </div>
+                        <div className='flex items-center gap-3'>
+                          <div>
+                            <Svg name="clock" className="size-3.5 text-[#f76900]" />
+                          </div>
+                          <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
+                        </div>
+                        <div className='flex items-center gap-3'>
+                          <div>
+                            <Svg name="clock" className="size-3.5 text-[#f76900]" />
+                          </div>
+                          <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
+                        </div>
+                        <div className='flex items-center gap-3'>
+                          <div>
+                            <Svg name="clock" className="size-3.5 text-[#f76900]" />
+                          </div>
+                          <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
+                        </div>
+                        <div className='flex items-center gap-3'>
+                          <div>
+                            <Svg name="clock" className="size-3.5 text-[#f76900]" />
+                          </div>
+                          <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
+                        </div>
+                        <div className='flex items-center gap-3'>
+                          <div>
+                            <Svg name="clock" className="size-3.5 text-[#f76900]" />
+                          </div>
+                          <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
+                        </div>
+                        <div className='flex items-center gap-3'>
+                          <div>
+                            <Svg name="clock" className="size-3.5 text-[#f76900]" />
+                          </div>
+                          <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
+                        </div>
+                        <div className='flex items-center gap-3'>
+                          <div>
+                            <Svg name="clock" className="size-3.5 text-[#f76900]" />
+                          </div>
+                          <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
+                        </div>
+                        <div className='flex items-center gap-3'>
+                          <div>
+                            <Svg name="clock" className="size-3.5 text-[#f76900]" />
+                          </div>
+                          <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
+                        </div>
+                        <div className='flex items-center gap-3'>
+                          <div>
+                            <Svg name="clock" className="size-3.5 text-[#f76900]" />
+                          </div>
+                          <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
+                        </div>
+
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div id="pricing" className="py-6">
-                  <h2 className="text-2xl font-medium text-[#141414] mb-2">Location</h2>
-                </div>
-                <div id="location" className="py-6">
-                  <h2 className="text-2xl font-medium text-[#141414] mb-2">Location</h2>
-                </div>
-                <div id="hours" className="py-6">
-                  <h2 className="text-2xl font-medium text-[#141414] mb-2">Location</h2>
-                </div>
-                <div id="reviews" className="py-6">
-                  <h2 className="text-2xl font-medium text-[#141414] mb-2">Location</h2>
+                  <div id="pricing" className="md:pt-10 pt-5 md:pb-14 pb-7  border-b border-[#dbdbdb]">
+                    <h2 className="text-xl font-medium text-[#141414] mb-6">Pricing</h2>
+                    <div className='space-y-4'>
+                      <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
+                        <div className='flex md:flex-row flex-col md:items-center md:gap-4 gap-2 justify-between'>
+                          <div>
+                            <h3 className="text-lg font-medium text-[#010101]">Private Office</h3>
+                            <p className="text-sm text-[#777]">Private space for you and your team</p>
+                            
+                          </div>
+                          <div className="">
+                            <span className="block text-[15px] font-light">from</span>
+                            <div className='flex items-center'>
+                              <h2 className=" text-lg font-medium flex items-center">
+                                <span className="text-lg text-[#141414]"><Svg name="rupee" className="size-[18px] text-[#f76900]" /></span> 33,000
+                              </h2>
+                              <span className=" text-[15px] font-light">/seat/month</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <button className="mt-4 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-4 py-3 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
+                            ENQUIRE NOW
+                          </button>
+                        </div>
+                      </div>
+                      <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
+                        <div className='flex md:flex-row flex-col md:items-center md:gap-4 gap-2 justify-between'>
+                          <div>
+                            <h3 className="text-lg font-medium text-[#010101]">Private Office</h3>
+                            <p className="text-sm text-[#777]">Private space for you and your team</p>
+                            
+                          </div>
+                          <div className="">
+                            <span className="block text-[15px] font-light">from</span>
+                            <div className='flex items-center'>
+                              <h2 className=" text-lg font-medium flex items-center">
+                                <span className="text-lg text-[#141414]"><Svg name="rupee" className="size-[18px] text-[#f76900]" /></span> 33,000
+                              </h2>
+                              <span className=" text-[15px] font-light">/seat/month</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <button className="mt-4 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-4 py-3 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
+                            ENQUIRE NOW
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="location" className="md:pt-10 pt-5 md:pb-14 pb-7  border-b border-[#dbdbdb]">
+                    <h2 className="text-xl font-medium text-[#141414] mb-8">Location</h2>
+                    <div>
+                      <iframe className='w-full h-[400px] ' src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d113191.98042546936!2d76.56397305823452!3d27.554769647218155!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3972998fa7e65df3%3A0x38cebba39ee426f2!2sAlwar%2C%20Rajasthan%2C%20India!5e0!3m2!1sen!2sus!4v1757567494363!5m2!1sen!2sus" allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                    <div className='md:px-5 md:py-5 px-5 py-3 grid grid-cols-2'>
+                      <div className='flex items-center gap-2'>
+                        <div className='flex items-center flex-col gap-1 text-[#777]'>
+                          <Svg name="metro" className="size-5" />
+                          <h3 className='text-[#777] text-xs font-normal'>Metro</h3>
+                        </div>
+                        <div>
+                          <h3 className='text-[#777] text-xs font-normal'>NA</h3>
+                          <h3 className='text-[#777] text-xs font-normal'>NA</h3>
+                        </div>
+                      </div>
+                      <div className='flex items-center gap-2'>
+                        <div className='flex items-center flex-col gap-1 text-[#777]'>
+                          <Svg name="train" className="size-5" />
+                          <h3 className='text-[#777] text-xs font-normal'>Railway</h3>
+                        </div>
+                        <div>
+                          <h3 className='text-[#777] text-xs font-normal'>NA</h3>
+                          <h3 className='text-[#777] text-xs font-normal'>1 Kms</h3>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="hours" className="md:pt-10 pt-5 md:pb-14 pb-7  border-b border-[#dbdbdb]">
+                    <h2 className="text-xl font-medium text-[#141414] mb-4">Business Hours</h2>
+                    <div>
+                      <section className=" ">
+                        <div className="flex items-center gap-2 mb-6">
+                          <div className="flex items-center border border-[#f76900] rounded-full px-5 py-3 text-[#646464]">
+                            <span className="mr-3">
+                              <Image width={25} height={25} className='w-[25px] h-[25px]' src="/images/clock-24-7.webp" alt="" />
+                              </span> This space is operational 24x7
+                          </div>
+                        </div>
+
+                        <div className="grid gap-4 md:p-6">
+                          <div className="flex justify-between">
+                            <span className="text-[#777] text-[15px]">Monday</span>
+                            <span className="text-[#777] text-[15px]">09:00 AM – 08:00 PM</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-[#777] text-[15px]">Tuesday</span>
+                            <span className="text-[#777] text-[15px]">09:00 AM – 08:00 PM</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-[#777] text-[15px]">Wednesday</span>
+                            <span className="text-[#777] text-[15px]">09:00 AM – 08:00 PM</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-[#777] text-[15px]">Thursday</span>
+                            <span className="text-[#777] text-[15px]">09:00 AM – 08:00 PM</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-[#777] text-[15px]">Friday</span>
+                            <span className="text-[#777] text-[15px]">09:00 AM – 08:00 PM</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-[#777] text-[15px]">Saturday</span>
+                            <span className="text-[#777] text-[15px]">10:00 AM – 04:00 PM</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-[#777] text-[15px]">Sunday</span>
+                            <span className="text-[#ff3a6d] text-[15px]">Closed</span>
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </div>
+                  <div id="reviews" className="py-6">
+                    <div className='flex flex-wrap md:items-center md:gap-7 gap-3'>
+                      <h2 className="text-xl font-medium text-[#141414] mb-2">Reviews & Ratings</h2>
+                      <div>
+                        <button className="bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white px-4 py-2.5 rounded-[15px] font-semibold duration-500 transition flex items-center gap-2 uppercase tracking-[1px]">
+                          <Svg name="pencil" className="size-5" />  
+                          <span>Leave a Review</span>
+                        </button>
+                      </div>
+                    </div>
+                    <div className='pt-5 md:pt-10'>
+                      <h3 className='text-[#343a40] text-lg'>No Reviews Yet</h3>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          <div className='md:w-1/3 w-full pl-7 max-md:pl-0 md:order-2 order-1'>
+            <div className="w-full border border-[#dbdbdb] p-6 rounded-sm md:sticky md:top-[90px]  bg-white">
+              <h3 className="text-xl font-medium text-center mb-5">Interested in this space?</h3>
+              <div className="grid grid-cols-2 gap-3 mb-6 text-sm text-gray-700">
+                <div className="flex items-center gap-1 text-[11px]">
+                  <span className="text-orange-500"><Svg name="checkRound" className="size-5" /></span>
+                  Zero Brokerage
+                </div>
+                <div className="flex items-center gap-1 text-[11px]">
+                  <span className="text-orange-500"><Svg name="checkRound" className="size-5" /></span>
+                  Best Deals
+                </div>
+                <div className="flex items-center gap-1 text-[11px]">
+                  <span className="text-orange-500"><Svg name="checkRound" className="size-5" /></span>
+                  1000+ Clients Served
+                </div>
+                <div className="flex items-center gap-1 text-[11px]">
+                  <span className="text-orange-500"><Svg name="checkRound" className="size-5" /></span>
+                  Expert Advisors
+                </div>
+              </div>
+
+              <div className="space-y-3 mb-6">
+                <button className="w-full bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white py-4 rounded-[15px] font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px]">Get Quote </button>
+                <button className="w-full border uppercase tracking-[1px] border-[#000e54] text-[#000e54] text-sm font-semibold py-4 rounded-[15px]">
+                   Schedule a visit
+                </button>
+              </div>
+              <div className='text-center space-y-1'>
+                <p className="text-center text-sm text-black ">
+                  Speak to our office space experts.
+                </p>
+                <a href='#' className="font-semibold text-base text-black">Call +91 95133 92400</a>
+              </div>
+            </div>
+
+          </div>
         </div>
-      </div>
       </section>
     </>
   )

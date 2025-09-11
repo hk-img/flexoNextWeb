@@ -29,7 +29,7 @@ const TrustedCompanies = () => {
   ];
   return (
     <section className="py-10 bg-white">
-      <div className="max-w-6xl mx-auto text-center px-4">
+      <div className="max-w-6xl mx-auto text-center px-4 xl:px-[21px] lg:px-10 md:px-6">
         {/* Heading */}
         <h2 className="md:text-[32px] text-xl font-medium text-center text-[#333] mb-8">
           Trusted By Leading Companies in India

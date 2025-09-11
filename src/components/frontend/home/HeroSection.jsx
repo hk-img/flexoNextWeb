@@ -60,7 +60,7 @@ const HeroSection = () => {
       ))}
 
       <div className="absolute inset-0 bg-black/40 flex flex-col justify-center text-white">
-        <div className="max-w-6xl xl:px-[6px] lg:px-10 md:px-6 px-4 mx-auto w-full">
+        <div className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-4 mx-auto w-full">
           <div className="mb-10 md:text-start text-center">
             <h1 className="text-4xl md:text-[56px] font-bold transition-all duration-700 ease-in-out mb-2">
               Discover Amazing{" "}

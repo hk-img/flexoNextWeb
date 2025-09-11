@@ -1,5 +1,6 @@
 import React from "react"
 import EmblaCarousel from "../emblaCarousel/EmblaCarousel"
+import Image from "next/image"
 
 const CoworkingSpaces = () => {
   const cities = [
@@ -14,39 +15,41 @@ const CoworkingSpaces = () => {
   ]
 
   return (
-    <div className="max-w-6xl xl:px-1 lg:px-10 md:px-6 px-4 mx-auto">
+    <div className="max-w-6xl xl:px-1 lg:px-10 md:px-6 px-6 mx-auto">
       <h2 className="md:text-[32px] text-xl font-medium text-center text-[#333]">
         Explore India&apos;s Premier Network of{" "}
         <span className="text-[#f76900]">Coworking Spaces</span>
       </h2>
 
-      <div className="mt-10 flex flex-col lg:flex-row gap-[6px]">
-        <div className="w-full lg:w-1/3">
+      <div className="mt-10 flex flex-col md:flex-row gap-[6px]">
+        <div className="w-full md:w-1/3">
           <a href="#">
-            <div className="relative rounded-sm overflow-hidden">
+            <div className="relative rounded-sm overflow-hidden h-full">
               <div className="before:content-[''] before:w-full before:h-full before:absolute before:top-0 before:left-0 before:bg-[#0000002b]" />
-              <div>
-                <img
+              <div className="h-full">
+                <Image
+                width={405}
+                height={420}
                   src="/images/mumbai.webp"
                   alt="mumbai coworking"
-                  className="h-[250px] md:h-[350px] lg:h-[405px] w-full object-cover"
+                  className="h-[250px] md:h-full w-full object-cover"
                   loading="lazy"
                 />
               </div>
-              <div className="absolute bottom-1 left-1 text-white font-semibold text-2xl  px-2 py-1 rounded-md">
+              <div className="absolute bottom-1 left-1 text-white font-semibold text-2xl px-2 py-1 rounded-md">
                 Mumbai
               </div>
             </div>
           </a>
         </div>
-        <div className="w-full lg:w-2/3">
-          <EmblaCarousel options={{ loop: true,autoplay:false,showButton: true }}>
+        <div className="w-full md:w-2/3">
+          <EmblaCarousel options={{ loop: true,autoplay:false,showButton: true ,  align: "start"  }}>
             {Array.from({ length: Math.ceil(cities.length / 2) }).map(
               (_, colIdx) => (
                 <div
                   key={colIdx}
                   className="embla__slide shrink-0 
-                    basis-1/2 md:basis-1/3 lg:basis-1/3 "
+                   basis-[50%] sm:basis-[50%] md:basis-[50%] lg:basis-[33.3%] xl:basis-[33.3%] "
                 >
                   <div className="grid grid-rows-2 gap-1">
                     {cities
@@ -58,7 +61,9 @@ const CoworkingSpaces = () => {
                             className="relative rounded-sm overflow-hidden shadow-md"
                           >
                             <div className="before:content-[''] before:w-full before:h-full before:absolute before:top-0 before:left-0 before:bg-[#0000002b]" />
-                            <img
+                            <Image
+                            width={200}
+                            height={200}
                               src={city.image}
                               alt={city.name}
                               className="w-full h-[160px] md:h-[180px] lg:h-[200px] object-cover"

@@ -1,13 +1,14 @@
 import React from 'react'
 import Svg from '@/components/svg'
+import Image from 'next/image'
 
 const Header = () => {
   return (
     <header className='fixed top-0 z-50 bg-white w-full'>
-      <div className='max-w-6xl xl:px-[6px] lg:px-10 md:px-6 px-4 mx-auto py-[23px] '>
+      <div className='max-w-6xl xl:px-[6px] lg:px-10 md:px-6 px-4 mx-auto py-[20px] '>
         <div className='flex justify-between items-center'>
           <div>
-            <img src="/images/logo.webp" alt="logo" title='logo' className='lg:w-[130px] sm:w-[70px] w-[100px]' width={137} height={37} />
+            <Image src="/images/logo.webp" alt="logo" title='logo' className='lg:w-[130px] sm:w-[70px] w-[100px]' width={137} height={37} />
           </div>
           <div className='lg:flex hidden items-center gap-3'>
             <div>

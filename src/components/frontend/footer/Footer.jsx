@@ -1,5 +1,6 @@
 import React from 'react'
 import Svg from '@/components/svg'
+import Image from 'next/image'
 
 const Footer = () => {
   return (
@@ -126,7 +127,7 @@ const Footer = () => {
         <div className='max-w-6xl xl:px-[6px] lg:px-10 md:px-6 px-4 mx-auto'>
           <div className="flex flex-col md:flex-row justify-between md:items-center text-[15px] text-gray-500 md:px-[15px]">
             <div className="mb-4 md:mb-0">
-              <img src="images/logo.webp" alt="Flexo Logo" className="h-8" />
+              <Image src="/images/logo.webp" alt="Flexo Logo" className="h-8" width={137} height={32} />
             </div>
             <div className='flex flex-col md:items-end'>
               <div className="md:space-x-4 space-x-3">

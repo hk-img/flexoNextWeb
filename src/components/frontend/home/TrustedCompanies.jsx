@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import EmblaCarousel from "../emblaCarousel/EmblaCarousel";
 import Image from "next/image";
@@ -28,14 +27,11 @@ const TrustedCompanies = () => {
     { src: "/images/trusted-logo5.webp", alt: "Eicher" },
     { src: "/images/trusted-logo6.webp", alt: "InMobi" },
   ];
-
-  const OPTIONS = { loop: true };
-
   return (
     <section className="py-10 bg-white">
       <div className="max-w-6xl mx-auto text-center px-4">
         {/* Heading */}
-        <h2 className="text-2xl md:text-3xl font-semibold text-[#333] mb-8">
+        <h2 className="md:text-[32px] text-xl font-medium text-center text-[#333] mb-8">
           Trusted By Leading Companies in India
         </h2>
 

@@ -6,7 +6,7 @@ const page = () => {
   return (
     <>
       <Home/>
-      <Svg name="bankVerify" className="w-6 h-6 text-gray-500" />
+      {/* <Svg name="bankVerify" className="w-6 h-6 text-gray-500" /> */}
     </>
   )
 }

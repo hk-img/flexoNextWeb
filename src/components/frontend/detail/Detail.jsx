@@ -351,7 +351,7 @@ const Detail = () => {
                   </div>
                   <div id="reviews" className="py-6">
                     <div className='flex flex-wrap md:items-center md:gap-7 gap-3'>
-                      <h2 className="text-xl font-medium text-[#141414] mb-2">Reviews & Ratings</h2>
+                      <h2 className="text-xl font-medium text-[#141414] mb-2">Reviews & Ratings <span>(1)</span> </h2>
                       <div>
                         <button className="bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white px-4 py-2.5 rounded-[15px] font-semibold duration-500 transition flex items-center gap-2 uppercase tracking-[1px]">
                           <Svg name="pencil" className="size-5" />  
@@ -359,8 +359,56 @@ const Detail = () => {
                         </button>
                       </div>
                     </div>
-                    <div className='pt-5 md:pt-10'>
+                    <div className='pt-5 md:pt-10 hidden'>
                       <h3 className='text-[#343a40] text-lg'>No Reviews Yet</h3>
+                    </div>
+                    <div>
+                      <div className="space-y-6 pt-5 md:pt-8 ">
+                        <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-1 text-[#f76900]">
+                            <Svg name="star" className="size-4" /> 
+                            <Svg name="star" className="size-4" /> 
+                            <Svg name="star" className="size-4" /> 
+                            <Svg name="star" className="size-4" /> 
+                            <Svg name="emptyStar" className="size-4" /> 
+
+                          </div>
+                          <div className="border border-[#f76900] text-[#777] text-sm px-3 py-0.5 rounded-full">
+                            4.0
+                          </div>
+                        </div>
+
+                        <div className="flex items-start gap-4">
+                          <div className="w-12 h-12 rounded-full flex items-center justify-center">
+                            <Image width={50} height={50} src="/images/user_image.webp" alt="" />
+                          </div>
+
+                          <div className="flex-1 space-y-1">
+                            <div className="">
+                              <h3 className="font-medium text-[#141414]">Hitesh</h3>
+                              <div className='flex items-center gap-10'>
+                                <div className="flex text-[#f76900] gap-1 text-sm">
+                                  <Svg name="star" className="size-5" /> 
+                                  <Svg name="star" className="size-5" /> 
+                                  <Svg name="star" className="size-5" /> 
+                                  <Svg name="star" className="size-5" /> 
+                                  <Svg name="emptyStar" className="size-5" /> 
+                                </div>
+                                <p className="mt-1 text-base font-medium text-black flex items-center gap-1">
+                                  <Svg name="checkTic" className="size-3 text-[#7f7f7f]" /> 
+                                    Yes I would book again
+                                </p>
+                              </div>  
+                            </div>
+
+                            <p className="text-[#777] text-sm">test review</p>
+                            <p className="text-[#777] text-xs">September 11, 2025</p>
+
+                           
+                          </div>
+                        </div>
+                      </div>
+
                     </div>
                   </div>
                 </div>
@@ -372,19 +420,19 @@ const Detail = () => {
               <h3 className="text-xl font-medium text-center mb-5">Interested in this space?</h3>
               <div className="grid grid-cols-2 gap-3 mb-6 text-sm text-gray-700">
                 <div className="flex items-center gap-1 text-[11px]">
-                  <span className="text-orange-500"><Svg name="checkRound" className="size-5" /></span>
+                  <span className="text-[#f76900]"><Svg name="checkRound" className="size-5" /></span>
                   Zero Brokerage
                 </div>
                 <div className="flex items-center gap-1 text-[11px]">
-                  <span className="text-orange-500"><Svg name="checkRound" className="size-5" /></span>
+                  <span className="text-[#f76900]"><Svg name="checkRound" className="size-5" /></span>
                   Best Deals
                 </div>
                 <div className="flex items-center gap-1 text-[11px]">
-                  <span className="text-orange-500"><Svg name="checkRound" className="size-5" /></span>
+                  <span className="text-[#f76900]"><Svg name="checkRound" className="size-5" /></span>
                   1000+ Clients Served
                 </div>
                 <div className="flex items-center gap-1 text-[11px]">
-                  <span className="text-orange-500"><Svg name="checkRound" className="size-5" /></span>
+                  <span className="text-[#f76900]"><Svg name="checkRound" className="size-5" /></span>
                   Expert Advisors
                 </div>
               </div>

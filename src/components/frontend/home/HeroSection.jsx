@@ -41,7 +41,7 @@ const HeroSection = () => {
   }, [texts.length]);
 
   return (
-    <section className="relative w-full h-[calc(100dvh-82px)] mt-[82px] overflow-hidden">
+    <section className="relative w-full h-[calc(100dvh-82px)] lg:mt-[82px] md:mt-[62px] mt-[68px] overflow-hidden">
       {images.map((img, idx) => (
         <div
           key={idx}
@@ -60,7 +60,7 @@ const HeroSection = () => {
       ))}
 
       <div className="absolute inset-0 bg-black/40 flex flex-col justify-center text-white">
-        <div className="max-w-6xl xl:px-[6px] lg:px-10 md:px-6 px-4 mx-auto w-full">
+        <div className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-4 mx-auto w-full">
           <div className="mb-10 md:text-start text-center">
             <h1 className="text-4xl md:text-[56px] font-bold transition-all duration-700 ease-in-out mb-2">
               Discover Amazing{" "}
@@ -76,8 +76,8 @@ const HeroSection = () => {
           <div className="flex md:flex-row flex-col md:bg-transparent bg-white md:p-0 p-4 rounded-[15px] items-center gap-y-5 gap-x-3 mt-6">
             <div className=" flex gap-y-5 md:flex-row flex-col bg-white md:rounded-[15px] overflow-hidden w-full max-w-xl">
               <select
-                className="flex-1 px-4 py-3 text-black md:border-l md:border-[#d5d5d5] border md:rounded-none rounded-[15px]  border-black outline-none bg-white"
-                defaultValue=""
+                className="flex-1 px-4 py-3 text-black md:border-l md:border-[#d5d5d5] border md:rounded-none rounded-[15px]  border-black outline-none bg-white appearance-none"
+                
               >
                 <option value="" disabled>
                   What are you looking for?
@@ -92,8 +92,8 @@ const HeroSection = () => {
               </select>
 
               <select
-                className="flex-1 px-4 py-3 text-black border rounded-[15px] md:border-transparent border-black outline-none bg-white"
-                defaultValue=""
+                className="flex-1 px-4 py-3 text-black border rounded-[15px] md:border-transparent border-black outline-none bg-white appearance-none"
+                
               >
                 <option value="" disabled>
                   Where?

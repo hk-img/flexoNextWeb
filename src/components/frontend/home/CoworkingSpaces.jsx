@@ -15,7 +15,7 @@ const CoworkingSpaces = () => {
   ]
 
   return (
-    <div className="max-w-6xl xl:px-1 lg:px-10 md:px-6 px-6 mx-auto">
+    <div className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto">
       <h2 className="md:text-[32px] text-xl font-medium text-center text-[#333]">
         Explore India&apos;s Premier Network of{" "}
         <span className="text-[#f76900]">Coworking Spaces</span>

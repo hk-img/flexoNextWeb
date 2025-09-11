@@ -108,31 +108,132 @@ const Detail = () => {
               </div>
             </div>
             <div>
-          <div className="border-t border-b border-gray-200">
-            <div className="flex justify-between max-w-4xl mx-auto px-4">
-              <button className="py-4 text-sm font-medium text-gray-600 hover:text-orange-500 transition">
-                About the Space
-              </button>
-              <button className="py-4 text-sm font-medium text-gray-600 hover:text-orange-500 transition">
-                Pricing
-              </button>
-              <button className="py-4 text-sm font-medium text-orange-600 border-b-2 border-orange-500">
-                Location
-              </button>
-              <button className="py-4 text-sm font-medium text-gray-600 hover:text-orange-500 transition">
-                Business Hours
-              </button>
-              <button className="py-4 text-sm font-medium text-gray-600 hover:text-orange-500 transition">
-                Reviews
-              </button>
+            <div className="border-t border-b border-gray-200">
+              <div className="flex justify-between max-w-4xl mx-auto px-4">
+                <a href="#about" className="py-4 text-sm font-medium text-gray-600 hover:text-orange-500 transition">
+                  About the Space
+                </a>
+                <a href="#pricing" className="py-4 text-sm font-medium text-gray-600 hover:text-orange-500 transition">
+                  Pricing
+                </a>
+                <a href="#location" className="py-4 text-sm font-medium text-orange-600 border-b-2 border-orange-500">
+                  Location
+                </a>
+                <a href="#hours" className="py-4 text-sm font-medium text-gray-600 hover:text-orange-500 transition">
+                  Business Hours
+                </a>
+                <a href="#reviews" className="py-4 text-sm font-medium text-gray-600 hover:text-orange-500 transition">
+                  Reviews
+                </a>
+              </div>
+              <div>
+                <div id="about" className="py-6 bprder-b border-[#dbdbdb]">
+                  <div>
+                    <h2 className="text-xl font-medium text-[#141414] mb-2">About the Space</h2>
+                    <p className='text-[#777] text-base leading-[1.8]'>Here's an elegant coworking space in the plush suburbs of Goregaon East. The workspace stands gracefully among elite residential buildings allowing 100+ people to sit, walk, network, chat, close deals, discuss business, interview, relax, and sip on a warm coffee. The private offices, shared desks, dedicated desks, conference halls, event spaces, and full-floor workstations make it a comprehensive workspace solution. This coworking space in Goregaon East is cleaned daily to ensure you have a safe and hygienic work environment.</p>
+                  </div>
+                  <div className='pt-12'>
+                    <h2 className="text-xl font-medium text-[#141414] mb-6">Amenities</h2>
+                    <div className="grid md:grid-cols-3 grid-cols-2 space-y-5">
+                      <div className='flex items-center gap-3'>
+                        <div>
+                          <Svg name="clock" className="size-3.5 text-[#f76900]" />
+                        </div>
+                        <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
+                      </div>
+                      <div className='flex items-center gap-3'>
+                        <div>
+                          <Svg name="clock" className="size-3.5 text-[#f76900]" />
+                        </div>
+                        <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
+                      </div>
+                      <div className='flex items-center gap-3'>
+                        <div>
+                          <Svg name="clock" className="size-3.5 text-[#f76900]" />
+                        </div>
+                        <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
+                      </div>
+                      <div className='flex items-center gap-3'>
+                        <div>
+                          <Svg name="clock" className="size-3.5 text-[#f76900]" />
+                        </div>
+                        <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
+                      </div>
+                      <div className='flex items-center gap-3'>
+                        <div>
+                          <Svg name="clock" className="size-3.5 text-[#f76900]" />
+                        </div>
+                        <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
+                      </div>
+                      <div className='flex items-center gap-3'>
+                        <div>
+                          <Svg name="clock" className="size-3.5 text-[#f76900]" />
+                        </div>
+                        <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
+                      </div>
+                      <div className='flex items-center gap-3'>
+                        <div>
+                          <Svg name="clock" className="size-3.5 text-[#f76900]" />
+                        </div>
+                        <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
+                      </div>
+                      <div className='flex items-center gap-3'>
+                        <div>
+                          <Svg name="clock" className="size-3.5 text-[#f76900]" />
+                        </div>
+                        <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
+                      </div>
+                      <div className='flex items-center gap-3'>
+                        <div>
+                          <Svg name="clock" className="size-3.5 text-[#f76900]" />
+                        </div>
+                        <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
+                      </div>
+                      <div className='flex items-center gap-3'>
+                        <div>
+                          <Svg name="clock" className="size-3.5 text-[#f76900]" />
+                        </div>
+                        <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
+                      </div>
+                      <div className='flex items-center gap-3'>
+                        <div>
+                          <Svg name="clock" className="size-3.5 text-[#f76900]" />
+                        </div>
+                        <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
+                      </div>
+                      <div className='flex items-center gap-3'>
+                        <div>
+                          <Svg name="clock" className="size-3.5 text-[#f76900]" />
+                        </div>
+                        <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
+                      </div>
+                      <div className='flex items-center gap-3'>
+                        <div>
+                          <Svg name="clock" className="size-3.5 text-[#f76900]" />
+                        </div>
+                        <h3 className='text-[#141414] text-[15px] font-medium'>24x7 Access</h3>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <div id="pricing" className="py-6">
+                  <h2 className="text-2xl font-medium text-[#141414] mb-2">Location</h2>
+                </div>
+                <div id="location" className="py-6">
+                  <h2 className="text-2xl font-medium text-[#141414] mb-2">Location</h2>
+                </div>
+                <div id="hours" className="py-6">
+                  <h2 className="text-2xl font-medium text-[#141414] mb-2">Location</h2>
+                </div>
+                <div id="reviews" className="py-6">
+                  <h2 className="text-2xl font-medium text-[#141414] mb-2">Location</h2>
+                </div>
+              </div>
             </div>
           </div>
-
         </div>
-          </div>
-        </div>
-
-        
+      </div>
       </section>
     </>
   )

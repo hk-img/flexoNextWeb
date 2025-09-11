@@ -30,7 +30,7 @@ export default function EmblaCarousel({ children, options }) {
     <section className="relative">
       {/* Carousel */}
       <div className="overflow-hidden" ref={emblaRef}>
-        <div className="flex gap-1 ps-1">{children}</div>
+        <div className="flex">{children}</div>
       </div>
 
       {/* Buttons */}

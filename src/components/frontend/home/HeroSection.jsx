@@ -83,12 +83,9 @@ const HeroSection = () => {
                   What are you looking for?
                 </option>
                 <option value="coworking">Coworking Spaces</option>
-                <option value="desk">Desk Rooms</option>
-                <option value="managed">Managed Offices</option>
-                <option value="meeting">Meeting Rooms</option>
-                <option value="cabins">Private Cabins</option>
                 <option value="offices">Private Offices</option>
-                <option value="workspaces">Workspaces</option>
+                <option value="desk">Classroom</option>
+                <option value="managed">Managed Offices</option>
               </select>
 
               <select

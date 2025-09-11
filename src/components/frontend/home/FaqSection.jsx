@@ -3,12 +3,16 @@ import Svg from "@/components/svg";
 import React, { useState } from "react";
 
 const faqs = [
-  { question: "What is Flexo?", answer: "Flexo is a platform that provides office space solutions... Flexo is a platform that provides office space solutions... Flexo is a platform that provides office space solutions... Flexo is a platform that provides office space solutions... Flexo is a platform that provides office space solutions... Flexo is a platform that provides office space solutions..." },
-  { question: "How does Flexo help me find office spaces?", answer: "We help by offering tailored suggestions..." },
-  { question: "Does Flexo have coworking spaces of its own?", answer: "No, Flexo partners with trusted providers..." },
-  { question: "What types of spaces are listed on Flexo?", answer: "Coworking, managed offices, enterprise spaces..." },
-  { question: "How does Flexo ensure the quality of its listed spaces?", answer: "We do quality checks before listing..." },
-  { question: "Does Flexo manage spaces directly?", answer: "No, we connect businesses with workspace providers..." },
+    { question: "What is Flexo?", answer: "Flexo is a leading proptech marketplace and commercial real estate advisor specializing in offices, coworking spaces, managed offices and flexible spaces across India. We also offer multi-city office solutions and empower companies to implement hybrid and hub-and-spoke real estate strategies effectively." },
+    { question: "How does Flexo help me find office spaces?", answer: "Flexo offers a curated selection of coworking spaces, managed offices, and long-term lease options. Our team provides expert guidance to find the perfect fit for your needs." },
+    { question: "Does Flexo have coworking spaces of its own?", answer: "Currently, Flexo does not operate coworking spaces. Flexo is an aggregator platform that connects you with trusted coworking operators offering a diverse range of workspaces tailored to your needs." },
+    { question: "What types of spaces are listed on Flexo?", answer: "Flexo features offices, coworking spaces, meeting rooms, virtual offices, podcast studios, photo studios, production venues, and more." },
+    { question: "How does Flexo ensure the quality of its listed spaces?", answer: "Flexo verifies the listed spaces and partners with trusted operators to provide high-quality, professional environments for your needs. Additionally, users can leave reviews for spaces based on their experiences." },
+    { question: "Does Flexo manage spaces directly?", answer: "Currently, Flexo collaborates with trusted operators who manage long-term office spaces, such as managed offices and coworking spaces. Short-term spaces like podcast studios and photo studios are listed by verified hosts, ensuring access to high-quality, well-maintained spaces." },
+    { question: " Can Flexo help me customize my office space? ", answer: "Yes, Flexo specializes in finding fully furnished and customizable office spaces that align with your team's requirements. We can also assist with fit-outs through our qualified design and build partners to create a workspace tailored to your needs." },
+    { question: " How do I list my space on Flexo? ", answer: "Listing your space is easy! Visit our 'List Your Space' page, fill out the required details and submit your space. Your space will go live after our team reviews and approves your listing." },
+    { question: " What makes Flexo different from other platforms? ", answer: "Flexo stands out by offering tailored solutions, expert guidance, and a diverse selection of office spaces, coworking spaces, and flexible short-term spaces. Our deep expertise in the commercial real estate market ensures a seamless and personalized experience for every client." },
+    { question: " How do I contact Flexo for assistance? ", answer: "You can reach out to us via email at hello@flexospaces.com. Our team is here to help with all your inquiries." },
 ];
 
 const FaqSection = () => {

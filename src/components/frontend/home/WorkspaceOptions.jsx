@@ -9,29 +9,31 @@ const coworkingSpaces = [
     teamSize: "3 to 50",
   },
   {
-    title: "Dedicated Desks",
-    img: "/images/Desk-spaces (1).webp",
-    teamSize: "5 to 50",
+    title: "private Offices",
+    img: "/images/private-offices.webp",
+    teamSize: "15 to 500",
   },
   {
-    title: "Hot Desks",
-    img: "/images/managed-offices (1).webp",
-    teamSize: "1 to 10",
+    title: "Managed Offices",
+    img: "/images/managed-offices.webp",
+    teamSize: "25 to 1000+",
   },
+  {
+    title: "Desks Space",
+    img: "/images/Desk-spaces.webp",
+    teamSize: "1 to 50",
+  },
+ 
   {
     title: "Meeting Rooms",
-    img: "/images/private-cabins (1).webp",
+    img: "/images/private-cabins.webp",
     teamSize: "2 to 20",
   },
-  {
-    title: "Event Spaces",
-    img: "/images/private-offices (1).webp",
-    teamSize: "20 to 200",
-  },
+ 
    {
     title: "Built to Suit",
     img: "/images/built-to-suit.webp",
-    teamSize: "20 to 200",
+    teamSize: "25 to 1000+",
   },
 ];
 
@@ -60,8 +62,9 @@ const WorkspaceOptions = () => {
                   <Image
                   width={405}
                   height={400}
-                    src={space.img}
-                    alt={space.title}
+                  src={space.img}
+                  alt={space.title}
+                  title={space.title}
                     className="w-full h-[400px] object-cover"
                   />
 

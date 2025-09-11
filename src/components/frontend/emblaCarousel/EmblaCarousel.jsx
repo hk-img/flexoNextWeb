@@ -5,6 +5,7 @@ import useEmblaCarousel from "embla-carousel-react"
 import Autoplay from "embla-carousel-autoplay"
 import { usePrevNextButtons, PrevButton, NextButton } from "./EmblaCarouselArrowButtons"
 import AutoScroll from "embla-carousel-auto-scroll"
+import { useDotButton, DotButton } from "./EmblaCarouselDotButton"
 
 export default function EmblaCarousel({ children, options }) {
   const plugins = []
@@ -26,6 +27,8 @@ export default function EmblaCarousel({ children, options }) {
   const { prevBtnDisabled, nextBtnDisabled, onPrevButtonClick, onNextButtonClick } =
     usePrevNextButtons(emblaApi)
 
+  const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(emblaApi)
+
   return (
     <section className="relative">
       {/* Carousel */}
@@ -38,6 +41,20 @@ export default function EmblaCarousel({ children, options }) {
         <div className="absolute top-1/2 -left-5 -right-5 flex justify-between -translate-y-1/2">
           <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
           <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
+        </div>
+      )}
+
+      {options?.showDots && (
+        <div className="flex justify-center mt-4 gap-2">
+          {scrollSnaps.map((_, index) => (
+            <DotButton
+              key={index}
+              onClick={() => onDotButtonClick(index)}
+              className={`h-3 w-3 rounded-full ${
+                index === selectedIndex ? "bg-orange-500" : "bg-gray-300"
+              }`}
+            />
+          ))}
         </div>
       )}
     </section>

@@ -4,9 +4,9 @@ import Svg from '@/components/svg'
 import Image from 'next/image';
 const coworkingSpaces = [
   {
-    title: "Private Offices",
-    img: "/images/private-cabins (1).webp",
-    teamSize: "15 to 500",
+    title: "Private Cabins",
+    img: "/images/workspaceOption-1.webp",
+    teamSize: "3 to 50",
   },
   {
     title: "Dedicated Desks",

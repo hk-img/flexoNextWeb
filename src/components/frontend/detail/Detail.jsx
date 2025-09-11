@@ -108,26 +108,25 @@ const Detail = () => {
               </div>
             </div>
             <div>
-          <div className="border-t border-b border-gray-200">
-            <div className="flex justify-between max-w-4xl mx-auto px-4">
-              <button className="py-4 text-sm font-medium text-gray-600 hover:text-orange-500 transition">
-                About the Space
-              </button>
-              <button className="py-4 text-sm font-medium text-gray-600 hover:text-orange-500 transition">
-                Pricing
-              </button>
-              <button className="py-4 text-sm font-medium text-orange-600 border-b-2 border-orange-500">
-                Location
-              </button>
-              <button className="py-4 text-sm font-medium text-gray-600 hover:text-orange-500 transition">
-                Business Hours
-              </button>
-              <button className="py-4 text-sm font-medium text-gray-600 hover:text-orange-500 transition">
-                Reviews
-              </button>
+            <div className="border-t border-b border-gray-200">
+              <div className="flex justify-between max-w-4xl mx-auto px-4">
+                <button className="py-4 text-sm font-medium text-gray-600 hover:text-orange-500 transition">
+                  About the Space
+                </button>
+                <button className="py-4 text-sm font-medium text-gray-600 hover:text-orange-500 transition">
+                  Pricing
+                </button>
+                <button className="py-4 text-sm font-medium text-orange-600 border-b-2 border-orange-500">
+                  Location
+                </button>
+                <button className="py-4 text-sm font-medium text-gray-600 hover:text-orange-500 transition">
+                  Business Hours
+                </button>
+                <button className="py-4 text-sm font-medium text-gray-600 hover:text-orange-500 transition">
+                  Reviews
+                </button>
+              </div>
             </div>
-          </div>
-
         </div>
           </div>
         </div>

@@ -33,3 +33,24 @@
 .animate-fadeSlide {
   animation: fadeSlide 2s ease-in-out;
 }
+.scrollmenu {
+    scrollbar-width: 120px;
+    -ms-overflow-style: none; 
+}
+
+.scrollmenu::-webkit-scrollbar {
+    height: 14px; 
+}
+
+.scrollmenu::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.scrollmenu::-webkit-scrollbar-thumb {
+    background: #c5c4c4;
+    border-radius: 0px
+}
+
+.scrollmenu::-webkit-scrollbar-button {
+    display: none;
+}

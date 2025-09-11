@@ -14,7 +14,7 @@ const brandLogos = [
   "/images/Tablespace-New-Logo.webp",
   "/images/IncuspazeLogo.webp",
   "/images/CoWrksLogo2022.webp",
-   "/images/brand-logo-5.webp",
+  "/images/brand-logo-5.webp",
 ];
 
 const CoworkingBrands = () => {

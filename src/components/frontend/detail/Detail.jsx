@@ -1,8 +1,34 @@
+'use client'
 import Svg from '@/components/svg'
 import Image from 'next/image'
 import React from 'react'
+import { useEffect, useState } from "react";
 
 const Detail = () => {
+  const [isFixed, setIsFixed] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY >= 700) {
+        setIsFixed(true);
+      } else {
+        setIsFixed(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  const [activeTab, setActiveTab] = useState(1);
+
+  const scrollToSection = (id, tab) => {
+    setActiveTab(tab);
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({  block: "start" });
+    }
+  };
+
   return (
     <>
       <section className="relative w-full mt-[82px] ">
@@ -15,23 +41,23 @@ const Detail = () => {
               <div className="grid md:grid-cols-2 grid-cols-4 gap-[2px]">
                 <div>
                   <a href="#">
-                  <img src="/images/detail-1.webp" alt="" />
+                    <img src="/images/detail-1.webp" alt="" />
                   </a>
                 </div>
                 <div>
                   <a href="#">
                     <img src="/images/detail-2.webp" alt="" />
                   </a>
-                  
+
                 </div>
                 <div>
                   <a href="#">
-                  <img src="/images/detail-3.webp" alt="" />
+                    <img src="/images/detail-3.webp" alt="" />
                   </a>
                 </div>
                 <div>
                   <a href="#">
-                  <img src="/images/detail-4.webp" alt="" />
+                    <img src="/images/detail-4.webp" alt="" />
                   </a>
                 </div>
               </div>
@@ -42,11 +68,11 @@ const Detail = () => {
           <div className='absolute top-7 right-6  flex items-center justify-center gap-3'>
             <div className='bg-white w-[34px] h-[34px] flex items-center justify-center rounded-full'>
               <a href="#">
-              <Svg
+                <Svg
                   name="heartTransparent"
                   className="size-[18px] text-black"
                 />
-                </a>
+              </a>
             </div>
             <div className="relative group">
               <div className="bg-white w-[34px] h-[34px] flex items-center justify-center rounded-full cursor-pointer shadow">
@@ -76,12 +102,12 @@ const Detail = () => {
       <section className="max-w-6xl xl:px-1 lg:px-10 md:px-6 px-4 mx-auto py-6">
         <div className='flex flex-wrap'>
           <div className='md:w-2/3'>
-             <ol className="text-sm  mb-1 flex items-center gap-2">
+            <ol className="text-sm  mb-1 flex items-center gap-2">
               <li className='text-[#141414] hover:text-[#777]'><a href="#">Coworking Space In Mumbai </a></li>
-                <li><Svg name="rightArrow" className="size-2 text-gray-500" /></li>
+              <li><Svg name="rightArrow" className="size-2 text-gray-500" /></li>
               <li className='text-[#141414] hover:text-[#777]'><a href="#" >Goregaon </a></li>
             </ol>
-            <div className="">  
+            <div className="">
               <h1 className="text-lg font-medium text-[#141414] mb-5">WeWork Goregaon</h1>
               <div className="flex gap-1 items-center text-[#141414] text-sm mb-5">
                 <Svg name="location2" className="size-5 text-[#f76900]" />
@@ -95,7 +121,7 @@ const Detail = () => {
                   </div>
                   <div className="flex gap-2 items-center">
                     <Svg name="scaleRuler" className="size-3.5 text-[#646464]" />
-                  <span> sqft</span>
+                    <span> sqft</span>
                   </div>
                 </div>
                 <div className="flex items-center space-x-1 border border-[#ddd] rounded-full w-fit px-4 py-2">
@@ -117,22 +143,70 @@ const Detail = () => {
           <div className='md:w-2/3 w-full md:order-1 order-2'>
             <div>
               <div className="">
-                <div className=" justify-between max-w-4xl mx-auto px-4 border-t border-b border-gray-200 md:flex hidden">
-                  <a href="#about" className="py-4 text-sm font-medium  transition">
+                <div
+                  className={`${isFixed
+                      ? "fixed shadow-md top-0 z-40 w-full left-0 right-0 px-10"
+                      : "relative"
+                    } justify-between px-4 border-t border-b bg-white border-gray-200 md:flex hidden`}
+                >
+                    <button
+                    onClick={() => scrollToSection("about", 1)}
+                    className={`py-4 relative text-sm font-medium transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${activeTab === 1 ? "text-[#f76900] border-b border-[#f76900]" : "text-[#777]"
+                      }`}
+                  >
                     About the Space
-                  </a>
-                  <a href="#pricing" className="py-4 text-sm font-medium  transition">
+                  </button>
+
+
+                  <button
+                    onClick={() => scrollToSection("pricing", 2)}
+                    className={`py-4 relative text-sm font-medium transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 
+    after:bg-[#f76900] after:transition-all after:duration-500 
+    hover:after:w-full ${activeTab === 2
+                        ? "text-[#f76900] border-b border-[#f76900]"
+                        : "text-[#777]"
+                      }`}
+                  >
                     Pricing
-                  </a>
-                  <a href="#location" className="py-4 text-sm font-medium">
+                  </button>
+
+
+                  <button
+                    onClick={() => scrollToSection("location", 3)}
+                    className={`py-4 relative text-sm font-medium transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 
+    after:bg-[#f76900] after:transition-all after:duration-500 
+    hover:after:w-full ${activeTab === 3
+                        ? "text-[#f76900] border-b border-[#f76900]"
+                        : "text-[#777]"
+                      }`}
+                  >
                     Location
-                  </a>
-                  <a href="#hours" className="py-4 text-sm font-medium  transition">
+                  </button>
+
+
+                  <button
+                    onClick={() => scrollToSection("hours", 5)}
+                    className={`py-4 relative text-sm font-medium transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 
+    after:bg-[#f76900] after:transition-all after:duration-500 
+    hover:after:w-full ${activeTab === 5
+                        ? "text-[#f76900] border-b border-[#f76900]"
+                        : "text-[#777]"
+                      }`}
+                  >
                     Business Hours
-                  </a>
-                  <a href="#reviews" className="py-4 text-sm font-medium  transition">
+                  </button>
+
+                  <button
+                    onClick={() => scrollToSection("reviews", 4)}
+                    className={`py-4 relative text-sm font-medium transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 
+    after:bg-[#f76900] after:transition-all after:duration-500 
+    hover:after:w-full ${activeTab === 4
+                        ? "text-[#f76900] border-b border-[#f76900]"
+                        : "text-[#777]"
+                      }`}
+                  >
                     Reviews
-                  </a>
+                  </button>
                 </div>
                 <div>
                   <div id="about" className="md:pt-10 pt-5 md:pb-14 pb-7  border-b border-[#dbdbdb]">
@@ -233,7 +307,7 @@ const Detail = () => {
                           <div>
                             <h3 className="text-lg font-medium text-[#010101]">Private Office</h3>
                             <p className="text-sm text-[#777]">Private space for you and your team</p>
-                            
+
                           </div>
                           <div className="">
                             <span className="block text-[15px] font-light">from</span>
@@ -256,7 +330,7 @@ const Detail = () => {
                           <div>
                             <h3 className="text-lg font-medium text-[#010101]">Private Office</h3>
                             <p className="text-sm text-[#777]">Private space for you and your team</p>
-                            
+
                           </div>
                           <div className="">
                             <span className="block text-[15px] font-light">from</span>
@@ -312,7 +386,7 @@ const Detail = () => {
                           <div className="flex items-center border border-[#f76900] rounded-full px-5 py-3 text-[#646464]">
                             <span className="mr-3">
                               <Image width={25} height={25} className='w-[25px] h-[25px]' src="/images/clock-24-7.webp" alt="" />
-                              </span> This space is operational 24x7
+                            </span> This space is operational 24x7
                           </div>
                         </div>
 
@@ -354,7 +428,7 @@ const Detail = () => {
                       <h2 className="text-xl font-medium text-[#141414] mb-2">Reviews & Ratings <span>(1)</span> </h2>
                       <div>
                         <button className="bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white px-4 py-2.5 rounded-[15px] font-semibold duration-500 transition flex items-center gap-2 uppercase tracking-[1px]">
-                          <Svg name="pencil" className="size-5" />  
+                          <Svg name="pencil" className="size-5" />
                           <span>Leave a Review</span>
                         </button>
                       </div>
@@ -366,11 +440,11 @@ const Detail = () => {
                       <div className="space-y-6 pt-5 md:pt-8 ">
                         <div className="flex items-center gap-2">
                           <div className="flex items-center gap-1 text-[#f76900]">
-                            <Svg name="star" className="size-4" /> 
-                            <Svg name="star" className="size-4" /> 
-                            <Svg name="star" className="size-4" /> 
-                            <Svg name="star" className="size-4" /> 
-                            <Svg name="emptyStar" className="size-4" /> 
+                            <Svg name="star" className="size-4" />
+                            <Svg name="star" className="size-4" />
+                            <Svg name="star" className="size-4" />
+                            <Svg name="star" className="size-4" />
+                            <Svg name="emptyStar" className="size-4" />
 
                           </div>
                           <div className="border border-[#f76900] text-[#777] text-sm px-3 py-0.5 rounded-full">
@@ -388,23 +462,23 @@ const Detail = () => {
                               <h3 className="font-medium text-[#141414]">Hitesh</h3>
                               <div className='flex items-center gap-10'>
                                 <div className="flex text-[#f76900] gap-1 text-sm">
-                                  <Svg name="star" className="size-5" /> 
-                                  <Svg name="star" className="size-5" /> 
-                                  <Svg name="star" className="size-5" /> 
-                                  <Svg name="star" className="size-5" /> 
-                                  <Svg name="emptyStar" className="size-5" /> 
+                                  <Svg name="star" className="size-5" />
+                                  <Svg name="star" className="size-5" />
+                                  <Svg name="star" className="size-5" />
+                                  <Svg name="star" className="size-5" />
+                                  <Svg name="emptyStar" className="size-5" />
                                 </div>
                                 <p className="mt-1 text-base font-medium text-black flex items-center gap-1">
-                                  <Svg name="checkTic" className="size-3 text-[#7f7f7f]" /> 
-                                    Yes I would book again
+                                  <Svg name="checkTic" className="size-3 text-[#7f7f7f]" />
+                                  Yes I would book again
                                 </p>
-                              </div>  
+                              </div>
                             </div>
 
                             <p className="text-[#777] text-sm">test review</p>
                             <p className="text-[#777] text-xs">September 11, 2025</p>
 
-                           
+
                           </div>
                         </div>
                       </div>
@@ -418,7 +492,7 @@ const Detail = () => {
           <div className='md:w-1/3 w-full pl-7 max-md:pl-0 md:order-2 order-1'>
             <div className="w-full border border-[#dbdbdb] p-6 rounded-sm md:sticky md:top-[90px]  bg-white">
               <h3 className="text-xl font-medium text-center mb-5">Interested in this space?</h3>
-              <div className="grid grid-cols-2 gap-3 mb-6 text-sm text-gray-700">
+              <div className="grid grid-cols-2 gap-3 mb-6 text-sm text-[#777]">
                 <div className="flex items-center gap-1 text-[11px]">
                   <span className="text-[#f76900]"><Svg name="checkRound" className="size-5" /></span>
                   Zero Brokerage
@@ -440,7 +514,7 @@ const Detail = () => {
               <div className="space-y-3 mb-6">
                 <button className="w-full bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white py-4 rounded-[15px] font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px]">Get Quote </button>
                 <button className="w-full border uppercase tracking-[1px] border-[#000e54] text-[#000e54] text-sm font-semibold py-4 rounded-[15px]">
-                   Schedule a visit
+                  Schedule a visit
                 </button>
               </div>
               <div className='text-center space-y-1'>

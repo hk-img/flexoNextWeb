@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <footer className="bg-[#f5f6f7] ">
       <div className="max-w-6xl xl:px-[6px] lg:px-10 md:px-6 px-4 mx-auto py-10">
-        <div className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-3 gap-8 ">
+        <div className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-3 md:gap-2 gap-8 ">
           <ul className="space-y-[10px] md:px-[15px]">
             <li className="relative before:content-[''] w-fit before:absolute before:left-0 before:top-full  before:h-[1px] before:w-0 before:bg-[#555] before:opacity-0 before:transition-all before:duration-400  hover:before:w-full hover:before:opacity-100 text-[#555] ">
               <a href="#" className="block md:text-[15px] text-sm">Enterprise Solutions</a>

@@ -40,7 +40,7 @@ const page = () => {
       <section className="w-full relative lg:py-16 bg-white">
         <div className="max-w-full xl:px-4 lg:px-4 md:px-3 px-4 mx-auto py-8">
           <div className="group/mainBox w-full flex flex-col lg:flex-row gap-6 items-start">
-            <div className="lg:w-3/5 w-full grow flex flex-col justify-center">
+            <div className="lg:w-3/5 w-full grow flex flex-col justify-center lg:mt-6 mt-4">
               <div className='form-group filter-group'>
                 <h1 className="text-xl flex flex-wrap font-bold text-[#141414] mb-4">
                   Coworking Space in Bkc, Mumbai
@@ -199,7 +199,7 @@ const page = () => {
                         <ul className='flex'>
                           <li className='text-[13px] !leading-8 font-normal list-style-none'>
                             <a href='' className='flex items-center cursor-pointer font-medium text-[#777777] text-sm'>
-                               <Svg name="pencil" className="text-[#777777] size-[15px] me-1" />
+                              <Svg name="pencil" className="text-[#777777] size-[15px] me-1" />
                               Location
                             </a>
                           </li>
@@ -251,15 +251,15 @@ const page = () => {
                 </div>
 
               </div>
-              <div className="spaces mt-6 flex flex-row flex-wrap -mx-2">
+              <div className="spaces mt-6 flex flex-row flex-wrap -mx-4">
 
-                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
+                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-4">
                   <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
                         <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
                           {cities.map((city, index) => (
                             <div
                               key={index}
-                              className="embla__slide shrink-0 basis-full"
+                              className="embla__slide relative shrink-0 basis-full"
                             >
                               <Image
                                 src={city.image}
@@ -270,7 +270,15 @@ const page = () => {
                                 loading="lazy"
                                 className="w-full aspect-[399/320] object-cover rounded-t-md"
                               />
+                              {/* <div className="shortlistIcon absolute top-[3px] z-30 right-[2px] flex p-3">
+                                <div className="shareBtn me-2">
+                                  <a href="" className="rounded-full text-base bg-[#ece8e8] w-[34px] h-[34px] cursor-pointer">
+                                    <Svg name="heart" className="size-[18px] text-[#808080]" />
+                                  </a>
+                                </div>
+                              </div> */}
                             </div>
+                            
                           ))}
                         </EmblaCarousel>
                         
@@ -319,16 +327,16 @@ const page = () => {
 
                         <div className="mt-2 w-full flex items-start">
                             <div class="text-sm text-[#141414] !leading-[21px] text-start">
-                              <input type="checkbox" id="toggle" class="peer hidden"/>
+                              <input type="checkbox" id="toggle" className="peer hidden"/>
                               <div
-                                class="overflow-hidden max-h-[40px] transition-all duration-500 ease-in-out peer-checked:max-h-[1000px]"
+                                className="overflow-hidden max-h-[40px] transition-all duration-500 ease-in-out peer-checked:max-h-[1000px]"
                               >
                                 One of the most premium coworking spaces in Mumbai, this is the ideal platform for high-growth start-ups, corporates, multinationals and financial services companies that want the best for their teams. Located in the highly energetic location of Bandra Kurla Complex (BKC), this coworking space in BKC has solutions for all your needs. It has improved HVAC standards to keep the air circulation healthy. The facility has a spacious parking lot as well as a bike storage.
                               </div>
 
                               <label
-                                for="toggle"
-                                class="mt-1 block text-[12px] tracking-[1px] font-semibold text-[#777777] cursor-pointer peer-checked:after:content-['See_less'] after:content-['See_more']"
+                                htmlFor="toggle"
+                                className="mt-1 block text-[12px] tracking-[1px] font-semibold text-[#777777] cursor-pointer peer-checked:after:content-['See_less'] after:content-['See_more']"
                               ></label>
                             </div>
 
@@ -339,10 +347,10 @@ const page = () => {
                           </div>
 
                         </div>
-                      </div>
+                  </div>
                 </div>
 
-                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
+                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-4">
                   <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
                         <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
                           {cities.map((city, index) => (
@@ -431,7 +439,7 @@ const page = () => {
                       </div>
                 </div>
                 
-                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
+                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-4">
                   <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
                         <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
                           {cities.map((city, index) => (
@@ -520,7 +528,7 @@ const page = () => {
                       </div>
                 </div>
 
-                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
+                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-4">
                   <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
                         <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
                           {cities.map((city, index) => (
@@ -609,7 +617,7 @@ const page = () => {
                       </div>
                 </div>
 
-                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
+                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-4">
                   <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
                         <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
                           {cities.map((city, index) => (
@@ -698,7 +706,7 @@ const page = () => {
                       </div>
                 </div>
                 
-                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
+                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-4">
                   <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
                         <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
                           {cities.map((city, index) => (
@@ -789,9 +797,9 @@ const page = () => {
 
               </div>
                 <TrustedCompanies/>
-              <div className="spaces flex flex-row flex-wrap -mx-2">
+              <div className="spaces flex flex-row flex-wrap -mx-4">
 
-                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
+                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-4">
                   <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
                         <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
                           {cities.map((city, index) => (
@@ -880,7 +888,7 @@ const page = () => {
                       </div>
                 </div>
 
-                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
+                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-4">
                   <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
                         <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
                           {cities.map((city, index) => (
@@ -969,7 +977,7 @@ const page = () => {
                       </div>
                 </div>
                 
-                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
+                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-4">
                   <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
                         <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
                           {cities.map((city, index) => (
@@ -1058,7 +1066,7 @@ const page = () => {
                       </div>
                 </div>
 
-                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
+                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-4">
                   <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
                         <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
                           {cities.map((city, index) => (
@@ -1147,7 +1155,7 @@ const page = () => {
                       </div>
                 </div>
 
-                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
+                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-4">
                   <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
                         <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
                           {cities.map((city, index) => (
@@ -1230,190 +1238,12 @@ const page = () => {
                         <div className="offerBtn flex items-end justify-end">
                           <button className="w-fit bg-[#f76900] text-[12px] border border-[#f76900]  text-white py-1.5 px-3 rounded-sm font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">Get Offer </button>
                         </div>
-
-                        </div>
-                      </div>
-                </div>
-                
-                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
-                  <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
-                        <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
-                          {cities.map((city, index) => (
-                            <div
-                              key={index}
-                              className="embla__slide shrink-0 basis-full"
-                            >
-                              <Image
-                                src={city.image}
-                                alt={city.name}
-                                title={city.name}
-                                width={399}
-                                height={320}
-                                loading="lazy"
-                                className="w-full aspect-[399/320] object-cover rounded-t-md"
-                              />
-                            </div>
-                          ))}
-                        </EmblaCarousel>
-                        
-                      <div className="pt-2 px-6 pb-4 flex flex-col flex-grow">
-                        <div className="flex flex-col justify-between items-start md:mb-2 mb-1">
-                          <h3 className="text-lg cursor-pointer font-medium text-[#141414] text-ellipsis line-clamp-1">
-                            WeWork BKC A Reputed Business Address in Mumbai 
-                          </h3>
-                          <span className="text-[15px] text-[#141414] bg-transparent flex items-center text-start font-normal -ms-[3px]">
-                            <Svg name="location2" className="text-[#f76900] size-[15px] me-1" />
-                            BKC, Mumbai
-                          </span>
-                        </div>
-                        <div className="flex items-center space-x-2 text-sm text-[#777777] mb-1 font-light">
-                          <div className="flex gap-1 items-center">
-                            <Svg name="user2" className="size-[12px] text-[#f76900]" />
-                            <span>people</span>
-                          </div>
-                          <div className="flex gap-1 items-center">
-                            <Svg name="scaleRuler" className="size-[12px] text-[#f76900]" />
-                            <span>sqft</span>
-                          </div>
-                        </div>
-                        <div className="m-0 flex justify-between items-start">
-                          <div className="w-full flex flex-col justify-between items-start">
-                            <span className="text-sm m-0 font-normal text-[#141414]">
-                              Private Office from
-                            </span>
-                            <span className="text-sm m-0 font-normal text-[#141414]">
-                              Desks From
-                            </span>
-                          </div>
-                          <div className="w-full flex flex-col justify-end items-start">
-                            <div class="flex items-center justify-end">
-                              <Svg name="rupee" className="text-[#7f7f7f] size-[15px]" />
-                              <span class="text-sm font-semibold text-black">60000</span>
-                              <small class="ps-1 text-[11px] font-normal text-[#141414] pt-0.5">per seat/month</small>
-                            </div>
-                            <div class="flex items-center justify-end">
-                              <Svg name="rupee" className="text-[#7f7f7f] size-[15px]" />
-                              <span class="text-sm font-semibold text-black">15000</span>
-                              <small class="ps-1 text-[11px] font-normal text-[#141414] pt-0.5">per seat/month</small>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="mt-2 w-full flex items-start">
-                            <div class="text-sm text-[#141414] !leading-[21px] text-start">
-                              <input type="checkbox" id="toggle" class="peer hidden"/>
-                              <div
-                                class="overflow-hidden max-h-[40px] transition-all duration-500 ease-in-out peer-checked:max-h-[1000px]"
-                              >
-                                One of the most premium coworking spaces in Mumbai, this is the ideal platform for high-growth start-ups, corporates, multinationals and financial services companies that want the best for their teams. Located in the highly energetic location of Bandra Kurla Complex (BKC), this coworking space in BKC has solutions for all your needs. It has improved HVAC standards to keep the air circulation healthy. The facility has a spacious parking lot as well as a bike storage.
-                              </div>
-
-                              <label
-                                for="toggle"
-                                class="mt-1 block text-[12px] tracking-[1px] font-semibold text-[#777777] cursor-pointer peer-checked:after:content-['See_less'] after:content-['See_more']"
-                              ></label>
-                            </div>
-
-                        </div>
-                        <div className="offerBtn flex items-end justify-end">
-                          <button className="w-fit bg-[#f76900] text-[12px] border border-[#f76900]  text-white py-1.5 px-3 rounded-sm font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">Get Offer </button>
-
-                          </div>
 
                         </div>
                       </div>
                 </div>
                 
-                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
-                  <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
-                        <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
-                          {cities.map((city, index) => (
-                            <div
-                              key={index}
-                              className="embla__slide shrink-0 basis-full"
-                            >
-                              <Image
-                                src={city.image}
-                                alt={city.name}
-                                title={city.name}
-                                width={399}
-                                height={320}
-                                loading="lazy"
-                                className="w-full aspect-[399/320] object-cover rounded-t-md"
-                              />
-                            </div>
-                          ))}
-                        </EmblaCarousel>
-                        
-                      <div className="pt-2 px-6 pb-4 flex flex-col flex-grow">
-                        <div className="flex flex-col justify-between items-start md:mb-2 mb-1">
-                          <h3 className="text-lg cursor-pointer font-medium text-[#141414] text-ellipsis line-clamp-1">
-                            WeWork BKC A Reputed Business Address in Mumbai 
-                          </h3>
-                          <span className="text-[15px] text-[#141414] bg-transparent flex items-center text-start font-normal -ms-[3px]">
-                            <Svg name="location2" className="text-[#f76900] size-[15px] me-1" />
-                            BKC, Mumbai
-                          </span>
-                        </div>
-                        <div className="flex items-center space-x-2 text-sm text-[#777777] mb-1 font-light">
-                          <div className="flex gap-1 items-center">
-                            <Svg name="user2" className="size-[12px] text-[#f76900]" />
-                            <span>people</span>
-                          </div>
-                          <div className="flex gap-1 items-center">
-                            <Svg name="scaleRuler" className="size-[12px] text-[#f76900]" />
-                            <span>sqft</span>
-                          </div>
-                        </div>
-                        <div className="m-0 flex justify-between items-start">
-                          <div className="w-full flex flex-col justify-between items-start">
-                            <span className="text-sm m-0 font-normal text-[#141414]">
-                              Private Office from
-                            </span>
-                            <span className="text-sm m-0 font-normal text-[#141414]">
-                              Desks From
-                            </span>
-                          </div>
-                          <div className="w-full flex flex-col justify-end items-start">
-                            <div class="flex items-center justify-end">
-                              <Svg name="rupee" className="text-[#7f7f7f] size-[15px]" />
-                              <span class="text-sm font-semibold text-black">60000</span>
-                              <small class="ps-1 text-[11px] font-normal text-[#141414] pt-0.5">per seat/month</small>
-                            </div>
-                            <div class="flex items-center justify-end">
-                              <Svg name="rupee" className="text-[#7f7f7f] size-[15px]" />
-                              <span class="text-sm font-semibold text-black">15000</span>
-                              <small class="ps-1 text-[11px] font-normal text-[#141414] pt-0.5">per seat/month</small>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="mt-2 w-full flex items-start">
-                            <div class="text-sm text-[#141414] !leading-[21px] text-start">
-                              <input type="checkbox" id="toggle" class="peer hidden"/>
-                              <div
-                                class="overflow-hidden max-h-[40px] transition-all duration-500 ease-in-out peer-checked:max-h-[1000px]"
-                              >
-                                One of the most premium coworking spaces in Mumbai, this is the ideal platform for high-growth start-ups, corporates, multinationals and financial services companies that want the best for their teams. Located in the highly energetic location of Bandra Kurla Complex (BKC), this coworking space in BKC has solutions for all your needs. It has improved HVAC standards to keep the air circulation healthy. The facility has a spacious parking lot as well as a bike storage.
-                              </div>
-
-                              <label
-                                for="toggle"
-                                class="mt-1 block text-[12px] tracking-[1px] font-semibold text-[#777777] cursor-pointer peer-checked:after:content-['See_less'] after:content-['See_more']"
-                              ></label>
-                            </div>
-
-                        </div>
-                        <div className="offerBtn flex items-end justify-end">
-                          <button className="w-fit bg-[#f76900] text-[12px] border border-[#f76900]  text-white py-1.5 px-3 rounded-sm font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">Get Offer </button>
-
-                          </div>
-
-                        </div>
-                      </div>
-                </div>
-
-                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
+                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-4">
                   <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
                         <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
                           {cities.map((city, index) => (
@@ -1502,7 +1332,7 @@ const page = () => {
                       </div>
                 </div>
                 
-                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
+                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-4">
                   <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
                         <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
                           {cities.map((city, index) => (
@@ -1591,7 +1421,96 @@ const page = () => {
                       </div>
                 </div>
 
-                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
+                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-4">
+                  <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
+                        <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
+                          {cities.map((city, index) => (
+                            <div
+                              key={index}
+                              className="embla__slide shrink-0 basis-full"
+                            >
+                              <Image
+                                src={city.image}
+                                alt={city.name}
+                                title={city.name}
+                                width={399}
+                                height={320}
+                                loading="lazy"
+                                className="w-full aspect-[399/320] object-cover rounded-t-md"
+                              />
+                            </div>
+                          ))}
+                        </EmblaCarousel>
+                        
+                      <div className="pt-2 px-6 pb-4 flex flex-col flex-grow">
+                        <div className="flex flex-col justify-between items-start md:mb-2 mb-1">
+                          <h3 className="text-lg cursor-pointer font-medium text-[#141414] text-ellipsis line-clamp-1">
+                            WeWork BKC A Reputed Business Address in Mumbai 
+                          </h3>
+                          <span className="text-[15px] text-[#141414] bg-transparent flex items-center text-start font-normal -ms-[3px]">
+                            <Svg name="location2" className="text-[#f76900] size-[15px] me-1" />
+                            BKC, Mumbai
+                          </span>
+                        </div>
+                        <div className="flex items-center space-x-2 text-sm text-[#777777] mb-1 font-light">
+                          <div className="flex gap-1 items-center">
+                            <Svg name="user2" className="size-[12px] text-[#f76900]" />
+                            <span>people</span>
+                          </div>
+                          <div className="flex gap-1 items-center">
+                            <Svg name="scaleRuler" className="size-[12px] text-[#f76900]" />
+                            <span>sqft</span>
+                          </div>
+                        </div>
+                        <div className="m-0 flex justify-between items-start">
+                          <div className="w-full flex flex-col justify-between items-start">
+                            <span className="text-sm m-0 font-normal text-[#141414]">
+                              Private Office from
+                            </span>
+                            <span className="text-sm m-0 font-normal text-[#141414]">
+                              Desks From
+                            </span>
+                          </div>
+                          <div className="w-full flex flex-col justify-end items-start">
+                            <div class="flex items-center justify-end">
+                              <Svg name="rupee" className="text-[#7f7f7f] size-[15px]" />
+                              <span class="text-sm font-semibold text-black">60000</span>
+                              <small class="ps-1 text-[11px] font-normal text-[#141414] pt-0.5">per seat/month</small>
+                            </div>
+                            <div class="flex items-center justify-end">
+                              <Svg name="rupee" className="text-[#7f7f7f] size-[15px]" />
+                              <span class="text-sm font-semibold text-black">15000</span>
+                              <small class="ps-1 text-[11px] font-normal text-[#141414] pt-0.5">per seat/month</small>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="mt-2 w-full flex items-start">
+                            <div class="text-sm text-[#141414] !leading-[21px] text-start">
+                              <input type="checkbox" id="toggle" class="peer hidden"/>
+                              <div
+                                class="overflow-hidden max-h-[40px] transition-all duration-500 ease-in-out peer-checked:max-h-[1000px]"
+                              >
+                                One of the most premium coworking spaces in Mumbai, this is the ideal platform for high-growth start-ups, corporates, multinationals and financial services companies that want the best for their teams. Located in the highly energetic location of Bandra Kurla Complex (BKC), this coworking space in BKC has solutions for all your needs. It has improved HVAC standards to keep the air circulation healthy. The facility has a spacious parking lot as well as a bike storage.
+                              </div>
+
+                              <label
+                                for="toggle"
+                                class="mt-1 block text-[12px] tracking-[1px] font-semibold text-[#777777] cursor-pointer peer-checked:after:content-['See_less'] after:content-['See_more']"
+                              ></label>
+                            </div>
+
+                        </div>
+                        <div className="offerBtn flex items-end justify-end">
+                          <button className="w-fit bg-[#f76900] text-[12px] border border-[#f76900]  text-white py-1.5 px-3 rounded-sm font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">Get Offer </button>
+
+                          </div>
+
+                        </div>
+                      </div>
+                </div>
+                
+                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-4">
                   <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
                         <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
                           {cities.map((city, index) => (
@@ -1680,7 +1599,96 @@ const page = () => {
                       </div>
                 </div>
 
-                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
+                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-4">
+                  <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
+                        <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
+                          {cities.map((city, index) => (
+                            <div
+                              key={index}
+                              className="embla__slide shrink-0 basis-full"
+                            >
+                              <Image
+                                src={city.image}
+                                alt={city.name}
+                                title={city.name}
+                                width={399}
+                                height={320}
+                                loading="lazy"
+                                className="w-full aspect-[399/320] object-cover rounded-t-md"
+                              />
+                            </div>
+                          ))}
+                        </EmblaCarousel>
+                        
+                      <div className="pt-2 px-6 pb-4 flex flex-col flex-grow">
+                        <div className="flex flex-col justify-between items-start md:mb-2 mb-1">
+                          <h3 className="text-lg cursor-pointer font-medium text-[#141414] text-ellipsis line-clamp-1">
+                            WeWork BKC A Reputed Business Address in Mumbai 
+                          </h3>
+                          <span className="text-[15px] text-[#141414] bg-transparent flex items-center text-start font-normal -ms-[3px]">
+                            <Svg name="location2" className="text-[#f76900] size-[15px] me-1" />
+                            BKC, Mumbai
+                          </span>
+                        </div>
+                        <div className="flex items-center space-x-2 text-sm text-[#777777] mb-1 font-light">
+                          <div className="flex gap-1 items-center">
+                            <Svg name="user2" className="size-[12px] text-[#f76900]" />
+                            <span>people</span>
+                          </div>
+                          <div className="flex gap-1 items-center">
+                            <Svg name="scaleRuler" className="size-[12px] text-[#f76900]" />
+                            <span>sqft</span>
+                          </div>
+                        </div>
+                        <div className="m-0 flex justify-between items-start">
+                          <div className="w-full flex flex-col justify-between items-start">
+                            <span className="text-sm m-0 font-normal text-[#141414]">
+                              Private Office from
+                            </span>
+                            <span className="text-sm m-0 font-normal text-[#141414]">
+                              Desks From
+                            </span>
+                          </div>
+                          <div className="w-full flex flex-col justify-end items-start">
+                            <div class="flex items-center justify-end">
+                              <Svg name="rupee" className="text-[#7f7f7f] size-[15px]" />
+                              <span class="text-sm font-semibold text-black">60000</span>
+                              <small class="ps-1 text-[11px] font-normal text-[#141414] pt-0.5">per seat/month</small>
+                            </div>
+                            <div class="flex items-center justify-end">
+                              <Svg name="rupee" className="text-[#7f7f7f] size-[15px]" />
+                              <span class="text-sm font-semibold text-black">15000</span>
+                              <small class="ps-1 text-[11px] font-normal text-[#141414] pt-0.5">per seat/month</small>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="mt-2 w-full flex items-start">
+                            <div class="text-sm text-[#141414] !leading-[21px] text-start">
+                              <input type="checkbox" id="toggle" class="peer hidden"/>
+                              <div
+                                class="overflow-hidden max-h-[40px] transition-all duration-500 ease-in-out peer-checked:max-h-[1000px]"
+                              >
+                                One of the most premium coworking spaces in Mumbai, this is the ideal platform for high-growth start-ups, corporates, multinationals and financial services companies that want the best for their teams. Located in the highly energetic location of Bandra Kurla Complex (BKC), this coworking space in BKC has solutions for all your needs. It has improved HVAC standards to keep the air circulation healthy. The facility has a spacious parking lot as well as a bike storage.
+                              </div>
+
+                              <label
+                                for="toggle"
+                                class="mt-1 block text-[12px] tracking-[1px] font-semibold text-[#777777] cursor-pointer peer-checked:after:content-['See_less'] after:content-['See_more']"
+                              ></label>
+                            </div>
+
+                        </div>
+                        <div className="offerBtn flex items-end justify-end">
+                          <button className="w-fit bg-[#f76900] text-[12px] border border-[#f76900]  text-white py-1.5 px-3 rounded-sm font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">Get Offer </button>
+
+                          </div>
+
+                        </div>
+                      </div>
+                </div>
+
+                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-4">
                   <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
                         <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
                           {cities.map((city, index) => (
@@ -1768,7 +1776,7 @@ const page = () => {
                       </div>
                 </div>
                 
-                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
+                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-4">
                   <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
                         <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
                           {cities.map((city, index) => (
@@ -1856,15 +1864,7 @@ const page = () => {
                       </div>
                 </div>
               </div> 
-              {/* <div className="bg-gradient-to-br w-full relative overflow-hidden from-[#FD1E24] to-[#FFA600]">
-                  <div className="flex items-center">
-                    <div className="md:w-3/5 w-full flex flex-col lg:py-12 md:py-8 py-6">
-                      <h4>Winner of Best Flex Space Aggregator of the Year</h4>
-                      <p></p>
-                    </div>
-                    <div className="md:w-2/5 w-full flex flex-col lg:py-12 md:py-8 py-6"></div>
-                  </div>
-              </div> */}
+            
               <section className="w-full relative lg:py-12 py-10">
                   <div className="relative w-full h-[280px]">
                     <Image
@@ -1875,19 +1875,20 @@ const page = () => {
                         className="rounded-lg relative object-cover w-full h-full"
                       />
                   </div>
+                  
                   <div className="flex items-center absolute top-[30%] left-10">
                     <div className="md:w-4/5 w-full flex flex-col gap-y-3">
                       <h4 className="text-xl font-semibold text-[#010101] text-balance ">Winner of Best Flex Space Aggregator of the Year</h4>
                       <p className="lg:3/5 w-full text-sm text-[#272828] lg:mb-4 mb-2">We negotiate, you save. Our strong   relationships with operators ensure you get the best terms—zero hassle, zero brokerage.</p>
-                       <button className="w-fit bg-[#141414] text-sm hover:bg-[#ff7c52] text-white py-4 px-6 rounded-[15px] font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">
-                           Request call back
+                      <button className="w-fit bg-[#141414] text-sm hover:bg-[#ff7c52] text-white py-4 px-6 rounded-[15px] font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">
+                          Request call back
                       </button>
                     </div>
                   </div>
               </section> 
-              <div className="spaces flex flex-row flex-wrap -mx-2">
+              <div className="spaces flex flex-row flex-wrap -mx-4">
 
-                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
+                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-4">
                   <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
                         <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
                           {cities.map((city, index) => (
@@ -1976,7 +1977,7 @@ const page = () => {
                       </div>
                 </div>
 
-                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
+                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-4">
                   <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
                         <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
                           {cities.map((city, index) => (
@@ -2065,7 +2066,7 @@ const page = () => {
                       </div>
                 </div>
                 
-                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
+                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-4">
                   <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
                         <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
                           {cities.map((city, index) => (
@@ -2154,7 +2155,7 @@ const page = () => {
                       </div>
                 </div>
 
-                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
+                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-4">
                   <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
                         <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
                           {cities.map((city, index) => (
@@ -2243,7 +2244,7 @@ const page = () => {
                       </div>
                 </div>
 
-                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
+                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-4">
                   <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
                         <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
                           {cities.map((city, index) => (
@@ -2326,190 +2327,12 @@ const page = () => {
                         <div className="offerBtn flex items-end justify-end">
                           <button className="w-fit bg-[#f76900] text-[12px] border border-[#f76900]  text-white py-1.5 px-3 rounded-sm font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">Get Offer </button>
                         </div>
-
-                        </div>
-                      </div>
-                </div>
-                
-                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
-                  <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
-                        <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
-                          {cities.map((city, index) => (
-                            <div
-                              key={index}
-                              className="embla__slide shrink-0 basis-full"
-                            >
-                              <Image
-                                src={city.image}
-                                alt={city.name}
-                                title={city.name}
-                                width={399}
-                                height={320}
-                                loading="lazy"
-                                className="w-full aspect-[399/320] object-cover rounded-t-md"
-                              />
-                            </div>
-                          ))}
-                        </EmblaCarousel>
-                        
-                      <div className="pt-2 px-6 pb-4 flex flex-col flex-grow">
-                        <div className="flex flex-col justify-between items-start md:mb-2 mb-1">
-                          <h3 className="text-lg cursor-pointer font-medium text-[#141414] text-ellipsis line-clamp-1">
-                            WeWork BKC A Reputed Business Address in Mumbai 
-                          </h3>
-                          <span className="text-[15px] text-[#141414] bg-transparent flex items-center text-start font-normal -ms-[3px]">
-                            <Svg name="location2" className="text-[#f76900] size-[15px] me-1" />
-                            BKC, Mumbai
-                          </span>
-                        </div>
-                        <div className="flex items-center space-x-2 text-sm text-[#777777] mb-1 font-light">
-                          <div className="flex gap-1 items-center">
-                            <Svg name="user2" className="size-[12px] text-[#f76900]" />
-                            <span>people</span>
-                          </div>
-                          <div className="flex gap-1 items-center">
-                            <Svg name="scaleRuler" className="size-[12px] text-[#f76900]" />
-                            <span>sqft</span>
-                          </div>
-                        </div>
-                        <div className="m-0 flex justify-between items-start">
-                          <div className="w-full flex flex-col justify-between items-start">
-                            <span className="text-sm m-0 font-normal text-[#141414]">
-                              Private Office from
-                            </span>
-                            <span className="text-sm m-0 font-normal text-[#141414]">
-                              Desks From
-                            </span>
-                          </div>
-                          <div className="w-full flex flex-col justify-end items-start">
-                            <div class="flex items-center justify-end">
-                              <Svg name="rupee" className="text-[#7f7f7f] size-[15px]" />
-                              <span class="text-sm font-semibold text-black">60000</span>
-                              <small class="ps-1 text-[11px] font-normal text-[#141414] pt-0.5">per seat/month</small>
-                            </div>
-                            <div class="flex items-center justify-end">
-                              <Svg name="rupee" className="text-[#7f7f7f] size-[15px]" />
-                              <span class="text-sm font-semibold text-black">15000</span>
-                              <small class="ps-1 text-[11px] font-normal text-[#141414] pt-0.5">per seat/month</small>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="mt-2 w-full flex items-start">
-                            <div class="text-sm text-[#141414] !leading-[21px] text-start">
-                              <input type="checkbox" id="toggle" class="peer hidden"/>
-                              <div
-                                class="overflow-hidden max-h-[40px] transition-all duration-500 ease-in-out peer-checked:max-h-[1000px]"
-                              >
-                                One of the most premium coworking spaces in Mumbai, this is the ideal platform for high-growth start-ups, corporates, multinationals and financial services companies that want the best for their teams. Located in the highly energetic location of Bandra Kurla Complex (BKC), this coworking space in BKC has solutions for all your needs. It has improved HVAC standards to keep the air circulation healthy. The facility has a spacious parking lot as well as a bike storage.
-                              </div>
-
-                              <label
-                                for="toggle"
-                                class="mt-1 block text-[12px] tracking-[1px] font-semibold text-[#777777] cursor-pointer peer-checked:after:content-['See_less'] after:content-['See_more']"
-                              ></label>
-                            </div>
-
-                        </div>
-                        <div className="offerBtn flex items-end justify-end">
-                          <button className="w-fit bg-[#f76900] text-[12px] border border-[#f76900]  text-white py-1.5 px-3 rounded-sm font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">Get Offer </button>
-
-                          </div>
 
                         </div>
                       </div>
                 </div>
                 
-                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
-                  <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
-                        <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
-                          {cities.map((city, index) => (
-                            <div
-                              key={index}
-                              className="embla__slide shrink-0 basis-full"
-                            >
-                              <Image
-                                src={city.image}
-                                alt={city.name}
-                                title={city.name}
-                                width={399}
-                                height={320}
-                                loading="lazy"
-                                className="w-full aspect-[399/320] object-cover rounded-t-md"
-                              />
-                            </div>
-                          ))}
-                        </EmblaCarousel>
-                        
-                      <div className="pt-2 px-6 pb-4 flex flex-col flex-grow">
-                        <div className="flex flex-col justify-between items-start md:mb-2 mb-1">
-                          <h3 className="text-lg cursor-pointer font-medium text-[#141414] text-ellipsis line-clamp-1">
-                            WeWork BKC A Reputed Business Address in Mumbai 
-                          </h3>
-                          <span className="text-[15px] text-[#141414] bg-transparent flex items-center text-start font-normal -ms-[3px]">
-                            <Svg name="location2" className="text-[#f76900] size-[15px] me-1" />
-                            BKC, Mumbai
-                          </span>
-                        </div>
-                        <div className="flex items-center space-x-2 text-sm text-[#777777] mb-1 font-light">
-                          <div className="flex gap-1 items-center">
-                            <Svg name="user2" className="size-[12px] text-[#f76900]" />
-                            <span>people</span>
-                          </div>
-                          <div className="flex gap-1 items-center">
-                            <Svg name="scaleRuler" className="size-[12px] text-[#f76900]" />
-                            <span>sqft</span>
-                          </div>
-                        </div>
-                        <div className="m-0 flex justify-between items-start">
-                          <div className="w-full flex flex-col justify-between items-start">
-                            <span className="text-sm m-0 font-normal text-[#141414]">
-                              Private Office from
-                            </span>
-                            <span className="text-sm m-0 font-normal text-[#141414]">
-                              Desks From
-                            </span>
-                          </div>
-                          <div className="w-full flex flex-col justify-end items-start">
-                            <div class="flex items-center justify-end">
-                              <Svg name="rupee" className="text-[#7f7f7f] size-[15px]" />
-                              <span class="text-sm font-semibold text-black">60000</span>
-                              <small class="ps-1 text-[11px] font-normal text-[#141414] pt-0.5">per seat/month</small>
-                            </div>
-                            <div class="flex items-center justify-end">
-                              <Svg name="rupee" className="text-[#7f7f7f] size-[15px]" />
-                              <span class="text-sm font-semibold text-black">15000</span>
-                              <small class="ps-1 text-[11px] font-normal text-[#141414] pt-0.5">per seat/month</small>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="mt-2 w-full flex items-start">
-                            <div class="text-sm text-[#141414] !leading-[21px] text-start">
-                              <input type="checkbox" id="toggle" class="peer hidden"/>
-                              <div
-                                class="overflow-hidden max-h-[40px] transition-all duration-500 ease-in-out peer-checked:max-h-[1000px]"
-                              >
-                                One of the most premium coworking spaces in Mumbai, this is the ideal platform for high-growth start-ups, corporates, multinationals and financial services companies that want the best for their teams. Located in the highly energetic location of Bandra Kurla Complex (BKC), this coworking space in BKC has solutions for all your needs. It has improved HVAC standards to keep the air circulation healthy. The facility has a spacious parking lot as well as a bike storage.
-                              </div>
-
-                              <label
-                                for="toggle"
-                                class="mt-1 block text-[12px] tracking-[1px] font-semibold text-[#777777] cursor-pointer peer-checked:after:content-['See_less'] after:content-['See_more']"
-                              ></label>
-                            </div>
-
-                        </div>
-                        <div className="offerBtn flex items-end justify-end">
-                          <button className="w-fit bg-[#f76900] text-[12px] border border-[#f76900]  text-white py-1.5 px-3 rounded-sm font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">Get Offer </button>
-
-                          </div>
-
-                        </div>
-                      </div>
-                </div>
-
-                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
+                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-4">
                   <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
                         <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
                           {cities.map((city, index) => (
@@ -2598,7 +2421,7 @@ const page = () => {
                       </div>
                 </div>
                 
-                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
+                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-4">
                   <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
                         <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
                           {cities.map((city, index) => (
@@ -2687,7 +2510,96 @@ const page = () => {
                       </div>
                 </div>
 
-                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
+                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-4">
+                  <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
+                        <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
+                          {cities.map((city, index) => (
+                            <div
+                              key={index}
+                              className="embla__slide shrink-0 basis-full"
+                            >
+                              <Image
+                                src={city.image}
+                                alt={city.name}
+                                title={city.name}
+                                width={399}
+                                height={320}
+                                loading="lazy"
+                                className="w-full aspect-[399/320] object-cover rounded-t-md"
+                              />
+                            </div>
+                          ))}
+                        </EmblaCarousel>
+                        
+                      <div className="pt-2 px-6 pb-4 flex flex-col flex-grow">
+                        <div className="flex flex-col justify-between items-start md:mb-2 mb-1">
+                          <h3 className="text-lg cursor-pointer font-medium text-[#141414] text-ellipsis line-clamp-1">
+                            WeWork BKC A Reputed Business Address in Mumbai 
+                          </h3>
+                          <span className="text-[15px] text-[#141414] bg-transparent flex items-center text-start font-normal -ms-[3px]">
+                            <Svg name="location2" className="text-[#f76900] size-[15px] me-1" />
+                            BKC, Mumbai
+                          </span>
+                        </div>
+                        <div className="flex items-center space-x-2 text-sm text-[#777777] mb-1 font-light">
+                          <div className="flex gap-1 items-center">
+                            <Svg name="user2" className="size-[12px] text-[#f76900]" />
+                            <span>people</span>
+                          </div>
+                          <div className="flex gap-1 items-center">
+                            <Svg name="scaleRuler" className="size-[12px] text-[#f76900]" />
+                            <span>sqft</span>
+                          </div>
+                        </div>
+                        <div className="m-0 flex justify-between items-start">
+                          <div className="w-full flex flex-col justify-between items-start">
+                            <span className="text-sm m-0 font-normal text-[#141414]">
+                              Private Office from
+                            </span>
+                            <span className="text-sm m-0 font-normal text-[#141414]">
+                              Desks From
+                            </span>
+                          </div>
+                          <div className="w-full flex flex-col justify-end items-start">
+                            <div class="flex items-center justify-end">
+                              <Svg name="rupee" className="text-[#7f7f7f] size-[15px]" />
+                              <span class="text-sm font-semibold text-black">60000</span>
+                              <small class="ps-1 text-[11px] font-normal text-[#141414] pt-0.5">per seat/month</small>
+                            </div>
+                            <div class="flex items-center justify-end">
+                              <Svg name="rupee" className="text-[#7f7f7f] size-[15px]" />
+                              <span class="text-sm font-semibold text-black">15000</span>
+                              <small class="ps-1 text-[11px] font-normal text-[#141414] pt-0.5">per seat/month</small>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="mt-2 w-full flex items-start">
+                            <div class="text-sm text-[#141414] !leading-[21px] text-start">
+                              <input type="checkbox" id="toggle" class="peer hidden"/>
+                              <div
+                                class="overflow-hidden max-h-[40px] transition-all duration-500 ease-in-out peer-checked:max-h-[1000px]"
+                              >
+                                One of the most premium coworking spaces in Mumbai, this is the ideal platform for high-growth start-ups, corporates, multinationals and financial services companies that want the best for their teams. Located in the highly energetic location of Bandra Kurla Complex (BKC), this coworking space in BKC has solutions for all your needs. It has improved HVAC standards to keep the air circulation healthy. The facility has a spacious parking lot as well as a bike storage.
+                              </div>
+
+                              <label
+                                for="toggle"
+                                class="mt-1 block text-[12px] tracking-[1px] font-semibold text-[#777777] cursor-pointer peer-checked:after:content-['See_less'] after:content-['See_more']"
+                              ></label>
+                            </div>
+
+                        </div>
+                        <div className="offerBtn flex items-end justify-end">
+                          <button className="w-fit bg-[#f76900] text-[12px] border border-[#f76900]  text-white py-1.5 px-3 rounded-sm font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">Get Offer </button>
+
+                          </div>
+
+                        </div>
+                      </div>
+                </div>
+                
+                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-4">
                   <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
                         <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
                           {cities.map((city, index) => (
@@ -2776,7 +2688,96 @@ const page = () => {
                       </div>
                 </div>
 
-                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
+                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-4">
+                  <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
+                        <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
+                          {cities.map((city, index) => (
+                            <div
+                              key={index}
+                              className="embla__slide shrink-0 basis-full"
+                            >
+                              <Image
+                                src={city.image}
+                                alt={city.name}
+                                title={city.name}
+                                width={399}
+                                height={320}
+                                loading="lazy"
+                                className="w-full aspect-[399/320] object-cover rounded-t-md"
+                              />
+                            </div>
+                          ))}
+                        </EmblaCarousel>
+                        
+                      <div className="pt-2 px-6 pb-4 flex flex-col flex-grow">
+                        <div className="flex flex-col justify-between items-start md:mb-2 mb-1">
+                          <h3 className="text-lg cursor-pointer font-medium text-[#141414] text-ellipsis line-clamp-1">
+                            WeWork BKC A Reputed Business Address in Mumbai 
+                          </h3>
+                          <span className="text-[15px] text-[#141414] bg-transparent flex items-center text-start font-normal -ms-[3px]">
+                            <Svg name="location2" className="text-[#f76900] size-[15px] me-1" />
+                            BKC, Mumbai
+                          </span>
+                        </div>
+                        <div className="flex items-center space-x-2 text-sm text-[#777777] mb-1 font-light">
+                          <div className="flex gap-1 items-center">
+                            <Svg name="user2" className="size-[12px] text-[#f76900]" />
+                            <span>people</span>
+                          </div>
+                          <div className="flex gap-1 items-center">
+                            <Svg name="scaleRuler" className="size-[12px] text-[#f76900]" />
+                            <span>sqft</span>
+                          </div>
+                        </div>
+                        <div className="m-0 flex justify-between items-start">
+                          <div className="w-full flex flex-col justify-between items-start">
+                            <span className="text-sm m-0 font-normal text-[#141414]">
+                              Private Office from
+                            </span>
+                            <span className="text-sm m-0 font-normal text-[#141414]">
+                              Desks From
+                            </span>
+                          </div>
+                          <div className="w-full flex flex-col justify-end items-start">
+                            <div class="flex items-center justify-end">
+                              <Svg name="rupee" className="text-[#7f7f7f] size-[15px]" />
+                              <span class="text-sm font-semibold text-black">60000</span>
+                              <small class="ps-1 text-[11px] font-normal text-[#141414] pt-0.5">per seat/month</small>
+                            </div>
+                            <div class="flex items-center justify-end">
+                              <Svg name="rupee" className="text-[#7f7f7f] size-[15px]" />
+                              <span class="text-sm font-semibold text-black">15000</span>
+                              <small class="ps-1 text-[11px] font-normal text-[#141414] pt-0.5">per seat/month</small>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="mt-2 w-full flex items-start">
+                            <div class="text-sm text-[#141414] !leading-[21px] text-start">
+                              <input type="checkbox" id="toggle" class="peer hidden"/>
+                              <div
+                                class="overflow-hidden max-h-[40px] transition-all duration-500 ease-in-out peer-checked:max-h-[1000px]"
+                              >
+                                One of the most premium coworking spaces in Mumbai, this is the ideal platform for high-growth start-ups, corporates, multinationals and financial services companies that want the best for their teams. Located in the highly energetic location of Bandra Kurla Complex (BKC), this coworking space in BKC has solutions for all your needs. It has improved HVAC standards to keep the air circulation healthy. The facility has a spacious parking lot as well as a bike storage.
+                              </div>
+
+                              <label
+                                for="toggle"
+                                class="mt-1 block text-[12px] tracking-[1px] font-semibold text-[#777777] cursor-pointer peer-checked:after:content-['See_less'] after:content-['See_more']"
+                              ></label>
+                            </div>
+
+                        </div>
+                        <div className="offerBtn flex items-end justify-end">
+                          <button className="w-fit bg-[#f76900] text-[12px] border border-[#f76900]  text-white py-1.5 px-3 rounded-sm font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">Get Offer </button>
+
+                          </div>
+
+                        </div>
+                      </div>
+                </div>
+
+                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-4">
                   <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
                         <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
                           {cities.map((city, index) => (
@@ -2864,7 +2865,7 @@ const page = () => {
                       </div>
                 </div>
                 
-                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
+                <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-4">
                   <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
                         <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
                           {cities.map((city, index) => (
@@ -2955,8 +2956,8 @@ const page = () => {
               <Testimonial />
             </div>
 
-            <div className="map lg:w-2/5 w-full flex flex-col ps-8">
-              <img src='https://images.ctfassets.net/hrltx12pl8hq/28ECAQiPJZ78hxatLTa7Ts/2f695d869736ae3b0de3e56ceaca3958/free-nature-images.jpg?fit=fill&w=1200&h=630' alt='listing banner' className='w-full h-full object-cover rounded-md' />
+            <div className="map lg:w-2/5 w-full flex flex-col md:sticky md:top-10">
+              <img src='https://flexospaces-images.s3.ap-south-1.amazonaws.com/img/workspaces.webp' alt='listing banner' width="505" height="800" className='w-full h-full aspect-[505/800] object-cover rounded-md' />
             </div>
           </div>
         </div>

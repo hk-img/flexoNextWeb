@@ -51,7 +51,8 @@ const HeroSection = () => {
         >
           <Image
             src={img}
-            alt={`Slide ${idx}`}
+            alt={texts[idx]}
+            title={texts[idx]}
             fill
             priority
             className="object-cover"
@@ -61,22 +62,22 @@ const HeroSection = () => {
 
       <div className="absolute inset-0 bg-black/40 flex flex-col justify-center text-white">
         <div className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-4 mx-auto w-full">
-          <div className="mb-10 md:text-start text-center">
-            <h1 className="text-4xl md:text-[56px] font-bold transition-all duration-700 ease-in-out mb-2">
+          <div className=" md:text-start text-center">
+            <h1 className="text-4xl md:text-[56px] font-semibold transition-all duration-700 ease-in-out mb-1">
               Discover Amazing{" "}
             </h1>
 
             <div
               key={texts[currentText]}
-              className="text-[#f76900] [text-shadow:0px_0px_40px_black] inline-block animate-fadeSlide text-4xl md:text-5xl font-bold"
+              className="text-[#f76900] [text-shadow:0px_0px_40px_black] inline-block animate-fadeSlide text-4xl md:text-5xl font-semibold"
             >
               {texts[currentText]}
             </div>
           </div>
-          <div className="flex md:flex-row flex-col md:bg-transparent bg-white md:p-0 p-4 rounded-[15px] items-center gap-y-5 gap-x-3 mt-6">
-            <div className=" flex gap-y-5 md:flex-row flex-col bg-white md:rounded-[15px] overflow-hidden w-full max-w-xl">
+          <div className="flex md:flex-row flex-col md:bg-transparent bg-white md:p-0 p-4 rounded-[15px] items-center gap-y-5 gap-x-4 mt-9">
+            <div className=" flex gap-y-5 md:flex-row flex-col bg-white md:rounded-[15px] overflow-hidden w-full max-w-[536px]">
               <select
-                className="flex-1 px-4 py-3 text-black md:border-l md:border-[#d5d5d5] border md:rounded-none rounded-[15px]  border-black outline-none bg-white appearance-none"
+                className="flex-1 px-4 py-2.5 text-black md:border-l md:border-[#d5d5d5] border md:rounded-none rounded-[15px]  border-black outline-none bg-white appearance-none"
                 
               >
                 <option value="" disabled>
@@ -89,7 +90,7 @@ const HeroSection = () => {
               </select>
 
               <select
-                className="flex-1 px-4 py-3 text-black border rounded-[15px] md:border-transparent border-black outline-none bg-white appearance-none"
+                className="flex-1 px-4 py-2.5 text-black border rounded-[15px] md:border-transparent border-black outline-none bg-white appearance-none"
                 
               >
                 <option value="" disabled>
@@ -103,7 +104,7 @@ const HeroSection = () => {
               </select>           
             </div>
             <div className="md:w-auto w-full">
-              <a href="#" className="bg-[#f76900] px-6 text-white font-semibold h-[46px] flex items-center justify-center rounded-xl w-full"> Search </a>
+              <a href="#" className="bg-[#f76900] px-5 text-white font-medium h-[46px] flex items-center justify-center rounded-xl w-full text-sm"> Search </a>
             </div>
           </div>
         </div>

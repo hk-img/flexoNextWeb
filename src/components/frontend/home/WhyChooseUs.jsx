@@ -4,7 +4,7 @@ import React from 'react'
 
 const WhyChooseUs = () => {
     return (
-        <section className="relative py-16 my-10">
+        <section className="relative py-16 my-8">
             <Image
                 width={1526}
                 height={539}
@@ -19,7 +19,7 @@ const WhyChooseUs = () => {
                         <h2 className="text-3xl md:text-[32px] font-medium mb-2">
                             Why choose <span className="text-orange-500">Flexo ?</span>
                         </h2>
-                        <p className="mb-4 text-white">
+                        <p className="mb-4 text-white text-sm">
                            We make your office-search, a hassle-less experience. With an in depth knowledge, let our workspace solution experts find what you're looking for
                         </p>
                         <div>

@@ -151,7 +151,7 @@ const Detail = () => {
                 >
                     <button
                     onClick={() => scrollToSection("about", 1)}
-                    className={`py-4 relative text-sm font-medium transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${activeTab === 1 ? "text-[#f76900] border-b border-[#f76900]" : "text-[#777]"
+                    className={`py-4 relative text-sm font-medium transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${activeTab === 1 ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]" : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
                       }`}
                   >
                     About the Space
@@ -160,11 +160,7 @@ const Detail = () => {
 
                   <button
                     onClick={() => scrollToSection("pricing", 2)}
-                    className={`py-4 relative text-sm font-medium transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 
-    after:bg-[#f76900] after:transition-all after:duration-500 
-    hover:after:w-full ${activeTab === 2
-                        ? "text-[#f76900] border-b border-[#f76900]"
-                        : "text-[#777]"
+                     className={`py-4 relative text-sm font-medium transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${activeTab === 2 ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]" : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
                       }`}
                   >
                     Pricing
@@ -173,11 +169,7 @@ const Detail = () => {
 
                   <button
                     onClick={() => scrollToSection("location", 3)}
-                    className={`py-4 relative text-sm font-medium transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 
-    after:bg-[#f76900] after:transition-all after:duration-500 
-    hover:after:w-full ${activeTab === 3
-                        ? "text-[#f76900] border-b border-[#f76900]"
-                        : "text-[#777]"
+                     className={`py-4 relative text-sm font-medium transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${activeTab === 3 ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]" : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
                       }`}
                   >
                     Location
@@ -185,24 +177,16 @@ const Detail = () => {
 
 
                   <button
-                    onClick={() => scrollToSection("hours", 5)}
-                    className={`py-4 relative text-sm font-medium transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 
-    after:bg-[#f76900] after:transition-all after:duration-500 
-    hover:after:w-full ${activeTab === 5
-                        ? "text-[#f76900] border-b border-[#f76900]"
-                        : "text-[#777]"
+                    onClick={() => scrollToSection("hours", 4)}
+                    className={`py-4 relative text-sm font-medium transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${activeTab === 4 ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]" : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
                       }`}
                   >
                     Business Hours
                   </button>
 
                   <button
-                    onClick={() => scrollToSection("reviews", 4)}
-                    className={`py-4 relative text-sm font-medium transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 
-    after:bg-[#f76900] after:transition-all after:duration-500 
-    hover:after:w-full ${activeTab === 4
-                        ? "text-[#f76900] border-b border-[#f76900]"
-                        : "text-[#777]"
+                    onClick={() => scrollToSection("reviews", 5)}
+                     className={`py-4 relative text-sm font-medium transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${activeTab === 5 ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]" : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
                       }`}
                   >
                     Reviews

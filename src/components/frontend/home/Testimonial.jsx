@@ -62,7 +62,7 @@ const Testimonial = () => {
                 key={idx}
                 className="embla__slide shrink-0 md:px-3 basis-[100%] sm:basis-[50%] md:basis-[50%] lg:basis-[33.3%] xl:basis-[33.3%] py-3"
               >
-                <div className=" group border border-gray-200 rounded-md h-full shadow-[0_0_3px_#cbcbcb] p-4 relative bg-white hover:transform hover:translate-y-[-10px] transition-all duration-500">
+                <div className=" group border border-gray-200 rounded-md shadow-[0_0_3px_#cbcbcb] p-4 relative bg-white hover:transform hover:translate-y-[-10px] transition-all duration-500">
                   <span className="absolute top-3 right-3 text-[#f76900] text-4xl font-bold opacity-40">
                     <Svg name="quots" className="size-9" />
                   </span>

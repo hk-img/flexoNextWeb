@@ -25,7 +25,7 @@ const CoworkingSpaces = () => {
   return (
     <div className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto">
       <h2 className="md:text-[32px] text-xl font-medium text-center text-[#333]">
-        Explore India&apos;s Premier Network of{" "}
+        Explore India's Premier Network of{" "}
         <span className="text-[#f76900]">Coworking Spaces</span>
       </h2>
 
@@ -36,10 +36,11 @@ const CoworkingSpaces = () => {
               <div className="before:content-[''] before:w-full before:h-full before:absolute before:top-0 before:left-0 before:bg-[#0000002b]" />
               <div className="h-full">
                 <Image
-                width={405}
-                height={420}
+                  width={405}
+                  height={420}
                   src="/images/mumbai.webp"
                   alt="mumbai coworking"
+                  title="mumbai coworking"
                   className="h-[250px] md:h-full w-full object-cover"
                   loading="lazy"
                 />
@@ -70,10 +71,11 @@ const CoworkingSpaces = () => {
                           >
                             <div className="before:content-[''] before:w-full before:h-full before:absolute before:top-0 before:left-0 before:bg-[#0000002b]" />
                             <Image
-                            width={200}
-                            height={200}
+                              width={200}
+                              height={200}
                               src={city.image}
                               alt={city.name}
+                              title={city.name}
                               className="w-full h-[160px] md:h-[180px] lg:h-[200px] object-cover"
                               loading="lazy"
                             />

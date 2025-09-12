@@ -38,9 +38,8 @@ const Header = () => {
         hidden ? "-translate-y-full " : "translate-y-0 shadow-[0_0_12px_0_#0000004d]"
       } bg-white`}
     >
-      <div className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-4 mx-auto py-[20px]">
+      <div className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-4 mx-auto py-[21px]">
         <div className="flex justify-between items-center">
-          {/* Logo */}
           <div>
             <Image
               src="/images/logo.webp"
@@ -52,24 +51,22 @@ const Header = () => {
             />
           </div>
 
-          {/* Desktop Buttons */}
-          <div className="lg:flex hidden items-center gap-3">
+          <div className="lg:flex hidden items-center gap-5">
             <div>
-              <button className="bg-[#f76900] border-[2px] border-[#f76900] rounded-[15px] text-white py-[7px] px-6">
+              <a href="#" className="bg-[#f76900] border-[2px] border-[#f76900] rounded-[15px] text-[15px] text-white py-[8px] px-5.5">
                 List Your Space
-              </button>
+              </a>
             </div>
             <div>
-              <button className="flex items-center gap-1 border-[2px] border-[#ffe9d8] bg-[#f7690012] text-[#f76900] rounded-[15px] py-[7px] px-6">
+              <a href="#" className="flex items-center gap-1 border-[2px] border-[#ffe9d8] bg-[#f7690012] text-[#f76900] rounded-[15px] py-[8px] px-5.5">
                 <span>
-                  <Svg name="logIn" className="size-[18px]" />
+                  <Svg name="logIn" className="size-[22px]" />
                 </span>
-                <span>Sign in</span>
-              </button>
+                <span className="text-[15px]">Sign in</span>
+              </a>
             </div>
           </div>
 
-          {/* Mobile Icons */}
           <div className="flex lg:hidden items-center gap-3">
             <a href="#">
               <Svg name="call" className="size-[16px] text-black" />

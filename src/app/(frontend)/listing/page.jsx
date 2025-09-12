@@ -1,5 +1,7 @@
 import EmblaCarousel from "@/components/frontend/emblaCarousel/EmblaCarousel"
 import Image from 'next/image';
+import Svg from '@/components/svg'
+
 
 const page = () => {
   const cities = [
@@ -227,7 +229,7 @@ const page = () => {
               <div className="spaces mt-6 flex flex-row flex-wrap -mx-2">
 
                 <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
-                  <div className="space-card border border-[#e4e4e4] rounded-md flex flex-col">
+                  <div className="space-card w-full h-full border border-[#e4e4e4] rounded-md flex flex-col">
                       {/* <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true , p: 0, gap: 0,  align: "start"}}>
                               {cities.map((city, index) => (
                                 <div
@@ -276,6 +278,7 @@ const page = () => {
                               key={index}
                               className="embla__slide shrink-0 basis-full"
                             >
+                              
                               <Image
                                 src={city.image}
                                 alt={city.name}
@@ -283,8 +286,9 @@ const page = () => {
                                 width={399}
                                 height={320}
                                 loading="lazy"
-                                className="w-full h-auto object-cover rounded-md"
+                                className="w-full aspect-[399/320] object-cover rounded-t-md"
                               />
+                              
                             </div>
                           ))}
 
@@ -297,7 +301,7 @@ const page = () => {
                               width={399}
                               height={320}
                               loading="lazy"
-                              className="w-full h-auto object-cover rounded-md"
+                              className="w-full aspect-[399/320] object-cover rounded-md"
                             />
                           </div>
                           <div className="embla__slide shrink-0 basis-full">
@@ -308,18 +312,58 @@ const page = () => {
                               width={399}
                               height={320}
                               loading="lazy"
-                              className="w-full h-auto object-cover rounded-md"
+                              className="w-full aspect-[399/320] object-cover rounded-md"
                             />
                           </div>
                         </EmblaCarousel>
                       <div className="pt-2 px-7 pb-4 flex flex-col flex-grow">
                         <div className="flex flex-col justify-between items-start md:mb-2 mb-1">
-                          <h3 className="text-lg cursor-pointer font-semibold text-[#141414]">
+                          <h3 className="text-lg cursor-pointer font-medium text-[#141414]">
                             WeWork BKC A Reputed Business Address in Mumbai 
                           </h3>
-                          <span className="text-[15px] text-[#141414] bg-transparent text-start font-normal">
-                            <svg className="text-[#f76900] size-[15px]" stroke="currentColor" fill="currentColor" viewBox="0 0 512 512" height="200px" width="200px" xmlns="http://www.w3.org/2000/svg"><path d="M256 32C167.67 32 96 96.51 96 176c0 128 160 304 160 304s160-176 160-304c0-79.49-71.67-144-160-144zm0 224a64 64 0 1 1 64-64 64.07 64.07 0 0 1-64 64z"></path></svg>
-                            BKC, Mumbai</span>
+                          <span className="text-[15px] text-[#141414] bg-transparent flex items-center text-start font-normal -ms-[3px]">
+                            <svg className="text-[#f76900] size-[15px] me-1" stroke="currentColor" fill="currentColor" viewBox="0 0 512 512" height="200px" width="200px" xmlns="http://www.w3.org/2000/svg"><path d="M256 32C167.67 32 96 96.51 96 176c0 128 160 304 160 304s160-176 160-304c0-79.49-71.67-144-160-144zm0 224a64 64 0 1 1 64-64 64.07 64.07 0 0 1-64 64z"></path></svg>
+                            BKC, Mumbai
+                          </span>
+                        </div>
+                        <div className="flex items-center space-x-2 text-sm text-[#777777] mb-1 font-light">
+                          <div className="flex gap-2 items-center">
+                            <Svg name="user2" className="size-[12px] text-[#f76900]" />
+                            <span>people</span>
+                          </div>
+                          <div className="flex gap-2 items-center">
+                            <Svg name="scaleRuler" className="size-[12px] text-[#f76900]" />
+                            <span>sqft</span>
+                          </div>
+                        </div>
+
+
+                        <div className="m-0 flex flex-col items-center">
+                          <div className="w-full flex justify-between items-center">
+                            <span className="text-sm m-0 font-normal text-[#141414]">
+                              Private Office from
+                            </span>
+                            <div class="flex items-center">
+                              <Svg name="rupee" className="text-[#7f7f7f] size-[15px]" />
+                              <span class="text-sm font-semibold text-black">60000</span>
+                              <small class="ps-1 text-[11px] font-normal text-[#141414] pt-0.5">per seat/month</small>
+                            </div>
+                          </div>
+                          <div className="w-full flex justify-between items-center">
+                            <span className="text-sm m-0 font-normal text-[#141414]">
+                              Desks From
+                            </span>
+                            <div class="flex items-center">
+                              <Svg name="rupee" className="text-[#7f7f7f] size-[15px]" />
+                              <span class="text-sm font-semibold text-black">15000</span>
+                              <small class="ps-1 text-[11px] font-normal text-[#141414] pt-0.5">per seat/month</small>
+                            </div>
+                          </div>
+                          <div className="mt-2 w-full flex items-start">
+                            <p className="text-sm text-[#141414]"> One of the most premium coworking spaces in Mumbai, this is the ideal platform for high-growth start-ups, corporates, multinationals and financial services companies that want the best for their teams. Located in the highly energetic location of Bandra Kurla Complex (BKC), this coworking space in BKC has solutions for all your needs. It has improved HVAC standards to keep the air circulation healthy. The facility has a spacious parking lot as well as a bike storage. </p>
+                          </div>
+                        </div>
+
                         </div>
                       </div>
                   </div>
@@ -377,7 +421,6 @@ const page = () => {
             <div className="map lg:w-2/5 w-full flex flex-col ps-8">
               <img src='https://images.ctfassets.net/hrltx12pl8hq/28ECAQiPJZ78hxatLTa7Ts/2f695d869736ae3b0de3e56ceaca3958/free-nature-images.jpg?fit=fill&w=1200&h=630' alt='listing banner' className='w-full h-full object-cover rounded-md' />
             </div>
-          </div>
         </div>
       </section>
     </>

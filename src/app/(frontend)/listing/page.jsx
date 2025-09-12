@@ -227,15 +227,14 @@ const page = () => {
               <div className="spaces mt-6 flex flex-row flex-wrap -mx-2">
 
                 <div className="spaceCard lg:w-1/3 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:md:w-full w-full p-2">
-                  <div className="space-card border border-[#e4e4e4] rounded-md overflow-hidden">
-                      <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true , p: 0, gap: 0,  align: "start"}}>
+                  <div className="space-card border border-[#e4e4e4] rounded-md flex flex-col">
+                      {/* <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true , p: 0, gap: 0,  align: "start"}}>
                               {cities.map((city, index) => (
                                 <div
                                   key={index}
                                   className="embla__slide shrink-0 basis-full"
                                 >
-                                  <div className="grid grid-rows-2">
-                                    <Image
+                                  <Image
                                       src={city.image}
                                       alt={city.name}
                                       title={city.name}
@@ -244,23 +243,85 @@ const page = () => {
                                       loading="lazy"
                                       className="w-full h-auto object-cover rounded-md"
                                     />
-                                  </div>
                                 </div>
                               ))}
             
 
                         <div className="embla__slide shrink-0 basis-full">
-                          <div className="grid grid-rows-2 gap-1">
-                            sdgdf
-                          </div>
+                          <Image
+                              src={city.image}
+                              alt={city.name}
+                              title={city.name}
+                              width={399}
+                              height={320}
+                              loading="lazy"
+                              className="w-full h-auto object-cover rounded-md"
+                            />
                         </div>
                         <div className="embla__slide shrink-0 basis-full">
-                          <div className="grid grid-rows-2 gap-1">
-                            sdgdf
-                          </div>
+                          <Image
+                                      src={city.image}
+                                      alt={city.name}
+                                      title={city.name}
+                                      width={399}
+                                      height={320}
+                                      loading="lazy"
+                                      className="w-full h-auto object-cover rounded-md"
+                                    />
                         </div>
-                      </EmblaCarousel>
+                      </EmblaCarousel> */}
+                        <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
+                          {cities.map((city, index) => (
+                            <div
+                              key={index}
+                              className="embla__slide shrink-0 basis-full"
+                            >
+                              <Image
+                                src={city.image}
+                                alt={city.name}
+                                title={city.name}
+                                width={399}
+                                height={320}
+                                loading="lazy"
+                                className="w-full h-auto object-cover rounded-md"
+                              />
+                            </div>
+                          ))}
 
+                          {/* Example of static extra slides */}
+                          <div className="embla__slide shrink-0 basis-full">
+                            <Image
+                              src="/images/extra1.webp"
+                              alt="Extra Slide 1"
+                              title="Extra Slide 1"
+                              width={399}
+                              height={320}
+                              loading="lazy"
+                              className="w-full h-auto object-cover rounded-md"
+                            />
+                          </div>
+                          <div className="embla__slide shrink-0 basis-full">
+                            <Image
+                              src="/images/extra2.webp"
+                              alt="Extra Slide 2"
+                              title="Extra Slide 2"
+                              width={399}
+                              height={320}
+                              loading="lazy"
+                              className="w-full h-auto object-cover rounded-md"
+                            />
+                          </div>
+                        </EmblaCarousel>
+                      <div className="pt-2 px-7 pb-4 flex flex-col flex-grow">
+                        <div className="flex flex-col justify-between items-start md:mb-2 mb-1">
+                          <h3 className="text-lg cursor-pointer font-semibold text-[#141414]">
+                            WeWork BKC A Reputed Business Address in Mumbai 
+                          </h3>
+                          <span className="text-[15px] text-[#141414] bg-transparent text-start font-normal">
+                            <svg className="text-[#f76900] size-[15px]" stroke="currentColor" fill="currentColor" viewBox="0 0 512 512" height="200px" width="200px" xmlns="http://www.w3.org/2000/svg"><path d="M256 32C167.67 32 96 96.51 96 176c0 128 160 304 160 304s160-176 160-304c0-79.49-71.67-144-160-144zm0 224a64 64 0 1 1 64-64 64.07 64.07 0 0 1-64 64z"></path></svg>
+                            BKC, Mumbai</span>
+                        </div>
+                      </div>
                   </div>
                 </div>
 

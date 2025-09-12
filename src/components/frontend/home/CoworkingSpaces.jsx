@@ -4,7 +4,7 @@ import Image from "next/image"
 
 const CoworkingSpaces = () => {
   const cities = [
-    { name: "Mumbai", image: "/images/mumbai.webp" },
+    { name: "Bengaluru", image: "/images/Bengaluru.webp" },
     { name: "Pune", image: "/images/pune.webp" },
     { name: "Gurgaon", image: "/images/gurgaon.webp" },
     { name: "Chennai", image: "/images/chennai.webp" },
@@ -12,6 +12,14 @@ const CoworkingSpaces = () => {
     { name: "Noida", image: "/images/noida.webp" },
     { name: "Ahmedabad", image: "/images/ahmedabad.webp" },
     { name: "Hyderabad", image: "/images/hyderabad.webp" },
+    { name: "Goa", image: "/images/Goa.webp" },
+    { name: "Lucknow", image: "/images/Lucknow.webp" },
+    { name: "Chandigarh", image: "/images/chandigarh.webp" },
+    { name: "Surat", image: "/images/Surat.webp" },
+    { name: "Jaipur", image: "/images/Jaipur.webp" },
+    { name: "Coimbatore", image: "/images/Coimbatore.webp" },
+    { name: "Kochi", image: "/images/Kochi.webp" },
+    { name: "Indore", image: "/images/Indore.webp" },
   ]
 
   return (

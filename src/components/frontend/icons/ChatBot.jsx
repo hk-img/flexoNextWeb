@@ -3,11 +3,11 @@ import React from 'react'
 
 const ChatBot = () => {
   return (
-    <div className='fixed bottom-4 right-4'>
+    <div className='fixed bottom-3 right-3'>
       <div className=' flex flex-col space-y-2'>
         <a href="#" target="_blank" className="relative group">
           <div className="bg-[#276ad6] text-white w-[45px] h-[45px] flex items-center justify-center rounded-full">
-            <Svg name="call" className="size-5" />
+            <Svg name="call" className="size-4.5" />
           </div>
           <div className=" absolute top-1/2 -translate-y-1/2 right-[30px] bg-[#276ad6] text-white text-[16px]  px-2 py-1 rounded-sm flex items-center justify-center whitespace-nowrap opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:right-[55px] transition-all duration-500"
           > +91 95133 92400

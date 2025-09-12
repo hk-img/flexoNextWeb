@@ -3,7 +3,7 @@ import React from 'react'
 
  const OfficeSearch = () => {
   return (
-    <section className="max-w-6xl xl:px-1 lg:px-10 md:px-6 px-4 mx-auto py-8">
+    <section className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto py-8">
         <div className="text-center mb-10">
              <h2 className="md:text-[32px] text-xl font-medium text-center text-[#333] ">
                 Your Office Search, Simplified By Experts
@@ -19,7 +19,7 @@ import React from 'react'
                 <div className="md:absolute top-1/2 md:transform md:-translate-y-1/2 -left-5 bg-white text-[#f76900] flex items-center justify-center w-9 h-9  shadow-[0_0_3px_#f76900] rounded-full">
                     <Svg
                         name="check"
-                        className="size-4 text-[#f76900]"
+                        className="size-5 text-[#f76900]"
                         />
                 </div>
                 <div>
@@ -34,7 +34,7 @@ import React from 'react'
                 <div className="md:absolute top-1/2 md:transform md:-translate-y-1/2 -left-5 bg-white text-[#f76900] flex items-center justify-center w-9 h-9  shadow-[0_0_3px_#f76900] rounded-full">
                     <Svg
                         name="check"
-                        className="size-4 text-[#f76900]"
+                        className="size-5 text-[#f76900]"
                         />
                 </div>
                 <div>
@@ -49,7 +49,7 @@ import React from 'react'
                 <div className="md:absolute top-1/2 md:transform md:-translate-y-1/2 -left-5 bg-white text-[#f76900] flex items-center justify-center w-9 h-9  shadow-[0_0_3px_#f76900] rounded-full">
                     <Svg
                         name="check"
-                        className="size-4 text-[#f76900]"
+                        className="size-5 text-[#f76900]"
                         />
                 </div>
                 <div>
@@ -64,7 +64,7 @@ import React from 'react'
                 <div className="md:absolute top-1/2 md:transform md:-translate-y-1/2 -left-5 bg-white text-[#f76900] flex items-center justify-center w-9 h-9  shadow-[0_0_3px_#f76900] rounded-full">
                     <Svg
                         name="check"
-                        className="size-4 text-[#f76900]"
+                        className="size-5 text-[#f76900]"
                         />
                 </div>
                 <div>

@@ -83,7 +83,7 @@ const Testimonial = () => {
                         {t.designation}
                       </p>
                       <p
-                        className="text-xs font-bold text-[#f76900]"
+                        className="text-xs font-bold text-[#cd854f]"
                         
                       >
                         {t.company}

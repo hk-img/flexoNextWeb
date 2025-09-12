@@ -11,19 +11,20 @@ const Banner = ({heading,img,desc,btnText,btnLink}) => {
           height={400}
           src={img} 
           alt="Handshake background"
+          title="Handshake background"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-[#00000075]"></div>
       </div>
 
       <div className="relative z-10 text-center px-6">
-        <h2 className="text-white text-2xl md:text-[26px] font-semibold mb-4">
+        <h2 className="text-white text-2xl md:text-[26px] font-medium mb-4">
           {heading}
         </h2>
-        <p className="text-white/90 mb-6 text-sm md:text-lg">
+        <p className="text-white/90 text-sm md:text-lg">
           {desc}
         </p>
-        <a href={btnLink} className="bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white px-10 py-4 rounded-[15px] font-semibold duration-500 transition">
+        <a href={btnLink} className="inline-block bg-[#f76900] mt-6 tracking-[1px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white px-7.5 py-4 rounded-[15px] font-semibold duration-500 transition">
           {btnText}
         </a>
       </div>

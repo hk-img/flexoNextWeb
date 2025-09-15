@@ -43,7 +43,7 @@ const BookWorkspace = () => {
                                     </div>
                                 </div>
 
-                               <div className="flex md:flex-row flex-col items-start gap-3 rounded-[7px] rounded-br-none p-4 shadow-[0_0_3px_#7a7a7a]  relative">
+                                <div className="flex md:flex-row flex-col items-start gap-3 rounded-[7px] rounded-br-none p-4 shadow-[0_0_3px_#7a7a7a]  relative">
                                     <div>
                                         <span className="md:absolute -top-5 -left-5 bg-gradient-to-br from-[rgb(81,49,18)] to-[rgb(247,105,0)] text-white w-10 h-10 flex items-center justify-center rounded-[7px] rounded-br-none font-medium text-[17px]">4</span>
                                     </div>

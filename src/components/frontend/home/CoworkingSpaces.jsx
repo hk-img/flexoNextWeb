@@ -58,7 +58,7 @@ const CoworkingSpaces = () => {
                 <div
                   key={colIdx}
                   className="embla__slide shrink-0 
-                   basis-[50%] sm:basis-[50%] md:basis-[50%] lg:basis-[33.3%] xl:basis-[33.3%] "
+                  basis-[50%] sm:basis-[50%] md:basis-[50%] lg:basis-[33.3%] xl:basis-[33.3%] "
                 >
                   <div className="grid grid-rows-2 gap-1">
                     {cities
@@ -66,7 +66,6 @@ const CoworkingSpaces = () => {
                       .map((city, idx) => (
                         <a  key={idx} href="#">
                           <div
-                           
                             className="relative rounded-sm overflow-hidden shadow-md"
                           >
                             <div className="before:content-[''] before:w-full before:h-full before:absolute before:top-0 before:left-0 before:bg-[#0000002b]" />

@@ -12,6 +12,7 @@ import Banner from './Banner'
 import FaqSection from './FaqSection'
 
 const Home = () => {
+  
   return (
     <>
       <HeroSection/>

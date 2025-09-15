@@ -44,7 +44,7 @@ export const PrevButton = (props) => {
       type="button"
       {...restProps}
     >
-       <Svg name="leftArrow" className="size-[20px] ms-2 flex items-center justify-center" />
+      <Svg name="leftArrow" className="size-[20px] ms-2 flex items-center justify-center" />
       {children}
     </button>
   )

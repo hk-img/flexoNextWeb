@@ -3,7 +3,7 @@ import React from 'react'
 
 const BookWorkspace = () => {
     return (
-        <div className="max-w-6xl xl:px-1 lg:px-10 md:px-6 px-4 mx-auto md:pt-4 ">
+        <div className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto md:pt-4 ">
             <div>
                 <section className="container mx-auto md:px-4 py-12">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
@@ -62,7 +62,7 @@ const BookWorkspace = () => {
                         </div>
 
                         <div>
-                            <Image width={500} height={500} src="/images/find-work-space-1.webp" alt="Workspace" className="rounded-[7px] w-full object-cover h-[544px]" />
+                            <Image width={500} height={500} src="/images/find-work-space-1.webp" alt="Workspace"  title="Workspace"className="rounded-[7px] w-full object-cover h-[544px]" />
                         </div>
                     </div>
                 </section>

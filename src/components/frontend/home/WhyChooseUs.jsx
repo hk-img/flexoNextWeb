@@ -10,10 +10,11 @@ const WhyChooseUs = () => {
                 height={539}
                 src="/images/why-choose-flexo.webp"
                 alt="Why choose Flexo"
+                title="Why choose Flexo"
                 className="absolute inset-0 -z-10 h-full w-full object-cover"
             />
             <div className="absolute inset-0 bg-[#00000066] -z-10"></div>
-            <div className='max-w-6xl xl:px-1 lg:px-10 md:px-6 px-4 mx-auto'>
+            <div className='max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto'>
                 <div className="relative container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
                     <div className="text-white">
                         <h2 className="text-3xl md:text-[32px] font-medium mb-2">
@@ -39,7 +40,7 @@ const WhyChooseUs = () => {
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <div className="bg-[#0000002b] backdrop-blur-[6px] rounded-lg p-5 shadow-[0_0_3px_#f7f7f7] text-center text-white hover:translate-y-[-10px] transition duration-500 ease-in-out">
+                        <div className="bg-[#0000002b] backdrop-blur-[6px] rounded-lg p-6 shadow-[0_0_3px_#f7f7f7] text-center text-white hover:translate-y-[-10px] transition duration-500 ease-in-out">
                             <div className="mb-2 flex items-center justify-center">
                                 <Svg name="shareYourRequirements" className="size-14 text-white"/>
                             </div>
@@ -50,7 +51,7 @@ const WhyChooseUs = () => {
                             </p>
                         </div>
 
-                         <div className="bg-[#0000002b] backdrop-blur-[6px] rounded-lg p-5 shadow-[0_0_3px_#f7f7f7] text-center text-white hover:translate-y-[-10px] transition duration-500 ease-in-out">
+                         <div className="bg-[#0000002b] backdrop-blur-[6px] rounded-lg p-6 shadow-[0_0_3px_#f7f7f7] text-center text-white hover:translate-y-[-10px] transition duration-500 ease-in-out">
                             <div className="mb-2 flex items-center justify-center">
                                 <Svg name="fastService" className="size-14 text-white"/>
                             </div>
@@ -60,7 +61,7 @@ const WhyChooseUs = () => {
                             </p>
                         </div>
 
-                         <div className="bg-[#0000002b] backdrop-blur-[6px] rounded-lg p-5 shadow-[0_0_3px_#f7f7f7] text-center text-white hover:translate-y-[-10px] transition duration-500 ease-in-out">
+                         <div className="bg-[#0000002b] backdrop-blur-[6px] rounded-lg p-6 shadow-[0_0_3px_#f7f7f7] text-center text-white hover:translate-y-[-10px] transition duration-500 ease-in-out">
                             <div className="mb-2 flex items-center justify-center">
                                 <Svg name="largestCoverage" className="size-14 text-white"/>
                             </div>
@@ -69,7 +70,7 @@ const WhyChooseUs = () => {
                                 Access 1800+ coworking spaces across India with Flexo's extensive network.
                             </p>
                         </div>
-                         <div className="bg-[#0000002b] backdrop-blur-[6px] rounded-lg p-5 shadow-[0_0_3px_#f7f7f7] text-center text-white hover:translate-y-[-10px] transition duration-500 ease-in-out">
+                         <div className="bg-[#0000002b] backdrop-blur-[6px] rounded-lg p-6 shadow-[0_0_3px_#f7f7f7] text-center text-white hover:translate-y-[-10px] transition duration-500 ease-in-out">
                             <div className="mb-2 flex items-center justify-center">
                                 <Svg name="dedicatedAdvisor" className="size-14 text-white"/>
                             </div>

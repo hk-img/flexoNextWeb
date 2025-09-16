@@ -36,7 +36,7 @@ const CoworkingBrands = () => {
         {chunkedLogos.map((logos, idx) => (
           <div
             key={idx}
-            className="embla__slide shrink-0 px-[13px] basis-[50%] sm:basis-[50%] md:basis-[50%] lg:basis-[33.3%] xl:basis-[25%]"
+            className="embla__slide shrink-0 px-[15px] basis-[50%] sm:basis-[50%] md:basis-[50%] lg:basis-[33.3%] xl:basis-[25%]"
           >
             <div className="grid grid-rows-2 gap-2">
               {logos.map((logo, index) => (

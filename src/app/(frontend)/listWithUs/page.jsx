@@ -73,7 +73,7 @@ const person = [
 ];
   return (
     <>
-        <section className="relative w-full top-20">
+        <section className="relative w-full lg:top-20 top-16">
           <div className='flex items-center h-full'>
             <img
               src="/images/list_with_us_banner.webp"
@@ -87,27 +87,27 @@ const person = [
           <div className="relative flex justify-end lg:py-8 py-6">
             <div className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 py-6">
               <div className='w-full relative flex flex-col items-start justify-end text-white lg:left-10'>
-                <h1 className='lg:w-4/5 w-full lg:text-4xl md:text-3xl text-2xl !leading-12 text-white font-medium mb-4'>List Your Space and Grow Your Earnings</h1>
+                <h1 className='lg:w-4/5 w-full lg:text-4xl md:text-[17px] lg:!leading-12 text-white font-medium mb-4'>List Your Space and Grow Your Earnings</h1>
                 <ul className='flex flex-col lg:ps-6 ps-2'>
-                  <li className='lg:mb-4 mb-2 flex items-center text-white text-[21px]'>
+                  <li className='lg:mb-4 mb-2 flex items-center text-white lg:text-[21px] text-base'>
                     <span className='pe-2'><Svg name="check" className="size-[24px] text-white"/></span>
                       Get Qualified Leads and Bookings 
                   </li>
-                  <li className='lg:mb-4 mb-2 flex items-center text-white text-[21px]'>
+                  <li className='lg:mb-4 mb-2 flex items-center text-white lg:text-[21px] text-base'>
                       <span className='pe-2'><Svg name="check" className="size-[24px] text-white"/></span>
                       Maximise Occupancy Levels and Revenue
                   </li>
-                  <li className='lg:mb-4 mb-2 flex items-center text-white text-[21px]'>
+                  <li className='lg:mb-4 mb-2 flex items-center text-white lg:text-[21px] text-base'>
                       <span className='pe-2'><Svg name="check" className="size-[24px] text-white"/></span>
                       Increase Visibility and Reach
                   </li>
-                  <li className='lg:mb-4 mb-2 flex items-center text-white text-[21px]'>
+                  <li className='lg:mb-4 mb-2 flex items-center text-white lg:text-[21px] text-base'>
                       <span className='pe-2'><Svg name="check" className="size-[24px] text-white"/></span>
                       Turn Unused Space Into Profit
                   </li>
                 </ul>
                 <div className='mt-5 md:ps-6 ps-2'>
-                  <button class="bg-[#f76900] text-sm text-white px-[30px] py-4 rounded-[3px] cursor-pointer font-medium duration-500 transition flex items-center gap-2"><span>Let's Get Started</span></button>
+                  <button className="bg-[#f76900] text-sm text-white px-[30px] py-4 rounded-[3px] cursor-pointer font-medium duration-500 transition flex items-center gap-2"><span>Let's Get Started</span></button>
                 </div>
               </div>
             </div>
@@ -118,7 +118,7 @@ const person = [
             <div className='max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto py-6'>
               <div className='flex flex-col lg:flex-row items-center'>
                 <div className='lg:w-7/12 md:w-7/12 w-full flex flex-col'>
-                  <div className='relative w-full rounded-lg'>
+                  <div className='relative w-full rounded-lg lg:mt-0 mt-10'>
                       <img  src="/images/list-us.webp"
                           alt="List Your Space and Grow Your Earnings"
                           width={717}
@@ -128,7 +128,7 @@ const person = [
                   </div>
                 </div>
                 <div className='lg:w-5/12 md:w-5/12 w-full flex flex-col'>
-                    <div className='relative z-10 p-3 shadow-[0_0_3px_#bababa] bg-white rounded-md -ml-20 border-2 border-dashed border-[#f76900]'>
+                    <div className='lg:relative lg:z-10 p-3 shadow-[0_0_3px_#bababa] bg-white rounded-md lg:-ml-20 border-2 border-dashed border-[#f76900] lg:mt-0 mt-6'>
                         <h2 className='font-normal lg:text-2xl/10 text-xl/10'>Join India's Premier Space Marketplace! </h2>
                         <p className='text-sm/normal font-normal text-[#777]'>Join hundreds of hosts with 1,800+ listings from 20+ cities across India and start monetizing your space today. Whether you have a coworking space, office for lease, meeting room, studio, event venue or activity space, Flexo helps you connect with businesses and professionals actively looking for the perfect workspace. </p>
                     </div>
@@ -140,7 +140,7 @@ const person = [
         <section className='w-full relative lg:py-8 py-4'>
           <div className='max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto py-6'>
               <div className='max-w-[800px] flex flex-col mx-auto px-6'>
-                <h2 className='md:text-[32px] text-xl font-medium text-center text-[#333]'>
+                <h2 className='md:text-[32px] text-2xl font-medium text-center text-[#333]'>
                   How It Works
                 </h2>
               </div>
@@ -165,9 +165,9 @@ const person = [
         </section>
         
         <section className='w-full relative lg:py-8 py-4'>
-          <div className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto py-12">
+          <div className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto lg:py-12 py-6">
             <div className='max-w-[800px] flex flex-col mx-auto px-6'>
-              <h2 className="md:text-[32px] text-xl font-medium text-center text-[#333] mb-4">
+              <h2 className="md:text-[32px] text-2xl font-medium text-center text-[#333] mb-4">
                 What Types of Spaces Can You List?
               </h2>
             </div>
@@ -212,7 +212,7 @@ const person = [
         <section className='w-full relative'>
           <div className='max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto py-6'>
               <div className='max-w-[800px] flex flex-col mx-auto px-6'>
-                <h2 className='md:text-[32px] text-xl font-medium text-center text-[#333]'>
+                <h2 className='md:text-[32px] text-2xl font-medium text-center text-[#333]'>
                   Why List with Flexo?
                 </h2>
               </div>
@@ -256,7 +256,7 @@ const person = [
         <section className='w-full relative lg:py-8 py-4'>
           <div className='max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto py-6'>
             <div className='max-w-[800px] flex flex-col mx-auto px-6 mb-10'>
-              <h2 className='md:text-[32px] text-xl font-medium text-center text-[#333]'>
+              <h2 className='md:text-[32px] text-2xl font-medium text-center text-[#333]'>
                 Host Success Stories
               </h2>
             </div>
@@ -277,11 +277,11 @@ const person = [
                           className="w-[317px] h-[400px] aspect-[317/400] object-cover"
                       />
                   </div>
-                  <div className='lg:w-7/12 md:w-7/12 w-full flex flex-col items-start ps-6 md:mt-0 mt-4'>
+                  <div className='lg:w-7/12 md:w-7/12 w-full flex flex-col items-start lg:ps-6 md:mt-0 mt-4'>
                     <div className='quoteMark mb-6'>
                       <Svg name="quoteMark" className="text-gray-400 size-[55px]"/>
                     </div>
-                    <p className='text-base text-[#777777] text-balance mb-6'>{person.content}</p>
+                    <p className='lg:text-base text-[15px] text-[#777777] text-balance mb-6'>{person.content}</p>
                     <h5 className='text-base/relaxed text-[#141414] font-medium mb-1'>{person.name}</h5>
                     <p className='text-sm text-[#777777] font-normal'>{person.designation}</p>
                   </div>

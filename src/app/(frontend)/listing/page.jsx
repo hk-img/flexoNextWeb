@@ -40,7 +40,7 @@ const page = () => {
       <section className="w-full relative lg:py-16 bg-white">
         <div className="max-w-full xl:px-4 lg:px-4 md:px-3 px-4 mx-auto py-8">
           <div className="group/mainBox w-full flex flex-col lg:flex-row gap-6 items-start">
-            <div className="lg:w-3/5 w-full grow flex flex-col justify-center lg:mt-10 mt-16">
+            <div className="lg:w-2/3 w-full grow flex flex-col justify-center lg:mt-10 mt-16">
                 <h1 className="text-xl flex flex-wrap font-bold text-[#141414] mb-4">
                   Coworking Space in Bkc, Mumbai
                 </h1>
@@ -2959,7 +2959,7 @@ const page = () => {
               <Testimonial />
             </div>
 
-            <div className="map lg:w-2/5 w-full lg:flex flex-col md:sticky md:top-10 hidden">
+            <div className="map lg:w-1/3 w-full lg:flex flex-col md:sticky md:top-10 hidden">
               <img src='https://flexospaces-images.s3.ap-south-1.amazonaws.com/img/workspaces.webp' alt='listing banner' width="505" height="800" className='w-full h-full aspect-[505/800] object-cover rounded-md' />
             </div>
 

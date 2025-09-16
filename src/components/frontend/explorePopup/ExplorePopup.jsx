@@ -32,9 +32,9 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
       <div className="fixed inset-0 bg-black/40" aria-hidden="true" />
 
       {/* Centered content */}
-      <div className="fixed inset-0 flex items-center justify-center p-4">
-        <DialogPanel className="w-full max-w-2xl rounded-2xl bg-white p-8 shadow-xl relative">
-           <div className="py-4 flex items-center justify-between">
+      <div className="fixed inset-0 flex  items-center justify-center p-4">
+        <DialogPanel className="w-full max-w-3xl rounded-sm bg-white p-8 relative overflow-y-auto h-full [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]">
+           <div className="pb-4 flex items-center justify-between">
             <DialogTitle className="text-xl font-medium">
               Get Quotes
             </DialogTitle>
@@ -67,31 +67,31 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
               <Form>
                 {/* Two-column fields */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
+                  <div className="relative">
                     <label className="block text-sm font-semibold mb-1">
                       First name <span className="text-[#dc3545]">*</span>
                     </label>
                     <Field
                       name="firstName"
                       placeholder="Enter First Name"
-                      className="w-full rounded-sm border border-[#dbdbdb] px-3 py-3"
+                      className="w-full rounded-sm border border-[#dbdbdb] px-3 py-2.5"
                     />
-                    <ErrorMessage name="firstName" component="div" className="text-sm text-[#dc3545] mt-1" />
+                    <ErrorMessage name="firstName" component="div" className="font-medium text-[10px] text-[#dc3545] mt-1 absolute -bottom-4 left-0" />
                   </div>
 
-                  <div>
+                  <div className="relative">
                     <label className="block text-sm font-semibold mb-1">
                       Last name <span className="text-[#dc3545]">*</span>
                     </label>
                     <Field
                       name="lastName"
                       placeholder="Enter Last Name"
-                      className="w-full rounded-sm border border-[#dbdbdb] px-3 py-3"
+                      className="w-full rounded-sm border border-[#dbdbdb] px-3 py-2.5"
                     />
-                    <ErrorMessage name="lastName" component="div" className="text-sm text-[#dc3545] mt-1" />
+                    <ErrorMessage name="lastName" component="div" className="font-medium text-[10px] text-[#dc3545] mt-1 absolute -bottom-4 left-0" />
                   </div>
 
-                  <div>
+                  <div className="relative">
                     <label className="block text-sm font-semibold mb-1">
                       Email <span className="text-[#dc3545]">*</span>
                     </label>
@@ -99,12 +99,12 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                       name="email"
                       type="email"
                       placeholder="Enter Email"
-                      className="w-full rounded-sm border border-[#dbdbdb] px-3 py-3"
+                      className="w-full rounded-sm border border-[#dbdbdb] px-3 py-2.5"
                     />
-                    <ErrorMessage name="email" component="div" className="text-sm text-[#dc3545] mt-1" />
+                    <ErrorMessage name="email" component="div" className="font-medium text-[10px] text-[#dc3545] mt-1 absolute -bottom-4 left-0" />
                   </div>
 
-                  <div>
+                  <div className="relative">
                     <label className="block text-sm font-semibold mb-1">
                       Mobile <span className="text-[#dc3545]">*</span>
                     </label>
@@ -114,36 +114,36 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                         name="mobile"
                         type="tel"
                         placeholder="Enter Mobile"
-                        className="flex-1 rounded-r-sm border border-[#dbdbdb] px-3 py-3"
+                        className="flex-1 rounded-r-sm border border-[#dbdbdb] px-3 py-2.5"
                       />
                     </div>
-                    <ErrorMessage name="mobile" component="div" className="text-sm text-[#dc3545] mt-1" />
+                    <ErrorMessage name="mobile" component="div" className="font-medium text-[10px] text-[#dc3545] mt-1 absolute -bottom-4 left-0" />
                   </div>
 
-                  <div>
+                  <div className="relative">
                     <label className="block text-sm font-semibold mb-1">
                       City <span className="text-[#dc3545]">*</span>
                     </label>
-                    <Field as="select" name="city" className="w-full rounded-sm border border-[#dbdbdb] px-3 py-3">
+                    <Field as="select" name="city" className="w-full rounded-sm border border-[#dbdbdb] px-3 py-2.5">
                       <option value="">Select City</option>
                       <option value="Delhi">Delhi</option>
                       <option value="Mumbai">Mumbai</option>
                       <option value="Bangalore">Bangalore</option>
                     </Field>
-                    <ErrorMessage name="city" component="div" className="text-sm text-[#dc3545] mt-1" />
+                    <ErrorMessage name="city" component="div" className="font-medium text-[10px] text-[#dc3545] mt-1 absolute -bottom-4 left-0" />
                   </div>
 
-                  <div>
+                  <div className="relative">
                     <label className="block text-sm font-semibold mb-1">
                       No. of Seats <span className="text-[#dc3545]">*</span>
                     </label>
-                    <Field as="select" name="seats" className="w-full rounded-sm border border-[#dbdbdb] px-3 py-3">
+                    <Field as="select" name="seats" className="w-full rounded-sm border border-[#dbdbdb] px-3 py-2.5">
                       <option value="">Select No. of Seats</option>
                       <option value="1-5">1–5</option>
                       <option value="6-20">6–20</option>
                       <option value="21+">21+</option>
                     </Field>
-                    <ErrorMessage name="seats" component="div" className="text-sm text-[#dc3545] mt-1" />
+                    <ErrorMessage name="seats" component="div" className="font-medium text-[10px] text-[#dc3545] mt-1 absolute -bottom-4 left-0" />
                   </div>
                 </div>
                 <div className="border-b pb-6 border-[#dbdbdb]">
@@ -159,13 +159,11 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
             )}
           </Formik>
 
-          <p className="mt-6 text-xs text-gray-500">
+          <p className="mt-6 text-xs text-gray-500 text-center">
             After you submit a workspace enquiry, we may share your details with workspace providers
             to follow up on your enquiry. Please read our{" "}
-            <a href="/privacy" className="text-orange-500 underline">
-              Privacy Policy
-            </a>{" "}
-            for details of how we process information.
+            <a href="#" className="text-[#f76900] underline">
+              Privacy Policy </a> for details of how we process information.
           </p>
         </DialogPanel>
       </div>

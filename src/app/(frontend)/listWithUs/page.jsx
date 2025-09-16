@@ -8,35 +8,33 @@ import { useEffect, useState } from "react";
 const page = () => {
 const person = [
     {
-    name: "Ganesh OfficeBing",
+    name: "Ganesh Ghodekar",
     image: "/images/Ganesh-OfficeBing.webp",
+    content: "Working with Flexo has been an excellent experience. The platform is efficient and user-friendly, making it easy to connect with potential clients and manage inquiries seamlessly. Flexo has significantly helped in generating quality leads and successfully closing deals for our office spaces. The leads we receive through Flexo are well-targeted and relevant, which has streamlined our leasing process and improved our conversion rate. What sets Flexo apart from other platforms is the personalized support and prompt communication we receive from their team. They have been incredibly helpful, always responsive, and proactive in ensuring smooth coordination and timely updates. Their dedication and professionalism make a real difference. I would highly recommend Flexo to other space operators. Their platform, combined with the attentive support from team members, makes them a valuable partner in maximizing occupancy and growing your business. Flexo has proven to be a reliable and results-driven partner, and we highly recommend them to other space operators looking to maximize occupancy and grow their business.",
+    designation:"Office Bing, Area Sales Manager"
     },
+    
     {
     name: "Rushad Ghaswala",
     image: "/images/Rushad-Ghaswala-WeWork.webp",
+    content: "Our experience with Flexo has been nothing short of outstanding. The team’s professionalism, efficiency, and dedication have made a significant impact on our operations. What stands out the most is how seamlessly they coordinate with us for site visits, deal closures, and specific client requirements. Their proactive communication and attention to detail ensure that every lead is handled with care, and every opportunity is maximized.The level of collaboration and support we receive from Flexo is unmatched. Their team is always accessible, responsive, and ready to adapt to our needs, making the entire workflow incredibly efficient. I would recommend Flexo to any space operator looking for a reliable, results-driven partner in the industry.",
+    designation:"WeWork India, Senior Lead - Sales Transactions"
+    },
+
+    {
+    name: "Manas Dhanghakar",
+    image: "/images/Manas-Eszi.webp",
+    content: "Working with Flexo has been a great experience. Their team is incredibly professional and helpful throughout the process from site visits to deal closures. Flexo stands out for its transparency and in-depth industry knowledge make them a valuable platform for coworking operators and clients alike. We highly recommend Flexo to other space operators and hosts, as they have helped us achieve many successful closures.",
+    designation:"EsziWorkN, Community and Facility Manager"
     },
     {
-    name: "wework bkc bkc coworking space 6_110330.webp",
-    image: "/images/6_110330.webp",
-    },
-    {
-    name: "wework bkc bkc coworking space 6_816657.webp",
-    image: "/images/6_816657.webp",
-    },
-    {
-    name: "wework bkc bkc coworking space 6_857568.webp",
-    image: "/images/6_857568.webp",
-    },
-    {
-    name: "wework bkc bkc coworking space 6_220604.webp",
-    image: "/images/6_220604.webp",
-    },
-    {
-    name: "wework bkc bkc coworking space 6_477318.webp",
-    image: "/images/6_477318.webp",
+    name: "Amandeep Manaktala",
+    image: "/images/Amandeep-EFC.webp",
+    content: "Working with Flexo has been an amazing experience. The team is a great asset, providing valuable support and ensuring a smooth process. Flexo has played a crucial role in helping us close deals at key locations like BKC and Kurla Centrium. What sets them apart is their ability to bring serious clients who are well-informed and decisive, leading to faster closures. Their transparency, professionalism, and industry expertise make them a trusted partner. We highly recommend Flexo to other space operators looking for a reliable and results-driven platform.",
+    designation:"EFC Limited, Sr. Sales Manager"
     },
   ];
-const coworkingSpaces = [
+  const coworkingSpaces = [
   {
     title: "Coworking Spaces",
     img: "/images/Coworking.webp",
@@ -51,31 +49,26 @@ const coworkingSpaces = [
     title: "Studio",
     img: "/images/Studio-Space.webp",
     desc: "Perfect for podcasting, photoshoots, and video production."
-
   },
   {
     title: "Office Spaces",
     img: "/images/Office-Space.webp",
     desc: "For long-term rentals"
-
   },
   {
     title: "Activity Spaces",
     img: "/images/Activity-Space.webp",
     desc: "For fitness studios, dance halls, yoga centers, or any creative space."
-
   },
   {
     title: "Unique Spaces",
     img: "/images/And-much-more.webp",
     desc: "Multipurpose spaces that cater to every experience."
-
   },
   {
     title: "Meeting Rooms",
     img: "/images/Meeting-Room.webp",
     desc: "Equipped for business discussions and training sessions."
-
   },
 ];
   return (
@@ -260,42 +253,44 @@ const coworkingSpaces = [
           </div>
         </section>
 
-        <section className='w-full relative'>
+        <section className='w-full relative lg:py-8 py-4'>
           <div className='max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto py-6'>
-            <div className='max-w-[800px] flex flex-col mx-auto px-6'>
+            <div className='max-w-[800px] flex flex-col mx-auto px-6 mb-10'>
               <h2 className='md:text-[32px] text-xl font-medium text-center text-[#333]'>
                 Host Success Stories
               </h2>
             </div>
-            <div className='p-6 shadow-[0_0_3px_#b3b3b3] rounded-[5px] mb-2'>
+          <div className='lg:p-6 p-2 shadow-[0_0_3px_#b3b3b3] rounded-[5px] mb-2'>
             <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
               {person.map((person, index) => (
-                <div
-                  key={index}
-                  className="embla__slide relative shrink-0 basis-full"
-                >
-                 
-                    <div className='flex lg:flex-row flex-col gap-2'>
-                      <div className='lg:w-2/5 w-full flex flex-col items-center'>
-                        <Image
-                          src={person.image}
-                          alt={person.name}
-                          title={person.name}
-                          width={400}
-                          height={400}
-                          loading="lazy"
-                          className="w-full aspect-sqaure object-cover"
-                        />
-                      </div>
-                      <div className='lg:w-3/5 w-full flex flex-col items-center'>
-                        <p className='text-base mb-6'>Working with Flexo has been an excellent experience. The platform is efficient and user-friendly, making it easy to connect with potential clients and manage inquiries seamlessly. Flexo has significantly helped in generating quality leads and successfully closing deals for our office spaces. The leads we receive through Flexo are well-targeted and relevant, which has streamlined our leasing process and improved our conversion rate. What sets Flexo apart from other platforms is the personalized support and prompt communication we receive from their team. They have been incredibly helpful, always responsive, and proactive in ensuring smooth coordination and timely updates. Their dedication and professionalism make a real difference. I would highly recommend Flexo to other space operators. Their platform, combined with the attentive support from team members, makes them a valuable partner in maximizing occupancy and growing your business. Flexo has proven to be a reliable and results-driven partner, and we highly recommend them to other space operators looking to maximize occupancy and grow their business.</p>
-                      </div>
+              <div key={index} className="embla__slide relative h-full shrink-0 basis-full ">
+                <div className='lg:p-6 p-2 my-2'>
+                <div className='flex lg:flex-row flex-col h-full items-center'>
+                  <div className='lg:w-1/3 md:w-2/5 w-full flex flex-col items-center'>
+                      <Image
+                          src={person.image}                     
+                          alt={person.name}                      
+                          title={person.name}                    
+                          width={1080}                           
+                          height={970}                         
+                          loading="lazy"                        
+                          className="w-[317px] h-[400px] aspect-[317/400] object-cover"
+                      />
+                  </div>
+                  <div className='lg:w-7/12 md:w-7/12 w-full flex flex-col items-start ps-6 md:mt-0 mt-4'>
+                    <div className='quoteMark mb-6'>
+                      <Svg name="quoteMark" className="text-gray-400 size-[55px]"/>
                     </div>
-                
+                    <p className='text-base text-[#777777] text-balance mb-6'>{person.content}</p>
+                    <h5 className='text-base/relaxed text-[#141414] font-medium mb-1'>{person.name}</h5>
+                    <p className='text-sm text-[#777777] font-normal'>{person.designation}</p>
+                  </div>
                 </div>
+                </div>
+              </div>
               ))}
             </EmblaCarousel>
-           </div>
+          </div>
           </div>
         </section>
 

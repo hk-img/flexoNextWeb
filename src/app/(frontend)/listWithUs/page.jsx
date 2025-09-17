@@ -115,7 +115,7 @@ const person = [
         </section>
 
         <section className='chooseSpace w-full relative lg:pt-22 md:pt-12 pt-8'>
-            <div className='max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto py-6'>
+            <div className='container py-6'>
               <div className='flex flex-col lg:flex-row items-center'>
                 <div className='lg:w-7/12 md:w-7/12 w-full flex flex-col'>
                   <div className='relative w-full rounded-lg lg:mt-0 mt-10'>
@@ -129,7 +129,7 @@ const person = [
                 </div>
                 <div className='lg:w-5/12 md:w-5/12 w-full flex flex-col'>
                     <div className='lg:relative lg:z-10 p-3 shadow-[0_0_3px_#bababa] bg-white rounded-md lg:-ml-20 border-2 border-dashed border-[#f76900] lg:mt-0 mt-6'>
-                        <h2 className='font-normal lg:text-2xl/10 text-xl/10'>Join India's Premier Space Marketplace! </h2>
+                        <h2 className='font-normal text-2xl/10'>Join India's Premier Space Marketplace! </h2>
                         <p className='text-sm/normal font-normal text-[#777]'>Join hundreds of hosts with 1,800+ listings from 20+ cities across India and start monetizing your space today. Whether you have a coworking space, office for lease, meeting room, studio, event venue or activity space, Flexo helps you connect with businesses and professionals actively looking for the perfect workspace. </p>
                     </div>
                 </div>
@@ -138,8 +138,8 @@ const person = [
         </section>
         
         <section className='w-full relative lg:py-8 py-4'>
-          <div className='max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto py-6'>
-              <div className='max-w-[800px] flex flex-col mx-auto px-6'>
+          <div className='container py-6'>
+              <div className='w-full flex flex-col mx-auto px-6'>
                 <h2 className='md:text-[32px] text-2xl font-medium text-center text-[#333]'>
                   How It Works
                 </h2>
@@ -165,8 +165,8 @@ const person = [
         </section>
         
         <section className='w-full relative lg:py-8 py-4'>
-          <div className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto lg:py-12 py-6">
-            <div className='max-w-[800px] flex flex-col mx-auto px-6'>
+          <div className="container py-6">
+            <div className='w-full flex flex-col mx-auto px-6'>
               <h2 className="md:text-[32px] text-2xl font-medium text-center text-[#333] mb-4">
                 What Types of Spaces Can You List?
               </h2>
@@ -210,8 +210,8 @@ const person = [
         </section>
 
         <section className='w-full relative'>
-          <div className='max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto py-6'>
-              <div className='max-w-[800px] flex flex-col mx-auto px-6'>
+          <div className='container py-6'>
+              <div className='w-full flex flex-col mx-auto px-6'>
                 <h2 className='md:text-[32px] text-2xl font-medium text-center text-[#333]'>
                   Why List with Flexo?
                 </h2>
@@ -254,43 +254,45 @@ const person = [
         </section>
 
         <section className='w-full relative lg:py-8 py-4'>
-          <div className='max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto py-6'>
-            <div className='max-w-[800px] flex flex-col mx-auto px-6 mb-10'>
+          <div className='container py-6'>
+            <div className='w-full flex flex-col mx-auto px-6 mb-10'>
               <h2 className='md:text-[32px] text-2xl font-medium text-center text-[#333]'>
                 Host Success Stories
               </h2>
             </div>
-          <div className='lg:p-6 p-2 shadow-[0_0_3px_#b3b3b3] rounded-[5px] mb-2'>
-            <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
-              {person.map((person, index) => (
-              <div key={index} className="embla__slide relative h-full shrink-0 basis-full ">
-                <div className='lg:p-6 p-2 my-2'>
-                <div className='flex lg:flex-row flex-col h-full items-center'>
-                  <div className='lg:w-1/3 md:w-2/5 w-full flex flex-col items-center'>
-                      <Image
-                          src={person.image}                     
-                          alt={person.name}                      
-                          title={person.name}                    
-                          width={1080}                           
-                          height={970}                         
-                          loading="lazy"                        
-                          className="w-[317px] h-[400px] aspect-[317/400] object-cover"
-                      />
-                  </div>
-                  <div className='lg:w-7/12 md:w-7/12 w-full flex flex-col items-start lg:ps-6 md:mt-0 mt-4'>
-                    <div className='quoteMark mb-6'>
-                      <Svg name="quoteMark" className="text-gray-400 size-[55px]"/>
+            <div className='mt-3 px-4'>
+            <div className='lg:p-6 p-2 shadow-[0_0_3px_#b3b3b3] rounded-[5px] mb-2'>
+              <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
+                {person.map((person, index) => (
+                <div key={index} className="embla__slide relative h-full shrink-0 basis-full ">
+                  <div className='lg:p-6 p-2 my-2'>
+                  <div className='flex lg:flex-row flex-col h-full items-center'>
+                    <div className='lg:w-1/3 md:w-2/5 w-full flex flex-col items-center'>
+                        <Image
+                            src={person.image}                     
+                            alt={person.name}                      
+                            title={person.name}                    
+                            width={1080}                           
+                            height={970}                         
+                            loading="lazy"                        
+                            className="lg:w-[317px] lg:h-[400px] w-full h-auto aspect-[317/400] object-cover"
+                        />
                     </div>
-                    <p className='lg:text-base text-[15px] text-[#777777] text-balance mb-6'>{person.content}</p>
-                    <h5 className='text-base/relaxed text-[#141414] font-medium mb-1'>{person.name}</h5>
-                    <p className='text-sm text-[#777777] font-normal'>{person.designation}</p>
+                    <div className='lg:w-7/12 md:w-7/12 w-full flex flex-col items-start ps-6 md:mt-0 mt-4'>
+                      <div className='quoteMark mb-6'>
+                        <Svg name="quoteMark" className="text-gray-400 size-[55px]"/>
+                      </div>
+                      <p className='lg:text-base text-[15px] text-[#777777] text-balance mb-6'>{person.content}</p>
+                      <h5 className='text-base/relaxed text-[#141414] font-medium mb-1'>{person.name}</h5>
+                      <p className='text-sm text-[#777777] font-normal'>{person.designation}</p>
+                    </div>
+                  </div>
                   </div>
                 </div>
-                </div>
-              </div>
-              ))}
-            </EmblaCarousel>
-          </div>
+                ))}
+              </EmblaCarousel>
+            </div>
+            </div>
           </div>
         </section>
 

@@ -3,6 +3,7 @@ import Svg from '@/components/svg'
 import Image from 'next/image'
 import React from 'react'
 import { useEffect, useState } from "react";
+import EmblaCarousel from "../emblaCarousel/EmblaCarousel";
 
 const Detail = () => {
   const [isFixed, setIsFixed] = useState(false);
@@ -510,6 +511,54 @@ const Detail = () => {
             </div>
 
           </div>
+        </div>
+      </section>
+      
+      <section className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto py-6">
+        <h2 className="md:text-2xl text-xl font-medium text-[#333] mb-8">
+          Nearby Coworking Spaces
+        </h2>
+        <div>
+            <EmblaCarousel  options={{ loop: true, autoplay: false, showButton: true, align: "start" }} >
+           
+              <div
+              
+                className="embla__slide shrink-0 md:px-4 basis-[100%] sm:basis-[50%] md:basis-[50%] lg:basis-[33.3%] xl:basis-[33.3%] py-3"
+              >
+                <div className=" group border border-gray-200 rounded-md shadow-[0_0_3px_#cbcbcb] p-4 relative bg-white hover:transform hover:translate-y-[-10px] transition-all duration-500">
+                  <span className="absolute top-3 right-3 text-[#f76900] text-4xl font-bold opacity-40">
+                    <Svg name="quots" className="size-9" />
+                  </span>
+
+                  <div className="flex items-center gap-3 mb-4">
+                    
+                    <div className="space-y-1">
+                      <h5 className="font-medium text-[17px] text-black">
+                      
+                      </h5>
+                      <p className="font-medium text-[15px] text-black">
+                        
+                      </p>
+                      <p
+                        className="text-xs font-bold text-[#cd854f]"
+                        
+                      >
+                       
+                      </p>
+                      <div className="flex items-center mt-2 text-[#fbbf24]">
+                        
+                          <Svg  name="star" className="size-4.5" />
+                        
+                      </div>
+                    </div>
+                  </div>
+
+                  <p className="text-[#777] text-sm line-clamp-5 group-hover:line-clamp-none transition-all duration-500 cursor-default">
+                   
+                  </p>
+                </div>
+              </div>
+          </EmblaCarousel>
         </div>
       </section>
     </>

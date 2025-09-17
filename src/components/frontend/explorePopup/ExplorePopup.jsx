@@ -32,10 +32,10 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
       <div className="fixed inset-0 bg-black/40" aria-hidden="true" />
 
       {/* Centered content */}
-      <div className="fixed inset-0 flex  items-center justify-center p-4">
-        <DialogPanel className="w-full max-w-3xl rounded-sm bg-white p-8 relative overflow-y-auto h-full [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]">
-           <div className="pb-4 flex items-center justify-between">
-            <DialogTitle className="text-xl font-medium">
+      <div className="fixed inset-0 flex  items-center justify-center px-4">
+        <DialogPanel className="w-full max-w-3xl rounded-[11px] bg-white p-6 relative overflow-y-auto h-full [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]">
+           <div className="pb-6 flex items-center justify-between">
+            <DialogTitle className="text-lg font-semibold">
               Get Quotes
             </DialogTitle>
             <button
@@ -45,7 +45,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
               <Svg name="close" className="size-5" />
             </button>
           </div>
-          <div className="px-4 py-3 bg-[#f4f4f4] mb-6">
+          <div className="px-5 py-[10px] bg-[#f4f4f4] mb-6">
             <p className="text-[#000000de]  text-[13px]">
               Our workspace advisor will get in touch to help you with your requirement.
             </p>
@@ -146,24 +146,23 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                     <ErrorMessage name="seats" component="div" className="font-medium text-[10px] text-[#dc3545] mt-1 absolute -bottom-4 left-0" />
                   </div>
                 </div>
-                <div className="border-b pb-6 border-[#dbdbdb]">
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="mt-6 w-full bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white py-4 rounded-[15px] font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px]"
-                >
-                  {isSubmitting ? "Submitting..." : "SUBMIT"}
-                </button>
+                <div className="border-b pb-4 border-[#dbdbdb]">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="mt-6 w-full bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white py-4 rounded-[15px] font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px]"
+                  >
+                    {isSubmitting ? "Submitting..." : "SUBMIT"}
+                  </button>
                 </div>
               </Form>
             )}
           </Formik>
 
-          <p className="mt-6 text-xs text-gray-500 text-center">
-            After you submit a workspace enquiry, we may share your details with workspace providers
-            to follow up on your enquiry. Please read our{" "}
-            <a href="#" className="text-[#f76900] underline">
-              Privacy Policy </a> for details of how we process information.
+          <p className="mt-4 pb-5 px-5 text-balance text-[11px] text-[#000000de] text-center">
+            After you submit a workspace enquiry to us, we may share your details with workspace providers, who may contact you to follow up on your enquiry." Please read our
+            <a href="#" className="text-[#f76900]">
+              Privacy Policy </a> for details of how we process the information.
           </p>
         </DialogPanel>
       </div>

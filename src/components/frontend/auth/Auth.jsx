@@ -99,7 +99,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
             </button>
             <button className="flex-1 border border-[#dbdbdb] rounded-md py-1 flex items-center justify-center gap-2">
               <Svg name="mail" className="size-4 text-black"/>
-              <span> Mail</span>
+              <span className='text-sm'> Mail</span>
             </button>
           </div>
 

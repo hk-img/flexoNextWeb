@@ -52,7 +52,7 @@ const Testimonial = () => {
         </h2>
       </div>
 
-      <div className="mt-10 flex lg:flex-row gap-[6px]">
+      <div className="mt-10 flex lg:flex-row flex-col gap-[6px]">
         <div className="w-full">
           <EmblaCarousel
             options={{ loop: true, autoplay: false, showButton: true, align: "start" }}

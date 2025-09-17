@@ -1,8 +1,96 @@
 "use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+const Select = dynamic(() => import("react-select"), { ssr: false });
+const typeOptions = [
+  { value: "coworking", label: "Coworking Space" },
+  { value: "private", label: "Private Office" },
+  { value: "classroom", label: "Classroom" },
+  { value: "managed", label: "Managed Office" },
+];
+
+const cityOptions = [
+  { value: "delhi", label: "Delhi" },
+  { value: "mumbai", label: "Mumbai" },
+  { value: "bangalore", label: "Bangalore" },
+  { value: "pune", label: "Pune" },
+  { value: "hyderabad", label: "Hyderabad" },
+];
 
 const HeroSection = () => {
+  const [type, setType] = useState(null);
+  const [city, setCity] = useState(null);
+
+  const customStyles = {
+    container: (base) => ({
+      ...base,
+      width: "260px",
+    }),
+    control: (base, state) => ({
+      ...base,
+      borderRadius: "15px",
+      backgroundColor: "#fff",
+      borderColor: "transparent",
+      minHeight: "46px",
+      height: "46px",
+      boxShadow: "none",
+      outline: "none",
+      "&:hover": {
+        borderColor: "transparent",
+      },
+    }),
+    menu: (base) => ({
+      ...base,
+      marginTop: 4,
+      borderRadius: "12px",
+      backgroundColor: "#fff",
+      boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+      outline: "none",
+    }),
+    valueContainer: (base) => ({
+      ...base,
+      padding: "0 12px",
+    }),
+    placeholder: (base) => ({
+      ...base,
+      color: "#777",
+      fontSize: "0.95rem",
+    }),
+    singleValue: (base) => ({
+      ...base,
+      fontSize: "0.95rem",
+      color: "#333",
+    }),
+    option: (base, state) => ({
+      ...base,
+      padding: "10px 14px",
+      borderRadius: "12px",
+      backgroundColor: state.isSelected
+        ? "#ebf5ff"
+        : state.isFocused
+        ? "#f5faff"
+        : "#fff",
+      color: "#333",
+      fontWeight: state.isSelected ? "bold" : "normal",
+      cursor: "pointer",
+      outline: "none",
+      boxShadow: "none",
+      ":active": {
+        backgroundColor: "#ebf5ff",
+      },
+    }),
+    dropdownIndicator: (base) => ({
+      ...base,
+      color: "#999",
+      padding: "0 8px",
+    }),
+    indicatorsContainer: (base) => ({
+      ...base,
+      paddingRight: "4px", 
+    }),
+  };
+
   const images = [
     "/images/coworking-spaces.webp",
     "/images/desk-spaces.webp",
@@ -75,37 +163,65 @@ const HeroSection = () => {
             </div>
           </div>
           <div className="flex md:flex-row flex-col md:bg-transparent bg-white md:p-0 p-4 rounded-[15px] items-center gap-y-5 gap-x-4 mt-9">
-            <div className=" flex gap-y-5 md:flex-row flex-col bg-white md:rounded-[15px] overflow-hidden w-full max-w-[536px]">
-              <select
-                className="flex-1 px-4 py-2.5 text-black md:border-l md:border-[#d5d5d5] border md:rounded-none rounded-[15px]  border-black outline-none bg-white appearance-none"
-                
-              >
-                <option value="" disabled>
-                  What are you looking for?
-                </option>
-                <option value="coworking">Coworking Spaces</option>
-                <option value="offices">Private Offices</option>
-                <option value="desk">Classroom</option>
-                <option value="managed">Managed Offices</option>
-              </select>
+            <div className="flex gap-y-5 md:flex-row flex-col bg-white md:rounded-[15px] overflow-hidden w-full max-w-[536px]">
+              <Select
+                options={typeOptions}
+                placeholder="What are you looking for?"
+                value={type}
+                onChange={(opt) => setType(opt)}
+                styles={customStyles}
+                menuPosition="fixed"
+                className="flex-1"
+                isClearable
+                components={{
+                  ClearIndicator: (props) => (
+                    <div
+                      {...props.innerProps}
+                      style={{
+                        cursor: "pointer",
+                        padding: "0 8px",
+                        color: "#999",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      ×
+                    </div>
+                  ),
+                }}
+              />
+              <Select
+                options={cityOptions}
+                placeholder="Where?"
+                value={city}
+                onChange={(opt) => setCity(opt)}
+                styles={customStyles}
+                menuPosition="fixed"
+                className="flex-1"
+                // isClearable
+                // components={{
+                //   ClearIndicator: (props) => (
+                //     <div
+                //       {...props.innerProps}
+                //       style={{
+                //         cursor: "pointer",
+                //         padding: "0 8px",
+                //         color: "#999",
+                //         fontWeight: "bold",
+                //       }}
+                //     >
+                //       ×
+                //     </div>
+                //   ),
+                // }}
+              />
+            </div>
 
-              <select
-                className="flex-1 px-4 py-2.5 text-black border rounded-[15px] md:border-transparent border-black outline-none bg-white appearance-none"
-                
-              >
-                <option value="" disabled>
-                  Where?
-                </option>
-                <option value="delhi">Delhi</option>
-                <option value="mumbai">Mumbai</option>
-                <option value="bangalore">Bangalore</option>
-                <option value="pune">Pune</option>
-                <option value="hyderabad">Hyderabad</option>
-              </select>           
-            </div>
-            <div className="md:w-auto w-full">
-              <a href="#" className="bg-[#f76900] px-5 text-white font-medium h-[46px] flex items-center justify-center rounded-xl w-full text-sm"> Search </a>
-            </div>
+            <button
+              onClick={() => console.log(type, city)}
+              className="bg-[#f76900] px-5 text-white font-medium h-[46px] flex items-center justify-center rounded-xl w-full md:w-auto text-sm"
+            >
+              Search
+            </button>
           </div>
         </div>
       </div>

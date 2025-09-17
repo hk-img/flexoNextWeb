@@ -29,7 +29,7 @@ const CoworkingSpaces = () => {
         <span className="text-[#f76900]">Coworking Spaces</span>
       </h2>
 
-      <div className="mt-10 flex flex-col md:flex-row gap-[6px]">
+      <div className="mt-10 flex flex-col md:flex-row gap-1">
         <div className="w-full md:w-1/3">
           <a href="#">
             <div className="relative rounded-sm overflow-hidden h-full">
@@ -60,13 +60,13 @@ const CoworkingSpaces = () => {
                   className="embla__slide shrink-0 
                   basis-[50%] sm:basis-[50%] md:basis-[50%] lg:basis-[33.3%] xl:basis-[33.3%] "
                 >
-                  <div className="grid grid-rows-2 gap-1">
+                  <div className="grid grid-rows-2 gap-1 px-0.5">
                     {cities
                       .slice(colIdx * 2, colIdx * 2 + 2)
                       .map((city, idx) => (
                         <a  key={idx} href="#">
                           <div
-                            className="relative rounded-sm overflow-hidden shadow-md"
+                            className="relative rounded-sm overflow-hidden shadow-md "
                           >
                             <div className="before:content-[''] before:w-full before:h-full before:absolute before:top-0 before:left-0 before:bg-[#0000002b]" />
                             <Image
@@ -79,7 +79,7 @@ const CoworkingSpaces = () => {
                               loading="lazy"
                             />
                             
-                            <div className="absolute bottom-1 left-1 text-white font-semibold text-2xl  px-2 py-1 rounded-md">
+                            <div className="absolute bottom-1 left-1 text-white font-medium text-2xl  px-2 py-1 rounded-md">
                               {city.name}
                             </div>
                           </div>

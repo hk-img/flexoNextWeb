@@ -73,8 +73,8 @@ const person = [
 ];
   return (
     <>
-        <section className="relative w-full lg:top-20 top-16">
-          <div className='flex items-center h-full'>
+      <section className="relative w-full lg:top-20 top-16">
+        <div className='flex items-center h-full justify-center py-[50px]'>
             <img
               src="/images/list_with_us_banner.webp"
               alt="List Your Space and Grow Your Earnings"
@@ -83,36 +83,38 @@ const person = [
               title="List Your Space and Grow Your Earnings"
               className="absolute inset-0 w-full h-full lg:h-[484px] object-cover"
             />
-          </div>
-          <div className="relative flex justify-end lg:py-8 py-6">
-            <div className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 py-6">
-              <div className='w-full relative flex flex-col items-start justify-end text-white lg:left-10'>
-                <h1 className='lg:w-4/5 w-full lg:text-4xl md:text-[17px] lg:!leading-12 text-white font-medium mb-4'>List Your Space and Grow Your Earnings</h1>
-                <ul className='flex flex-col lg:ps-6 ps-2'>
-                  <li className='lg:mb-4 mb-2 flex items-center text-white lg:text-[21px] text-base'>
-                    <span className='pe-2'><Svg name="check" className="size-[24px] text-white"/></span>
-                      Get Qualified Leads and Bookings 
-                  </li>
-                  <li className='lg:mb-4 mb-2 flex items-center text-white lg:text-[21px] text-base'>
-                      <span className='pe-2'><Svg name="check" className="size-[24px] text-white"/></span>
-                      Maximise Occupancy Levels and Revenue
-                  </li>
-                  <li className='lg:mb-4 mb-2 flex items-center text-white lg:text-[21px] text-base'>
-                      <span className='pe-2'><Svg name="check" className="size-[24px] text-white"/></span>
-                      Increase Visibility and Reach
-                  </li>
-                  <li className='lg:mb-4 mb-2 flex items-center text-white lg:text-[21px] text-base'>
-                      <span className='pe-2'><Svg name="check" className="size-[24px] text-white"/></span>
-                      Turn Unused Space Into Profit
-                  </li>
-                </ul>
-                <div className='mt-5 md:ps-6 ps-2'>
-                  <button className="bg-[#f76900] text-sm text-white px-[30px] py-4 rounded-[3px] cursor-pointer font-medium duration-500 transition flex items-center gap-2"><span>Let's Get Started</span></button>
+          <div className="container flex justify-end">
+            <div className='flex flex-wrap mx-[-15px] justify-end'>
+              <div className="lg:w-10/12 md:w-10/12 px-[15px] w-full">
+                <div className='w-full relative flex flex-col items-start text-white'>
+                  <h1 className='w-full lg:text-4xl md:text-[17px] lg:!leading-[1.6] text-white font-medium mb-4'>List Your Space and Grow Your Earnings</h1>
+                    <ul className='flex flex-col text-start ps-2 md:ps-[16px]'>
+                      <li className='lg:mb-4 md:mb-4 mb-2 flex items-center text-white lg:text-[21px] text-base'>
+                        <span className='pe-2'><Svg name="check" className="size-[24px] text-white"/></span>
+                          Get Qualified Leads and Bookings 
+                      </li>
+                      <li className='lg:mb-4 md:mb-4 mb-2 flex items-center text-white lg:text-[21px] text-base'>
+                          <span className='pe-2'><Svg name="check" className="size-[24px] text-white"/></span>
+                          Maximise Occupancy Levels and Revenue
+                      </li>
+                      <li className='lg:mb-4 md:mb-4 mb-2 gap-2 flex items-center text-white lg:text-[21px] text-base'>
+                          <span className='pe-2'><Svg name="check" className="size-[24px] text-white"/></span>
+                          Increase Visibility and Reach
+                      </li>
+                      <li className='flex items-center gap-2 text-white lg:text-[21px] text-base'>
+                          <span className='pe-2'><Svg name="check" className="size-[24px] text-white"/></span>
+                          Turn Unused Space Into Profit
+                      </li>
+                    </ul>
+                    <div className='mt-5 md:ps-6 ps-2'>
+                      <button className="bg-[#f76900] text-sm text-white px-[30px] py-4 rounded-[3px] cursor-pointer font-medium duration-500 transition flex items-center gap-2"><span>Let's Get Started</span></button>
+                    </div>
                 </div>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
         <section className='chooseSpace w-full relative lg:pt-22 md:pt-12 pt-8'>
             <div className='container py-6'>

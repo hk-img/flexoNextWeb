@@ -2,7 +2,11 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { components as RSComponents } from "react-select"; 
+import Svg from "@/components/svg";
+
 const Select = dynamic(() => import("react-select"), { ssr: false });
+
 const typeOptions = [
   { value: "coworking", label: "Coworking Space" },
   { value: "private", label: "Private Office" },
@@ -18,10 +22,43 @@ const cityOptions = [
   { value: "hyderabad", label: "Hyderabad" },
 ];
 
-const HeroSection = () => {
+export default function HeroSection() {
   const [type, setType] = useState(null);
   const [city, setCity] = useState(null);
 
+  const DropdownIndicator = (props) => {
+  const { menuIsOpen } = props.selectProps;
+
+  return (
+    <RSComponents.DropdownIndicator {...props}>
+      <Svg
+        name="arrowDropDown"
+        className={`size-4.5 text-gray-500 transition-transform duration-200 ${
+          menuIsOpen ? "rotate-180" : "rotate-0"
+        }`}
+      />
+    </RSComponents.DropdownIndicator>
+  );
+};
+
+  const ClearIndicator = (props) => {
+    return (
+      <RSComponents.ClearIndicator {...props}>
+        <div
+          // inner clickable area (we let the wrapper handle events)
+          style={{
+            cursor: "pointer",
+            padding: "0 8px",
+            color: "#999",
+            fontWeight: "bold",
+          }}
+        >
+          ×
+        </div>
+      </RSComponents.ClearIndicator>
+    );
+  };
+const IndicatorSeparator = () => null;
   const customStyles = {
     container: (base) => ({
       ...base,
@@ -87,7 +124,7 @@ const HeroSection = () => {
     }),
     indicatorsContainer: (base) => ({
       ...base,
-      paddingRight: "4px", 
+      paddingRight: "4px",
     }),
   };
 
@@ -100,7 +137,6 @@ const HeroSection = () => {
     "/images/private-offices.webp",
     "/images/workspaces.webp",
   ];
-
   const texts = [
     "Coworking Spaces",
     "Desk Rooms",
@@ -115,16 +151,18 @@ const HeroSection = () => {
   const [currentText, setCurrentText] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImage((prev) => (prev + 1) % images.length);
-    }, 5000);
+    const interval = setInterval(
+      () => setCurrentImage((prev) => (prev + 1) % images.length),
+      5000
+    );
     return () => clearInterval(interval);
   }, [images.length]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentText((prev) => (prev + 1) % texts.length);
-    }, 5000);
+    const interval = setInterval(
+      () => setCurrentText((prev) => (prev + 1) % texts.length),
+      5000
+    );
     return () => clearInterval(interval);
   }, [texts.length]);
 
@@ -149,7 +187,7 @@ const HeroSection = () => {
       ))}
 
       <div className="absolute inset-0 bg-black/40 flex flex-col justify-center text-white">
-        <div className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-4 mx-auto w-full">
+        <div className="container px-[15px] mx-auto w-full">
           <div className=" md:text-start text-center">
             <h1 className="text-4xl md:text-[56px] font-semibold transition-all duration-700 ease-in-out mb-1">
               Discover Amazing{" "}
@@ -162,6 +200,7 @@ const HeroSection = () => {
               {texts[currentText]}
             </div>
           </div>
+
           <div className="flex md:flex-row flex-col md:bg-transparent bg-white md:p-0 p-4 rounded-[15px] items-center gap-y-5 gap-x-4 mt-9">
             <div className="flex gap-y-5 md:flex-row flex-col bg-white md:rounded-[15px] overflow-hidden w-full max-w-[536px]">
               <Select
@@ -174,21 +213,12 @@ const HeroSection = () => {
                 className="flex-1"
                 isClearable
                 components={{
-                  ClearIndicator: (props) => (
-                    <div
-                      {...props.innerProps}
-                      style={{
-                        cursor: "pointer",
-                        padding: "0 8px",
-                        color: "#999",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      ×
-                    </div>
-                  ),
+                  ClearIndicator,
+                  DropdownIndicator,
+                  IndicatorSeparator,
                 }}
               />
+
               <Select
                 options={cityOptions}
                 placeholder="Where?"
@@ -197,22 +227,12 @@ const HeroSection = () => {
                 styles={customStyles}
                 menuPosition="fixed"
                 className="flex-1"
-                // isClearable
-                // components={{
-                //   ClearIndicator: (props) => (
-                //     <div
-                //       {...props.innerProps}
-                //       style={{
-                //         cursor: "pointer",
-                //         padding: "0 8px",
-                //         color: "#999",
-                //         fontWeight: "bold",
-                //       }}
-                //     >
-                //       ×
-                //     </div>
-                //   ),
-                // }}
+                isClearable
+                components={{
+                  ClearIndicator,
+                  DropdownIndicator,
+                  IndicatorSeparator,
+                }}
               />
             </div>
 
@@ -227,6 +247,4 @@ const HeroSection = () => {
       </div>
     </section>
   );
-};
-
-export default HeroSection;
+}

@@ -42,7 +42,7 @@ const Header = () => {
           hidden ? "-translate-y-full " : "translate-y-0 shadow-[0_0_12px_0_#0000004d]"
         } bg-white`}
       >
-        <div className="container w-full mx-auto lg:py-5 md:py-[20.5px] py-[17px]">
+        <div className="container w-full mx-auto lg:py-5 sm:py-[20.5px] py-[17px]">
           <div className="flex justify-between items-center">
             <div className="px-[15px]">
               <Link href="/">
@@ -50,7 +50,7 @@ const Header = () => {
                   src="/images/logo.webp"
                   alt="logo"
                   title="logo"
-                  className="xl:w-[130px] lg:w-[114px] sm:w-[74px] w-[100px]"
+                  className="xl:w-[130px] lg:w-[114px] md:w-[74px] w-[100px]"
                   width={137}
                   height={37}
                 />

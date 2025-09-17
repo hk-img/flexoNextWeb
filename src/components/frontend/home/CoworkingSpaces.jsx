@@ -23,9 +23,9 @@ const CoworkingSpaces = () => {
   ]
 
   return (
-    <div className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto">
-      <h2 className="md:text-[32px] text-xl font-medium text-center text-[#333]">
-        Explore India's Premier Network of{" "}
+    <div className="container mx-auto text-center md:px-1 px-[15px]">
+      <h2 className="sm:text-[32px] text-2xl font-medium text-center text-[#333]">
+        Explore India's Premier Network of
         <span className="text-[#f76900]">Coworking Spaces</span>
       </h2>
 
@@ -41,12 +41,14 @@ const CoworkingSpaces = () => {
                   src="/images/mumbai.webp"
                   alt="mumbai coworking"
                   title="mumbai coworking"
-                  className="h-[250px] md:h-full w-full object-cover"
+                  className=" xl:h-[405px] sm:h-full w-full object-cover"
                   loading="lazy"
                 />
               </div>
-              <div className="absolute bottom-1 left-1 text-white font-semibold text-2xl px-2 py-1 rounded-md">
-                Mumbai
+              <div className="absolute bottom-1 left-1 text-white font-semibold md:text-2xl text-xl px-2 py-1 rounded-md">
+                <h3>
+                  Mumbai
+                </h3>
               </div>
             </div>
           </a>
@@ -57,16 +59,16 @@ const CoworkingSpaces = () => {
               (_, colIdx) => (
                 <div
                   key={colIdx}
-                  className="embla__slide shrink-0 
+                  className="embla__slide shrink-0 h-full 
                   basis-[50%] sm:basis-[50%] md:basis-[50%] lg:basis-[33.3%] xl:basis-[33.3%] "
                 >
-                  <div className="grid grid-rows-2 gap-1 px-0.5">
+                  <div className="grid grid-rows-2 gap-1 px-0.5 h-full">
                     {cities
                       .slice(colIdx * 2, colIdx * 2 + 2)
                       .map((city, idx) => (
                         <a  key={idx} href="#">
                           <div
-                            className="relative rounded-sm overflow-hidden shadow-md "
+                            className="relative rounded-sm overflow-hidden shadow-md h-full"
                           >
                             <div className="before:content-[''] before:w-full before:h-full before:absolute before:top-0 before:left-0 before:bg-[#0000002b]" />
                             <Image
@@ -79,8 +81,10 @@ const CoworkingSpaces = () => {
                               loading="lazy"
                             />
                             
-                            <div className="absolute bottom-1 left-1 text-white font-medium text-2xl  px-2 py-1 rounded-md">
-                              {city.name}
+                            <div className="absolute bottom-1 left-1 text-white font-medium md:text-2xl text-xl  px-2 py-1 rounded-md">
+                              <h3>
+                                {city.name}
+                              </h3>
                             </div>
                           </div>
                         </a>

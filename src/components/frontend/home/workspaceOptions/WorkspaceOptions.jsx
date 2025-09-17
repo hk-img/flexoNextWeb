@@ -39,14 +39,14 @@ const coworkingSpaces = [
 const WorkspaceOptions = () => {
 
   return (
-    <div className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto py-12">
-      <div className='max-w-[800px] px-6 mx-auto'>
-        <h2 className="md:text-[32px] text-xl font-medium text-center text-[#333]">
+    <div className="container mx-auto text-center px-[15px] pt-[84px]">
+      <div className='max-w-[900px] md:px-6 mx-auto'>
+        <h2 className="sm:text-[32px] text-2xl leading-[1.2] font-medium text-center text-[#333]">
           With <span className="text-[#f76900]">1800+</span> Workspace Options, We have the Right Space for Every Team
 
         </h2>
       </div>
-      <div className="mt-10 flex lg:flex-row gap-[6px]">
+      <div className="sm:mt-10 mt-16 flex lg:flex-row gap-[6px]">
 
         <div className="w-full">
           <EmblaCarousel

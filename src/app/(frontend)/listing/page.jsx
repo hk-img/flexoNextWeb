@@ -1,10 +1,21 @@
+"use client";
+import { useState, useEffect } from "react";
 import EmblaCarousel from "@/components/frontend/emblaCarousel/EmblaCarousel"
 import Image from 'next/image';
 import Svg from '@/components/svg';
 import TrustedCompanies from "@/components/frontend/home/TrustedCompanies";
 import Testimonial from "@/components/frontend/home/Testimonial";
+import dynamic from "next/dynamic";
 
+const Select = dynamic(() => import("react-select"), { ssr: false });
+  const typeOptions = [
+    { value: "coworking", label: "Coworking Space" },
+    { value: "private", label: "Private Office" },
+    { value: "classroom", label: "Classroom" },
+    { value: "managed", label: "Managed Office" },
+  ];
 const page = () => {
+    const [type, setType] = useState(null);
   const cities = [
     {
     name: "wework bkc bkc coworking space 6_681160.webp",
@@ -35,6 +46,74 @@ const page = () => {
     image: "/images/6_477318.webp",
     },
   ];
+  const customStyles = {
+    container: (base) => ({
+      ...base,
+      width: "260px",
+    }),
+    control: (base, state) => ({
+      ...base,
+      borderRadius: "15px",
+      backgroundColor: "#fff",
+      borderColor: "transparent",
+      minHeight: "46px",
+      height: "46px",
+      boxShadow: "none",
+      outline: "none",
+      "&:hover": {
+        borderColor: "transparent",
+      },
+    }),
+    menu: (base) => ({
+      ...base,
+      marginTop: 4,
+      borderRadius: "12px",
+      backgroundColor: "#fff",
+      boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+      outline: "none",
+    }),
+    valueContainer: (base) => ({
+      ...base,
+      padding: "0 12px",
+    }),
+    placeholder: (base) => ({
+      ...base,
+      color: "#777",
+      fontSize: "0.95rem",
+    }),
+    singleValue: (base) => ({
+      ...base,
+      fontSize: "0.95rem",
+      color: "#333",
+    }),
+    option: (base, state) => ({
+      ...base,
+      padding: "10px 14px",
+      borderRadius: "12px",
+      backgroundColor: state.isSelected
+        ? "#ebf5ff"
+        : state.isFocused
+        ? "#f5faff"
+        : "#fff",
+      color: "#333",
+      fontWeight: state.isSelected ? "bold" : "normal",
+      cursor: "pointer",
+      outline: "none",
+      boxShadow: "none",
+      ":active": {
+        backgroundColor: "#ebf5ff",
+      },
+    }),
+    dropdownIndicator: (base) => ({
+      ...base,
+      color: "#999",
+      padding: "0 8px",
+    }),
+    indicatorsContainer: (base) => ({
+      ...base,
+      paddingRight: "4px", 
+    }),
+  };
   return (
     <>
       <section className="w-full relative lg:py-16 bg-white">
@@ -183,15 +262,41 @@ const page = () => {
                 <div className='filterRow w-full flex lg:flex-row flex-col items-center gap-4'>
                   <div className='lg:w-3/5 w-full filters-buttons flex justify-between items-center'>
                     <div>
-                      <ul className='flex'>
+                      <ul className='flex relative'>
                           <li className='text-[13px] !leading-8 font-normal list-style-none'>
                             <a href='' className='flex items-center cursor-pointer font-medium text-[#777777] text-sm'>
                               Space Type
                               <svg className='text-[#777777] size-5' stroke="currentColor" fill="currentColor" viewBox="0 0 512 512" height="20px" width="20px" xmlns="http://www.w3.org/2000/svg"><path d="M128 192l128 128 128-128z"></path></svg>
                             </a>
                           </li>
-                        </ul>
+                      </ul>
+                      <Select
+                          options={typeOptions}
+                          // placeholder="What are you looking for?"
+                          value={type}
+                          onChange={(opt) => setType(opt)}
+                          styles={customStyles}
+                          menuPosition="fixed"
+                          className="flex-1"
+                          isClearable
+                          components={{
+                            ClearIndicator: (props) => (
+                              <div
+                                {...props.innerProps}
+                                style={{
+                                  cursor: "pointer",
+                                  padding: "0 8px",
+                                  color: "#999",
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                ×
+                              </div>
+                            ),
+                          }}
+                      />
                     </div>
+                    
                     <div>
                         <ul className='flex'>
                           <li className='text-[13px] !leading-8 font-normal list-style-none'>
@@ -219,8 +324,13 @@ const page = () => {
                           className="sr-only peer"
                           defaultChecked
                         />
-                        <div className="w-8 h-[10px] bg-gray-300 rounded-full peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-transparent peer-checked:bg-[#f76900] 
-                            relative after:absolute after:top-[-4px] after:left-[0px] after:bg-[#f76900] after:border-[#f76900] after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-6"
+                        <div className="w-[36px] h-[14px] shrink-0 bg-[#00000061] rounded-lg 
+                            peer-checked:bg-[#f76900] 
+                            relative after:absolute after:top-[-4px] after:left-[-7px] 
+                            after:bg-[#fafafa] after:border after:border-[#fafafa] 
+                            after:rounded-full after:h-5 after:w-5 after:transition-all 
+                            after:duration-500 after:shadow-[0px_2px_1px_-1px_rgba(0,0,0,0.2),0px_1px_1px_0px_rgba(0,0,0,0.14),0px_1px_3px_0px_rgba(0,0,0,0.12)] peer-checked:after:translate-x-6 peer-checked:after:bg-[#f76900] 
+                            peer-checked:after:border-[#f76900]"
                         ></div>
                         <span className="ms-3 text-sm font-normal text-[#777777]">
                           Map

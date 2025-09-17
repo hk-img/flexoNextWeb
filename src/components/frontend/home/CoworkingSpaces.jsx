@@ -79,7 +79,7 @@ const CoworkingSpaces = () => {
                               loading="lazy"
                             />
                             
-                            <div className="absolute bottom-1 left-1 text-white font-semibold text-2xl  px-2 py-1 rounded-md">
+                            <div className="absolute bottom-1 left-1 text-white font-medium text-2xl  px-2 py-1 rounded-md">
                               {city.name}
                             </div>
                           </div>

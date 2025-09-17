@@ -168,7 +168,7 @@ const Detail = () => {
                 <div
                   className={`${
                     isFixed
-                      ? "fixed shadow-md top-0 z-40 w-full left-0 right-0 px-10"
+                      ? "fixed shadow-md top-0 z-40 w-full left-0 right-0 px-30 h-[80px]"
                       : "relative"
                   } justify-between  border-t border-b bg-white border-[#ddd] md:flex hidden`}
                 >
@@ -747,8 +747,8 @@ const Detail = () => {
         </div>
       </section>
 
-      <section className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto py-6">
-        <h2 className="md:text-2xl text-xl font-medium text-[#333] mb-8">
+      <section className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto pb-6 pt-10">
+        <h2 className="md:text-2xl text-xl font-medium text-[#333] mb-5">
           Nearby Coworking Spaces
         </h2>
         <div>
@@ -757,12 +757,15 @@ const Detail = () => {
               loop: true,
               autoplay: false,
               showButton: true,
+              showDots: true,
               align: "start",
             }}
           >
             {
               Array.from({ length: 10 }).map((_, index) => (
-                <ProductCard key={index}/>
+                 <div key={index} className="shrink-0 px-[9px] basis-[100%] sm:basis-[50%] md:basis-[50%] lg:basis-[33.3%] xl:basis-[33.3%] py-3">
+                  <ProductCard />
+                </div>
               ))
             }
           </EmblaCarousel>

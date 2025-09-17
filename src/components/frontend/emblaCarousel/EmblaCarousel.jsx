@@ -45,13 +45,13 @@ export default function EmblaCarousel({ children, options }) {
       )}
 
       {options?.showDots && (
-        <div className="flex justify-center mt-4 gap-2">
+        <div className="flex justify-center mt-4 gap-6">
           {scrollSnaps.map((_, index) => (
             <DotButton
               key={index}
               onClick={() => onDotButtonClick(index)}
-              className={`h-3 w-3 rounded-full ${
-                index === selectedIndex ? "bg-orange-500" : "bg-gray-300"
+              className={`h-[5px] w-[5px] rounded-full ${
+                index === selectedIndex ? "bg-black" : "bg-[#bfbfbf]"
               }`}
             />
           ))}

@@ -36,7 +36,7 @@ const ProductCard = () => {
   ];
   return (
     <>
-      <div className="spaceCard lg:w-1/2 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:xl:w-1/2 group-has-[.map]/mainBox:md:w-1/2 w-full p-4">
+     
         <div className="space-card w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
           <EmblaCarousel
             options={{
@@ -152,7 +152,6 @@ const ProductCard = () => {
             </div>
           </div>
         </div>
-      </div>
     </>
   );
 };

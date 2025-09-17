@@ -130,7 +130,7 @@ const Footer = () => {
               <Image src="/images/logo.webp" alt="Flexo Logo" className="h-8" width={137} height={32} />
             </div>
             <div className='flex flex-col md:items-end'>
-              <div className="md:space-x-4 space-x-3">
+              <div className="md:space-x-4 space-x-3 flex flex-wrap items-center">
                 <a href="#" className="after:content-['|'] text-[15px] hover:text-black text-[#555] after:absolute relative me-6  after:-right-3 after:text-gray-400 text-nowrap md:text-base text-sm">Terms Of Use</a>
                 <a href="#" className="after:content-['|'] text-[15px] hover:text-black text-[#555] after:absolute relative me-6 after:-right-3 after:text-gray-400 text-nowrap md:text-base text-sm">Privacy Policy</a>
                 <a href="#" className="after:content-['|'] text-[15px] hover:text-black text-[#555] after:absolute relative me-6 after:-right-3 after:text-gray-400 text-nowrap md:text-base text-sm">Refund Policy</a>

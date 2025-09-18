@@ -4,9 +4,18 @@ import Svg from "@/components/svg";
 import TrustedCompanies from "@/components/frontend/home/TrustedCompanies";
 import Testimonial from "@/components/frontend/home/Testimonial";
 import ProductCard from "../productCard/ProductCard";
-import { use, useState } from "react";
+import {useEffect, useRef, useState } from "react";
+const locations = [
+  "Andheri East, Mumbai, Maharashtra, India",
+  "Malad, Mumbai, Maharashtra, India",
+  "Vikhroli, Mumbai, Maharashtra, India",
+  "BKC, Mumbai, Maharashtra, India",
+  "Goregaon, Mumbai, Maharashtra, India",
+];
 
 const Listing = () => {
+  const spacesTypeRef = useRef(null);
+  const locationRef = useRef(null);
   const [toggleSpaceType, setToggleSpaceType] = useState(false);
   const [toggleSpace, setToggleSpace] = useState(false);
   const [selectedRadio, setSelectedRadio] = useState("Co-working");
@@ -19,6 +28,8 @@ const Listing = () => {
     "Day Pass",
   ]);
   const [toggleLocation, setToggleLocation] = useState(false);
+  const [toggleLocationOptions,setToggleLocationOptions] = useState(false);
+  const [query,setQuery] = useState('');
 
   const handleRadioChange = (e) => {
     const { value } = e.target;
@@ -44,6 +55,21 @@ const Listing = () => {
       setSelectedCheckboxes([...selectedCheckboxes, type]);
     }
   };
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (spacesTypeRef.current && !spacesTypeRef.current.contains(event.target)) {
+        setToggleSpace(false);
+      }
+      if (locationRef.current && !locationRef.current.contains(event.target)) {
+        setToggleLocationOptions(false);
+      }
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
   return (
     <>
       <section className="w-full relative lg:py-16 bg-white">
@@ -405,7 +431,7 @@ const Listing = () => {
                                 </div>
                               )}
                               {toggleSpace && (
-                                <div className="scrollDropdown absolute top-[64px] left-0 w-[520px] bg-white block shadow-lg z-50 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700">
+                                <div ref = {spacesTypeRef} className="scrollDropdown absolute top-[64px] left-0 w-[520px] bg-white block shadow-lg z-50 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700">
                                   <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
                                     <input
                                       type="radio"
@@ -481,38 +507,70 @@ const Listing = () => {
                                   </label>
                                 </div>
                               )}
-                              
                               {toggleLocation && (
-                                  <div
-                                    onClick={() => setToggleLocation(!toggleLocation)}
-                                    className="absolute top-[70px] -left-0 w-[520px] rounded-xl z-50"
-                                  >
+                                <div className="relative">
+                                  {/* Search box */}
+                                  <div className="absolute top-[70px] -left-0 w-[520px] rounded-xl z-50">
                                     <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center min-h-14 max-h-14 gap-5 p-[18px] rounded-[42px]">
-                                      <div className="w-full ">
-                                      <div className="bg-white shadow-mb rounded-full h-10 w-full flex items-center justify-between">
-                                      <div className="w-full flex justify-between items-center">
-                                        <button className="text-[#777777] w-[15px] h-[15px]">
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            strokeWidth={3}
-                                            stroke="currentColor"
-                                            className="w-4 h-4"
-                                          >
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z" />
-                                          </svg>
-                                        </button>
-                                        <input
-                                          type="text" placeholder="Where are you looking for office space?" className="border-0 bg-transparent w-full text-sm placeholder:font-normal transition-all duration-200 p-[10px] placeholder:text-[#333] focus:outline-none" />
-                                      </div>
-                                      <div className="flex whitespace-nowrap text-[#777777]">Near Me</div>
-                                      </div>
+                                      <div className="w-full">
+                                        <div className="bg-white shadow-mb rounded-full h-10 w-full flex items-center justify-between">
+                                          <div className="w-full flex justify-between items-center">
+                                            <button className="text-[#777777] w-[15px] h-[15px]">
+                                              <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                strokeWidth={3}
+                                                stroke="currentColor"
+                                                className="w-4 h-4"
+                                              >
+                                                <path
+                                                  strokeLinecap="round"
+                                                  strokeLinejoin="round"
+                                                  d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z"
+                                                />
+                                              </svg>
+                                            </button>
+                                            <input
+                                              type="text"
+                                              placeholder="Where are you looking for office space?"
+                                              className="border-0 bg-transparent w-full text-sm placeholder:font-normal transition-all duration-200 p-[10px] placeholder:text-[#333] focus:outline-none"
+                                              value={query}
+                                              onFocus={() => setToggleLocationOptions(true)}
+                                              onChange={(e) => setQuery(e.target.value)}
+                                            />
+                                          </div>
+                                          <div className="flex whitespace-nowrap text-[#777777]">
+                                            Near Me
+                                          </div>
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
-                                )}
 
+                                  {/* Suggestion list */}
+                                  {toggleLocationOptions && (
+                                    <div ref={locationRef} className="absolute top-[125px] left-0 w-[520px] bg-white shadow-md rounded-xl z-50 max-h-64 overflow-auto">
+                                      {locations
+                                        .filter((loc) =>
+                                          loc.toLowerCase().includes(query.toLowerCase())
+                                        )
+                                        .map((loc, idx) => (
+                                          <div
+                                            key={idx}
+                                            className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
+                                            onClick={() => {
+                                              setQuery(loc);
+                                              setToggleLocationOptions(false);
+                                            }}
+                                          >
+                                            {loc}
+                                          </div>
+                                        ))}
+                                    </div>
+                                  )}
+                                </div>
+                              )}
                             </div>
                           </li>
                         </ul>
@@ -526,6 +584,7 @@ const Listing = () => {
                               onClick={() => {
                                 setToggleLocation(!toggleLocation);
                                 setToggleSpace(false);
+                                setToggleLocationOptions(false);
                               }}
                               className="flex items-center cursor-pointer font-medium text-[#777777] text-sm"
                             >

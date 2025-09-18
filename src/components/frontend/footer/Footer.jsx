@@ -5,7 +5,7 @@ import Image from 'next/image'
 const Footer = () => {
   return (
     <footer className="bg-[#f5f6f7] ">
-      <div className="container mx-auto pt-10 pb-13">
+      <div className="container mx-auto pt-[50px] pb-13">
         <div className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-3 ">
           <ul className="space-y-[10px] px-[15px]">
             <li className="relative w-fit before:absolute before:left-0 before:top-full  before:h-[1px] before:w-0 before:bg-[#555] before:opacity-0 before:transition-all before:duration-400  hover:before:w-full hover:before:opacity-100 text-[#555] ">
@@ -131,10 +131,10 @@ const Footer = () => {
             </div>
             <div className='flex flex-col md:items-end'>
               <div className="md:space-x-4 space-x-3 flex flex-wrap">
-                <a href="#" className="after:content-['|'] hover:text-black text-[#555] after:absolute relative me-6  after:-right-3 after:text-gray-400 text-nowrap text-sm leading-[30px]">Terms Of Use</a>
-                <a href="#" className="after:content-['|'] hover:text-black text-[#555] after:absolute relative me-6 after:-right-3 after:text-gray-400 text-nowrap text-sm leading-[30px]">Privacy Policy</a>
-                <a href="#" className="after:content-['|'] hover:text-black text-[#555] after:absolute relative me-6 after:-right-3 after:text-gray-400 text-nowrap text-sm leading-[30px]">Refund Policy</a>
-                <a href="#" className="after:content-['|'] hover:text-black text-[#555] after:absolute relative me-6 after:-right-3 after:text-gray-400 text-nowrap text-sm leading-[30px]">Host Terms & Conditions</a>
+                <a href="#" className="after:content-['|'] hover:text-black text-[#555] after:absolute relative me-6  after:-right-3 after:text-[#ccc] text-nowrap text-sm leading-[30px]">Terms Of Use</a>
+                <a href="#" className="after:content-['|'] hover:text-black text-[#555] after:absolute relative me-6 after:-right-3 after:text-[#ccc] text-nowrap text-sm leading-[30px]">Privacy Policy</a>
+                <a href="#" className="after:content-['|'] hover:text-black text-[#555] after:absolute relative me-6 after:-right-3 after:text-[#ccc] text-nowrap text-sm leading-[30px]">Refund Policy</a>
+                <a href="#" className="after:content-['|'] hover:text-black text-[#555] after:absolute relative me-6 after:-right-3 after:text-[#ccc] text-nowrap text-sm leading-[30px]">Host Terms & Conditions</a>
               </div>
               <div className="text-[#333] text-[13px] leading-[30px]">
                 Copyright Flexo Proptech Pvt Ltd 2025. All Rights Reserved.

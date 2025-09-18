@@ -23,9 +23,9 @@ const FaqSection = () => {
   };
 
   return (
-   <section className="container px-[15px] mx-auto py-[41px]">
+   <section className="container px-[15px] mx-auto sm:py-[41px] py-8">
         <div>
-            <h2 className="text-2xl md:text-[32px] font-medium lg:mb-10 mb-16 leading-[1.2] text-center text-[#333]">
+            <h2 className="text-2xl md:text-[32px] font-medium lg:mb-10 sm:mb-16 mb-8 leading-[1.2] text-center text-[#333]">
                Frequently Asked Question
             </h2>
             <div className="divide-y divide-gray-200">

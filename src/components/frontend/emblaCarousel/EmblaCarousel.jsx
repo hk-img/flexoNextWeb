@@ -38,19 +38,19 @@ export default function EmblaCarousel({ children, options }) {
 
       {/* Buttons */}
       {options?.showButton && (
-        <div className="absolute top-1/2 -left-0 -right-0 flex justify-between -translate-y-1/2">
+        <div className="emblaarrows absolute top-1/2  flex justify-between -translate-y-1/2">
           <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
           <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
         </div>
       )}
 
       {options?.showDots && (
-        <div className="flex justify-center mt-4 gap-6">
+        <div className="flex justify-center mt-4 gap-6 embladots">
           {scrollSnaps.map((_, index) => (
             <DotButton
               key={index}
               onClick={() => onDotButtonClick(index)}
-              className={`h-[5px] w-[5px] rounded-full ${
+              className={`h-[5px] w-[5px] rounded-full  ${
                 index === selectedIndex ? "bg-black" : "bg-[#bfbfbf]"
               }`}
             />

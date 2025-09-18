@@ -26,7 +26,7 @@ const CoworkingSpaces = () => {
     <div className="container mx-auto text-center md:px-1 px-[15px]">
       <h2 className="sm:text-[32px] text-2xl font-medium text-center text-[#333]">
         Explore India's Premier Network of
-        <span className="text-[#f76900]">Coworking Spaces</span>
+        <span className="text-[#f76900]"> Coworking Spaces</span>
       </h2>
 
       <div className="mt-10 flex flex-col md:flex-row gap-1">
@@ -45,15 +45,15 @@ const CoworkingSpaces = () => {
                   loading="lazy"
                 />
               </div>
-              <div className="absolute bottom-1 left-1 text-white font-semibold md:text-2xl text-xl px-2 py-1 rounded-md">
-                <h3>
+              <div className="absolute bottom-0 left-0 text-start text-white font-semibold md:text-2xl text-xl pt-[50px] pr-[50px] pb-[5px] pl-[10px] bg-[linear-gradient(18deg,_#000000c4,_transparent,_transparent)] w-full rounded-md">
+                <h3 className="leading-[1.6]">
                   Mumbai
                 </h3>
               </div>
             </div>
           </a>
         </div>
-        <div className="w-full md:w-2/3">
+        <div className="w-full md:w-2/3 md:[&_.emblaarrows]:-left-6 md:[&_.emblaarrows]:-right-6 [&_.emblaarrows]:-left-3 [&_.emblaarrows]:-right-3 [&_.emblaarrows_button]:w-10 [&_.emblaarrows_button]:h-10 [&_.emblaarrows_button_Svg]:size-[18px]">
           <EmblaCarousel options={{ loop: true,autoplay:false,showButton: true ,  align: "start"  }}>
             {Array.from({ length: Math.ceil(cities.length / 2) }).map(
               (_, colIdx) => (
@@ -81,8 +81,8 @@ const CoworkingSpaces = () => {
                               loading="lazy"
                             />
                             
-                            <div className="absolute bottom-1 left-1 text-white font-medium md:text-2xl text-xl  px-2 py-1 rounded-md">
-                              <h3>
+                            <div className="absolute bottom-0 text-start left-0 text-white font-medium md:text-2xl text-xl pt-[50px] pr-[50px] pb-[5px] pl-[10px] rounded-md bg-[linear-gradient(18deg,_#000000c4,_transparent,_transparent)] w-full">
+                              <h3 className="leading-[1.6]">
                                 {city.name}
                               </h3>
                             </div>

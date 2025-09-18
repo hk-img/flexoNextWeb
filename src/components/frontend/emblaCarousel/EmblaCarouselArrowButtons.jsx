@@ -40,7 +40,7 @@ export const PrevButton = (props) => {
 
   return (
     <button
-      className="flex items-center justify-center w-9 h-9 rounded-full border-2 border-[#d0c2c2] bg-white text-[#d0c2c2] hover:border-[#f76900] hover:text-[#f76900] transition-all duration-300 ease-in-out"
+      className="flex items-center justify-center rounded-full border-2 border-[#d0c2c2] bg-white text-[#d0c2c2] hover:border-[#f76900] hover:text-[#f76900] transition-all duration-300 ease-in-out"
       type="button"
       {...restProps}
     >
@@ -55,11 +55,11 @@ export const NextButton = (props) => {
 
   return (
     <button
-      className="flex items-center justify-center w-9 h-9 rounded-full border-2 border-[#d0c2c2] bg-white text-[#d0c2c2] hover:border-[#f76900] hover:text-[#f76900] transition-all duration-300 ease-in-out"
+      className="flex items-center justify-center rounded-full border-2 border-[#d0c2c2] bg-white text-[#d0c2c2] hover:border-[#f76900] hover:text-[#f76900] transition-all duration-300 ease-in-out"
       type="button"
       {...restProps}
     >
-      <Svg name="rightArrow" className="size-[20px] flex items-center justify-center" />
+      <Svg name="rightArrow" className="flex items-center justify-center" />
       {children}
     </button>
   )

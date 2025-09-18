@@ -44,7 +44,7 @@ const testimonials = [
 
 const Testimonial = () => {
   return (
-    <div className="container px-[15px] mx-auto xl:pt-[90px] xl:pb-[94px] py-[93px]">
+    <div className="container px-[15px] mx-auto xl:pt-[90px] xl:pb-[94px] py-12">
       <div className="max-w-[800px] mx-auto">
         <h2 className="md:text-[32px] text-2xl font-medium text-center text-[#333] leading-[1.2]">
           Trusted by Teams,{" "}
@@ -52,22 +52,22 @@ const Testimonial = () => {
         </h2>
       </div>
 
-      <div className="xl:mt-10 lg:mt-9 md:mt-15 mt-16 flex lg:flex-row flex-col gap-[6px]">
-        <div className="w-full">
+      <div className="xl:mt-10 lg:mt-9 md:mt-15 mt-10 flex lg:flex-row flex-col gap-[6px]">
+        <div className="w-full [&_.emblaarrows]:-left-10 [&_.emblaarrows]:-right-10 sm:[&_.emblaarrows]:flex [&_.emblaarrows]:hidden sm:[&_.embladots]:hidden [&_.embladots]:flex  [&_.emblaarrows_button]:w-10 [&_.emblaarrows_button]:h-10 [&_.emblaarrows_button_Svg]:size-[18px]">
           <EmblaCarousel
-            options={{ loop: true, autoplay: false, showButton: true, align: "start" }}
+            options={{ loop: true, autoplay: false, showButton: true, align: "start",showDots: true }}
           >
             {testimonials.map((t, idx) => (
               <div
                 key={idx}
-                className="embla__slide shrink-0 lg:px-[15px] sm:px-[12px] px-[28px] basis-[100%] sm:basis-[50%] md:basis-[50%] lg:basis-[33.3%] xl:basis-[33.3%] py-3"
+                className="embla__slide shrink-0 lg:px-[15px] sm:px-[12px] px-1 basis-[100%] sm:basis-[50%] md:basis-[50%] lg:basis-[33.3%] xl:basis-[33.3%] py-3"
               >
                 <div className=" group rounded-md shadow-[0_0_3px_#cbcbcb] p-6 relative bg-white hover:transform hover:translate-y-[-10px] transition-all duration-500 min-h-[330px]">
                   <span className="absolute top-3 right-3 text-[#f76900] text-4xl font-bold opacity-40">
                     <Svg name="quots" className="size-[34px]" />
                   </span>
 
-                  <div className="flex items-center gap-4 mb-4">
+                  <div className="flex sm:flex-row flex-col sm:items-center items-start gap-4 mb-4">
                     <Image
                       src={t.img}
                       alt={t.name}

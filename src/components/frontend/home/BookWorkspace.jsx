@@ -9,10 +9,10 @@ const BookWorkspace = () => {
     <>
       <section className="container mx-auto px-[15px]  md:pt-4 ">
         <div>
-          <div className="py-[61px]">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          <div className="pt-[63px] sm:pb-[76px] pb-[79px]">
+            <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-[30px] gap-6 items-center">
               <div>
-                <h2 className="text-2xl leading-[1.6] md:text-[27px] font-normal mb-14">
+                <h2 className=" leading-[1.6] text-[27px] font-normal lg:mb-[31px] mb-[56px]">
                   Find and <span className="text-[#f76900]">Book</span> Your
                   Perfect Workspace in 4 Easy Steps With{" "}
                   <span className="text-[#f76900] font-bold">Flexo</span>
@@ -21,7 +21,7 @@ const BookWorkspace = () => {
                 <div className="space-y-2">
                   <div className="flex lg:flex-row flex-col items-start max-lg:gap-[10px] rounded-[7px] rounded-br-none px-6 py-4 shadow-[0_0_3px_#7a7a7a]  relative">
                     <div>
-                      <span className="lg:absolute -top-5 -left-5 bg-gradient-to-br from-[rgb(81,49,18)] to-[rgb(247,105,0)] text-white w-10 h-10 flex items-center justify-center rounded-[7px] rounded-br-none font-medium text-[17px]">
+                      <span className="lg:absolute -top-[21px] -left-[21px] bg-gradient-to-br from-[rgb(81,49,18)] to-[rgb(247,105,0)] text-white w-10 h-10 flex items-center justify-center rounded-[7px] rounded-br-none font-medium text-[17px] leading-[1.5]">
                         1
                       </span>
                     </div>
@@ -29,7 +29,7 @@ const BookWorkspace = () => {
                       <h6 className="font-medium leading-[1.6] text-base text-[#f76900]">
                         Share Your Requirements
                       </h6>
-                      <p className="text-[#777] leading-[1.5] xl:text-base text-sm">
+                      <p className="text-[#777] leading-[1.5]  text-sm">
                         Tell us your needs and a dedicated advisor will handle
                         the rest.
                       </p>
@@ -38,7 +38,7 @@ const BookWorkspace = () => {
 
                   <div className="flex lg:flex-row flex-col items-start max-lg:gap-[10px] rounded-[7px] rounded-br-none px-6 py-4 shadow-[0_0_3px_#7a7a7a]  relative">
                     <div>
-                      <span className="lg:absolute -top-5 -left-5 bg-gradient-to-br from-[rgb(81,49,18)] to-[rgb(247,105,0)] text-white w-10 h-10 flex items-center justify-center rounded-[7px] rounded-br-none font-medium text-[17px]">
+                      <span className="lg:absolute -top-[21px] -left-[21px] bg-gradient-to-br from-[rgb(81,49,18)] to-[rgb(247,105,0)] text-white w-10 h-10 flex items-center justify-center rounded-[7px] rounded-br-none font-medium text-[17px] leading-[1.5]">
                         2
                       </span>
                     </div>
@@ -46,7 +46,7 @@ const BookWorkspace = () => {
                       <h6 className="font-medium leading-[1.6] text-base text-[#f76900]">
                         Get Space Options and Personalised Tours
                       </h6>
-                      <p className="text-[#777] leading-[1.5] xl:text-base text-sm">
+                      <p className="text-[#777] leading-[1.5]  text-sm">
                         Shortlist and take guided tours of your favorite
                         options.
                       </p>
@@ -54,7 +54,7 @@ const BookWorkspace = () => {
                   </div>
                   <div className="flex lg:flex-row flex-col items-start max-lg:gap-[10px] rounded-[7px] rounded-br-none px-6 py-4 shadow-[0_0_3px_#7a7a7a]  relative">
                     <div>
-                      <span className="lg:absolute -top-5 -left-5 bg-gradient-to-br from-[rgb(81,49,18)] to-[rgb(247,105,0)] text-white w-10 h-10 flex items-center justify-center rounded-[7px] rounded-br-none font-medium text-[17px]">
+                      <span className="lg:absolute -top-[21px] -left-[21px] bg-gradient-to-br from-[rgb(81,49,18)] to-[rgb(247,105,0)] text-white w-10 h-10 flex items-center justify-center rounded-[7px] rounded-br-none font-medium text-[17px] leading-[1.5]">
                         3
                       </span>
                     </div>
@@ -62,7 +62,7 @@ const BookWorkspace = () => {
                       <h6 className="font-medium leading-[1.6] text-base text-[#f76900]">
                         We Negotiate, You Save
                       </h6>
-                      <p className="text-[#777] leading-[1.5] xl:text-base text-sm">
+                      <p className="text-[#777] leading-[1.5]  text-sm">
                         We leverage our relationships to help you secure the
                         best terms.
                       </p>
@@ -71,7 +71,7 @@ const BookWorkspace = () => {
 
                   <div className="flex lg:flex-row flex-col items-start max-lg:gap-[10px] rounded-[7px] rounded-br-none px-6 py-4 shadow-[0_0_3px_#7a7a7a]  relative">
                     <div>
-                      <span className="lg:absolute -top-5 -left-5 bg-gradient-to-br from-[rgb(81,49,18)] to-[rgb(247,105,0)] text-white w-10 h-10 flex items-center justify-center rounded-[7px] rounded-br-none font-medium text-[17px]">
+                      <span className="lg:absolute -top-[21px] -left-[21px] bg-gradient-to-br from-[rgb(81,49,18)] to-[rgb(247,105,0)] text-white w-10 h-10 flex items-center justify-center rounded-[7px] rounded-br-none font-medium text-[17px] leading-[1.5]">
                         4
                       </span>
                     </div>
@@ -79,19 +79,19 @@ const BookWorkspace = () => {
                       <h6 className="font-medium leading-[1.6] text-base text-[#f76900]">
                         Move-In Quickly and Get To Work
                       </h6>
-                      <p className="text-[#777] leading-[1.5] xl:text-base text-sm">
+                      <p className="text-[#777] leading-[1.5]  text-sm">
                         Finalize the agreement and move-in, hassle-free.
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="mt-6">
+                <div className="mt-4">
                   <button
                     onClick={() => {
                       setIsOpen(true);
                     }}
-                    className="cursor-pointer relative w-full overflow-hidden rounded-sm font-semibold text-white hover:text-[#f76900] py-2 z-10 bg-transparent border-2 border-[#f76900] before:absolute before:inset-0 before:w-full before:bg-[#f76900] before:transition-all before:duration-500 before:origin-right hover:before:w-0 before:-z-10"
+                    className="cursor-pointer relative w-full overflow-hidden rounded-sm font-semibold text-white hover:text-[#f76900] py-2 z-10 bg-transparent border-2 border-transparent hover:border-[#f76900] before:absolute before:inset-0 before:w-full before:bg-[#f76900] before:transition-all transition-all duration-500  before:duration-500 before:origin-right hover:before:w-0 before:-z-10 text-base leading-[1.5]"
                   >
                     Connect with a Workspace Expert Today
                   </button>
@@ -105,53 +105,53 @@ const BookWorkspace = () => {
                   src="/images/find-work-space-1.webp"
                   alt="Workspace"
                   title="Workspace"
-                  className="rounded-[7px] w-full object-cover h-[544px]"
+                  className="rounded-[7px] w-full object-cover lg:h-[544px] h-full"
                 />
               </div>
             </div>
           </div>
-          <div className="mx-auto md:px-4 text-center">
+          <div className="mx-auto text-center">
             <div>
               <div>
-                <h2 className="md:text-[32px] text-xl font-medium text-center text-[#333]">
+                <h2 className="md:text-[32px] leading-[1.2] text-2xl font-medium text-center text-[#333]">
                   {" "}
                   India's Premier Marketplace for{" "}
                   <span className="text-[#f76900]">Flexible Workspaces</span>
                 </h2>
               </div>
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 py-8.5">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-[30px] gap-y-[23px] lg:py-[36px] py-[64px] ">
                 <div className="text-center">
-                  <h2 className="md:text-3xl text-[23px] md:text-[40px] text-[#f76900] font-medium">
+                  <h2 className="text-[23px] lg:text-[40px] text-[#f76900] leading-[1.3] font-medium">
                     1800+
                   </h2>
-                  <h5 className="text-[#141414] font-medium mt-1 text-base">
+                  <h5 className="text-[#141414] font-medium mt-[5px] xl:text-lg leading-[1.3] text-base">
                     Partner Spaces
                   </h5>
                 </div>
 
                 <div className="text-center">
-                  <h2 className="md:text-3xl text-[23px] md:text-[40px] text-[#f76900] font-medium">
+                  <h2 className="text-[23px] lg:text-[40px] text-[#f76900] leading-[1.3] font-medium">
                     1000+
                   </h2>
-                  <h5 className="text-[#141414] font-medium mt-1 text-base">
+                  <h5 className="text-[#141414] font-medium mt-[5px] xl:text-lg leading-[1.3] text-base">
                     Clients Served
                   </h5>
                 </div>
 
                 <div className="text-center">
-                  <h2 className="md:text-3xl text-[23px] md:text-[40px] text-[#f76900] font-medium">
+                  <h2 className="text-[23px] lg:text-[40px] text-[#f76900] leading-[1.3] font-medium">
                     20+
                   </h2>
-                  <h5 className="text-[#141414] font-medium mt-1 text-base">
+                  <h5 className="text-[#141414] font-medium mt-[5px] xl:text-lg leading-[1.3] text-base">
                     Cities Across India
                   </h5>
                 </div>
 
                 <div className="text-center">
-                  <h2 className="md:text-3xl text-[23px] md:text-[40px] text-[#f76900] font-medium">
+                  <h2 className="text-[23px] lg:text-[40px] text-[#f76900] leading-[1.3] font-medium">
                     25 million+
                   </h2>
-                  <h5 className="text-[#141414] font-medium mt-1 text-base">
+                  <h5 className="text-[#141414] font-medium mt-[5px] xl:text-lg leading-[1.3] text-base">
                     Sqft of Office Space Options
                   </h5>
                 </div>

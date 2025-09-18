@@ -3,73 +3,73 @@ import React from 'react'
 
  const OfficeSearch = () => {
   return (
-    <section className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto py-8">
-        <div className="text-center mb-10">
-             <h2 className="md:text-[32px] text-xl font-medium text-center text-[#333] ">
+    <section className="container px-[15px] mx-auto py-2.5">
+        <div className="text-center mb-12">
+             <h2 className="sm:text-[32px] text-2xl font-medium text-center text-[#333] leading-[1.2] tracking-normal">
                 Your Office Search, Simplified By Experts
             </h2>
-            <p className="mt-1 text-[#777] text-lg">
+            <p className="lg:mt-[16px] mt-10 text-[#777] text-lg leading-[1.5]">
             With over 1,000 businesses and professionals helped, we bring unmatched
             expertise and personalized service to every client.
             </p>
         </div>
 
-        <div className="grid md:grid-cols-2 md:gap-8 gap-4">
-            <div className="relative flex flex-col items-start gap-2 rounded-md px-6 py-2 shadow-[0_0_3px_#fbb784]">
-                <div className="md:absolute top-1/2 md:transform md:-translate-y-1/2 -left-5 bg-white text-[#f76900] flex items-center justify-center w-9 h-9  shadow-[0_0_3px_#f76900] rounded-full">
+        <div className="grid md:grid-cols-2 md:gap-x-[30px] md:gap-y-6 gap-4">
+            <div className="relative flex flex-col items-start gap-1.5 rounded-md px-6 py-2 shadow-[0_0_3px_#fbb784]">
+                <div className="lg:absolute top-1/2 lg:transform lg:-translate-y-1/2 -left-4.5 bg-white text-[#f76900] flex items-center justify-center w-[35px] h-[35px]  shadow-[0_0_3px_#f76900] rounded-full">
                     <Svg
                         name="check"
                         className="size-5 text-[#f76900]"
                         />
                 </div>
                 <div>
-                    <h3 className="font-medium text-[#141414]">Space shortlisting</h3>
-                    <p className="text-[#777] text-sm">
+                    <h3 className="font-medium text-[#141414] xl:text-lg text-base leading-[1.6] xl:pb-px ">Space shortlisting</h3>
+                    <p className="text-[#777] xl:text-base text-sm leading-[1.5]">
                     We find the perfect office that suits your needs and budget.
                     </p>
                 </div>
             </div>
 
-            <div className="relative flex flex-col items-start gap-2 rounded-md px-6 py-2 shadow-[0_0_3px_#fbb784]">
-                <div className="md:absolute top-1/2 md:transform md:-translate-y-1/2 -left-5 bg-white text-[#f76900] flex items-center justify-center w-9 h-9  shadow-[0_0_3px_#f76900] rounded-full">
+            <div className="relative flex flex-col items-start gap-1.5 rounded-md px-6 py-2 shadow-[0_0_3px_#fbb784]">
+                <div className="lg:absolute top-1/2 lg:transform lg:-translate-y-1/2 -left-4.5 bg-white text-[#f76900] flex items-center justify-center w-[35px] h-[35px]  shadow-[0_0_3px_#f76900] rounded-full">
                     <Svg
                         name="check"
                         className="size-5 text-[#f76900]"
                         />
                 </div>
                 <div>
-                    <h3 className="font-medium text-[#141414]">Personalized Tours</h3>
-                    <p className="text-[#777] text-sm">
+                    <h3 className="font-medium text-[#141414] xl:text-lg text-base leading-[1.6] xl:pb-px ">Personalized Tours</h3>
+                    <p className="text-[#777] xl:text-base text-sm leading-[1.5]">
                     Visit spaces that match your criteria—saving you time and effort.
                     </p>
                 </div>
             </div>
 
-            <div className="relative flex flex-col items-start gap-2 rounded-md px-6 py-2 shadow-[0_0_3px_#fbb784]">
-                <div className="md:absolute top-1/2 md:transform md:-translate-y-1/2 -left-5 bg-white text-[#f76900] flex items-center justify-center w-9 h-9  shadow-[0_0_3px_#f76900] rounded-full">
+            <div className="relative flex flex-col items-start gap-1.5 rounded-md px-6 py-2 shadow-[0_0_3px_#fbb784]">
+                <div className="lg:absolute top-1/2 lg:transform lg:-translate-y-1/2 -left-4.5 bg-white text-[#f76900] flex items-center justify-center w-[35px] h-[35px]  shadow-[0_0_3px_#f76900] rounded-full">
                     <Svg
                         name="check"
                         className="size-5 text-[#f76900]"
                         />
                 </div>
                 <div>
-                    <h3 className="font-medium text-[#141414]">Smart Price Negotiation</h3>
-                    <p className="text-[#777] text-sm">
+                    <h3 className="font-medium text-[#141414] xl:text-lg text-base leading-[1.6] xl:pb-px ">Smart Price Negotiation</h3>
+                    <p className="text-[#777] xl:text-base text-sm leading-[1.5]">
                    We secure the best deal, so you can focus on growing your business.
                     </p>
                 </div>
             </div>
 
-            <div className="relative flex flex-col items-start gap-2 rounded-md px-6 py-2 shadow-[0_0_3px_#fbb784]">
-                <div className="md:absolute top-1/2 md:transform md:-translate-y-1/2 -left-5 bg-white text-[#f76900] flex items-center justify-center w-9 h-9  shadow-[0_0_3px_#f76900] rounded-full">
+            <div className="relative flex flex-col items-start gap-1.5 rounded-md px-6 py-2 shadow-[0_0_3px_#fbb784]">
+                <div className="lg:absolute top-1/2 lg:transform lg:-translate-y-1/2 -left-4.5 bg-white text-[#f76900] flex items-center justify-center w-[35px] h-[35px]  shadow-[0_0_3px_#f76900] rounded-full">
                     <Svg
                         name="check"
                         className="size-5 text-[#f76900]"
                         />
                 </div>
                 <div>
-                    <h3 className="font-medium text-[#141414]">Seamless Contract Handling</h3>
-                    <p className="text-[#777] text-sm">
+                    <h3 className="font-medium text-[#141414] xl:text-lg text-base leading-[1.6] xl:pb-px ">Seamless Contract Handling</h3>
+                    <p className="text-[#777] xl:text-base text-sm leading-[1.5]">
                     From paperwork to move in, we make it effortless.
                     </p>
                 </div>

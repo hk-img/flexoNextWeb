@@ -230,7 +230,7 @@ const IndicatorSeparator = () => null;
                 isClearable
                 components={{
                   ClearIndicator,
-                  DropdownIndicator,
+                  DropdownIndicator:null,
                   IndicatorSeparator,
                 }}
               />

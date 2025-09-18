@@ -1,22 +1,53 @@
 "use client";
 import Svg from "@/components/svg";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
-import { Formik, Form, ErrorMessage } from "formik";
-import * as Yup from "yup";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
+import { useForm, Controller } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const schema = z
+  .object({
+    mobile: z.string().min(1, "Mobile number is required"),
+    country: z
+      .object({
+        dialCode: z.string().optional(),
+      })
+      .nullable()
+      .optional(),
+  })
+  .refine(
+    (data) => {
+      if (!data.mobile) return false;
+
+      const code = data.country?.dialCode ?? "";
+      const numeric = data.mobile.replace(/\D/g, "");
+      return numeric.length > code.length;
+    },
+    {
+      message: "Mobile number is required",
+      path: ["mobile"],
+    }
+  );
+
 const Auth = ({ isOpen, setIsOpen }) => {
-  const validationSchema = Yup.object({
-    mobile: Yup.string()
-      .required("Mobile number is required")
+  const {
+    handleSubmit,
+    control,
+    setValue,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: zodResolver(schema),
+    defaultValues: { mobile: "", country: null },
   });
 
-  const handleSubmit = (values, { setSubmitting }) => {
-    const country_code = `+${values?.country?.dialCode}`; 
-    const mobile = values?.mobile?.replace(dialCode, "").replace(/^\+/, "");
+  const onSubmit = async (values) => {
+    const country_code = values.country ? `+${values.country.dialCode}` : "";
+    const dialCode = values.country ? values.country.dialCode : "";
+    const mobile = values.mobile.replace(dialCode, "").replace(/^\+/, "");
     console.log({ country_code, mobile });
-    setTimeout(() => setSubmitting(false), 800);
   };
 
   return (
@@ -26,9 +57,9 @@ const Auth = ({ isOpen, setIsOpen }) => {
       className="relative z-50"
     >
       <div className="fixed inset-0 bg-black/40" aria-hidden="true" />
-
       <div className="fixed inset-0 flex items-center justify-center p-4">
         <DialogPanel className="w-full max-w-[600px] rounded-sm bg-white p-6 shadow-xl relative">
+          {/* Header */}
           <div className="px-5 py-4 border-b border-[#dbdbdb] flex items-center justify-between">
             <DialogTitle className="text-xl font-medium">
               Register/Create an<span className="text-[#f76900]"> Account</span>
@@ -41,47 +72,45 @@ const Auth = ({ isOpen, setIsOpen }) => {
             </button>
           </div>
 
-          <Formik
-            initialValues={{ mobile: "",country:null }}
-            validationSchema={validationSchema}
-            onSubmit={handleSubmit}
-          >
-            {({ isSubmitting,values,setFieldValue }) => (
-              <Form className="mt-6">
-                <label htmlFor="mobile" className="block text-sm font-semibold">
-                  Mobile <span className="text-[#f76900]">*</span>
-                </label>
-                <div>
+          {/* Form */}
+          <form onSubmit={handleSubmit(onSubmit)} className="mt-6">
+            <label htmlFor="mobile" className="block text-sm font-semibold">
+              Mobile <span className="text-[#f76900]">*</span>
+            </label>
+
+            <div>
+              <Controller
+                name="mobile"
+                control={control}
+                render={({ field }) => (
                   <PhoneInput
-                    country={"in"} 
-                    value={values?.mobile}
-                    onChange={(value,country) => {
-                      setFieldValue("mobile", value);
-                      setFieldValue("country",country)
+                    country="in"
+                    value={field.value}
+                    onChange={(value, country) => {
+                      setValue("mobile", value, { shouldValidate: true });
+                      setValue("country", country);
                     }}
-                    enableSearch={true} 
-                    inputProps={{
-                      name: "mobile"
-                    }}
+                    enableSearch
+                    inputProps={{ name: "mobile" }}
                   />
-                </div>
-                <ErrorMessage
-                  name="mobile"
-                  component="div"
-                  className="mt-1 text-sm text-[#f76900]"
-                />
+                )}
+              />
+              {errors.mobile && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.mobile.message}
+                </p>
+              )}
+            </div>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="mt-10 w-full bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white py-4 rounded-[15px] font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px]"
+            >
+              {isSubmitting ? "Sending..." : "GET OTP"}
+            </button>
+          </form>
 
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className=" mt-10 w-full bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white py-4 rounded-[15px] font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px]"
-                >
-                  {isSubmitting ? "Sending..." : "GET OTP"}
-                </button>
-              </Form>
-            )}
-          </Formik>
-
+          {/* Divider */}
           <div className="my-6 flex items-center">
             <hr className="flex-1 border-gray-300" />
             <span className="px-2 text-sm text-[#000000de]">
@@ -90,18 +119,16 @@ const Auth = ({ isOpen, setIsOpen }) => {
             <hr className="flex-1 border-gray-300" />
           </div>
 
+          {/* Social buttons */}
           <div className="flex gap-3 px-10">
             <button className="flex items-center justify-center border rounded-md py-0.5 px-0.5 bg-[#1a73e8] hover:bg-[#5194ee] transition duration-300 text-white">
               <div className="bg-white h-full p-1 flex items-center justify-center rounded-l-sm">
+                {/* Google SVG */}
                 <svg
                   stroke="currentColor"
                   fill="currentColor"
                   strokeWidth="0"
-                  version="1.1"
-                  x="0px"
-                  y="0px"
                   viewBox="0 0 48 48"
-                  enableBackground="new 0 0 48 48"
                   height="16px"
                   width="16px"
                   xmlns="http://www.w3.org/2000/svg"
@@ -120,7 +147,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
                   ></path>
                   <path
                     fill="#1976D2"
-                    d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571 c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
+                    d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571 l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
                   ></path>
                 </svg>
               </div>
@@ -132,6 +159,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
             </button>
           </div>
 
+          {/* Footer */}
           <div className="mt-6 text-center flex items-center justify-center gap-4">
             <span className="text-sm text-black">Already have an account?</span>
             <button className="bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white py-3 px-5 rounded-full font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px]">

@@ -23,14 +23,14 @@ const FaqSection = () => {
   };
 
   return (
-   <section className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto py-8">
+   <section className="container px-[15px] mx-auto py-[41px]">
         <div>
-            <h2 className="text-3xl md:text-[32px] font-medium mb-6 text-center text-[#333]">
+            <h2 className="text-2xl md:text-[32px] font-medium lg:mb-10 mb-16 leading-[1.2] text-center text-[#333]">
                Frequently Asked Question
             </h2>
             <div className="divide-y divide-gray-200">
             {faqs.map((faq, index) => (
-                <div key={index} className="py-4">
+                <div key={index} className="p-5">
                     <button
                         onClick={() => toggleFAQ(index)}
                         className="flex items-center justify-between w-full text-left text-base font-medium text-[#141414]"
@@ -38,12 +38,12 @@ const FaqSection = () => {
                         <div
                         className={`${
                             openIndex === index ? "shadow-[5px_5px_15px_#00000033]" : ""
-                        } flex items-center gap-2 w-full p-4 rounded-sm`}
+                        } flex items-center gap-2 w-full p-3 rounded-sm xl:text-lg text-base leading-[1.6]`}
                         >
                         <span className="text-orange-500">
                             <Svg
                             name="rightArrow"
-                            className={`size-3 text-[#f76900] transform transition-transform duration-500 ease-in-out ${
+                            className={`size-[15px] text-[#f76900] transform transition-transform duration-500 ease-in-out ${
                                 openIndex === index ? "rotate-90" : ""
                             }`}
                             />
@@ -56,7 +56,7 @@ const FaqSection = () => {
                         openIndex === index ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
                         }`}
                     >
-                        <p className="mt-8 text-[#777] text-sm md:text-lg pl-6">
+                        <p className="mt-8 text-[#777] text-lg leading-[1.5]">
                         {faq.answer}
                         </p>
                     </div>

@@ -44,15 +44,15 @@ const testimonials = [
 
 const Testimonial = () => {
   return (
-    <div className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto py-12">
-      <div className="max-w-[800px] px-6 mx-auto">
-        <h2 className="md:text-[32px] text-xl font-medium text-center text-[#333]">
+    <div className="container px-[15px] mx-auto xl:pt-[90px] xl:pb-[94px] py-[93px]">
+      <div className="max-w-[800px] mx-auto">
+        <h2 className="md:text-[32px] text-2xl font-medium text-center text-[#333] leading-[1.2]">
           Trusted by Teams,{" "}
           <span className="text-[#f76900]">Loved by Leaders</span>
         </h2>
       </div>
 
-      <div className="mt-10 flex lg:flex-row flex-col gap-[6px]">
+      <div className="xl:mt-10 lg:mt-9 md:mt-15 mt-16 flex lg:flex-row flex-col gap-[6px]">
         <div className="w-full">
           <EmblaCarousel
             options={{ loop: true, autoplay: false, showButton: true, align: "start" }}
@@ -60,14 +60,14 @@ const Testimonial = () => {
             {testimonials.map((t, idx) => (
               <div
                 key={idx}
-                className="embla__slide shrink-0 md:px-4 basis-[100%] sm:basis-[50%] md:basis-[50%] lg:basis-[33.3%] xl:basis-[33.3%] py-3"
+                className="embla__slide shrink-0 lg:px-[15px] sm:px-[12px] px-[28px] basis-[100%] sm:basis-[50%] md:basis-[50%] lg:basis-[33.3%] xl:basis-[33.3%] py-3"
               >
-                <div className=" group border border-gray-200 rounded-md shadow-[0_0_3px_#cbcbcb] p-4 relative bg-white hover:transform hover:translate-y-[-10px] transition-all duration-500">
+                <div className=" group rounded-md shadow-[0_0_3px_#cbcbcb] p-6 relative bg-white hover:transform hover:translate-y-[-10px] transition-all duration-500 min-h-[330px]">
                   <span className="absolute top-3 right-3 text-[#f76900] text-4xl font-bold opacity-40">
-                    <Svg name="quots" className="size-9" />
+                    <Svg name="quots" className="size-[34px]" />
                   </span>
 
-                  <div className="flex items-center gap-3 mb-4">
+                  <div className="flex items-center gap-4 mb-4">
                     <Image
                       src={t.img}
                       alt={t.name}
@@ -78,10 +78,12 @@ const Testimonial = () => {
                     <div className="space-y-1">
                       <h5 className="font-medium text-[17px] text-black">
                         {t.name}
-                      </h5>
-                      <p className="font-medium text-[15px] text-black">
+                        <br />
+                        <span className="font-medium text-[15px] text-black">
                         {t.designation}
-                      </p>
+                      </span>
+                      </h5>
+                      
                       <p
                         className="text-xs font-bold text-[#cd854f]"
                         
@@ -96,7 +98,7 @@ const Testimonial = () => {
                     </div>
                   </div>
 
-                  <p className="text-[#777] text-sm line-clamp-5 group-hover:line-clamp-none transition-all duration-500 cursor-default">
+                  <p className="text-[#777] text-base line-clamp-5 group-hover:line-clamp-none transition-all duration-500 cursor-default">
                     {t.review}
                   </p>
                 </div>

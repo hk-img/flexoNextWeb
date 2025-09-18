@@ -7,79 +7,79 @@ const BookWorkspace = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
-      <div className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto md:pt-4 ">
+      <section className="container mx-auto px-[15px]  md:pt-4 ">
         <div>
-          <section className="container mx-auto md:px-4 py-12">
+          <div className="py-[61px]">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
               <div>
-                <h2 className="text-2xl md:text-[27px] font-normal mb-10">
+                <h2 className="text-2xl leading-[1.6] md:text-[27px] font-normal mb-14">
                   Find and <span className="text-[#f76900]">Book</span> Your
                   Perfect Workspace in 4 Easy Steps With{" "}
                   <span className="text-[#f76900] font-bold">Flexo</span>
                 </h2>
 
                 <div className="space-y-2">
-                  <div className="flex md:flex-row flex-col items-start gap-3 rounded-[7px] rounded-br-none p-4 shadow-[0_0_3px_#7a7a7a]  relative">
+                  <div className="flex lg:flex-row flex-col items-start max-lg:gap-[10px] rounded-[7px] rounded-br-none px-6 py-4 shadow-[0_0_3px_#7a7a7a]  relative">
                     <div>
-                      <span className="md:absolute -top-5 -left-5 bg-gradient-to-br from-[rgb(81,49,18)] to-[rgb(247,105,0)] text-white w-10 h-10 flex items-center justify-center rounded-[7px] rounded-br-none font-medium text-[17px]">
+                      <span className="lg:absolute -top-5 -left-5 bg-gradient-to-br from-[rgb(81,49,18)] to-[rgb(247,105,0)] text-white w-10 h-10 flex items-center justify-center rounded-[7px] rounded-br-none font-medium text-[17px]">
                         1
                       </span>
                     </div>
                     <div>
-                      <h6 className="font-medium text-base text-[#f76900]">
+                      <h6 className="font-medium leading-[1.6] text-base text-[#f76900]">
                         Share Your Requirements
                       </h6>
-                      <p className="text-[#777] text-sm">
+                      <p className="text-[#777] leading-[1.5] xl:text-base text-sm">
                         Tell us your needs and a dedicated advisor will handle
                         the rest.
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex md:flex-row flex-col items-start gap-3 rounded-[7px] rounded-br-none p-4 shadow-[0_0_3px_#7a7a7a]  relative">
+                  <div className="flex lg:flex-row flex-col items-start max-lg:gap-[10px] rounded-[7px] rounded-br-none px-6 py-4 shadow-[0_0_3px_#7a7a7a]  relative">
                     <div>
-                      <span className="md:absolute -top-5 -left-5 bg-gradient-to-br from-[rgb(81,49,18)] to-[rgb(247,105,0)] text-white w-10 h-10 flex items-center justify-center rounded-[7px] rounded-br-none font-medium text-[17px]">
+                      <span className="lg:absolute -top-5 -left-5 bg-gradient-to-br from-[rgb(81,49,18)] to-[rgb(247,105,0)] text-white w-10 h-10 flex items-center justify-center rounded-[7px] rounded-br-none font-medium text-[17px]">
                         2
                       </span>
                     </div>
                     <div>
-                      <h6 className="font-medium text-base text-[#f76900]">
+                      <h6 className="font-medium leading-[1.6] text-base text-[#f76900]">
                         Get Space Options and Personalised Tours
                       </h6>
-                      <p className="text-[#777] text-sm">
+                      <p className="text-[#777] leading-[1.5] xl:text-base text-sm">
                         Shortlist and take guided tours of your favorite
                         options.
                       </p>
                     </div>
                   </div>
-                  <div className="flex md:flex-row flex-col items-start gap-3 rounded-[7px] rounded-br-none p-4 shadow-[0_0_3px_#7a7a7a]  relative">
+                  <div className="flex lg:flex-row flex-col items-start max-lg:gap-[10px] rounded-[7px] rounded-br-none px-6 py-4 shadow-[0_0_3px_#7a7a7a]  relative">
                     <div>
-                      <span className="md:absolute -top-5 -left-5 bg-gradient-to-br from-[rgb(81,49,18)] to-[rgb(247,105,0)] text-white w-10 h-10 flex items-center justify-center rounded-[7px] rounded-br-none font-medium text-[17px]">
+                      <span className="lg:absolute -top-5 -left-5 bg-gradient-to-br from-[rgb(81,49,18)] to-[rgb(247,105,0)] text-white w-10 h-10 flex items-center justify-center rounded-[7px] rounded-br-none font-medium text-[17px]">
                         3
                       </span>
                     </div>
                     <div>
-                      <h6 className="font-medium text-base text-[#f76900]">
+                      <h6 className="font-medium leading-[1.6] text-base text-[#f76900]">
                         We Negotiate, You Save
                       </h6>
-                      <p className="text-[#777] text-sm">
+                      <p className="text-[#777] leading-[1.5] xl:text-base text-sm">
                         We leverage our relationships to help you secure the
                         best terms.
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex md:flex-row flex-col items-start gap-3 rounded-[7px] rounded-br-none p-4 shadow-[0_0_3px_#7a7a7a]  relative">
+                  <div className="flex lg:flex-row flex-col items-start max-lg:gap-[10px] rounded-[7px] rounded-br-none px-6 py-4 shadow-[0_0_3px_#7a7a7a]  relative">
                     <div>
-                      <span className="md:absolute -top-5 -left-5 bg-gradient-to-br from-[rgb(81,49,18)] to-[rgb(247,105,0)] text-white w-10 h-10 flex items-center justify-center rounded-[7px] rounded-br-none font-medium text-[17px]">
+                      <span className="lg:absolute -top-5 -left-5 bg-gradient-to-br from-[rgb(81,49,18)] to-[rgb(247,105,0)] text-white w-10 h-10 flex items-center justify-center rounded-[7px] rounded-br-none font-medium text-[17px]">
                         4
                       </span>
                     </div>
                     <div>
-                      <h6 className="font-medium text-base text-[#f76900]">
+                      <h6 className="font-medium leading-[1.6] text-base text-[#f76900]">
                         Move-In Quickly and Get To Work
                       </h6>
-                      <p className="text-[#777] text-sm">
+                      <p className="text-[#777] leading-[1.5] xl:text-base text-sm">
                         Finalize the agreement and move-in, hassle-free.
                       </p>
                     </div>
@@ -109,8 +109,8 @@ const BookWorkspace = () => {
                 />
               </div>
             </div>
-          </section>
-          <section className="mx-auto md:px-4 text-center">
+          </div>
+          <div className="mx-auto md:px-4 text-center">
             <div>
               <div>
                 <h2 className="md:text-[32px] text-xl font-medium text-center text-[#333]">
@@ -157,9 +157,9 @@ const BookWorkspace = () => {
                 </div>
               </div>
             </div>
-          </section>
+          </div>
         </div>
-      </div>
+      </section>
       {isOpen && <ExplorePopup isOpen={isOpen} setIsOpen={setIsOpen} />}
     </>
   );

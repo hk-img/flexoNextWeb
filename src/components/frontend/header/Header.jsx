@@ -42,7 +42,7 @@ const Header = () => {
           hidden ? "-translate-y-full " : "translate-y-0 shadow-[0_0_12px_0_#0000004d]"
         } bg-white`}
       >
-        <div className="container w-full mx-auto py-5">
+        <div className="container w-full mx-auto lg:py-5 sm:py-[20.5px] py-[17px]">
           <div className="flex justify-between items-center">
             <div className="px-[15px]">
               <Link href="/">
@@ -50,7 +50,7 @@ const Header = () => {
                   src="/images/logo.webp"
                   alt="logo"
                   title="logo"
-                  className="lg:w-[130px] sm:w-[70px] w-[100px]"
+                  className="xl:w-[130px] lg:w-[114px] md:w-[74px] w-[100px]"
                   width={137}
                   height={37}
                 />
@@ -59,27 +59,26 @@ const Header = () => {
 
             <div className="lg:flex hidden items-center gap-5 px-[15px]">
               <div>
-                <a href="#" className="bg-[#f76900] border-[2px] border-[#f76900] rounded-[15px] text-[15px] text-white py-[8px] px-5.5">
+                <a href="#" className="bg-[#f76900] border-[2px] border-[#f76900] rounded-[15px] xl:text-[15px] lg:text-sm text-white py-[8px] px-5.5">
                   List Your Space
                 </a>
               </div>
               <div>
-                <button
-                  type="button"
+                <a href="#"
                   className="flex items-center gap-1 border-[2px] border-[#ffe9d8] bg-[#f7690012] text-[#f76900] rounded-[15px] py-[8px] px-5.5 cursor-pointer"
                   onClick={() => setIsOpen(true)}
                 >
                   <span>
                     <Svg name="logIn" className="size-[22px]" />
                   </span>
-                  <span className="text-[15px]">Sign in</span>
-                </button>
+                  <span className="xl:text-[15px] lg:text-sm">Sign in</span>
+                </a>
               </div>
             </div>
 
-            <div className="flex lg:hidden items-center gap-3">
+            <div className="flex lg:hidden items-center gap-[15px] px-[15px]">
               <a href="#">
-                <Svg name="call" className="size-[16px] text-black" />
+                <Svg name="call" className="size-[15px] text-black" />
               </a>
               <a href="#">
                 <Svg name="homePlus" className="size-[18px] text-black" />

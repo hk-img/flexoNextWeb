@@ -9,7 +9,7 @@ import { use, useState } from "react";
 const Listing = () => {
   const [toggleSpaceType, setToggleSpaceType] = useState(false);
   const [toggleSpace, setToggleSpace] = useState(false);
-  const [selectedRadio, setSelectedRadio] = useState("co-working");
+  const [selectedRadio, setSelectedRadio] = useState("Co-working");
   const [selectedCheckboxes, setSelectedCheckboxes] = useState([
     "Private Office",
     "Managed Office",
@@ -395,25 +395,25 @@ const Listing = () => {
                               {toggleSpaceType && (
                                 <div
                                   onClick={() => setToggleSpace(!toggleSpace)}
-                                  className="absolute top-6 left-0 w-[60%] max-w-full h-44 bg-white border rounded-xl shadow-lg z-50"
+                                  className="absolute top-2 left-0 w-[520px] rounded-xl z-50"
                                 >
-                                  <div className="border-b p-2">
-                                    <div className="border rounded-full px-3 py-1 text-sm text-gray-600 bg-gray-50">
+                                  <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center min-h-14 max-h-14 gap-5 p-[18px] rounded-[42px]">
+                                    <div className="border-1 border-[#dee2e6] p-1 text-sm font-light">
                                       {selectedRadio}
                                     </div>
                                   </div>
                                 </div>
                               )}
                               {toggleSpace && (
-                                <div className="absolute top-28 left-0 w-72 bg-white border rounded-xl shadow-lg z-50 max-h-72 overflow-y-auto p-3 space-y-2 text-sm text-gray-700">
-                                  <label className="flex items-center gap-2 cursor-pointer">
+                                <div className="scrollDropdown absolute top-[64px] left-0 w-[520px] bg-white block shadow-lg z-50 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700">
+                                  <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
                                     <input
                                       type="radio"
                                       name="spaceType"
                                       value="co-working"
-                                      checked={selectedRadio === "co-working"}
+                                      checked={selectedRadio === "Co-working"}
                                       onChange={handleRadioChange}
-                                      className="accent-orange-500"
+                                      className="accent-[#26310b]"
                                     />
                                     Co-working
                                   </label>
@@ -429,7 +429,7 @@ const Listing = () => {
                                     ].map((type) => (
                                       <label
                                         key={type}
-                                        className="flex items-center gap-2 cursor-pointer"
+                                        className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light"
                                       >
                                         <input
                                           type="checkbox"
@@ -437,82 +437,139 @@ const Listing = () => {
                                             type
                                           )}
                                           onChange={() => handleCheckbox(type)}
-                                          className="accent-orange-500"
+                                          className="accent-[#26310b]"
                                         />
                                         {type}
                                       </label>
                                     ))}
                                   </div>
 
-                                  <label className="flex items-center gap-2 cursor-pointer">
+                                  <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
                                     <input
                                       type="radio"
                                       name="spaceType"
                                       value="Private Office"
                                       checked={selectedRadio === "Private Office"}
                                       onChange={handleRadioChange}
-                                      className="accent-orange-500"
+                                      className="accent-[#26310b]"
                                     />
                                     Private Office
                                   </label>
 
-                                  <label className="flex items-center gap-2 cursor-pointer">
+                                  <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
                                     <input
                                       type="radio"
                                       name="spaceType"
                                       value="Classroom"
                                       checked={selectedRadio === "Classroom"}
                                       onChange={handleRadioChange}
-                                      className="accent-orange-500"
+                                      className="accent-[#26310b]"
                                     />
                                     Classroom
                                   </label>
 
-                                  <label className="flex items-center gap-2 cursor-pointer">
+                                  <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
                                     <input
                                       type="radio"
                                       name="spaceType"
                                       value="Managed Office"
                                       checked={selectedRadio === "Managed Office"}
                                       onChange={handleRadioChange}
-                                      className="accent-orange-500"
+                                      className="accent-[#26310b]"
                                     />
                                     Managed Office
                                   </label>
                                 </div>
                               )}
-                              {
-                                  toggleLocation && (
-                                    <>
-                                      <div className="bg-white shadow-mb rounded-full h-10 w-full">
-                                          <input type="text" placeholder="Enter Location" className="border-0 bg-transparent w-full" />
+                              
+                              {toggleLocation && (
+                                  <div
+                                    onClick={() => setToggleLocation(!toggleLocation)}
+                                    className="absolute top-[70px] -left-0 w-[520px] rounded-xl z-50"
+                                  >
+                                    <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center min-h-14 max-h-14 gap-5 p-[18px] rounded-[42px]">
+                                      <div className="w-full ">
+                                      <div className="bg-white shadow-mb rounded-full h-10 w-full flex items-center justify-between">
+                                      <div className="w-full flex justify-between items-center">
+                                        <button className="text-[#777777] w-[15px] h-[15px]">
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            strokeWidth={3}
+                                            stroke="currentColor"
+                                            className="w-4 h-4"
+                                          >
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z" />
+                                          </svg>
+                                        </button>
+                                        <input
+                                          type="text" placeholder="Where are you looking for office space?" className="border-0 bg-transparent w-full text-sm placeholder:font-normal transition-all duration-200 p-[10px] placeholder:text-[#333] focus:outline-none" />
                                       </div>
-                                    </>
-                                  )
-                              }
+                                      <div className="flex whitespace-nowrap text-[#777777]">Near Me</div>
+                                      </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                )}
+
                             </div>
                           </li>
                         </ul>
                       </nav>
                     </div>
                     <div>
-                      <ul className="flex">
-                        <li className="text-[13px] !leading-8 font-normal list-style-none">
-                          <div
-                            onClick={() => {
+                      <nav className="block">
+                        <ul className="flex p-0 m-0">
+                          <li className="text-[13px] !leading-8 font-normal list-style-none p-0 m-0 h-5">
+                            <div
+                              onClick={() => {
                                 setToggleLocation(!toggleLocation);
                                 setToggleSpace(false);
-                            }}
-                            className="flex items-center cursor-pointer font-medium text-[#777777] text-sm"
-                          >
-                            <Svg
-                              name="pencil"
-                              className="text-[#777777] size-[15px] me-1"
-                            />
-                            Location
-                          </div>
-                        </li>
-                      </ul>
+                              }}
+                              className="flex items-center cursor-pointer font-medium text-[#777777] text-sm"
+                            >
+                              <Svg
+                                name="pencil"
+                                className="text-[#777777] size-[15px] me-1"
+                              />
+                              Location
+                            </div>
+                            {/* <div className="relative inline-block">
+                                {toggleLocation && (
+                                  <div
+                                    onClick={() => setToggleLocation(!toggleLocation)}
+                                    className="absolute top-2 -left-[170px] w-[520px] rounded-xl z-50"
+                                  >
+                                    <div className="text-sm text-[#333333] bg-white border-2 border-[#d4d0d0] flex items-center min-h-14 max-h-14 gap-5 py-[7px] px-[18px] rounded-[42px]">
+                                      <div className="w-full ">
+                                      <div className="bg-white shadow-mb rounded-full h-10 w-full flex items-center justify-between">
+                                      <div className="w-full flex justify-between items-center">
+                                        <button className="text-[#777777] w-[15px] h-[15px]">
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            strokeWidth={3}
+                                            stroke="currentColor"
+                                            className="w-4 h-4"
+                                          >
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z" />
+                                          </svg>
+                                        </button>
+                                        <input
+                                          type="text" placeholder="Where are you looking for office space?" className="border-0 bg-transparent w-full text-sm placeholder:font-normal transition-all duration-200 p-[10px] placeholder:text-[#333] focus:outline-none" />
+                                      </div>
+                                      <div className="flex whitespace-nowrap text-[#777777]">Near Me</div>
+                                      </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                )}
+                            </div> */}
+                          </li>
+                        </ul>
+                      </nav>
                     </div>
                     <div>
                       <ul className="flex">

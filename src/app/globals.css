@@ -55,13 +55,24 @@
     display: none;
 }
 
-.container {
-  width: 100%;
-  padding-right: 1rem;
-  padding-left: 1rem;
-  margin-right: auto;
-  margin-left: auto;
+.scrollDropdown::-webkit-scrollbar {
+    height: 10px!important; 
 }
+
+.scrollDropdown::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.scrollDropdown::-webkit-scrollbar-thumb {
+    background: #c5c4c4;
+    border-radius: 0px
+}
+
+.scrollDropdown::-webkit-scrollbar-button {
+    display: none;
+}
+
+
 
 .\!container {
     width: 100%!important;

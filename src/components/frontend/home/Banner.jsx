@@ -4,7 +4,7 @@ import React from 'react'
 
 const Banner = ({heading,img,desc,btnText,btnLink}) => {
   return (
-    <section className="relative w-full py-10 h-[400px] flex items-center justify-center overflow-hidden">
+    <section className="relative w-full py-15 lg:h-[400px] h-full flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
         <Image
           width={1520}
@@ -17,14 +17,14 @@ const Banner = ({heading,img,desc,btnText,btnLink}) => {
         <div className="absolute inset-0 bg-[#00000075]"></div>
       </div>
 
-      <div className="relative z-10 text-center px-6">
-        <h2 className="text-white text-2xl md:text-[26px] font-medium mb-4">
+      <div className="relative container z-10 text-center px-[15px]">
+        <h2 className="text-white text-[22px] md:text-[26px] font-medium xl:mb-[7px] mb-2 leading-[1.6]">
           {heading}
         </h2>
-        <p className="text-white/90 text-sm md:text-lg">
+        <p className="text-white/90 text-lg leading-[1.5]">
           {desc}
         </p>
-        <a href={btnLink} className="inline-block bg-[#f76900] mt-6 tracking-[1px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white px-7.5 py-4 rounded-[15px] font-semibold duration-500 transition">
+        <a href={btnLink} className="inline-block bg-[#f76900] mt-6 tracking-[1px] xl:text-base text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:px-7.5 px-5 md:py-[15px] py-[10px] rounded-[15px] font-semibold duration-500 transition">
           {btnText}
         </a>
       </div>

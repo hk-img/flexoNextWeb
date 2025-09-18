@@ -1,11 +1,8 @@
-"use client";
 import Svg from "@/components/svg";
 import Image from "next/image";
-import React, { useState } from "react";
-import ExplorePopup from "../../explorePopup/ExplorePopup";
+import React from "react";
 
-const WorkspaceOptionItem = ({ space }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const WorkspaceOptionItem = ({ space,setIsOpen }) => {
   return (
     <>
       <div className="embla__slide shrink-0 px-[5px] basis-[100%] sm:basis-[50%] md:basis-[50%] lg:basis-[25%] xl:basis-[25%]">
@@ -50,7 +47,6 @@ const WorkspaceOptionItem = ({ space }) => {
           </div>
         </div>
       </div>
-      {isOpen && <ExplorePopup isOpen={isOpen} setIsOpen={setIsOpen} />}
     </>
   );
 };

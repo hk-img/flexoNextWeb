@@ -13,7 +13,9 @@ const Auth = ({ isOpen, setIsOpen }) => {
   });
 
   const handleSubmit = (values, { setSubmitting }) => {
-    console.log("Form Data:", values);
+    const country_code = `+${values?.country?.dialCode}`; 
+    const mobile = values?.mobile?.replace(dialCode, "").replace(/^\+/, "");
+    console.log({ country_code, mobile });
     setTimeout(() => setSubmitting(false), 800);
   };
 
@@ -40,7 +42,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
           </div>
 
           <Formik
-            initialValues={{ mobile: "" }}
+            initialValues={{ mobile: "",country:null }}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
@@ -53,8 +55,9 @@ const Auth = ({ isOpen, setIsOpen }) => {
                   <PhoneInput
                     country={"in"} 
                     value={values?.mobile}
-                    onChange={(value) => {
+                    onChange={(value,country) => {
                       setFieldValue("mobile", value);
+                      setFieldValue("country",country)
                     }}
                     enableSearch={true} 
                     inputProps={{

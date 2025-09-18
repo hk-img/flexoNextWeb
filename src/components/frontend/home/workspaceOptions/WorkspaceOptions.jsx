@@ -1,6 +1,8 @@
-import React from 'react'
+"use client";
+import React, { useState } from 'react'
 import EmblaCarousel from "../../emblaCarousel/EmblaCarousel"
 import WorkspaceOptionItem from './WorkspaceOptionItem';
+import ExplorePopup from '../../explorePopup/ExplorePopup';
 const coworkingSpaces = [
   {
     title: "Private Cabins",
@@ -37,8 +39,9 @@ const coworkingSpaces = [
 ];
 
 const WorkspaceOptions = () => {
-
+  const [isOpen, setIsOpen] = useState(false);
   return (
+    <>
     <div className="container mx-auto text-center px-[15px] pt-[84px]">
       <div className='max-w-[900px] md:px-6 mx-auto'>
         <h2 className="sm:text-[32px] text-2xl leading-[1.2] font-medium text-center text-[#333]">
@@ -53,12 +56,14 @@ const WorkspaceOptions = () => {
             options={{ loop: true, autoplay: false, showButton: true, align: "start" }}
           >
             {coworkingSpaces.map((space, idx) => (
-              <WorkspaceOptionItem space={space} key={idx} />
+              <WorkspaceOptionItem space={space} key={idx} setIsOpen={setIsOpen}/>
             ))}
           </EmblaCarousel>
         </div>
       </div>
     </div>
+    {isOpen && <ExplorePopup isOpen={isOpen} setIsOpen={setIsOpen}/>}
+    </>
   )
 }
 

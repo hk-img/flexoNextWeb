@@ -33,7 +33,7 @@ const Detail = () => {
 
   return (
     <>
-      <section className="relative w-full mt-[82px] ">
+      <section className="relative w-full lg:mt-[82px] sm:mt-[62px] mt-[63px] ">
         <div className="relative">
           <div className="grid md:grid-cols-2 grid-cols-1 gap-[2px]">
             <div className="max-md:relative max-md:overflow-hidden max-md:pt-[66.45%] max-md:w-full">
@@ -74,18 +74,18 @@ const Detail = () => {
           </div>
         </div>
         <div>
-          <div className="absolute top-7 right-6  flex items-center justify-center gap-3">
+          <div className="absolute top-7 right-[27px]  flex items-center justify-center gap-2.5">
             <div className="bg-white w-[34px] h-[34px] flex items-center justify-center rounded-full">
               <a href="#">
                 <Svg
                   name="heartTransparent"
-                  className="size-[18px] text-black"
+                  className="size-[18px] text-[#343a40]"
                 />
               </a>
             </div>
             <div className="relative group">
               <div className="bg-white w-[34px] h-[34px] flex items-center justify-center rounded-full cursor-pointer shadow">
-                <Svg name="share" className="size-[18px] text-black" />
+                <Svg name="share" className="size-[18px] text-[#343a40]" />
               </div>
               <div className="absolute -right-25 -translate-x-1/2 mt-2 flex items-center gap-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
                 <div className="bg-white w-[34px] h-[34px] flex items-center justify-center rounded-full shadow ">
@@ -111,7 +111,7 @@ const Detail = () => {
           </div>
         </div>
       </section>
-      <section className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto py-6">
+      <section className="container px-[15px] mx-auto py-6">
         <div className="flex flex-wrap">
           <div className="md:w-2/3">
             <ol className="text-sm  mb-2 flex items-center gap-2">

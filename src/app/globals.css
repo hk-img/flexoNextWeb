@@ -60,6 +60,7 @@
   width: 100%;
   margin-right: auto;
   margin-left: auto;
+}
 
 .scrollDropdown::-webkit-scrollbar {
     height: 10px!important; 

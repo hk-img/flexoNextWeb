@@ -2,7 +2,11 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { components as RSComponents } from "react-select"; 
+import Svg from "@/components/svg";
+
 const Select = dynamic(() => import("react-select"), { ssr: false });
+
 const typeOptions = [
   { value: "coworking", label: "Coworking Space" },
   { value: "private", label: "Private Office" },
@@ -18,10 +22,43 @@ const cityOptions = [
   { value: "hyderabad", label: "Hyderabad" },
 ];
 
-const HeroSection = () => {
+export default function HeroSection() {
   const [type, setType] = useState(null);
   const [city, setCity] = useState(null);
 
+  const DropdownIndicator = (props) => {
+  const { menuIsOpen } = props.selectProps;
+
+  return (
+    <RSComponents.DropdownIndicator {...props}>
+      <Svg
+        name="arrowDropDown"
+        className={`size-5 text-[#999] transition-transform duration-200 ${
+          menuIsOpen ? "rotate-180" : "rotate-0"
+        }`}
+      />
+    </RSComponents.DropdownIndicator>
+  );
+};
+
+  const ClearIndicator = (props) => {
+    return (
+      <RSComponents.ClearIndicator {...props}>
+        <div
+          // inner clickable area (we let the wrapper handle events)
+          style={{
+            cursor: "pointer",
+            padding: "0 8px",
+            color: "#999",
+            fontWeight: "bold",
+          }}
+        >
+          ×
+        </div>
+      </RSComponents.ClearIndicator>
+    );
+  };
+const IndicatorSeparator = () => null;
   const customStyles = {
     container: (base) => ({
       ...base,
@@ -87,7 +124,7 @@ const HeroSection = () => {
     }),
     indicatorsContainer: (base) => ({
       ...base,
-      paddingRight: "4px", 
+      paddingRight: "4px",
     }),
   };
 
@@ -100,7 +137,6 @@ const HeroSection = () => {
     "/images/private-offices.webp",
     "/images/workspaces.webp",
   ];
-
   const texts = [
     "Coworking Spaces",
     "Desk Rooms",
@@ -115,21 +151,23 @@ const HeroSection = () => {
   const [currentText, setCurrentText] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImage((prev) => (prev + 1) % images.length);
-    }, 5000);
+    const interval = setInterval(
+      () => setCurrentImage((prev) => (prev + 1) % images.length),
+      5000
+    );
     return () => clearInterval(interval);
   }, [images.length]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentText((prev) => (prev + 1) % texts.length);
-    }, 5000);
+    const interval = setInterval(
+      () => setCurrentText((prev) => (prev + 1) % texts.length),
+      5000
+    );
     return () => clearInterval(interval);
   }, [texts.length]);
 
   return (
-    <section className="relative w-full h-[calc(100dvh-82px)] lg:mt-[82px] md:mt-[62px] mt-[68px] overflow-hidden">
+    <section className="relative w-full md:h-[calc(100dvh-82px)] h-[calc(100dvh-63px)] lg:mt-[82px] sm:mt-[62px] mt-[63px] overflow-hidden">
       {images.map((img, idx) => (
         <div
           key={idx}
@@ -148,22 +186,23 @@ const HeroSection = () => {
         </div>
       ))}
 
-      <div className="absolute inset-0 bg-black/40 flex flex-col justify-center text-white">
-        <div className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-4 mx-auto w-full">
+      <div className="absolute inset-0 bg-black/40 flex flex-col sm:justify-center justify-end text-white">
+        <div className="container px-[15px] mx-auto w-full">
           <div className=" md:text-start text-center">
-            <h1 className="text-4xl md:text-[56px] font-semibold transition-all duration-700 ease-in-out mb-1">
+            <h1 className="text-[34px] md:text-[56px] leading-[1.2] font-semibold transition-all duration-700 ease-in-out md:mb-1">
               Discover Amazing{" "}
             </h1>
 
             <div
               key={texts[currentText]}
-              className="text-[#f76900] [text-shadow:0px_0px_40px_black] inline-block animate-fadeSlide text-4xl md:text-5xl font-semibold"
+              className="text-[#f76900] [text-shadow:0px_0px_40px_black] inline-block animate-fadeSlide text-[30px] md:text-5xl font-semibold"
             >
               {texts[currentText]}
             </div>
           </div>
-          <div className="flex md:flex-row flex-col md:bg-transparent bg-white md:p-0 p-4 rounded-[15px] items-center gap-y-5 gap-x-4 mt-9">
-            <div className="flex gap-y-5 md:flex-row flex-col bg-white md:rounded-[15px] overflow-hidden w-full max-w-[536px]">
+
+          <div className="flex md:flex-row flex-col md:bg-transparent bg-white md:px-0 md:py-0 py-[20px] px-[21px] rounded-[15px] items-center gap-y-5 gap-x-4 sm:mt-9 mt-18 sm:mb-0 mb-4">
+            <div className="flex gap-y-5 md:flex-row flex-col bg-white md:rounded-[15px] overflow-hidden w-full xl:max-w-[536px] md:max-w-[449px] ">
               <Select
                 options={typeOptions}
                 placeholder="What are you looking for?"
@@ -171,24 +210,15 @@ const HeroSection = () => {
                 onChange={(opt) => setType(opt)}
                 styles={customStyles}
                 menuPosition="fixed"
-                className="flex-1"
+                className="md:border-r border  border-black max-md:rounded-[15px] !w-full md:border-[#d0c2c2] [&_div>div>div]:!text-black [&_div>div>div]:!text-sm [&_div>div>div]:!text-nowrap md:!h-[46px] !h-[52px]"
                 isClearable
                 components={{
-                  ClearIndicator: (props) => (
-                    <div
-                      {...props.innerProps}
-                      style={{
-                        cursor: "pointer",
-                        padding: "0 8px",
-                        color: "#999",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      ×
-                    </div>
-                  ),
+                  ClearIndicator,
+                  DropdownIndicator,
+                  IndicatorSeparator,
                 }}
               />
+
               <Select
                 options={cityOptions}
                 placeholder="Where?"
@@ -196,23 +226,13 @@ const HeroSection = () => {
                 onChange={(opt) => setCity(opt)}
                 styles={customStyles}
                 menuPosition="fixed"
-                className="flex-1"
-                // isClearable
-                // components={{
-                //   ClearIndicator: (props) => (
-                //     <div
-                //       {...props.innerProps}
-                //       style={{
-                //         cursor: "pointer",
-                //         padding: "0 8px",
-                //         color: "#999",
-                //         fontWeight: "bold",
-                //       }}
-                //     >
-                //       ×
-                //     </div>
-                //   ),
-                // }}
+                className=" [&_div>div>div]:!text-black [&_div>div>div]:!text-sm max-md:border border-black rounded-[15px] !w-full md:!h-[46px] !h-[52px]"
+                isClearable
+                components={{
+                  ClearIndicator,
+                  DropdownIndicator:null,
+                  IndicatorSeparator,
+                }}
               />
             </div>
 
@@ -227,6 +247,4 @@ const HeroSection = () => {
       </div>
     </section>
   );
-};
-
-export default HeroSection;
+}

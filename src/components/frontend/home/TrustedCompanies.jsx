@@ -28,14 +28,12 @@ const TrustedCompanies = () => {
     { src: "/images/trusted-logo22.webp", alt: "PRP" , title: "PRP" },
   ];
   return (
-    <section className="py-10 bg-white">
-      <div className="max-w-6xl mx-auto text-center px-4 xl:px-[21px] lg:px-10 md:px-6">
-        {/* Heading */}
-        <h2 className="md:text-[32px] text-xl font-medium text-center text-[#333] mb-6">
+    <section className="py-9 bg-white">
+      <div className="container mx-auto text-center px-[15px]">
+        <h2 className="sm:text-[32px] text-2xl font-medium text-center text-[#333] md:mb-4 mb-10 leading-[1.2]">
           Trusted By Leading Companies in India
         </h2>
 
-        {/* Carousel */}
         <EmblaCarousel options={{ loop: true, autoscroll: true}}>
           {companies.map((s, i) => (
             <div

@@ -25,8 +25,8 @@ const CoworkingBrands = () => {
   }
 
   return (
-    <div className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto py-8">
-      <h2 className="md:text-[32px] text-xl font-medium text-center text-[#333] mb-8">
+    <div className="container mx-auto px-[30px] pt-[76px]">
+      <h2 className="sm:text-[32px] text-2xl leading-[1.2] font-medium text-center text-[#333] md:mb-9 mb-16">
         Top Coworking Brands, All in One Place
       </h2>
 
@@ -36,7 +36,7 @@ const CoworkingBrands = () => {
         {chunkedLogos.map((logos, idx) => (
           <div
             key={idx}
-            className="embla__slide shrink-0 px-[15px] basis-[50%] sm:basis-[50%] md:basis-[50%] lg:basis-[33.3%] xl:basis-[25%]"
+            className="embla__slide shrink-0 md:px-[15px] sm:px-[12px] px-[10px] basis-[50%] sm:basis-[50%] md:basis-[50%] lg:basis-[25%] xl:basis-[25%]"
           >
             <div className="grid grid-rows-2 gap-2">
               {logos.map((logo, index) => (
@@ -48,8 +48,8 @@ const CoworkingBrands = () => {
                   title={logo.name}
                 >
                   <div
-                    className="group relative rounded-md overflow-hidden border-b-[2px] border-[#ffdbc0] 
-                    py-6 px-12 bg-[#fafafa] cursor-pointer flex items-center justify-center 
+                    className="group relative rounded-md overflow-hidden border-b-3 border-[#ffdbc0] 
+                    md:py-6 ms:px-12 py-4 px-6 bg-[#fafafa] cursor-pointer flex items-center justify-center 
                     hover:shadow-[5px_5px_20px_#0000001a] transition-all duration-500 ease-in-out"
                   >
                     <Image

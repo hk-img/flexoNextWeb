@@ -4,7 +4,7 @@ import React from 'react'
 
 const WhyChooseUs = () => {
     return (
-        <section className="relative py-16 my-8">
+        <section className="relative py-[61px] my-[28px]">
             <Image
                 width={1526}
                 height={539}
@@ -14,22 +14,22 @@ const WhyChooseUs = () => {
                 className="absolute inset-0 -z-10 h-full w-full object-cover"
             />
             <div className="absolute inset-0 bg-[#00000066] -z-10"></div>
-            <div className='max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto'>
-                <div className="relative container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            <div className='container px-[15px] mx-auto'>
+                <div className="relative container mx-auto grid grid-cols-1 lg:grid-cols-2 lg:gap-[30px] gap-6 items-center">
                     <div className="text-white">
-                        <h2 className="text-3xl md:text-[32px] font-medium mb-2">
+                        <h2 className="text-2xl md:text-[32px] font-medium mb-[5px] leading-[1.5]">
                             Why choose <span className="text-orange-500">Flexo ?</span>
                         </h2>
-                        <p className="mb-4 text-white text-sm">
+                        <p className="mb-4 text-white xl:text-base text-sm leading-[1.5]">
                            We make your office-search, a hassle-less experience. With an in depth knowledge, let our workspace solution experts find what you're looking for
                         </p>
                         <div>
                             <a
                                 href="#"
-                                className="relative inline-flex items-center gap-2 px-3 py-1.5 rounded-[10px] font-semibold text-[#f76900] bg-[#0000006b] backdrop-blur-[12px] transition-all duration-500 hover:scale-105 text-sm hover:underline text-center"
+                                className="relative inline-block px-2 py-1.5 rounded-[10px] font-semibold text-[#f76900] bg-[#0000006b] backdrop-blur-[12px] transition-all duration-500 hover:scale-105 text-sm hover:underline text-center leading-[1.5] border border-transparent"
                             >
                                 Claim Your Free Consultation with Zero Brokerage Offer Now! 
-                                <span className="transition-transform duration-300">
+                                <span className="transition-transform duration-300 [display:ruby]">
                                 <Svg
                                     name="rightLongArrow"
                                     className="size-5 text-[#f76900]"
@@ -39,7 +39,7 @@ const WhyChooseUs = () => {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-[30px] gap-y-6">
                         <div className="bg-[#0000002b] backdrop-blur-[6px] rounded-lg p-6 shadow-[0_0_3px_#f7f7f7] text-center text-white hover:translate-y-[-10px] transition duration-500 ease-in-out">
                             <div className="mb-2 flex items-center justify-center">
                                 <Svg name="shareYourRequirements" className="size-14 text-white"/>

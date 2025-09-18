@@ -34,7 +34,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
       {/* Centered content */}
       <div className="fixed inset-0 flex  items-center justify-center px-4">
         <DialogPanel className="w-full max-w-3xl rounded-[11px] bg-white p-6 relative overflow-y-auto h-full [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]">
-           <div className="pb-6 flex items-center justify-between">
+          <div className="pb-6 flex items-center justify-between">
             <DialogTitle className="text-lg font-semibold">
               Get Quotes
             </DialogTitle>

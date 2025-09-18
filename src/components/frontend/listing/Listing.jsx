@@ -368,130 +368,132 @@ const Listing = () => {
                 <div className="filterRow w-full flex lg:flex-row flex-col items-center gap-4">
                   <div className="lg:w-3/5 w-full filters-buttons flex justify-between items-center">
                     <div>
-                      <ul className="flex">
-                        <li className="text-[13px] !leading-8 font-normal list-style-none">
-                          <div
-                            onClick={() => {
-                              setToggleSpaceType(!toggleSpaceType);
-                              setToggleSpace(false);
-                            }}
-                            className="flex items-center cursor-pointer font-medium text-[#777777] text-sm"
-                          >
-                            Space Type
-                            <svg
-                              className="text-[#777777] size-5"
-                              stroke="currentColor"
-                              fill="currentColor"
-                              viewBox="0 0 512 512"
-                              height="20px"
-                              width="20px"
-                              xmlns="http://www.w3.org/2000/svg"
+                      <nav className="block">
+                        <ul className="flex p-0 m-0">
+                          <li className="text-[13px] !leading-8 font-normal list-style-none p-0 m-0 h-5">
+                            <div
+                              onClick={() => {
+                                setToggleSpaceType(!toggleSpaceType);
+                                setToggleSpace(false);
+                              }}
+                              className="flex items-center cursor-pointer font-medium text-[#777777] text-sm"
                             >
-                              <path d="M128 192l128 128 128-128z"></path>
-                            </svg>
-                          </div>
-                          <div className="relative inline-block">
-                            {toggleSpaceType && (
-                              <div
-                                onClick={() => setToggleSpace(!toggleSpace)}
-                                className="absolute top-12 left-0 w-72 bg-white border rounded-xl shadow-lg z-50"
+                              Space Type
+                              <svg
+                                className="text-[#777777] size-5"
+                                stroke="currentColor"
+                                fill="currentColor"
+                                viewBox="0 0 512 512"
+                                height="20px"
+                                width="20px"
+                                xmlns="http://www.w3.org/2000/svg"
                               >
-                                <div className="border-b p-2">
-                                  <div className="border rounded-full px-3 py-1 text-sm text-gray-600 bg-gray-50">
-                                    {selectedRadio}
+                                <path d="M128 192l128 128 128-128z"></path>
+                              </svg>
+                            </div>
+                            <div className="relative inline-block">
+                              {toggleSpaceType && (
+                                <div
+                                  onClick={() => setToggleSpace(!toggleSpace)}
+                                  className="absolute top-6 left-0 w-[60%] max-w-full h-44 bg-white border rounded-xl shadow-lg z-50"
+                                >
+                                  <div className="border-b p-2">
+                                    <div className="border rounded-full px-3 py-1 text-sm text-gray-600 bg-gray-50">
+                                      {selectedRadio}
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            )}
-                            {toggleSpace && (
-                              <div className="absolute top-28 left-0 w-72 bg-white border rounded-xl shadow-lg z-50 max-h-72 overflow-y-auto p-3 space-y-2 text-sm text-gray-700">
-                                <label className="flex items-center gap-2 cursor-pointer">
-                                  <input
-                                    type="radio"
-                                    name="spaceType"
-                                    value="co-working"
-                                    checked={selectedRadio === "co-working"}
-                                    onChange={handleRadioChange}
-                                    className="accent-orange-500"
-                                  />
-                                  Co-working
-                                </label>
+                              )}
+                              {toggleSpace && (
+                                <div className="absolute top-28 left-0 w-72 bg-white border rounded-xl shadow-lg z-50 max-h-72 overflow-y-auto p-3 space-y-2 text-sm text-gray-700">
+                                  <label className="flex items-center gap-2 cursor-pointer">
+                                    <input
+                                      type="radio"
+                                      name="spaceType"
+                                      value="co-working"
+                                      checked={selectedRadio === "co-working"}
+                                      onChange={handleRadioChange}
+                                      className="accent-orange-500"
+                                    />
+                                    Co-working
+                                  </label>
 
-                                <div className="pl-6 space-y-2">
-                                  {[
-                                    "Private Office",
-                                    "Managed Office",
-                                    "Dedicated Desk",
-                                    "Flexible Desk",
-                                    "Virtual Office",
-                                    "Day Pass",
-                                  ].map((type) => (
-                                    <label
-                                      key={type}
-                                      className="flex items-center gap-2 cursor-pointer"
-                                    >
-                                      <input
-                                        type="checkbox"
-                                        checked={selectedCheckboxes.includes(
-                                          type
-                                        )}
-                                        onChange={() => handleCheckbox(type)}
-                                        className="accent-orange-500"
-                                      />
-                                      {type}
-                                    </label>
-                                  ))}
+                                  <div className="pl-6 space-y-2">
+                                    {[
+                                      "Private Office",
+                                      "Managed Office",
+                                      "Dedicated Desk",
+                                      "Flexible Desk",
+                                      "Virtual Office",
+                                      "Day Pass",
+                                    ].map((type) => (
+                                      <label
+                                        key={type}
+                                        className="flex items-center gap-2 cursor-pointer"
+                                      >
+                                        <input
+                                          type="checkbox"
+                                          checked={selectedCheckboxes.includes(
+                                            type
+                                          )}
+                                          onChange={() => handleCheckbox(type)}
+                                          className="accent-orange-500"
+                                        />
+                                        {type}
+                                      </label>
+                                    ))}
+                                  </div>
+
+                                  <label className="flex items-center gap-2 cursor-pointer">
+                                    <input
+                                      type="radio"
+                                      name="spaceType"
+                                      value="Private Office"
+                                      checked={selectedRadio === "Private Office"}
+                                      onChange={handleRadioChange}
+                                      className="accent-orange-500"
+                                    />
+                                    Private Office
+                                  </label>
+
+                                  <label className="flex items-center gap-2 cursor-pointer">
+                                    <input
+                                      type="radio"
+                                      name="spaceType"
+                                      value="Classroom"
+                                      checked={selectedRadio === "Classroom"}
+                                      onChange={handleRadioChange}
+                                      className="accent-orange-500"
+                                    />
+                                    Classroom
+                                  </label>
+
+                                  <label className="flex items-center gap-2 cursor-pointer">
+                                    <input
+                                      type="radio"
+                                      name="spaceType"
+                                      value="Managed Office"
+                                      checked={selectedRadio === "Managed Office"}
+                                      onChange={handleRadioChange}
+                                      className="accent-orange-500"
+                                    />
+                                    Managed Office
+                                  </label>
                                 </div>
-
-                                <label className="flex items-center gap-2 cursor-pointer">
-                                  <input
-                                    type="radio"
-                                    name="spaceType"
-                                    value="Private Office"
-                                    checked={selectedRadio === "Private Office"}
-                                    onChange={handleRadioChange}
-                                    className="accent-orange-500"
-                                  />
-                                  Private Office
-                                </label>
-
-                                <label className="flex items-center gap-2 cursor-pointer">
-                                  <input
-                                    type="radio"
-                                    name="spaceType"
-                                    value="Classroom"
-                                    checked={selectedRadio === "Classroom"}
-                                    onChange={handleRadioChange}
-                                    className="accent-orange-500"
-                                  />
-                                  Classroom
-                                </label>
-
-                                <label className="flex items-center gap-2 cursor-pointer">
-                                  <input
-                                    type="radio"
-                                    name="spaceType"
-                                    value="Managed Office"
-                                    checked={selectedRadio === "Managed Office"}
-                                    onChange={handleRadioChange}
-                                    className="accent-orange-500"
-                                  />
-                                  Managed Office
-                                </label>
-                              </div>
-                            )}
-                            {
-                                toggleLocation && (
-                                  <>
-                                    <div className="bg-white shadow-mb rounded-full h-10 w-full">
-                                        <input type="text" placeholder="Enter Location" className="border-0 bg-transparent w-full" />
-                                    </div>
-                                  </>
-                                )
-                            }
-                          </div>
-                        </li>
-                      </ul>
+                              )}
+                              {
+                                  toggleLocation && (
+                                    <>
+                                      <div className="bg-white shadow-mb rounded-full h-10 w-full">
+                                          <input type="text" placeholder="Enter Location" className="border-0 bg-transparent w-full" />
+                                      </div>
+                                    </>
+                                  )
+                              }
+                            </div>
+                          </li>
+                        </ul>
+                      </nav>
                     </div>
                     <div>
                       <ul className="flex">

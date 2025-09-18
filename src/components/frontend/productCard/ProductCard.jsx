@@ -60,13 +60,59 @@ const ProductCard = () => {
                   loading="lazy"
                   className="w-full aspect-[399/320] object-cover rounded-t-md"
                 />
-                {/* <div className="shortlistIcon absolute top-[3px] z-30 right-[2px] flex p-3">
-                                <div className="shareBtn me-2">
-                                  <a href="" className="rounded-full text-base bg-[#ece8e8] w-[34px] h-[34px] cursor-pointer">
-                                    <Svg name="heart" className="size-[18px] text-[#808080]" />
-                                  </a>
-                                </div>
-                              </div> */}
+                
+                <div className="shortlistIcon absolute top-[3px] z-30 right-[2px] flex p-3">
+                  <div className="shareBtn relative me-2">
+                    <a
+                      href="#"
+                      className="flex items-center justify-center rounded-full text-base bg-[#ece8e8] w-[34px] h-[34px] text-[#808080] cursor-pointer"
+                    >
+                      <Svg name="heart" className="size-[18px] text-[#808080]" />
+                    </a>
+                  </div>
+                  <div className="shareBtn relative me-2">
+                    <a
+                      href="#"
+                      className="flex items-center justify-center rounded-full text-base bg-[#ece8e8] w-[34px] h-[34px] text-[#808080] cursor-pointer"
+                    >
+                      <Svg name="share" className="size-[18px] text-[#808080]" />
+                    </a>
+                    <ul className="absolute top-[45px] right-[-16px] flex flex-row justify-between gap-2">
+                      <li className="bg-[#1877F2] items-center justify-center w-8 h-8 rounded-full inline-block border-1 border-[#000000] text-center text-[15px] opacity-0 transition-all duration-500 ms-1 ">
+                        <a
+                          href="https://www.facebook.com/sharer/sharer.php?u=https://your-url.com"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="share-button flex items-center justify-center w-full h-full"
+                        >
+                          <Svg name="facebook" className="text-white w-4 h-4" />
+                        </a>
+                      </li>
+
+                      <li className="bg-[#0A66C2] items-center justify-center w-8 h-8 rounded-full inline-block border-1 border-[#000000] text-center text-[15px] opacity-0 transition-all duration-500 ms-1">
+                        <a
+                          href="https://www.linkedin.com/sharing/share-offsite/?url=https://your-url.com"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="share-button flex items-center justify-center w-full h-full"
+                        >
+                          <Svg name="linkedin2" className="text-white w-4 h-4" />
+                        </a>
+                      </li>
+
+                      <li className="bg-[#25D366] items-center justify-center w-8 h-8 rounded-full inline-block border-1 border-[#000000] text-center text-[15px] opacity-0 transition-all duration-500 ms-1">
+                        <a
+                          href="https://api.whatsapp.com/send?text=https://your-url.com"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="share-button flex items-center justify-center w-full h-full"
+                        >
+                          <Svg name="whatsapp" className="text-white w-5 h-5" />
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             ))}
           </EmblaCarousel>

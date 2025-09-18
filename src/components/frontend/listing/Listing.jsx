@@ -73,20 +73,18 @@ const Listing = () => {
   return (
     <>
       <section className="w-full relative lg:py-16 bg-white">
-        <div className="max-w-full xl:px-4 lg:px-4 md:px-3 px-4 mx-auto py-8">
+        <div className="max-w-full xl:px-4 lg:px-4 md:px-3 px-4 mx-auto py-4">
           <div className="group/mainBox w-full flex flex-col lg:flex-row gap-6 items-start">
-            <div className="lg:w-2/3 w-full grow flex flex-col justify-center lg:mt-10 mt-16">
-              <h1 className="text-xl flex flex-wrap font-bold text-[#141414] mb-4">
+            <div className="lg:w-2/3 w-full grow flex flex-col justify-center lg:mt-8 mt-16">
+              <h1 className="text-xl flex flex-wrap font-bold text-[#141414]">
                 Coworking Space in Bkc, Mumbai
               </h1>
               <div className="form-group filter-group">
-                <div className="scrollMenus overflow-auto whitespace-nowrap lg:py-4 py-2 mb-4">
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] max-w-[240px] w-[160px] whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Andheri West
+                <div className="scrollMenus overflow-auto whitespace-nowrap pb-2 mb-4">
+                  <a className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] max-w-[240px] w-[160px] whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
+                      href="https://example.com"
+                      target="_blank"
+                    > Andheri West
                   </a>
                   <a
                     className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] max-w-[240px] w-[160px] whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
@@ -660,7 +658,7 @@ const Listing = () => {
                             after:bg-[#fafafa] after:border after:border-[#fafafa] 
                             after:rounded-full after:h-5 after:w-5 after:transition-all 
                             after:duration-500 after:shadow-[0px_2px_1px_-1px_rgba(0,0,0,0.2),0px_1px_1px_0px_rgba(0,0,0,0.14),0px_1px_3px_0px_rgba(0,0,0,0.12)] peer-checked:after:translate-x-6 peer-checked:after:bg-[#f76900] 
-                            peer-checked:after:border-[#f76900]"
+                            peer-checked:after:border-[#fafafa]"
                         ></div>
                         <span className="ms-3 text-sm font-normal text-[#777777]">
                           Map
@@ -777,7 +775,7 @@ const Listing = () => {
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                className="rounded-md"
+                className=""
               ></iframe>
             </div>
           </div>

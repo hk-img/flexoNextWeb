@@ -16,17 +16,21 @@ const filterPopup = () => {
                 <div className="relative">
                   <div className="flex justify-between items-center -mx-[15px]">
                     <p className="w-1/6 md:w-1/12 px-4 text-sm">Filters</p>
-                    <div className="applyBtn w-2/6 md:w-1/4 px-4 text-center">
-                      <button className="bg-[#f76900] py-[10px] px-7 text-white font-normal inline-block text-base rounded-sm">Apply</button>
-                    </div>
-                    <div className="clearBtn w-2/6 md:w-1/4 px-4 text-center">
-                      <button className="bg-[#f76900] py-[10px] px-7 text-white font-normal inline-block text-base rounded-sm">Apply</button>
+                    <div className="flex items-center gap-x-12">
+                      <div className="applyBtn w-2/6 md:w-1/4 px-4 text-center">
+                        <button className="bg-[#f76900] py-[10px] px-7 text-white font-normal inline-block text-base rounded-sm">Apply</button>
+                      </div>
+                      <div className="clearBtn w-2/6 md:w-1/4 px-4 text-center">
+                        <button className="bg-[#f76900] py-[10px] px-7 text-white font-normal inline-block text-base rounded-sm">Clear</button>
+                      </div>
                     </div>
                     <div className="w-1/6 md:w-1/6 text-right cursor-pointer px-4 flex justify-end">
                       <Svg name="close" className="text-[#343a40] size-[20px] me-1" />
                     </div>
                   </div>
-                </div>
+                  <div className="border-b border-[#0000001a] py-3"></div>
+                  <div className=""></div>
+                </div> 
               </div>
             </div>
           </div>  

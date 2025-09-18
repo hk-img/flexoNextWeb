@@ -2,26 +2,46 @@
 
 import Svg from "@/components/svg";
 import { Dialog, DialogTitle, DialogPanel } from "@headlessui/react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+
 
 const schema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
   email: z.string().email("Enter a valid email").min(1, "Email is required"),
-  mobile: z
-    .string()
-    .min(1, "Mobile is required")
-    .regex(/^\d{7,15}$/, "Enter valid mobile"),
+   mobile: z.string().min(1, "Mobile number is required"),
+    country: z
+      .object({
+        dialCode: z.string().optional(),
+      })
+      .nullable()
+      .optional(),
   city: z.string().min(1, "Select city"),
   seats: z.string().min(1, "Seats required"),
-});
+}).refine(
+  (data) => {
+    if (!data.mobile) return false;
+
+    const code = data.country?.dialCode ?? "";
+    const numeric = data.mobile.replace(/\D/g, "");
+    return numeric.length > code.length;
+  },
+  {
+    message: "Mobile number is required",
+    path: ["mobile"],
+  }
+);
 
 const ExplorePopup = ({ isOpen, setIsOpen }) => {
   const {
     register,
     handleSubmit,
+    control,   
+    setValue,
     formState: { errors },
     reset,
   } = useForm({
@@ -38,6 +58,10 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
 
   const onSubmit = async (values) => {
     console.log("Quote form data:", values);
+    const country_code = values.country ? `+${values.country.dialCode}` : "";
+    const dialCode = values.country ? values.country.dialCode : "";
+    const mobile = values.mobile.replace(dialCode, "").replace(/^\+/, "");
+    console.log({ country_code, mobile });
     reset();
     setIsOpen(false);
   };
@@ -122,16 +146,23 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                 <label className="block text-sm font-semibold mb-1">
                   Mobile <span className="text-[#dc3545]">*</span>
                 </label>
-                <div className="flex">
-                  <span className="px-3 py-3 border border-[#dbdbdb] rounded-l-sm text-sm">
-                    +91
-                  </span>
-                  <input
-                    type="tel"
-                    {...register("mobile")}
-                    placeholder="Enter Mobile"
-                    className="flex-1 rounded-r-sm border border-[#dbdbdb] px-3 py-2.5"
+                <div>
+                <Controller
+                name="mobile"
+                control={control}
+                render={({ field }) => (
+                  <PhoneInput
+                    country="in"
+                    value={field.value}
+                    onChange={(value, country) => {
+                      setValue("mobile", value, { shouldValidate: true });
+                      setValue("country", country);
+                    }}
+                    enableSearch
+                    inputProps={{ name: "mobile" }}
                   />
+                )}
+              />
                 </div>
                 {errors.mobile && (
                   <div className="font-medium text-[10px] text-[#dc3545] mt-1 absolute -bottom-4 left-0">

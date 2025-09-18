@@ -48,9 +48,8 @@ export default function HeroSection() {
           // inner clickable area (we let the wrapper handle events)
           style={{
             cursor: "pointer",
-            padding: "0 8px",
+            padding: "0",
             color: "#999",
-            fontWeight: "bold",
           }}
         >
           ×
@@ -102,14 +101,15 @@ const IndicatorSeparator = () => null;
     option: (base, state) => ({
       ...base,
       padding: "10px 14px",
-      borderRadius: "12px",
+      borderRadius: "11px",
       backgroundColor: state.isSelected
         ? "#ebf5ff"
         : state.isFocused
         ? "#f5faff"
         : "#fff",
       color: "#333",
-      fontWeight: state.isSelected ? "bold" : "normal",
+      fontSize: "14px",
+      fontWeight: state.isSelected ? "500" : "normal",
       cursor: "pointer",
       outline: "none",
       boxShadow: "none",
@@ -124,7 +124,7 @@ const IndicatorSeparator = () => null;
     }),
     indicatorsContainer: (base) => ({
       ...base,
-      paddingRight: "4px",
+      // paddingRight: "4px",
     }),
   };
 
@@ -167,7 +167,7 @@ const IndicatorSeparator = () => null;
   }, [texts.length]);
 
   return (
-    <section className="relative w-full md:h-[calc(100dvh-82px)] h-[calc(100dvh-63px)] lg:mt-[82px] sm:mt-[62px] mt-[63px] overflow-hidden">
+    <section className="relative w-full md:h-[calc(100dvh-82px)] h-[calc(100dvh-60px)] lg:mt-[82px] sm:mt-[62px] mt-[60px] overflow-hidden">
       {images.map((img, idx) => (
         <div
           key={idx}
@@ -189,7 +189,7 @@ const IndicatorSeparator = () => null;
       <div className="absolute inset-0 bg-black/40 flex flex-col sm:justify-center justify-end text-white">
         <div className="container px-[15px] mx-auto w-full">
           <div className=" md:text-start text-center">
-            <h1 className="text-[34px] md:text-[56px] leading-[1.2] font-semibold transition-all duration-700 ease-in-out md:mb-1">
+            <h1 className="text-[34px] md:text-[56px] leading-[1.2] font-semibold transition-all duration-700 ease-in-out md:mb-[5px]">
               Discover Amazing{" "}
             </h1>
 

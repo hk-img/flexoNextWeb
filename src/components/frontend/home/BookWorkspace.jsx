@@ -9,7 +9,7 @@ const BookWorkspace = () => {
     <>
       <section className="container mx-auto px-[15px]  md:pt-4 ">
         <div>
-          <div className="pt-[63px] sm:pb-[76px] pb-[79px]">
+          <div className="pt-[63px] sm:pb-[76px] pb-16">
             <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-[30px] gap-6 items-center">
               <div>
                 <h2 className=" leading-[1.6] text-[27px] font-normal lg:mb-[31px] mb-[56px]">
@@ -119,7 +119,7 @@ const BookWorkspace = () => {
                   <span className="text-[#f76900]">Flexible Workspaces</span>
                 </h2>
               </div>
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-[30px] gap-y-[23px] lg:py-[36px] py-[64px] ">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-[30px] gap-y-[23px] lg:py-[36px] sm:py-[64px] py-12 ">
                 <div className="text-center">
                   <h2 className="text-[23px] lg:text-[40px] text-[#f76900] leading-[1.3] font-medium">
                     1800+

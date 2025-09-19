@@ -49,7 +49,7 @@ const CoworkingBrands = () => {
                   >
                     <div
                       className="group relative rounded-md overflow-hidden border-b-3 border-[#ffdbc0] 
-                      md:py-6 ms:px-12 py-4 px-6 bg-[#fafafa] cursor-pointer flex items-center justify-center 
+                      md:py-6 md:px-12 py-4 px-6 bg-[#fafafa] cursor-pointer flex items-center justify-center 
                       hover:shadow-[5px_5px_20px_#0000001a] transition-all duration-500 ease-in-out"
                     >
                       <Image

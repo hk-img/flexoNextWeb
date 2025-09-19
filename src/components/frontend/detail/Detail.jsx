@@ -74,7 +74,7 @@ const Detail = () => {
           </div>
         </div>
         <div>
-          <div className="absolute top-7 right-[27px]  flex items-center justify-center gap-2.5">
+          <div className="absolute md:top-7 md:right-[27px] top-3 right-4  flex items-center justify-center gap-2.5">
             <div className="bg-white w-[34px] h-[34px] flex items-center justify-center rounded-full">
               <a href="#">
                 <Svg
@@ -88,33 +88,33 @@ const Detail = () => {
                 <Svg name="share" className="size-[18px] text-[#343a40]" />
               </div>
               <div className="absolute -right-25 -translate-x-1/2 mt-2 flex items-center gap-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                <div className="bg-white w-[34px] h-[34px] flex items-center justify-center rounded-full shadow ">
-                  <Svg name="facebook" className="size-[18px] text-[#f76900]" />
+                <div className="bg-[#3b5998] w-[30px] h-[30px] flex border items-center justify-center rounded-full shadow ">
+                  <Svg name="facebook" className="size-[15px] text-black" />
                 </div>
-                <div className="bg-white w-[34px] h-[34px] flex items-center justify-center rounded-full shadow ">
-                  <Svg name="linkedin" className="size-[18px] text-[#f76900]" />
+                <div className="bg-[#34aaf3] w-[30px] h-[30px] flex border items-center justify-center rounded-full shadow ">
+                  <Svg name="linkedin" className="size-[15px] text-black" />
                 </div>
-                <div className="bg-white w-[34px] h-[34px] flex items-center justify-center rounded-full shadow ">
-                  <Svg name="whatsapp" className="size-[18px] text-[#f76900]" />
+                <div className="bg-[#6ee777] w-[30px] h-[30px] flex border items-center justify-center rounded-full shadow ">
+                  <Svg name="whatsapp" className="size-[15px] text-black" />
                 </div>
-                <div className="bg-white w-[34px] h-[34px] flex items-center justify-center rounded-full shadow ">
+                <div className="bg-[radial-gradient(circle_at_30%_107%,_#fdf497_0%,_#fdf497_5%,_#fd5949_45%,#d6249f_60%,#285AEB_90%)] border w-[30px] h-[30px] flex items-center justify-center rounded-full shadow ">
                   <Svg
                     name="instagram"
-                    className="size-[18px] text-[#f76900]"
+                    className="size-[15px] text-black"
                   />
                 </div>
-                <div className="bg-white w-[34px] h-[34px] flex items-center justify-center rounded-full shadow ">
-                  <Svg name="copy" className="size-[18px] text-[#f76900]" />
+                <div className="bg-white w-[30px] h-[30px] border  flex items-center justify-center rounded-full shadow ">
+                  <Svg name="copy" className="size-[15px] text-black" />
                 </div>
               </div>
             </div>
           </div>
         </div>
       </section>
-      <section className="container px-[15px] mx-auto py-6">
+      <section className="container px-[15px] mx-auto md:py-6 py-[18px]">
         <div className="flex flex-wrap">
-          <div className="md:w-2/3">
-            <ol className="text-sm  mb-2 flex items-center gap-2">
+          <div className="lg:w-2/3 md:pr-[15px] pr-0">
+            <ol className="2xl:text-base text-sm leading-[30px] flex flex-wrap items-center gap-2">
               <li className="text-[#141414] hover:text-[#777]">
                 <a href="#">Coworking Space In Mumbai </a>
               </li>
@@ -126,33 +126,33 @@ const Detail = () => {
               </li>
             </ol>
             <div className="">
-              <h1 className="text-lg font-medium text-[#141414] mb-4">
+              <h1 className="2xl:text-[30px] text-lg leading-[1.6] font-medium text-[#141414] mb-4">
                 WeWork Goregaon
               </h1>
-              <div className="flex items-start text-[#141414] text-sm mb-4">
+              <div className="flex items-center text-[#141414] 2xl:text-base text-sm mb-4">
                 <Svg name="location2" className="size-5 text-[#f76900]" />
                 <span>Goregaon</span>
               </div>
-              <div className="flex md:flex-row flex-col md:space-y-0 space-y-3 md:items-center justify-between mb-7">
-                <div className="flex items-center space-x-10 text-sm text-[#646464] px-2">
-                  <div className="flex gap-1 items-center ">
-                    <Svg name="user2" className="size-3.5 text-[#7f7f7f]" />
-                    <span>people</span>
+              <div className="flex md:flex-row flex-col md:space-y-0 space-y-3 md:items-center justify-between mb-[25px]">
+                <div className="flex items-center space-x-5 text-sm text-[#646464] px-2">
+                  <div className="flex gap-1.5 items-center ">
+                    <Svg name="user2" className="size-[15px] text-[#7f7f7f]" />
+                    <span className="2xl:text-base text-sm">people</span>
                   </div>
-                  <div className="flex gap-1 items-center">
+                  <div className="flex gap-1.5 items-center">
                     <Svg
                       name="scaleRuler"
-                      className="size-3.5 text-[#646464]"
+                      className="size-[15px] text-[#7f7f7f]"
                     />
-                    <span> sqft</span>
+                    <span className="2xl:text-base text-sm"> sqft</span>
                   </div>
                 </div>
-                <div className="flex items-center space-x-1 border border-[#ddd] rounded-full w-fit px-4 py-2">
-                  <div className="flex items-center space-x-1 p-1">
+                <div className="flex items-center space-x-1 border border-[#ddd] rounded-full w-fit px-3 py-1">
+                  <div className="flex items-center space-x-1 p-1 pr-3 border-r border-[#ddd]">
                     <Svg name="thumbUp" className="size-3.5 text-black" />
-                    <span className="text-sm">0</span>
+                    <span className="text-[15px]">0</span>
                   </div>
-                  <span className="text-gray-300">|</span>
+                  
                   <div className="flex items-center space-x-1 p-1">
                     <Svg name="thumbDown" className="size-3.5 text-black" />
                   </div>
@@ -162,19 +162,19 @@ const Detail = () => {
           </div>
         </div>
         <div className="flex flex-wrap">
-          <div className="md:w-2/3 w-full pr-5 max-md:pr-0 md:order-1 order-2">
+          <div className="lg:w-2/3 w-full pr-[15px] max-lg:pr-0 lg:order-1 order-2">
             <div>
               <div className="">
                 <div
                   className={`${
                     isFixed
-                      ? "fixed shadow-md top-0 z-40 w-full left-0 right-0 px-30 h-[80px]"
+                      ? "fixed shadow-md top-0 z-40 w-full left-0 right-0 px-35 h-[81px]"
                       : "relative"
                   } justify-between  border-t border-b bg-white border-[#ddd] md:flex hidden`}
                 >
                   <button
                     onClick={() => scrollToSection("about", 1)}
-                    className={`py-4 relative text-sm transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
+                    className={`py-[25px] relative 2xl:text-base text-sm leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
                       activeTab === 1
                         ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]"
                         : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
@@ -185,7 +185,7 @@ const Detail = () => {
 
                   <button
                     onClick={() => scrollToSection("pricing", 2)}
-                    className={`py-4 relative text-sm transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
+                    className={`py-[25px] relative 2xl:text-base text-sm leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
                       activeTab === 2
                         ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]"
                         : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
@@ -196,7 +196,7 @@ const Detail = () => {
 
                   <button
                     onClick={() => scrollToSection("location", 3)}
-                    className={`py-4 relative text-sm transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
+                    className={`py-[25px] relative 2xl:text-base text-sm leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
                       activeTab === 3
                         ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]"
                         : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
@@ -207,7 +207,7 @@ const Detail = () => {
 
                   <button
                     onClick={() => scrollToSection("hours", 4)}
-                    className={`py-4 relative text-sm transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
+                    className={`py-[25px] relative 2xl:text-base text-sm leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
                       activeTab === 4
                         ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]"
                         : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
@@ -218,7 +218,7 @@ const Detail = () => {
 
                   <button
                     onClick={() => scrollToSection("reviews", 5)}
-                    className={`py-4 relative text-sm transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
+                    className={`py-[25px] relative 2xl:text-base text-sm leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
                       activeTab === 5
                         ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]"
                         : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
@@ -230,10 +230,10 @@ const Detail = () => {
                 <div>
                   <div
                     id="about"
-                    className="md:pt-9 pt-5 md:pb-14 pb-7 border-b border-[#dbdbdb]"
+                    className="md:pt-[30px] pt-5 md:pb-[50px] pb-7 border-b border-[#dbdbdb]"
                   >
                     <div>
-                      <h2 className="text-xl font-medium text-[#141414] mb-2">
+                      <h2 className="text-xl leading-[1.6] font-medium text-[#141414] mb-[15px]">
                         About the Space
                       </h2>
                       <p className="text-[#777] text-base leading-[1.8]">
@@ -253,7 +253,7 @@ const Detail = () => {
                       <h2 className="text-xl font-medium text-[#141414] mb-6">
                         Amenities
                       </h2>
-                      <div className="grid md:grid-cols-3 grid-cols-2 space-y-5">
+                      <div className="grid md:grid-cols-3 grid-cols-2 space-y-6">
                         <div className="flex items-center gap-3">
                           <div>
                             <Svg
@@ -261,7 +261,7 @@ const Detail = () => {
                               className="size-3.5 text-[#f76900]"
                             />
                           </div>
-                          <h3 className="text-[#141414] text-[15px] font-medium">
+                          <h3 className="text-[#141414] text-[15px] font-medium leading-[1.6]">
                             24x7 Access
                           </h3>
                         </div>
@@ -272,7 +272,7 @@ const Detail = () => {
                               className="size-3.5 text-[#f76900]"
                             />
                           </div>
-                          <h3 className="text-[#141414] text-[15px] font-medium">
+                          <h3 className="text-[#141414] text-[15px] font-medium leading-[1.6]">
                             24x7 Access
                           </h3>
                         </div>
@@ -283,7 +283,7 @@ const Detail = () => {
                               className="size-3.5 text-[#f76900]"
                             />
                           </div>
-                          <h3 className="text-[#141414] text-[15px] font-medium">
+                          <h3 className="text-[#141414] text-[15px] font-medium leading-[1.6]">
                             24x7 Access
                           </h3>
                         </div>
@@ -294,7 +294,7 @@ const Detail = () => {
                               className="size-3.5 text-[#f76900]"
                             />
                           </div>
-                          <h3 className="text-[#141414] text-[15px] font-medium">
+                          <h3 className="text-[#141414] text-[15px] font-medium leading-[1.6]">
                             24x7 Access
                           </h3>
                         </div>
@@ -305,7 +305,7 @@ const Detail = () => {
                               className="size-3.5 text-[#f76900]"
                             />
                           </div>
-                          <h3 className="text-[#141414] text-[15px] font-medium">
+                          <h3 className="text-[#141414] text-[15px] font-medium leading-[1.6]">
                             24x7 Access
                           </h3>
                         </div>
@@ -316,7 +316,7 @@ const Detail = () => {
                               className="size-3.5 text-[#f76900]"
                             />
                           </div>
-                          <h3 className="text-[#141414] text-[15px] font-medium">
+                          <h3 className="text-[#141414] text-[15px] font-medium leading-[1.6]">
                             24x7 Access
                           </h3>
                         </div>
@@ -327,7 +327,7 @@ const Detail = () => {
                               className="size-3.5 text-[#f76900]"
                             />
                           </div>
-                          <h3 className="text-[#141414] text-[15px] font-medium">
+                          <h3 className="text-[#141414] text-[15px] font-medium leading-[1.6]">
                             24x7 Access
                           </h3>
                         </div>
@@ -338,7 +338,7 @@ const Detail = () => {
                               className="size-3.5 text-[#f76900]"
                             />
                           </div>
-                          <h3 className="text-[#141414] text-[15px] font-medium">
+                          <h3 className="text-[#141414] text-[15px] font-medium leading-[1.6]">
                             24x7 Access
                           </h3>
                         </div>
@@ -349,7 +349,7 @@ const Detail = () => {
                               className="size-3.5 text-[#f76900]"
                             />
                           </div>
-                          <h3 className="text-[#141414] text-[15px] font-medium">
+                          <h3 className="text-[#141414] text-[15px] font-medium leading-[1.6]">
                             24x7 Access
                           </h3>
                         </div>
@@ -360,7 +360,7 @@ const Detail = () => {
                               className="size-3.5 text-[#f76900]"
                             />
                           </div>
-                          <h3 className="text-[#141414] text-[15px] font-medium">
+                          <h3 className="text-[#141414] text-[15px] font-medium leading-[1.6]">
                             24x7 Access
                           </h3>
                         </div>
@@ -371,7 +371,7 @@ const Detail = () => {
                               className="size-3.5 text-[#f76900]"
                             />
                           </div>
-                          <h3 className="text-[#141414] text-[15px] font-medium">
+                          <h3 className="text-[#141414] text-[15px] font-medium leading-[1.6]">
                             24x7 Access
                           </h3>
                         </div>
@@ -382,7 +382,7 @@ const Detail = () => {
                               className="size-3.5 text-[#f76900]"
                             />
                           </div>
-                          <h3 className="text-[#141414] text-[15px] font-medium">
+                          <h3 className="text-[#141414] text-[15px] font-medium leading-[1.6]">
                             24x7 Access
                           </h3>
                         </div>
@@ -393,89 +393,94 @@ const Detail = () => {
                               className="size-3.5 text-[#f76900]"
                             />
                           </div>
-                          <h3 className="text-[#141414] text-[15px] font-medium">
+                          <h3 className="text-[#141414] text-[15px] font-medium leading-[1.6]">
                             24x7 Access
                           </h3>
                         </div>
+                      </div>
+                      <div className="md:hidden block mt-5">
+                        <h3 className="text-sm text-[#3e80d8] font-extrabold">
+                          Show More
+                        </h3>
                       </div>
                     </div>
                   </div>
                   <div
                     id="pricing"
-                    className="md:pt-9 pt-5 md:pb-14 pb-7 border-b border-[#dbdbdb]"
+                    className="md:pt-[50px] pt-5 md:pb-14 pb-10 border-b border-[#dbdbdb]"
                   >
-                    <h2 className="text-xl font-medium text-[#141414] mb-6">
+                    <h2 className="text-xl font-medium text-[#141414] mb-[15px]">
                       Pricing
                     </h2>
-                    <div className="space-y-4">
+                    <div className="space-y-5">
                       <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
-                        <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-2 justify-between">
-                          <div>
-                            <h3 className="text-lg font-medium text-[#010101]">
+                        <div className="grid md:grid-cols-3 grid-cols-1 md:items-center md:gap-4 gap-2 justify-between">
+                          <div className="md:col-span-2">
+                            <h3 className="2xl:text-xl text-lg leading-[1.6] font-medium text-[#010101]">
                               Private Office
                             </h3>
-                            <p className="text-sm text-[#777]">
+                            <p className="2xl:text-base text-sm leading-[1.5] text-[#777]">
                               Private space for you and your team
                             </p>
                           </div>
-                          <div className="">
-                            <span className="block text-[15px] font-light">
+                          <div className="md:ps-[15px]">
+                            <span className="block text-[15px] leading-[30px] font-light">
                               from
                             </span>
                             <div className="flex items-center">
-                              <h2 className=" text-lg font-medium flex items-center">
+                              <h2 className=" text-lg font-medium flex items-center leading-[1.6]">
                                 <span className="text-lg text-[#141414]">
                                   <Svg
                                     name="rupee"
                                     className="size-[18px] text-[#f76900]"
                                   />
                                 </span>{" "}
-                                33,000
+                                33000
                               </h2>
-                              <span className=" text-[15px] font-light">
+                              <span className=" text-[15px] leading-[30px] font-light">
                                 /seat/month
                               </span>
                             </div>
                           </div>
                         </div>
                         <div>
-                          <button className="mt-4 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
+                          <button className="md:mt-3 mt-4 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
                             ENQUIRE NOW
                           </button>
                         </div>
                       </div>
                       <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
-                        <div className="flex md:flex-row flex-col md:items-center md:gap-4 gap-2 justify-between">
-                          <div>
-                            <h3 className="text-lg font-medium text-[#010101]">
+                        <div className="grid md:grid-cols-3 grid-cols-1 md:items-center md:gap-4 gap-2 justify-between">
+                          <div className="md:col-span-2">
+                            <h3 className="2xl:text-xl text-lg leading-[1.6] font-medium text-[#010101]">
                               Private Office
                             </h3>
-                            <p className="text-sm text-[#777]">
+                            <p className="2xl:text-base text-sm leading-[1.5] text-[#777]">
                               Private space for you and your team
                             </p>
                           </div>
-                          <div className="">
-                            <span className="block text-[15px] font-light">
+                          <div className="md:ps-[15px]">
+                            <span className="block text-[15px] leading-[30px] font-light">
                               from
                             </span>
                             <div className="flex items-center">
-                              <h2 className=" text-lg font-medium flex items-center">
+                              <h2 className=" text-lg font-medium flex items-center leading-[1.6]">
                                 <span className="text-lg text-[#141414]">
                                   <Svg
                                     name="rupee"
                                     className="size-[18px] text-[#f76900]"
                                   />
                                 </span>{" "}
-                                33,000
+                                33000
                               </h2>
-                              <span className=" text-[15px] font-light">
+                              <span className=" text-[15px] leading-[30px] font-light">
                                 /seat/month
                               </span>
                             </div>
                           </div>
                         </div>
                         <div>
-                          <button className="mt-4 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
+                          <button className="md:mt-3 mt-4 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
                             ENQUIRE NOW
                           </button>
                         </div>
@@ -484,9 +489,9 @@ const Detail = () => {
                   </div>
                   <div
                     id="location"
-                    className="md:pt-9 pt-5 md:pb-14 pb-7 border-b border-[#dbdbdb]"
+                    className="md:pt-[50px] pt-5 md:pb-14 pb-7 border-b border-[#dbdbdb]"
                   >
-                    <h2 className="text-xl font-medium text-[#141414] mb-8">
+                    <h2 className="text-xl font-medium text-[#141414] mb-[15px] leading-[1.6]">
                       Location
                     </h2>
                     <div>
@@ -498,7 +503,7 @@ const Detail = () => {
                         referrerPolicy="no-referrer-when-downgrade"
                       ></iframe>
                     </div>
-                    <div className="md:px-5 md:py-5 px-5 py-3 grid grid-cols-2">
+                    <div className="md:px-5 pt-5 px-5 grid grid-cols-2">
                       <div className="flex items-center gap-2">
                         <div className="flex items-center flex-col gap-1 text-[#777]">
                           <Svg name="metro" className="size-5" />
@@ -537,13 +542,13 @@ const Detail = () => {
                     id="hours"
                     className="md:pt-9 pt-5 md:pb-14 pb-7 border-b border-[#dbdbdb]"
                   >
-                    <h2 className="text-xl font-medium text-[#141414] mb-4">
+                    <h2 className="text-xl font-medium text-[#141414] mb-[15px] leading-[1.6]">
                       Business Hours
                     </h2>
                     <div>
-                      <section className=" ">
-                        <div className="flex items-center gap-2 mb-6">
-                          <div className="flex items-center border border-[#f76900] rounded-full px-5 py-3 text-[#646464]">
+                      <div className=" ">
+                        <div className="flex items-center gap-2 mb-[25px]">
+                          <div className="flex items-center border border-[#f76900] rounded-full md:px-5 px-[10px] py-3 text-[#646464]">
                             <span className="mr-3">
                               <Image
                                 width={25}
@@ -615,11 +620,11 @@ const Detail = () => {
                             </span>
                           </div>
                         </div>
-                      </section>
+                      </div>
                     </div>
                   </div>
                   <div id="reviews" className="py-6">
-                    <div className="flex flex-wrap md:items-center md:gap-7 gap-3">
+                    <div className="flex flex-wrap md:items-center  md:gap-7 gap-3">
                       <h2 className="text-xl font-medium text-[#141414] mb-2">
                         Reviews & Ratings <span>(1)</span>{" "}
                       </h2>
@@ -663,7 +668,7 @@ const Detail = () => {
                               <h3 className="font-medium text-[#141414]">
                                 Hitesh
                               </h3>
-                              <div className="flex items-center gap-10">
+                              <div className="flex md:flex-row flex-col md:items-center md:gap-10 gap-1">
                                 <div className="flex text-[#f76900] gap-1 text-sm">
                                   <Svg name="star" className="size-5" />
                                   <Svg name="star" className="size-5" />
@@ -694,51 +699,51 @@ const Detail = () => {
               </div>
             </div>
           </div>
-          <div className="md:w-1/3 w-full pl-7 max-md:pl-0 md:order-2 order-1">
-            <div className="w-full border border-[#dbdbdb] p-6 rounded-sm md:sticky md:top-[90px]  bg-white">
-              <h3 className="text-xl font-medium text-center mb-5">
+          <div className="lg:w-1/3 w-full pl-[34px] max-lg:pl-0 lg:order-2 order-1 lg:pb-0 pb-4">
+            <div className="w-full border border-[#dbdbdb] py-[22px] px-5 rounded-sm md:sticky md:top-[90px]  bg-white">
+              <h3 className="text-xl font-medium text-center mb-5 pt-[10px]">
                 Interested in this space?
               </h3>
-              <div className="grid grid-cols-2 gap-3 mb-6 text-sm text-[#777]">
-                <div className="flex items-center gap-1 text-[11px]">
+              <div className="grid grid-cols-2 gap-y-2 gap-x-6  mb-5 text-sm text-black">
+                <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5]">
                   <span className="text-[#f76900]">
-                    <Svg name="checkRound" className="size-5" />
+                    <Svg name="checkRound" className="size-[22px]" />
                   </span>
                   Zero Brokerage
                 </div>
-                <div className="flex items-center gap-1 text-[11px]">
+                <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5]">
                   <span className="text-[#f76900]">
-                    <Svg name="checkRound" className="size-5" />
+                    <Svg name="checkRound" className="size-[22px]" />
                   </span>
                   Best Deals
                 </div>
-                <div className="flex items-center gap-1 text-[11px]">
+                <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5]">
                   <span className="text-[#f76900]">
-                    <Svg name="checkRound" className="size-5" />
+                    <Svg name="checkRound" className="size-[22px]" />
                   </span>
                   1000+ Clients Served
                 </div>
-                <div className="flex items-center gap-1 text-[11px]">
+                <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5]">
                   <span className="text-[#f76900]">
-                    <Svg name="checkRound" className="size-5" />
+                    <Svg name="checkRound" className="size-[22px]" />
                   </span>
                   Expert Advisors
                 </div>
               </div>
 
-              <div className="space-y-3 mb-6">
-                <button className="w-full bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white py-4 rounded-[15px] font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px]">
+              <div className="space-y-3 mb-10">
+                <button className="w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">
                   Get Quote{" "}
                 </button>
-                <button className="w-full border uppercase tracking-[1px] border-[#000e54] text-[#000e54] text-sm font-semibold py-4 rounded-[15px]">
+                <button className="w-full border uppercase tracking-[1px] border-[#000e54] text-[#000e54] md:text-[15px] 2xl:text-base text-sm font-semibold md:py-[15px] py-[10px] rounded-[15px]">
                   Schedule a visit
                 </button>
               </div>
-              <div className="text-center space-y-1">
-                <p className="text-center text-sm text-black ">
+              <div className="text-center">
+                <p className="text-center text-sm leading-[1.5] text-black ">
                   Speak to our office space experts.
                 </p>
-                <a href="#" className="font-semibold text-base text-black">
+                <a href="#" className="font-semibold text-base leading-[1.5] text-black">
                   Call +91 95133 92400
                 </a>
               </div>
@@ -747,8 +752,8 @@ const Detail = () => {
         </div>
       </section>
 
-      <section className="max-w-6xl xl:px-[21px] lg:px-10 md:px-6 px-6 mx-auto pb-6 pt-10">
-        <h2 className="md:text-2xl text-xl font-medium text-[#333] mb-5">
+      <section className="container px-[15px] mx-auto pb-[50px] pt-10">
+        <h2 className="text-2xl font-medium text-[#333] mb-[3px] leading-[1.6] ps-3">
           Nearby Coworking Spaces
         </h2>
         <div>
@@ -756,7 +761,6 @@ const Detail = () => {
             options={{
               loop: true,
               autoplay: false,
-              showButton: true,
               showDots: true,
               align: "start",
             }}

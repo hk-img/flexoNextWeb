@@ -19,7 +19,7 @@ export default function EmblaCarousel({ children, options }) {
         playOnInit: true,
         stopOnInteraction: false,
         stopOnHover: false,
-        speed: 0.8,
+        speed: 0.7,
     }))
   }
 

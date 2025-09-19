@@ -44,7 +44,7 @@ const WorkspaceOptions = () => {
     <>
     <div className="container mx-auto text-center px-[15px] sm:pt-[84px] pt-[64px]">
       <div className='md:px-6 mx-auto'>
-        <h2 className="sm:text-[32px] text-2xl leading-[1.2] font-medium text-center text-[#333] text-balance">
+        <h2 className="max-w-[800px] mx-auto sm:text-[32px] text-2xl leading-[1.2] font-medium text-center text-[#333]">
           With <span className="text-[#f76900]">1800+</span> Workspace Options, We have the Right Space for Every Team
 
         </h2>

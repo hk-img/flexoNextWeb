@@ -30,7 +30,7 @@ const TrustedCompanies = () => {
   return (
     <section className="py-9 bg-white">
       <div className="container mx-auto text-center px-[15px]">
-        <h2 className="sm:text-[32px] text-2xl font-medium text-center text-[#333] md:mb-4 mb-2 leading-[1.2] text-balance">
+        <h2 className="sm:text-[32px] text-2xl font-medium text-center text-[#333] md:mb-4 mb-2 leading-[1.2] ">
           Trusted By Leading Companies in India
         </h2>
 

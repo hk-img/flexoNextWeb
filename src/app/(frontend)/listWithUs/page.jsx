@@ -284,7 +284,7 @@ const person = [
                       <div className='quoteMark mb-6'>
                         <Svg name="quoteMark" className="text-gray-400 size-[55px]"/>
                       </div>
-                      <p className='lg:text-base text-[15px] text-[#777777] text-balance mb-6'>{person.content}</p>
+                      <p className='lg:text-base text-[15px] text-[#777777] mb-6'>{person.content}</p>
                       <h5 className='text-base/relaxed text-[#141414] font-medium mb-1'>{person.name}</h5>
                       <p className='text-sm text-[#777777] font-normal'>{person.designation}</p>
                     </div>

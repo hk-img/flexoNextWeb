@@ -113,8 +113,8 @@ const Detail = () => {
       </section>
       <section className="container px-[15px] mx-auto md:py-6 py-[18px]">
         <div className="flex flex-wrap">
-          <div className="md:w-2/3 md:pr-[15px] pr-0">
-            <ol className="md:text-base text-sm leading-[30px] flex flex-wrap items-center gap-2">
+          <div className="lg:w-2/3 md:pr-[15px] pr-0">
+            <ol className="2xl:text-base text-sm leading-[30px] flex flex-wrap items-center gap-2">
               <li className="text-[#141414] hover:text-[#777]">
                 <a href="#">Coworking Space In Mumbai </a>
               </li>
@@ -126,10 +126,10 @@ const Detail = () => {
               </li>
             </ol>
             <div className="">
-              <h1 className="md:text-[30px] text-lg leading-[1.6] font-medium text-[#141414] mb-4">
+              <h1 className="2xl:text-[30px] text-lg leading-[1.6] font-medium text-[#141414] mb-4">
                 WeWork Goregaon
               </h1>
-              <div className="flex items-center text-[#141414] md:text-base text-sm mb-4">
+              <div className="flex items-center text-[#141414] 2xl:text-base text-sm mb-4">
                 <Svg name="location2" className="size-5 text-[#f76900]" />
                 <span>Goregaon</span>
               </div>
@@ -137,14 +137,14 @@ const Detail = () => {
                 <div className="flex items-center space-x-5 text-sm text-[#646464] px-2">
                   <div className="flex gap-1.5 items-center ">
                     <Svg name="user2" className="size-[15px] text-[#7f7f7f]" />
-                    <span className="md:text-base text-sm">people</span>
+                    <span className="2xl:text-base text-sm">people</span>
                   </div>
                   <div className="flex gap-1.5 items-center">
                     <Svg
                       name="scaleRuler"
                       className="size-[15px] text-[#7f7f7f]"
                     />
-                    <span className="md:text-base text-sm"> sqft</span>
+                    <span className="2xl:text-base text-sm"> sqft</span>
                   </div>
                 </div>
                 <div className="flex items-center space-x-1 border border-[#ddd] rounded-full w-fit px-3 py-1">
@@ -162,7 +162,7 @@ const Detail = () => {
           </div>
         </div>
         <div className="flex flex-wrap">
-          <div className="md:w-2/3 w-full pr-[15px] max-md:pr-0 md:order-1 order-2">
+          <div className="lg:w-2/3 w-full pr-[15px] max-lg:pr-0 lg:order-1 order-2">
             <div>
               <div className="">
                 <div
@@ -174,7 +174,7 @@ const Detail = () => {
                 >
                   <button
                     onClick={() => scrollToSection("about", 1)}
-                    className={`py-[25px] relative text-base leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
+                    className={`py-[25px] relative 2xl:text-base text-sm leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
                       activeTab === 1
                         ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]"
                         : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
@@ -185,7 +185,7 @@ const Detail = () => {
 
                   <button
                     onClick={() => scrollToSection("pricing", 2)}
-                    className={`py-[25px] relative text-base leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
+                    className={`py-[25px] relative 2xl:text-base text-sm leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
                       activeTab === 2
                         ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]"
                         : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
@@ -196,7 +196,7 @@ const Detail = () => {
 
                   <button
                     onClick={() => scrollToSection("location", 3)}
-                    className={`py-[25px] relative text-base leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
+                    className={`py-[25px] relative 2xl:text-base text-sm leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
                       activeTab === 3
                         ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]"
                         : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
@@ -207,7 +207,7 @@ const Detail = () => {
 
                   <button
                     onClick={() => scrollToSection("hours", 4)}
-                    className={`py-[25px] relative text-base leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
+                    className={`py-[25px] relative 2xl:text-base text-sm leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
                       activeTab === 4
                         ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]"
                         : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
@@ -218,7 +218,7 @@ const Detail = () => {
 
                   <button
                     onClick={() => scrollToSection("reviews", 5)}
-                    className={`py-[25px] relative text-base leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
+                    className={`py-[25px] relative 2xl:text-base text-sm leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
                       activeTab === 5
                         ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]"
                         : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
@@ -399,9 +399,9 @@ const Detail = () => {
                         </div>
                       </div>
                       <div className="md:hidden block mt-5">
-                            <h3 className="text-sm text-[#3e80d8] font-extrabold">
-                              Show More
-                            </h3>
+                        <h3 className="text-sm text-[#3e80d8] font-extrabold">
+                          Show More
+                        </h3>
                       </div>
                     </div>
                   </div>
@@ -416,10 +416,10 @@ const Detail = () => {
                       <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
                         <div className="grid md:grid-cols-3 grid-cols-1 md:items-center md:gap-4 gap-2 justify-between">
                           <div className="md:col-span-2">
-                            <h3 className="text-lg leading-[1.6] font-medium text-[#010101]">
+                            <h3 className="2xl:text-xl text-lg leading-[1.6] font-medium text-[#010101]">
                               Private Office
                             </h3>
-                            <p className="md:text-base text-sm leading-[1.5] text-[#777]">
+                            <p className="2xl:text-base text-sm leading-[1.5] text-[#777]">
                               Private space for you and your team
                             </p>
                           </div>
@@ -452,10 +452,10 @@ const Detail = () => {
                       <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
                         <div className="grid md:grid-cols-3 grid-cols-1 md:items-center md:gap-4 gap-2 justify-between">
                           <div className="md:col-span-2">
-                            <h3 className="text-lg leading-[1.6] font-medium text-[#010101]">
+                            <h3 className="2xl:text-xl text-lg leading-[1.6] font-medium text-[#010101]">
                               Private Office
                             </h3>
-                            <p className="md:text-base text-sm leading-[1.5] text-[#777]">
+                            <p className="2xl:text-base text-sm leading-[1.5] text-[#777]">
                               Private space for you and your team
                             </p>
                           </div>
@@ -699,31 +699,31 @@ const Detail = () => {
               </div>
             </div>
           </div>
-          <div className="md:w-1/3 w-full pl-[34px] max-md:pl-0 md:order-2 order-1md:pb-0 pb-4">
+          <div className="lg:w-1/3 w-full pl-[34px] max-lg:pl-0 lg:order-2 order-1 lg:pb-0 pb-4">
             <div className="w-full border border-[#dbdbdb] py-[22px] px-5 rounded-sm md:sticky md:top-[90px]  bg-white">
               <h3 className="text-xl font-medium text-center mb-5 pt-[10px]">
                 Interested in this space?
               </h3>
               <div className="grid grid-cols-2 gap-y-2 gap-x-6  mb-5 text-sm text-black">
-                <div className="flex items-center gap-0.5 md:text-[13px] text-[11px] leading-[1.5]">
+                <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5]">
                   <span className="text-[#f76900]">
                     <Svg name="checkRound" className="size-[22px]" />
                   </span>
                   Zero Brokerage
                 </div>
-                <div className="flex items-center gap-0.5 md:text-[13px] text-[11px] leading-[1.5]">
+                <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5]">
                   <span className="text-[#f76900]">
                     <Svg name="checkRound" className="size-[22px]" />
                   </span>
                   Best Deals
                 </div>
-                <div className="flex items-center gap-0.5 md:text-[13px] text-[11px] leading-[1.5]">
+                <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5]">
                   <span className="text-[#f76900]">
                     <Svg name="checkRound" className="size-[22px]" />
                   </span>
                   1000+ Clients Served
                 </div>
-                <div className="flex items-center gap-0.5 md:text-[13px] text-[11px] leading-[1.5]">
+                <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5]">
                   <span className="text-[#f76900]">
                     <Svg name="checkRound" className="size-[22px]" />
                   </span>
@@ -732,10 +732,10 @@ const Detail = () => {
               </div>
 
               <div className="space-y-3 mb-10">
-                <button className="w-full bg-[#f76900] md:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">
+                <button className="w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">
                   Get Quote{" "}
                 </button>
-                <button className="w-full border uppercase tracking-[1px] border-[#000e54] text-[#000e54] md:text-[15px] text-sm font-semibold md:py-[15px] py-[10px] rounded-[15px]">
+                <button className="w-full border uppercase tracking-[1px] border-[#000e54] text-[#000e54] md:text-[15px] 2xl:text-base text-sm font-semibold md:py-[15px] py-[10px] rounded-[15px]">
                   Schedule a visit
                 </button>
               </div>
@@ -753,7 +753,7 @@ const Detail = () => {
       </section>
 
       <section className="container px-[15px] mx-auto pb-[50px] pt-10">
-        <h2 className="md:text-2xl text-xl font-medium text-[#333] mb-[3px] leading-[1.6] ps-3">
+        <h2 className="text-2xl font-medium text-[#333] mb-[3px] leading-[1.6] ps-3">
           Nearby Coworking Spaces
         </h2>
         <div>

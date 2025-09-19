@@ -1,9 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
 import Svg from "@/components/svg";
-import { Dialog, DialogTitle, DialogPanel } from "@headlessui/react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
 
 const filterPopup = () => {
   return (

@@ -187,62 +187,63 @@ const IndicatorSeparator = () => null;
         </div>
       ))}
 
-      <div className="absolute inset-0 bg-black/40 flex flex-col sm:justify-center justify-end text-white">
-        <div className="container px-[15px] mx-auto w-full">
-          <div className=" md:text-start text-center">
-            <h1 className="text-[34px] md:text-[56px] leading-[1.2] font-semibold transition-all duration-700 ease-in-out md:mb-[5px]">
-              Discover Amazing{" "}
-            </h1>
+      <div className="absolute inset-0 bg-black/40  text-white">
+        <div className="container px-[15px] mx-auto w-full h-full">
+          <div className="flex flex-col md:items-start md:justify-center items-center justify-end h-full">
+            <div className=" md:text-start text-center max-md:flex-1 basis-auto flex flex-col md:justify-end justify-center">
+              <h1 className="text-[34px] md:text-[56px] leading-[1.2] font-semibold transition-all duration-700 ease-in-out md:mb-[5px]">
+                Discover Amazing{" "}
+              </h1>
 
-            <div
-              key={texts[currentText]}
-              className="text-[#f76900] [text-shadow:0px_0px_40px_black] inline-block animate-fadeSlide text-[30px] md:text-5xl font-semibold"
-            >
-              {texts[currentText]}
+              <div
+                key={texts[currentText]}
+                className="text-[#f76900] [text-shadow:0px_0px_40px_black] inline-block animate-fadeSlide text-[30px] md:text-5xl font-semibold"
+              >
+                {texts[currentText]}
+              </div>
             </div>
-          </div>
+            <div className="flex md:flex-row flex-col md:bg-transparent bg-white md:px-0 md:py-0 p-[15px] rounded-[15px] items-center gap-y-5 gap-x-4 sm:mt-9 mt-17 sm:mb-0 mb-4 w-full">
+              <div className="flex gap-y-5 md:flex-row flex-col bg-white md:rounded-[15px] overflow-hidden w-full xl:max-w-[536px] md:max-w-[449px] px-2 i">
+                <Select
+                  options={typeOptions}
+                  placeholder="What are you looking for?"
+                  value={type}
+                  onChange={(opt) => setType(opt)}
+                  styles={customStyles}
+                  menuPosition="fixed"
+                  className="md:border-r max-md:border items-center flex justify-between border-black max-md:rounded-[15px] !w-full md:border-[#d0c2c2] [&_div>div>div]:!text-black [&_div>div>div]:!text-sm [&_div>div>div]:!text-nowrap md:!h-[46px] !h-[52px]"
+                  isClearable
+                  components={{
+                    ClearIndicator,
+                    DropdownIndicator,
+                    IndicatorSeparator,
+                  }}
+                />
 
-          <div className="flex md:flex-row flex-col md:bg-transparent bg-white md:px-0 md:py-0 p-[15px] rounded-[15px] items-center gap-y-5 gap-x-4 sm:mt-9 mt-24 sm:mb-0 mb-4">
-            <div className="flex gap-y-5 md:flex-row flex-col bg-white md:rounded-[15px] overflow-hidden w-full xl:max-w-[536px] md:max-w-[449px] px-2 i">
-              <Select
-                options={typeOptions}
-                placeholder="What are you looking for?"
-                value={type}
-                onChange={(opt) => setType(opt)}
-                styles={customStyles}
-                menuPosition="fixed"
-                className="md:border-r max-md:border items-center flex justify-between border-black max-md:rounded-[15px] !w-full md:border-[#d0c2c2] [&_div>div>div]:!text-black [&_div>div>div]:!text-sm [&_div>div>div]:!text-nowrap md:!h-[46px] !h-[52px]"
-                isClearable
-                components={{
-                  ClearIndicator,
-                  DropdownIndicator,
-                  IndicatorSeparator,
-                }}
-              />
+                <Select
+                  options={cityOptions}
+                  placeholder="Where?"
+                  value={city}
+                  onChange={(opt) => setCity(opt)}
+                  styles={customStyles}
+                  menuPosition="fixed"
+                  className=" [&_div>div>div]:!text-black [&_div>div>div]:!text-sm max-md:border border-black rounded-[15px] !w-full md:!h-[46px] !h-[52px] items-center flex justify-between"
+                  isClearable
+                  components={{
+                    ClearIndicator,
+                    DropdownIndicator:null,
+                    IndicatorSeparator,
+                  }}
+                />
+              </div>
 
-              <Select
-                options={cityOptions}
-                placeholder="Where?"
-                value={city}
-                onChange={(opt) => setCity(opt)}
-                styles={customStyles}
-                menuPosition="fixed"
-                className=" [&_div>div>div]:!text-black [&_div>div>div]:!text-sm max-md:border border-black rounded-[15px] !w-full md:!h-[46px] !h-[52px] items-center flex justify-between"
-                isClearable
-                components={{
-                  ClearIndicator,
-                  DropdownIndicator:null,
-                  IndicatorSeparator,
-                }}
-              />
+              <button
+                onClick={() => console.log(type, city)}
+                className="bg-[#f76900] px-5 text-white font-medium h-[46px] flex items-center justify-center rounded-xl w-full md:w-auto text-sm"
+              >
+                Search
+              </button>
             </div>
-
-            <button
-              onClick={() => console.log(type, city)}
-              className="bg-[#f76900] px-5 text-white font-medium h-[46px] flex items-center justify-center rounded-xl w-full md:w-auto text-sm"
-            >
-              Search
-            </button>
           </div>
         </div>
       </div>

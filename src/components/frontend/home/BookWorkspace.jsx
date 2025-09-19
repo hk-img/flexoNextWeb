@@ -91,7 +91,7 @@ const BookWorkspace = () => {
                     onClick={() => {
                       setIsOpen(true);
                     }}
-                    className="cursor-pointer relative w-full overflow-hidden rounded-sm font-semibold text-white md:hover:text-[#f76900] py-2 z-10 bg-transparent border-2 border-transparent md:hover:border-[#f76900] before:absolute before:inset-0 before:w-full before:bg-[#f76900] before:transition-all transition-all duration-500  before:duration-500 before:origin-right md:hover:before:w-0 before:-z-10 text-base leading-[1.5] text-balance"
+                    className="cursor-pointer relative w-full overflow-hidden rounded-sm font-semibold text-white md:hover:text-[#f76900] py-2 z-10 bg-transparent border-2 border-transparent md:hover:border-[#f76900] before:absolute before:inset-0 before:w-full before:bg-[#f76900] before:transition-all transition-all duration-500  before:duration-500 before:origin-right md:hover:before:w-0 before:-z-10 text-base leading-[1.5] "
                   >
                     Connect with a Workspace Expert Today
                   </button>

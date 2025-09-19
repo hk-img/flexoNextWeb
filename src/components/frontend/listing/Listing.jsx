@@ -707,7 +707,7 @@ const Listing = () => {
 
                 <div className="flex items-center absolute lg:top-[30%] lg:left-10 top-[22%] left-8">
                   <div className="md:w-4/5 w-full flex flex-col gap-y-3">
-                    <h4 className="text-xl font-semibold text-[#010101] text-balance ">
+                    <h4 className="text-xl font-semibold text-[#010101] ">
                       Winner of Best Flex Space Aggregator of the Year
                     </h4>
                     <p className="lg:3/5 w-full text-sm text-[#272828] lg:mb-4 mb-2">

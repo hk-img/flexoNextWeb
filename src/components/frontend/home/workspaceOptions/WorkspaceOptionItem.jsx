@@ -16,7 +16,7 @@ const WorkspaceOptionItem = ({ space,setIsOpen }) => {
             className="w-full h-[400px] object-cover"
           />
 
-          <div className="absolute bottom-[10px] left-[10px] right-[10px] bg-[#00000080] backdrop-blur-[5px]  text-white px-[15px] py-[10.5px] rounded-[5px] transition-all duration-700 ease-in-out group-hover:-translate-y-3">
+          <div className="absolute bottom-[10px] left-[10px] right-[10px] bg-[#00000080] backdrop-blur-[5px]  text-white px-[15px] py-[10.5px] rounded-[5px] transition-all duration-700 ease-in-out md:group-hover:-translate-y-3">
             <div className="border-b border-[#ffffff1a] pb-1.5">
               <h3 className="text-base text-start font-medium">{space.title}</h3>
             </div>

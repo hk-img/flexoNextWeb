@@ -46,7 +46,7 @@ const Testimonial = () => {
   return (
     <div className="container px-[15px] mx-auto xl:pt-[90px] xl:pb-[94px] py-12">
       <div className="max-w-[800px] mx-auto">
-        <h2 className="md:text-[32px] text-2xl font-medium text-center text-[#333] leading-[1.2]">
+        <h2 className="md:text-[32px] text-2xl font-medium text-center text-[#333] leading-[1.2] text-balance">
           Trusted by Teams,{" "}
           <span className="text-[#f76900]">Loved by Leaders</span>
         </h2>
@@ -62,7 +62,7 @@ const Testimonial = () => {
                 key={idx}
                 className="embla__slide shrink-0 lg:px-[15px] sm:px-[12px] px-1 basis-[100%] sm:basis-[50%] md:basis-[50%] lg:basis-[33.3%] xl:basis-[33.3%] py-3"
               >
-                <div className=" group rounded-md shadow-[0_0_3px_#cbcbcb] p-6 relative bg-white hover:transform hover:translate-y-[-10px] transition-all duration-500 min-h-[330px]">
+                <div className=" group rounded-md shadow-[0_0_3px_#cbcbcb] p-6 relative bg-white md:hover:transform md:hover:translate-y-[-10px] transition-all duration-500 min-h-[280px]">
                   <span className="absolute top-3 right-3 text-[#f76900] text-4xl font-bold opacity-40">
                     <Svg name="quots" className="size-[34px]" />
                   </span>
@@ -98,7 +98,7 @@ const Testimonial = () => {
                     </div>
                   </div>
 
-                  <p className="text-[#777] text-base line-clamp-5 group-hover:line-clamp-none transition-all duration-500 cursor-default">
+                  <p className="text-[#777] 2xl:text-base text-sm line-clamp-5 md:group-hover:line-clamp-none transition-all duration-500 cursor-default">
                     {t.review}
                   </p>
                 </div>

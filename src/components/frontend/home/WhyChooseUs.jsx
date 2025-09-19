@@ -4,7 +4,7 @@ import React from 'react'
 
 const WhyChooseUs = () => {
     return (
-        <section className="relative py-[61px] my-[28px]">
+        <section className="relative py-[50px] my-[28px]">
             <Image
                 width={1526}
                 height={539}
@@ -20,13 +20,13 @@ const WhyChooseUs = () => {
                         <h2 className="text-2xl md:text-[32px] font-medium mb-[5px] leading-[1.5]">
                             Why choose <span className="text-orange-500">Flexo ?</span>
                         </h2>
-                        <p className="mb-4 text-white xl:text-base text-sm leading-[1.5]">
+                        <p className="mb-4 text-white 2xl:text-base text-sm leading-[1.5]">
                            We make your office-search, a hassle-less experience. With an in depth knowledge, let our workspace solution experts find what you're looking for
                         </p>
                         <div>
                             <a
                                 href="#"
-                                className="relative inline-block px-2 py-1.5 rounded-[10px] font-semibold text-[#f76900] bg-[#0000006b] backdrop-blur-[12px] transition-all duration-500 hover:scale-105 text-sm hover:underline text-center leading-[1.5] border border-transparent"
+                                className="relative inline-block px-2 py-1.5 rounded-[10px] font-semibold text-[#f76900] bg-[#0000006b] backdrop-blur-[12px] transition-all duration-500 md:hover:scale-105 text-sm md:hover:underline text-center leading-[1.5] border border-transparent"
                             >
                                 Claim Your Free Consultation with Zero Brokerage Offer Now! 
                                 <span className="transition-transform duration-300 [display:ruby]">
@@ -44,7 +44,7 @@ const WhyChooseUs = () => {
                             <div className="mb-2 flex items-center justify-center">
                                 <Svg name="shareYourRequirements" className="size-14 text-white"/>
                             </div>
-                            <h3 className="text-[#f76900]">Tell Us Your Needs</h3>
+                            <h3 className="text-[#f76900] font-medium">Tell Us Your Needs</h3>
                             <p className="text-sm text-white">
                                 Share your requirements, and a dedicated workspace advisor will
                                 handle the rest.
@@ -55,7 +55,7 @@ const WhyChooseUs = () => {
                             <div className="mb-2 flex items-center justify-center">
                                 <Svg name="fastService" className="size-14 text-white"/>
                             </div>
-                            <h3 className="text-[#f76900]">Fast & Efficient Service</h3>
+                            <h3 className="text-[#f76900] font-medium">Fast & Efficient Service</h3>
                             <p className="text-sm text-white">
                                Experience a quick turnaround time and a smooth process from search to move-in.
                             </p>
@@ -65,7 +65,7 @@ const WhyChooseUs = () => {
                             <div className="mb-2 flex items-center justify-center">
                                 <Svg name="largestCoverage" className="size-14 text-white"/>
                             </div>
-                            <h3 className="text-[#f76900]">Largest Coverage</h3>
+                            <h3 className="text-[#f76900] font-medium">Largest Coverage</h3>
                             <p className="text-sm text-white">
                                 Access 1800+ coworking spaces across India with Flexo's extensive network.
                             </p>
@@ -74,7 +74,7 @@ const WhyChooseUs = () => {
                             <div className="mb-2 flex items-center justify-center">
                                 <Svg name="dedicatedAdvisor" className="size-14 text-white"/>
                             </div>
-                            <h3 className="text-[#f76900]">Dedicated Workspace Experts</h3>
+                            <h3 className="text-[#f76900] font-medium">Dedicated Workspace Experts</h3>
                             <p className="text-sm text-white">
                                 Get personalized, support from experts for shortlisting, negotiating and finalizing your perfect office
                             </p>

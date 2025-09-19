@@ -391,9 +391,9 @@ const Listing = () => {
 
                 <div className="filterRow w-full flex lg:flex-row flex-col items-center gap-4">
                   <div className="lg:w-[70%] w-full filters-buttons flex justify-between items-center">
-                    <div className="lg:w-1/4">
+                    <div className="lg:w-1/4 w-1/5">
                       <nav className="block">
-                        <ul className="flex p-0 m-0">
+                        <ul className="flex flex-col p-0 m-0">
                           <li className="text-[13px] !leading-8 font-normal list-style-none p-0 m-0 h-5">
                             <div
                               onClick={() => {
@@ -575,9 +575,9 @@ const Listing = () => {
                         </ul>
                       </nav>
                     </div>
-                    <div className="lg:w-1/4">
+                    <div className="lg:w-1/4 w-1/5">
                       <nav className="block">
-                        <ul className="flex p-0 m-0">
+                        <ul className="flex flex-col p-0 m-0">
                           <li className="text-[13px] !leading-8 font-normal list-style-none p-0 m-0 h-5">
                             <div
                               onClick={() => {
@@ -598,8 +598,8 @@ const Listing = () => {
                         </ul>
                       </nav>
                     </div>
-                    <div className="lg:w-1/4">
-                      <ul className="flex">
+                    <div className="lg:w-1/4 w-1/5">
+                      <ul className="flex flex-col p-0 m-0">
                         <li className="text-[13px] !leading-8 font-normal list-style-none">
                           <a
                             href=""
@@ -614,7 +614,7 @@ const Listing = () => {
                         </li>
                       </ul>
                     </div>
-                    <div className="lg:w-1/4">
+                    <div className="lg:w-1/4 w-1/5">
                       <label className="relative inline-flex items-center cursor-pointer">
                         <input
                           type="checkbox"

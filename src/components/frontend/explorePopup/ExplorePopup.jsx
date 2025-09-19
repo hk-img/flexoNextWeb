@@ -90,7 +90,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
       />
 
       {/* Popup Box */}
-      <div className="relative w-full max-w-[55vw] rounded-[11px] bg-white p-6 overflow-y-auto h-full md:h-auto [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]">
+      <div className="relative w-full max-w-[55vw] mx-[12px] rounded-[11px] bg-white p-6 overflow-y-auto h-full md:h-auto [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]">
         {/* Header */}
         <div className="pb-6 flex items-center justify-between">
           <h2 className="text-lg font-semibold">Get Quotes</h2>
@@ -117,10 +117,11 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                 First name <span className="text-[#dc3545]">*</span>
               </label>
               <input
-                {...register("firstName")}
-                placeholder="Enter First Name"
-                className="w-full rounded-sm border border-[#dbdbdb] px-3 py-2.5"
-              />
+                  {...register("firstName", { required: true })}
+                  required
+                  placeholder="Enter First Name"
+                  className="w-full rounded-sm border border-[#dbdbdb] px-3 py-2.5 invalid:border-pink-500"
+                />
               {errors.firstName && (
                 <span className="text-[10px] text-[#dc3545] mt-1 absolute -bottom-4 left-0">
                   {errors.firstName.message}
@@ -184,7 +185,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                   />
                 )}
               />
-              {values?.country?.name}
+              {/* {values?.country?.name} */}
               {errors.mobile && (
                 <span className="text-[10px] text-[#dc3545] mt-1 absolute -bottom-4 left-0">
                   {errors.mobile.message}
@@ -245,7 +246,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
           </div>
         </form>
 
-        <p className="mt-4 pb-5 px-5 text-balance text-[11px] text-[#000000de] text-center">
+        <p className="mt-4 pb-5 px-5 text-[11px] text-[#000000de] text-center">
           After you submit a workspace enquiry to us, we may share your details
           with workspace providers, who may contact you to follow up on your
           enquiry. Please read our{" "}

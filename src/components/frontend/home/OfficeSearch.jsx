@@ -8,7 +8,7 @@ import React from 'react'
              <h2 className="sm:text-[32px] text-2xl font-medium text-center text-[#333] leading-[1.2] tracking-normal">
                 Your Office Search, Simplified By Experts
             </h2>
-            <p className="lg:mt-[16px] mt-10 text-[#777] text-lg leading-[1.5] text-balance">
+            <p className="lg:mt-[16px] mt-10 text-[#777] text-lg leading-[1.5] ">
             With over 1,000 businesses and professionals helped, we bring unmatched
             expertise and personalized service to every client.
             </p>

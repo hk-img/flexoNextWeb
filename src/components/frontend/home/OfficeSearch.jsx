@@ -23,8 +23,8 @@ import React from 'react'
                         />
                 </div>
                 <div>
-                    <h3 className="font-medium text-[#141414] xl:text-lg text-base leading-[1.6] xl:pb-px ">Space shortlisting</h3>
-                    <p className="text-[#777] xl:text-base text-sm leading-[1.5]">
+                    <h3 className="font-medium text-[#141414] text-base leading-[1.6] xl:pb-px ">Space shortlisting</h3>
+                    <p className="text-[#777] text-sm leading-[1.5]">
                     We find the perfect office that suits your needs and budget.
                     </p>
                 </div>
@@ -38,8 +38,8 @@ import React from 'react'
                         />
                 </div>
                 <div>
-                    <h3 className="font-medium text-[#141414] xl:text-lg text-base leading-[1.6] xl:pb-px ">Personalized Tours</h3>
-                    <p className="text-[#777] xl:text-base text-sm leading-[1.5]">
+                    <h3 className="font-medium text-[#141414] text-base leading-[1.6] xl:pb-px ">Personalized Tours</h3>
+                    <p className="text-[#777] xl:text-sm text-sm leading-[1.5]">
                     Visit spaces that match your criteria—saving you time and effort.
                     </p>
                 </div>
@@ -53,8 +53,8 @@ import React from 'react'
                         />
                 </div>
                 <div>
-                    <h3 className="font-medium text-[#141414] xl:text-lg text-base leading-[1.6] xl:pb-px ">Smart Price Negotiation</h3>
-                    <p className="text-[#777] xl:text-base text-sm leading-[1.5]">
+                    <h3 className="font-medium text-[#141414] text-base leading-[1.6] xl:pb-px ">Smart Price Negotiation</h3>
+                    <p className="text-[#777] xl:text-sm text-sm leading-[1.5]">
                    We secure the best deal, so you can focus on growing your business.
                     </p>
                 </div>
@@ -68,8 +68,8 @@ import React from 'react'
                         />
                 </div>
                 <div>
-                    <h3 className="font-medium text-[#141414] xl:text-lg text-base leading-[1.6] xl:pb-px ">Seamless Contract Handling</h3>
-                    <p className="text-[#777] xl:text-base text-sm leading-[1.5]">
+                    <h3 className="font-medium text-[#141414] text-base leading-[1.6] xl:pb-px ">Seamless Contract Handling</h3>
+                    <p className="text-[#777] xl:text-sm text-sm leading-[1.5]">
                     From paperwork to move in, we make it effortless.
                     </p>
                 </div>

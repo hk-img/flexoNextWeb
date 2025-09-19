@@ -30,7 +30,7 @@ const TrustedCompanies = () => {
   return (
     <section className="py-9 bg-white">
       <div className="container mx-auto text-center px-[15px]">
-        <h2 className="sm:text-[32px] text-2xl font-medium text-center text-[#333] md:mb-4 mb-10 leading-[1.2]">
+        <h2 className="sm:text-[32px] text-2xl font-medium text-center text-[#333] md:mb-4 mb-10 leading-[1.2] text-balance">
           Trusted By Leading Companies in India
         </h2>
 
@@ -38,7 +38,7 @@ const TrustedCompanies = () => {
           {companies.map((s, i) => (
             <div
               key={i}
-              className="embla__slide flex-[0_0_auto] basis-auto px-6 flex items-center justify-center"
+              className="embla__slide flex-[0_0_auto] basis-auto sm:px-6 px-2 flex items-center justify-center"
             >
               <Image
                 src={s.src}

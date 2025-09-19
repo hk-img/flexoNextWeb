@@ -5,6 +5,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import EmblaCarousel from "../emblaCarousel/EmblaCarousel";
 import ProductCard from "../productCard/ProductCard";
+import { YouTubeEmbed } from '@next/third-parties/google';
 
 const Detail = () => {
   const [isFixed, setIsFixed] = useState(false);
@@ -36,8 +37,8 @@ const Detail = () => {
       <section className="relative w-full lg:mt-[82px] sm:mt-[62px] mt-[63px] ">
         <div className="relative">
           <div className="grid md:grid-cols-2 grid-cols-1 gap-[2px]">
-            <div className="max-md:relative max-md:overflow-hidden max-md:pt-[66.45%] max-md:w-full">
-              <iframe
+            <div className="[&_[data-ntpc]]:!h-full [&_[data-title]]:h-full">
+              {/* <iframe
                 className="w-full h-full max-md:absolute max-md:inset-0 "
                 src="https://www.youtube.com/embed/hxvOFKFqQLk?si=qR2XPRzDJJBua9_k"
                 title="YouTube video player"
@@ -45,7 +46,11 @@ const Detail = () => {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 referrerPolicy="strict-origin-when-cross-origin"
                 allowFullScreen
-              ></iframe>
+              ></iframe> */}
+              <YouTubeEmbed
+                videoId="hxvOFKFqQLk"
+                className="!w-full !h-full  "
+              />
             </div>
             <div>
               <div className="grid md:grid-cols-2 grid-cols-4 gap-[2px]">
@@ -113,8 +118,8 @@ const Detail = () => {
       </section>
       <section className="container px-[15px] mx-auto md:py-6 py-[18px]">
         <div className="flex flex-wrap">
-          <div className="md:w-2/3 md:pr-[15px] pr-0">
-            <ol className="md:text-base text-sm leading-[30px] flex flex-wrap items-center gap-2">
+          <div className="lg:w-2/3 md:pr-[15px] pr-0">
+            <ol className="2xl:text-base text-sm leading-[30px] flex flex-wrap items-center gap-2 pb-px">
               <li className="text-[#141414] hover:text-[#777]">
                 <a href="#">Coworking Space In Mumbai </a>
               </li>
@@ -126,28 +131,28 @@ const Detail = () => {
               </li>
             </ol>
             <div className="">
-              <h1 className="md:text-[30px] text-lg leading-[1.6] font-medium text-[#141414] mb-4">
+              <h1 className="2xl:text-[30px] text-lg leading-[1.6] font-medium text-[#141414] mb-4">
                 WeWork Goregaon
               </h1>
-              <div className="flex items-center text-[#141414] md:text-base text-sm mb-4">
+              <div className="flex items-center text-[#141414] 2xl:text-base text-sm mb-4.5">
                 <Svg name="location2" className="size-5 text-[#f76900]" />
                 <span>Goregaon</span>
               </div>
-              <div className="flex md:flex-row flex-col md:space-y-0 space-y-3 md:items-center justify-between mb-[25px]">
-                <div className="flex items-center space-x-5 text-sm text-[#646464] px-2">
-                  <div className="flex gap-1.5 items-center ">
+              <div className="flex md:flex-row flex-col md:space-y-0 md:gap-y-0 gap-y-1 space-y-3 md:items-center justify-between mb-[25px]">
+                <div className="flex items-center space-x-11 text-sm text-[#646464] px-2">
+                  <div className="flex gap-[5px] items-center ">
                     <Svg name="user2" className="size-[15px] text-[#7f7f7f]" />
-                    <span className="md:text-base text-sm">people</span>
+                    <span className="2xl:text-base text-sm">people</span>
                   </div>
-                  <div className="flex gap-1.5 items-center">
+                  <div className="flex gap-[5px] items-center">
                     <Svg
                       name="scaleRuler"
                       className="size-[15px] text-[#7f7f7f]"
                     />
-                    <span className="md:text-base text-sm"> sqft</span>
+                    <span className="2xl:text-base text-sm"> sqft</span>
                   </div>
                 </div>
-                <div className="flex items-center space-x-1 border border-[#ddd] rounded-full w-fit px-3 py-1">
+                <div className="flex items-center space-x-1 border border-[#ddd] rounded-full w-fit md:px-3.5 px-3 md:py-2 py-1">
                   <div className="flex items-center space-x-1 p-1 pr-3 border-r border-[#ddd]">
                     <Svg name="thumbUp" className="size-3.5 text-black" />
                     <span className="text-[15px]">0</span>
@@ -162,19 +167,19 @@ const Detail = () => {
           </div>
         </div>
         <div className="flex flex-wrap">
-          <div className="md:w-2/3 w-full pr-[15px] max-md:pr-0 md:order-1 order-2">
+          <div className="lg:w-2/3 w-full pr-[15px] max-lg:pr-0 lg:order-1 order-2">
             <div>
               <div className="">
                 <div
                   className={`${
                     isFixed
-                      ? "fixed shadow-md top-0 z-40 w-full left-0 right-0 px-35 h-[81px]"
+                      ? "fixed shadow-md top-0 z-40 w-full left-0 right-0 2xl:px-35 px-15 2xl:h-[81px] h-[52px]"
                       : "relative"
                   } justify-between  border-t border-b bg-white border-[#ddd] md:flex hidden`}
                 >
                   <button
                     onClick={() => scrollToSection("about", 1)}
-                    className={`py-[25px] relative text-base leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
+                    className={`2xl:py-[25px] py-[10px] relative 2xl:text-base text-sm leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
                       activeTab === 1
                         ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]"
                         : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
@@ -185,7 +190,7 @@ const Detail = () => {
 
                   <button
                     onClick={() => scrollToSection("pricing", 2)}
-                    className={`py-[25px] relative text-base leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
+                    className={`2xl:py-[25px] py-[10px] relative 2xl:text-base text-sm leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
                       activeTab === 2
                         ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]"
                         : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
@@ -196,7 +201,7 @@ const Detail = () => {
 
                   <button
                     onClick={() => scrollToSection("location", 3)}
-                    className={`py-[25px] relative text-base leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
+                    className={`2xl:py-[25px] py-[10px] relative 2xl:text-base text-sm leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
                       activeTab === 3
                         ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]"
                         : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
@@ -207,7 +212,7 @@ const Detail = () => {
 
                   <button
                     onClick={() => scrollToSection("hours", 4)}
-                    className={`py-[25px] relative text-base leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
+                    className={`2xl:py-[25px] py-[10px] relative 2xl:text-base text-sm leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
                       activeTab === 4
                         ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]"
                         : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
@@ -218,7 +223,7 @@ const Detail = () => {
 
                   <button
                     onClick={() => scrollToSection("reviews", 5)}
-                    className={`py-[25px] relative text-base leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
+                    className={`2xl:py-[25px] py-[10px] relative 2xl:text-base text-sm leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
                       activeTab === 5
                         ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]"
                         : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
@@ -249,6 +254,38 @@ const Detail = () => {
                         safe and hygienic work environment.
                       </p>
                     </div>
+                    <div className="  pt-6">
+                      <details className="group [&_summary::-webkit-details-marker]:hidden">
+                        <summary className="flex cursor-pointer items-center justify-between py-5 px-1 hover:bg-[#0000000a] border-b border-[#dbdbdb]">
+                          <div className="flex items-center gap-1">
+                            <Svg name="parking" className="size-7 text-[#f76900]"/>
+                            <span className="font-medium text-lg">Parking</span>
+                          </div>
+                          <Svg name="leftArrow" className="size-3.5 -rotate-90 transition-transform duration-300 group-open:rotate-90"/>
+                          
+                        </summary>
+
+                        <div className="pt-8 space-y-5 ">
+                          <div>
+                            <h4 className="font-semibold text-[#000000de] leading-[20px] text-[17px] mb-2">Parking options</h4>
+                            <p className="text-[#646464] text-base leading-[1.8]">
+                              Free Onsite Parking, Free Street Parking, Valet Parking, Near By Parking Lot,
+                              Metered Street Parking, Paid Site Parking
+                            </p>
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-[#000000de] leading-[20px] text-[17px] mb-2">Parking description</h4>
+                            <p className="text-[#646464] text-base leading-[1.8]">
+                              Provide a unique and descriptive title for your space that stands out. Do not include
+                              your business name as your listing will not be approved. Provide a unique and descriptive
+                              title for your space that stands out. Do not include your business name as your listing
+                              will not be approved.
+                            </p>
+                          </div>
+                        </div>
+                      </details>
+                    </div>
+
                     <div className="pt-12">
                       <h2 className="text-xl font-medium text-[#141414] mb-6">
                         Amenities
@@ -399,9 +436,9 @@ const Detail = () => {
                         </div>
                       </div>
                       <div className="md:hidden block mt-5">
-                            <h3 className="text-sm text-[#3e80d8] font-extrabold">
-                              Show More
-                            </h3>
+                        <h3 className="text-sm text-[#3e80d8] font-extrabold">
+                          Show More
+                        </h3>
                       </div>
                     </div>
                   </div>
@@ -414,12 +451,12 @@ const Detail = () => {
                     </h2>
                     <div className="space-y-5">
                       <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
-                        <div className="grid md:grid-cols-3 grid-cols-1 md:items-center md:gap-4 gap-2 justify-between">
+                        <div className="grid md:grid-cols-3 grid-cols-1 md:items-center md:gap-4 gap-0 justify-between">
                           <div className="md:col-span-2">
-                            <h3 className="text-lg leading-[1.6] font-medium text-[#010101]">
+                            <h3 className="2xl:text-xl text-lg leading-[1.6] font-medium text-[#010101]">
                               Private Office
                             </h3>
-                            <p className="md:text-base text-sm leading-[1.5] text-[#777]">
+                            <p className="2xl:text-base text-sm leading-[1.5] text-[#777]">
                               Private space for you and your team
                             </p>
                           </div>
@@ -444,7 +481,7 @@ const Detail = () => {
                           </div>
                         </div>
                         <div>
-                          <button className="md:mt-3 mt-4 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
+                          <button className="md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
                             ENQUIRE NOW
                           </button>
                         </div>
@@ -452,10 +489,10 @@ const Detail = () => {
                       <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
                         <div className="grid md:grid-cols-3 grid-cols-1 md:items-center md:gap-4 gap-2 justify-between">
                           <div className="md:col-span-2">
-                            <h3 className="text-lg leading-[1.6] font-medium text-[#010101]">
+                            <h3 className="2xl:text-xl text-lg leading-[1.6] font-medium text-[#010101]">
                               Private Office
                             </h3>
-                            <p className="md:text-base text-sm leading-[1.5] text-[#777]">
+                            <p className="2xl:text-base text-sm leading-[1.5] text-[#777]">
                               Private space for you and your team
                             </p>
                           </div>
@@ -480,7 +517,7 @@ const Detail = () => {
                           </div>
                         </div>
                         <div>
-                          <button className="md:mt-3 mt-4 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
+                          <button className="md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
                             ENQUIRE NOW
                           </button>
                         </div>
@@ -562,7 +599,7 @@ const Detail = () => {
                           </div>
                         </div>
 
-                        <div className="grid gap-4 md:p-6">
+                        <div className="grid md:gap-4 gap-2 md:p-6 px-[15px]">
                           <div className="flex justify-between">
                             <span className="text-[#777] text-[15px]">
                               Monday
@@ -699,31 +736,32 @@ const Detail = () => {
               </div>
             </div>
           </div>
-          <div className="md:w-1/3 w-full pl-[34px] max-md:pl-0 md:order-2 order-1md:pb-0 pb-4">
-            <div className="w-full border border-[#dbdbdb] py-[22px] px-5 rounded-sm md:sticky md:top-[90px]  bg-white">
+          <div className="lg:w-1/3 w-full pl-[36px] max-lg:pl-0 lg:order-2 order-1 lg:pb-0 pb-4">
+            <div className="w-full border border-[#dbdbdb] py-[22px] px-[19px] rounded-sm md:sticky md:top-[90px]  bg-white">
               <h3 className="text-xl font-medium text-center mb-5 pt-[10px]">
                 Interested in this space?
               </h3>
-              <div className="grid grid-cols-2 gap-y-2 gap-x-6  mb-5 text-sm text-black">
-                <div className="flex items-center gap-0.5 md:text-[13px] text-[11px] leading-[1.5]">
+              <div className="columns-2  space-y-2  mb-4 text-sm text-black">
+                <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5]">
                   <span className="text-[#f76900]">
                     <Svg name="checkRound" className="size-[22px]" />
                   </span>
                   Zero Brokerage
                 </div>
-                <div className="flex items-center gap-0.5 md:text-[13px] text-[11px] leading-[1.5]">
-                  <span className="text-[#f76900]">
-                    <Svg name="checkRound" className="size-[22px]" />
-                  </span>
-                  Best Deals
-                </div>
-                <div className="flex items-center gap-0.5 md:text-[13px] text-[11px] leading-[1.5]">
+                <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5]">
                   <span className="text-[#f76900]">
                     <Svg name="checkRound" className="size-[22px]" />
                   </span>
                   1000+ Clients Served
                 </div>
-                <div className="flex items-center gap-0.5 md:text-[13px] text-[11px] leading-[1.5]">
+                <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5] ps-2">
+                  <span className="text-[#f76900]">
+                    <Svg name="checkRound" className="size-[22px]" />
+                  </span>
+                  Best Deals
+                </div>
+                
+                <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5] ps-2">
                   <span className="text-[#f76900]">
                     <Svg name="checkRound" className="size-[22px]" />
                   </span>
@@ -731,11 +769,11 @@ const Detail = () => {
                 </div>
               </div>
 
-              <div className="space-y-3 mb-10">
-                <button className="w-full bg-[#f76900] md:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">
+              <div className="space-y-2.5 mb-10">
+                <button className="w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">
                   Get Quote{" "}
                 </button>
-                <button className="w-full border uppercase tracking-[1px] border-[#000e54] text-[#000e54] md:text-[15px] text-sm font-semibold md:py-[15px] py-[10px] rounded-[15px]">
+                <button className="w-full border uppercase tracking-[1px] border-[#000e54] text-[#000e54] 2xl:text-base text-sm font-semibold md:py-[15px] py-[10px] rounded-[15px]">
                   Schedule a visit
                 </button>
               </div>
@@ -753,7 +791,7 @@ const Detail = () => {
       </section>
 
       <section className="container px-[15px] mx-auto pb-[50px] pt-10">
-        <h2 className="md:text-2xl text-xl font-medium text-[#333] mb-[3px] leading-[1.6] ps-3">
+        <h2 className="text-2xl font-medium text-[#141414] mb-[3px] leading-[1.6] ps-3">
           Nearby Coworking Spaces
         </h2>
         <div>

@@ -18,7 +18,7 @@ const Banner = ({heading,img,desc,btnText,btnLink}) => {
       </div>
 
       <div className="relative container z-10 text-center px-[15px]">
-        <h2 className="text-white text-[22px] md:text-[26px] font-medium xl:mb-[7px] mb-2 leading-[1.6]">
+        <h2 className="text-white text-[22px] md:text-[26px] font-medium mb-2 leading-[1.6]">
           List Your Space and Earn with Flexo
         </h2>
         <p className="text-white/90 text-lg leading-[1.5]">

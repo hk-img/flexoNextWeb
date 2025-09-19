@@ -1,6 +1,6 @@
 "use client";
+import { useEffect } from "react";
 import Svg from "@/components/svg";
-import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
@@ -21,7 +21,6 @@ const schema = z
   .refine(
     (data) => {
       if (!data.mobile) return false;
-
       const code = data.country?.dialCode ?? "";
       const numeric = data.mobile.replace(/\D/g, "");
       return numeric.length > code.length;
@@ -38,10 +37,29 @@ const Auth = ({ isOpen, setIsOpen }) => {
     control,
     setValue,
     formState: { errors, isSubmitting },
+    watch,
   } = useForm({
     resolver: zodResolver(schema),
-    defaultValues: { mobile: "", country: null },
+    defaultValues: {
+      mobile: "",
+      country: {
+        name: "India",
+        dialCode: "91",
+        countryCode: "in",
+        format: "+.. .....-.....",
+      },
+    },
   });
+  const values = watch();
+  console.log({ values }, "Rtyryrtyrt");
+
+  useEffect(() => {
+    const handleEsc = (e) => e.key === "Escape" && setIsOpen(false);
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, [setIsOpen]);
+
+  if (!isOpen) return null;
 
   const onSubmit = async (values) => {
     const country_code = values.country ? `+${values.country.dialCode}` : "";
@@ -51,55 +69,57 @@ const Auth = ({ isOpen, setIsOpen }) => {
   };
 
   return (
-    <Dialog
-      open={isOpen}
-      onClose={() => setIsOpen(false)}
-      className="relative z-50"
-    >
-      <div className="fixed inset-0 bg-black/40" aria-hidden="true" />
-      <div className="fixed inset-0 flex items-center justify-center p-4">
-        <DialogPanel className="w-full max-w-[600px] rounded-sm bg-white p-6 shadow-xl relative">
-          {/* Header */}
-          <div className="px-5 py-4 border-b border-[#dbdbdb] flex items-center justify-between">
-            <DialogTitle className="text-xl font-medium">
-              Register/Create an<span className="text-[#f76900]"> Account</span>
-            </DialogTitle>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="text-black cursor-pointer"
-            >
-              <Svg name="close" className="size-5" />
-            </button>
-          </div>
-
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0 bg-black/40"
+        onClick={() => setIsOpen(false)}
+      />
+      {/* Modal Box */}
+      <div className="relative w-full max-w-[600px] rounded-sm bg-white p-6 shadow-xl">
+        {/* Header */}
+        <div className="px-5 py-4 border-b border-[#dbdbdb] flex items-center justify-between">
+          <h2 className="text-xl font-medium">
+            Register/Create an<span className="text-[#f76900]"> Account</span>
+          </h2>
+          <button
+            onClick={() => setIsOpen(false)}
+            className="text-black cursor-pointer"
+          >
+            <Svg name="close" className="size-5" />
+          </button>
+        </div>
+        <div className="p-5">
           {/* Form */}
-          <form onSubmit={handleSubmit(onSubmit)} className="mt-6">
-            <label htmlFor="mobile" className="block text-sm font-semibold">
-              Mobile <span className="text-[#f76900]">*</span>
-            </label>
-
-            <div>
-              <Controller
-                name="mobile"
-                control={control}
-                render={({ field }) => (
-                  <PhoneInput
-                    country="in"
-                    value={field.value}
-                    onChange={(value, country) => {
-                      setValue("mobile", value, { shouldValidate: true });
-                      setValue("country", country);
-                    }}
-                    enableSearch
-                    inputProps={{ name: "mobile" }}
-                  />
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="px-[15px]">
+              <label htmlFor="mobile" className="block text-sm font-semibold mb-2">
+                Mobile <span className="text-[#f76900]">*</span>
+              </label>
+              <div>
+                <Controller
+                  name="mobile"
+                  control={control}
+                  render={({ field }) => (
+                    <PhoneInput
+                      country="in"
+                      value={field.value}
+                      onChange={(value, country) => {
+                        setValue("mobile", value, { shouldValidate: true });
+                        setValue("country", country);
+                      }}
+                      enableSearch
+                      inputProps={{ name: "mobile" }}
+                    />
+                  )}
+                />
+                {values?.country?.name}
+                {errors.mobile && (
+                  <p className="mt-1 text-sm text-red-500">
+                    {errors.mobile.message}
+                  </p>
                 )}
-              />
-              {errors.mobile && (
-                <p className="mt-1 text-sm text-red-500">
-                  {errors.mobile.message}
-                </p>
-              )}
+              </div>
             </div>
             <button
               type="submit"
@@ -166,9 +186,9 @@ const Auth = ({ isOpen, setIsOpen }) => {
               LOGIN
             </button>
           </div>
-        </DialogPanel>
+        </div>
       </div>
-    </Dialog>
+    </div>
   );
 };
 

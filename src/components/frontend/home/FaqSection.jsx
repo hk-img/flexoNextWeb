@@ -30,7 +30,7 @@ const FaqSection = () => {
             </h2>
             <div className="divide-y divide-gray-200">
             {faqs.map((faq, index) => (
-                <div key={index} className="p-5">
+                <div key={index} className="md:px-5 py-5 px-2">
                     <button
                         onClick={() => toggleFAQ(index)}
                         className="flex items-center justify-between w-full text-left text-base font-medium text-[#141414]"
@@ -38,7 +38,7 @@ const FaqSection = () => {
                         <div
                         className={`${
                             openIndex === index ? "shadow-[5px_5px_15px_#00000033]" : ""
-                        } flex items-center gap-2 w-full p-3 rounded-sm xl:text-lg text-base leading-[1.6]`}
+                        } flex items-center gap-2 w-full p-3 rounded-sm 2xl:text-lg text-base leading-[1.6]`}
                         >
                         <span className="text-orange-500">
                             <Svg

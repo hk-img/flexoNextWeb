@@ -413,7 +413,7 @@ const Listing = () => {
 
                 <div className="filterRow w-full flex lg:flex-row flex-col items-center gap-4">
                   <div className="lg:w-[70%] w-full filters-buttons flex justify-between items-center">
-                    <div className="lg:w-1/4 w-1/5">
+                    <div className="lg:w-1/4 md:w-1/5 w-auto">
                       <nav className="block">
                         <ul className="flex flex-col p-0 m-0">
                           <li className="text-[13px] !leading-8 font-normal list-style-none p-0 m-0 h-5">
@@ -597,7 +597,7 @@ const Listing = () => {
                         </ul>
                       </nav>
                     </div>
-                    <div className="lg:w-1/4 w-1/5">
+                    <div className="lg:w-1/4 md:w-1/5 w-auto">
                       <nav className="block">
                         <ul className="flex flex-col p-0 m-0">
                           <li className="text-[13px] !leading-8 font-normal list-style-none p-0 m-0 h-5">
@@ -620,7 +620,7 @@ const Listing = () => {
                         </ul>
                       </nav>
                     </div>
-                    <div className="lg:w-1/4 w-1/5">
+                    <div className="lg:w-1/4 md:w-1/5 w-auto">
                       <ul className="flex flex-col p-0 m-0">
                         <li className="text-[13px] !leading-8 font-normal list-style-none">
                           <div
@@ -636,7 +636,7 @@ const Listing = () => {
                         </li>
                       </ul>
                     </div>
-                    <div className="lg:w-1/4 w-1/5">
+                    <div className="lg:w-1/4 md:w-1/5 w-auto">
                       <label className="relative inline-flex items-center cursor-pointer">
                         <input
                           type="checkbox"

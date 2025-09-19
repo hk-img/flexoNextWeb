@@ -43,6 +43,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
     setValue,
     formState: { errors },
     reset,
+    watch,
   } = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -52,9 +53,16 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
       mobile: "",
       city: "",
       seats: "",
-      country: null,
+      country: {
+        name: "India",
+        dialCode: "91",
+        countryCode: "in",
+        format: "+.. .....-.....",
+      },
     },
   });
+  const values = watch();
+  console.log({ values }, "Rtyryrtyrt");
 
   const onSubmit = (values) => {
     const country_code = values.country ? `+${values.country.dialCode}` : "";
@@ -86,14 +94,18 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
         {/* Header */}
         <div className="pb-6 flex items-center justify-between">
           <h2 className="text-lg font-semibold">Get Quotes</h2>
-          <button onClick={() => setIsOpen(false)} className="text-black cursor-pointer">
+          <button
+            onClick={() => setIsOpen(false)}
+            className="text-black cursor-pointer"
+          >
             <Svg name="close" className="size-5" />
           </button>
         </div>
 
         <div className="px-5 py-[10px] bg-[#f4f4f4] mb-6">
           <p className="text-[#000000de] text-[13px]">
-            Our workspace advisor will get in touch to help you with your requirement.
+            Our workspace advisor will get in touch to help you with your
+            requirement.
           </p>
         </div>
 
@@ -172,6 +184,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                   />
                 )}
               />
+              {values?.country?.name}
               {errors.mobile && (
                 <span className="text-[10px] text-[#dc3545] mt-1 absolute -bottom-4 left-0">
                   {errors.mobile.message}
@@ -233,8 +246,9 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
         </form>
 
         <p className="mt-4 pb-5 px-5 text-balance text-[11px] text-[#000000de] text-center">
-          After you submit a workspace enquiry to us, we may share your details with workspace
-          providers, who may contact you to follow up on your enquiry. Please read our{" "}
+          After you submit a workspace enquiry to us, we may share your details
+          with workspace providers, who may contact you to follow up on your
+          enquiry. Please read our{" "}
           <a href="#" className="text-[#f76900]">
             Privacy Policy
           </a>{" "}

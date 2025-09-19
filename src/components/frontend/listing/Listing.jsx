@@ -17,6 +17,7 @@ const locations = [
 const Listing = () => {
   const spacesTypeRef = useRef(null);
   const locationRef = useRef(null);
+  const [mapToggle,setMapToggle] = useState(true);
   const [toggleSpaceType, setToggleSpaceType] = useState(false);
   const [toggleSpace, setToggleSpace] = useState(false);
   const [selectedRadio, setSelectedRadio] = useState("Co-working");
@@ -641,7 +642,8 @@ const Listing = () => {
                         <input
                           type="checkbox"
                           className="sr-only peer"
-                          defaultChecked
+                          checked={mapToggle}
+                          onChange={(e) => setMapToggle(e.target.checked)}
                         />
                         <div className="w-[36px] h-[14px] shrink-0 bg-[#00000061] rounded-lg 
                             peer-checked:bg-[#f76900] 
@@ -670,19 +672,22 @@ const Listing = () => {
                     </div>
                   </div>
                 </div>
-                
-                <div className="map lg:w-2/5 w-full flex flex-col md:sticky md:top-10 mt-6 lg:mt-1 lg:hidden">
-                  <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.501429411464!2d72.82552997425316!3d19.129516050292203!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b77913e9dd2d%3A0xcb2f5ffbb0662d10!2sSpaces%20-%20Inspire%20Hub%20Andheri%20West!5e0!3m2!1sen!2sin!4v1758019913835!5m2!1sen!2sin"
-                    width="505"
-                    height="700"
-                    style={{ border: 0 }}
-                    allowFullScreen
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    className="w-full h-full lg:aspect-[505/800] aspect-square object-cover rounded-md"
-                  ></iframe>
-                </div>
+                {
+                  mapToggle && (
+                    <div className="map lg:w-2/5 w-full flex flex-col md:sticky md:top-10 mt-6 lg:mt-1 lg:hidden">
+                      <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.501429411464!2d72.82552997425316!3d19.129516050292203!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b77913e9dd2d%3A0xcb2f5ffbb0662d10!2sSpaces%20-%20Inspire%20Hub%20Andheri%20West!5e0!3m2!1sen!2sin!4v1758019913835!5m2!1sen!2sin"
+                        width="505"
+                        height="700"
+                        style={{ border: 0 }}
+                        allowFullScreen
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                        className="w-full h-full lg:aspect-[505/800] aspect-square object-cover rounded-md"
+                      ></iframe>
+                    </div>
+                  )
+                }
               </div>
               <div className="lg:w-2/5 w-full items-start flex lg:flex-row lg:hidden flex-col lg:justify-end justify-start lg:pt-2 pt-4">
                 <div className="text-right xs:text-left">
@@ -757,19 +762,21 @@ const Listing = () => {
 
               <Testimonial />
             </div>
-
-            <div className="map lg:w-1/3 w-full lg:flex flex-col md:sticky md:top-10 hidden">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.501429411464!2d72.82552997425316!3d19.129516050292203!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b77913e9dd2d%3A0xcb2f5ffbb0662d10!2sSpaces%20-%20Inspire%20Hub%20Andheri%20West!5e0!3m2!1sen!2sin!4v1758019913835!5m2!1sen!2sin"
-                width="505"
-                height="700"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className=""
-              ></iframe>
-            </div>
+            {
+              mapToggle &&  
+              <div className="map lg:w-1/3 w-full lg:flex flex-col md:sticky md:top-10 hidden">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.501429411464!2d72.82552997425316!3d19.129516050292203!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b77913e9dd2d%3A0xcb2f5ffbb0662d10!2sSpaces%20-%20Inspire%20Hub%20Andheri%20West!5e0!3m2!1sen!2sin!4v1758019913835!5m2!1sen!2sin"
+                  width="505"
+                  height="700"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className=""
+                ></iframe>
+              </div>
+            }
           </div>
         </div>
       </section>

@@ -1,12 +1,11 @@
-'use client'
 import Image from 'next/image';
 import Svg from '@/components/svg';
 import EmblaCarousel from "@/components/frontend/emblaCarousel/EmblaCarousel";
 import Banner from "@/components/frontend/home/Banner";
 import FaqSection from "@/components/frontend/home/FaqSection";
-import { useEffect, useState } from "react";
-const page = () => {
-const person = [
+
+const ListWithUs = () => {
+    const person = [
     {
     name: "Ganesh Ghodekar",
     image: "/images/Ganesh-OfficeBing.webp",
@@ -196,9 +195,9 @@ const person = [
                             className="w-full h-full rounded-md object-cover"
                           />
                         </div>
-                        <div class="text-center p-3">
-                          <h5 class="text-base/relaxed font-medium text-[#f76900]">{space.title}</h5>
-                          <p class="text-sm text-[#777777]">
+                        <div className="text-center p-3">
+                          <h5 className="text-base/relaxed font-medium text-[#f76900]">{space.title}</h5>
+                          <p className="text-sm text-[#777777]">
                             {space.desc}
                           </p>
                         </div>
@@ -306,4 +305,5 @@ const person = [
     </>
   )
 }
-export default page
+
+export default ListWithUs

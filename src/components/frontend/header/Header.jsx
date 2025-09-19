@@ -59,9 +59,9 @@ const Header = () => {
 
             <div className="lg:flex hidden items-center gap-5 px-[15px]">
               <div>
-                <a href="#" className="bg-[#f76900] border-[2px] border-[#f76900] rounded-[15px] xl:text-[15px] lg:text-sm text-white py-[8px] px-5.5">
+                <Link href="/list-with-us" className="bg-[#f76900] border-[2px] border-[#f76900] rounded-[15px] xl:text-[15px] lg:text-sm text-white py-[8px] px-5.5">
                   List Your Space
-                </a>
+                </Link>
               </div>
               <div>
                 <a href="#"

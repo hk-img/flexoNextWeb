@@ -5,6 +5,7 @@ import TrustedCompanies from "@/components/frontend/home/TrustedCompanies";
 import Testimonial from "@/components/frontend/home/Testimonial";
 import ProductCard from "../productCard/ProductCard";
 import {useEffect, useRef, useState } from "react";
+import FilterPopup from "./FilterPopup";
 const locations = [
   "Andheri East, Mumbai, Maharashtra, India",
   "Malad, Mumbai, Maharashtra, India",
@@ -30,6 +31,27 @@ const Listing = () => {
   const [toggleLocation, setToggleLocation] = useState(false);
   const [toggleLocationOptions,setToggleLocationOptions] = useState(false);
   const [query,setQuery] = useState('');
+  const [isFilterOpen,setIsFilterOpen] = useState(false);
+  const [filterData,setFilterData] = useState({
+    priceRange: {
+      min: 0,
+      max: 0,
+    },
+    distanceRange: {
+      min: 0,
+      max: 0,
+    },
+    sortBy: "",
+    amenities: [],
+  });
+
+  const handleApply = () => {
+    setIsFilterOpen(false);
+  };
+
+  const handleClear = () => {
+    setIsFilterOpen(false);
+  };
 
   const handleRadioChange = (e) => {
     const { value } = e.target;
@@ -601,8 +623,8 @@ const Listing = () => {
                     <div className="lg:w-1/4 w-1/5">
                       <ul className="flex flex-col p-0 m-0">
                         <li className="text-[13px] !leading-8 font-normal list-style-none">
-                          <a
-                            href=""
+                          <div
+                            onClick={() => setIsFilterOpen(!isFilterOpen)}
                             className="flex items-center cursor-pointer font-medium text-[#777777] text-sm"
                           >
                             <Svg
@@ -610,7 +632,7 @@ const Listing = () => {
                               className="text-[#777777] size-[18px] me-1"
                             />
                             Filters
-                          </a>
+                          </div>
                         </li>
                       </ul>
                     </div>
@@ -751,6 +773,7 @@ const Listing = () => {
           </div>
         </div>
       </section>
+      {isFilterOpen && <FilterPopup isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen} filterData={filterData} setFilterData={setFilterData} handleApply={handleApply} handleClear={handleClear}/>}
     </>
   );
 };

@@ -12,7 +12,7 @@ const BookWorkspace = () => {
           <div className="pt-[63px] sm:pb-[76px] pb-16">
             <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-[30px] gap-6 items-center">
               <div>
-                <h2 className=" leading-[1.6] text-[27px] font-normal lg:mb-[31px] mb-[56px]">
+                <h2 className=" leading-[1.6] text-[27px] font-normal lg:mb-[31px] mb-10">
                   Find and <span className="text-[#f76900]">Book</span> Your
                   Perfect Workspace in 4 Easy Steps With{" "}
                   <span className="text-[#f76900] font-bold">Flexo</span>
@@ -91,7 +91,7 @@ const BookWorkspace = () => {
                     onClick={() => {
                       setIsOpen(true);
                     }}
-                    className="cursor-pointer relative w-full overflow-hidden rounded-sm font-semibold text-white hover:text-[#f76900] py-2 z-10 bg-transparent border-2 border-transparent hover:border-[#f76900] before:absolute before:inset-0 before:w-full before:bg-[#f76900] before:transition-all transition-all duration-500  before:duration-500 before:origin-right hover:before:w-0 before:-z-10 text-base leading-[1.5]"
+                    className="cursor-pointer relative w-full overflow-hidden rounded-sm font-semibold text-white md:hover:text-[#f76900] py-2 z-10 bg-transparent border-2 border-transparent md:hover:border-[#f76900] before:absolute before:inset-0 before:w-full before:bg-[#f76900] before:transition-all transition-all duration-500  before:duration-500 before:origin-right md:hover:before:w-0 before:-z-10 text-base leading-[1.5] text-balance"
                   >
                     Connect with a Workspace Expert Today
                   </button>
@@ -119,7 +119,7 @@ const BookWorkspace = () => {
                   <span className="text-[#f76900]">Flexible Workspaces</span>
                 </h2>
               </div>
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-[30px] gap-y-[23px] lg:py-[36px] sm:py-[64px] py-12 ">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-[30px] gap-y-[23px] lg:py-[36px] sm:py-[64px] pt-12 pb-4 ">
                 <div className="text-center">
                   <h2 className="text-[23px] lg:text-[40px] text-[#f76900] leading-[1.3] font-medium">
                     1800+

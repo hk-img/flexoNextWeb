@@ -37,10 +37,21 @@ const Auth = ({ isOpen, setIsOpen }) => {
     control,
     setValue,
     formState: { errors, isSubmitting },
+    watch,
   } = useForm({
     resolver: zodResolver(schema),
-    defaultValues: { mobile: "", country: null },
+    defaultValues: {
+      mobile: "",
+      country: {
+        name: "India",
+        dialCode: "91",
+        countryCode: "in",
+        format: "+.. .....-.....",
+      },
+    },
   });
+  const values = watch();
+  console.log({ values }, "Rtyryrtyrt");
 
   useEffect(() => {
     const handleEsc = (e) => e.key === "Escape" && setIsOpen(false);
@@ -101,6 +112,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
                 />
               )}
             />
+            {values?.country?.name}
             {errors.mobile && (
               <p className="mt-1 text-sm text-red-500">
                 {errors.mobile.message}

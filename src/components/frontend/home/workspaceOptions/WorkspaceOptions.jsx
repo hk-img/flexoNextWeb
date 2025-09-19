@@ -43,13 +43,13 @@ const WorkspaceOptions = () => {
   return (
     <>
     <div className="container mx-auto text-center px-[15px] sm:pt-[84px] pt-[64px]">
-      <div className='max-w-[850px] md:px-6 mx-auto'>
-        <h2 className="sm:text-[32px] text-2xl leading-[1.2] font-medium text-center text-[#333] text-balanced">
+      <div className='md:px-6 mx-auto'>
+        <h2 className="sm:text-[32px] text-2xl leading-[1.2] font-medium text-center text-[#333] text-balance">
           With <span className="text-[#f76900]">1800+</span> Workspace Options, We have the Right Space for Every Team
 
         </h2>
       </div>
-      <div className="sm:mt-10 mt-12 flex lg:flex-row gap-[6px]">
+      <div className="sm:mt-10 mt-8 flex lg:flex-row gap-[6px]">
 
         <div className="w-full md:[&_.emblaarrows]:-left-6 md:[&_.emblaarrows]:-right-6 [&_.emblaarrows]:-left-3 [&_.emblaarrows]:-right-3 [&_.emblaarrows_button]:w-10 [&_.emblaarrows_button]:h-10 [&_.emblaarrows_button_Svg]:size-[18px]">
           <EmblaCarousel

@@ -70,6 +70,7 @@ const IndicatorSeparator = () => null;
       borderColor: "transparent",
       minHeight: "46px",
       height: "46px",
+      width:"100%",
       boxShadow: "none",
       outline: "none",
       "&:hover": {
@@ -86,7 +87,7 @@ const IndicatorSeparator = () => null;
     }),
     valueContainer: (base) => ({
       ...base,
-      padding: "0 12px",
+      padding: "0 8px",
     }),
     placeholder: (base) => ({
       ...base,
@@ -167,7 +168,7 @@ const IndicatorSeparator = () => null;
   }, [texts.length]);
 
   return (
-    <section className="relative w-full md:h-[calc(100dvh-82px)] h-[calc(100dvh-60px)] lg:mt-[82px] sm:mt-[62px] mt-[60px] overflow-hidden">
+    <section className="relative w-full md:h-[calc(100dvh-82px)] h-[calc(100dvh-60px)] lg:mt-[82px] sm:mt-[62px] mt-[64px] overflow-hidden">
       {images.map((img, idx) => (
         <div
           key={idx}
@@ -201,8 +202,8 @@ const IndicatorSeparator = () => null;
             </div>
           </div>
 
-          <div className="flex md:flex-row flex-col md:bg-transparent bg-white md:px-0 md:py-0 py-[20px] px-[21px] rounded-[15px] items-center gap-y-5 gap-x-4 sm:mt-9 mt-18 sm:mb-0 mb-4">
-            <div className="flex gap-y-5 md:flex-row flex-col bg-white md:rounded-[15px] overflow-hidden w-full xl:max-w-[536px] md:max-w-[449px] ">
+          <div className="flex md:flex-row flex-col md:bg-transparent bg-white md:px-0 md:py-0 p-[15px] rounded-[15px] items-center gap-y-5 gap-x-4 sm:mt-9 mt-24 sm:mb-0 mb-4">
+            <div className="flex gap-y-5 md:flex-row flex-col bg-white md:rounded-[15px] overflow-hidden w-full xl:max-w-[536px] md:max-w-[449px] px-2 i">
               <Select
                 options={typeOptions}
                 placeholder="What are you looking for?"
@@ -210,7 +211,7 @@ const IndicatorSeparator = () => null;
                 onChange={(opt) => setType(opt)}
                 styles={customStyles}
                 menuPosition="fixed"
-                className="md:border-r border  border-black max-md:rounded-[15px] !w-full md:border-[#d0c2c2] [&_div>div>div]:!text-black [&_div>div>div]:!text-sm [&_div>div>div]:!text-nowrap md:!h-[46px] !h-[52px]"
+                className="md:border-r border items-center flex justify-between border-black max-md:rounded-[15px] !w-full md:border-[#d0c2c2] [&_div>div>div]:!text-black [&_div>div>div]:!text-sm [&_div>div>div]:!text-nowrap md:!h-[46px] !h-[52px]"
                 isClearable
                 components={{
                   ClearIndicator,
@@ -226,7 +227,7 @@ const IndicatorSeparator = () => null;
                 onChange={(opt) => setCity(opt)}
                 styles={customStyles}
                 menuPosition="fixed"
-                className=" [&_div>div>div]:!text-black [&_div>div>div]:!text-sm max-md:border border-black rounded-[15px] !w-full md:!h-[46px] !h-[52px]"
+                className=" [&_div>div>div]:!text-black [&_div>div>div]:!text-sm max-md:border border-black rounded-[15px] !w-full md:!h-[46px] !h-[52px] items-center flex justify-between"
                 isClearable
                 components={{
                   ClearIndicator,

@@ -23,13 +23,13 @@ const CoworkingSpaces = () => {
   ]
 
   return (
-    <div className="container mx-auto text-center md:px-1 px-[15px]">
+    <div className="container mx-auto text-center md:px-0 px-[15px]">
       <h2 className="sm:text-[32px] text-2xl font-medium text-center text-[#333]">
         Explore India's Premier Network of
         <span className="text-[#f76900]"> Coworking Spaces</span>
       </h2>
 
-      <div className="mt-10 flex flex-col md:flex-row gap-1">
+      <div className="md:mt-10 mt-6 flex flex-col md:flex-row gap-1">
         <div className="w-full md:w-1/3">
           <a href="#">
             <div className="relative rounded-sm overflow-hidden h-full">
@@ -53,7 +53,7 @@ const CoworkingSpaces = () => {
             </div>
           </a>
         </div>
-        <div className="w-full md:w-2/3 md:[&_.emblaarrows]:-left-6 md:[&_.emblaarrows]:-right-6 [&_.emblaarrows]:-left-3 [&_.emblaarrows]:-right-3 [&_.emblaarrows_button]:w-10 [&_.emblaarrows_button]:h-10 [&_.emblaarrows_button_Svg]:size-[18px]">
+        <div className="w-full md:w-2/3 md:[&_.emblaarrows]:-left-6 md:[&_.emblaarrows]:-right-5 [&_.emblaarrows]:-left-3 [&_.emblaarrows]:-right-3 [&_.emblaarrows_button]:w-10 [&_.emblaarrows_button]:h-10 [&_.emblaarrows_button_Svg]:size-[18px]">
           <EmblaCarousel options={{ loop: true,autoplay:false,showButton: true ,  align: "start"  }}>
             {Array.from({ length: Math.ceil(cities.length / 2) }).map(
               (_, colIdx) => (

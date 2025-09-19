@@ -26,7 +26,7 @@ const CoworkingBrands = () => {
 
   return (
     <div className="container mx-auto px-[30px] sm:pt-[76px] pt-16">
-      <h2 className="sm:text-[32px] text-2xl leading-[1.2] font-medium text-center text-[#333] md:mb-9 mb-12">
+      <h2 className="sm:text-[32px] text-2xl leading-[1.2] font-medium text-center text-[#333] md:mb-10 mb-8">
         Top Coworking Brands, All in One Place
       </h2>
       <div className="md:[&_.emblaarrows]:-left-10 md:[&_.emblaarrows]:-right-10 [&_.emblaarrows]:-left-6 [&_.emblaarrows]:-right-6 [&_.emblaarrows_button]:w-10 [&_.emblaarrows_button]:h-10 [&_.emblaarrows_button_Svg]:size-[18px]">
@@ -50,7 +50,7 @@ const CoworkingBrands = () => {
                     <div
                       className="group relative rounded-md overflow-hidden border-b-3 border-[#ffdbc0] 
                       md:py-6 md:px-12 py-4 px-6 bg-[#fafafa] cursor-pointer flex items-center justify-center 
-                      hover:shadow-[5px_5px_20px_#0000001a] transition-all duration-500 ease-in-out"
+                      md:hover:shadow-[5px_5px_20px_#0000001a] transition-all duration-500 ease-in-out"
                     >
                       <Image
                         width={185}
@@ -58,7 +58,7 @@ const CoworkingBrands = () => {
                         src={logo.src}
                         alt={`${logo.name} Logo`}
                         title={logo.name}
-                        className="h-10 object-contain transition-transform duration-500 ease-in-out group-hover:scale-110"
+                        className="h-10 object-contain transition-transform duration-500 ease-in-out md:group-hover:scale-110"
                         loading="lazy"
                       />
                     </div>

@@ -399,6 +399,7 @@ const Listing = () => {
                               onClick={() => {
                                 setToggleSpaceType(!toggleSpaceType);
                                 setToggleSpace(false);
+                                setToggleLocationOptions(false);
                               }}
                               className="flex items-center cursor-pointer font-medium text-[#777777] text-sm"
                             >
@@ -419,7 +420,7 @@ const Listing = () => {
                               {toggleSpaceType && (
                                 <div
                                   onClick={() => setToggleSpace(!toggleSpace)}
-                                  className="absolute top-2 left-0 w-[520px] rounded-xl z-50"
+                                  className="relative top-4 left-0 w-[550px] rounded-xl z-10"
                                 >
                                   <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center min-h-14 max-h-14 gap-5 p-[18px] rounded-[42px]">
                                     <div className="border-1 border-[#dee2e6] p-1 text-sm font-light">
@@ -429,7 +430,7 @@ const Listing = () => {
                                 </div>
                               )}
                               {toggleSpace && (
-                                <div ref = {spacesTypeRef} className="scrollDropdown absolute top-[64px] left-0 w-[520px] bg-white block shadow-lg z-50 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700">
+                                <div ref = {spacesTypeRef} className="scrollDropdown absolute top-[72px] left-0 w-[550px] bg-white block shadow-lg z-20 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700">
                                   <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
                                     <input
                                       type="radio"
@@ -508,8 +509,8 @@ const Listing = () => {
                               {toggleLocation && (
                                 <div className="relative">
                                   {/* Search box */}
-                                  <div className="absolute top-[70px] -left-0 w-[520px] rounded-xl z-50">
-                                    <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center min-h-14 max-h-14 gap-5 p-[18px] rounded-[42px]">
+                                  <div className="relative top-6 -left-0 w-[550px] rounded-xl z-10">
+                                    <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center py-[9px] px-4 rounded-[42px]">
                                       <div className="w-full">
                                         <div className="bg-white shadow-mb rounded-full h-10 w-full flex items-center justify-between">
                                           <div className="w-full flex justify-between items-center">
@@ -548,7 +549,7 @@ const Listing = () => {
 
                                   {/* Suggestion list */}
                                   {toggleLocationOptions && (
-                                    <div ref={locationRef} className="absolute top-[125px] left-0 w-[520px] bg-white shadow-md rounded-xl z-50 max-h-64 overflow-auto">
+                                    <div ref={locationRef} className="scrollDropdown max-h-72 overflow-y-auto absolute top-[70px] left-4 w-[420px] bg-white shadow-lg z-20">
                                       {locations
                                         .filter((loc) =>
                                           loc.toLowerCase().includes(query.toLowerCase())
@@ -583,6 +584,7 @@ const Listing = () => {
                                 setToggleLocation(!toggleLocation);
                                 setToggleSpace(false);
                                 setToggleLocationOptions(false);
+                                setToggleSpace(false);
                               }}
                               className="flex items-center cursor-pointer font-medium text-[#777777] text-sm"
                             >
@@ -592,38 +594,6 @@ const Listing = () => {
                               />
                               Location
                             </div>
-                            {/* <div className="relative inline-block">
-                                {toggleLocation && (
-                                  <div
-                                    onClick={() => setToggleLocation(!toggleLocation)}
-                                    className="absolute top-2 -left-[170px] w-[520px] rounded-xl z-50"
-                                  >
-                                    <div className="text-sm text-[#333333] bg-white border-2 border-[#d4d0d0] flex items-center min-h-14 max-h-14 gap-5 py-[7px] px-[18px] rounded-[42px]">
-                                      <div className="w-full ">
-                                      <div className="bg-white shadow-mb rounded-full h-10 w-full flex items-center justify-between">
-                                      <div className="w-full flex justify-between items-center">
-                                        <button className="text-[#777777] w-[15px] h-[15px]">
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            strokeWidth={3}
-                                            stroke="currentColor"
-                                            className="w-4 h-4"
-                                          >
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z" />
-                                          </svg>
-                                        </button>
-                                        <input
-                                          type="text" placeholder="Where are you looking for office space?" className="border-0 bg-transparent w-full text-sm placeholder:font-normal transition-all duration-200 p-[10px] placeholder:text-[#333] focus:outline-none" />
-                                      </div>
-                                      <div className="flex whitespace-nowrap text-[#777777]">Near Me</div>
-                                      </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                )}
-                            </div> */}
                           </li>
                         </ul>
                       </nav>
@@ -651,8 +621,7 @@ const Listing = () => {
                           className="sr-only peer"
                           defaultChecked
                         />
-                        <div
-                          className="w-[36px] h-[14px] shrink-0 bg-[#00000061] rounded-lg 
+                        <div className="w-[36px] h-[14px] shrink-0 bg-[#00000061] rounded-lg 
                             peer-checked:bg-[#f76900] 
                             relative after:absolute after:top-[-4px] after:left-[-7px] 
                             after:bg-[#fafafa] after:border after:border-[#fafafa] 
@@ -660,7 +629,7 @@ const Listing = () => {
                             after:duration-500 after:shadow-[0px_2px_1px_-1px_rgba(0,0,0,0.2),0px_1px_1px_0px_rgba(0,0,0,0.14),0px_1px_3px_0px_rgba(0,0,0,0.12)] peer-checked:after:translate-x-6 peer-checked:after:bg-[#f76900] 
                             peer-checked:after:border-[#fafafa]"
                         ></div>
-                        <span className="ms-3 text-sm font-normal text-[#777777]">
+                        <span className="lg:ms-3 ms-1 text-sm font-normal text-[#777777]">
                           Map
                         </span>
                       </label>
@@ -679,6 +648,7 @@ const Listing = () => {
                     </div>
                   </div>
                 </div>
+                
                 <div className="map lg:w-2/5 w-full flex flex-col md:sticky md:top-10 mt-6 lg:mt-1 lg:hidden">
                   <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.501429411464!2d72.82552997425316!3d19.129516050292203!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b77913e9dd2d%3A0xcb2f5ffbb0662d10!2sSpaces%20-%20Inspire%20Hub%20Andheri%20West!5e0!3m2!1sen!2sin!4v1758019913835!5m2!1sen!2sin"

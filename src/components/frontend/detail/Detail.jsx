@@ -5,6 +5,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import EmblaCarousel from "../emblaCarousel/EmblaCarousel";
 import ProductCard from "../productCard/ProductCard";
+import { YouTubeEmbed } from '@next/third-parties/google';
 
 const Detail = () => {
   const [isFixed, setIsFixed] = useState(false);
@@ -37,7 +38,7 @@ const Detail = () => {
         <div className="relative">
           <div className="grid md:grid-cols-2 grid-cols-1 gap-[2px]">
             <div className="max-md:relative max-md:overflow-hidden max-md:pt-[66.45%] max-md:w-full">
-              <iframe
+              {/* <iframe
                 className="w-full h-full max-md:absolute max-md:inset-0 "
                 src="https://www.youtube.com/embed/hxvOFKFqQLk?si=qR2XPRzDJJBua9_k"
                 title="YouTube video player"
@@ -45,7 +46,11 @@ const Detail = () => {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 referrerPolicy="strict-origin-when-cross-origin"
                 allowFullScreen
-              ></iframe>
+              ></iframe> */}
+              <YouTubeEmbed
+                videoId="hxvOFKFqQLk"
+                className="w-full h-full max-md:absolute max-md:inset-0 "
+              />
             </div>
             <div>
               <div className="grid md:grid-cols-2 grid-cols-4 gap-[2px]">

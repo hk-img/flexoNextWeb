@@ -28,8 +28,20 @@ const filterPopup = () => {
                       <Svg name="close" className="text-[#343a40] size-[20px] me-1" />
                     </div>
                   </div>
-                  <div className="border-b border-[#0000001a] py-3"></div>
-                  <div className=""></div>
+                  <div className="border-b border-[#0000001a] my-4"></div>
+                  <div className="relative">
+                    <div className=""><p className="">Price</p>
+                    <div className="flex items-center justify-between gap-2">
+                      <div class="text-sm font-normal text-[#777777]">500</div>
+                      <div class="text-sm font-normal text-[#777777]">5000</div>
+                    </div>
+                      <div class="flex items-center w-full">
+                        <div class="w-4 h-4 bg-orange-500 rounded-full"></div>
+                        <div class="flex-1 h-1 bg-orange-500"></div>
+                        <div class="w-4 h-4 bg-orange-500 rounded-full"></div>
+                      </div>
+                    </div>
+                  </div>
                 </div> 
               </div>
             </div>

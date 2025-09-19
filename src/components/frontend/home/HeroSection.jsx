@@ -211,7 +211,7 @@ const IndicatorSeparator = () => null;
                 onChange={(opt) => setType(opt)}
                 styles={customStyles}
                 menuPosition="fixed"
-                className="md:border-r border items-center flex justify-between border-black max-md:rounded-[15px] !w-full md:border-[#d0c2c2] [&_div>div>div]:!text-black [&_div>div>div]:!text-sm [&_div>div>div]:!text-nowrap md:!h-[46px] !h-[52px]"
+                className="md:border-r max-md:border items-center flex justify-between border-black max-md:rounded-[15px] !w-full md:border-[#d0c2c2] [&_div>div>div]:!text-black [&_div>div>div]:!text-sm [&_div>div>div]:!text-nowrap md:!h-[46px] !h-[52px]"
                 isClearable
                 components={{
                   ClearIndicator,

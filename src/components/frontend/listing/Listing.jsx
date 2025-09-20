@@ -4,7 +4,7 @@ import Svg from "@/components/svg";
 import TrustedCompanies from "@/components/frontend/home/TrustedCompanies";
 import Testimonial from "@/components/frontend/home/Testimonial";
 import ProductCard from "../productCard/ProductCard";
-import {useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import FilterPopup from "./FilterPopup";
 const locations = [
   "Andheri East, Mumbai, Maharashtra, India",
@@ -17,7 +17,7 @@ const locations = [
 const Listing = () => {
   const spacesTypeRef = useRef(null);
   const locationRef = useRef(null);
-  const [mapToggle,setMapToggle] = useState(true);
+  const [mapToggle, setMapToggle] = useState(true);
   const [toggleSpaceType, setToggleSpaceType] = useState(false);
   const [toggleSpace, setToggleSpace] = useState(false);
   const [selectedRadio, setSelectedRadio] = useState("Co-working");
@@ -30,10 +30,10 @@ const Listing = () => {
     "Day Pass",
   ]);
   const [toggleLocation, setToggleLocation] = useState(false);
-  const [toggleLocationOptions,setToggleLocationOptions] = useState(false);
-  const [query,setQuery] = useState('');
-  const [isFilterOpen,setIsFilterOpen] = useState(false);
-  const [filterData,setFilterData] = useState({
+  const [toggleLocationOptions, setToggleLocationOptions] = useState(false);
+  const [query, setQuery] = useState("");
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [filterData, setFilterData] = useState({
     priceRange: {
       min: 0,
       max: 0,
@@ -81,7 +81,10 @@ const Listing = () => {
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
-      if (spacesTypeRef.current && !spacesTypeRef.current.contains(event.target)) {
+      if (
+        spacesTypeRef.current &&
+        !spacesTypeRef.current.contains(event.target)
+      ) {
         setToggleSpace(false);
       }
       if (locationRef.current && !locationRef.current.contains(event.target)) {
@@ -104,10 +107,13 @@ const Listing = () => {
               </h1>
               <div className="form-group filter-group">
                 <div className="scrollMenus overflow-auto whitespace-nowrap pb-2 mb-4">
-                  <a className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                      href="https://example.com"
-                      target="_blank"
-                    > Andheri West
+                  <a
+                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
+                    href="https://example.com"
+                    target="_blank"
+                  >
+                    {" "}
+                    Andheri West
                   </a>
                   <a
                     className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
@@ -453,7 +459,10 @@ const Listing = () => {
                                 </div>
                               )}
                               {toggleSpace && (
-                                <div ref = {spacesTypeRef} className="scrollDropdown absolute top-[72px] left-0 w-[550px] bg-white block shadow-lg z-20 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700">
+                                <div
+                                  ref={spacesTypeRef}
+                                  className="scrollDropdown absolute top-[72px] left-0 w-[550px] bg-white block shadow-lg z-20 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700"
+                                >
                                   <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
                                     <input
                                       type="radio"
@@ -497,7 +506,9 @@ const Listing = () => {
                                       type="radio"
                                       name="spaceType"
                                       value="Private Office"
-                                      checked={selectedRadio === "Private Office"}
+                                      checked={
+                                        selectedRadio === "Private Office"
+                                      }
                                       onChange={handleRadioChange}
                                       className="accent-[#26310b]"
                                     />
@@ -521,7 +532,9 @@ const Listing = () => {
                                       type="radio"
                                       name="spaceType"
                                       value="Managed Office"
-                                      checked={selectedRadio === "Managed Office"}
+                                      checked={
+                                        selectedRadio === "Managed Office"
+                                      }
                                       onChange={handleRadioChange}
                                       className="accent-[#26310b]"
                                     />
@@ -558,8 +571,12 @@ const Listing = () => {
                                               placeholder="Where are you looking for office space?"
                                               className="border-0 bg-transparent w-full text-sm placeholder:font-normal transition-all duration-200 p-[10px] placeholder:text-[#333] focus:outline-none"
                                               value={query}
-                                              onFocus={() => setToggleLocationOptions(true)}
-                                              onChange={(e) => setQuery(e.target.value)}
+                                              onFocus={() =>
+                                                setToggleLocationOptions(true)
+                                              }
+                                              onChange={(e) =>
+                                                setQuery(e.target.value)
+                                              }
                                             />
                                           </div>
                                           <div className="flex whitespace-nowrap text-[#777777]">
@@ -572,10 +589,15 @@ const Listing = () => {
 
                                   {/* Suggestion list */}
                                   {toggleLocationOptions && (
-                                    <div ref={locationRef} className="scrollDropdown max-h-72 overflow-y-auto absolute top-[70px] left-4 w-[420px] bg-white shadow-lg z-20">
+                                    <div
+                                      ref={locationRef}
+                                      className="scrollDropdown max-h-72 overflow-y-auto absolute top-[70px] left-4 w-[420px] bg-white shadow-lg z-20"
+                                    >
                                       {locations
                                         .filter((loc) =>
-                                          loc.toLowerCase().includes(query.toLowerCase())
+                                          loc
+                                            .toLowerCase()
+                                            .includes(query.toLowerCase())
                                         )
                                         .map((loc, idx) => (
                                           <div
@@ -645,7 +667,8 @@ const Listing = () => {
                           checked={mapToggle}
                           onChange={(e) => setMapToggle(e.target.checked)}
                         />
-                        <div className="w-[36px] h-[14px] shrink-0 bg-[#00000061] rounded-lg 
+                        <div
+                          className="w-[36px] h-[14px] shrink-0 bg-[#00000061] rounded-lg 
                             peer-checked:bg-[#f76900] 
                             relative after:absolute after:top-[-4px] after:left-[-7px] 
                             after:bg-[#fafafa] after:border after:border-[#fafafa] 
@@ -672,22 +695,20 @@ const Listing = () => {
                     </div>
                   </div>
                 </div>
-                {
-                  mapToggle && (
-                    <div className="map lg:w-2/5 w-full flex flex-col md:sticky md:top-10 mt-6 lg:mt-1 lg:hidden">
-                      <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.501429411464!2d72.82552997425316!3d19.129516050292203!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b77913e9dd2d%3A0xcb2f5ffbb0662d10!2sSpaces%20-%20Inspire%20Hub%20Andheri%20West!5e0!3m2!1sen!2sin!4v1758019913835!5m2!1sen!2sin"
-                        width="505"
-                        height="700"
-                        style={{ border: 0 }}
-                        allowFullScreen
-                        loading="lazy"
-                        referrerPolicy="no-referrer-when-downgrade"
-                        className="w-full h-full lg:aspect-[505/800] aspect-square object-cover rounded-md"
-                      ></iframe>
-                    </div>
-                  )
-                }
+                {mapToggle && (
+                  <div className="map lg:w-2/5 w-full flex flex-col md:sticky md:top-10 mt-6 lg:mt-1 lg:hidden">
+                    <iframe
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.501429411464!2d72.82552997425316!3d19.129516050292203!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b77913e9dd2d%3A0xcb2f5ffbb0662d10!2sSpaces%20-%20Inspire%20Hub%20Andheri%20West!5e0!3m2!1sen!2sin!4v1758019913835!5m2!1sen!2sin"
+                      width="505"
+                      height="700"
+                      style={{ border: 0 }}
+                      allowFullScreen
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      className="w-full h-full lg:aspect-[505/800] aspect-square object-cover rounded-md"
+                    ></iframe>
+                  </div>
+                )}
               </div>
               <div className="lg:w-2/5 w-full items-start flex lg:flex-row lg:hidden flex-col lg:justify-end justify-start lg:pt-2 pt-4">
                 <div className="text-right xs:text-left">
@@ -703,7 +724,7 @@ const Listing = () => {
                 {Array.from({ length: 6 }).map((_, index) => (
                   <div
                     key={index}
-                    className="spaceCard lg:w-1/2 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:xl:w-1/2 group-has-[.map]/mainBox:md:w-1/2 w-full p-4"
+                    className="spaceCard lg:w-1/3 md:w-1/3 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:xl:w-1/2 group-has-[.map]/mainBox:md:w-1/2 w-full p-4"
                   >
                     <ProductCard />
                   </div>
@@ -762,8 +783,7 @@ const Listing = () => {
 
               <Testimonial />
             </div>
-            {
-              mapToggle &&  
+            {mapToggle && (
               <div className="map lg:w-1/3 w-full lg:flex flex-col md:sticky md:top-10 hidden">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.501429411464!2d72.82552997425316!3d19.129516050292203!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b77913e9dd2d%3A0xcb2f5ffbb0662d10!2sSpaces%20-%20Inspire%20Hub%20Andheri%20West!5e0!3m2!1sen!2sin!4v1758019913835!5m2!1sen!2sin"
@@ -776,11 +796,20 @@ const Listing = () => {
                   className=""
                 ></iframe>
               </div>
-            }
+            )}
           </div>
         </div>
       </section>
-      {isFilterOpen && <FilterPopup isFilterOpen={isFilterOpen} setIsFilterOpen={setIsFilterOpen} filterData={filterData} setFilterData={setFilterData} handleApply={handleApply} handleClear={handleClear}/>}
+      {isFilterOpen && (
+        <FilterPopup
+          isFilterOpen={isFilterOpen}
+          setIsFilterOpen={setIsFilterOpen}
+          filterData={filterData}
+          setFilterData={setFilterData}
+          handleApply={handleApply}
+          handleClear={handleClear}
+        />
+      )}
     </>
   );
 };

@@ -420,7 +420,7 @@ const Listing = () => {
 
                 <div className="filterRow w-full flex lg:flex-row flex-col items-center gap-4">
                   <div className="lg:w-[70%] w-full filters-buttons flex justify-between items-center">
-                    <div className="lg:w-1/4 w-1/5">
+                    <div className="lg:w-1/4 md:w-1/5 w-auto">
                       <nav className="block">
                         <ul className="flex flex-col p-0 m-0">
                           <li className="text-[13px] !leading-8 font-normal list-style-none p-0 m-0 h-5">
@@ -444,6 +444,7 @@ const Listing = () => {
                               >
                                 <path d="M128 192l128 128 128-128z"></path>
                               </svg>
+                            </div> 
                             </div>
                             <div className="relative inline-block">
                               {toggleSpaceType && (
@@ -620,7 +621,7 @@ const Listing = () => {
                         </ul>
                       </nav>
                     </div>
-                    <div className="lg:w-1/4 w-1/5">
+                    <div className="lg:w-1/4 md:w-1/5 w-auto">
                       <nav className="block">
                         <ul className="flex flex-col p-0 m-0">
                           <li className="text-[13px] !leading-8 font-normal list-style-none p-0 m-0 h-5">
@@ -643,7 +644,7 @@ const Listing = () => {
                         </ul>
                       </nav>
                     </div>
-                    <div className="lg:w-1/4 w-1/5">
+                    <div className="lg:w-1/4 md:w-1/5 w-auto">
                       <ul className="flex flex-col p-0 m-0">
                         <li className="text-[13px] !leading-8 font-normal list-style-none">
                           <div
@@ -659,7 +660,7 @@ const Listing = () => {
                         </li>
                       </ul>
                     </div>
-                    <div className="lg:w-1/4 w-1/5">
+                    <div className="lg:w-1/4 md:w-1/5 w-auto">
                       <label className="relative inline-flex items-center cursor-pointer">
                         <input
                           type="checkbox"
@@ -720,6 +721,161 @@ const Listing = () => {
                   </p>
                 </div>
               </div>
+              <div className="relative inline-block">
+                {toggleSpaceType && (
+                  <div
+                    onClick={() => setToggleSpace(!toggleSpace)}
+                    className="relative top-4 left-0 w-[550px] rounded-xl z-10"
+                  >
+                    <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center min-h-14 max-h-14 gap-5 p-[18px] rounded-[42px]">
+                      <div className="border-1 border-[#dee2e6] p-1 text-sm font-light">
+                        {selectedRadio}
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {toggleSpace && (
+                  <div ref = {spacesTypeRef} className="scrollDropdown absolute top-[72px] left-0 w-[550px] bg-white block shadow-lg z-20 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700">
+                    <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
+                      <input
+                        type="radio"
+                        name="spaceType"
+                        value="co-working"
+                        checked={selectedRadio === "Co-working"}
+                        onChange={handleRadioChange}
+                        className="accent-[#26310b]"
+                      />
+                      Co-working
+                    </label>
+
+                    <div className="pl-6 space-y-2">
+                      {[
+                        "Private Office",
+                        "Managed Office",
+                        "Dedicated Desk",
+                        "Flexible Desk",
+                        "Virtual Office",
+                        "Day Pass",
+                      ].map((type) => (
+                        <label
+                          key={type}
+                          className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light"
+                        >
+                          <input
+                            type="checkbox"
+                            checked={selectedCheckboxes.includes(
+                              type
+                            )}
+                            onChange={() => handleCheckbox(type)}
+                            className="accent-[#26310b]"
+                          />
+                          {type}
+                        </label>
+                      ))}
+                    </div>
+
+                    <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
+                      <input
+                        type="radio"
+                        name="spaceType"
+                        value="Private Office"
+                        checked={selectedRadio === "Private Office"}
+                        onChange={handleRadioChange}
+                        className="accent-[#26310b]"
+                      />
+                      Private Office
+                    </label>
+
+                    <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
+                      <input
+                        type="radio"
+                        name="spaceType"
+                        value="Classroom"
+                        checked={selectedRadio === "Classroom"}
+                        onChange={handleRadioChange}
+                        className="accent-[#26310b]"
+                      />
+                      Classroom
+                    </label>
+
+                    <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
+                      <input
+                        type="radio"
+                        name="spaceType"
+                        value="Managed Office"
+                        checked={selectedRadio === "Managed Office"}
+                        onChange={handleRadioChange}
+                        className="accent-[#26310b]"
+                      />
+                      Managed Office
+                    </label>
+                  </div>
+                )}
+                {toggleLocation && (
+                  <div className="relative">
+                    {/* Search box */}
+                    <div className="relative top-6 -left-0 w-[550px] rounded-xl z-10">
+                      <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center py-[9px] px-4 rounded-[42px]">
+                        <div className="w-full">
+                          <div className="bg-white shadow-mb rounded-full h-10 w-full flex items-center justify-between">
+                            <div className="w-full flex justify-between items-center">
+                              <button className="text-[#777777] w-[15px] h-[15px]">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  strokeWidth={3}
+                                  stroke="currentColor"
+                                  className="w-4 h-4"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z"
+                                  />
+                                </svg>
+                              </button>
+                              <input
+                                type="text"
+                                placeholder="Where are you looking for office space?"
+                                className="border-0 bg-transparent w-full text-sm placeholder:font-normal transition-all duration-200 p-[10px] placeholder:text-[#333] focus:outline-none"
+                                value={query}
+                                onFocus={() => setToggleLocationOptions(true)}
+                                onChange={(e) => setQuery(e.target.value)}
+                              />
+                            </div>
+                            <div className="flex whitespace-nowrap text-[#777777]">
+                              Near Me
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Suggestion list */}
+                    {toggleLocationOptions && (
+                      <div ref={locationRef} className="scrollDropdown max-h-72 overflow-y-auto absolute top-[70px] left-4 w-[420px] bg-white shadow-lg z-20">
+                        {locations
+                          .filter((loc) =>
+                            loc.toLowerCase().includes(query.toLowerCase())
+                          )
+                          .map((loc, idx) => (
+                            <div
+                              key={idx}
+                              className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
+                              onClick={() => {
+                                setQuery(loc);
+                                setToggleLocationOptions(false);
+                              }}
+                            >
+                              {loc}
+                            </div>
+                          ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>   
               <div className="spaces lg:mt-6 flex flex-row flex-wrap -mx-4">
                 {Array.from({ length: 6 }).map((_, index) => (
                   <div

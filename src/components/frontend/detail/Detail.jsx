@@ -37,7 +37,7 @@ const Detail = () => {
       <section className="relative w-full lg:mt-[82px] sm:mt-[62px] mt-[63px] ">
         <div className="relative">
           <div className="grid md:grid-cols-2 grid-cols-1 gap-[2px]">
-            <div className="[&_[data-ntpc]]:!h-full [&_[data-title]]:h-full">
+            <div className="[&_[data-ntpc]]:!h-full [&_[data-title]]:h-full [&_[data-title]]:!max-w-full">
               {/* <iframe
                 className="w-full h-full max-md:absolute max-md:inset-0 "
                 src="https://www.youtube.com/embed/hxvOFKFqQLk?si=qR2XPRzDJJBua9_k"
@@ -254,37 +254,58 @@ const Detail = () => {
                         safe and hygienic work environment.
                       </p>
                     </div>
-                    <div className="  pt-6">
-                      <details className="group [&_summary::-webkit-details-marker]:hidden">
-                        <summary className="flex cursor-pointer items-center justify-between py-5 px-1 hover:bg-[#0000000a] border-b border-[#dbdbdb]">
-                          <div className="flex items-center gap-1">
-                            <Svg name="parking" className="size-7 text-[#f76900]"/>
-                            <span className="font-medium text-lg">Parking</span>
-                          </div>
-                          <Svg name="leftArrow" className="size-3.5 -rotate-90 transition-transform duration-300 group-open:rotate-90"/>
-                          
-                        </summary>
+                  <div className="pt-6">
+                    <div className="">
+                      <input type="checkbox" id="parking-toggle" className="hidden peer" />
+                      <label
+                        htmlFor="parking-toggle"
+                        className="flex cursor-pointer items-center justify-between border-b border-[#dbdbdb] py-5 px-1 hover:bg-[#0000000a]"
+                      >
+                        <div className="flex items-center gap-1">
+                          <Svg name="parking" className="size-7 text-[#f76900]" />
+                          <span className="font-medium text-lg">Parking</span>
+                        </div>
+                        <Svg
+                          name="leftArrow"
+                          className="size-3.5 -rotate-90 transition-transform duration-300 peer-checked:rotate-90"
+                        />
+                      </label>
 
-                        <div className="pt-8 space-y-5 ">
+                      <div
+                        className="
+                          overflow-hidden
+                          transition-[max-height] duration-[225ms] ease-[cubic-bezier(0.4,0,0.2,1)]
+                          max-h-0 peer-checked:max-h-[1000px]
+                        "
+                      >
+                        <div className="pt-8 space-y-5">
                           <div>
-                            <h4 className="font-semibold text-[#000000de] leading-[20px] text-[17px] mb-2">Parking options</h4>
+                            <h4 className="font-semibold text-[#000000de] leading-[20px] text-[17px] mb-2">
+                              Parking options
+                            </h4>
                             <p className="text-[#646464] text-base leading-[1.8]">
-                              Free Onsite Parking, Free Street Parking, Valet Parking, Near By Parking Lot,
-                              Metered Street Parking, Paid Site Parking
+                              Free Onsite Parking, Free Street Parking, Valet Parking, Near By
+                              Parking Lot, Metered Street Parking, Paid Site Parking
                             </p>
                           </div>
                           <div>
-                            <h4 className="font-semibold text-[#000000de] leading-[20px] text-[17px] mb-2">Parking description</h4>
+                            <h4 className="font-semibold text-[#000000de] leading-[20px] text-[17px] mb-2">
+                              Parking description
+                            </h4>
                             <p className="text-[#646464] text-base leading-[1.8]">
-                              Provide a unique and descriptive title for your space that stands out. Do not include
-                              your business name as your listing will not be approved. Provide a unique and descriptive
-                              title for your space that stands out. Do not include your business name as your listing
-                              will not be approved.
+                              Provide a unique and descriptive title for your space that stands
+                              out. Do not include your business name as your listing will not be
+                              approved. Provide a unique and descriptive title for your space that
+                              stands out. Do not include your business name as your listing will
+                              not be approved.
                             </p>
                           </div>
                         </div>
-                      </details>
+                      </div>
                     </div>
+                  </div>
+
+
 
                     <div className="pt-12">
                       <h2 className="text-xl font-medium text-[#141414] mb-6">

@@ -444,7 +444,7 @@ const Listing = () => {
                               >
                                 <path d="M128 192l128 128 128-128z"></path>
                               </svg>
-                            </div> 
+                            </div>
                           </li>
                         </ul>
                       </nav>
@@ -524,11 +524,11 @@ const Listing = () => {
                     </div>
                   </div>
                 </div>
-                <div className="relative inline-block lg:hidden">
+                <div className="relative inline-block lg:hidden w-full">
                   {toggleSpaceType && (
                     <div
                       onClick={() => setToggleSpace(!toggleSpace)}
-                      className="relative top-4 left-0 w-[550px] rounded-xl z-10"
+                      className="relative top-4 left-0 md:w-[400px] lg:w-3/5 w-full rounded-xl z-10 pb-4"
                     >
                       <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center min-h-14 max-h-14 gap-5 p-[18px] rounded-[42px]">
                         <div className="border-1 border-[#dee2e6] p-1 text-sm font-light">
@@ -538,7 +538,10 @@ const Listing = () => {
                     </div>
                   )}
                   {toggleSpace && (
-                    <div ref = {spacesTypeRef} className="scrollDropdown absolute top-[72px] left-0 w-[550px] bg-white block shadow-lg z-20 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700">
+                    <div
+                      ref={spacesTypeRef}
+                      className="scrollDropdown absolute top-[72px] left-0 w-[550px] bg-white block shadow-lg z-20 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700"
+                    >
                       <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
                         <input
                           type="radio"
@@ -566,9 +569,7 @@ const Listing = () => {
                           >
                             <input
                               type="checkbox"
-                              checked={selectedCheckboxes.includes(
-                                type
-                              )}
+                              checked={selectedCheckboxes.includes(type)}
                               onChange={() => handleCheckbox(type)}
                               className="accent-[#26310b]"
                             />
@@ -617,7 +618,7 @@ const Listing = () => {
                   {toggleLocation && (
                     <div className="relative">
                       {/* Search box */}
-                      <div className="relative top-6 -left-0 w-[550px] rounded-xl z-10">
+                      <div className="relative top-4 -left-0 w-full md:w-[400px] lg:w-3/5 rounded-xl z-10 pb-7">
                         <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center py-[9px] px-4 rounded-[42px]">
                           <div className="w-full">
                             <div className="bg-white shadow-mb rounded-full h-10 w-full flex items-center justify-between">
@@ -657,7 +658,10 @@ const Listing = () => {
 
                       {/* Suggestion list */}
                       {toggleLocationOptions && (
-                        <div ref={locationRef} className="scrollDropdown max-h-72 overflow-y-auto absolute top-[70px] left-4 w-[420px] bg-white shadow-lg z-20">
+                        <div
+                          ref={locationRef}
+                          className="scrollDropdown max-h-72 overflow-y-auto absolute top-[70px] left-4 w-[420px] bg-white shadow-lg z-20"
+                        >
                           {locations
                             .filter((loc) =>
                               loc.toLowerCase().includes(query.toLowerCase())
@@ -678,9 +682,9 @@ const Listing = () => {
                       )}
                     </div>
                   )}
-                </div>   
+                </div>
                 {mapToggle && (
-                  <div className="map lg:w-2/5 w-full flex flex-col md:sticky md:top-10 mt-6 lg:mt-1 lg:hidden">
+                  <div className="map lg:w-2/5 w-full flex flex-col md:sticky md:top-10 mt-3 lg:mt-1 lg:hidden">
                     <iframe
                       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.501429411464!2d72.82552997425316!3d19.129516050292203!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b77913e9dd2d%3A0xcb2f5ffbb0662d10!2sSpaces%20-%20Inspire%20Hub%20Andheri%20West!5e0!3m2!1sen!2sin!4v1758019913835!5m2!1sen!2sin"
                       width="505"
@@ -704,11 +708,11 @@ const Listing = () => {
                   </p>
                 </div>
               </div>
-              <div className="relative lg:inline-block hidden">
+              <div className="relative lg:inline-block hidden w-full">
                 {toggleSpaceType && (
                   <div
                     onClick={() => setToggleSpace(!toggleSpace)}
-                    className="relative top-4 left-0 w-[550px] rounded-xl z-10"
+                    className="relative top-4 left-0 w-full md:w-[400px] lg:w-3/5 rounded-xl z-10"
                   >
                     <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center min-h-14 max-h-14 gap-5 p-[18px] rounded-[42px]">
                       <div className="border-1 border-[#dee2e6] p-1 text-sm font-light">
@@ -718,7 +722,10 @@ const Listing = () => {
                   </div>
                 )}
                 {toggleSpace && (
-                  <div ref = {spacesTypeRef} className="scrollDropdown absolute top-[72px] left-0 w-[550px] bg-white block shadow-lg z-20 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700">
+                  <div
+                    ref={spacesTypeRef}
+                    className="scrollDropdown absolute top-[72px] left-0 w-[550px] bg-white block shadow-lg z-20 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700"
+                  >
                     <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
                       <input
                         type="radio"
@@ -746,9 +753,7 @@ const Listing = () => {
                         >
                           <input
                             type="checkbox"
-                            checked={selectedCheckboxes.includes(
-                              type
-                            )}
+                            checked={selectedCheckboxes.includes(type)}
                             onChange={() => handleCheckbox(type)}
                             className="accent-[#26310b]"
                           />
@@ -797,7 +802,7 @@ const Listing = () => {
                 {toggleLocation && (
                   <div className="relative">
                     {/* Search box */}
-                    <div className="relative top-6 -left-0 w-[550px] rounded-xl z-10">
+                    <div className="relative top-6 -left-0 w-full md:w-[400px] lg:w-3/5 rounded-xl z-10 pb-7">
                       <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center py-[9px] px-4 rounded-[42px]">
                         <div className="w-full">
                           <div className="bg-white shadow-mb rounded-full h-10 w-full flex items-center justify-between">
@@ -837,7 +842,10 @@ const Listing = () => {
 
                     {/* Suggestion list */}
                     {toggleLocationOptions && (
-                      <div ref={locationRef} className="scrollDropdown max-h-72 overflow-y-auto absolute top-[70px] left-4 w-[420px] bg-white shadow-lg z-20">
+                      <div
+                        ref={locationRef}
+                        className="scrollDropdown max-h-72 overflow-y-auto absolute top-[70px] left-4 w-[420px] bg-white shadow-lg z-20"
+                      >
                         {locations
                           .filter((loc) =>
                             loc.toLowerCase().includes(query.toLowerCase())
@@ -858,7 +866,7 @@ const Listing = () => {
                     )}
                   </div>
                 )}
-              </div>   
+              </div>
               <div className="spaces lg:mt-6 flex flex-row flex-wrap -mx-4">
                 {Array.from({ length: 6 }).map((_, index) => (
                   <div
@@ -874,7 +882,7 @@ const Listing = () => {
                 {Array.from({ length: 12 }).map((_, index) => (
                   <div
                     key={index}
-                    className="spaceCard lg:w-1/2 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:xl:w-1/2 group-has-[.map]/mainBox:md:w-1/2 w-full p-4"
+                    className="spaceCard lg:w-1/3 md:w-1/3 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:xl:w-1/2 group-has-[.map]/mainBox:md:w-1/2 w-full p-4"
                   >
                     <ProductCard />
                   </div>
@@ -892,12 +900,12 @@ const Listing = () => {
                   />
                 </div>
 
-                <div className="flex items-center absolute lg:top-[30%] lg:left-10 top-[22%] left-8">
+                <div className="flex items-center absolute lg:top-[30%] lg:left-10 sm:top-[22%] top-[15%] left-8">
                   <div className="md:w-4/5 w-full flex flex-col gap-y-3">
                     <h4 className="text-xl font-semibold text-[#010101] ">
                       Winner of Best Flex Space Aggregator of the Year
                     </h4>
-                    <p className="lg:3/5 w-full text-sm text-[#272828] lg:mb-4 mb-2">
+                    <p className="lg:w-3/5 w-3/4 text-sm pe-4 text-[#272828] lg:mb-4 mb-2">
                       We negotiate, you save. Our strong relationships with
                       operators ensure you get the best terms—zero hassle, zero
                       brokerage.
@@ -913,7 +921,7 @@ const Listing = () => {
                 {Array.from({ length: 12 }).map((_, index) => (
                   <div
                     key={index}
-                    className="spaceCard lg:w-1/2 md:w-1/2 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:xl:w-1/2 group-has-[.map]/mainBox:md:w-1/2 w-full p-4"
+                    className="spaceCard lg:w-1/3 md:w-1/3 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:xl:w-1/2 group-has-[.map]/mainBox:md:w-1/2 w-full p-4"
                   >
                     <ProductCard />
                   </div>

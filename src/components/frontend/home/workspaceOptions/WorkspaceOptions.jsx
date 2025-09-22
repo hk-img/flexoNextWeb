@@ -21,7 +21,7 @@ const coworkingSpaces = [
   },
   {
     title: "Desks Space",
-    img: "/images/Desk-spaces.webp",
+    img: "/images/desk-spaces.webp",
     teamSize: "1 to 50",
   },
  

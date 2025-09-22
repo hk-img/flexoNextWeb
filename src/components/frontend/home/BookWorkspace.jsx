@@ -124,7 +124,7 @@ const BookWorkspace = () => {
                   <h2 className="text-[23px] lg:text-[40px] text-[#f76900] leading-[1.3] font-medium">
                     1800+
                   </h2>
-                  <h5 className="text-[#141414] font-medium mt-[5px] xl:text-lg leading-[1.3] text-base">
+                  <h5 className="text-[#141414] font-medium mt-[5px] 2xl:text-lg leading-[1.3] text-base">
                     Partner Spaces
                   </h5>
                 </div>
@@ -133,7 +133,7 @@ const BookWorkspace = () => {
                   <h2 className="text-[23px] lg:text-[40px] text-[#f76900] leading-[1.3] font-medium">
                     1000+
                   </h2>
-                  <h5 className="text-[#141414] font-medium mt-[5px] xl:text-lg leading-[1.3] text-base">
+                  <h5 className="text-[#141414] font-medium mt-[5px] 2xl:text-lg leading-[1.3] text-base">
                     Clients Served
                   </h5>
                 </div>
@@ -142,7 +142,7 @@ const BookWorkspace = () => {
                   <h2 className="text-[23px] lg:text-[40px] text-[#f76900] leading-[1.3] font-medium">
                     20+
                   </h2>
-                  <h5 className="text-[#141414] font-medium mt-[5px] xl:text-lg leading-[1.3] text-base">
+                  <h5 className="text-[#141414] font-medium mt-[5px] 2xl:text-lg leading-[1.3] text-base">
                     Cities Across India
                   </h5>
                 </div>
@@ -151,7 +151,7 @@ const BookWorkspace = () => {
                   <h2 className="text-[23px] lg:text-[40px] text-[#f76900] leading-[1.3] font-medium">
                     25 million+
                   </h2>
-                  <h5 className="text-[#141414] font-medium mt-[5px] xl:text-lg leading-[1.3] text-base">
+                  <h5 className="text-[#141414] font-medium mt-[5px] 2xl:text-lg leading-[1.3] text-base">
                     Sqft of Office Space Options
                   </h5>
                 </div>

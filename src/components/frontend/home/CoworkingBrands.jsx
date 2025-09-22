@@ -25,11 +25,11 @@ const CoworkingBrands = () => {
   }
 
   return (
-    <div className="container mx-auto px-[30px] sm:pt-[76px] pt-16">
-      <h2 className="sm:text-[32px] text-2xl leading-[1.2] font-medium text-center text-[#333] md:mb-10 mb-8">
+    <div className="container mx-auto  sm:pt-[76px] pt-16">
+      <h2 className="sm:text-[32px] text-2xl px-1 leading-[1.2] font-medium text-center text-[#333] md:mb-10 mb-8">
         Top Coworking Brands, All in One Place
       </h2>
-      <div className="md:[&_.emblaarrows]:-left-10 md:[&_.emblaarrows]:-right-10 [&_.emblaarrows]:-left-6 [&_.emblaarrows]:-right-6 [&_.emblaarrows_button]:w-10 [&_.emblaarrows_button]:h-10 [&_.emblaarrows_button_Svg]:size-[18px]">
+      <div className="md:[&_.emblaarrows]:-left-10 md:[&_.emblaarrows]:-right-10 [&_.emblaarrows]:-left-6 [&_.emblaarrows]:-right-6 [&_.emblaarrows_button]:w-10 [&_.emblaarrows_button]:h-10 [&_.emblaarrows_button_Svg]:size-[18px] px-[30px]">
         <EmblaCarousel
           options={{ loop: true, autoplay: false, showButton: true, align: "start" }}
         >

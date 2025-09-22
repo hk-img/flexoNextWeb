@@ -41,17 +41,10 @@ export default function HeroSection() {
   );
 };
 
-  const ClearIndicator = (props) => {
+    const ClearIndicator = (props) => {
     return (
       <RSComponents.ClearIndicator {...props}>
-        <div
-          // inner clickable area (we let the wrapper handle events)
-          style={{
-            cursor: "pointer",
-            padding: "0",
-            color: "#999",
-          }}
-        >
+        <div className="cursor-pointer text-gray-500 hover:text-[#f76900] transition-colors duration-200">
           ×
         </div>
       </RSComponents.ClearIndicator>
@@ -84,7 +77,16 @@ const IndicatorSeparator = () => null;
       backgroundColor: "#fff",
       boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
       outline: "none",
+      overflow: "hidden",
     }),
+      menuList: (base) => ({
+        ...base,
+        maxHeight: "200px", // 5 items ke baad scroll
+        overflowY: "auto",
+        paddingRight: "4px",
+        className: " [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]"
+        
+      }),
     valueContainer: (base) => ({
       ...base,
       padding: "0 8px",
@@ -210,7 +212,7 @@ const IndicatorSeparator = () => null;
                   value={type}
                   onChange={(opt) => setType(opt)}
                   styles={customStyles}
-                  menuPosition="fixed"
+                 menuPortalTarget={typeof document !== "undefined" ? document.body : null}
                   className="md:border-r max-md:border items-center flex justify-between border-black max-md:rounded-[15px] !w-full md:border-[#d0c2c2] [&_div>div>div]:!text-black [&_div>div>div]:!text-sm [&_div>div>div]:!text-nowrap md:!h-[46px] !h-[52px]"
                   isClearable
                   components={{
@@ -226,11 +228,11 @@ const IndicatorSeparator = () => null;
                   value={city}
                   onChange={(opt) => setCity(opt)}
                   styles={customStyles}
-                  menuPosition="fixed"
+                 menuPortalTarget={typeof document !== "undefined" ? document.body : null}
                   className=" [&_div>div>div]:!text-black [&_div>div>div]:!text-sm max-md:border border-black rounded-[15px] !w-full md:!h-[46px] !h-[52px] items-center flex justify-between"
                   isClearable
                   components={{
-                    ClearIndicator,
+                    ClearIndicator:null,
                     DropdownIndicator:null,
                     IndicatorSeparator,
                   }}
@@ -239,7 +241,7 @@ const IndicatorSeparator = () => null;
 
               <button
                 onClick={() => console.log(type, city)}
-                className="bg-[#f76900] px-5 text-white font-medium h-[46px] flex items-center justify-center rounded-xl w-full md:w-auto text-sm"
+                className="bg-[#f76900] px-5 text-white font-medium h-[46px] flex items-center justify-center rounded-xl w-full md:w-auto text-sm cursor-pointer"
               >
                 Search
               </button>

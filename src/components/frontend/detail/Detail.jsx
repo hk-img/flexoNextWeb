@@ -36,6 +36,7 @@ const Detail = () => {
     <>
       <section className="relative w-full lg:mt-[82px] sm:mt-[62px] mt-[63px] ">
         <div className="relative">
+          <div className="bg-black text-white font-medium text-sm px-[10px] py-2 rounded-sm absolute top-7 left-6  z-10">Premium</div>
           <div className="grid md:grid-cols-2 grid-cols-1 gap-[2px]">
             <div className="[&_[data-ntpc]]:!h-full [&_[data-title]]:h-full [&_[data-title]]:!max-w-full">
               {/* <iframe
@@ -94,22 +95,22 @@ const Detail = () => {
               </div>
               <div className="absolute -right-25 -translate-x-1/2 mt-2 flex items-center gap-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
                 <div className="bg-[#3b5998] w-[30px] h-[30px] flex border items-center justify-center rounded-full shadow ">
-                  <Svg name="facebook" className="size-[15px] text-black" />
+                  <Svg name="facebook" className="size-[15px] text-[#343a40]"/>
                 </div>
                 <div className="bg-[#34aaf3] w-[30px] h-[30px] flex border items-center justify-center rounded-full shadow ">
-                  <Svg name="linkedin" className="size-[15px] text-black" />
+                  <Svg name="linkedin2" className="size-[15px] text-[#343a40]"/>
                 </div>
                 <div className="bg-[#6ee777] w-[30px] h-[30px] flex border items-center justify-center rounded-full shadow ">
-                  <Svg name="whatsapp" className="size-[15px] text-black" />
+                  <Svg name="whatsapp" className="size-[15px] text-[#343a40]"/>
                 </div>
                 <div className="bg-[radial-gradient(circle_at_30%_107%,_#fdf497_0%,_#fdf497_5%,_#fd5949_45%,#d6249f_60%,#285AEB_90%)] border w-[30px] h-[30px] flex items-center justify-center rounded-full shadow ">
                   <Svg
                     name="instagram"
-                    className="size-[15px] text-black"
+                    className="size-[15px] text-[#343a40]"
                   />
                 </div>
                 <div className="bg-white w-[30px] h-[30px] border  flex items-center justify-center rounded-full shadow ">
-                  <Svg name="copy" className="size-[15px] text-black" />
+                  <Svg name="copy" className="size-[15px] text-[#343a40]"/>
                 </div>
               </div>
             </div>
@@ -254,9 +255,10 @@ const Detail = () => {
                         safe and hygienic work environment.
                       </p>
                     </div>
-                  <div className="pt-6">
-                    <div className="">
+                  <div className="py-6">
+                    <div>
                       <input type="checkbox" id="parking-toggle" className="hidden peer" />
+
                       <label
                         htmlFor="parking-toggle"
                         className="flex cursor-pointer items-center justify-between border-b border-[#dbdbdb] py-5 px-1 hover:bg-[#0000000a]"
@@ -265,20 +267,23 @@ const Detail = () => {
                           <Svg name="parking" className="size-7 text-[#f76900]" />
                           <span className="font-medium text-lg">Parking</span>
                         </div>
-                        <Svg
-                          name="leftArrow"
-                          className="size-3.5 -rotate-90 transition-transform duration-300 peer-checked:rotate-90"
-                        />
+                        {/* arrow needs to be outside label */}
                       </label>
+
+                      {/* put arrow here */}
+                      <Svg
+                        name="leftArrow"
+                        className="size-3.5 -rotate-90 transition-transform duration-300 peer-checked:rotate-90 ml-auto mr-1 -mt-10"
+                      />
 
                       <div
                         className="
                           overflow-hidden
-                          transition-[max-height] duration-[225ms] ease-[cubic-bezier(0.4,0,0.2,1)]
+                          transition-[max-height] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
                           max-h-0 peer-checked:max-h-[1000px]
                         "
                       >
-                        <div className="pt-8 space-y-5">
+                        <div className="pt-8 mt-8 space-y-5">
                           <div>
                             <h4 className="font-semibold text-[#000000de] leading-[20px] text-[17px] mb-2">
                               Parking options
@@ -303,6 +308,7 @@ const Detail = () => {
                         </div>
                       </div>
                     </div>
+
                   </div>
 
 
@@ -812,7 +818,7 @@ const Detail = () => {
       </section>
 
       <section className="container px-[15px] mx-auto pb-[50px] pt-10">
-        <h2 className="text-2xl font-medium text-[#141414] mb-[3px] leading-[1.6] ps-3">
+        <h2 className="text-2xl font-medium text-[#141414] mb-[3px] leading-[1.6] md:pl-3 pl-0">
           Nearby Coworking Spaces
         </h2>
         <div>
@@ -826,7 +832,7 @@ const Detail = () => {
           >
             {
               Array.from({ length: 10 }).map((_, index) => (
-                 <div key={index} className="shrink-0 px-[9px] basis-[100%] sm:basis-[50%] md:basis-[50%] lg:basis-[33.3%] xl:basis-[33.3%] py-3">
+                 <div key={index} className="shrink-0 md:px-[9px] px-0 basis-[100%] sm:basis-[50%] md:basis-[50%] lg:basis-[33.3%] xl:basis-[33.3%] py-3">
                   <ProductCard />
                 </div>
               ))

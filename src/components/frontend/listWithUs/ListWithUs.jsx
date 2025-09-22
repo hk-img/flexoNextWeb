@@ -72,51 +72,51 @@ const ListWithUs = () => {
 ];
   return (
     <>
-      <section className="relative w-full lg:top-20 top-16">
-        <div className='flex items-center h-full justify-center py-[50px]'>
-            <img
-              src="/images/list_with_us_banner.webp"
-              alt="List Your Space and Grow Your Earnings"
-              width={1526}
-              height={484}
-              title="List Your Space and Grow Your Earnings"
-              className="absolute inset-0 w-full h-full lg:h-[484px] object-cover"
-            />
-          <div className="container flex justify-end">
-            <div className='flex flex-wrap mx-[-15px] justify-end'>
-              <div className="lg:w-10/12 md:w-10/12 px-[15px] w-full">
-                <div className='w-full relative flex flex-col items-start text-white'>
-                  <h1 className='w-full lg:text-4xl md:text-[17px] lg:!leading-[1.6] text-white font-medium mb-4'>List Your Space and Grow Your Earnings</h1>
-                    <ul className='flex flex-col text-start ps-2 md:ps-[16px]'>
-                      <li className='lg:mb-4 md:mb-4 mb-2 flex items-center text-white lg:text-[21px] text-base'>
-                        <span className='pe-2'><Svg name="check" className="size-[24px] text-white"/></span>
-                          Get Qualified Leads and Bookings 
-                      </li>
-                      <li className='lg:mb-4 md:mb-4 mb-2 flex items-center text-white lg:text-[21px] text-base'>
+        <section className="relative w-full lg:top-20 top-16">
+          <div className='flex items-center h-full justify-center py-[50px]'>
+              <img
+                src="/images/list_with_us_banner.webp"
+                alt="List Your Space and Grow Your Earnings"
+                width={1526}
+                height={484}
+                title="List Your Space and Grow Your Earnings"
+                className="absolute inset-0 w-full h-full lg:h-[484px] object-cover"
+              />
+            <div className="container mx-auto md:px-0 px-[15px] flex justify-end">
+              <div className='flex flex-wrap mx-[-15px] justify-end'>
+                <div className="lg:w-10/12 md:w-10/12 px-[15px] w-full">
+                  <div className='w-full relative flex flex-col items-start text-white'>
+                    <h1 className='w-full lg:text-4xl md:text-[17px] lg:!leading-[1.6] text-white font-medium mb-4'>List Your Space and Grow Your Earnings</h1>
+                      <ul className='flex flex-col text-start ps-2 md:ps-[16px]'>
+                        <li className='lg:mb-4 md:mb-4 mb-2 flex items-center text-white lg:text-[21px] text-base'>
                           <span className='pe-2'><Svg name="check" className="size-[24px] text-white"/></span>
-                          Maximise Occupancy Levels and Revenue
-                      </li>
-                      <li className='lg:mb-4 md:mb-4 mb-2 gap-2 flex items-center text-white lg:text-[21px] text-base'>
-                          <span className='pe-2'><Svg name="check" className="size-[24px] text-white"/></span>
-                          Increase Visibility and Reach
-                      </li>
-                      <li className='flex items-center gap-2 text-white lg:text-[21px] text-base'>
-                          <span className='pe-2'><Svg name="check" className="size-[24px] text-white"/></span>
-                          Turn Unused Space Into Profit
-                      </li>
-                    </ul>
-                    <div className='mt-5 md:ps-6 ps-2'>
-                      <button className="bg-[#f76900] text-sm text-white px-[30px] py-4 rounded-[3px] cursor-pointer font-medium duration-500 transition flex items-center gap-2"><span>Let's Get Started</span></button>
-                    </div>
+                            Get Qualified Leads and Bookings 
+                        </li>
+                        <li className='lg:mb-4 md:mb-4 mb-2 flex items-center text-white lg:text-[21px] text-base'>
+                            <span className='pe-2'><Svg name="check" className="size-[24px] text-white"/></span>
+                            Maximise Occupancy Levels and Revenue
+                        </li>
+                        <li className='lg:mb-4 md:mb-4 mb-2 gap-2 flex items-center text-white lg:text-[21px] text-base'>
+                            <span className='pe-2'><Svg name="check" className="size-[24px] text-white"/></span>
+                            Increase Visibility and Reach
+                        </li>
+                        <li className='flex items-center gap-2 text-white lg:text-[21px] text-base'>
+                            <span className='pe-2'><Svg name="check" className="size-[24px] text-white"/></span>
+                            Turn Unused Space Into Profit
+                        </li>
+                      </ul>
+                      <div className='mt-5 md:ps-6 ps-2'>
+                        <button className="bg-[#f76900] text-sm text-white px-[30px] py-4 rounded-[3px] cursor-pointer font-medium duration-500 transition flex items-center gap-2"><span>Let's Get Started</span></button>
+                      </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-        <section className='chooseSpace w-full relative lg:pt-22 md:pt-12 pt-8'>
-            <div className='container py-6'>
+        <section className='chooseSpace w-full relative lg:pt-32 md:pt-12 pt-16 pb-10'>
+            <div className='container mx-auto md:px-0 px-[15px]'>
               <div className='flex flex-col lg:flex-row items-center'>
                 <div className='lg:w-7/12 md:w-7/12 w-full flex flex-col'>
                   <div className='relative w-full rounded-lg lg:mt-0 mt-10'>
@@ -138,25 +138,25 @@ const ListWithUs = () => {
             </div>
         </section>
         
-        <section className='w-full relative lg:py-8 py-4'>
-          <div className='container py-6'>
-              <div className='w-full flex flex-col mx-auto px-6'>
+        <section className='w-full relative py-10'>
+          <div className='container mx-auto md:px-0 px-[15px]'>
+              <div className='w-full flex flex-col mx-auto px-6 mb-[15px]'>
                 <h2 className='md:text-[32px] text-2xl font-medium text-center text-[#333]'>
                   How It Works
                 </h2>
               </div>
-              <div className='grid lg:grid-cols-3 grid-cols-1 gap-6 lg:pt-8 pt-6'>
-                <div className='relative p-6 flex flex-col shadow-[0_0_3px_#8b8b8b] rounded-md overflow-hidden h-full lg:mb-0 mb-4 before:absolute before:left-[-1px] before:top-[-1px] before:h-[48px] before:border-[3px] before:border-[#f76900] before:rounded-[30px] after:absolute after:right-[-1px] after:bottom-[-1px] after:h-[48px] after:border-[3px] after:border-[#f76900] after:rounded-[30px]  transition-all duration-500 md:hover:-translate-y-[10px]'>
+              <div className='flex lg:flex-row flex-col h-full lg:gap-x-[30px] lg:pt-8 pt-6'>
+                <div className='lg:w-1/3 relative p-6 flex flex-col shadow-[0_0_3px_#8b8b8b] rounded-md overflow-hidden h-auto lg:mb-0 mb-6 before:absolute before:left-[-1px] before:top-[-1px] before:h-[48px] before:border-[3px] before:border-[#f76900] before:rounded-[30px] after:absolute after:right-[-1px] after:bottom-[-1px] after:h-[48px] after:border-[3px] after:border-[#f76900] after:rounded-[30px]  transition-all duration-500 md:hover:-translate-y-[10px]'>
                   <div className='count mb-2'><span className='rounded-full bg-white shadow-[0_0_3px_#f76900] w-10 h-10 flex justify-center items-center text-[18px] font-medium text-[#f76900] border-2 border-[#f76900]'>01</span></div>
                   <h5 className='text-base/relaxed text-[#f76900] font-medium'>Sign Up and Create Your Listing</h5>
                   <p className='text-[#777] text-sm/normal'>Provide key details like location, size, amenities, and usage categories. Upload high-quality photos to showcase your space.</p>
                 </div>
-                <div className='relative p-6 flex flex-col shadow-[0_0_3px_#8b8b8b] rounded-md overflow-hidden h-full lg:mb-0 mb-4 before:absolute before:left-[-1px] before:top-[-1px] before:h-[48px] before:border-[3px] before:border-[#f76900] before:rounded-[30px] after:absolute after:right-[-1px] after:bottom-[-1px] after:h-[48px] after:border-[3px] after:border-[#f76900] after:rounded-[30px] transition-all duration-500 md:hover:-translate-y-[10px]'>
+                <div className='lg:w-1/3 relative p-6 flex flex-col shadow-[0_0_3px_#8b8b8b] rounded-md overflow-hidden h-auto lg:mb-0 mb-6 before:absolute before:left-[-1px] before:top-[-1px] before:h-[48px] before:border-[3px] before:border-[#f76900] before:rounded-[30px] after:absolute after:right-[-1px] after:bottom-[-1px] after:h-[48px] after:border-[3px] after:border-[#f76900] after:rounded-[30px] transition-all duration-500 md:hover:-translate-y-[10px]'>
                   <div className='count mb-2'><span className='rounded-full bg-white shadow-[0_0_3px_#f76900] w-10 h-10 flex justify-center items-center text-[18px] font-medium text-[#f76900] border-2 border-[#f76900]'>02</span></div>
                   <h5 className='text-base/relaxed text-[#f76900] font-medium'>Set Your Preferences</h5>
                   <p className='text-[#777] text-sm/normal'>Choose how you want to rent your space and set your pricing. Offer hourly, daily, or long-term leases based on what works best for your business.</p>
                 </div>
-                <div className='relative p-6 flex flex-col shadow-[0_0_3px_#8b8b8b] rounded-md overflow-hidden h-full lg:mb-0 mb-4 before:absolute before:left-[-1px] before:top-[-1px] before:h-[48px] before:border-[3px] before:border-[#f76900] before:rounded-[30px] after:absolute after:right-[-1px] after:bottom-[-1px] after:h-[48px] after:border-[3px] after:border-[#f76900] after:rounded-[30px] transition-all duration-500 md:hover:-translate-y-[10px]'>
+                <div className='lg:w-1/3 relative p-6 flex flex-col shadow-[0_0_3px_#8b8b8b] rounded-md overflow-hidden h-auto lg:mb-0 mb-6 before:absolute before:left-[-1px] before:top-[-1px] before:h-[48px] before:border-[3px] before:border-[#f76900] before:rounded-[30px] after:absolute after:right-[-1px] after:bottom-[-1px] after:h-[48px] after:border-[3px] after:border-[#f76900] after:rounded-[30px] transition-all duration-500 md:hover:-translate-y-[10px]'>
                   <div className='count mb-2'><span className='rounded-full bg-white shadow-[0_0_3px_#f76900] w-10 h-10 flex justify-center items-center text-[18px] font-medium text-[#f76900] border-2 border-[#f76900]'>03</span></div>
                   <h5 className='text-base/relaxed text-[#f76900] font-medium'>Start Earning</h5>
                   <p className='text-[#777] text-sm/normal'>Go live on the platform, receive inquiries and bookings, and effortlessly manage everything from your dashboard.</p>
@@ -165,22 +165,22 @@ const ListWithUs = () => {
           </div>
         </section>
         
-        <section className='w-full relative lg:py-8 py-4'>
-          <div className="container py-6">
-            <div className='w-full flex flex-col mx-auto px-6'>
-              <h2 className="md:text-[32px] text-2xl font-medium text-center text-[#333] mb-4">
+        <section className='w-full relative py-10'>
+          <div className="container mx-auto md:px-0 px-[15px]">
+            <div className='w-full flex flex-col mx-auto mb-6'>
+              <h2 className="md:text-[32px] text-2xl font-medium text-center text-[#333] ">
                 What Types of Spaces Can You List?
               </h2>
             </div>
             <p className='text-sm/normal text-[#777777] text-center mx-auto'>From vibrant coworking spaces, sleek offices to creative studios, every space has a home on Flexo. We bring together diverse spaces for work, creativity, activities, and collaboration—all in one marketplace.</p>
 
-            <div className="mt-10 flex lg:flex-row gap-[6px]">
-              <div className="w-full">
+            <div className="mt-10 flex lg:flex-row gap-[6px] md:[&_.emblaarrows]:-left-9 md:[&_.emblaarrows]:-right-9 [&_.emblaarrows]:-left-6 [&_.emblaarrows]:-right-6 [&_.emblaarrows_button]:w-10 [&_.emblaarrows_button]:h-10 [&_.emblaarrows_button_Svg]:size-[18px]">
+              <div className="w-full px-[15px]">
                 <EmblaCarousel
                   options={{ loop: true, autoplay: false, showButton: true, align: "start" }}
                 >
                   {coworkingSpaces.map((space, idx) => (
-                    <div
+                  <div
                       key={idx}
                       className="embla__slide shrink-0 basis-[100%] sm:basis-[50%] md:basis-[50%] lg:basis-[33.3%] xl:basis-[25%]"
                     >
@@ -202,7 +202,7 @@ const ListWithUs = () => {
                           </p>
                         </div>
                     </div>
-                    </div>
+                  </div>
                   ))}
                 </EmblaCarousel>
               </div>
@@ -211,7 +211,7 @@ const ListWithUs = () => {
         </section>
 
         <section className='w-full relative'>
-          <div className='container py-6'>
+          <div className='container mx-auto md:px-0 px-[15px]'>
               <div className='w-full flex flex-col mx-auto px-6'>
                 <h2 className='md:text-[32px] text-2xl font-medium text-center text-[#333]'>
                   Why List with Flexo?
@@ -255,13 +255,13 @@ const ListWithUs = () => {
         </section>
 
         <section className='w-full relative lg:py-8 py-4'>
-          <div className='container py-6'>
+          <div className='container mx-auto md:px-0 px-[15px]'>
             <div className='w-full flex flex-col mx-auto px-6 mb-10'>
               <h2 className='md:text-[32px] text-2xl font-medium text-center text-[#333]'>
                 Host Success Stories
               </h2>
             </div>
-            <div className='mt-3 px-4'>
+            <div className='mt-3 px-4 [&_.emblaarrows]:hidden md:[&_.emblaarrows]:-left-6 md:[&_.emblaarrows]:-right-5 [&_.emblaarrows]:-left-3 [&_.emblaarrows]:-right-3 [&_.emblaarrows_button]:w-10 [&_.emblaarrows_button]:h-10 [&_.emblaarrows_button_Svg]:size-[18px]'>
             <div className='lg:p-6 p-2 shadow-[0_0_3px_#b3b3b3] rounded-[5px] mb-2'>
               <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
                 {person.map((person, index) => (

@@ -33,24 +33,25 @@ const TrustedCompanies = () => {
         <h2 className="sm:text-[32px] text-2xl font-medium text-center text-[#333] md:mb-4 mb-2 leading-[1.2] ">
           Trusted By Leading Companies in India
         </h2>
-
-        <EmblaCarousel options={{ loop: true, autoscroll: true}}>
-          {companies.map((s, i) => (
-            <div
-              key={i}
-              className="embla__slide flex-[0_0_auto] basis-auto sm:px-4 px-4 flex items-center justify-center"
-            >
-              <Image
-                src={s.src}
-                alt={s.alt}
-                title={s.title}
-                width={120}
-                height={50}
-                className="object-contain transition md:w-[145px] w-[105px]"
-              />
-            </div>
-          ))}
-        </EmblaCarousel>
+        <div className="pointer-events-none">
+          <EmblaCarousel options={{ loop: true, autoscroll: true}}>
+            {companies.map((s, i) => (
+              <div
+                key={i}
+                className="embla__slide flex-[0_0_auto] basis-auto sm:px-4 px-4 flex items-center justify-center"
+              >
+                <Image
+                  src={s.src}
+                  alt={s.alt}
+                  title={s.title}
+                  width={120}
+                  height={50}
+                  className="object-contain transition md:w-[145px] w-[105px]"
+                />
+              </div>
+            ))}
+          </EmblaCarousel>
+        </div>
       </div>
     </section>
   );

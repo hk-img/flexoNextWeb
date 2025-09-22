@@ -5,19 +5,19 @@ import Image from "next/image"
 const CoworkingSpaces = () => {
   const cities = [
     { name: "Bengaluru", image: "/images/Bengaluru.webp" },
-    { name: "Hyderabad", image: "/images/hyderabad.webp" },
-    { name: "Pune", image: "/images/pune.webp" },
-    { name: "Delhi", image: "/images/delhi.webp" },
-    { name: "Gurgaon", image: "/images/gurgaon.webp" },
-    { name: "Noida", image: "/images/noida.webp" },
-    { name: "Chennai", image: "/images/chennai.webp" },
+    { name: "Hyderabad", image: "/images/Hyderabad.webp" },
+    { name: "Pune", image: "/images/Pune.webp" },
+    { name: "Delhi", image: "/images/Delhi.webp" },
+    { name: "Gurgaon", image: "/images/Gurgaon.webp" },
+    { name: "Noida", image: "/images/Noida.webp" },
+    { name: "Chennai", image: "/images/Chennai.webp" },
     { name: "Ahmedabad", image: "/images/ahemdabad.webp" },
     { name: "Jaipur", image: "/images/Jaipur.webp" },
     { name: "Coimbatore", image: "/images/Coimbatore.webp" },
     { name: "Kochi", image: "/images/Kochi.webp" },
     { name: "Indore", image: "/images/Indore.webp" },
     { name: "Lucknow", image: "/images/Lucknow.webp" },
-    { name: "Chandigarh", image: "/images/chandigarh.webp" },
+    { name: "Chandigarh", image: "/images/Chandigarh.webp" },
     { name: "Goa", image: "/images/Goa.webp" },
     { name: "Surat", image: "/images/Surat.webp" },
   ]
@@ -38,7 +38,7 @@ const CoworkingSpaces = () => {
                 <Image
                   width={405}
                   height={420}
-                  src="/images/mumbai.webp"
+                  src="/images/Mumbai.webp"
                   alt="mumbai coworking"
                   title="mumbai coworking"
                   className=" xl:h-[405px] sm:h-full w-full object-cover"

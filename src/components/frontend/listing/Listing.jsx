@@ -98,8 +98,8 @@ const Listing = () => {
   }, []);
   return (
     <>
-      <section className="w-full relative lg:py-16 bg-white">
-        <div className="max-w-full xl:px-4 lg:px-4 md:px-3 px-4 mx-auto py-4">
+      <section className="w-full relative lg:pt-16 bg-white">
+        <div className="max-w-full xl:px-4 lg:px-4 md:px-3 px-4 mx-auto pt-4">
           <div className="group/mainBox w-full flex flex-col lg:flex-row gap-6 items-start">
             <div className="lg:w-2/3 w-full grow flex flex-col justify-center lg:mt-8 mt-16">
               <h1 className="text-xl flex flex-wrap font-bold text-[#141414] mb-4">

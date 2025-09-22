@@ -36,7 +36,7 @@ const ProductCard = () => {
   ];
   return (
     <>
-     
+
         <div className="space-card [&_.emblaarrows]:left-3 [&_.emblaarrows]:right-3 [&_.emblaarrows_button]:w-[30px] [&_.emblaarrows_button]:h-[30px] [&_.emblaarrows_button_Svg]:size-[18px] [&_.emblaarrows_button]:!border-0 [&_.emblaarrows_button]:opacity-50 [&_.emblaarrows_button]:hover:opacity-100 [&_.emblaarrows_button_Svg]:!text-black w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col">
           <EmblaCarousel
             options={{
@@ -117,7 +117,7 @@ const ProductCard = () => {
             ))}
           </EmblaCarousel>
 
-          <div className="pt-2 px-6 pb-4 flex flex-col flex-grow">
+          <div className="lg:pt-2 lg:px-6 lg:pb-4 py-[22px] px-[14px] flex flex-col flex-grow">
             <div className="flex flex-col justify-between items-start md:mb-2 mb-1">
               <h3 className="text-lg cursor-pointer font-medium text-[#141414] text-ellipsis line-clamp-1">
                 WeWork BKC A Reputed Business Address in Mumbai
@@ -140,12 +140,41 @@ const ProductCard = () => {
                 <span>sqft</span>
               </div>
             </div>
-            <div className="m-0 flex justify-between items-start">
+            <div className="flex justify-between align-items-center lg:flex-nowrap flex-wrap m-0">
+              <p className="w-1/2 lg:text-sm text-[13px] text-[#141414] m-0 p-0 font-normal">Private Office from</p>
+              <div className="w-1/2">
+                <div className="lg:text-sm text-[13px] text-[#141414] m-0 p-0 font-medium">
+                <div className="flex items-baseline m-0">
+                  <div className="flex items-center">
+                    <Svg name="rupee" className="text-[#7f7f7f] size-[15px]" />
+                    <span className="text-black font-semibold text-sm">25000</span>
+                  </div>
+                  <span className="ps-1 text-[11px] font-normal !leading-4">per seat/month</span>
+                </div>  
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-between align-items-center lg:flex-nowrap flex-wrap m-0">
+              <p className="w-1/2 lg:text-sm text-[13px] text-[#141414] m-0 p-0 font-normal">Desks from</p>
+              <div className="w-1/2">
+                <div className="lg:text-sm text-[13px] text-[#141414] m-0 p-0 font-medium">
+                <div className="flex items-baseline m-0">
+                  <div className="flex items-center">
+                    <Svg name="rupee" className="text-[#7f7f7f] size-[15px]" />
+                    <span className="text-black font-semibold text-sm">15000</span>
+                  </div>
+                  <span className="ps-1 text-[11px] font-normal !leading-4">per seat/month</span>
+                </div>  
+                </div>
+              </div>
+            </div>
+
+            {/* <div className="m-0 flex justify-between items-start">
               <div className="w-full flex flex-col justify-between items-start">
-                <span className="text-sm m-0 font-normal text-[#141414]">
+                <span className="lg:text-sm text-[13px] m-0 font-normal text-[#141414]">
                   Private Office from
                 </span>
-                <span className="text-sm m-0 font-normal text-[#141414]">
+                <span className="lg:text-sm text-[13px] m-0 font-normal text-[#141414]">
                   Desks From
                 </span>
               </div>
@@ -169,8 +198,8 @@ const ProductCard = () => {
                   </small>
                 </div>
               </div>
-            </div>
-
+            </div> */}
+            
             <div className="mt-2 w-full flex items-start">
               <div className="text-sm text-[#141414] !leading-[21px] text-start">
                 <input type="checkbox" id="toggle" className="peer hidden" />

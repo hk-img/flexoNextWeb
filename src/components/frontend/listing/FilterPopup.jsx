@@ -91,19 +91,18 @@ const FilterPopup = ({
                   </div>
                 </div>
                 <div className="border-b border-[#0000001a] mt-8 mb-6"></div>
+                <p className="text-base font-extralight mb-3">Distance</p>
                 <div class="relative w-full h-2">
-                      <div class="absolute top-1/2 left-0 w-full h-1 bg-gray-300 -translate-y-1/2 rounded"></div>
+                  <div class="absolute top-1/2 left-0 w-full h-1 bg-gray-300 -translate-y-1/2 rounded"></div>
 
-                      <div class="absolute top-1/2 left-0 w-full h-1 bg-orange-500 -translate-y-1/2 rounded"></div>
+                  <div class="absolute top-1/2 left-0 w-full h-1 bg-gray-300 -translate-y-1/2 rounded"></div>
 
-                      <div class="absolute top-1/2 left-0 w-8 h-8 -translate-y-1/2 bg-orange-500 rounded-full flex items-center justify-center">
-                        <div class="w-2 h-2 bg-white rounded-full"></div>
-                      </div>
+                  <div class="absolute top-1/2 left-0 w-8 h-8 -translate-y-1/2 bg-orange-500 rounded-full flex items-center justify-center">
+                    <div class="w-2 h-2 bg-white rounded-full"></div>
+                  </div>
 
-                      <div class="absolute top-1/2 right-0 w-8 h-8 -translate-y-1/2 bg-orange-500 rounded-full flex items-center justify-center">
-                        <div class="w-2 h-2 bg-white rounded-full"></div>
-                      </div>
                 </div>
+
                 {/* <div className="relative">
                   <div className="">
                     <p className="">Distance</p>
@@ -118,7 +117,7 @@ const FilterPopup = ({
                     </div>
                   </div>
                 </div> */}
-                <div className="border-b border-[#0000001a] my-4"></div>
+                <div className="border-b border-[#0000001a] mt-8 mb-6"></div>
                 <div className="relative">
                   <div className="text-lg text-[#141414] font-medium !leading-7 mb-4">
                     Sort By:

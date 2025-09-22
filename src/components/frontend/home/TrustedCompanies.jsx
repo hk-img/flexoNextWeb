@@ -33,7 +33,7 @@ const TrustedCompanies = () => {
         <h2 className="sm:text-[32px] text-2xl font-medium text-center text-[#333] md:mb-4 mb-2 leading-[1.2] ">
           Trusted By Leading Companies in India
         </h2>
-          <EmblaCarousel options={{ loop: true, autoscroll: false, align: "start"}}>
+          <EmblaCarousel options={{ loop: true, autoscroll: true, align: "start"}}>
             {companies.map((s, i) => (
               <div 
                 key={i}

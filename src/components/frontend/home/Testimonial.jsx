@@ -53,7 +53,7 @@ const Testimonial = () => {
       </div>
 
       <div className="xl:mt-10 lg:mt-9 md:mt-15 mt-10 flex lg:flex-row flex-col gap-[6px]">
-        <div className="w-full [&_.emblaarrows]:-left-10 [&_.emblaarrows]:-right-10 sm:[&_.emblaarrows]:flex [&_.emblaarrows]:hidden sm:[&_.embladots]:hidden [&_.embladots]:flex  [&_.emblaarrows_button]:w-10 [&_.emblaarrows_button]:h-10 [&_.emblaarrows_button_Svg]:size-[18px]">
+        <div className="w-full [&_.emblaarrows]:-left-9 [&_.emblaarrows]:-right-9 sm:[&_.emblaarrows]:flex [&_.emblaarrows]:hidden sm:[&_.embladots]:hidden [&_.embladots]:flex  [&_.emblaarrows_button]:w-10 [&_.emblaarrows_button]:h-10 [&_.emblaarrows_button_Svg]:size-[18px]">
           <EmblaCarousel
             options={{ loop: true, autoplay: false, showButton: true, align: "start",showDots: true }}
           >

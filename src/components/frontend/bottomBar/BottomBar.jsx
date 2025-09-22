@@ -14,7 +14,7 @@ export const BottomBar = () => {
     <>
       {routes.includes(pathname) && (
         <>
-          <div className="fixed bottom-0 bg-[#f76900] w-full md:hidden block z-10">
+          <div className="fixed bottom-0 bg-[#f76900] w-full md:hidden block z-50">
             <div className="flex items-center justify-between p-4">
               <div>
                 <div

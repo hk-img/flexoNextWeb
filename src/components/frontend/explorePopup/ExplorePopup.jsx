@@ -90,7 +90,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
       />
 
       {/* Popup Box */}
-      <div className="relative w-full max-w-[55vw] mx-[12px] rounded-[11px] bg-white p-6 overflow-y-auto h-full md:h-auto [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]">
+      <div className="relative w-full lg:max-w-[55vw] mx-[12px] rounded-[11px] bg-white p-6 overflow-y-auto h-full md:h-auto [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]">
         {/* Header */}
         <div className="pb-6 flex items-center justify-between">
           <h2 className="text-lg font-semibold">Get Quotes</h2>

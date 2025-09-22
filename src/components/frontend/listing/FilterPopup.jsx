@@ -75,30 +75,30 @@ const FilterPopup = ({
                         5000
                       </div>
                     </div>
-                    <div class="relative w-full h-2">
-                      <div class="absolute top-1/2 left-0 w-full h-1 bg-gray-300 -translate-y-1/2 rounded"></div>
+                    <div className="relative w-full h-2">
+                      <div className="absolute top-1/2 left-0 w-full h-1 bg-gray-300 -translate-y-1/2 rounded"></div>
 
-                      <div class="absolute top-1/2 left-0 w-full h-1 bg-orange-500 -translate-y-1/2 rounded"></div>
+                      <div className="absolute top-1/2 left-0 w-full h-1 bg-orange-500 -translate-y-1/2 rounded"></div>
 
-                      <div class="absolute top-1/2 left-0 w-8 h-8 -translate-y-1/2 bg-orange-500 rounded-full flex items-center justify-center">
-                        <div class="w-2 h-2 bg-white rounded-full"></div>
+                      <div className="absolute top-1/2 left-0 w-8 h-8 -translate-y-1/2 bg-orange-500 rounded-full flex items-center justify-center">
+                        <div className="w-2 h-2 bg-white rounded-full"></div>
                       </div>
 
-                      <div class="absolute top-1/2 right-0 w-8 h-8 -translate-y-1/2 bg-orange-500 rounded-full flex items-center justify-center">
-                        <div class="w-2 h-2 bg-white rounded-full"></div>
+                      <div className="absolute top-1/2 right-0 w-8 h-8 -translate-y-1/2 bg-orange-500 rounded-full flex items-center justify-center">
+                        <div className="w-2 h-2 bg-white rounded-full"></div>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className="border-b border-[#0000001a] mt-8 mb-6"></div>
                 <p className="text-base font-extralight mb-3">Distance</p>
-                <div class="relative w-full h-2">
-                  <div class="absolute top-1/2 left-0 w-full h-1 bg-gray-300 -translate-y-1/2 rounded"></div>
+                <div className="relative w-full h-2">
+                  <div className="absolute top-1/2 left-0 w-full h-1 bg-gray-300 -translate-y-1/2 rounded"></div>
 
-                  <div class="absolute top-1/2 left-0 w-full h-1 bg-gray-300 -translate-y-1/2 rounded"></div>
+                  <div className="absolute top-1/2 left-0 w-full h-1 bg-gray-300 -translate-y-1/2 rounded"></div>
 
-                  <div class="absolute top-1/2 left-0 w-8 h-8 -translate-y-1/2 bg-orange-500 rounded-full flex items-center justify-center">
-                    <div class="w-2 h-2 bg-white rounded-full"></div>
+                  <div className="absolute top-1/2 left-0 w-8 h-8 -translate-y-1/2 bg-orange-500 rounded-full flex items-center justify-center">
+                    <div className="w-2 h-2 bg-white rounded-full"></div>
                   </div>
 
                 </div>

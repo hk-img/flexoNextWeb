@@ -19,23 +19,16 @@ const coworkingSpaces = [
     img: "/images/managed-offices.webp",
     teamSize: "25 to 1000+",
   },
-  {
-    title: "Desks Space",
-    img: "/images/desk-spaces.webp",
-    teamSize: "1 to 50",
-  },
- 
-  {
-    title: "Meeting Rooms",
-    img: "/images/private-cabins.webp",
-    teamSize: "2 to 20",
-  },
- 
    {
     title: "Built to Suit",
     img: "/images/built-to-suit.webp",
     teamSize: "25 to 1000+",
   },
+  {
+    title: "Desks Space",
+    img: "/images/desk-spaces.webp",
+    teamSize: "1 to 50",
+  }, 
 ];
 
 const WorkspaceOptions = () => {

@@ -62,10 +62,12 @@ const FilterPopup = ({
                   </div>
                 </div>
                 <div className="border-b border-[#0000001a] my-4"></div>
+                
+
                 <div className="relative">
                   <div className="">
                     <p className="">Price</p>
-                    <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center justify-between gap-2 mb-3">
                       <div className="text-base font-extralight text-[#777777]">
                         500
                       </div>
@@ -73,15 +75,35 @@ const FilterPopup = ({
                         5000
                       </div>
                     </div>
-                    <div className="flex items-center w-full">
-                      <div className="w-4 h-4 bg-[#f76900] rounded-full"></div>
-                      <div className="flex-1 h-1 bg-[#f76900]"></div>
-                      <div className="w-4 h-4 bg-[#f76900] rounded-full"></div>
+                    <div className="relative w-full h-2">
+                      <div className="absolute top-1/2 left-0 w-full h-1 bg-gray-300 -translate-y-1/2 rounded"></div>
+
+                      <div className="absolute top-1/2 left-0 w-full h-1 bg-orange-500 -translate-y-1/2 rounded"></div>
+
+                      <div className="absolute top-1/2 left-0 w-8 h-8 -translate-y-1/2 bg-orange-500 rounded-full flex items-center justify-center">
+                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                      </div>
+
+                      <div className="absolute top-1/2 right-0 w-8 h-8 -translate-y-1/2 bg-orange-500 rounded-full flex items-center justify-center">
+                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div className="border-b border-[#0000001a] my-4"></div>
-                <div className="relative">
+                <div className="border-b border-[#0000001a] mt-8 mb-6"></div>
+                <p className="text-base font-extralight mb-3">Distance</p>
+                <div className="relative w-full h-2">
+                  <div className="absolute top-1/2 left-0 w-full h-1 bg-gray-300 -translate-y-1/2 rounded"></div>
+
+                  <div className="absolute top-1/2 left-0 w-full h-1 bg-gray-300 -translate-y-1/2 rounded"></div>
+
+                  <div className="absolute top-1/2 left-0 w-8 h-8 -translate-y-1/2 bg-orange-500 rounded-full flex items-center justify-center">
+                    <div className="w-2 h-2 bg-white rounded-full"></div>
+                  </div>
+
+                </div>
+
+                {/* <div className="relative">
                   <div className="">
                     <p className="">Distance</p>
                     <div className="flex items-center justify-between gap-2">
@@ -94,8 +116,8 @@ const FilterPopup = ({
                       <div className="flex-1 h-1 bg-[#d8e0f3]"></div>
                     </div>
                   </div>
-                </div>
-                <div className="border-b border-[#0000001a] my-4"></div>
+                </div> */}
+                <div className="border-b border-[#0000001a] mt-8 mb-6"></div>
                 <div className="relative">
                   <div className="text-lg text-[#141414] font-medium !leading-7 mb-4">
                     Sort By:

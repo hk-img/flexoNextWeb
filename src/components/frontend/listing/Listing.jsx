@@ -98,8 +98,8 @@ const Listing = () => {
   }, []);
   return (
     <>
-      <section className="w-full relative lg:py-16 bg-white">
-        <div className="max-w-full xl:px-4 lg:px-4 md:px-3 px-4 mx-auto py-4">
+      <section className="w-full relative lg:pt-16 bg-white">
+        <div className="max-w-full xl:px-4 lg:px-4 md:px-3 px-4 mx-auto pt-4">
           <div className="group/mainBox w-full flex flex-col lg:flex-row gap-6 items-start">
             <div className="lg:w-2/3 w-full grow flex flex-col justify-center lg:mt-8 mt-16">
               <h1 className="text-xl flex flex-wrap font-bold text-[#141414] mb-4">
@@ -905,7 +905,7 @@ const Listing = () => {
                     <h4 className="text-xl font-semibold text-[#010101] ">
                       Winner of Best Flex Space Aggregator of the Year
                     </h4>
-                    <p className="lg:w-3/5 w-3/4 text-sm pe-4 text-[#272828] lg:mb-4 mb-2">
+                    <p className="lg:w-4/5 w-3/4 text-sm pe-4 text-[#272828] lg:mb-4 mb-2">
                       We negotiate, you save. Our strong relationships with
                       operators ensure you get the best terms—zero hassle, zero
                       brokerage.

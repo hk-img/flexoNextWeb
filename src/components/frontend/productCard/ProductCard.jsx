@@ -61,62 +61,62 @@ const ProductCard = () => {
                   className="w-full aspect-[399/320] object-cover rounded-t-md"
                 />
                 
-                <div className="shortlistIcon absolute top-[3px] z-30 right-[2px] flex p-3">
-                  <div className="shareBtn relative me-2">
-                    <a
-                      href="#"
-                      className="flex items-center justify-center rounded-full text-base bg-[#ece8e8] w-[34px] h-[34px] text-[#808080] cursor-pointer"
-                    >
-                      <Svg name="heart" className="size-[18px] text-[#808080]" />
-                    </a>
-                  </div>
-                  <div className="shareBtn relative me-2 group">
-                    <a
-                      href="#"
-                      className="flex items-center justify-center rounded-full text-base bg-[#ece8e8] w-[34px] h-[34px] text-[#808080] cursor-pointer"
-                    >
-                      <Svg name="share" className="size-[18px] text-[#808080]" />
-                    </a>
-                    <ul className="absolute top-[45px] right-[-16px] flex flex-row">
-                      <li className="bg-[#3b5998] items-center justify-center w-8 h-8 rounded-full inline-block border-1 border-[#000000] text-center text-[15px] opacity-0 transition-all duration-500 ms-1 group-hover:opacity-100">
-                        <a
-                          href="https://www.facebook.com/sharer/sharer.php?u=https://your-url.com"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="share-button flex items-center justify-center w-full h-full"
-                        >
-                          <Svg name="facebook" className="text-white size-[15px]" />
-                        </a>
-                      </li>
-
-                      <li className="bg-[#34aaf3] items-center justify-center w-8 h-8 rounded-full inline-block border-1 border-[#000000] text-center text-[15px] opacity-0 transition-all duration-500 ms-1 group-hover:opacity-100">
-                        <a
-                          href="https://www.linkedin.com/sharing/share-offsite/?url=https://your-url.com"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="share-button flex items-center justify-center w-full h-full"
-                        >
-                          <Svg name="linkedin2" className="text-white size-[15px]" />
-                        </a>
-                      </li>
-
-                      <li className="bg-[#25D366] items-center justify-center w-8 h-8 rounded-full inline-block border-1 border-[#000000] text-center text-[15px] opacity-0 transition-all duration-500 ms-1 group-hover:opacity-100">
-                        <a
-                          href="https://api.whatsapp.com/send?text=https://your-url.com"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="share-button flex items-center justify-center w-full h-full"
-                        >
-                          <Svg name="whatsapp" className="text-white size-[15px]" />
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
+               
               </div>
             ))}
           </EmblaCarousel>
+          <div className="shortlistIcon absolute top-[16px] z-30 right-[8px] flex p-3">
+                    <div className="shareBtn relative me-2">
+                      <a
+                        href="#"
+                        className="flex items-center justify-center rounded-full text-base bg-[#ece8e8] w-[34px] h-[34px] text-[#808080] cursor-pointer"
+                      >
+                        <Svg name="heart" className="size-[18px] text-[#808080]" />
+                      </a>
+                    </div>
+                    <div className="shareBtn relative me-2 group">
+                      <a
+                        href="#"
+                        className="flex items-center justify-center rounded-full text-base bg-[#ece8e8] w-[34px] h-[34px] text-[#808080] cursor-pointer"
+                      >
+                        <Svg name="share" className="size-[18px] text-[#808080]" />
+                      </a>
+                      <ul className="absolute top-[45px] right-[-6px] flex flex-row">
+                        <li className="bg-[#3b5998] items-center justify-center w-8 h-8 rounded-full inline-block border-1 border-[#000000] text-center text-[15px] opacity-0 transition-all duration-500 ms-1 group-hover:opacity-100">
+                          <a
+                            href="https://www.facebook.com"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="share-button flex items-center justify-center w-full h-full"
+                          >
+                            <Svg name="facebook" className="text-white size-[15px]" />
+                          </a>
+                        </li>
 
+                        <li className="bg-[#34aaf3] items-center justify-center w-8 h-8 rounded-full inline-block border-1 border-[#000000] text-center text-[15px] opacity-0 transition-all duration-500 ms-1 group-hover:opacity-100">
+                          <a
+                            href="https://www.linkedin.com"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="share-button flex items-center justify-center w-full h-full"
+                          >
+                            <Svg name="linkedin2" className="text-white size-[15px]" />
+                          </a>
+                        </li>
+
+                        <li className="bg-[#25D366] items-center justify-center w-8 h-8 rounded-full inline-block border-1 border-[#000000] text-center text-[15px] opacity-0 transition-all duration-500 ms-1 group-hover:opacity-100">
+                          <a
+                            href="https://api.whatsapp.com"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="share-button flex items-center justify-center w-full h-full"
+                          >
+                            <Svg name="whatsapp" className="text-white size-[15px]" />
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+          </div>
           <div className="lg:pt-2 lg:px-6 lg:pb-4 py-[22px] px-[14px] flex flex-col flex-grow">
             <div className="flex flex-col justify-between items-start md:mb-2 mb-1">
               <h3 className="text-lg cursor-pointer font-medium text-[#141414] text-ellipsis line-clamp-1">

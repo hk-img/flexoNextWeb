@@ -37,7 +37,7 @@ const TrustedCompanies = () => {
             {companies.map((s, i) => (
               <div 
                 key={i}
-                className="embla__slide flex-[0_0_auto] basis-auto sm:px-4 px-4 flex items-center justify-center"
+                className="embla__slide flex-[0_0_auto] basis-[50%] sm:basis-[40%] md:basis-[30%] lg:basis-[20%] xl:basis-[15%] sm:px-4 px-4 flex items-center justify-center py-6"
               >
                 <Image
                   src={s.src}
@@ -45,7 +45,7 @@ const TrustedCompanies = () => {
                   title={s.title}
                   width={120}
                   height={50}
-                  className="object-contain transition md:w-[145px] w-[105px]"
+                  className="object-contain transition w-auto h-[100px]"
                 />
               </div>
             ))}

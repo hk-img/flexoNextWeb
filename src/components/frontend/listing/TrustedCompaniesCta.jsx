@@ -51,7 +51,7 @@ const TrustedCompaniesCta = () => {
                 </div>
               ))}
             </EmblaCarousel>
-            <p className="text-[#141414] w-full 2xl:text-lg xl:text-base md:text-sm text-xs text-balance relative z-10 md:text-center lg:mb-10 mb-6">
+            <p className="text-[#141414] mb-8">
               Over <span className="font-semibold">250+ enterprises and startups</span> found their perfect office with Flexo.
             </p>
             

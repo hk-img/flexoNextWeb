@@ -123,13 +123,13 @@ const FilterPopup = ({
                     Sort By:
                   </div>
                   <div className="flex flex-wrap items-center gap-4">
-                    <label className="flex items-center gap-2 cursor-pointer">
+                    {/* <label className="flex items-center gap-2 cursor-pointer">
                       <input
                         type="radio"
                         name="sort"
                         value="rating"
                         className="peer hidden"
-                        checked={filterData.sortBy === "rating"}
+                        defaultChecked={filterData.sortBy === "rating"}
                         onChange={(e) =>
                           setFilterData((prev) => ({
                             ...prev,
@@ -143,7 +143,28 @@ const FilterPopup = ({
                       <span className="text-sm text-gray-700 text-extralight">
                         Rating High to Low
                       </span>
+                    </label> */}
+
+                    <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="sort"
+                          value="rating"
+                          className="peer hidden"
+                          checked={filterData.sortBy === "rating"}
+                          onChange={(e) =>
+                            setFilterData((prev) => ({
+                              ...prev,
+                              sortBy: e.target.value,
+                            }))
+                          }
+                        />
+                        <input className="accent-[#f76900] size-5" type="radio" name="sort" value="rating"></input>
+                        <span className="text-sm text-gray-700 font-light">
+                          Rating High to Low
+                        </span>
                     </label>
+
 
                     <label className="flex items-center gap-2 cursor-pointer">
                       <input
@@ -151,7 +172,7 @@ const FilterPopup = ({
                         name="sort"
                         value="high_to_low"
                         className="peer hidden"
-                        checked={filterData.sortBy === "high_to_low"}
+                        defaultChecked={filterData.sortBy === "high_to_low"}
                         onChange={(e) =>
                           setFilterData((prev) => ({
                             ...prev,
@@ -159,9 +180,7 @@ const FilterPopup = ({
                           }))
                         }
                       />
-                      <span className="w-5 h-5 border-2 border-gray-400 rounded-full flex items-center justify-center peer-checked:border-[#f76900]">
-                        <span className="w-2 h-2 bg-blue-600 rounded-full scale-0 peer-checked:scale-100 transition"></span>
-                      </span>
+                      <input className="accent-[#f76900] size-5" type="radio" name="sort" value="high_to_low"></input>
                       <span className="text-sm text-gray-700 text-extralight">
                         Price High to Low
                       </span>
@@ -173,7 +192,7 @@ const FilterPopup = ({
                         name="sort"
                         value="low_to_high"
                         className="peer hidden"
-                        checked={filterData.sortBy === "low_to_high"}
+                        defaultChecked={filterData.sortBy === "low_to_high"}
                         onChange={(e) =>
                           setFilterData((prev) => ({
                             ...prev,
@@ -181,9 +200,8 @@ const FilterPopup = ({
                           }))
                         }
                       />
-                      <span className="w-5 h-5 border-2 border-gray-400 rounded-full flex items-center justify-center peer-checked:border-[#f76900]">
-                        <span className="w-2 h-2 bg-blue-600 rounded-full scale-0 peer-checked:scale-100 transition"></span>
-                      </span>
+                      <input className="accent-[#f76900] size-5" type="radio" name="sort" value="low_to_high"></input>
+
                       <span className="text-sm text-gray-700 text-extralight">
                         Price Low to High
                       </span>

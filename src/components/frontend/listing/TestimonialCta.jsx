@@ -44,7 +44,7 @@ const testimonials = [
 
 const TestimonialCta = () => {
   return (
-    <section className="w-full relative lg:py-4 md:py-3 py-4 px-4 rounded-2xl items-center mt-6 shadow-[0_4px_10px_#00000014] mx-auto bg-no-repeat bg-cover overflow-hidden bg-gradient-to-r from-[#ffd7ba] to-[#FFE7DA]">
+    <section className="w-full relative lg:py-4 md:py-3 py-4 px-4 rounded-2xl items-center mt-6 mb-8 shadow-[0_4px_10px_#00000014] mx-auto bg-no-repeat bg-cover overflow-hidden bg-gradient-to-r from-[#ffd7ba] to-[#FFE7DA]">
         <div className="max-w-full xl:px-4 lg:px-4 md:px-3 px-4 mx-auto pt-4">
           <div className="flex lg:flex-row flex-col items-center gap-4">
               <div className="lg:w-2/5 w-full flex flex-col gap-y-6">
@@ -93,7 +93,7 @@ const TestimonialCta = () => {
                             </div>
                           </div>
 
-                          <p className="text-[#777] text-sm 2xl:text-base line-clamp-5 md:group-hover:line-clamp-none transition-all duration-500 cursor-default">
+                          <p className="text-[#303030] md:text-sm/6 text-[13px] font-normal line-clamp-5 transition-all duration-500 cursor-default">
                             {t.review}
                           </p>
                         </div>

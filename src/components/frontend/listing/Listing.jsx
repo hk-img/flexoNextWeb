@@ -548,7 +548,7 @@ const Listing = () => {
                           type="radio"
                           name="spaceType"
                           value="co-working"
-                          checked={selectedRadio === "Co-working"}
+                          defaultChecked={selectedRadio === "Co-working"}
                           onChange={handleRadioChange}
                           className="accent-[#26310b]"
                         />
@@ -584,7 +584,7 @@ const Listing = () => {
                           type="radio"
                           name="spaceType"
                           value="Private Office"
-                          checked={selectedRadio === "Private Office"}
+                          defaultChecked={selectedRadio === "Private Office"}
                           onChange={handleRadioChange}
                           className="accent-[#26310b]"
                         />
@@ -596,7 +596,7 @@ const Listing = () => {
                           type="radio"
                           name="spaceType"
                           value="Classroom"
-                          checked={selectedRadio === "Classroom"}
+                          defaultChecked={selectedRadio === "Classroom"}
                           onChange={handleRadioChange}
                           className="accent-[#26310b]"
                         />
@@ -608,7 +608,7 @@ const Listing = () => {
                           type="radio"
                           name="spaceType"
                           value="Managed Office"
-                          checked={selectedRadio === "Managed Office"}
+                          defaultChecked={selectedRadio === "Managed Office"}
                           onChange={handleRadioChange}
                           className="accent-[#26310b]"
                         />
@@ -732,7 +732,7 @@ const Listing = () => {
                         type="radio"
                         name="spaceType"
                         value="co-working"
-                        checked={selectedRadio === "Co-working"}
+                        defaultChecked={selectedRadio === "Co-working"}
                         onChange={handleRadioChange}
                         className="accent-[#26310b]"
                       />
@@ -768,7 +768,7 @@ const Listing = () => {
                         type="radio"
                         name="spaceType"
                         value="Private Office"
-                        checked={selectedRadio === "Private Office"}
+                        defaultChecked={selectedRadio === "Private Office"}
                         onChange={handleRadioChange}
                         className="accent-[#26310b]"
                       />
@@ -780,7 +780,7 @@ const Listing = () => {
                         type="radio"
                         name="spaceType"
                         value="Classroom"
-                        checked={selectedRadio === "Classroom"}
+                        defaultChecked={selectedRadio === "Classroom"}
                         onChange={handleRadioChange}
                         className="accent-[#26310b]"
                       />
@@ -792,7 +792,7 @@ const Listing = () => {
                         type="radio"
                         name="spaceType"
                         value="Managed Office"
-                        checked={selectedRadio === "Managed Office"}
+                        defaultChecked={selectedRadio === "Managed Office"}
                         onChange={handleRadioChange}
                         className="accent-[#26310b]"
                       />

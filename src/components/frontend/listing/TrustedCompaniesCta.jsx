@@ -29,10 +29,10 @@ const TrustedCompaniesCta = () => {
   ];
   return (
     <section className="w-full relative pb-10">
-       <h2 className="sm:text-[32px] text-2xl font-medium text-center text-[#333] leading-[1.2] py-6">
+      <h2 className="sm:text-[32px] text-2xl font-medium text-center text-[#333] leading-[1.2] py-6">
             Trusted By Leading Companies in India
           </h2>
-      <div className="relative pt-4 pb-8 px-6 rounded-2xl items-center shadow-[0_4px_10px_#00000014] mx-auto bg-no-repeat bg-cover overflow-hidden bg-gradient-to-r from-[#ffd7ba] to-transparent">
+      <div className="relative lg:pt-6 lg:pb-12 py-7 px-6 rounded-2xl items-center shadow-[0_4px_10px_#00000014] mx-auto bg-no-repeat bg-cover overflow-hidden bg-gradient-to-r from-[#ffd7ba] to-transparent">
         <div className="container mx-auto text-center px-[15px] before:absolute before:inset-0 before:w-full before:h-full before:opacity-50 before:-z-10 ">
             <EmblaCarousel options={{ loop: true, autoscroll: true, align: "start"}}>
               {companies.map((s, i) => (
@@ -51,11 +51,11 @@ const TrustedCompaniesCta = () => {
                 </div>
               ))}
             </EmblaCarousel>
-            <p class="text-[#141414] mb-8">
-              Over <span class="font-semibold">250+ enterprises and startups</span> found their perfect office with Flexo.
+            <p className="text-[#141414] w-full 2xl:text-lg xl:text-base md:text-sm text-xs text-balance relative z-10 md:text-center lg:mb-10 mb-6">
+              Over <span className="font-semibold">250+ enterprises and startups</span> found their perfect office with Flexo.
             </p>
             
-            <a href="#enquiry" class="w-fit bg-[#f76900] text-[12px] border border-[#f76900]  text-white py-3 px-7 rounded-2xl font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">
+            <a href="#enquiry" className="w-fit bg-[#f76900] text-[12px] border border-[#f76900]  text-white py-3 px-7 rounded-2xl font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">
               Enquire Now
             </a>
         </div>

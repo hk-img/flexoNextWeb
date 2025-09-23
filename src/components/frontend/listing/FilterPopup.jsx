@@ -159,7 +159,7 @@ const FilterPopup = ({
                             }))
                           }
                         />
-                        <input className="accent-[#f76900]" type="radio" name="sort" value="rating"></input>
+                        <input className="accent-[#f76900] size-5" type="radio" name="sort" value="rating"></input>
                         <span className="text-sm text-gray-700 font-light">
                           Rating High to Low
                         </span>
@@ -180,7 +180,7 @@ const FilterPopup = ({
                           }))
                         }
                       />
-                      <input className="accent-[#f76900]" type="radio" name="sort" value="high_to_low"></input>
+                      <input className="accent-[#f76900] size-5" type="radio" name="sort" value="high_to_low"></input>
                       <span className="text-sm text-gray-700 text-extralight">
                         Price High to Low
                       </span>
@@ -200,7 +200,7 @@ const FilterPopup = ({
                           }))
                         }
                       />
-                      <input className="accent-[#f76900]" type="radio" name="sort" value="low_to_high"></input>
+                      <input className="accent-[#f76900] size-5" type="radio" name="sort" value="low_to_high"></input>
 
                       <span className="text-sm text-gray-700 text-extralight">
                         Price Low to High

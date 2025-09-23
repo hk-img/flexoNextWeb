@@ -1,47 +1,55 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import { components as RSComponents } from "react-select"; 
+import { components as RSComponents } from "react-select";
 import Svg from "@/components/svg";
+import { useQuery } from "@tanstack/react-query";
+import { getApi } from "@/services/ApiService";
+import { useRouter } from "next/navigation";
 
 const Select = dynamic(() => import("react-select"), { ssr: false });
 
-const typeOptions = [
-  { value: "coworking", label: "Coworking Space" },
-  { value: "private", label: "Private Office" },
-  { value: "classroom", label: "Classroom" },
-  { value: "managed", label: "Managed Office" },
+const images = [
+  "/images/coworking-spaces.webp",
+  "/images/desk-spaces.webp",
+  "/images/managed-offices.webp",
+  "/images/meeting-rooms.webp",
+  "/images/private-cabins.webp",
+  "/images/private-offices.webp",
+  "/images/workspaces.webp",
+];
+const texts = [
+  "Coworking Spaces",
+  "Desk Rooms",
+  "Managed Offices",
+  "Meeting Rooms",
+  "Private Cabins",
+  "Private Offices",
+  "Workspaces",
 ];
 
-const cityOptions = [
-  { value: "delhi", label: "Delhi" },
-  { value: "mumbai", label: "Mumbai" },
-  { value: "bangalore", label: "Bangalore" },
-  { value: "pune", label: "Pune" },
-  { value: "hyderabad", label: "Hyderabad" },
-];
-
-export default function HeroSection() {
+export default function HeroSection({spaceCategoryData}) {
+  const router = useRouter();
   const [type, setType] = useState(null);
-  const [city, setCity] = useState(null);
+  const [location, setLocation] = useState(null);
+  console.log({ type, location });
 
   const DropdownIndicator = (props) => {
-  const { menuIsOpen } = props.selectProps;
+    const { menuIsOpen } = props.selectProps;
+    return (
+      <RSComponents.DropdownIndicator {...props}>
+        <Svg
+          name="arrowDropDown"
+          className={`size-5 text-[#999] transition-transform duration-200 ${
+            menuIsOpen ? "rotate-180" : "rotate-0"
+          }`}
+        />
+      </RSComponents.DropdownIndicator>
+    );
+  };
 
-  return (
-    <RSComponents.DropdownIndicator {...props}>
-      <Svg
-        name="arrowDropDown"
-        className={`size-5 text-[#999] transition-transform duration-200 ${
-          menuIsOpen ? "rotate-180" : "rotate-0"
-        }`}
-      />
-    </RSComponents.DropdownIndicator>
-  );
-};
-
-    const ClearIndicator = (props) => {
+  const ClearIndicator = (props) => {
     return (
       <RSComponents.ClearIndicator {...props}>
         <div className="cursor-pointer text-gray-500 hover:text-[#f76900] transition-colors duration-200">
@@ -50,7 +58,7 @@ export default function HeroSection() {
       </RSComponents.ClearIndicator>
     );
   };
-const IndicatorSeparator = () => null;
+
   const customStyles = {
     container: (base) => ({
       ...base,
@@ -63,7 +71,7 @@ const IndicatorSeparator = () => null;
       borderColor: "transparent",
       minHeight: "46px",
       height: "46px",
-      width:"100%",
+      width: "100%",
       boxShadow: "none",
       outline: "none",
       "&:hover": {
@@ -79,14 +87,14 @@ const IndicatorSeparator = () => null;
       outline: "none",
       overflow: "hidden",
     }),
-      menuList: (base) => ({
-        ...base,
-        maxHeight: "200px", // 5 items ke baad scroll
-        overflowY: "auto",
-        paddingRight: "4px",
-        className: " [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]"
-        
-      }),
+    menuList: (base) => ({
+      ...base,
+      maxHeight: "200px", // 5 items ke baad scroll
+      overflowY: "auto",
+      paddingRight: "4px",
+      className:
+        " [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]",
+    }),
     valueContainer: (base) => ({
       ...base,
       padding: "0 8px",
@@ -130,26 +138,6 @@ const IndicatorSeparator = () => null;
       // paddingRight: "4px",
     }),
   };
-
-  const images = [
-    "/images/coworking-spaces.webp",
-    "/images/desk-spaces.webp",
-    "/images/managed-offices.webp",
-    "/images/meeting-rooms.webp",
-    "/images/private-cabins.webp",
-    "/images/private-offices.webp",
-    "/images/workspaces.webp",
-  ];
-  const texts = [
-    "Coworking Spaces",
-    "Desk Rooms",
-    "Managed Offices",
-    "Meeting Rooms",
-    "Private Cabins",
-    "Private Offices",
-    "Workspaces",
-  ];
-
   const [currentImage, setCurrentImage] = useState(0);
   const [currentText, setCurrentText] = useState(0);
 
@@ -168,6 +156,33 @@ const IndicatorSeparator = () => null;
     );
     return () => clearInterval(interval);
   }, [texts.length]);
+
+  const { data: allLocations } = useQuery({
+    queryKey: ["allLocations", type?.label],
+    queryFn: async () => {
+      const res = await getApi(`user/getAllLocations?spaceType=${type?.label}`);
+      return res.data;
+    },
+    enabled: !!type?.label,
+  });
+
+  const locationData = useMemo(() => {
+    return allLocations || [];
+  }, [allLocations]);
+
+  const filterLocations = (option, inputValue) => {
+    return option.label.toLowerCase().startsWith(inputValue.toLowerCase());
+  };
+
+  const handleSearch = (type,location)=>{
+    const typeSlug = type?.label?.toLowerCase().replace(/\s+/g, "-");
+    const citySlug = location?.city?.toLowerCase().replace(/\s+/g, "-");
+    const locationSlug = location?.location_name?.toLowerCase().replace(/\s+/g, "-") || "";
+    if(!locationSlug && typeSlug == "coworking-space" ){
+      return router.push(`/in/coworking/${citySlug}`);
+    }
+    router.push(`/in/${typeSlug}/${citySlug}/${locationSlug}`);
+  }
 
   return (
     <section className="relative w-full md:h-[calc(100dvh-82px)] h-[calc(100dvh-60px)] lg:mt-[82px] sm:mt-[62px] mt-[64px] overflow-hidden">
@@ -207,40 +222,47 @@ const IndicatorSeparator = () => null;
             <div className="flex md:flex-row flex-col md:bg-transparent bg-white md:px-0 md:py-0 p-[15px] rounded-[15px] items-center gap-y-5 gap-x-4 sm:mt-9 mt-17 sm:mb-0 mb-4 w-full">
               <div className="flex gap-y-5 md:flex-row flex-col bg-white md:rounded-[15px] overflow-hidden w-full xl:max-w-[536px] md:max-w-[449px] px-2 i">
                 <Select
-                  options={typeOptions}
+                  options={spaceCategoryData}
                   placeholder="What are you looking for?"
                   value={type}
                   onChange={(opt) => setType(opt)}
                   styles={customStyles}
-                 menuPortalTarget={typeof document !== "undefined" ? document.body : null}
+                  menuPortalTarget={
+                    typeof document !== "undefined" ? document.body : null
+                  }
                   className="md:border-r max-md:border items-center flex justify-between border-black max-md:rounded-[15px] !w-full md:border-[#d0c2c2] [&_div>div>div]:!text-black [&_div>div>div]:!text-sm [&_div>div>div]:!text-nowrap md:!h-[46px] !h-[52px]"
                   isClearable
                   components={{
                     ClearIndicator,
                     DropdownIndicator,
-                    IndicatorSeparator,
+                    IndicatorSeparator: null,
                   }}
+                  noOptionsMessage={() => "Space not found"}
                 />
 
                 <Select
-                  options={cityOptions}
+                  options={locationData}
                   placeholder="Where?"
-                  value={city}
-                  onChange={(opt) => setCity(opt)}
+                  value={location}
+                  onChange={(opt) => setLocation(opt)}
                   styles={customStyles}
-                 menuPortalTarget={typeof document !== "undefined" ? document.body : null}
+                  menuPortalTarget={
+                    typeof document !== "undefined" ? document.body : null
+                  }
                   className=" [&_div>div>div]:!text-black [&_div>div>div]:!text-sm max-md:border border-black rounded-[15px] !w-full md:!h-[46px] !h-[52px] items-center flex justify-between"
                   isClearable
                   components={{
-                    ClearIndicator:null,
-                    DropdownIndicator:null,
-                    IndicatorSeparator,
+                    ClearIndicator: null,
+                    DropdownIndicator: null,
+                    IndicatorSeparator: null,
                   }}
+                  filterOption={filterLocations}
+                  noOptionsMessage={() => "Location not found"}
                 />
               </div>
 
               <button
-                onClick={() => console.log(type, city)}
+                onClick={()=>handleSearch(type,location)}
                 className="bg-[#f76900] px-5 text-white font-medium h-[46px] flex items-center justify-center rounded-xl w-full md:w-auto text-sm cursor-pointer"
               >
                 Search

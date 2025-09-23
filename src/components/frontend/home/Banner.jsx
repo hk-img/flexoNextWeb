@@ -2,7 +2,7 @@ import Image from 'next/image'
 import React from 'react'
 
 
-const Banner = ({heading,img,desc,btnText,btnLink}) => {
+const Banner = () => {
   return (
     <section className="relative w-full py-15 lg:h-[343px] h-full flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">

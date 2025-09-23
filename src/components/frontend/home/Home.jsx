@@ -12,11 +12,12 @@ import Banner from './Banner'
 import FaqSection from './FaqSection'
 import RequestCallback from './RequestCallback'
 
-const Home = () => {
+
+const Home = ({spaceCategoryData}) => {
   
   return (
     <>
-      <HeroSection/>
+      <HeroSection spaceCategoryData={spaceCategoryData}/>
       <TrustedCompanies/>
       <CoworkingSpaces/>
       <WorkspaceOptions/>

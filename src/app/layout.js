@@ -1,5 +1,6 @@
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -29,7 +30,9 @@ export default function RootLayout({ children }) {
       <body
         className={`${poppins.className} antialiased overflow-x-hidden font-poppins [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]`}
       >
-        {children}
+        <ReactQueryProvider>
+          {children}
+        </ReactQueryProvider>
       </body>
     </html>
   );

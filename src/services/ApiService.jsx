@@ -20,7 +20,7 @@ export const getApi = async (url) => {
     ) {
       localStorage.removeItem(TOKEN_NAME);
       document.cookie = `${TOKEN_NAME}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
-      window.location.href = "/login";
+      window.location.href = "/";
     }
     throw error;
   }
@@ -44,7 +44,7 @@ export const getAPIAuth = async (url, tokenInit) => {
     ) {
       localStorage.removeItem(TOKEN_NAME);
       document.cookie = `${TOKEN_NAME}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
-      window.location.href = "/login";
+      window.location.href = "/";
     }
     throw error;
   }
@@ -70,7 +70,7 @@ export const deleteAPIAuth = async (url, tokenInit) => {
     ) {
       localStorage.removeItem(TOKEN_NAME);
       document.cookie = `${TOKEN_NAME}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
-      window.location.href = "/login";
+      window.location.href = "/";
     }
     throw error;
   }
@@ -94,7 +94,7 @@ export const postAPIFormData = async (url, params, token) => {
     ) {
       localStorage.removeItem(TOKEN_NAME);
       document.cookie = `${TOKEN_NAME}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
-      window.location.href = "/login";
+      window.location.href = "/";
     }
     throw error;
   }
@@ -118,7 +118,7 @@ export const postAPI = async (url, params) => {
     ) {
       localStorage.removeItem(TOKEN_NAME);
       document.cookie = `${TOKEN_NAME}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
-      window.location.href = "/login";
+      window.location.href = "/";
     }
     throw error;
   }
@@ -144,7 +144,7 @@ export const postAPIAuth = async (url, params, tokenInit) => {
     ) {
       localStorage.removeItem(TOKEN_NAME);
       document.cookie = `${TOKEN_NAME}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
-      window.location.href = "/login";
+      window.location.href = "/";
     }
     throw error;
   }
@@ -170,7 +170,7 @@ export const patchAPIAuth = async (url, params, tokenInit) => {
     ) {
       localStorage.removeItem(TOKEN_NAME);
       document.cookie = `${TOKEN_NAME}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
-      window.location.href = "/login";
+      window.location.href = "/";
     }
     throw error;
   }

@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
 import Svg from "@/components/svg";
-import TrustedCompanies from "@/components/frontend/home/TrustedCompanies";
-import Testimonial from "@/components/frontend/home/Testimonial";
+import TrustedCompaniesCta from "./TrustedCompaniesCta";
+import TestimonialCta from "./TestimonialCta";
 import ProductCard from "../productCard/ProductCard";
 import { useEffect, useRef, useState } from "react";
 import FilterPopup from "./FilterPopup";
@@ -98,6 +98,7 @@ const Listing = () => {
   }, []);
   return (
     <>
+   
       <section className="w-full relative lg:pt-16 bg-white">
         <div className="max-w-full xl:px-4 lg:px-4 md:px-3 px-4 mx-auto pt-4">
           <div className="group/mainBox w-full flex flex-col lg:flex-row gap-6 items-start">
@@ -877,7 +878,7 @@ const Listing = () => {
                   </div>
                 ))}
               </div>
-              <TrustedCompanies />
+              <TrustedCompaniesCta />
               <div className="spaces flex flex-row flex-wrap -mx-4">
                 {Array.from({ length: 12 }).map((_, index) => (
                   <div
@@ -889,7 +890,7 @@ const Listing = () => {
                 ))}
               </div>
 
-              <section className="w-full relative lg:py-12 md:py-6 py-4">
+              <section className="w-full relative lg:py-8 md:py-6 py-4">
                 <div className="relative w-full h-[280px]">
                   <Image
                     src="/images/banner.png"
@@ -928,7 +929,7 @@ const Listing = () => {
                 ))}
               </div>
 
-              <Testimonial />
+              <TestimonialCta />
             </div>
             {mapToggle && (
               <div className="map lg:w-1/3 w-full lg:flex flex-col md:sticky md:top-10 hidden">

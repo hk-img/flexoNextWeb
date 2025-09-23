@@ -61,11 +61,11 @@ const ProductCard = () => {
                   className="w-full aspect-[399/320] object-cover rounded-t-md"
                 />
                 
-               
+              
               </div>
             ))}
           </EmblaCarousel>
-          <div className="shortlistIcon absolute top-[16px] z-30 right-[8px] flex p-3">
+          <div className="shortlistIcon absolute top-[16px] z-10 right-[8px] flex p-3">
                     <div className="shareBtn relative me-2">
                       <a
                         href="#"
@@ -168,38 +168,7 @@ const ProductCard = () => {
                 </div>
               </div>
             </div>
-
-            {/* <div className="m-0 flex justify-between items-start">
-              <div className="w-full flex flex-col justify-between items-start">
-                <span className="lg:text-sm text-[13px] m-0 font-normal text-[#141414]">
-                  Private Office from
-                </span>
-                <span className="lg:text-sm text-[13px] m-0 font-normal text-[#141414]">
-                  Desks From
-                </span>
-              </div>
-              <div className="w-full flex flex-col justify-end items-start">
-                <div className="flex items-center justify-end">
-                  <Svg name="rupee" className="text-[#7f7f7f] size-[15px]" />
-                  <span className="text-sm font-semibold text-black">
-                    60000
-                  </span>
-                  <small className="ps-1 text-[11px] font-normal text-[#141414] pt-0.5">
-                    per seat/month
-                  </small>
-                </div>
-                <div className="flex items-center justify-end">
-                  <Svg name="rupee" className="text-[#7f7f7f] size-[15px]" />
-                  <span className="text-sm font-semibold text-black">
-                    15000
-                  </span>
-                  <small className="ps-1 text-[11px] font-normal text-[#141414] pt-0.5">
-                    per seat/month
-                  </small>
-                </div>
-              </div>
-            </div> */}
-            
+          
             <div className="mt-2 w-full flex items-start">
               <div className="text-sm text-[#141414] !leading-[21px] text-start">
                 <input type="checkbox" id="toggle" className="peer hidden" />

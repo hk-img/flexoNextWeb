@@ -50,7 +50,7 @@ const TestimonialCta = () => {
               <div className="lg:w-2/5 w-full flex flex-col gap-y-6">
                 <h4 className="text-base/relaxed text-[#141414] font-semibold">Still Searching? Let Us Help.</h4>
                 <h5 className="text-base/relaxed text-[#141414] font-semibold">Leave the hassle to us. Connect with an expert workspace advisor today.</h5>
-                <a href="#" class="w-fit bg-[#f76900] text-[12px] border border-[#f76900]  text-white py-3 px-7 rounded-2xl font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">
+                <a href="#" className="w-fit bg-[#f76900] text-[12px] border border-[#f76900]  text-white py-3 px-7 rounded-2xl font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">
                   Enquire Now
                 </a>
               </div>

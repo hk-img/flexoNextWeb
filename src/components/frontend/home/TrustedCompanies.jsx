@@ -7,8 +7,8 @@ const TrustedCompanies = () => {
     { src: "/images/trusted-logo7.webp", alt: "Amethyst partners" , title: "Amethyst partners" },
     { src: "/images/trusted-logo6.webp", alt: "Accord Synergy" , title: "Accord Synergy" },
     { src: "/images/trusted-logo13.webp", alt: "Arvind Mafatlal Group" , title: "Arvind Mafatlal Group" },
-    { src: "/images/trusted-logo14.webp", alt: "Beer biceps" , title: "Beer biceps" },
     { src: "/images/trusted-logo2.webp", alt: "Arnold Holdings Ltd." ,title: "Arnold Holdings Ltd." },
+    { src: "/images/trusted-logo14.webp", alt: "Beer biceps" , title: "Beer biceps" },
     { src: "/images/trusted-logo20.webp", alt: "Eicher" , title: "Eicher" },
     { src: "/images/trusted-logo15.webp", alt: "InMobi" , title: "InMobi" },
     { src: "/images/trusted-logo21.webp", alt: "JTB" , title: "JTB" },
@@ -28,7 +28,7 @@ const TrustedCompanies = () => {
     { src: "/images/trusted-logo12.webp", alt: "Triniti" , title: "Triniti" },
   ];
   return (
-    <section className="py-9 bg-white">
+    <section className="py-9 bg-[#fdfafe]">
       <div className="container mx-auto text-center px-[15px]">
         <h2 className="sm:text-[32px] text-2xl font-medium text-center text-[#333] md:mb-4 mb-2 leading-[1.2] ">
           Trusted By Leading Companies in India
@@ -37,7 +37,7 @@ const TrustedCompanies = () => {
             {companies.map((s, i) => (
               <div 
                 key={i}
-                className="embla__slide flex-[0_0_auto] basis-[50%] sm:basis-[40%] md:basis-[30%] lg:basis-[20%] xl:basis-[15%] sm:px-4 px-4 flex items-center justify-center py-6"
+                className="embla__slide flex-[0_0_auto] basis-auto sm:px-4 px-4 flex items-center justify-center"
               >
                 <Image
                   src={s.src}
@@ -45,7 +45,7 @@ const TrustedCompanies = () => {
                   title={s.title}
                   width={120}
                   height={50}
-                  className="object-contain transition w-auto h-[100px]"
+                  className="object-contain transition md:w-[165px] w-[105px]"
                 />
               </div>
             ))}

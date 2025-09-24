@@ -144,7 +144,7 @@ const ProductCard = () => {
               <p className="w-1/2 lg:text-sm text-[13px] text-[#141414] m-0 p-0 font-normal">Private Office from</p>
               <div className="w-1/2">
                 <div className="lg:text-sm text-[13px] text-[#141414] m-0 p-0 font-medium">
-                <div className="flex items-baseline m-0">
+                <div className="flex items-center m-0">
                   <div className="flex items-center">
                     <Svg name="rupee" className="text-[#7f7f7f] size-[15px]" />
                     <span className="text-black font-semibold text-sm">25000</span>
@@ -158,7 +158,7 @@ const ProductCard = () => {
               <p className="w-1/2 lg:text-sm text-[13px] text-[#141414] m-0 p-0 font-normal">Desks from</p>
               <div className="w-1/2">
                 <div className="lg:text-sm text-[13px] text-[#141414] m-0 p-0 font-medium">
-                <div className="flex items-baseline m-0">
+                <div className="flex items-center m-0">
                   <div className="flex items-center">
                     <Svg name="rupee" className="text-[#7f7f7f] size-[15px]" />
                     <span className="text-black font-semibold text-sm">15000</span>

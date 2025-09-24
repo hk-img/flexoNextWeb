@@ -1,6 +1,7 @@
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
+import { Toaster } from "sonner";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -32,6 +33,19 @@ export default function RootLayout({ children }) {
       >
         <ReactQueryProvider>
           {children}
+          <Toaster
+            position="bottom-right"
+            richColors
+            theme="system"
+            toastOptions={{
+              style: {
+                borderRadius: "10px",
+                padding: "14px 16px",
+                fontSize: "14px",
+                fontWeight: 500,
+              },
+            }}
+          />
         </ReactQueryProvider>
       </body>
     </html>

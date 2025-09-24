@@ -6,6 +6,9 @@ import TestimonialCta from "./TestimonialCta";
 import ProductCard from "../productCard/ProductCard";
 import { useEffect, useRef, useState } from "react";
 import FilterPopup from "./FilterPopup";
+import { postAPI } from "@/services/ApiService";
+import { useQuery } from "@tanstack/react-query";
+import Pagination from "../pagination/Pagination";
 const locations = [
   "Andheri East, Mumbai, Maharashtra, India",
   "Malad, Mumbai, Maharashtra, India",
@@ -45,6 +48,7 @@ const Listing = () => {
     sortBy: "",
     amenities: [],
   });
+  const [page,setPage] = useState(1);
 
   const handleApply = () => {
     setIsFilterOpen(false);
@@ -96,6 +100,39 @@ const Listing = () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, []);
+
+  const { data: allSpaces } = useQuery({
+    queryKey: ["allSpaces",page],
+    queryFn: async () => {
+      const payload ={
+        city_name: slug?.[1],
+        spaceType: [
+          "Private Office",
+          "Managed Office",
+          "Dedicated Desk",
+          "Flexible Desk",
+          "Virtual Office",
+          "Day Pass"
+        ],
+        type: "coworking",
+        userId: 0,
+        capacity: null,
+        min_price: null,
+        max_price: null,
+        amenities: [],
+        location_name: "andheri east",
+        city_lat: 0,
+        city_long: 0,
+        location_lat: 19.1121947,
+        location_longi: 72.8792898,
+        page_no: page
+      }
+      const res = await postAPI("spaces/getSpacesByCity",payload);
+      return res.data;
+    },
+    keepPreviousData: true,
+  });
+  console.log({allSpaces})
   return (
     <>
    
@@ -930,6 +967,7 @@ const Listing = () => {
               </div>
 
               <TestimonialCta />
+              <Pagination currentPage={page} totalPages={5} onPageChange={setPage} />
             </div>
             {mapToggle && (
               <div className="map lg:w-1/3 w-full lg:flex flex-col md:sticky md:top-10 hidden">

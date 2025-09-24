@@ -6,7 +6,7 @@ const page = async({params}) => {
   console.log(slug,"Rtyhrty");
   return (
     <>
-      <Listing/>
+      <Listing slug={slug}/>
     </>
   )
 }

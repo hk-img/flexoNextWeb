@@ -4,14 +4,14 @@ const GEO_OPTS = { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 };
 const LocationContext = createContext();
 
 export const LocationProvider = ({ children }) => {
-  const [location, setLocation] = useState(null);
-  console.log({ location });
+  const [coordinates, setCoordinates] = useState(null);
+  console.log({ coordinates });
 
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         ({ coords }) => {
-          setLocation({ lat: coords.latitude, lon: coords.longitude });
+          setCoordinates({ lat: coords.latitude, lng: coords.longitude });
         },
         (err) => {
           console.error("Location error:", err);
@@ -23,7 +23,7 @@ export const LocationProvider = ({ children }) => {
   return (
     <LocationContext.Provider
       value={{
-        location,
+        coordinates,
       }}
     >
       {children}

@@ -189,22 +189,24 @@ export default function HeroSection({spaceCategoryData}) {
       {images.map((img, idx) => (
         <div
           key={idx}
-          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+          className={`sm:absolute top-0 left-0 transition-opacity sm:w-full sm:h-full sm:flex sm:justify-center sm:items-center duration-1000 ease-in-out max-sm:before:absolute max-sm:before:inset-x-0 max-sm:before:bottom-0 max-sm:before:z-[1] max-sm:before:h-[330px] max-sm:before:bg-gradient-to-t max-sm:before:from-[#3a0d00] max-sm:before:via-[#3a0d00] max-sm:before:to-transparent max-sm:inset-0 max-sm:top-auto ${
             idx === currentImage ? "opacity-100" : "opacity-0"
           }`}
         >
-          <Image
-            src={img}
-            alt={texts[idx]}
-            title={texts[idx]}
-            fill
-            priority
-            className="object-cover"
-          />
+          <div className="sm:relative absolute w-full sm:h-full sm:overflow-hidden max-sm:bg-bottom max-sm:bg-cover max-sm:h-[calc(100%-170px)]">
+            <Image
+              src={img}
+              alt={texts[idx]}
+              title={texts[idx]}
+              fill
+              priority
+              className="object-cover h-full w-full"
+            />
+          </div>
         </div>
       ))}
 
-      <div className="absolute inset-0 bg-black/40  text-white">
+      <div className="absolute inset-0 bg-black/40  text-white z-10 lg:py-0 sm:py-4 py-0">
         <div className="container px-[15px] mx-auto w-full h-full">
           <div className="flex flex-col md:items-start md:justify-center items-center justify-end h-full">
             <div className=" md:text-start text-center max-md:flex-1 basis-auto flex flex-col md:justify-end justify-center">
@@ -219,8 +221,8 @@ export default function HeroSection({spaceCategoryData}) {
                 {texts[currentText]}
               </div>
             </div>
-            <div className="flex md:flex-row flex-col md:bg-transparent bg-white md:px-0 md:py-0 p-[15px] rounded-[15px] items-center gap-y-5 gap-x-4 sm:mt-9 mt-17 sm:mb-0 mb-4 w-full">
-              <div className="flex gap-y-5 md:flex-row flex-col bg-white md:rounded-[15px] overflow-hidden w-full xl:max-w-[536px] md:max-w-[449px] px-2 i">
+            <div className="flex md:flex-row flex-col md:bg-transparent bg-white md:px-0 md:py-0 px-[15px] pt-5 pb-4 rounded-[15px] items-center gap-y-5 gap-x-4 sm:mt-9 mt-17 sm:mb-0 mb-4 w-full">
+              <div className="flex gap-y-5 md:flex-row flex-col bg-white md:rounded-[15px] overflow-hidden w-full xl:max-w-[536px] md:max-w-[449px] px-[7px]">
                 <Select
                   options={spaceCategoryData}
                   placeholder="What are you looking for?"

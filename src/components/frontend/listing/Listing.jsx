@@ -10,6 +10,7 @@ import { postAPI } from "@/services/ApiService";
 import { useQuery } from "@tanstack/react-query";
 import Pagination from "../pagination/Pagination";
 import ExplorePopup from "../explorePopup/ExplorePopup";
+import { getTypeOfSpaceByWorkSpace } from "@/services/Comman";
 const coworkingTypes = [
   "Private Office",
   "Managed Office",
@@ -18,15 +19,9 @@ const coworkingTypes = [
   "Virtual Office",
   "Day Pass",
 ]
-const locations = [
-  "Andheri East, Mumbai, Maharashtra, India",
-  "Malad, Mumbai, Maharashtra, India",
-  "Vikhroli, Mumbai, Maharashtra, India",
-  "BKC, Mumbai, Maharashtra, India",
-  "Goregaon, Mumbai, Maharashtra, India",
-];
 
-const Listing = ({sapceType,city,locationName,spaceCategoryData,nearBySpacesData}) => {
+const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nearBySpacesData}) => {
+  console.log({locationData})
   const [isOpen, setIsOpen] = useState(false);
   const spacesTypeRef = useRef(null);
   const locationRef = useRef(null);
@@ -87,14 +82,14 @@ const Listing = ({sapceType,city,locationName,spaceCategoryData,nearBySpacesData
   // }, []);
 
   useEffect(()=>{
-    if(sapceType === "coworking"){
+    if(spaceType === "coworking"){
       setSelectedRadio("Coworking Space");
       setSelectedCheckboxes(coworkingTypes);
       return;
     }
     const selectedSpaceType = spaceCategoryData?.find((item) => {
       const categorySpaceType = item?.spaceType?.toLowerCase().replace(/\s+/g, "-");
-      if(categorySpaceType === sapceType)
+      if(categorySpaceType === spaceType)
       {
         return item
       }
@@ -107,15 +102,31 @@ const Listing = ({sapceType,city,locationName,spaceCategoryData,nearBySpacesData
     }else{
       setSelectedCheckboxes([selectedSpaceType?.spaceType]);
     }
-  },[spaceCategoryData,sapceType])
+  },[spaceCategoryData,spaceType])
+
+  useEffect(()=>{
+    if(locationData?.length > 0 && locationName){
+      const capitalLocationName = `${locationName?.replace(/-/g, " ")?.split(" ")?.map(word => word?.charAt(0)?.toUpperCase() + word?.slice(1))?.join(" ")}`;
+      console.log({capitalLocationName})
+      const selectedLocation = locationData?.find((item) => {
+        if(item?.location_name === capitalLocationName)
+        {
+          return item
+        }
+      })
+      setQuery(selectedLocation?.label);
+    }
+  },[locationData,locationName])
 
   const { data: allSpaces,refetch:refetchSpaces } = useQuery({
     queryKey: ["allSpaces",page,city,selectedCheckboxes],
     queryFn: async () => {
+      const type = getTypeOfSpaceByWorkSpace(spaceType || "");
+      console.log({type},"Rftyhryryry")
       let payload ={
         city_name: city,
         spaceType: selectedCheckboxes,
-        type: "coworking",
+        type: type,
         userId: 0,
         capacity: null,
         min_price: 0,
@@ -172,8 +183,8 @@ const Listing = ({sapceType,city,locationName,spaceCategoryData,nearBySpacesData
                     nearBySpacesData?.map((item,index)=>(
                       <a
                         key={index}
-                        className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                        href="https://example.com"
+                        className={`${item?.location_name?.split(" ")?.map(word => word.charAt(0).toLowerCase() + word.slice(1))?.join(" ") == locationName?.replace(/-/g, " ") ? "text-[#4343e8] border-[#7d9dd9] bg-[#e9e9ff]" : "text-[#9e9e9e] border-[#d4d4d4] bg-white"} inline-block text-center me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]`}
+                        href={`/in/${spaceType}/${city}/${item?.location_name?.toLowerCase().replace(/\s+/g, "-")}`}
                         target="_blank"
                       >
                         {" "}
@@ -376,10 +387,11 @@ const Listing = ({sapceType,city,locationName,spaceCategoryData,nearBySpacesData
                                   className="border-0 bg-transparent w-full text-sm placeholder:font-normal transition-all duration-200 p-[10px] placeholder:text-[#333] focus:outline-none"
                                   value={query}
                                   onFocus={() => setToggleLocationOptions(true)}
+                                  onBlur={() => setToggleLocationOptions(false)}
                                   onChange={(e) => setQuery(e.target.value)}
                                 />
                               </div>
-                              <div className="flex whitespace-nowrap text-[#777777]">
+                              <div className="flex whitespace-nowrap text-[#777777] cursor-pointer">
                                 Near Me
                               </div>
                             </div>
@@ -393,20 +405,20 @@ const Listing = ({sapceType,city,locationName,spaceCategoryData,nearBySpacesData
                           ref={locationRef}
                           className="scrollDropdown max-h-72 overflow-y-auto absolute top-[70px] left-4 w-[420px] bg-white shadow-lg z-20"
                         >
-                          {locations
+                          {locationData
                             .filter((loc) =>
-                              loc.toLowerCase().includes(query.toLowerCase())
+                              loc?.label?.toLowerCase()?.includes(query?.toLowerCase())
                             )
                             .map((loc, idx) => (
                               <div
                                 key={idx}
                                 className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
                                 onClick={() => {
-                                  setQuery(loc);
+                                  setQuery(loc?.label);
                                   setToggleLocationOptions(false);
                                 }}
                               >
-                                {loc}
+                                {loc?.label}
                               </div>
                             ))}
                         </div>
@@ -526,10 +538,11 @@ const Listing = ({sapceType,city,locationName,spaceCategoryData,nearBySpacesData
                                 className="border-0 bg-transparent w-full text-sm placeholder:font-normal transition-all duration-200 p-[10px] placeholder:text-[#333] focus:outline-none"
                                 value={query}
                                 onFocus={() => setToggleLocationOptions(true)}
+                                onBlur={() => setToggleLocationOptions(false)}
                                 onChange={(e) => setQuery(e.target.value)}
                               />
                             </div>
-                            <div className="flex whitespace-nowrap text-[#777777]">
+                            <div className="flex whitespace-nowrap text-[#777777] cursor-pointer">
                               Near Me
                             </div>
                           </div>
@@ -543,20 +556,20 @@ const Listing = ({sapceType,city,locationName,spaceCategoryData,nearBySpacesData
                         ref={locationRef}
                         className="scrollDropdown max-h-72 overflow-y-auto absolute top-[70px] left-4 w-[420px] bg-white shadow-lg z-20"
                       >
-                        {locations
+                        {locationData
                           .filter((loc) =>
-                            loc.toLowerCase().includes(query.toLowerCase())
+                            loc?.label?.toLowerCase()?.includes(query?.toLowerCase())
                           )
                           .map((loc, idx) => (
                             <div
                               key={idx}
                               className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
                               onClick={() => {
-                                setQuery(loc);
+                                setQuery(loc?.label);
                                 setToggleLocationOptions(false);
                               }}
                             >
-                              {loc}
+                              {loc?.label}
                             </div>
                           ))}
                       </div>

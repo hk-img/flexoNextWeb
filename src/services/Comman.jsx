@@ -21,3 +21,10 @@ export const workSpace = [
   { workSpaceName: "Event Space", typeOfSpace: "Short-Term" },
 ];
 
+export const getTypeOfSpaceByWorkSpace = (workSpaceSlug) => {
+  if(!workSpaceSlug) return "";
+  const capitalWorkSpace = `${workSpaceSlug?.replace(/-/g, " ")?.split(" ")?.map(word => word?.charAt(0)?.toUpperCase() + word?.slice(1))?.join(" ")}`;
+  const findWorkSpace = workSpace.find((item) => item.workSpaceName === capitalWorkSpace);
+  return findWorkSpace?.typeOfSpace?.toLowerCase().replace(/-/g, "");
+};
+

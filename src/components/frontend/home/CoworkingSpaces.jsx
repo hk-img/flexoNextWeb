@@ -11,7 +11,7 @@ const CoworkingSpaces = () => {
     { name: "Gurgaon", image: "/images/Gurgaon.webp" },
     { name: "Noida", image: "/images/Noida.webp" },
     { name: "Chennai", image: "/images/Chennai.webp" },
-    { name: "Ahmedabad", image: "/images/ahemdabad.webp" },
+    { name: "Ahmedabad", image: "/images/Ahmedabad.webp" },
     { name: "Jaipur", image: "/images/Jaipur.webp" },
     { name: "Coimbatore", image: "/images/Coimbatore.webp" },
     { name: "Kochi", image: "/images/Kochi.webp" },

@@ -206,7 +206,7 @@ export default function HeroSection({spaceCategoryData}) {
         </div>
       ))}
 
-      <div className="absolute inset-0 bg-black/40  text-white z-10 lg:py-0 sm:py-4 py-0">
+      <div className="absolute inset-0 bg-black/40  text-white z-1 lg:py-0 sm:py-4 py-0">
         <div className="container px-[15px] mx-auto w-full h-full">
           <div className="flex flex-col md:items-start md:justify-center items-center justify-end h-full">
             <div className=" md:text-start text-center max-md:flex-1 basis-auto flex flex-col md:justify-end justify-center">

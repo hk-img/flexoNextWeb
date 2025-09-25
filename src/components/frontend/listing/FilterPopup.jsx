@@ -3,7 +3,7 @@ import Svg from "@/components/svg";
 import { getApi } from "@/services/ApiService";
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useRef } from "react";
-import { get } from "react-hook-form";
+import DualRangeSlider from "./DualRangeSlider";
 
 const FilterPopup = ({
   isFilterOpen,
@@ -81,6 +81,18 @@ const FilterPopup = ({
                       </div>
                     </div>
                     <div className="border-b border-[#0000001a] my-4"></div>
+                    <DualRangeSlider
+                      min={50000}
+                      max={50000000}
+                      step={100}
+                      values={filterData.priceRange}
+                      onChange={(range) =>
+                        setFilterData({
+                          ...filterData,
+                          priceRange: range,
+                        })
+                      }
+                    />
                     <div className="relative">
                       <div className="">
                         <p className="">Price</p>

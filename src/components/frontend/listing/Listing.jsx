@@ -42,14 +42,8 @@ const Listing = ({sapceType,city,locationName,spaceCategoryData,nearBySpacesData
   const [query, setQuery] = useState("");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filterData, setFilterData] = useState({
-    priceRange: {
-      min: 0,
-      max: 0,
-    },
-    distanceRange: {
-      min: 0,
-      max: 0,
-    },
+  priceRange: { min: 500, max: 50000000 },
+  distanceRange:0,
     sortBy: "",
     amenities: [],
   });
@@ -157,8 +151,9 @@ const Listing = ({sapceType,city,locationName,spaceCategoryData,nearBySpacesData
   const handleClear = () => {
     setIsFilterOpen(false);
   };
-  const start = (page - 1) * perPage + 1;
-  const end = Math.min(page * perPage, allSpaces?.space_count || 0);
+  const total = allSpaces?.space_count || 0;
+  const start = total > 0 ? (page - 1) * perPage + 1 : 0;
+  const end = total > 0 ? Math.min(page * perPage, total) : 0;
   return (
     <>
       <section className="w-full relative lg:pt-16 bg-white">

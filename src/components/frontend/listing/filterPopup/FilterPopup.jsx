@@ -4,6 +4,7 @@ import { getApi } from "@/services/ApiService";
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useRef } from "react";
 import DualRangeSlider from "./DualRangeSlider";
+import SingleRangeSlider from "./SingleRangeSlider";
 
 const FilterPopup = ({
   isFilterOpen,
@@ -81,6 +82,7 @@ const FilterPopup = ({
                       </div>
                     </div>
                     <div className="border-b border-[#0000001a] my-4"></div>
+                    <p className="text-base font-extralight mb-3">Price</p>
                     <DualRangeSlider
                       min={50000}
                       max={50000000}
@@ -93,7 +95,20 @@ const FilterPopup = ({
                         })
                       }
                     />
-                    <div className="relative">
+                    <p className="text-base font-extralight mb-3">Distance</p>
+                    <SingleRangeSlider
+                      min={0}
+                      max={50}
+                      step={1}
+                      value={filterData.distance}
+                      onChange={(val) =>
+                        setFilterData({
+                          ...filterData,
+                          distance: val, // directly number
+                        })
+                      }
+                    />
+                    {/* <div className="relative">
                       <div className="">
                         <p className="">Price</p>
                         <div className="flex items-center justify-between gap-2 mb-3">
@@ -130,7 +145,7 @@ const FilterPopup = ({
                         <div className="w-2 h-2 bg-white rounded-full"></div>
                       </div>
 
-                    </div>
+                    </div> */}
                     <div className="border-b border-[#0000001a] mt-8 mb-6"></div>
                     <div className="relative">
                       <div className="text-lg text-[#141414] font-medium !leading-7 mb-4">

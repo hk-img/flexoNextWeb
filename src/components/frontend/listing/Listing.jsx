@@ -5,7 +5,7 @@ import TrustedCompaniesCta from "./TrustedCompaniesCta";
 import TestimonialCta from "./TestimonialCta";
 import ProductCard from "../productCard/ProductCard";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import FilterPopup from "./FilterPopup";
+import FilterPopup from "./filterPopup/FilterPopup";
 import { postAPI } from "@/services/ApiService";
 import { useQuery } from "@tanstack/react-query";
 import Pagination from "../pagination/Pagination";
@@ -42,8 +42,8 @@ const Listing = ({sapceType,city,locationName,spaceCategoryData,nearBySpacesData
   const [query, setQuery] = useState("");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filterData, setFilterData] = useState({
-  priceRange: { min: 500, max: 50000000 },
-  distanceRange:0,
+    priceRange: { min: 50000, max: 50000000 },
+    distance:0,
     sortBy: "",
     amenities: [],
   });
@@ -118,9 +118,9 @@ const Listing = ({sapceType,city,locationName,spaceCategoryData,nearBySpacesData
         type: "coworking",
         userId: 0,
         capacity: null,
-        min_price: null,
-        max_price: null,
-        amenities: filterData.amenities,
+        min_price: 0,
+        max_price: 0,
+        amenities: filterData?.amenities,
         location_name: locationName?.replace(/-/g, " "),
         city_lat: 0,
         city_long: 0,
@@ -129,7 +129,10 @@ const Listing = ({sapceType,city,locationName,spaceCategoryData,nearBySpacesData
         page_no: page
       }
       if(filterData.sortBy){
-        payload.sortBy = filterData.sortBy;
+        payload.sortBy = filterData?.sortBy;
+      }
+      if(filterData.distance > 0){
+        payload.distance = filterData?.distance;
       }
       const res = await postAPI("spaces/getSpacesByCity",payload);
       return res.data;

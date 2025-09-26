@@ -11,7 +11,7 @@ const schema = z.object({
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
-const LoginViaMailPassword = ({ setIsOpen, setValue }) => {
+const LoginViaMailPassword = ({ setIsOpen, setIsShowMobile }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [isForgetPassword, setIsForgetPassword] = useState(false);
 
@@ -43,9 +43,7 @@ const LoginViaMailPassword = ({ setIsOpen, setValue }) => {
         <div className=" pt-6">
           <button
             onClick={() => {
-              setValue("isMobileTab", true, {
-                shouldValidate: true,
-              });
+              setIsShowMobile(true);
             }}
             className="p-3 cursor-pointer flex items-center text-[#f76900] font-medium"
           >

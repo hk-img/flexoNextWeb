@@ -10,7 +10,7 @@ import { postAPI } from "@/services/ApiService";
 import { useQuery } from "@tanstack/react-query";
 import Pagination from "../pagination/Pagination";
 import ExplorePopup from "../explorePopup/ExplorePopup";
-import { getTypeOfSpaceByWorkSpace } from "@/services/Comman";
+import { convertSlugToCapitalLetter, getTypeOfSpaceByWorkSpace, slugGenerator } from "@/services/Comman";
 const coworkingTypes = [
   "Private Office",
   "Managed Office",
@@ -21,7 +21,7 @@ const coworkingTypes = [
 ]
 
 const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nearBySpacesData}) => {
-  console.log({locationData})
+  console.log({locationData,spaceCategoryData,nearBySpacesData})
   const [isOpen, setIsOpen] = useState(false);
   const spacesTypeRef = useRef(null);
   const locationRef = useRef(null);
@@ -88,7 +88,7 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
       return;
     }
     const selectedSpaceType = spaceCategoryData?.find((item) => {
-      const categorySpaceType = item?.spaceType?.toLowerCase().replace(/\s+/g, "-");
+      const categorySpaceType = slugGenerator(item?.spaceType || "");
       if(categorySpaceType === spaceType)
       {
         return item
@@ -106,7 +106,7 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
 
   useEffect(()=>{
     if(locationData?.length > 0 && locationName){
-      const capitalLocationName = `${locationName?.replace(/-/g, " ")?.split(" ")?.map(word => word?.charAt(0)?.toUpperCase() + word?.slice(1))?.join(" ")}`;
+      const capitalLocationName = convertSlugToCapitalLetter(locationName || "");
       console.log({capitalLocationName})
       const selectedLocation = locationData?.find((item) => {
         if(item?.location_name === capitalLocationName)
@@ -184,7 +184,7 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
                       <a
                         key={index}
                         className={`${item?.location_name?.split(" ")?.map(word => word.charAt(0).toLowerCase() + word.slice(1))?.join(" ") == locationName?.replace(/-/g, " ") ? "text-[#4343e8] border-[#7d9dd9] bg-[#e9e9ff]" : "text-[#9e9e9e] border-[#d4d4d4] bg-white"} inline-block text-center me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]`}
-                        href={`/in/${spaceType}/${city}/${item?.location_name?.toLowerCase().replace(/\s+/g, "-")}`}
+                        href={`/in/${spaceType}/${city}/${slugGenerator(item?.location_name || "")}`}
                         target="_blank"
                       >
                         {" "}

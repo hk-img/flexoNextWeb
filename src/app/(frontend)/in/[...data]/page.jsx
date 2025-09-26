@@ -1,5 +1,6 @@
 import Listing from '@/components/frontend/listing/Listing';
 import { BASE_URL } from '@/services/ApiService';
+import { convertSlugToCapitalLetter } from '@/services/Comman';
 import React from 'react'
 
 const page = async({params}) => {
@@ -19,7 +20,7 @@ const page = async({params}) => {
     spaceType: spaceType == "coworking" ? "coworking space" : spaceType?.replace(/-/g, " ")
   }
   async function fetchAPI2() {
-    const capitalSpaceType = `${spaceType?.replace(/-/g, " ")?.split(" ")?.map(word => word?.charAt(0)?.toUpperCase() + word?.slice(1))?.join(" ")}`;
+    const capitalSpaceType = convertSlugToCapitalLetter(spaceType || "");
     const res = await fetch(`${BASE_URL}/user/getAllLocations?spaceType=${capitalSpaceType}`,{
       headers: {
         Accept: "application/json",

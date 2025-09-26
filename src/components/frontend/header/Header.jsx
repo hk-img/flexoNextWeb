@@ -83,9 +83,9 @@ const Header = () => {
               <a href="#">
                 <Svg name="homePlus" className="size-[18px] text-black" />
               </a>
-              <a href="#">
+              <div className="cursor-pointer" onClick={() => setIsOpen(true)}>
                 <Svg name="logOut" className="size-[22px] text-black" />
-              </a>
+              </div>
             </div>
           </div>
         </div>

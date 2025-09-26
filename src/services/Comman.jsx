@@ -21,3 +21,19 @@ export const workSpace = [
   { workSpaceName: "Event Space", typeOfSpace: "Short-Term" },
 ];
 
+export const convertSlugToCapitalLetter = (slug)=>{
+  if(!slug) return "";
+  return slug?.replace(/-/g, " ")?.split(" ")?.map(word => word?.charAt(0)?.toUpperCase() + word?.slice(1))?.join(" ")
+}
+
+export const getTypeOfSpaceByWorkSpace = (workSpaceSlug) => {
+  if(!workSpaceSlug) return "";
+  const capitalWorkSpace = convertSlugToCapitalLetter(workSpaceSlug);
+  const findWorkSpace = workSpace.find((item) => item.workSpaceName === capitalWorkSpace);
+  return findWorkSpace?.typeOfSpace?.toLowerCase().replace(/-/g, "");
+};
+
+export const slugGenerator = (text) =>{
+  if(!text) return "";
+  return text?.toLowerCase().replace(/\s+/g, "-");
+}

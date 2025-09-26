@@ -3,7 +3,8 @@ import Svg from "@/components/svg";
 import { getApi } from "@/services/ApiService";
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useRef } from "react";
-import { get } from "react-hook-form";
+import DualRangeSlider from "./DualRangeSlider";
+import SingleRangeSlider from "./SingleRangeSlider";
 
 const FilterPopup = ({
   isFilterOpen,
@@ -81,7 +82,33 @@ const FilterPopup = ({
                       </div>
                     </div>
                     <div className="border-b border-[#0000001a] my-4"></div>
-                    <div className="relative">
+                    <p className="text-base font-extralight mb-3">Price</p>
+                    <DualRangeSlider
+                      min={50000}
+                      max={50000000}
+                      step={100}
+                      values={filterData.priceRange}
+                      onChange={(range) =>
+                        setFilterData({
+                          ...filterData,
+                          priceRange: range,
+                        })
+                      }
+                    />
+                    <p className="text-base font-extralight mb-3">Distance</p>
+                    <SingleRangeSlider
+                      min={0}
+                      max={50}
+                      step={1}
+                      value={filterData.distance}
+                      onChange={(val) =>
+                        setFilterData({
+                          ...filterData,
+                          distance: val, // directly number
+                        })
+                      }
+                    />
+                    {/* <div className="relative">
                       <div className="">
                         <p className="">Price</p>
                         <div className="flex items-center justify-between gap-2 mb-3">
@@ -101,8 +128,104 @@ const FilterPopup = ({
                         <div className="w-2 h-2 bg-white rounded-full"></div>
                       </div>
 
-                      <div className="absolute top-1/2 right-0 w-8 h-8 -translate-y-1/2 bg-orange-500 rounded-full flex items-center justify-center">
-                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                    </div> */}
+                    <div className="border-b border-[#0000001a] mt-8 mb-6"></div>
+                    <div className="relative">
+                      <div className="text-lg text-[#141414] font-medium !leading-7 mb-4">
+                        Sort By:
+                      </div>
+                      <div className="flex flex-wrap items-center gap-4">
+                        {/* Review */}
+                        <label className="flex items-center gap-2 cursor-pointer">
+                          <input
+                            type="radio"
+                            name="sort"
+                            value="review"
+                            className="accent-[#f76900] size-5"
+                            checked={filterData.sortBy === "review"}
+                            onChange={(e) =>
+                              setFilterData((prev) => ({
+                                ...prev,
+                                sortBy: e.target.value,
+                              }))
+                            }
+                          />
+                          <span className="text-sm text-gray-700 font-light">
+                            Rating High to Low
+                          </span>
+                        </label>
+
+                        {/* Price High to Low */}
+                        <label className="flex items-center gap-2 cursor-pointer">
+                          <input
+                            type="radio"
+                            name="sort"
+                            value="high_to_low"
+                            className="accent-[#f76900] size-5"
+                            checked={filterData.sortBy === "high_to_low"}
+                            onChange={(e) =>
+                              setFilterData((prev) => ({
+                                ...prev,
+                                sortBy: e.target.value,
+                              }))
+                            }
+                          />
+                          <span className="text-sm text-gray-700 font-light">
+                            Price High to Low
+                          </span>
+                        </label>
+
+                        {/* Price Low to High */}
+                        <label className="flex items-center gap-2 cursor-pointer">
+                          <input
+                            type="radio"
+                            name="sort"
+                            value="low_to_high"
+                            className="accent-[#f76900] size-5"
+                            checked={filterData.sortBy === "low_to_high"}
+                            onChange={(e) =>
+                              setFilterData((prev) => ({
+                                ...prev,
+                                sortBy: e.target.value,
+                              }))
+                            }
+                          />
+                          <span className="text-sm text-gray-700 font-light">
+                            Price Low to High
+                          </span>
+                        </label>
+                      </div>
+                    </div>
+                    <div className="border-b border-[#0000001a] my-4"></div>
+                    <div className="relative">
+                      <div className="text-base font-normal mt-0.5 mb-4">
+                        Amenities
+                      </div>
+                      <div className="grid md:grid-cols-3 grid-cols-2 gap-3">
+                        {
+                          allAmenities?.map((item, index) => (
+                            <label key={index} className="flex items-center space-x-2 cursor-pointer">
+                              <input
+                                type="checkbox"
+                                className="accent-[#f76900] me-2 h-4 w-4"
+                                name="amenities"
+                                value={item?.id}
+                                checked={filterData.amenities?.includes(item?.id)}
+                                onChange={(e) =>
+                                  setFilterData((prev) => ({
+                                    ...prev,
+                                    amenities: e.target.checked
+                                      ? [...prev.amenities, item?.id]
+                                      : prev.amenities.filter((amenity) => amenity !== item?.id),
+                                  }))
+                                }
+                              />
+                              <span className="text-[#212121] text-[13px] font-normal  !leading-6 ">
+                                {item?.amenities}
+                              </span>
+                            </label>
+                          ))
+                        }
                       </div>
                     </div>
                   </div>

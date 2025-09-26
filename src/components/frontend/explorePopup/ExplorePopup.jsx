@@ -120,7 +120,12 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                   {...register("firstName", { required: true })}
                   required
                   placeholder="Enter First Name"
-                  className="w-full rounded-sm border border-[#dbdbdb] px-3 py-2.5 invalid:border-pink-500"
+                  className={`w-full rounded-sm border-2 px-3 py-2.5
+                      border-[#dbdbdb]
+                      ${errors.firstName 
+                        ? "border-[#f44336] focus:border-[#f44336]" 
+                        : "hover:border-black focus:border-[#3f51b5]"}
+                    `}
                 />
               {errors.firstName && (
                 <span className="text-[10px] text-[#dc3545] mt-1 absolute -bottom-4 left-0">
@@ -137,7 +142,12 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
               <input
                 {...register("lastName")}
                 placeholder="Enter Last Name"
-                className="w-full rounded-sm border border-[#dbdbdb] px-3 py-2.5"
+               className={`w-full rounded-sm border-2 px-3 py-2.5
+                      border-[#dbdbdb]
+                      ${errors.lastName 
+                        ? "border-[#f44336] focus:border-[#f44336]" 
+                        : "hover:border-black focus:border-[#3f51b5]"}
+                    `}
               />
               {errors.lastName && (
                 <span className="text-[10px] text-[#dc3545] mt-1 absolute -bottom-4 left-0">
@@ -155,7 +165,12 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                 type="email"
                 {...register("email")}
                 placeholder="Enter Email"
-                className="w-full rounded-sm border border-[#dbdbdb] px-3 py-2.5"
+                className={`w-full rounded-sm border-2 px-3 py-2.5
+                      border-[#dbdbdb]
+                      ${errors.email 
+                        ? "border-[#f44336] focus:border-[#f44336]" 
+                        : "hover:border-black focus:border-[#3f51b5]"}
+                    `}
               />
               {errors.email && (
                 <span className="text-[10px] text-[#dc3545] mt-1 absolute -bottom-4 left-0">
@@ -182,6 +197,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                     }}
                     enableSearch
                     inputProps={{ name: "mobile" }}
+                    className="w-full [&_input]:!w-full [&_input]:!h-full h-12"
                   />
                 )}
               />
@@ -200,7 +216,12 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
               </label>
               <select
                 {...register("city")}
-                className="w-full rounded-sm border border-[#dbdbdb] px-3 py-2.5"
+                className={`w-full rounded-sm border-2 px-3 py-2.5
+                      border-[#dbdbdb]
+                      ${errors.city 
+                        ? "border-[#f44336] focus:border-[#f44336]" 
+                        : "hover:border-black focus:border-[#3f51b5]"}
+                    `}
               >
                 <option value="">Select City</option>
                 <option value="Delhi">Delhi</option>
@@ -221,7 +242,12 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
               </label>
               <select
                 {...register("seats")}
-                className="w-full rounded-sm border border-[#dbdbdb] px-3 py-2.5"
+                className={`w-full rounded-sm border-2 px-3 py-2.5
+                      border-[#dbdbdb]
+                      ${errors.seats 
+                        ? "border-[#f44336] focus:border-[#f44336]" 
+                        : "hover:border-black focus:border-[#3f51b5]"}
+                    `}
               >
                 <option value="">Select No. of Seats</option>
                 <option value="1-5">1–5</option>

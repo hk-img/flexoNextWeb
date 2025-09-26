@@ -130,7 +130,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
                 <Svg name="close" className="size-5" />
               </button>
             </div>
-            <div className="p-5">
+            <div className="py-5">
               {/* Form */}
                <form onSubmit={handleSubmit(onSubmit)}>
                 {values?.isMobileTab ? (
@@ -157,10 +157,11 @@ const Auth = ({ isOpen, setIsOpen }) => {
                             }}
                             enableSearch
                             inputProps={{ name: "mobile" }}
+                            className="w-full [&_input]:!w-full [&_input]:!h-full h-12"
                           />
                         )}
                       />
-                      {values?.country?.name}
+                      {/* {values?.country?.name} */}
                       {errors.mobile && (
                         <p className="mt-1 text-sm text-red-500">
                           {errors.mobile.message}
@@ -169,7 +170,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
                     </div>
                   </div>
                 ) : (
-                  <div className="px-[15px]">
+                  <div className="">
                     <label
                       htmlFor="mobile"
                       className="block text-sm font-semibold mb-2"
@@ -187,10 +188,15 @@ const Auth = ({ isOpen, setIsOpen }) => {
                           message: "Enter a valid email",
                         },
                       })}
-                      className="w-full p-2 border border-[#dbdbdb] rounded-md"
+                      className={`w-full rounded-sm border-2 px-3 py-2.5
+                      border-[#dbdbdb]
+                      ${errors.email 
+                        ? "border-[#f44336] focus:border-[#f44336]" 
+                        : "hover:border-black focus:border-[#3f51b5]"}
+                    `}
                     />
                     {errors.email && (
-                      <p className="mt-1 text-sm text-red-500">
+                      <p className="mt-1 text-sm text-[#f44336]">
                         {errors.email.message}
                       </p>
                     )}
@@ -261,7 +267,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
                 <Svg name="close" className="size-5" />
               </button>
             </div>
-            <div className="p-5">
+            <div className="py-5">
               <form onSubmit={handleSubmit(onSubmit)}>
                 {values?.isMobileTab ? (
                   <div className="px-[15px]">

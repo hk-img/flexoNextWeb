@@ -134,7 +134,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
               {/* Form */}
                <form onSubmit={handleSubmit(onSubmit)}>
                 {values?.isMobileTab ? (
-                  <div className="px-[15px]">
+                  <div>
                     <label
                       htmlFor="mobile"
                       className="block text-sm font-semibold mb-2"
@@ -157,7 +157,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
                             }}
                             enableSearch
                             inputProps={{ name: "mobile" }}
-                            className="w-full [&_input]:!w-full [&_input]:!h-full h-12"
+                            className="w-full [&_input]:!w-full [&_input]:!h-full h-[42px]"
                           />
                         )}
                       />
@@ -189,7 +189,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
                         },
                       })}
                       className={`w-full rounded-sm border-2 px-3 py-2.5
-                      border-[#dbdbdb]
+                      border-[#dbdbdb] h-[42px]
                       ${errors.email 
                         ? "border-[#f44336] focus:border-[#f44336]" 
                         : "hover:border-black focus:border-[#3f51b5]"}
@@ -293,6 +293,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
                             }}
                             enableSearch
                             inputProps={{ name: "mobile" }}
+                            className="w-full [&_input]:!w-full [&_input]:!h-full h-[42]"
                           />
                         )}
                       />
@@ -323,7 +324,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
                           message: "Enter a valid email",
                         },
                       })}
-                      className="w-full p-2 border border-[#dbdbdb] rounded-md"
+                      className="w-full p-2 border border-[#dbdbdb] rounded-md h-[42px]"
                     />
                     {errors.email && (
                       <p className="mt-1 text-sm text-red-500">

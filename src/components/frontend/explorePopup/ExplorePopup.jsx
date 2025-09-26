@@ -121,7 +121,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                   required
                   placeholder="Enter First Name"
                   className={`w-full rounded-sm border-2 px-3 py-2.5
-                      border-[#dbdbdb]
+                      border-[#dbdbdb] h-12
                       ${errors.firstName 
                         ? "border-[#f44336] focus:border-[#f44336]" 
                         : "hover:border-black focus:border-[#3f51b5]"}
@@ -143,7 +143,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                 {...register("lastName")}
                 placeholder="Enter Last Name"
                className={`w-full rounded-sm border-2 px-3 py-2.5
-                      border-[#dbdbdb]
+                      border-[#dbdbdb] h-12
                       ${errors.lastName 
                         ? "border-[#f44336] focus:border-[#f44336]" 
                         : "hover:border-black focus:border-[#3f51b5]"}
@@ -166,7 +166,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                 {...register("email")}
                 placeholder="Enter Email"
                 className={`w-full rounded-sm border-2 px-3 py-2.5
-                      border-[#dbdbdb]
+                      border-[#dbdbdb] h-12
                       ${errors.email 
                         ? "border-[#f44336] focus:border-[#f44336]" 
                         : "hover:border-black focus:border-[#3f51b5]"}
@@ -217,7 +217,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
               <select
                 {...register("city")}
                 className={`w-full rounded-sm border-2 px-3 py-2.5
-                      border-[#dbdbdb]
+                      border-[#dbdbdb] h-12
                       ${errors.city 
                         ? "border-[#f44336] focus:border-[#f44336]" 
                         : "hover:border-black focus:border-[#3f51b5]"}
@@ -243,7 +243,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
               <select
                 {...register("seats")}
                 className={`w-full rounded-sm border-2 px-3 py-2.5
-                      border-[#dbdbdb]
+                      border-[#dbdbdb] h-12
                       ${errors.seats 
                         ? "border-[#f44336] focus:border-[#f44336]" 
                         : "hover:border-black focus:border-[#3f51b5]"}

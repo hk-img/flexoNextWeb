@@ -7,6 +7,7 @@ import Svg from "@/components/svg";
 import { useQuery } from "@tanstack/react-query";
 import { getApi } from "@/services/ApiService";
 import { useRouter } from "next/navigation";
+import { slugGenerator } from "@/services/Comman";
 
 const Select = dynamic(() => import("react-select"), { ssr: false });
 
@@ -175,9 +176,9 @@ export default function HeroSection({spaceCategoryData}) {
   };
 
   const handleSearch = (type,location)=>{
-    const typeSlug = type?.label?.toLowerCase().replace(/\s+/g, "-");
-    const citySlug = location?.city?.toLowerCase().replace(/\s+/g, "-");
-    const locationSlug = location?.location_name?.toLowerCase().replace(/\s+/g, "-") || "";
+    const typeSlug = slugGenerator(type?.label);
+    const citySlug = slugGenerator(location?.city || "");
+    const locationSlug = slugGenerator(location?.location_name || "");
     if(!locationSlug && typeSlug == "coworking-space" ){
       return router.push(`/in/coworking/${citySlug}`);
     }

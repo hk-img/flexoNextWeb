@@ -4,8 +4,20 @@ import Svg from "@/components/svg";
 import TrustedCompaniesCta from "./TrustedCompaniesCta";
 import TestimonialCta from "./TestimonialCta";
 import ProductCard from "../productCard/ProductCard";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import FilterPopup from "./FilterPopup";
+import { postAPI } from "@/services/ApiService";
+import { useQuery } from "@tanstack/react-query";
+import Pagination from "../pagination/Pagination";
+import ExplorePopup from "../explorePopup/ExplorePopup";
+const coworkingTypes = [
+  "Private Office",
+  "Managed Office",
+  "Dedicated Desk",
+  "Flexible Desk",
+  "Virtual Office",
+  "Day Pass",
+]
 const locations = [
   "Andheri East, Mumbai, Maharashtra, India",
   "Malad, Mumbai, Maharashtra, India",
@@ -14,21 +26,17 @@ const locations = [
   "Goregaon, Mumbai, Maharashtra, India",
 ];
 
-const Listing = () => {
+const Listing = ({sapceType,city,locationName,spaceCategoryData,nearBySpacesData}) => {
+  const [isOpen, setIsOpen] = useState(false);
   const spacesTypeRef = useRef(null);
   const locationRef = useRef(null);
   const [mapToggle, setMapToggle] = useState(true);
   const [toggleSpaceType, setToggleSpaceType] = useState(false);
   const [toggleSpace, setToggleSpace] = useState(false);
-  const [selectedRadio, setSelectedRadio] = useState("Co-working");
-  const [selectedCheckboxes, setSelectedCheckboxes] = useState([
-    "Private Office",
-    "Managed Office",
-    "Dedicated Desk",
-    "Flexible Desk",
-    "Virtual Office",
-    "Day Pass",
-  ]);
+  const [selectedRadio, setSelectedRadio] = useState(spaceCategoryData?.[0]?.spaceType);
+  console.log({selectedRadio})
+  const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
+  console.log({selectedCheckboxes})
   const [toggleLocation, setToggleLocation] = useState(false);
   const [toggleLocationOptions, setToggleLocationOptions] = useState(false);
   const [query, setQuery] = useState("");
@@ -45,28 +53,15 @@ const Listing = () => {
     sortBy: "",
     amenities: [],
   });
-
-  const handleApply = () => {
-    setIsFilterOpen(false);
-  };
-
-  const handleClear = () => {
-    setIsFilterOpen(false);
-  };
+  const [page,setPage] = useState(1);
+  const perPage = 30;
 
   const handleRadioChange = (e) => {
     const { value } = e.target;
-    if (value == "co-working") {
-      setSelectedCheckboxes([
-        "Private Office",
-        "Managed Office",
-        "Dedicated Desk",
-        "Flexible Desk",
-        "Virtual Office",
-        "Day Pass",
-      ]);
+    if (value == "Coworking Space") {
+      setSelectedCheckboxes(coworkingTypes);
     } else {
-      setSelectedCheckboxes([]);
+      setSelectedCheckboxes([value]);
     }
     setSelectedRadio(value);
   };
@@ -79,26 +74,93 @@ const Listing = () => {
     }
   };
 
-  useEffect(() => {
-    const handleOutsideClick = (event) => {
-      if (
-        spacesTypeRef.current &&
-        !spacesTypeRef.current.contains(event.target)
-      ) {
-        setToggleSpace(false);
+  // useEffect(() => {
+  //   const handleOutsideClick = (event) => {
+  //     if (
+  //       spacesTypeRef.current &&
+  //       !spacesTypeRef.current.contains(event.target)
+  //     ) {
+  //       setToggleSpace(false);
+  //     }
+  //     if (locationRef.current && !locationRef.current.contains(event.target)) {
+  //       setToggleLocationOptions(false);
+  //     }
+  //   };
+  //   document.addEventListener("mousedown", handleOutsideClick);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleOutsideClick);
+  //   };
+  // }, []);
+
+  useEffect(()=>{
+    if(sapceType === "coworking"){
+      setSelectedRadio("Coworking Space");
+      setSelectedCheckboxes(coworkingTypes);
+      return;
+    }
+    const selectedSpaceType = spaceCategoryData?.find((item) => {
+      const categorySpaceType = item?.spaceType?.toLowerCase().replace(/\s+/g, "-");
+      if(categorySpaceType === sapceType)
+      {
+        return item
       }
-      if (locationRef.current && !locationRef.current.contains(event.target)) {
-        setToggleLocationOptions(false);
+    });
+    console.log({selectedSpaceType})
+    setSelectedRadio(selectedSpaceType?.spaceType)
+    if(selectedSpaceType?.spaceType === "Coworking Space")
+    {
+      setSelectedCheckboxes(coworkingTypes);
+    }else{
+      setSelectedCheckboxes([selectedSpaceType?.spaceType]);
+    }
+  },[spaceCategoryData,sapceType])
+
+  const { data: allSpaces,refetch:refetchSpaces } = useQuery({
+    queryKey: ["allSpaces",page,city,selectedCheckboxes],
+    queryFn: async () => {
+      let payload ={
+        city_name: city,
+        spaceType: selectedCheckboxes,
+        type: "coworking",
+        userId: 0,
+        capacity: null,
+        min_price: null,
+        max_price: null,
+        amenities: filterData.amenities,
+        location_name: locationName?.replace(/-/g, " "),
+        city_lat: 0,
+        city_long: 0,
+        location_lat:19.1121947,
+        location_longi:72.8792898,
+        page_no: page
       }
-    };
-    document.addEventListener("mousedown", handleOutsideClick);
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
-  }, []);
+      if(filterData.sortBy){
+        payload.sortBy = filterData.sortBy;
+      }
+      const res = await postAPI("spaces/getSpacesByCity",payload);
+      return res.data;
+    },
+    keepPreviousData: true,
+  });
+  const productData = useMemo(()=>{
+    return allSpaces?.data || []
+  },[allSpaces]);
+  const faqData = useMemo(()=>{
+    return allSpaces?.faqs || []
+  },[allSpaces]);
+
+  const handleApply = () => {
+    refetchSpaces();
+    setIsFilterOpen(false);
+  };
+
+  const handleClear = () => {
+    setIsFilterOpen(false);
+  };
+  const start = (page - 1) * perPage + 1;
+  const end = Math.min(page * perPage, allSpaces?.space_count || 0);
   return (
     <>
-   
       <section className="w-full relative lg:pt-16 bg-white">
         <div className="max-w-full xl:px-4 lg:px-4 md:px-3 px-4 mx-auto pt-4">
           <div className="group/mainBox w-full flex flex-col lg:flex-row gap-6 items-start">
@@ -108,315 +170,19 @@ const Listing = () => {
               </h1>
               <div className="form-group filter-group">
                 <div className="scrollMenus overflow-auto whitespace-nowrap pb-2 mb-4">
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    {" "}
-                    Andheri West
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Bandra
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Bandra Kurla Complex
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Bhandup
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    BKC
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Borivali
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Borivali East
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Borivali West
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Chembur
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Churchgate
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Colaba
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Dadar
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Dadar West
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Deonar
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Fort
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Ghatkopar
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Goregaon
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Goregaon East
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Jogeshwari
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Juhu
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Kandivali
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Kandivali West
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Khar West
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Kurla
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Lower Parel
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Mahalaxmi
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Mahim West
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Malad
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Malad East
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Malad West
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Marine Lines
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Mulund
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Nahur
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Nariman Point
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Powai
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Santacruz
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Santacruz West
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Thane
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Vashi
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Vikhroli
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Vile Parle
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Wadala
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Western Express Highway
-                  </a>
-                  <a
-                    className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
-                    href="https://example.com"
-                    target="_blank"
-                  >
-                    Worli
-                  </a>
+                  {
+                    nearBySpacesData?.map((item,index)=>(
+                      <a
+                        key={index}
+                        className="inline-block text-center bg-white me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border border-[#d4d4d4] min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]"
+                        href="https://example.com"
+                        target="_blank"
+                      >
+                        {" "}
+                        {item?.location_name}
+                      </a>
+                    ))
+                  }
                 </div>
 
                 <div className="filterRow w-full flex lg:flex-row flex-col items-center gap-4">
@@ -516,9 +282,9 @@ const Listing = () => {
                     <div className="text-right xs:text-left">
                       <p className="text-sm text-[#777777] leading-10 text-[15px]">
                         Showing{" "}
-                        <span className="font-medium text-[#f76900]">1–30</span>{" "}
+                        <span className="font-medium text-[#f76900]">{start}–{end}</span>{" "}
                         <span className="font-medium text-[#f76900]">
-                          of 37
+                          of {allSpaces?.space_count}
                         </span>{" "}
                         Listings
                       </p>
@@ -527,99 +293,65 @@ const Listing = () => {
                 </div>
                 <div className="relative inline-block lg:hidden w-full">
                   {toggleSpaceType && (
-                    <div
-                      onClick={() => setToggleSpace(!toggleSpace)}
-                      className="relative top-4 left-0 md:w-[400px] lg:w-3/5 w-full rounded-xl z-10 pb-4"
-                    >
-                      <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center min-h-14 max-h-14 gap-5 p-[18px] rounded-[42px]">
-                        <div className="border-1 border-[#dee2e6] p-1 text-sm font-light">
-                          {selectedRadio}
-                        </div>
+                  <div
+                    onClick={() => setToggleSpace(!toggleSpace)}
+                    className="relative top-4 left-0 w-full md:w-[400px] lg:w-3/5 rounded-xl z-10"
+                  >
+                    <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center min-h-14 max-h-14 gap-5 p-[18px] rounded-[42px]">
+                      <div className="border-1 border-[#dee2e6] p-1 text-sm font-light">
+                        {selectedRadio}
                       </div>
                     </div>
+                  </div>
                   )}
                   {toggleSpace && (
                     <div
                       ref={spacesTypeRef}
                       className="scrollDropdown absolute top-[72px] left-0 w-[550px] bg-white block shadow-lg z-20 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700"
                     >
-                      <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
-                        <input
-                          type="radio"
-                          name="spaceType"
-                          value="co-working"
-                          defaultChecked={selectedRadio === "Co-working"}
-                          onChange={handleRadioChange}
-                          className="accent-[#26310b]"
-                        />
-                        Co-working
-                      </label>
-
-                      <div className="pl-6 space-y-2">
-                        {[
-                          "Private Office",
-                          "Managed Office",
-                          "Dedicated Desk",
-                          "Flexible Desk",
-                          "Virtual Office",
-                          "Day Pass",
-                        ].map((type) => (
-                          <label
-                            key={type}
-                            className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light"
-                          >
-                            <input
-                              type="checkbox"
-                              checked={selectedCheckboxes.includes(type)}
-                              onChange={() => handleCheckbox(type)}
-                              className="accent-[#26310b]"
-                            />
-                            {type}
-                          </label>
-                        ))}
-                      </div>
-
-                      <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
-                        <input
-                          type="radio"
-                          name="spaceType"
-                          value="Private Office"
-                          defaultChecked={selectedRadio === "Private Office"}
-                          onChange={handleRadioChange}
-                          className="accent-[#26310b]"
-                        />
-                        Private Office
-                      </label>
-
-                      <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
-                        <input
-                          type="radio"
-                          name="spaceType"
-                          value="Classroom"
-                          defaultChecked={selectedRadio === "Classroom"}
-                          onChange={handleRadioChange}
-                          className="accent-[#26310b]"
-                        />
-                        Classroom
-                      </label>
-
-                      <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
-                        <input
-                          type="radio"
-                          name="spaceType"
-                          value="Managed Office"
-                          defaultChecked={selectedRadio === "Managed Office"}
-                          onChange={handleRadioChange}
-                          className="accent-[#26310b]"
-                        />
-                        Managed Office
-                      </label>
+                      {
+                        spaceCategoryData?.map((item,index)=>{
+                          return(
+                            <React.Fragment key={index}>
+                              <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
+                                <input
+                                  type="radio"
+                                  name="spaceType2"
+                                  value={item?.spaceType}
+                                  defaultChecked={selectedRadio === item?.spaceType}
+                                  onChange={handleRadioChange}
+                                  className="accent-[#26310b]"
+                                />
+                                {item?.spaceType}
+                              </label>
+                              {
+                                item?.spaceType == "Coworking Space" &&  <div className="pl-6 space-y-2">
+                                  {coworkingTypes?.map((type) => (
+                                    <label
+                                      key={type}
+                                      className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light"
+                                    >
+                                      <input
+                                        type="checkbox"
+                                        checked={selectedCheckboxes.includes(type)}
+                                        onChange={() => handleCheckbox(type)}
+                                        className="accent-[#26310b]"
+                                      />
+                                      {type}
+                                    </label>
+                                  ))}
+                                </div>
+                              }
+                            </React.Fragment>
+                          )
+                        })
+                      }
                     </div>
                   )}
                   {toggleLocation && (
                     <div className="relative">
                       {/* Search box */}
-                      <div className="relative top-4 -left-0 w-full md:w-[400px] lg:w-3/5 rounded-xl z-10 pb-7">
+                      <div className="relative top-6 -left-0 w-full md:w-[400px] lg:w-3/5 rounded-xl z-10 pb-7">
                         <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center py-[9px] px-4 rounded-[42px]">
                           <div className="w-full">
                             <div className="bg-white shadow-mb rounded-full h-10 w-full flex items-center justify-between">
@@ -703,8 +435,8 @@ const Listing = () => {
                 <div className="text-right xs:text-left">
                   <p className="text-sm text-[#777777] leading-10 text-[15px]">
                     Showing{" "}
-                    <span className="font-medium text-[#f76900]">1–30</span>{" "}
-                    <span className="font-medium text-[#f76900]">of 37</span>{" "}
+                    <span className="font-medium text-[#f76900]">{start}–{end}</span>{" "}
+                    <span className="font-medium text-[#f76900]">of {allSpaces?.space_count}</span>{" "}
                     Listings
                   </p>
                 </div>
@@ -727,77 +459,43 @@ const Listing = () => {
                     ref={spacesTypeRef}
                     className="scrollDropdown absolute top-[72px] left-0 w-[550px] bg-white block shadow-lg z-20 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700"
                   >
-                    <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
-                      <input
-                        type="radio"
-                        name="spaceType"
-                        value="co-working"
-                        defaultChecked={selectedRadio === "Co-working"}
-                        onChange={handleRadioChange}
-                        className="accent-[#26310b]"
-                      />
-                      Co-working
-                    </label>
-
-                    <div className="pl-6 space-y-2">
-                      {[
-                        "Private Office",
-                        "Managed Office",
-                        "Dedicated Desk",
-                        "Flexible Desk",
-                        "Virtual Office",
-                        "Day Pass",
-                      ].map((type) => (
-                        <label
-                          key={type}
-                          className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light"
-                        >
-                          <input
-                            type="checkbox"
-                            checked={selectedCheckboxes.includes(type)}
-                            onChange={() => handleCheckbox(type)}
-                            className="accent-[#26310b]"
-                          />
-                          {type}
-                        </label>
-                      ))}
-                    </div>
-
-                    <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
-                      <input
-                        type="radio"
-                        name="spaceType"
-                        value="Private Office"
-                        defaultChecked={selectedRadio === "Private Office"}
-                        onChange={handleRadioChange}
-                        className="accent-[#26310b]"
-                      />
-                      Private Office
-                    </label>
-
-                    <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
-                      <input
-                        type="radio"
-                        name="spaceType"
-                        value="Classroom"
-                        defaultChecked={selectedRadio === "Classroom"}
-                        onChange={handleRadioChange}
-                        className="accent-[#26310b]"
-                      />
-                      Classroom
-                    </label>
-
-                    <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
-                      <input
-                        type="radio"
-                        name="spaceType"
-                        value="Managed Office"
-                        defaultChecked={selectedRadio === "Managed Office"}
-                        onChange={handleRadioChange}
-                        className="accent-[#26310b]"
-                      />
-                      Managed Office
-                    </label>
+                    {
+                      spaceCategoryData?.map((item,index)=>{
+                        return(
+                          <React.Fragment key={index}>
+                            <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
+                              <input
+                                type="radio"
+                                name="spaceType"
+                                value={item?.spaceType}
+                                defaultChecked={selectedRadio === item?.spaceType}
+                                onChange={handleRadioChange}
+                                className="accent-[#26310b]"
+                              />
+                              {item?.spaceType}
+                            </label>
+                            {
+                              item?.spaceType == "Coworking Space" &&  <div className="pl-6 space-y-2">
+                                {coworkingTypes?.map((type) => (
+                                  <label
+                                    key={type}
+                                    className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      checked={selectedCheckboxes.includes(type)}
+                                      onChange={() => handleCheckbox(type)}
+                                      className="accent-[#26310b]"
+                                    />
+                                    {type}
+                                  </label>
+                                ))}
+                              </div>
+                            }
+                          </React.Fragment>
+                        )
+                      })
+                    }
                   </div>
                 )}
                 {toggleLocation && (
@@ -869,23 +567,23 @@ const Listing = () => {
                 )}
               </div>
               <div className="spaces lg:mt-6 flex flex-row flex-wrap -mx-4">
-                {Array.from({ length: 6 }).map((_, index) => (
+                {productData?.slice(0, 6)?.map((item, index) => (
                   <div
-                    key={index}
+                    key={`product-${index}`}
                     className="spaceCard relative lg:w-1/3 md:w-1/3 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:xl:w-1/2 group-has-[.map]/mainBox:md:w-1/2 w-full p-4"
                   >
-                    <ProductCard />
+                    <ProductCard item={item} setIsOpen={setIsOpen}/>
                   </div>
                 ))}
               </div>
               <TrustedCompaniesCta />
               <div className="spaces flex flex-row flex-wrap -mx-4">
-                {Array.from({ length: 12 }).map((_, index) => (
+                {productData?.slice(6, 18)?.map((item, index) => (
                   <div
-                    key={index}
+                    key={`product-${index + 6}`}
                     className="spaceCard relative lg:w-1/3 md:w-1/3 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:xl:w-1/2 group-has-[.map]/mainBox:md:w-1/2 w-full p-4"
                   >
-                    <ProductCard />
+                    <ProductCard item={item} setIsOpen={setIsOpen}/>
                   </div>
                 ))}
               </div>
@@ -919,17 +617,18 @@ const Listing = () => {
               </section>
 
               <div className="spaces flex flex-row flex-wrap -mx-4">
-                {Array.from({ length: 12 }).map((_, index) => (
+                {productData?.slice(18, 30)?.map((item, index) => (
                   <div
-                    key={index}
+                    key={`product-${index + 18}`}
                     className="spaceCard lg:w-1/3 md:w-1/3 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:xl:w-1/2 group-has-[.map]/mainBox:md:w-1/2 w-full p-4"
                   >
-                    <ProductCard />
+                    <ProductCard item={item} setIsOpen={setIsOpen}/>
                   </div>
                 ))}
               </div>
 
               <TestimonialCta />
+              <Pagination currentPage={page}  totalPages={Math.ceil(allSpaces?.space_count / perPage)} onPageChange={setPage} />
             </div>
             {mapToggle && (
               <div className="map lg:w-1/3 w-full lg:flex flex-col md:sticky md:top-10 hidden">
@@ -958,6 +657,7 @@ const Listing = () => {
           handleClear={handleClear}
         />
       )}
+      {isOpen && <ExplorePopup isOpen={isOpen} setIsOpen={setIsOpen}/>}
     </>
   );
 };

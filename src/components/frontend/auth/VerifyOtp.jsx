@@ -117,17 +117,18 @@ const VerifyOtp = ({ mobile = "", setIsShowOtp }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full max-w-md mx-auto bg-white p-6 rounded-2xl shadow-lg flex flex-col gap-5"
+      className="w-full py-7"
     >
-      <h2 className="text-xl font-semibold text-center text-gray-800">
-        OTP Verification
-      </h2>
-      <p className="text-center text-gray-600">
-        Enter the OTP sent to <span className="font-medium">+91 {mobile}</span>
-      </p>
-
+      <div className="mb-10">
+        <h2 className="text-lg 2xl:text-xl font-medium text-center text-[#141414] mb-1">
+          OTP Verification
+        </h2>
+        <p className="text-center 2xl:text-base text-sm text-[#000000de]">
+          Enter the OTP send to <span className="font-semibold text-black">+91 {mobile}</span>
+        </p>
+      </div>
       {/* OTP Inputs */}
-      <div className="flex justify-center gap-3">
+      <div className="flex justify-center gap-5">
         {otp.map((digit, idx) => (
           <input
             key={idx}
@@ -138,38 +139,44 @@ const VerifyOtp = ({ mobile = "", setIsShowOtp }) => {
             onChange={(e) => handleOtpChange(idx, e.target.value)}
             onKeyDown={(e) => handleKeyDown(e, idx)}
             ref={(el) => (inputRefs.current[idx] = el)}
-            className="size-14 text-center text-lg font-semibold border rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
+            placeholder="0"
+            className="p-5 text-center text-sm font-semibold border-b-2 text-[#000000de] outline-none w-[calc(25%-10px)]"
           />
         ))}
       </div>
-
-      {/* Resend OTP */}
-      <button
-        type="button"
-        onClick={handleResendOtp}
-        disabled={isResendDisabled}
-        className={`text-sm underline text-center ${
-          isResendDisabled
-            ? "text-gray-400 cursor-not-allowed"
-            : "text-blue-500"
-        }`}
-      >
-        {isResendDisabled ? `Resend in ${timer}s` : "Resend OTP"}
-      </button>
-
       {/* Error */}
       {errorMsg && (
-        <div className="text-red-600 text-center text-sm">{errorMsg}</div>
+        <div className="text-[#f44336] font-medium text-sm pt-3">{errorMsg}</div>
       )}
+
+      {/* Resend OTP */}
+      <div className="text-center text-sm 2xl:text-base mb-2">
+        Didn't receive the OTP {" "} 
+        <button
+          type="button"
+          onClick={handleResendOtp}
+          disabled={isResendDisabled}
+          className={`text-sm  text-center py-4 ${
+            isResendDisabled
+              ? "text-[#d6d6d6] cursor-not-allowed"
+              : "text-[#f76900]"
+          }`}
+        >
+          
+          <span className="uppercase font-semibold">Resend OTP</span> 
+        </button> {" "} 
+        {isResendDisabled && ` in ${timer}s` }
+      </div>
+
+      
 
       {/* Submit Button */}
       <button
         type="submit"
         disabled={isPending}
-        className="bg-orange-500 hover:bg-orange-600 transition text-white rounded-full h-12 w-full font-semibold flex items-center justify-center gap-2"
+        className="cursor-pointer bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white py-[15px] w-full rounded-[15px] font-semibold duration-500 transition text-center uppercase tracking-[1px]"
       >
         {isPending ? "Verifying..." : "Verify OTP"}
-        <Svg name="openInView" className="size-5" />
       </button>
     </form>
   );

@@ -40,25 +40,51 @@ const LoginViaMailPassword = ({ setIsOpen, setValue }) => {
       </div>
       {!isForgetPassword ? (
         <>
+        <div className=" pt-6">
           <button
             onClick={() => {
               setValue("isMobileTab", true, {
                 shouldValidate: true,
               });
             }}
-            className="py-5 cursor-pointer flex items-center text-[#f76900] font-medium"
+            className="p-3 cursor-pointer flex items-center text-[#f76900] font-medium"
           >
-            <Svg name="leftArrow" className="size-4" />
+            <Svg name="leftArrow" className="size-[15px]" />
             Back
           </button>
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="py-5 flex flex-col gap-4"
+            className="pb-5 flex flex-col gap-4"
           >
+           <div class="relative">
+                <input type="text" id="Email" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#3f51b5] peer" placeholder=" " />
+                <label for="Email" class="absolute text-sm font-semibold text-[#00000099] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#3f51b5]   peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Email*</label>
+            </div>
             <div>
+              <div class="relative">
+                  <input  type={showPassword ? "text" : "password"} {...register("password")} id="password" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#3f51b5] peer" placeholder=" " />
+                  <label for="password" class="absolute text-sm font-semibold text-[#00000099] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#3f51b5]   peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">password*</label>
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                  >
+                    <Svg
+                      name={showPassword ? "eyeSlash" : "eye"}
+                      className="size-5"
+                    />
+                  </button>
+              </div>
+              {errors.password && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+            {/* <div>
               <input
                 type="email"
-                placeholder="Email"
+                placeholder="Email*"
                 {...register("email")}
                 className={`h-12 px-4 border rounded-md w-full focus:outline-none focus:ring-2 ${
                   errors.email
@@ -71,10 +97,10 @@ const LoginViaMailPassword = ({ setIsOpen, setValue }) => {
                   {errors.email.message}
                 </p>
               )}
-            </div>
+            </div> */}
             <div>
               <div className="relative">
-                <input
+                {/* <input
                   type={showPassword ? "text" : "password"}
                   placeholder="Password"
                   {...register("password")}
@@ -83,8 +109,8 @@ const LoginViaMailPassword = ({ setIsOpen, setValue }) => {
                       ? "border-red-500 focus:ring-red-400"
                       : "border-gray-300 focus:ring-orange-500"
                   }`}
-                />
-                <button
+                /> */}
+                {/* <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
@@ -93,7 +119,7 @@ const LoginViaMailPassword = ({ setIsOpen, setValue }) => {
                     name={showPassword ? "eyeSlash" : "eye"}
                     className="size-5"
                   />
-                </button>
+                </button> */}
               </div>
               {errors.password && (
                 <p className="text-red-500 text-sm mt-1">
@@ -118,6 +144,7 @@ const LoginViaMailPassword = ({ setIsOpen, setValue }) => {
               Login
             </button>
           </form>
+          </div>
         </>
       ) : (
         <ForgetPassword setIsForgetPassword={setIsForgetPassword}/>

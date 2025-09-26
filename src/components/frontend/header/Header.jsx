@@ -64,7 +64,7 @@ const Header = () => {
                 </Link>
               </div>
               <div>
-                <a href="#"
+                <div
                   className="flex items-center gap-1 border-[2px] border-[#ffe9d8] bg-[#f7690012] text-[#f76900] rounded-[15px] py-[8px] px-5.5 cursor-pointer"
                   onClick={() => setIsOpen(true)}
                 >
@@ -72,7 +72,7 @@ const Header = () => {
                     <Svg name="logIn" className="size-[22px]" />
                   </span>
                   <span className="xl:text-[15px] lg:text-sm">Sign in</span>
-                </a>
+                </div>
               </div>
             </div>
 

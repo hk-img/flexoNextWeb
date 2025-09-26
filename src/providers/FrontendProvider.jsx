@@ -1,9 +1,12 @@
+import AuthProvider from "@/context/useAuth";
 import LocationProvider from "@/context/useLocation";
 
 export default function FrontendProvider({ children }) {
   return (
-    <LocationProvider>
-    {children}
-    </LocationProvider>
+    <AuthProvider>
+      <LocationProvider>
+        {children}
+      </LocationProvider>
+    </AuthProvider>
   );
 }

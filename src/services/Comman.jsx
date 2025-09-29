@@ -28,7 +28,7 @@ export const convertSlugToCapitalLetter = (slug)=>{
 
 export const getTypeOfSpaceByWorkSpace = (workSpaceSlug) => {
   if(!workSpaceSlug) return "";
-  const capitalWorkSpace = convertSlugToCapitalLetter(workSpaceSlug);
+  const capitalWorkSpace = workSpaceSlug == "coworking" ? "Coworking Space" : convertSlugToCapitalLetter(workSpaceSlug);
   const findWorkSpace = workSpace.find((item) => item.workSpaceName === capitalWorkSpace);
   return findWorkSpace?.typeOfSpace?.toLowerCase().replace(/-/g, "");
 };

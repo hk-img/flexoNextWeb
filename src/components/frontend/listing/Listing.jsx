@@ -11,6 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import Pagination from "../pagination/Pagination";
 import ExplorePopup from "../explorePopup/ExplorePopup";
 import { convertSlugToCapitalLetter, getTypeOfSpaceByWorkSpace, slugGenerator } from "@/services/Comman";
+import MapWithPrices from "./MapWithPrice";
 const coworkingTypes = [
   "Private Office",
   "Managed Office",
@@ -43,6 +44,8 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
     amenities: [],
   });
   const [page,setPage] = useState(1);
+  const [hoveredSpaceId, setHoveredSpaceId] = useState(null);
+  console.log({hoveredSpaceId})
   const perPage = 30;
 
   const handleRadioChange = (e) => {
@@ -426,7 +429,14 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
                     </div>
                   )}
                 </div>
-                {mapToggle && (
+                {
+                  mapToggle && (
+                    <div className="map lg:w-2/5 w-full flex flex-col md:sticky md:top-10 mt-3 lg:mt-1 lg:hidden">
+                      <MapWithPrices spaceType = {spaceType} spaces={productData} hoveredSpaceId={hoveredSpaceId}/>
+                    </div> 
+                  )
+                }
+                {/* {mapToggle && (
                   <div className="map lg:w-2/5 w-full flex flex-col md:sticky md:top-10 mt-3 lg:mt-1 lg:hidden">
                     <iframe
                       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.501429411464!2d72.82552997425316!3d19.129516050292203!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b77913e9dd2d%3A0xcb2f5ffbb0662d10!2sSpaces%20-%20Inspire%20Hub%20Andheri%20West!5e0!3m2!1sen!2sin!4v1758019913835!5m2!1sen!2sin"
@@ -439,7 +449,7 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
                       className="w-full h-full lg:aspect-[505/800] aspect-square object-cover rounded-md"
                     ></iframe>
                   </div>
-                )}
+                )} */}
               </div>
               <div className="lg:w-2/5 w-full items-start flex lg:flex-row lg:hidden flex-col lg:justify-end justify-start lg:pt-2 pt-4">
                 <div className="text-right xs:text-left">
@@ -582,6 +592,8 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
                   <div
                     key={`product-${index}`}
                     className="spaceCard relative lg:w-1/3 md:w-1/3 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:xl:w-1/2 group-has-[.map]/mainBox:md:w-1/2 w-full p-4"
+                    onMouseOver={()=>setHoveredSpaceId(item?.id)}
+                    onMouseLeave={()=>setHoveredSpaceId(null)}
                   >
                     <ProductCard item={item} setIsOpen={setIsOpen}/>
                   </div>
@@ -593,6 +605,8 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
                   <div
                     key={`product-${index + 6}`}
                     className="spaceCard relative lg:w-1/3 md:w-1/3 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:xl:w-1/2 group-has-[.map]/mainBox:md:w-1/2 w-full p-4"
+                    onMouseOver={()=>setHoveredSpaceId(item?.id)}
+                    onMouseLeave={()=>setHoveredSpaceId(null)}
                   >
                     <ProductCard item={item} setIsOpen={setIsOpen}/>
                   </div>
@@ -632,6 +646,8 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
                   <div
                     key={`product-${index + 18}`}
                     className="spaceCard lg:w-1/3 md:w-1/3 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:xl:w-1/2 group-has-[.map]/mainBox:md:w-1/2 w-full p-4"
+                    onMouseOver={()=>setHoveredSpaceId(item?.id)}
+                    onMouseLeave={()=>setHoveredSpaceId(null)}
                   >
                     <ProductCard item={item} setIsOpen={setIsOpen}/>
                   </div>
@@ -641,7 +657,14 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
               <TestimonialCta />
               <Pagination currentPage={page}  totalPages={Math.ceil(allSpaces?.space_count / perPage)} onPageChange={setPage} />
             </div>
-            {mapToggle && (
+            {
+              mapToggle && (
+                  <div className="map lg:w-1/3 w-full lg:flex flex-col md:sticky md:top-10 hidden">
+                    <MapWithPrices spaceType = {spaceType} spaces={productData} hoveredSpaceId={hoveredSpaceId}/>
+                  </div>
+              )
+            }
+            {/* {mapToggle && (
               <div className="map lg:w-1/3 w-full lg:flex flex-col md:sticky md:top-10 hidden">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.501429411464!2d72.82552997425316!3d19.129516050292203!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b77913e9dd2d%3A0xcb2f5ffbb0662d10!2sSpaces%20-%20Inspire%20Hub%20Andheri%20West!5e0!3m2!1sen!2sin!4v1758019913835!5m2!1sen!2sin"
@@ -654,7 +677,7 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
                   className=""
                 ></iframe>
               </div>
-            )}
+            )} */}
           </div>
         </div>
       </section>

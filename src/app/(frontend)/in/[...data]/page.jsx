@@ -15,10 +15,6 @@ const page = async({params}) => {
     });
     return res.json();
   }
-  const payload = {
-    cityId: city,
-    spaceType: spaceType == "coworking" ? "coworking space" : spaceType?.replace(/-/g, " ")
-  }
   async function fetchAPI2() {
     const capitalSpaceType = convertSlugToCapitalLetter(spaceType || "");
     const res = await fetch(`${BASE_URL}/user/getAllLocations?spaceType=${capitalSpaceType}`,{
@@ -28,6 +24,10 @@ const page = async({params}) => {
       next: { revalidate: 3600 }
     });
     return res.json();
+  }
+  const payload = {
+    cityId: city,
+    spaceType: spaceType == "coworking" ? "coworking space" : spaceType?.replace(/-/g, " ")
   }
   async function fetchAPI3() {
     const res = await fetch(`${BASE_URL}/spaces/getNearBySpacesByCityId`, {

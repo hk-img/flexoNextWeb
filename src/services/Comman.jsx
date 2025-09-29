@@ -37,3 +37,8 @@ export const slugGenerator = (text) =>{
   if(!text) return "";
   return text?.toLowerCase().replace(/\s+/g, "-");
 }
+
+export const convertSlugToSmallLetter = (slug)=>{
+  if(!slug) return "";
+  return slug?.replace(/-/g, " ")?.split(" ")?.map(word => word?.charAt(0)?.toLowerCase() + word?.slice(1))?.join(" ")
+}

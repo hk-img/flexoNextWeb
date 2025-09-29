@@ -168,8 +168,10 @@ const ProductCard = ({ item = {}, setIsOpen }) => {
           </div>
           <div className="offerBtn flex items-end justify-end">
             <button
-              onClick={() => {
-                setIsOpen && setIsOpen(true);
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();  
+                setIsOpen(true);
               }}
               className="w-fit bg-[#f76900] text-[12px] border border-[#f76900]  text-white py-1.5 px-3 rounded-sm font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer"
             >

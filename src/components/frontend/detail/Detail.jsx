@@ -5,10 +5,21 @@ import React from "react";
 import { useEffect, useState } from "react";
 import EmblaCarousel from "../emblaCarousel/EmblaCarousel";
 import ProductCard from "../productCard/ProductCard";
-import { YouTubeEmbed } from '@next/third-parties/google';
+import { YouTubeEmbed } from "@next/third-parties/google";
+import ExplorePopup from "../explorePopup/ExplorePopup";
+import ImageWithFallback from "@/components/ImageWithFallback";
+import MapComponent from "./MapComponent";
 
-const Detail = () => {
+const Detail = ({ detailData }) => {
+  const spaceData = detailData?.data;
+  const [showAll, setShowAll] = useState(false);
+  const displayedFacilities = showAll
+    ? spaceData?.facilities
+    : spaceData?.facilities?.slice(0, 3);
+  console.log({ spaceData });
+  const youtubeId = spaceData?.youtube_url?.split("/")?.pop();
   const [isFixed, setIsFixed] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY >= 700) {
@@ -36,7 +47,9 @@ const Detail = () => {
     <>
       <section className="relative w-full lg:mt-[82px] sm:mt-[62px] mt-[63px] ">
         <div className="relative">
-          <div className="bg-black text-white font-medium text-sm px-[10px] py-2 rounded-sm absolute top-7 left-6  z-10">Premium</div>
+          <div className="bg-black text-white font-medium text-sm px-[10px] py-2 rounded-sm absolute top-7 left-6  z-10">
+            Premium
+          </div>
           <div className="grid md:grid-cols-2 grid-cols-1 gap-[2px]">
             <div className="[&_[data-ntpc]]:!h-full [&_[data-title]]:h-full [&_[data-title]]:!max-w-full">
               {/* <iframe
@@ -48,33 +61,40 @@ const Detail = () => {
                 referrerPolicy="strict-origin-when-cross-origin"
                 allowFullScreen
               ></iframe> */}
-              <YouTubeEmbed
-                videoId="hxvOFKFqQLk"
-                className="!w-full !h-full  "
-              />
+              {youtubeId ? (
+                <YouTubeEmbed
+                  videoId={youtubeId}
+                  className="!w-full !h-full  "
+                />
+              ) : (
+                <ImageWithFallback
+                  src={spaceData?.images?.[0] || "/images/default_image.webp"}
+                  alt="Space Image"
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  className="w-full h-full object-cover"
+                  fallback="/images/default_image.webp"
+                />
+              )}
             </div>
             <div>
               <div className="grid md:grid-cols-2 grid-cols-4 gap-[2px]">
-                <div>
-                  <a href="#">
-                    <img src="/images/detail-1.webp" alt="" />
-                  </a>
-                </div>
-                <div>
-                  <a href="#">
-                    <img src="/images/detail-2.webp" alt="" />
-                  </a>
-                </div>
-                <div>
-                  <a href="#">
-                    <img src="/images/detail-3.webp" alt="" />
-                  </a>
-                </div>
-                <div>
-                  <a href="#">
-                    <img src="/images/detail-4.webp" alt="" />
-                  </a>
-                </div>
+                {spaceData?.images?.slice(1, 5).map((item, index) => (
+                  <div key={index}>
+                    <div>
+                      <ImageWithFallback
+                        src={item}
+                        alt="Space Image"
+                        width={0}
+                        height={0}
+                        sizes="100vw"
+                        className="w-full h-full object-cover"
+                        fallback="/images/default_image.webp"
+                      />
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -95,13 +115,16 @@ const Detail = () => {
               </div>
               <div className="absolute -right-25 -translate-x-1/2 mt-2 flex items-center gap-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
                 <div className="bg-[#3b5998] w-[30px] h-[30px] flex border items-center justify-center rounded-full shadow ">
-                  <Svg name="facebook" className="size-[15px] text-[#343a40]"/>
+                  <Svg name="facebook" className="size-[15px] text-[#343a40]" />
                 </div>
                 <div className="bg-[#34aaf3] w-[30px] h-[30px] flex border items-center justify-center rounded-full shadow ">
-                  <Svg name="linkedin2" className="size-[15px] text-[#343a40]"/>
+                  <Svg
+                    name="linkedin2"
+                    className="size-[15px] text-[#343a40]"
+                  />
                 </div>
                 <div className="bg-[#6ee777] w-[30px] h-[30px] flex border items-center justify-center rounded-full shadow ">
-                  <Svg name="whatsapp" className="size-[15px] text-[#343a40]"/>
+                  <Svg name="whatsapp" className="size-[15px] text-[#343a40]" />
                 </div>
                 <div className="bg-[radial-gradient(circle_at_30%_107%,_#fdf497_0%,_#fdf497_5%,_#fd5949_45%,#d6249f_60%,#285AEB_90%)] border w-[30px] h-[30px] flex items-center justify-center rounded-full shadow ">
                   <Svg
@@ -110,7 +133,7 @@ const Detail = () => {
                   />
                 </div>
                 <div className="bg-white w-[30px] h-[30px] border  flex items-center justify-center rounded-full shadow ">
-                  <Svg name="copy" className="size-[15px] text-[#343a40]"/>
+                  <Svg name="copy" className="size-[15px] text-[#343a40]" />
                 </div>
               </div>
             </div>
@@ -122,22 +145,24 @@ const Detail = () => {
           <div className="lg:w-2/3 md:pr-[15px] pr-0">
             <ol className="2xl:text-base text-sm leading-[30px] flex flex-wrap items-center gap-2 pb-px">
               <li className="text-[#141414] hover:text-[#777]">
-                <a href="#">Coworking Space In Mumbai </a>
+                <a href="#">
+                  {spaceData?.spaceType} In {spaceData?.contact_city_name}{" "}
+                </a>
               </li>
               <li>
                 <Svg name="rightArrow" className="size-2 text-gray-500" />
               </li>
               <li className="text-[#141414] hover:text-[#777]">
-                <a href="#">Goregaon </a>
+                <a href="#">{spaceData?.location_name} </a>
               </li>
             </ol>
             <div className="">
               <h1 className="2xl:text-[30px] text-lg leading-[1.6] font-medium text-[#141414] mb-4">
-                WeWork Goregaon
+                {spaceData?.actual_name} {spaceData?.location_name}
               </h1>
               <div className="flex items-center text-[#141414] 2xl:text-base text-sm mb-4.5">
                 <Svg name="location2" className="size-5 text-[#f76900]" />
-                <span>Goregaon</span>
+                <span>{spaceData?.location_name}</span>
               </div>
               <div className="flex md:flex-row flex-col md:space-y-0 md:gap-y-0 gap-y-1 space-y-3 md:items-center justify-between mb-[25px]">
                 <div className="flex items-center space-x-11 text-sm text-[#646464] px-2">
@@ -158,7 +183,7 @@ const Detail = () => {
                     <Svg name="thumbUp" className="size-3.5 text-black" />
                     <span className="text-[15px]">0</span>
                   </div>
-                  
+
                   <div className="flex items-center space-x-1 p-1">
                     <Svg name="thumbDown" className="size-3.5 text-black" />
                   </div>
@@ -243,230 +268,101 @@ const Detail = () => {
                         About the Space
                       </h2>
                       <p className="text-[#777] text-base leading-[1.8]">
-                        Here's an elegant coworking space in the plush suburbs
-                        of Goregaon East. The workspace stands gracefully among
-                        elite residential buildings allowing 100+ people to sit,
-                        walk, network, chat, close deals, discuss business,
-                        interview, relax, and sip on a warm coffee. The private
-                        offices, shared desks, dedicated desks, conference
-                        halls, event spaces, and full-floor workstations make it
-                        a comprehensive workspace solution. This coworking space
-                        in Goregaon East is cleaned daily to ensure you have a
-                        safe and hygienic work environment.
+                        {spaceData?.about}
                       </p>
                     </div>
-                  <div className="py-6">
-                    <div>
-                      <input type="checkbox" id="parking-toggle" className="hidden peer" />
+                    <div className="py-6">
+                      <div>
+                        <input
+                          type="checkbox"
+                          id="parking-toggle"
+                          className="hidden peer"
+                        />
 
-                      <label
-                        htmlFor="parking-toggle"
-                        className="flex cursor-pointer items-center justify-between border-b border-[#dbdbdb] py-5 px-1 hover:bg-[#0000000a]"
-                      >
-                        <div className="flex items-center gap-1">
-                          <Svg name="parking" className="size-7 text-[#f76900]" />
-                          <span className="font-medium text-lg">Parking</span>
-                        </div>
-                        {/* arrow needs to be outside label */}
-                      </label>
+                        <label
+                          htmlFor="parking-toggle"
+                          className="flex cursor-pointer items-center justify-between border-b border-[#dbdbdb] py-5 px-1 hover:bg-[#0000000a]"
+                        >
+                          <div className="flex items-center gap-1">
+                            <Svg
+                              name="parking"
+                              className="size-7 text-[#f76900]"
+                            />
+                            <span className="font-medium text-lg">Parking</span>
+                          </div>
+                          {/* arrow needs to be outside label */}
+                        </label>
 
-                      {/* put arrow here */}
-                      <Svg
-                        name="leftArrow"
-                        className="size-3.5 -rotate-90 transition-transform duration-300 peer-checked:rotate-90 ml-auto mr-1 -mt-10"
-                      />
+                        {/* put arrow here */}
+                        <Svg
+                          name="leftArrow"
+                          className="size-3.5 -rotate-90 transition-transform duration-300 peer-checked:rotate-90 ml-auto mr-1 -mt-10"
+                        />
 
-                      <div
-                        className="
+                        <div
+                          className="
                           overflow-hidden
                           transition-[max-height] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
                           max-h-0 peer-checked:max-h-[1000px]
                         "
-                      >
-                        <div className="pt-8 mt-8 space-y-5">
-                          <div>
-                            <h4 className="font-semibold text-[#000000de] leading-[20px] text-[17px] mb-2">
-                              Parking options
-                            </h4>
-                            <p className="text-[#646464] text-base leading-[1.8]">
-                              Free Onsite Parking, Free Street Parking, Valet Parking, Near By
-                              Parking Lot, Metered Street Parking, Paid Site Parking
-                            </p>
-                          </div>
-                          <div>
-                            <h4 className="font-semibold text-[#000000de] leading-[20px] text-[17px] mb-2">
-                              Parking description
-                            </h4>
-                            <p className="text-[#646464] text-base leading-[1.8]">
-                              Provide a unique and descriptive title for your space that stands
-                              out. Do not include your business name as your listing will not be
-                              approved. Provide a unique and descriptive title for your space that
-                              stands out. Do not include your business name as your listing will
-                              not be approved.
-                            </p>
+                        >
+                          <div className="pt-8 mt-8 space-y-5">
+                            <div>
+                              <h4 className="font-semibold text-[#000000de] leading-[20px] text-[17px] mb-2">
+                                Parking options
+                              </h4>
+                              <p className="text-[#646464] text-base leading-[1.8]">
+                                Free Onsite Parking, Free Street Parking, Valet
+                                Parking, Near By Parking Lot, Metered Street
+                                Parking, Paid Site Parking
+                              </p>
+                            </div>
+                            <div>
+                              <h4 className="font-semibold text-[#000000de] leading-[20px] text-[17px] mb-2">
+                                Parking description
+                              </h4>
+                              <p className="text-[#646464] text-base leading-[1.8]">
+                                Provide a unique and descriptive title for your
+                                space that stands out. Do not include your
+                                business name as your listing will not be
+                                approved. Provide a unique and descriptive title
+                                for your space that stands out. Do not include
+                                your business name as your listing will not be
+                                approved.
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-
-                  </div>
-
-
 
                     <div className="pt-12">
                       <h2 className="text-xl font-medium text-[#141414] mb-6">
                         Amenities
                       </h2>
                       <div className="grid md:grid-cols-3 grid-cols-2 space-y-6">
-                        <div className="flex items-center gap-3">
-                          <div>
-                            <Svg
-                              name="clock"
-                              className="size-3.5 text-[#f76900]"
-                            />
+                        {displayedFacilities.map((item, index) => (
+                          <div key={index} className="flex items-center gap-3">
+                            <div>
+                              <Svg
+                                name="clock"
+                                className="size-3.5 text-[#f76900]"
+                              />
+                            </div>
+                            <h3 className="text-[#141414] text-[15px] font-medium leading-[1.6]">
+                              {item?.name}
+                            </h3>
                           </div>
-                          <h3 className="text-[#141414] text-[15px] font-medium leading-[1.6]">
-                            24x7 Access
-                          </h3>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <div>
-                            <Svg
-                              name="clock"
-                              className="size-3.5 text-[#f76900]"
-                            />
-                          </div>
-                          <h3 className="text-[#141414] text-[15px] font-medium leading-[1.6]">
-                            24x7 Access
-                          </h3>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <div>
-                            <Svg
-                              name="clock"
-                              className="size-3.5 text-[#f76900]"
-                            />
-                          </div>
-                          <h3 className="text-[#141414] text-[15px] font-medium leading-[1.6]">
-                            24x7 Access
-                          </h3>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <div>
-                            <Svg
-                              name="clock"
-                              className="size-3.5 text-[#f76900]"
-                            />
-                          </div>
-                          <h3 className="text-[#141414] text-[15px] font-medium leading-[1.6]">
-                            24x7 Access
-                          </h3>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <div>
-                            <Svg
-                              name="clock"
-                              className="size-3.5 text-[#f76900]"
-                            />
-                          </div>
-                          <h3 className="text-[#141414] text-[15px] font-medium leading-[1.6]">
-                            24x7 Access
-                          </h3>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <div>
-                            <Svg
-                              name="clock"
-                              className="size-3.5 text-[#f76900]"
-                            />
-                          </div>
-                          <h3 className="text-[#141414] text-[15px] font-medium leading-[1.6]">
-                            24x7 Access
-                          </h3>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <div>
-                            <Svg
-                              name="clock"
-                              className="size-3.5 text-[#f76900]"
-                            />
-                          </div>
-                          <h3 className="text-[#141414] text-[15px] font-medium leading-[1.6]">
-                            24x7 Access
-                          </h3>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <div>
-                            <Svg
-                              name="clock"
-                              className="size-3.5 text-[#f76900]"
-                            />
-                          </div>
-                          <h3 className="text-[#141414] text-[15px] font-medium leading-[1.6]">
-                            24x7 Access
-                          </h3>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <div>
-                            <Svg
-                              name="clock"
-                              className="size-3.5 text-[#f76900]"
-                            />
-                          </div>
-                          <h3 className="text-[#141414] text-[15px] font-medium leading-[1.6]">
-                            24x7 Access
-                          </h3>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <div>
-                            <Svg
-                              name="clock"
-                              className="size-3.5 text-[#f76900]"
-                            />
-                          </div>
-                          <h3 className="text-[#141414] text-[15px] font-medium leading-[1.6]">
-                            24x7 Access
-                          </h3>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <div>
-                            <Svg
-                              name="clock"
-                              className="size-3.5 text-[#f76900]"
-                            />
-                          </div>
-                          <h3 className="text-[#141414] text-[15px] font-medium leading-[1.6]">
-                            24x7 Access
-                          </h3>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <div>
-                            <Svg
-                              name="clock"
-                              className="size-3.5 text-[#f76900]"
-                            />
-                          </div>
-                          <h3 className="text-[#141414] text-[15px] font-medium leading-[1.6]">
-                            24x7 Access
-                          </h3>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <div>
-                            <Svg
-                              name="clock"
-                              className="size-3.5 text-[#f76900]"
-                            />
-                          </div>
-                          <h3 className="text-[#141414] text-[15px] font-medium leading-[1.6]">
-                            24x7 Access
-                          </h3>
-                        </div>
+                        ))}
                       </div>
-                      <div className="md:hidden block mt-5">
-                        <h3 className="text-sm text-[#3e80d8] font-extrabold">
-                          Show More
-                        </h3>
-                      </div>
+                      {spaceData?.facilities?.length > 3 && (
+                        <div
+                          className="md:hidden block mt-5 text-sm text-[#3e80d8] font-extrabold cursor-pointer"
+                          onClick={() => setShowAll(!showAll)}
+                        >
+                          {showAll ? "Show Less" : "Show More"}
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div
@@ -477,78 +373,196 @@ const Detail = () => {
                       Pricing
                     </h2>
                     <div className="space-y-5">
-                      <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
-                        <div className="grid md:grid-cols-3 grid-cols-1 md:items-center md:gap-4 gap-0 justify-between">
-                          <div className="md:col-span-2">
-                            <h3 className="2xl:text-xl text-lg leading-[1.6] font-medium text-[#010101]">
-                              Private Office
-                            </h3>
-                            <p className="2xl:text-base text-sm leading-[1.5] text-[#777]">
-                              Private space for you and your team
-                            </p>
-                          </div>
-                          <div className="md:ps-[15px]">
-                            <span className="block text-[15px] leading-[30px] font-light">
-                              from
-                            </span>
-                            <div className="flex items-center">
-                              <h2 className=" text-lg font-medium flex items-center leading-[1.6]">
-                                <span className="text-lg text-[#141414]">
-                                  <Svg
-                                    name="rupee"
-                                    className="size-[18px] text-[#f76900]"
-                                  />
-                                </span>{" "}
-                                33000
-                              </h2>
-                              <span className=" text-[15px] leading-[30px] font-light">
-                                /seat/month
+                      {spaceData?.privatecabin_price > 0 && (
+                        <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
+                          <div className="grid md:grid-cols-3 grid-cols-1 md:items-center md:gap-4 gap-0 justify-between">
+                            <div className="md:col-span-2">
+                              <h3 className="2xl:text-xl text-lg leading-[1.6] font-medium text-[#010101]">
+                                Private Office
+                              </h3>
+                              <p className="2xl:text-base text-sm leading-[1.5] text-[#777]">
+                                Private space for you and your team
+                              </p>
+                            </div>
+                            <div className="md:ps-[15px]">
+                              <span className="block text-[15px] leading-[30px] font-light">
+                                from
                               </span>
+                              <div className="flex items-center">
+                                <h2 className=" text-lg font-medium flex items-center leading-[1.6]">
+                                  <span className="text-lg text-[#141414]">
+                                    <Svg
+                                      name="rupee"
+                                      className="size-[18px] text-[#f76900]"
+                                    />
+                                  </span>{" "}
+                                  {spaceData?.privatecabin_price}
+                                </h2>
+                                <span className=" text-[15px] leading-[30px] font-light">
+                                  /seat/month
+                                </span>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <div>
-                          <button className="md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
-                            ENQUIRE NOW
-                          </button>
-                        </div>
-                      </div>
-                      <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
-                        <div className="grid md:grid-cols-3 grid-cols-1 md:items-center md:gap-4 gap-2 justify-between">
-                          <div className="md:col-span-2">
-                            <h3 className="2xl:text-xl text-lg leading-[1.6] font-medium text-[#010101]">
-                              Private Office
-                            </h3>
-                            <p className="2xl:text-base text-sm leading-[1.5] text-[#777]">
-                              Private space for you and your team
-                            </p>
+                          <div>
+                            <button className="md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
+                              ENQUIRE NOW
+                            </button>
                           </div>
-                          <div className="md:ps-[15px]">
-                            <span className="block text-[15px] leading-[30px] font-light">
-                              from
-                            </span>
-                            <div className="flex items-center">
-                              <h2 className=" text-lg font-medium flex items-center leading-[1.6]">
-                                <span className="text-lg text-[#141414]">
-                                  <Svg
-                                    name="rupee"
-                                    className="size-[18px] text-[#f76900]"
-                                  />
-                                </span>{" "}
-                                33000
-                              </h2>
-                              <span className=" text-[15px] leading-[30px] font-light">
-                                /seat/month
+                        </div>
+                      )}
+                      {spaceData?.manage_office_price > 0 && (
+                        <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
+                          <div className="grid md:grid-cols-3 grid-cols-1 md:items-center md:gap-4 gap-2 justify-between">
+                            <div className="md:col-span-2">
+                              <h3 className="2xl:text-xl text-lg leading-[1.6] font-medium text-[#010101]">
+                                Managed Office
+                              </h3>
+                              <p className="2xl:text-base text-sm leading-[1.5] text-[#777]">
+                                Customised space for specific requirements
+                              </p>
+                            </div>
+                            <div className="md:ps-[15px]">
+                              <span className="block text-[15px] leading-[30px] font-light">
+                                from
                               </span>
+                              <div className="flex items-center">
+                                <h2 className=" text-lg font-medium flex items-center leading-[1.6]">
+                                  <span className="text-lg text-[#141414]">
+                                    <Svg
+                                      name="rupee"
+                                      className="size-[18px] text-[#f76900]"
+                                    />
+                                  </span>{" "}
+                                  {spaceData?.manage_office_price}
+                                </h2>
+                                <span className=" text-[15px] leading-[30px] font-light">
+                                  /seat/month
+                                </span>
+                              </div>
                             </div>
                           </div>
+                          <div>
+                            <button className="md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
+                              ENQUIRE NOW
+                            </button>
+                          </div>
                         </div>
-                        <div>
-                          <button className="md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
-                            ENQUIRE NOW
-                          </button>
+                      )}
+                      {spaceData?.dedicated_desk_price > 0 && (
+                        <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
+                          <div className="grid md:grid-cols-3 grid-cols-1 md:items-center md:gap-4 gap-2 justify-between">
+                            <div className="md:col-span-2">
+                              <h3 className="2xl:text-xl text-lg leading-[1.6] font-medium text-[#010101]">
+                                Dedicated Desk
+                              </h3>
+                              <p className="2xl:text-base text-sm leading-[1.5] text-[#777]">
+                                Fixed workstation in a shared area
+                              </p>
+                            </div>
+                            <div className="md:ps-[15px]">
+                              <span className="block text-[15px] leading-[30px] font-light">
+                                from
+                              </span>
+                              <div className="flex items-center">
+                                <h2 className=" text-lg font-medium flex items-center leading-[1.6]">
+                                  <span className="text-lg text-[#141414]">
+                                    <Svg
+                                      name="rupee"
+                                      className="size-[18px] text-[#f76900]"
+                                    />
+                                  </span>{" "}
+                                  {spaceData?.dedicated_desk_price}
+                                </h2>
+                                <span className=" text-[15px] leading-[30px] font-light">
+                                  /seat/month
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          <div>
+                            <button className="md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
+                              ENQUIRE NOW
+                            </button>
+                          </div>
                         </div>
-                      </div>
+                      )}
+                      {spaceData?.flexible_desk_price > 0 && (
+                        <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
+                          <div className="grid md:grid-cols-3 grid-cols-1 md:items-center md:gap-4 gap-2 justify-between">
+                            <div className="md:col-span-2">
+                              <h3 className="2xl:text-xl text-lg leading-[1.6] font-medium text-[#010101]">
+                                Flexible Desk
+                              </h3>
+                              <p className="2xl:text-base text-sm leading-[1.5] text-[#777]">
+                                Any workstation in a shared area
+                              </p>
+                            </div>
+                            <div className="md:ps-[15px]">
+                              <span className="block text-[15px] leading-[30px] font-light">
+                                from
+                              </span>
+                              <div className="flex items-center">
+                                <h2 className=" text-lg font-medium flex items-center leading-[1.6]">
+                                  <span className="text-lg text-[#141414]">
+                                    <Svg
+                                      name="rupee"
+                                      className="size-[18px] text-[#f76900]"
+                                    />
+                                  </span>{" "}
+                                  {spaceData?.flexible_desk_price}
+                                </h2>
+                                <span className=" text-[15px] leading-[30px] font-light">
+                                  /seat/month
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          <div>
+                            <button className="md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
+                              ENQUIRE NOW
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                      {spaceData?.virtual_office_price > 0 && (
+                        <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
+                          <div className="grid md:grid-cols-3 grid-cols-1 md:items-center md:gap-4 gap-2 justify-between">
+                            <div className="md:col-span-2">
+                              <h3 className="2xl:text-xl text-lg leading-[1.6] font-medium text-[#010101]">
+                                Virtual Office
+                              </h3>
+                              <p className="2xl:text-base text-sm leading-[1.5] text-[#777]">
+                                Premium business and mailing address
+                              </p>
+                            </div>
+                            <div className="md:ps-[15px]">
+                              <span className="block text-[15px] leading-[30px] font-light">
+                                from
+                              </span>
+                              <div className="flex items-center">
+                                <h2 className=" text-lg font-medium flex items-center leading-[1.6]">
+                                  <span className="text-lg text-[#141414]">
+                                    <Svg
+                                      name="rupee"
+                                      className="size-[18px] text-[#f76900]"
+                                    />
+                                  </span>{" "}
+                                  {spaceData?.virtual_office_price}
+                                </h2>
+                                <span className=" text-[15px] leading-[30px] font-light">
+                                  /seat/month
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          <div>
+                            <button className="md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
+                              ENQUIRE NOW
+                            </button>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div
@@ -559,13 +573,7 @@ const Detail = () => {
                       Location
                     </h2>
                     <div>
-                      <iframe
-                        className="w-full h-[400px] "
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d113191.98042546936!2d76.56397305823452!3d27.554769647218155!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3972998fa7e65df3%3A0x38cebba39ee426f2!2sAlwar%2C%20Rajasthan%2C%20India!5e0!3m2!1sen!2sus!4v1757567494363!5m2!1sen!2sus"
-                        allowFullScreen=""
-                        loading="lazy"
-                        referrerPolicy="no-referrer-when-downgrade"
-                      ></iframe>
+                      <MapComponent spaceData={spaceData} />
                     </div>
                     <div className="md:px-5 pt-5 px-5 grid grid-cols-2">
                       <div className="flex items-center gap-2">
@@ -627,62 +635,22 @@ const Detail = () => {
                         </div>
 
                         <div className="grid md:gap-4 gap-2 md:p-6 px-[15px]">
-                          <div className="flex justify-between">
-                            <span className="text-[#777] text-[15px]">
-                              Monday
-                            </span>
-                            <span className="text-[#777] text-[15px]">
-                              09:00 AM – 08:00 PM
-                            </span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-[#777] text-[15px]">
-                              Tuesday
-                            </span>
-                            <span className="text-[#777] text-[15px]">
-                              09:00 AM – 08:00 PM
-                            </span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-[#777] text-[15px]">
-                              Wednesday
-                            </span>
-                            <span className="text-[#777] text-[15px]">
-                              09:00 AM – 08:00 PM
-                            </span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-[#777] text-[15px]">
-                              Thursday
-                            </span>
-                            <span className="text-[#777] text-[15px]">
-                              09:00 AM – 08:00 PM
-                            </span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-[#777] text-[15px]">
-                              Friday
-                            </span>
-                            <span className="text-[#777] text-[15px]">
-                              09:00 AM – 08:00 PM
-                            </span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-[#777] text-[15px]">
-                              Saturday
-                            </span>
-                            <span className="text-[#777] text-[15px]">
-                              10:00 AM – 04:00 PM
-                            </span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-[#777] text-[15px]">
-                              Sunday
-                            </span>
-                            <span className="text-[#ff3a6d] text-[15px]">
-                              Closed
-                            </span>
-                          </div>
+                          {spaceData?.working_time?.map((item, index) => (
+                            <div key={index} className="flex justify-between">
+                              <span className="text-[#777] text-[15px]">
+                                {item.day}
+                              </span>
+                              {item.isClosed ? (
+                                <span className="text-[#ff3a6d] text-[15px]">
+                                  Closed
+                                </span>
+                              ) : (
+                                <span className="text-[#777] text-[15px]">
+                                  {item.openingTime} AM – {item.closingTime} PM
+                                </span>
+                              )}
+                            </div>
+                          ))}
                         </div>
                       </div>
                     </div>
@@ -699,65 +667,70 @@ const Detail = () => {
                         </button>
                       </div>
                     </div>
-                    <div className="pt-5 md:pt-10 hidden">
-                      <h3 className="text-[#343a40] text-lg">No Reviews Yet</h3>
-                    </div>
-                    <div>
-                      <div className="space-y-6 pt-5 md:pt-8 ">
-                        <div className="flex items-center gap-2">
-                          <div className="flex items-center gap-1 text-[#f76900]">
-                            <Svg name="star" className="size-4" />
-                            <Svg name="star" className="size-4" />
-                            <Svg name="star" className="size-4" />
-                            <Svg name="star" className="size-4" />
-                            <Svg name="emptyStar" className="size-4" />
-                          </div>
-                          <div className="border border-[#f76900] text-[#777] text-sm px-3 py-0.5 rounded-full">
-                            4.0
-                          </div>
-                        </div>
-
-                        <div className="flex items-start gap-4">
-                          <div className="w-12 h-12 rounded-full flex items-center justify-center">
-                            <Image
-                              width={50}
-                              height={50}
-                              src="/images/user_image.webp"
-                              alt=""
-                            />
+                    {detailData?.existingReview?.length > 0 ? (
+                      <div>
+                        <div className="space-y-6 pt-5 md:pt-8 ">
+                          <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-1 text-[#f76900]">
+                              <Svg name="star" className="size-4" />
+                              <Svg name="star" className="size-4" />
+                              <Svg name="star" className="size-4" />
+                              <Svg name="star" className="size-4" />
+                              <Svg name="emptyStar" className="size-4" />
+                            </div>
+                            <div className="border border-[#f76900] text-[#777] text-sm px-3 py-0.5 rounded-full">
+                              4.0
+                            </div>
                           </div>
 
-                          <div className="flex-1 space-y-1">
-                            <div className="">
-                              <h3 className="font-medium text-[#141414]">
-                                Hitesh
-                              </h3>
-                              <div className="flex md:flex-row flex-col md:items-center md:gap-10 gap-1">
-                                <div className="flex text-[#f76900] gap-1 text-sm">
-                                  <Svg name="star" className="size-5" />
-                                  <Svg name="star" className="size-5" />
-                                  <Svg name="star" className="size-5" />
-                                  <Svg name="star" className="size-5" />
-                                  <Svg name="emptyStar" className="size-5" />
-                                </div>
-                                <p className="mt-1 text-base font-medium text-black flex items-center gap-1">
-                                  <Svg
-                                    name="checkTic"
-                                    className="size-3 text-[#7f7f7f]"
-                                  />
-                                  Yes I would book again
-                                </p>
-                              </div>
+                          <div className="flex items-start gap-4">
+                            <div className="w-12 h-12 rounded-full flex items-center justify-center">
+                              <Image
+                                width={50}
+                                height={50}
+                                src="/images/user_image.webp"
+                                alt=""
+                              />
                             </div>
 
-                            <p className="text-[#777] text-sm">test review</p>
-                            <p className="text-[#777] text-xs">
-                              September 11, 2025
-                            </p>
+                            <div className="flex-1 space-y-1">
+                              <div className="">
+                                <h3 className="font-medium text-[#141414]">
+                                  Hitesh
+                                </h3>
+                                <div className="flex md:flex-row flex-col md:items-center md:gap-10 gap-1">
+                                  <div className="flex text-[#f76900] gap-1 text-sm">
+                                    <Svg name="star" className="size-5" />
+                                    <Svg name="star" className="size-5" />
+                                    <Svg name="star" className="size-5" />
+                                    <Svg name="star" className="size-5" />
+                                    <Svg name="emptyStar" className="size-5" />
+                                  </div>
+                                  <p className="mt-1 text-base font-medium text-black flex items-center gap-1">
+                                    <Svg
+                                      name="checkTic"
+                                      className="size-3 text-[#7f7f7f]"
+                                    />
+                                    Yes I would book again
+                                  </p>
+                                </div>
+                              </div>
+
+                              <p className="text-[#777] text-sm">test review</p>
+                              <p className="text-[#777] text-xs">
+                                September 11, 2025
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    ) : (
+                      <div className="pt-5 md:pt-10">
+                        <h3 className="text-[#343a40] text-lg">
+                          No Reviews Yet
+                        </h3>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -787,7 +760,7 @@ const Detail = () => {
                   </span>
                   Best Deals
                 </div>
-                
+
                 <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5] ps-2">
                   <span className="text-[#f76900]">
                     <Svg name="checkRound" className="size-[22px]" />
@@ -808,7 +781,10 @@ const Detail = () => {
                 <p className="text-center text-sm leading-[1.5] text-black ">
                   Speak to our office space experts.
                 </p>
-                <a href="#" className="font-semibold text-base leading-[1.5] text-black">
+                <a
+                  href="#"
+                  className="font-semibold text-base leading-[1.5] text-black"
+                >
                   Call +91 95133 92400
                 </a>
               </div>
@@ -830,16 +806,18 @@ const Detail = () => {
               align: "start",
             }}
           >
-            {
-              Array.from({ length: 10 }).map((_, index) => (
-                 <div key={index} className="shrink-0 md:px-[9px] px-0 basis-[100%] sm:basis-[50%] md:basis-[50%] lg:basis-[33.3%] xl:basis-[33.3%] py-3">
-                  <ProductCard />
-                </div>
-              ))
-            }
+            {spaceData?.similar_spaces?.map((item, index) => (
+              <div
+                key={index}
+                className="shrink-0 md:px-[9px] px-0 basis-[100%] sm:basis-[50%] md:basis-[50%] lg:basis-[33.3%] xl:basis-[33.3%] py-3"
+              >
+                <ProductCard item={item} setIsOpen={setIsOpen} />
+              </div>
+            ))}
           </EmblaCarousel>
         </div>
       </section>
+      {isOpen && <ExplorePopup isOpen={isOpen} setIsOpen={setIsOpen} />}
     </>
   );
 };

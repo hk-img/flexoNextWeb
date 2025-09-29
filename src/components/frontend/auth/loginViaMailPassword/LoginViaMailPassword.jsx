@@ -5,6 +5,10 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import ForgetPassword from "./ForgetPassword";
+import { useMutation } from "@tanstack/react-query";
+import { postAPI } from "@/services/ApiService";
+import { useAuth } from "@/context/useAuth";
+import { toast } from "sonner";
 
 const schema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email address"),
@@ -12,6 +16,7 @@ const schema = z.object({
 });
 
 const LoginViaMailPassword = ({ setIsOpen, setIsShowMobile }) => {
+  const { setToken } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [isForgetPassword, setIsForgetPassword] = useState(false);
 
@@ -23,8 +28,30 @@ const LoginViaMailPassword = ({ setIsOpen, setIsShowMobile }) => {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (data) => {
-    console.log("Form Submitted:", data);
+  const { mutate: loginViaMailPasswordMutation, isPending } = useMutation({
+    mutationFn: async (payload) => {
+      const response = await postAPI("user/userlogin", payload);
+      return response.data;
+    },
+    onSuccess: (data) => {
+      if (data.success) {
+        toast.success(data.message);
+        setToken(data.data.accessToken);
+      } else {
+        toast.error(data.message);
+      }
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  const onSubmit = (values) => {
+    const payload = {
+      email: values.email,
+      password: values.password,
+    }
+    loginViaMailPasswordMutation(payload);
   };
 
   return (
@@ -40,28 +67,55 @@ const LoginViaMailPassword = ({ setIsOpen, setIsShowMobile }) => {
       </div>
       {!isForgetPassword ? (
         <>
-        <div className=" pt-6">
-          <button
-            onClick={() => {
-              setIsShowMobile(true);
-            }}
-            className="p-3 cursor-pointer flex items-center text-[#f76900] font-medium"
-          >
-            <Svg name="leftArrow" className="size-[15px]" />
-            Back
-          </button>
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="pb-5 flex flex-col gap-4"
-          >
-           <div class="relative">
-                <input type="text" id="Email" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#3f51b5] peer" placeholder=" " />
-                <label for="Email" class="absolute text-sm font-semibold text-[#00000099] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#3f51b5]   peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Email*</label>
-            </div>
-            <div>
-              <div class="relative">
-                  <input  type={showPassword ? "text" : "password"} {...register("password")} id="password" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#3f51b5] peer" placeholder=" " />
-                  <label for="password" class="absolute text-sm font-semibold text-[#00000099] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#3f51b5]   peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">password*</label>
+          <div className=" pt-6">
+            <button
+              onClick={() => {
+                setIsShowMobile(true);
+              }}
+              className="p-3 cursor-pointer flex items-center text-[#f76900] font-medium"
+            >
+              <Svg name="leftArrow" className="size-[15px]" />
+              Back
+            </button>
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="pb-5 flex flex-col gap-4"
+            >
+              <div className="relative">
+                <input
+                  {...register("email")}
+                  type="text"
+                  id="Email"
+                  className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#3f51b5] peer"
+                  placeholder=" "
+                />
+                <label
+                  htmlFor="Email"
+                  className="absolute text-sm font-semibold text-[#00000099] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#3f51b5]   peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+                >
+                  Email*
+                </label>
+                {errors.email && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.email.message}
+                  </p>
+                )}
+              </div>
+              <div>
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    {...register("password")}
+                    id="password"
+                    className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#3f51b5] peer"
+                    placeholder=" "
+                  />
+                  <label
+                    htmlFor="password"
+                    className="absolute text-sm font-semibold text-[#00000099] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#3f51b5]   peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+                  >
+                    password*
+                  </label>
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
@@ -72,14 +126,14 @@ const LoginViaMailPassword = ({ setIsOpen, setIsShowMobile }) => {
                       className="size-5"
                     />
                   </button>
+                </div>
+                {errors.password && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.password.message}
+                  </p>
+                )}
               </div>
-              {errors.password && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.password.message}
-                </p>
-              )}
-            </div>
-            {/* <div>
+              {/* <div>
               <input
                 type="email"
                 placeholder="Email*"
@@ -96,9 +150,9 @@ const LoginViaMailPassword = ({ setIsOpen, setIsShowMobile }) => {
                 </p>
               )}
             </div> */}
-            <div>
-              <div className="relative">
-                {/* <input
+              <div>
+                <div className="relative">
+                  {/* <input
                   type={showPassword ? "text" : "password"}
                   placeholder="Password"
                   {...register("password")}
@@ -108,7 +162,7 @@ const LoginViaMailPassword = ({ setIsOpen, setIsShowMobile }) => {
                       : "border-gray-300 focus:ring-orange-500"
                   }`}
                 /> */}
-                {/* <button
+                  {/* <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
@@ -118,34 +172,35 @@ const LoginViaMailPassword = ({ setIsOpen, setIsShowMobile }) => {
                     className="size-5"
                   />
                 </button> */}
-              </div>
-              {errors.password && (
+                </div>
+                {/* {errors.password && (
                 <p className="text-red-500 text-sm mt-1">
                   {errors.password.message}
                 </p>
-              )}
-            </div>
-            <div className="flex justify-between text-sm font-medium">
-              <button
-                onClick={() => setIsForgetPassword(true)}
-                type="button"
-                className="cursor-pointer text-[#f76900]"
-              >
-                Forgot Password
-              </button>
-            </div>
+              )} */}
+              </div>
+              <div className="flex justify-between text-sm font-medium">
+                <button
+                  onClick={() => setIsForgetPassword(true)}
+                  type="button"
+                  className="cursor-pointer text-[#f76900]"
+                >
+                  Forgot Password
+                </button>
+              </div>
 
-            <button
-              type="submit"
-              className="bg-[#f76900] text-white h-12 rounded-md font-semibold hover:bg-orange-600 transition"
-            >
-              Login
-            </button>
-          </form>
+              <button
+                type="submit"
+                className="bg-[#f76900] text-white h-12 rounded-md font-semibold hover:bg-orange-600 transition"
+                disabled={isPending}
+              >
+                {isPending? "Loading...": "Login"}
+              </button>
+            </form>
           </div>
         </>
       ) : (
-        <ForgetPassword setIsForgetPassword={setIsForgetPassword}/>
+        <ForgetPassword setIsForgetPassword={setIsForgetPassword} />
       )}
     </div>
   );

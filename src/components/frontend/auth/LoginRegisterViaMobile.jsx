@@ -1,9 +1,12 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import { z } from "zod";
+import { set, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { postAPI } from "@/services/ApiService";
 
 const loginRegisterSchema = z
   .object({
@@ -35,7 +38,7 @@ const loginRegisterSchema = z
     }
   });
 
-const LoginRegisterViaMobile = ({ isLogin }) => {
+const LoginRegisterViaMobile = ({ isLogin, setMobile, setIsShowOtp }) => {
   const {
     register,
     handleSubmit,
@@ -57,12 +60,57 @@ const LoginRegisterViaMobile = ({ isLogin }) => {
     },
   });
   const values = watch();
+  const { mutate: sendOtpMutationForRegister } = useMutation({
+    mutationFn: async (payload) => {
+      const response = await postAPI("user/loginWithMobile", payload);
+      return response.data;
+    },
+    onSuccess: (data, payload) => {
+      console.log({ data });
+      if (data.success) {
+        toast.success(data.message);
+        setMobile(payload);
+        setIsShowOtp(true);
+      } else {
+        toast.error(data.message);
+      }
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  const { mutate: sendOtpMutationForLogin } = useMutation({
+    mutationFn: async (payload) => {
+      const response = await postAPI("user/login-Mobile-New", payload);
+      return response.data;
+    },
+    onSuccess: (data, payload) => {
+      console.log({ data });
+      if (data?.success) {
+        toast.success(data.message);
+        setMobile(payload);
+        setIsShowOtp(true);
+      } else {
+        toast.error(data.message);
+      }
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
   const onSubmit = async (values) => {
-    console.log({ values }, "dsrgwergwergew");
     const country_code = values.country ? `+${values.country.dialCode}` : "";
     const dialCode = values.country ? values.country.dialCode : "";
     const mobile = values.mobile.replace(dialCode, "").replace(/^\+/, "");
     console.log({ country_code, mobile });
+    const payload = { phone_code: country_code, mobile: mobile };
+    if (isLogin) {
+      sendOtpMutationForLogin(payload);
+    } else {
+      sendOtpMutationForRegister(payload);
+    }
   };
   return (
     <>
@@ -102,7 +150,7 @@ const LoginRegisterViaMobile = ({ isLogin }) => {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="mt-10 w-full bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white py-4 rounded-[15px] font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px]"
+          className="cursor-pointer mt-10 w-full bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white py-4 rounded-[15px] font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px]"
         >
           {isSubmitting ? "Sending..." : "GET OTP"}
         </button>

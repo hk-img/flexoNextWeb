@@ -1,13 +1,16 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import { z } from "zod";
+import { email, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { postAPI } from "@/services/ApiService";
+import { toast } from "sonner";
 
 const RegisterSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email address"),
 });
 
-const RegisterViaMail = () => {
+const RegisterViaMail = ({setEmail,setIsShowOtp}) => {
   const {
     register,
     handleSubmit,
@@ -19,8 +22,31 @@ const RegisterViaMail = () => {
     },
   });
 
+   const { mutate: sendOtpMutationForRegister,isPending } = useMutation({
+      mutationFn: async (payload) => {
+        const response = await postAPI("user/check-email", payload);
+        return response.data;
+      },
+      onSuccess: (data,payload) => {
+        console.log({ data });
+        if(data?.newEmail){
+          toast.success(data.message);
+          setEmail(payload.email);
+          setIsShowOtp(true);
+        }else{
+          toast.error(data.message);
+        }
+      },
+      onError: (error) => {
+        toast.error(error.message);
+      },
+    });
+
   const onSubmit = async (values) => {
-    console.log({ values }, "dsrgwergwergew");
+    const payload = {
+      email: values.email,
+    }
+    sendOtpMutationForRegister(payload);
   };
   return (
     <>
@@ -47,10 +73,10 @@ const RegisterViaMail = () => {
         </div>
         <button
           type="submit"
-          disabled={isSubmitting}
-          className="mt-10 w-full bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white py-4 rounded-[15px] font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px]"
+          disabled={isPending}
+          className="cursor-pointer mt-10 w-full bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white py-4 rounded-[15px] font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px]"
         >
-          {isSubmitting ? "Sending..." : "GET OTP"}
+          {isPending ? "Sending..." : "GET OTP"}
         </button>
       </form>
     </>

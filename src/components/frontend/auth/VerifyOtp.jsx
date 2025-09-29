@@ -2,12 +2,17 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { postAPI } from "@/services/ApiService";
-// import { LOGIN } from "@/api/urls";
 import { toast } from "sonner";
 import { useAuth } from "@/context/useAuth";
 import Svg from "@/components/svg";
 
-const VerifyOtp = ({ mobile = "", setIsShowOtp }) => {
+const VerifyOtp = ({
+  mobile = null,
+  email = "",
+  isLogin = false,
+  setIsShowUserDetailForm,
+  setIsOpen
+}) => {
   const { setToken } = useAuth();
   const [otp, setOtp] = useState(Array(4).fill(""));
   const [errorMsg, setErrorMsg] = useState("");
@@ -50,20 +55,82 @@ const VerifyOtp = ({ mobile = "", setIsShowOtp }) => {
     }
   }, [isResendDisabled, timer]);
 
-  // Validate OTP API
-  const { mutate: validateOtpMutation, isPending } = useMutation({
+  const {
+    mutate: validateRegisterOtpMutationForMobile,
+    isPending: isPendingRegisterForMobile,
+  } = useMutation({
     mutationFn: async (payload) => {
-    //   const response = await postAPI(`${LOGIN}`, payload);
-    //   return response.data;
+      const data = {
+        otp: payload.otp,
+      };
+      const response = await postAPI(
+        `user/registrationVerifyOTP/${payload.mobile}`,
+        data
+      );
+      return response.data;
     },
     onSuccess: (data) => {
-      if (!data?.success) {
-        setErrorMsg(data.message || "Invalid OTP");
-      } else {
+      if (data?.success) {
         setErrorMsg("");
         toast.success(data.message);
-        setToken(data.userLoginToken);
-        setIsShowOtp(false);
+        setIsShowUserDetailForm(true);
+      } else {
+        setErrorMsg(data.message || "Invalid OTP");
+      }
+    },
+    onError: (err) => {
+      toast.error(err.response?.data?.message || "Something went wrong");
+    },
+  });
+
+  const {
+    mutate: validateLoginOtpMutationForEmail,
+    isPending: isPendingLoginForEmail,
+  } = useMutation({
+    mutationFn: async (payload) => {
+      const data = {
+        otp: payload.otp,
+      };
+      const response = await postAPI(
+        `user/verifyemailotp/${payload.email}`,
+        data
+      );
+      return response.data;
+    },
+    onSuccess: (data) => {
+      if (data?.success) {
+        setErrorMsg("");
+        toast.success(data.message);
+        setIsShowUserDetailForm(true);
+      } else {
+        setErrorMsg(data.message || "Invalid OTP");
+      }
+    },
+    onError: (err) => {
+      toast.error(err.response?.data?.message || "Something went wrong");
+    },
+  });
+
+  const {
+    mutate: validateLoginOtpMutationForMobile,
+    isPending: isPendingLoginForMobile,
+  } = useMutation({
+    mutationFn: async (payload) => {
+      const data = {
+        otp: payload.otp,
+      }
+      const response = await postAPI(`user/verifyOTP/${payload.mobile}`, data);
+      return response.data;
+    },
+    onSuccess: (data) => {
+      console.log({ token: data.user.accessToken },"Rtyhrtyhrtyryrt");
+      if (data?.success) {
+        setErrorMsg("");
+        toast.success(data.message);
+        setToken(data.user.accessToken);
+        setIsOpen(false)
+      } else {
+        setErrorMsg(data.message || "Invalid OTP");
       }
     },
     onError: (err) => {
@@ -74,8 +141,8 @@ const VerifyOtp = ({ mobile = "", setIsShowOtp }) => {
   // Resend OTP API
   const { mutate: sendOtpMutation } = useMutation({
     mutationFn: async (payload) => {
-    //   const response = await postAPI(`${LOGIN}`, payload);
-    //   return response.data;
+      //   const response = await postAPI(`${LOGIN}`, payload);
+      //   return response.data;
     },
     onSuccess: () => {
       setTimer(30);
@@ -101,12 +168,21 @@ const VerifyOtp = ({ mobile = "", setIsShowOtp }) => {
       return;
     }
     setErrorMsg("");
-    const payload = {
-      loginType: "validateOtp",
-      mobile,
+    let payload = {
       otp: otp.join(""),
     };
-    validateOtpMutation(payload);
+    if (isLogin) {
+      payload.mobile = mobile.mobile;
+      validateLoginOtpMutationForMobile(payload);
+    } else {
+      if (mobile) {
+        payload.mobile = mobile.mobile;
+        validateRegisterOtpMutationForMobile(payload);
+      } else {
+        payload.email = email;
+        validateLoginOtpMutationForEmail(payload);
+      }
+    }
   };
 
   // Focus on first OTP box
@@ -115,16 +191,18 @@ const VerifyOtp = ({ mobile = "", setIsShowOtp }) => {
   }, []);
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="w-full py-7"
-    >
+    <form onSubmit={handleSubmit} className="w-full py-7">
       <div className="mb-10">
         <h2 className="text-lg 2xl:text-xl font-medium text-center text-[#141414] mb-1">
           OTP Verification
         </h2>
         <p className="text-center 2xl:text-base text-sm text-[#000000de]">
-          Enter the OTP send to <span className="font-semibold text-black">+91 {mobile}</span>
+          Enter the OTP send to{" "}
+          {
+            mobile
+              ? <span className="font-semibold text-black">+{mobile.phone_code} {mobile.mobile}</span>
+              : <span className="font-semibold text-black">{email}</span>
+          }
         </p>
       </div>
       {/* OTP Inputs */}
@@ -146,12 +224,14 @@ const VerifyOtp = ({ mobile = "", setIsShowOtp }) => {
       </div>
       {/* Error */}
       {errorMsg && (
-        <div className="text-[#f44336] font-medium text-sm pt-3">{errorMsg}</div>
+        <div className="text-[#f44336] font-medium text-sm pt-3">
+          {errorMsg}
+        </div>
       )}
 
       {/* Resend OTP */}
       <div className="text-center text-sm 2xl:text-base mb-2">
-        Didn't receive the OTP {" "} 
+        Didn't receive the OTP{" "}
         <button
           type="button"
           onClick={handleResendOtp}
@@ -162,21 +242,18 @@ const VerifyOtp = ({ mobile = "", setIsShowOtp }) => {
               : "text-[#f76900]"
           }`}
         >
-          
-          <span className="uppercase font-semibold">Resend OTP</span> 
-        </button> {" "} 
-        {isResendDisabled && ` in ${timer}s` }
+          <span className="uppercase font-semibold">Resend OTP</span>
+        </button>{" "}
+        {isResendDisabled && ` in ${timer}s`}
       </div>
-
-      
 
       {/* Submit Button */}
       <button
         type="submit"
-        disabled={isPending}
+        disabled={isPendingRegisterForMobile || isPendingLoginForMobile || isPendingLoginForEmail}
         className="cursor-pointer bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white py-[15px] w-full rounded-[15px] font-semibold duration-500 transition text-center uppercase tracking-[1px]"
       >
-        {isPending ? "Verifying..." : "Verify OTP"}
+        {isPendingRegisterForMobile || isPendingLoginForMobile || isPendingLoginForEmail ? "Verifying..." : "Verify OTP"}
       </button>
     </form>
   );

@@ -10,12 +10,12 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState("");
   const [user, setUser] = useState({});
 
-//   useEffect(() => {
-//     if (token) {
-//       document.cookie = `${TOKEN_NAME}=${token}; path=/;`;
-//       localStorage.setItem(`${TOKEN_NAME}`, token);
-//     }
-//   }, [token]);
+  useEffect(() => {
+    if (token) {
+      document.cookie = `${TOKEN_NAME}=${token}; path=/;`;
+      localStorage.setItem(`${TOKEN_NAME}`, token);
+    }
+  }, [token]);
 
 //   const getUserDetails = async () => {
 //     const response = await getAPIAuth("profile", token);

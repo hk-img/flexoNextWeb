@@ -175,7 +175,7 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
           <div className="group/mainBox w-full flex flex-col lg:flex-row gap-6 items-start">
             <div className="lg:w-2/3 w-full grow flex flex-col justify-center lg:mt-8 mt-16">
               <h1 className="text-xl flex flex-wrap font-bold text-[#141414] mb-4">
-                Coworking Space in Bkc, Mumbai
+                {locationName ? `${convertSlugToCapitalLetter(spaceType || "")} in ${convertSlugToCapitalLetter(locationName || "")}, ${convertSlugToCapitalLetter(city || "")}`: spaceType == "coworking" ? `Coworking Space in ${convertSlugToCapitalLetter(city || "")}` :`${convertSlugToCapitalLetter(spaceType || "")} in ${convertSlugToCapitalLetter(city || "")}`}
               </h1>
               <div className="form-group filter-group">
                 <div className="scrollMenus overflow-auto whitespace-nowrap pb-2 mb-4">

@@ -10,6 +10,7 @@ import { useMutation } from "@tanstack/react-query";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import PasswordScreen from "./PasswordScreen";
+import Svg from "@/components/svg";
 
 const schema = z
   .object({
@@ -114,66 +115,65 @@ export default function UserDetailRegistrationFormForEmail({
         <PasswordScreen email={email} setIsOpen={setIsOpen}/>
       ) : (
         <>
+        <div className="p-5">
           {otpVerified && (
             <div className="mb-6 flex justify-center">
-              <div className="inline-flex items-center gap-3 bg-green-50 border border-green-200 px-6 py-3 rounded-md shadow-sm">
-                <div className="w-7 h-7 flex items-center justify-center rounded-full bg-green-600 text-white">
-                  ✓
+              <div className="inline-flex items-center gap-3 bg-green-50 border border-[#05ac34] px-6 py-3 rounded-md shadow-sm">
+                <div>
+                  <Svg name="checkFill" className="size-7 text-[#05ac34]" />
                 </div>
-                <div className="text-green-800 font-medium">
+                <div className="text-[#141414] text-base font-medium">
                   OTP Verified Successfully
                 </div>
               </div>
             </div>
           )}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 items-end gap-4">
               {/* First Name */}
-              <label className="block">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-sm text-gray-700">
-                    First Name <span className="text-[#f76900]">*</span>
-                  </span>
-                </div>
-                <input
+              <div>
+                <div className="relative">
+                  <input
                   type="text"
-                  {...register("firstName")}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring ${
-                    errors.firstName
-                      ? "border-red-500 focus:ring-red-200"
-                      : "border-gray-300 focus:ring-indigo-200"
-                  }`}
-                />
-                {errors.firstName && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.firstName.message}
-                  </p>
-                )}
-              </label>
+                    {...register("firstName")}
+                    id="firstName"
+                    className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#3f51b5] peer ${
+                        errors.firstName ? "border-red-500 focus:ring-red-200" : "border-gray-300 focus:ring-indigo-200"
+                      }`}
+                    placeholder=" "
+                  />
+                  <label
+                    htmlFor="firstName"
+                    className="absolute text-sm font-semibold text-[#00000099] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#3f51b5]   peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+                  >
+                  First Name*
+                  </label>
+              </div>
+              {errors.firstName && <p className="text-[#f44336] font-medium text-sm mt-1">{errors.firstName.message}</p>}
+            </div>
 
               {/* Last Name */}
-              <label className="block">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-sm text-gray-700">
-                    Last Name <span className="text-[#f76900]">*</span>
-                  </span>
-                </div>
-                <input
-                  type="text"
-                  {...register("lastName")}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring ${
-                    errors.lastName
-                      ? "border-red-500 focus:ring-red-200"
-                      : "border-gray-300 focus:ring-indigo-200"
+             <div>
+            <div className="relative">
+              <input
+              type="text"
+                 {...register("lastName")}
+                id="lastName"
+                className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#3f51b5] peer ${
+                    errors.lastName ? "border-red-500 focus:ring-red-200" : "border-gray-300 focus:ring-indigo-200"
                   }`}
-                />
-                {errors.lastName && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.lastName.message}
-                  </p>
-                )}
+                placeholder=" "
+              />
+              <label
+                htmlFor="lastName"
+                className="absolute text-sm font-semibold text-[#00000099] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#3f51b5]   peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+              >
+              Last Name*
               </label>
-            </div>
+          </div>
+          {errors.lastName && <p className="text-[#f44336] font-medium text-sm mt-1">{errors.lastName.message}</p>}
+        </div>
+            
 
             {/* Email */}
             <label className="block">
@@ -199,25 +199,32 @@ export default function UserDetailRegistrationFormForEmail({
                   />
                 )}
               />
-              {errors.mobile && (
+              {/* {errors.mobile && (
                 <span className="text-red-500 text-sm mt-1">
                   {errors.mobile.message}
                 </span>
-              )}
+              )} */}
             </label>
 
             {/* Company Name */}
-            <label className="block">
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-sm text-gray-700">Company Name</span>
-              </div>
+            <div>
+            <div className="relative">
               <input
-                type="text"
-                {...register("companyName")}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200"
+             type="text"
+               {...register("companyName")}
+                id="companyName"
+                className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#3f51b5] peer`}
+                placeholder=" "
               />
-            </label>
-
+              <label
+                htmlFor="companyName"
+                className="absolute text-sm font-semibold text-[#00000099] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#3f51b5]   peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+              >
+             Company Name*
+              </label>
+          </div>
+        </div>
+          </div>
             <button
               type="submit"
               disabled={isPending}
@@ -226,6 +233,7 @@ export default function UserDetailRegistrationFormForEmail({
               {isPending ? "Submitting..." : "Register"}
             </button>
           </form>
+          </div>
         </>
       )}
     </>

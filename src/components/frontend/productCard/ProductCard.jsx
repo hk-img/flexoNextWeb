@@ -169,7 +169,6 @@ const ProductCard = ({ item = {}, setIsOpen }) => {
           <div className="offerBtn flex items-end justify-end">
             <button
               onClick={(e) => {
-                e.preventDefault();
                 e.stopPropagation();  
                 setIsOpen(true);
               }}

@@ -98,6 +98,9 @@ const Detail = ({ detailData }) => {
               </div>
             </div>
           </div>
+          <div className="bg-white cursor-pointer text-[#000e54] font-medium text-xs px-[10px] py-2 rounded-sm absolute bottom-7 right-6  z-0">
+             View More 
+          </div>
         </div>
         <div>
           <div className="absolute md:top-7 md:right-[27px] top-3 right-4  flex items-center justify-center gap-2.5">
@@ -340,8 +343,23 @@ const Detail = ({ detailData }) => {
                       <h2 className="text-xl font-medium text-[#141414] mb-6">
                         Amenities
                       </h2>
-                      <div className="grid md:grid-cols-3 grid-cols-2 space-y-6">
-                        {displayedFacilities.map((item, index) => (
+                       <div className="max-md:hidden  grid md:grid-cols-3 grid-cols-2 gap-6">
+                        {spaceData?.facilities?.map((item, index) => (
+                          <div key={index} className="flex items-center gap-3">
+                            <div>
+                              <Svg
+                                name="clock"
+                                className="size-3.5 text-[#f76900]"
+                              />
+                            </div>
+                            <h3 className="text-[#141414] text-[15px] font-medium leading-[1.6]">
+                              {item?.name}
+                            </h3>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="md:hidden block grid md:grid-cols-3 grid-cols-2 gap-6">
+                        {displayedFacilities?.map((item, index) => (
                           <div key={index} className="flex items-center gap-3">
                             <div>
                               <Svg

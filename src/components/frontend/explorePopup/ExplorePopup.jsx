@@ -82,7 +82,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center animate-fadeIn">
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/40"
@@ -90,7 +90,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
       />
 
       {/* Popup Box */}
-      <div className="relative w-full lg:max-w-[55vw] mx-[12px] rounded-[11px] bg-white p-6 overflow-y-auto h-full md:h-auto [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]">
+      <div className="relative w-full lg:max-w-[55vw] mx-[12px] rounded-[11px] bg-white p-6 overflow-y-auto h-full md:h-auto [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]  animate-scaleIn">
         {/* Header */}
         <div className="pb-6 flex items-center justify-between">
           <h2 className="text-lg font-semibold">Get Quotes</h2>

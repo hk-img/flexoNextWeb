@@ -39,8 +39,14 @@ export default function EmblaCarousel({ children, options }) {
       {/* Buttons */}
       {options?.showButton && (
         <div className="emblaarrows absolute top-1/2  flex justify-between -translate-y-1/2">
-          <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
-          <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
+          <PrevButton onClick={(e)=>{
+            e.stopPropagation();  
+            onPrevButtonClick()
+          }} disabled={prevBtnDisabled} />
+          <NextButton onClick={(e)=>{
+            e.stopPropagation(); 
+            onNextButtonClick()
+          }} disabled={nextBtnDisabled} />
         </div>
       )}
 

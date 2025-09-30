@@ -36,6 +36,8 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
   const [toggleLocation, setToggleLocation] = useState(false);
   const [toggleLocationOptions, setToggleLocationOptions] = useState(false);
   const [query, setQuery] = useState("");
+  const [selectedLocation,setSelectedLocation] = useState(null);
+  console.log({selectedLocation})
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filterData, setFilterData] = useState({
     priceRange: { min: 50000, max: 50000000 },
@@ -118,16 +120,17 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
         }
       })
       setQuery(selectedLocation?.label);
+      setSelectedLocation(selectedLocation);
     }
   },[locationData,locationName])
 
   const { data: allSpaces,refetch:refetchSpaces } = useQuery({
-    queryKey: ["allSpaces",page,city,selectedCheckboxes],
+    queryKey: ["allSpaces",page,city,selectedCheckboxes,selectedLocation],
     queryFn: async () => {
       const type = getTypeOfSpaceByWorkSpace(spaceType || "");
       console.log({type},"Rftyhryryry")
       let payload ={
-        city_name: city,
+        city_name: selectedLocation?.city,
         spaceType: selectedCheckboxes,
         type: type,
         userId: 0,
@@ -135,7 +138,7 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
         min_price: 0,
         max_price: 0,
         amenities: filterData?.amenities,
-        location_name: locationName?.replace(/-/g, " "),
+        location_name: selectedLocation?.location_name,
         city_lat: 0,
         city_long: 0,
         location_lat:19.1121947,
@@ -390,7 +393,6 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
                                   className="border-0 bg-transparent w-full text-sm placeholder:font-normal transition-all duration-200 p-[10px] placeholder:text-[#333] focus:outline-none"
                                   value={query}
                                   onFocus={() => setToggleLocationOptions(true)}
-                                  onBlur={() => setToggleLocationOptions(false)}
                                   onChange={(e) => setQuery(e.target.value)}
                                 />
                               </div>
@@ -418,6 +420,7 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
                                 className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
                                 onClick={() => {
                                   setQuery(loc?.label);
+                                  setSelectedLocation(loc);
                                   setToggleLocationOptions(false);
                                 }}
                               >
@@ -548,7 +551,6 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
                                 className="border-0 bg-transparent w-full text-sm placeholder:font-normal transition-all duration-200 p-[10px] placeholder:text-[#333] focus:outline-none"
                                 value={query}
                                 onFocus={() => setToggleLocationOptions(true)}
-                                onBlur={() => setToggleLocationOptions(false)}
                                 onChange={(e) => setQuery(e.target.value)}
                               />
                             </div>
@@ -576,6 +578,7 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
                               className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
                               onClick={() => {
                                 setQuery(loc?.label);
+                                setSelectedLocation(loc);
                                 setToggleLocationOptions(false);
                               }}
                             >

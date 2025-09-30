@@ -5,10 +5,9 @@ import React from "react";
 import { useEffect, useState } from "react";
 import EmblaCarousel from "../emblaCarousel/EmblaCarousel";
 import ProductCard from "../productCard/ProductCard";
-import { YouTubeEmbed } from "@next/third-parties/google";
 import ExplorePopup from "../explorePopup/ExplorePopup";
-import ImageWithFallback from "@/components/ImageWithFallback";
 import MapComponent from "./MapComponent";
+import HeroSection from "./heroSection/HeroSection";
 
 const Detail = ({ detailData }) => {
   const spaceData = detailData?.data;
@@ -17,7 +16,6 @@ const Detail = ({ detailData }) => {
     ? spaceData?.facilities
     : spaceData?.facilities?.slice(0, 3);
   console.log({ spaceData });
-  const youtubeId = spaceData?.youtube_url?.split("/")?.pop();
   const [isFixed, setIsFixed] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
@@ -45,104 +43,7 @@ const Detail = ({ detailData }) => {
 
   return (
     <>
-      <section className="relative w-full lg:mt-[82px] sm:mt-[62px] mt-[63px] ">
-        <div className="relative">
-          <div className="bg-black text-white font-medium text-sm px-[10px] py-2 rounded-sm absolute top-7 left-6  z-10">
-            Premium
-          </div>
-          <div className="grid md:grid-cols-2 grid-cols-1 gap-[2px]">
-            <div className="[&_[data-ntpc]]:!h-full [&_[data-title]]:h-full [&_[data-title]]:!max-w-full">
-              {/* <iframe
-                className="w-full h-full max-md:absolute max-md:inset-0 "
-                src="https://www.youtube.com/embed/hxvOFKFqQLk?si=qR2XPRzDJJBua9_k"
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              ></iframe> */}
-              {youtubeId ? (
-                <YouTubeEmbed
-                  videoId={youtubeId}
-                  className="!w-full !h-full  "
-                />
-              ) : (
-                <ImageWithFallback
-                  src={spaceData?.images?.[0] || "/images/default_image.webp"}
-                  alt="Space Image"
-                  width={0}
-                  height={0}
-                  sizes="100vw"
-                  className="w-full h-full object-cover"
-                  fallback="/images/default_image.webp"
-                />
-              )}
-            </div>
-            <div>
-              <div className="grid md:grid-cols-2 grid-cols-4 gap-[2px]">
-                {spaceData?.images?.slice(1, 5).map((item, index) => (
-                  <div key={index}>
-                    <div>
-                      <ImageWithFallback
-                        src={item}
-                        alt="Space Image"
-                        width={0}
-                        height={0}
-                        sizes="100vw"
-                        className="w-full h-full object-cover"
-                        fallback="/images/default_image.webp"
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className="bg-white cursor-pointer text-[#000e54] font-medium text-xs px-[10px] py-2 rounded-sm absolute bottom-7 right-6  z-0">
-             View More 
-          </div>
-        </div>
-        <div>
-          <div className="absolute md:top-7 md:right-[27px] top-3 right-4  flex items-center justify-center gap-2.5">
-            <div className="bg-white w-[34px] h-[34px] flex items-center justify-center rounded-full">
-              <a href="#">
-                <Svg
-                  name="heartTransparent"
-                  className="size-[18px] text-[#343a40]"
-                />
-              </a>
-            </div>
-            <div className="relative group">
-              <div className="bg-white w-[34px] h-[34px] flex items-center justify-center rounded-full cursor-pointer shadow">
-                <Svg name="share" className="size-[18px] text-[#343a40]" />
-              </div>
-              <div className="absolute -right-25 -translate-x-1/2 mt-2 flex items-center gap-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                <div className="bg-[#3b5998] w-[30px] h-[30px] flex border items-center justify-center rounded-full shadow ">
-                  <Svg name="facebook" className="size-[15px] text-[#343a40]" />
-                </div>
-                <div className="bg-[#34aaf3] w-[30px] h-[30px] flex border items-center justify-center rounded-full shadow ">
-                  <Svg
-                    name="linkedin2"
-                    className="size-[15px] text-[#343a40]"
-                  />
-                </div>
-                <div className="bg-[#6ee777] w-[30px] h-[30px] flex border items-center justify-center rounded-full shadow ">
-                  <Svg name="whatsapp" className="size-[15px] text-[#343a40]" />
-                </div>
-                <div className="bg-[radial-gradient(circle_at_30%_107%,_#fdf497_0%,_#fdf497_5%,_#fd5949_45%,#d6249f_60%,#285AEB_90%)] border w-[30px] h-[30px] flex items-center justify-center rounded-full shadow ">
-                  <Svg
-                    name="instagram"
-                    className="size-[15px] text-[#343a40]"
-                  />
-                </div>
-                <div className="bg-white w-[30px] h-[30px] border  flex items-center justify-center rounded-full shadow ">
-                  <Svg name="copy" className="size-[15px] text-[#343a40]" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroSection spaceData={spaceData}/>
       <section className="container px-[15px] mx-auto md:py-6 py-[18px]">
         <div className="flex flex-wrap">
           <div className="lg:w-2/3 md:pr-[15px] pr-0">
@@ -274,70 +175,63 @@ const Detail = ({ detailData }) => {
                         {spaceData?.about}
                       </p>
                     </div>
-                    <div className="py-6">
-                      <div>
-                        <input
-                          type="checkbox"
-                          id="parking-toggle"
-                          className="hidden peer"
-                        />
-
-                        <label
-                          htmlFor="parking-toggle"
-                          className="flex cursor-pointer items-center justify-between border-b border-[#dbdbdb] py-5 px-1 hover:bg-[#0000000a]"
-                        >
-                          <div className="flex items-center gap-1">
-                            <Svg
-                              name="parking"
-                              className="size-7 text-[#f76900]"
+                    {
+                      spaceData?.parkingOptionsValue?.length > 0 && spaceData?.parkingDescription && (
+                        <div className="py-6">
+                          <div>
+                            <input
+                              type="checkbox"
+                              id="parking-toggle"
+                              className="hidden peer"
                             />
-                            <span className="font-medium text-lg">Parking</span>
-                          </div>
-                          {/* arrow needs to be outside label */}
-                        </label>
 
-                        {/* put arrow here */}
-                        <Svg
-                          name="leftArrow"
-                          className="size-3.5 -rotate-90 transition-transform duration-300 peer-checked:rotate-90 ml-auto mr-1 -mt-10"
-                        />
+                            <label
+                              htmlFor="parking-toggle"
+                              className="flex cursor-pointer items-center justify-between border-b border-[#dbdbdb] py-5 px-1 hover:bg-[#0000000a]"
+                            >
+                              <div className="flex items-center gap-1">
+                                <Svg
+                                  name="parking"
+                                  className="size-7 text-[#f76900]"
+                                />
+                                <span className="font-medium text-lg">Parking</span>
+                              </div>
+                            </label>
+                            <Svg
+                              name="leftArrow"
+                              className="size-3.5 -rotate-90 transition-transform duration-300 peer-checked:rotate-90 ml-auto mr-1 -mt-10"
+                            />
 
-                        <div
-                          className="
-                          overflow-hidden
-                          transition-[max-height] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
-                          max-h-0 peer-checked:max-h-[1000px]
-                        "
-                        >
-                          <div className="pt-8 mt-8 space-y-5">
-                            <div>
-                              <h4 className="font-semibold text-[#000000de] leading-[20px] text-[17px] mb-2">
-                                Parking options
-                              </h4>
-                              <p className="text-[#646464] text-base leading-[1.8]">
-                                Free Onsite Parking, Free Street Parking, Valet
-                                Parking, Near By Parking Lot, Metered Street
-                                Parking, Paid Site Parking
-                              </p>
-                            </div>
-                            <div>
-                              <h4 className="font-semibold text-[#000000de] leading-[20px] text-[17px] mb-2">
-                                Parking description
-                              </h4>
-                              <p className="text-[#646464] text-base leading-[1.8]">
-                                Provide a unique and descriptive title for your
-                                space that stands out. Do not include your
-                                business name as your listing will not be
-                                approved. Provide a unique and descriptive title
-                                for your space that stands out. Do not include
-                                your business name as your listing will not be
-                                approved.
-                              </p>
+                            <div
+                              className="
+                              overflow-hidden
+                              transition-[max-height] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
+                              max-h-0 peer-checked:max-h-[1000px]
+                            "
+                            >
+                              <div className="pt-8 mt-8 space-y-5">
+                                <div>
+                                  <h4 className="font-semibold text-[#000000de] leading-[20px] text-[17px] mb-2">
+                                    Parking options
+                                  </h4>
+                                  <p className="text-[#646464] text-base leading-[1.8]">
+                                    {spaceData?.parkingOptionsValue?.join(", ")}
+                                  </p>
+                                </div>
+                                <div>
+                                  <h4 className="font-semibold text-[#000000de] leading-[20px] text-[17px] mb-2">
+                                    Parking description
+                                  </h4>
+                                  <p className="text-[#646464] text-base leading-[1.8]">
+                                    {spaceData?.parkingDescription}
+                                  </p>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
+                      )
+                    }
 
                     <div className="pt-12">
                       <h2 className="text-xl font-medium text-[#141414] mb-6">
@@ -423,7 +317,7 @@ const Detail = ({ detailData }) => {
                             </div>
                           </div>
                           <div>
-                            <button className="md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
+                            <button className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
                               ENQUIRE NOW
                             </button>
                           </div>
@@ -461,13 +355,13 @@ const Detail = ({ detailData }) => {
                             </div>
                           </div>
                           <div>
-                            <button className="md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
+                            <button className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
                               ENQUIRE NOW
                             </button>
                           </div>
                         </div>
                       )}
-                      {spaceData?.dedicated_desk_price > 0 && (
+                      {spaceData?.desks_price > 0 && (
                         <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
                           <div className="grid md:grid-cols-3 grid-cols-1 md:items-center md:gap-4 gap-2 justify-between">
                             <div className="md:col-span-2">
@@ -490,7 +384,7 @@ const Detail = ({ detailData }) => {
                                       className="size-[18px] text-[#f76900]"
                                     />
                                   </span>{" "}
-                                  {spaceData?.dedicated_desk_price}
+                                  {spaceData?.desks_price}
                                 </h2>
                                 <span className=" text-[15px] leading-[30px] font-light">
                                   /seat/month
@@ -499,7 +393,7 @@ const Detail = ({ detailData }) => {
                             </div>
                           </div>
                           <div>
-                            <button className="md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
+                            <button className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
                               ENQUIRE NOW
                             </button>
                           </div>
@@ -537,7 +431,7 @@ const Detail = ({ detailData }) => {
                             </div>
                           </div>
                           <div>
-                            <button className="md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
+                            <button className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
                               ENQUIRE NOW
                             </button>
                           </div>
@@ -575,8 +469,46 @@ const Detail = ({ detailData }) => {
                             </div>
                           </div>
                           <div>
-                            <button className="md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
+                            <button className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
                               ENQUIRE NOW
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                      {spaceData?.originalPrice > 0 && (
+                        <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
+                          <div className="grid md:grid-cols-3 grid-cols-1 md:items-center md:gap-4 gap-2 justify-between">
+                            <div className="md:col-span-2">
+                              <h3 className="2xl:text-xl text-lg leading-[1.6] font-medium text-[#010101]">
+                                Day Pass
+                              </h3>
+                              {/* <p className="2xl:text-base text-sm leading-[1.5] text-[#777]">
+                                Premium business and mailing address
+                              </p> */}
+                            </div>
+                            <div className="md:ps-[15px]">
+                              <span className="block text-[15px] leading-[30px] font-light">
+                                from
+                              </span>
+                              <div className="flex items-center">
+                                <h2 className=" text-lg font-medium flex items-center leading-[1.6]">
+                                  <span className="text-lg text-[#141414]">
+                                    <Svg
+                                      name="rupee"
+                                      className="size-[18px] text-[#f76900]"
+                                    />
+                                  </span>{" "}
+                                  {spaceData?.originalPrice}
+                                </h2>
+                                <span className=" text-[15px] leading-[30px] font-light">
+                                  /seat/month
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          <div>
+                            <button className="cursor-pointer md:mt-3 mt-2 bg-[#4b975f] border border-[#4b975f] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px]">
+                              Buy Pass
                             </button>
                           </div>
                         </div>
@@ -794,6 +726,13 @@ const Detail = ({ detailData }) => {
                 <button className="w-full border uppercase tracking-[1px] border-[#000e54] text-[#000e54] 2xl:text-base text-sm font-semibold md:py-[15px] py-[10px] rounded-[15px]">
                   Schedule a visit
                 </button>
+                {
+                  spaceData?.originalPrice > 0 && (
+                    <button className="w-full bg-[#2c864f] 2xl:text-[15px] text-sm hover:bg-[#40a667] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">
+                      Buy Pass
+                    </button>
+                  )
+                }
               </div>
               <div className="text-center">
                 <p className="text-center text-sm leading-[1.5] text-black ">

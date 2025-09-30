@@ -73,12 +73,6 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
     setIsOpen(false);
   };
 
-  useEffect(() => {
-    const handleEsc = (e) => e.key === "Escape" && setIsOpen(false);
-    window.addEventListener("keydown", handleEsc);
-    return () => window.removeEventListener("keydown", handleEsc);
-  }, [setIsOpen]);
-
   if (!isOpen) return null;
 
   return (

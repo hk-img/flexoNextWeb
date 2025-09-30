@@ -18,12 +18,6 @@ const Auth = ({ isOpen, setIsOpen }) => {
   const [mobile, setMobile] = useState(null);
   const [email, setEmail] = useState("");
 
-  useEffect(() => {
-    const handleEsc = (e) => e.key === "Escape" && setIsOpen(false);
-    window.addEventListener("keydown", handleEsc);
-    return () => window.removeEventListener("keydown", handleEsc);
-  }, [setIsOpen]);
-
   if (!isOpen) return null;
 
   const handleIsLoginToggle = () => {

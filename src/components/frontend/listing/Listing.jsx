@@ -68,23 +68,31 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
     }
   };
 
-  // useEffect(() => {
-  //   const handleOutsideClick = (event) => {
-  //     if (
-  //       spacesTypeRef.current &&
-  //       !spacesTypeRef.current.contains(event.target)
-  //     ) {
-  //       setToggleSpace(false);
-  //     }
-  //     if (locationRef.current && !locationRef.current.contains(event.target)) {
-  //       setToggleLocationOptions(false);
-  //     }
-  //   };
-  //   document.addEventListener("mousedown", handleOutsideClick);
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleOutsideClick);
-  //   };
-  // }, []);
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+       if (
+        event.target.closest(".toggle-space-type") ||
+        event.target.closest(".dropdown-menu-space-type") || 
+        event.target.closest(".toggle-location") ||
+        event.target.closest(".dropdown-menu-location")
+      ) {
+        return; 
+      }
+      if (
+        spacesTypeRef.current &&
+        !spacesTypeRef.current.contains(event.target)
+      ) {
+        setToggleSpace(false);
+      }
+      if (locationRef.current && !locationRef.current.contains(event.target)) {
+        setToggleLocationOptions(false);
+      }
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
 
   useEffect(()=>{
     if(spaceType === "coworking"){
@@ -310,63 +318,65 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
                 </div>
                 <div className="relative inline-block lg:hidden w-full">
                   {toggleSpaceType && (
-                  <div
-                    onClick={() => setToggleSpace(!toggleSpace)}
-                    className="relative top-4 left-0 w-full md:w-[400px] lg:w-3/5 rounded-xl z-10"
-                  >
-                    <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center min-h-14 max-h-14 gap-5 p-[18px] rounded-[42px]">
-                      <div className="border-1 border-[#dee2e6] p-1 text-sm font-light">
-                        {selectedRadio}
+                    <>
+                      <div
+                        onClick={() => setToggleSpace(!toggleSpace)}
+                        className="toggle-space-type relative top-4 left-0 w-full md:w-[400px] lg:w-3/5 rounded-xl z-10"
+                      >
+                        <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center min-h-14 max-h-14 gap-5 p-[18px] rounded-[42px]">
+                          <div className="border-1 border-[#dee2e6] p-1 text-sm font-light">
+                            {selectedRadio}
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  )}
-                  {toggleSpace && (
-                    <div
-                      ref={spacesTypeRef}
-                      className="scrollDropdown absolute top-[72px] left-0 w-[550px] bg-white block shadow-lg z-20 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700"
-                    >
-                      {
-                        spaceCategoryData?.map((item,index)=>{
-                          return(
-                            <React.Fragment key={index}>
-                              <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
-                                <input
-                                  type="radio"
-                                  name="spaceType2"
-                                  value={item?.spaceType}
-                                  defaultChecked={selectedRadio === item?.spaceType}
-                                  onChange={handleRadioChange}
-                                  className="accent-[#26310b]"
-                                />
-                                {item?.spaceType}
-                              </label>
-                              {
-                                item?.spaceType == "Coworking Space" &&  <div className="pl-6 space-y-2">
-                                  {coworkingTypes?.map((type) => (
-                                    <label
-                                      key={type}
-                                      className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light"
-                                    >
-                                      <input
-                                        type="checkbox"
-                                        checked={selectedCheckboxes.includes(type)}
-                                        onChange={() => handleCheckbox(type)}
-                                        className="accent-[#26310b]"
-                                      />
-                                      {type}
-                                    </label>
-                                  ))}
-                                </div>
-                              }
-                            </React.Fragment>
-                          )
-                        })
-                      }
-                    </div>
+                      {toggleSpace && (
+                        <div
+                          ref={spacesTypeRef}
+                          className="dropdown-menu-space-type scrollDropdown absolute top-[72px] left-0 w-[550px] bg-white block shadow-lg z-20 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700"
+                        >
+                          {
+                            spaceCategoryData?.map((item,index)=>{
+                              return(
+                                <React.Fragment key={index}>
+                                  <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
+                                    <input
+                                      type="radio"
+                                      name="spaceType2"
+                                      value={item?.spaceType}
+                                      defaultChecked={selectedRadio === item?.spaceType}
+                                      onChange={handleRadioChange}
+                                      className="accent-[#26310b]"
+                                    />
+                                    {item?.spaceType}
+                                  </label>
+                                  {
+                                    item?.spaceType == "Coworking Space" &&  <div className="pl-6 space-y-2">
+                                      {coworkingTypes?.map((type) => (
+                                        <label
+                                          key={type}
+                                          className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light"
+                                        >
+                                          <input
+                                            type="checkbox"
+                                            checked={selectedCheckboxes.includes(type)}
+                                            onChange={() => handleCheckbox(type)}
+                                            className="accent-[#26310b]"
+                                          />
+                                          {type}
+                                        </label>
+                                      ))}
+                                    </div>
+                                  }
+                                </React.Fragment>
+                              )
+                            })
+                          }
+                        </div>
+                      )}
+                    </>
                   )}
                   {toggleLocation && (
-                    <div className="relative">
+                    <div className="relative toggle-location">
                       {/* Search box */}
                       <div className="relative top-6 -left-0 w-full md:w-[400px] lg:w-3/5 rounded-xl z-10 pb-7">
                         <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center py-[9px] px-4 rounded-[42px]">
@@ -410,7 +420,7 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
                       {toggleLocationOptions && (
                         <div
                           ref={locationRef}
-                          className="scrollDropdown max-h-72 overflow-y-auto absolute top-[70px] left-4 w-[420px] bg-white shadow-lg z-20"
+                          className="dropdown-menu-location scrollDropdown max-h-72 overflow-y-auto absolute top-[70px] left-4 w-[420px] bg-white shadow-lg z-20"
                         >
                           {locationData
                             .filter((loc) =>
@@ -468,9 +478,10 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
               </div>
               <div className="relative lg:inline-block hidden w-full">
                 {toggleSpaceType && (
+                  <>
                   <div
                     onClick={() => setToggleSpace(!toggleSpace)}
-                    className="relative top-4 left-0 w-full md:w-[400px] lg:w-3/5 rounded-xl z-10"
+                    className="toggle-space-type relative top-4 left-0 w-full md:w-[400px] lg:w-3/5 rounded-xl z-10"
                   >
                     <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center min-h-14 max-h-14 gap-5 p-[18px] rounded-[42px]">
                       <div className="border-1 border-[#dee2e6] p-1 text-sm font-light">
@@ -478,53 +489,54 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
                       </div>
                     </div>
                   </div>
-                )}
-                {toggleSpace && (
-                  <div
-                    ref={spacesTypeRef}
-                    className="scrollDropdown absolute top-[72px] left-0 w-[550px] bg-white block shadow-lg z-20 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700"
-                  >
-                    {
-                      spaceCategoryData?.map((item,index)=>{
-                        return(
-                          <React.Fragment key={index}>
-                            <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
-                              <input
-                                type="radio"
-                                name="spaceType"
-                                value={item?.spaceType}
-                                defaultChecked={selectedRadio === item?.spaceType}
-                                onChange={handleRadioChange}
-                                className="accent-[#26310b]"
-                              />
-                              {item?.spaceType}
-                            </label>
-                            {
-                              item?.spaceType == "Coworking Space" &&  <div className="pl-6 space-y-2">
-                                {coworkingTypes?.map((type) => (
-                                  <label
-                                    key={type}
-                                    className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light"
-                                  >
-                                    <input
-                                      type="checkbox"
-                                      checked={selectedCheckboxes.includes(type)}
-                                      onChange={() => handleCheckbox(type)}
-                                      className="accent-[#26310b]"
-                                    />
-                                    {type}
-                                  </label>
-                                ))}
-                              </div>
-                            }
-                          </React.Fragment>
-                        )
-                      })
-                    }
-                  </div>
+                  {toggleSpace && (
+                    <div
+                      ref={spacesTypeRef}
+                      className="dropdown-menu-space-type scrollDropdown absolute top-[72px] left-0 w-[550px] bg-white block shadow-lg z-20 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700"
+                    >
+                      {
+                        spaceCategoryData?.map((item,index)=>{
+                          return(
+                            <React.Fragment key={index}>
+                              <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
+                                <input
+                                  type="radio"
+                                  name="spaceType"
+                                  value={item?.spaceType}
+                                  defaultChecked={selectedRadio === item?.spaceType}
+                                  onChange={handleRadioChange}
+                                  className="accent-[#26310b]"
+                                />
+                                {item?.spaceType}
+                              </label>
+                              {
+                                item?.spaceType == "Coworking Space" &&  <div className="pl-6 space-y-2">
+                                  {coworkingTypes?.map((type) => (
+                                    <label
+                                      key={type}
+                                      className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light"
+                                    >
+                                      <input
+                                        type="checkbox"
+                                        checked={selectedCheckboxes.includes(type)}
+                                        onChange={() => handleCheckbox(type)}
+                                        className="accent-[#26310b]"
+                                      />
+                                      {type}
+                                    </label>
+                                  ))}
+                                </div>
+                              }
+                            </React.Fragment>
+                          )
+                        })
+                      }
+                    </div>
+                  )}
+                  </>
                 )}
                 {toggleLocation && (
-                  <div className="relative">
+                  <div className="relative toggle-location">
                     {/* Search box */}
                     <div className="relative top-6 -left-0 w-full md:w-[400px] lg:w-3/5 rounded-xl z-10 pb-7">
                       <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center py-[9px] px-4 rounded-[42px]">
@@ -568,7 +580,7 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
                     {toggleLocationOptions && (
                       <div
                         ref={locationRef}
-                        className="scrollDropdown max-h-72 overflow-y-auto absolute top-[70px] left-4 w-[420px] bg-white shadow-lg z-20"
+                        className="dropdown-menu-location scrollDropdown max-h-72 overflow-y-auto absolute top-[70px] left-4 w-[420px] bg-white shadow-lg z-20"
                       >
                         {locationData
                           .filter((loc) =>

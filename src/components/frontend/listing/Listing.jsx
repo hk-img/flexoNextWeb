@@ -112,16 +112,17 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
 
   useEffect(()=>{
     if(locationData?.length > 0 && locationName){
-      const capitalLocationName = convertSlugToCapitalLetter(locationName || "");
-      console.log({capitalLocationName})
+      const smallLetterLocationName = convertSlugToSmallLetter(locationName || "");
+      console.log({smallLetterLocationName,locationData})
       const selectedLocation = locationData?.find((item) => {
-        if(item?.location_name === capitalLocationName)
+        if(item?.location_name.toLowerCase() === smallLetterLocationName)
         {
           return item
         }
       })
-      setQuery(selectedLocation?.label);
-      setSelectedLocation(selectedLocation);
+      console.log({selectedLocation})
+      setQuery(selectedLocation?.label || "");
+      setSelectedLocation(selectedLocation || null);
     }
   },[locationData,locationName])
 

@@ -182,37 +182,39 @@ const ProductCard = ({ item = {}, setIsOpen }) => {
               </div>
             </>
           )}
-          {(type == "longterm" || type == "shortterm") && (
-            <div className="bg-[#f76900] text-white flex items-center m-0">
-              <div className="flex items-center">
-                <Svg name="rupee" className="size-[15px]" />
-                <span className="font-semibold text-sm">
-                  {item?.originalPrice}
-                </span>
+          <div className="flex gap-10 items-center w-full mb-2">
+            {(type == "longterm" || type == "shortterm") && (
+              <div className="bg-[#f76900] text-white w-fit flex items-center py-1.5 pr-1.5 m-0">
+                <div className="flex items-center">
+                  <Svg name="rupee" className="size-[15px]" />
+                  <span className="font-semibold text-sm">
+                    {item?.originalPrice}
+                  </span>
+                </div>
+                {type == "longterm" ? (
+                  <span className="ps-1 text-sm font-normal !leading-4">
+                    /month
+                  </span>
+                ) : (
+                  <span className="ps-1 text-sm font-normal !leading-4">
+                    /hour
+                  </span>
+                )}
               </div>
-              {type == "longterm" ? (
-                <span className="ps-1 text-[11px] font-normal !leading-4">
-                  /month
-                </span>
-              ) : (
-                <span className="ps-1 text-[11px] font-normal !leading-4">
-                  /hour
-                </span>
-              )}
-            </div>
-          )}
-          {item?.isInstant == 1 ? (
-            <div className="flex items-center m-0">
-              <div className="flex items-center">
-                <Svg name="rupee" className="size-[15px]" />
-                <span className="bg-[#ffbf00] font-semibold text-sm">
-                  Instant Book
-                </span>
+            )}
+            {item?.isInstant == 1 ? (
+              <div className="flex items-center m-0">
+                <div className="flex gap-2 items-center">
+                  <Svg name="bolt" className="size-[15px] text-[#ffbf00]" />
+                  <span className="bg-[#ffbf00] p-1 text-xs rounded-sm text-[#343a40]">
+                    Instant Book
+                  </span>
+                </div>
               </div>
-            </div>
-          ) : (
-            <></>
-          )}
+            ) : (
+              <></>
+            )}
+          </div>
           {}
           {(type == "coworking" || type == "longterm") && (
             <>

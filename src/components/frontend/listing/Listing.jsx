@@ -443,7 +443,7 @@ const Listing = ({ spaceType, city, locationName, spaceCategoryData, locationDat
                 </div>
                 {
                   mapToggle && (
-                    <div className="map lg:w-2/5 w-full flex flex-col md:sticky md:top-10 mt-3 lg:mt-1 lg:hidden">
+                    <div className="map lg:w-2/5 w-full flex flex-col md:sticky md:top-10 mt-3 lg:mt-1 lg:hidden [&_.gm-style-iw-d]:!overflow-hidden [&_.gm-style-iw-d]:!max-w-[336px] [&_.gm-style-iw-d]:!max-h-full [&_.gm-style-iw-c]:!p-0 [&_.gm-style-iw-chr]:!hidden [&_.gm-style-iw]:!rounded-xl">
                       <MapWithPrices spaceType={spaceType} spaces={productData} hoveredSpaceId={hoveredSpaceId} />
                     </div>
                   )
@@ -673,7 +673,7 @@ const Listing = ({ spaceType, city, locationName, spaceCategoryData, locationDat
             </div>
             {
               mapToggle && (
-                <div className="map lg:w-1/3 w-full lg:flex flex-col md:sticky md:top-10 hidden">
+                <div className="map lg:w-1/3 w-full lg:flex flex-col md:sticky md:top-10 hidden [&_.gm-style-iw-d]:!overflow-hidden [&_.gm-style-iw-d]:!max-w-[336px] [&_.gm-style-iw-d]:!max-h-full [&_.gm-style-iw-c]:!p-0 [&_.gm-style-iw-chr]:!hidden [&_.gm-style-iw]:!rounded-xl">
                   <MapWithPrices spaceType={spaceType} spaces={productData} hoveredSpaceId={hoveredSpaceId} />
                 </div>
               )

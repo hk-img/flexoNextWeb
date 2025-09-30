@@ -2,6 +2,7 @@ import Svg from "@/components/svg";
 import React from "react";
 import EmblaCarousel from "../../emblaCarousel/EmblaCarousel";
 import Image from "next/image";
+import ImageWithFallback from "@/components/ImageWithFallback";
 
 const ImagePopup = ({ viewImagePopup, setViewImagePopup, images = [] }) => {
   return (
@@ -23,14 +24,14 @@ const ImagePopup = ({ viewImagePopup, setViewImagePopup, images = [] }) => {
                 >
                   <div className="relative rounded-sm overflow-hidden shadow-md h-full">
                     <div className="before:content-[''] before:w-full before:h-full before:absolute before:top-0 before:left-0 before:bg-[#0000002b]" />
-                    <Image
+                    <ImageWithFallback
                       width={200}
                       height={200}
                       src={imgSrc}
                       alt={`image-${index}`}
                       title={`image-${index}`}
                       className="w-full h-full object-cover"
-                      loading="lazy"
+                      fallback="/images/default_image.webp"
                     />
                   </div>
                 </div>

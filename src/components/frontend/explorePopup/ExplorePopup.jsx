@@ -118,7 +118,6 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
               </label>
               <input
                   {...register("firstName", { required: true })}
-                  required
                   placeholder="Enter First Name"
                   className={`w-full rounded-sm border-2 px-3 py-2.5
                       border-[#dbdbdb] h-12
@@ -128,9 +127,9 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                     `}
                 />
               {errors.firstName && (
-                <span className="text-[10px] text-[#dc3545] mt-1 absolute -bottom-4 left-0">
+                <p className="text-red-500 text-sm mt-1">
                   {errors.firstName.message}
-                </span>
+                </p>
               )}
             </div>
 
@@ -150,9 +149,9 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                     `}
               />
               {errors.lastName && (
-                <span className="text-[10px] text-[#dc3545] mt-1 absolute -bottom-4 left-0">
+                <p className="text-red-500 text-sm mt-1">
                   {errors.lastName.message}
-                </span>
+                </p>
               )}
             </div>
 
@@ -173,9 +172,9 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                     `}
               />
               {errors.email && (
-                <span className="text-[10px] text-[#dc3545] mt-1 absolute -bottom-4 left-0">
+                <p className="text-red-500 text-sm mt-1">
                   {errors.email.message}
-                </span>
+                </p>
               )}
             </div>
 
@@ -203,9 +202,9 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
               />
               {/* {values?.country?.name} */}
               {errors.mobile && (
-                <span className="text-[10px] text-[#dc3545] mt-1 absolute -bottom-4 left-0">
+                <p className="text-red-500 text-sm mt-1">
                   {errors.mobile.message}
-                </span>
+                </p>
               )}
             </div>
 
@@ -229,9 +228,9 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                 <option value="Bangalore">Bangalore</option>
               </select>
               {errors.city && (
-                <span className="text-[10px] text-[#dc3545] mt-1 absolute -bottom-4 left-0">
+                <p className="text-red-500 text-sm mt-1">
                   {errors.city.message}
-                </span>
+                </p>
               )}
             </div>
 
@@ -255,9 +254,9 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                 <option value="21+">21+</option>
               </select>
               {errors.seats && (
-                <span className="text-[10px] text-[#dc3545] mt-1 absolute -bottom-4 left-0">
+                <p className="text-red-500 text-sm mt-1">
                   {errors.seats.message}
-                </span>
+                </p>
               )}
             </div>
           </div>

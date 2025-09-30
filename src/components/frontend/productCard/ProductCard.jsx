@@ -2,6 +2,7 @@ import Svg from "@/components/svg";
 import React from "react";
 import EmblaCarousel from "../emblaCarousel/EmblaCarousel";
 import ImageWithFallback from "@/components/ImageWithFallback";
+import AboutText from "./AboutText";
 
 const ProductCard = ({ item = {}, setIsOpen }) => {
   return (
@@ -144,28 +145,7 @@ const ProductCard = ({ item = {}, setIsOpen }) => {
               </div>
             </div>
           </div>
-
-          <div className="mt-2 w-full flex items-start">
-            <div className="text-sm text-[#141414] !leading-[21px] text-start">
-              <input type="checkbox" id="toggle" className="peer hidden" />
-              <div className="overflow-hidden max-h-[40px] transition-all duration-500 ease-in-out peer-checked:max-h-[1000px]">
-                {item?.about ||
-                  `One of the most premium coworking spaces in Mumbai, this is
-                    the ideal platform for high-growth start-ups, corporates,
-                    multinationals and financial services companies that want the
-                    best for their teams. Located in the highly energetic location
-                    of Bandra Kurla Complex (BKC), this coworking space in BKC has
-                    solutions for all your needs. It has improved HVAC standards
-                    to keep the air circulation healthy. The facility has a
-                    spacious parking lot as well as a bike storage.`}
-              </div>
-
-              <label
-                htmlFor="toggle"
-                className="mt-1 block text-[12px] tracking-[1px] font-semibold text-[#777777] cursor-pointer peer-checked:after:content-['See_less'] after:content-['See_more']"
-              ></label>
-            </div>
-          </div>
+          <AboutText about={item?.about || ""} />
           <div className="offerBtn flex items-end justify-end">
             <button
               onClick={(e) => {

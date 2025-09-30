@@ -21,8 +21,8 @@ const coworkingTypes = [
   "Day Pass",
 ]
 
-const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nearBySpacesData}) => {
-  console.log({locationData,spaceCategoryData,nearBySpacesData})
+const Listing = ({ spaceType, city, locationName, spaceCategoryData, locationData, nearBySpacesData }) => {
+  console.log({ locationData, spaceCategoryData, nearBySpacesData })
   const [isOpen, setIsOpen] = useState(false);
   const spacesTypeRef = useRef(null);
   const locationRef = useRef(null);
@@ -30,24 +30,24 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
   const [toggleSpaceType, setToggleSpaceType] = useState(false);
   const [toggleSpace, setToggleSpace] = useState(false);
   const [selectedRadio, setSelectedRadio] = useState(spaceCategoryData?.[0]?.spaceType);
-  console.log({selectedRadio})
+  console.log({ selectedRadio })
   const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
-  console.log({selectedCheckboxes})
+  console.log({ selectedCheckboxes })
   const [toggleLocation, setToggleLocation] = useState(false);
   const [toggleLocationOptions, setToggleLocationOptions] = useState(false);
   const [query, setQuery] = useState("");
-  const [selectedLocation,setSelectedLocation] = useState(null);
-  console.log({selectedLocation})
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  console.log({ selectedLocation })
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filterData, setFilterData] = useState({
     priceRange: { min: 50000, max: 50000000 },
-    distance:0,
+    distance: 0,
     sortBy: "",
     amenities: [],
   });
-  const [page,setPage] = useState(1);
+  const [page, setPage] = useState(1);
   const [hoveredSpaceId, setHoveredSpaceId] = useState(null);
-  console.log({hoveredSpaceId})
+  console.log({ hoveredSpaceId })
   const perPage = 30;
 
   const handleRadioChange = (e) => {
@@ -70,13 +70,13 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
-       if (
+      if (
         event.target.closest(".toggle-space-type") ||
-        event.target.closest(".dropdown-menu-space-type") || 
+        event.target.closest(".dropdown-menu-space-type") ||
         event.target.closest(".toggle-location") ||
         event.target.closest(".dropdown-menu-location")
       ) {
-        return; 
+        return;
       }
       if (
         spacesTypeRef.current &&
@@ -94,52 +94,49 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
     };
   }, []);
 
-  useEffect(()=>{
-    if(spaceType === "coworking"){
+  useEffect(() => {
+    if (spaceType === "coworking") {
       setSelectedRadio("Coworking Space");
       setSelectedCheckboxes(coworkingTypes);
       return;
     }
     const selectedSpaceType = spaceCategoryData?.find((item) => {
       const categorySpaceType = slugGenerator(item?.spaceType || "");
-      if(categorySpaceType === spaceType)
-      {
+      if (categorySpaceType === spaceType) {
         return item
       }
     });
-    console.log({selectedSpaceType})
+    console.log({ selectedSpaceType })
     setSelectedRadio(selectedSpaceType?.spaceType)
-    if(selectedSpaceType?.spaceType === "Coworking Space")
-    {
+    if (selectedSpaceType?.spaceType === "Coworking Space") {
       setSelectedCheckboxes(coworkingTypes);
-    }else{
+    } else {
       const smallSpaceType = convertSlugToSmallLetter(selectedSpaceType?.spaceType || "");
       setSelectedCheckboxes([smallSpaceType]);
     }
-  },[spaceCategoryData,spaceType])
+  }, [spaceCategoryData, spaceType])
 
-  useEffect(()=>{
-    if(locationData?.length > 0 && locationName){
+  useEffect(() => {
+    if (locationData?.length > 0 && locationName) {
       const smallLetterLocationName = convertSlugToSmallLetter(locationName || "");
-      console.log({smallLetterLocationName,locationData})
+      console.log({ smallLetterLocationName, locationData })
       const selectedLocation = locationData?.find((item) => {
-        if(item?.location_name.toLowerCase() === smallLetterLocationName)
-        {
+        if (item?.location_name.toLowerCase() === smallLetterLocationName) {
           return item
         }
       })
-      console.log({selectedLocation})
+      console.log({ selectedLocation })
       setQuery(selectedLocation?.label || "");
       setSelectedLocation(selectedLocation || null);
     }
-  },[locationData,locationName])
+  }, [locationData, locationName])
 
-  const { data: allSpaces,refetch:refetchSpaces } = useQuery({
-    queryKey: ["allSpaces",page,city,selectedCheckboxes,selectedLocation],
+  const { data: allSpaces, refetch: refetchSpaces } = useQuery({
+    queryKey: ["allSpaces", page, city, selectedCheckboxes, selectedLocation],
     queryFn: async () => {
       const type = getTypeOfSpaceByWorkSpace(spaceType || "");
-      console.log({type},"Rftyhryryry")
-      let payload ={
+      console.log({ type }, "Rftyhryryry")
+      let payload = {
         city_name: selectedLocation?.city,
         spaceType: selectedCheckboxes,
         type: type,
@@ -151,27 +148,27 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
         location_name: selectedLocation?.location_name,
         city_lat: 0,
         city_long: 0,
-        location_lat:19.1121947,
-        location_longi:72.8792898,
+        location_lat: 19.1121947,
+        location_longi: 72.8792898,
         page_no: page
       }
-      if(filterData.sortBy){
+      if (filterData.sortBy) {
         payload.sortBy = filterData?.sortBy;
       }
-      if(filterData.distance > 0){
+      if (filterData.distance > 0) {
         payload.distance = filterData?.distance;
       }
-      const res = await postAPI("spaces/getSpacesByCity",payload);
+      const res = await postAPI("spaces/getSpacesByCity", payload);
       return res.data;
     },
     keepPreviousData: true,
   });
-  const productData = useMemo(()=>{
+  const productData = useMemo(() => {
     return allSpaces?.data || []
-  },[allSpaces]);
-  const faqData = useMemo(()=>{
+  }, [allSpaces]);
+  const faqData = useMemo(() => {
     return allSpaces?.faqs || []
-  },[allSpaces]);
+  }, [allSpaces]);
 
   const handleApply = () => {
     refetchSpaces();
@@ -191,15 +188,15 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
           <div className="group/mainBox w-full flex flex-col lg:flex-row gap-6 items-start">
             <div className="lg:w-2/3 w-full grow flex flex-col justify-center lg:mt-8 mt-16">
               <h1 className="text-xl flex flex-wrap font-bold text-[#141414] mb-4">
-                {locationName ? `${convertSlugToCapitalLetter(spaceType || "")} in ${convertSlugToCapitalLetter(locationName || "")}, ${convertSlugToCapitalLetter(city || "")}`: spaceType == "coworking" ? `Coworking Space in ${convertSlugToCapitalLetter(city || "")}` :`${convertSlugToCapitalLetter(spaceType || "")} in ${convertSlugToCapitalLetter(city || "")}`}
+                {locationName ? `${convertSlugToCapitalLetter(spaceType || "")} in ${convertSlugToCapitalLetter(locationName || "")}, ${convertSlugToCapitalLetter(city || "")}` : spaceType == "coworking" ? `Coworking Space in ${convertSlugToCapitalLetter(city || "")}` : `${convertSlugToCapitalLetter(spaceType || "")} in ${convertSlugToCapitalLetter(city || "")}`}
               </h1>
               <div className="form-group filter-group">
                 <div className="scrollMenus overflow-auto whitespace-nowrap pb-2 mb-4">
                   {
-                    nearBySpacesData?.map((item,index)=>(
+                    nearBySpacesData?.map((item, index) => (
                       <a
                         key={index}
-                        className={`${item?.location_name?.split(" ")?.map(word => word.charAt(0).toLowerCase() + word.slice(1))?.join(" ") == locationName?.replace(/-/g, " ") ? "text-[#4343e8] border-[#7d9dd9] bg-[#e9e9ff]" : "text-[#9e9e9e] border-[#d4d4d4] bg-white"} inline-block text-center me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border min-w-[240px] w-auto whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]`}
+                        className={`${item?.location_name?.split(" ")?.map(word => word.charAt(0).toLowerCase() + word.slice(1))?.join(" ") == locationName?.replace(/-/g, " ") ? "text-[#4343e8] border-[#7d9dd9] bg-[#e9e9ff]" : "text-[#9e9e9e] border-[#d4d4d4] bg-white"} inline-block text-center me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border max-w-[240px] w-[160px] whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]`}
                         href={`/in/${spaceType}/${city}/${slugGenerator(item?.location_name || "")}`}
                         target="_blank"
                       >
@@ -335,8 +332,8 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
                           className="dropdown-menu-space-type scrollDropdown absolute top-[72px] left-0 w-[550px] bg-white block shadow-lg z-20 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700"
                         >
                           {
-                            spaceCategoryData?.map((item,index)=>{
-                              return(
+                            spaceCategoryData?.map((item, index) => {
+                              return (
                                 <React.Fragment key={index}>
                                   <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
                                     <input
@@ -350,7 +347,7 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
                                     {item?.spaceType}
                                   </label>
                                   {
-                                    item?.spaceType == "Coworking Space" &&  <div className="pl-6 space-y-2">
+                                    item?.spaceType == "Coworking Space" && <div className="pl-6 space-y-2">
                                       {coworkingTypes?.map((type) => (
                                         <label
                                           key={type}
@@ -447,8 +444,8 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
                 {
                   mapToggle && (
                     <div className="map lg:w-2/5 w-full flex flex-col md:sticky md:top-10 mt-3 lg:mt-1 lg:hidden">
-                      <MapWithPrices spaceType = {spaceType} spaces={productData} hoveredSpaceId={hoveredSpaceId}/>
-                    </div> 
+                      <MapWithPrices spaceType={spaceType} spaces={productData} hoveredSpaceId={hoveredSpaceId} />
+                    </div>
                   )
                 }
                 {/* {mapToggle && (
@@ -479,60 +476,60 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
               <div className="relative lg:inline-block hidden w-full">
                 {toggleSpaceType && (
                   <>
-                  <div
-                    onClick={() => setToggleSpace(!toggleSpace)}
-                    className="toggle-space-type relative top-4 left-0 w-full md:w-[400px] lg:w-3/5 rounded-xl z-10"
-                  >
-                    <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center min-h-14 max-h-14 gap-5 p-[18px] rounded-[42px]">
-                      <div className="border-1 border-[#dee2e6] p-1 text-sm font-light">
-                        {selectedRadio}
+                    <div
+                      onClick={() => setToggleSpace(!toggleSpace)}
+                      className="toggle-space-type relative top-4 left-0 w-full md:w-[400px] lg:w-3/5 rounded-xl z-10"
+                    >
+                      <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center min-h-14 max-h-14 gap-5 p-[18px] rounded-[42px]">
+                        <div className="border-1 border-[#dee2e6] p-1 text-sm font-light">
+                          {selectedRadio}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  {toggleSpace && (
-                    <div
-                      ref={spacesTypeRef}
-                      className="dropdown-menu-space-type scrollDropdown absolute top-[72px] left-0 w-[550px] bg-white block shadow-lg z-20 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700"
-                    >
-                      {
-                        spaceCategoryData?.map((item,index)=>{
-                          return(
-                            <React.Fragment key={index}>
-                              <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
-                                <input
-                                  type="radio"
-                                  name="spaceType"
-                                  value={item?.spaceType}
-                                  defaultChecked={selectedRadio === item?.spaceType}
-                                  onChange={handleRadioChange}
-                                  className="accent-[#26310b]"
-                                />
-                                {item?.spaceType}
-                              </label>
-                              {
-                                item?.spaceType == "Coworking Space" &&  <div className="pl-6 space-y-2">
-                                  {coworkingTypes?.map((type) => (
-                                    <label
-                                      key={type}
-                                      className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light"
-                                    >
-                                      <input
-                                        type="checkbox"
-                                        checked={selectedCheckboxes.includes(type)}
-                                        onChange={() => handleCheckbox(type)}
-                                        className="accent-[#26310b]"
-                                      />
-                                      {type}
-                                    </label>
-                                  ))}
-                                </div>
-                              }
-                            </React.Fragment>
-                          )
-                        })
-                      }
-                    </div>
-                  )}
+                    {toggleSpace && (
+                      <div
+                        ref={spacesTypeRef}
+                        className="dropdown-menu-space-type scrollDropdown absolute top-[72px] left-0 w-[550px] bg-white block shadow-lg z-20 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700"
+                      >
+                        {
+                          spaceCategoryData?.map((item, index) => {
+                            return (
+                              <React.Fragment key={index}>
+                                <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
+                                  <input
+                                    type="radio"
+                                    name="spaceType"
+                                    value={item?.spaceType}
+                                    defaultChecked={selectedRadio === item?.spaceType}
+                                    onChange={handleRadioChange}
+                                    className="accent-[#26310b]"
+                                  />
+                                  {item?.spaceType}
+                                </label>
+                                {
+                                  item?.spaceType == "Coworking Space" && <div className="pl-6 space-y-2">
+                                    {coworkingTypes?.map((type) => (
+                                      <label
+                                        key={type}
+                                        className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light"
+                                      >
+                                        <input
+                                          type="checkbox"
+                                          checked={selectedCheckboxes.includes(type)}
+                                          onChange={() => handleCheckbox(type)}
+                                          className="accent-[#26310b]"
+                                        />
+                                        {type}
+                                      </label>
+                                    ))}
+                                  </div>
+                                }
+                              </React.Fragment>
+                            )
+                          })
+                        }
+                      </div>
+                    )}
                   </>
                 )}
                 {toggleLocation && (
@@ -609,10 +606,10 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
                   <div
                     key={`product-${index}`}
                     className="spaceCard relative lg:w-1/3 md:w-1/3 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:xl:w-1/2 group-has-[.map]/mainBox:md:w-1/2 w-full p-4"
-                    onMouseOver={()=>setHoveredSpaceId(item?.id)}
-                    onMouseLeave={()=>setHoveredSpaceId(null)}
+                    onMouseOver={() => setHoveredSpaceId(item?.id)}
+                    onMouseLeave={() => setHoveredSpaceId(null)}
                   >
-                    <ProductCard item={item} setIsOpen={setIsOpen}/>
+                    <ProductCard item={item} setIsOpen={setIsOpen} />
                   </div>
                 ))}
               </div>
@@ -622,10 +619,10 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
                   <div
                     key={`product-${index + 6}`}
                     className="spaceCard relative lg:w-1/3 md:w-1/3 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:xl:w-1/2 group-has-[.map]/mainBox:md:w-1/2 w-full p-4"
-                    onMouseOver={()=>setHoveredSpaceId(item?.id)}
-                    onMouseLeave={()=>setHoveredSpaceId(null)}
+                    onMouseOver={() => setHoveredSpaceId(item?.id)}
+                    onMouseLeave={() => setHoveredSpaceId(null)}
                   >
-                    <ProductCard item={item} setIsOpen={setIsOpen}/>
+                    <ProductCard item={item} setIsOpen={setIsOpen} />
                   </div>
                 ))}
               </div>
@@ -663,22 +660,22 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
                   <div
                     key={`product-${index + 18}`}
                     className="spaceCard lg:w-1/3 md:w-1/3 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:xl:w-1/2 group-has-[.map]/mainBox:md:w-1/2 w-full p-4"
-                    onMouseOver={()=>setHoveredSpaceId(item?.id)}
-                    onMouseLeave={()=>setHoveredSpaceId(null)}
+                    onMouseOver={() => setHoveredSpaceId(item?.id)}
+                    onMouseLeave={() => setHoveredSpaceId(null)}
                   >
-                    <ProductCard item={item} setIsOpen={setIsOpen}/>
+                    <ProductCard item={item} setIsOpen={setIsOpen} />
                   </div>
                 ))}
               </div>
 
               <TestimonialCta />
-              <Pagination currentPage={page}  totalPages={Math.ceil(allSpaces?.space_count / perPage)} onPageChange={setPage} />
+              <Pagination currentPage={page} totalPages={Math.ceil(allSpaces?.space_count / perPage)} onPageChange={setPage} />
             </div>
             {
               mapToggle && (
-                  <div className="map lg:w-1/3 w-full lg:flex flex-col md:sticky md:top-10 hidden">
-                    <MapWithPrices spaceType = {spaceType} spaces={productData} hoveredSpaceId={hoveredSpaceId}/>
-                  </div>
+                <div className="map lg:w-1/3 w-full lg:flex flex-col md:sticky md:top-10 hidden">
+                  <MapWithPrices spaceType={spaceType} spaces={productData} hoveredSpaceId={hoveredSpaceId} />
+                </div>
               )
             }
             {/* {mapToggle && (
@@ -698,6 +695,68 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
           </div>
         </div>
       </section>
+      <section className=" mt-18 bg-[#f9f9f9]">
+        <div className="container mx-auto md:px-0 px-[15px] py-10">
+          <div>
+            <h2 className="text-[#141414] font-medium leading-[1.6] md:text-[26px] text-xl">Frequently Asked Questions About Coworking Space in Andheri East Mumbai | Best Coworking Space in Andheri East Mumbai</h2>
+          </div>
+          <div className="max-w-[975px] mx-auto mt-4">
+            <div className="space-y-4">
+              <div>
+                <div>
+                  <p className="font-extrabold text-[#777] 2xl:text-base text-sm">Q- What are the best coworking spaces in Andheri East?</p>
+                </div>
+                <div className="flex text-[#7b7b7b] 2xl:text-base text-sm pt-1">
+                  <p>Ans-</p>
+                  <p>Top coworking spaces in Andheri East include Quest Coworks, Redbrick Offices, Wework Raheja Platinum, DevX Dynasty, Awfis Skyline Icon, Yessss Works, Wework Vijay Diamond, Innov8, to name a few.</p>
+                </div>
+              </div>
+              <div>
+                <div>
+                  <p className="font-extrabold text-[#777] 2xl:text-base text-sm">Q- What are the best coworking spaces in Andheri East?</p>
+                </div>
+                <div className="flex text-[#7b7b7b] 2xl:text-base text-sm pt-1">
+                  <p>Ans-</p>
+                  <p>Top coworking spaces in Andheri East include Quest Coworks, Redbrick Offices, Wework Raheja Platinum, DevX Dynasty, Awfis Skyline Icon, Yessss Works, Wework Vijay Diamond, Innov8, to name a few.</p>
+                </div>
+                <div className="mt-4">
+                  <h4 className="text-[#7b7b7b] font-bold leading-[20px] text-[15px]">Top Coworking Spaces in Andheri East</h4>
+                  <ol className="list-decimal list-inside text-black  2xl:text-base text-sm space-y-1 my-6">
+                    <li className="hover:text-[#7b7b7b]"> WeWork Andheri East</li>
+
+                    <li className="hover:text-[#7b7b7b]">  Innov8 Andheri East</li>
+
+                    <li className="hover:text-[#7b7b7b]"> Awfis Andheri East</li>
+
+                    <li className="hover:text-[#7b7b7b]">  Quest Coworks Andheri East</li>
+
+                    <li className="hover:text-[#7b7b7b]">  Regus Andheri East</li>
+
+                    <li className="hover:text-[#7b7b7b]"> YesssWorks Andheri East</li>
+
+                    <li className="hover:text-[#7b7b7b]"> Executive Spaces Andheri East</li>
+                    <li className="hover:text-[#7b7b7b]" > Incuspaze Andheri East</li>
+
+                    <li className="hover:text-[#7b7b7b]"> DevX Andheri East</li>
+
+                    <li className="hover:text-[#7b7b7b]"> DBS Business Center Andheri East</li>
+                  </ol>
+                  <div className="space-y-6">
+                    <div>
+                      <h5 className="text-black  2xl:text-base text-sm"> WeWork Andheri East</h5>
+                      <p className="text-[#7b7b7b] 2xl:text-base text-sm pt-4">Experience the grandeur of WeWork Vijay Diamond, a hub of coworking excellence in Andheri East. Immerse yourself in meticulously designed meeting booths, hot desks, and communal areas, all enhanced with state-of-the-art HVAC standards for utmost comfort. Indulge in the community spirit at the vibrant community bar or host impactful gatherings in the well-appointed conference rooms. Enjoy the flexibility of private offices and dedicated desks tailored to your needs. With amenities like parking, bike storage, wellness rooms, and a dedicated mother's room, every aspect of your workday is catered to. Take advantage of the outdoor space for small gatherings or utilize the expansive event space for larger events. Plus, with a dedicated area for your furry companions, you can bring your dog to work stress-free. Conveniently located just a 2-minute walk from the MIDC bus stop, WeWork Vijay Diamond offers a seamless blend of productivity and convenience for your work-life balance.</p>
+                    </div>
+                    <div>
+                      <h5 className="text-black  2xl:text-base text-sm"> WeWork Andheri East</h5>
+                      <p className="text-[#7b7b7b] 2xl:text-base text-sm pt-4">Experience the grandeur of WeWork Vijay Diamond, a hub of coworking excellence in Andheri East. Immerse yourself in meticulously designed meeting booths, hot desks, and communal areas, all enhanced with state-of-the-art HVAC standards for utmost comfort. Indulge in the community spirit at the vibrant community bar or host impactful gatherings in the well-appointed conference rooms. Enjoy the flexibility of private offices and dedicated desks tailored to your needs. With amenities like parking, bike storage, wellness rooms, and a dedicated mother's room, every aspect of your workday is catered to. Take advantage of the outdoor space for small gatherings or utilize the expansive event space for larger events. Plus, with a dedicated area for your furry companions, you can bring your dog to work stress-free. Conveniently located just a 2-minute walk from the MIDC bus stop, WeWork Vijay Diamond offers a seamless blend of productivity and convenience for your work-life balance.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       {isFilterOpen && (
         <FilterPopup
           isFilterOpen={isFilterOpen}
@@ -708,7 +767,7 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
           handleClear={handleClear}
         />
       )}
-      {isOpen && <ExplorePopup isOpen={isOpen} setIsOpen={setIsOpen}/>}
+      {isOpen && <ExplorePopup isOpen={isOpen} setIsOpen={setIsOpen} />}
     </>
   );
 };

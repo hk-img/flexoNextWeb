@@ -86,7 +86,7 @@ const FilterPopup = ({
                     <DualRangeSlider
                       min={50000}
                       max={50000000}
-                      step={100}
+                      step={500}
                       values={filterData.priceRange}
                       onChange={(range) =>
                         setFilterData({

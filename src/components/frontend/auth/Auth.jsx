@@ -25,7 +25,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center animate-fadeIn">
       <div
         className="absolute inset-0 bg-black/40"
         onClick={() => setIsOpen(false)}
@@ -37,7 +37,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
         />
       ) : (
         <>
-          <div className="relative w-full max-w-[600px] rounded-sm bg-white p-6 shadow-xl">
+          <div className="relative w-full max-w-[600px] rounded-sm bg-white p-6 shadow-xl overflow-y-auto h-full md:h-auto [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]  animate-scaleIn">
             <div className="px-5 py-4 border-b border-[#dbdbdb] flex items-center justify-between">
               {!isLogin ? (
                 <h2 className="text-xl font-medium">

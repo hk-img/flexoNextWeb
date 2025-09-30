@@ -10,7 +10,7 @@ import { postAPI } from "@/services/ApiService";
 import { useQuery } from "@tanstack/react-query";
 import Pagination from "../pagination/Pagination";
 import ExplorePopup from "../explorePopup/ExplorePopup";
-import { convertSlugToCapitalLetter, getTypeOfSpaceByWorkSpace, slugGenerator } from "@/services/Comman";
+import { convertSlugToCapitalLetter, convertSlugToSmallLetter, getTypeOfSpaceByWorkSpace, slugGenerator } from "@/services/Comman";
 import MapWithPrices from "./MapWithPrice";
 const coworkingTypes = [
   "Private Office",
@@ -105,7 +105,8 @@ const Listing = ({spaceType,city,locationName,spaceCategoryData,locationData,nea
     {
       setSelectedCheckboxes(coworkingTypes);
     }else{
-      setSelectedCheckboxes([selectedSpaceType?.spaceType]);
+      const smallSpaceType = convertSlugToSmallLetter(selectedSpaceType?.spaceType || "");
+      setSelectedCheckboxes([smallSpaceType]);
     }
   },[spaceCategoryData,spaceType])
 

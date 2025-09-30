@@ -3,7 +3,7 @@ import React from 'react'
 
 const ChatBot = () => {
   return (
-    <div className='fixed md:block hidden bottom-3 right-3'>
+    <div className='fixed md:block hidden bottom-3 right-3 z-2'>
       <div className=' flex flex-col space-y-2'>
         <a href="#" target="_blank" className="relative group">
           <div className="bg-[#276ad6] text-white w-[45px] h-[45px] flex items-center justify-center rounded-full">

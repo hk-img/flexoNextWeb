@@ -137,26 +137,33 @@ const Listing = ({ spaceType, city, locationName, spaceCategoryData, locationDat
       const type = getTypeOfSpaceByWorkSpace(spaceType || "");
       console.log({ type }, "Rftyhryryry")
       let payload = {
-        city_name: selectedLocation?.city,
+        city_name: convertSlugToSmallLetter(selectedLocation?.city || ""),
         spaceType: selectedCheckboxes,
         type: type,
         userId: 0,
         capacity: null,
-        min_price: 0,
-        max_price: 0,
-        amenities: filterData?.amenities,
-        location_name: selectedLocation?.location_name,
+        min_price: null,
+        max_price: null,
+        amenities: [],
+        location_name: convertSlugToSmallLetter(selectedLocation?.location_name || ""),
         city_lat: 0,
         city_long: 0,
         location_lat: 19.1121947,
         location_longi: 72.8792898,
         page_no: page
       }
-      if (filterData.sortBy) {
-        payload.sortBy = filterData?.sortBy;
+      if (filterData.priceRange.min != 50000 || filterData.priceRange.max != 50000000) {
+        payload.min_price = filterData?.priceRange?.min;
+        payload.max_price = filterData?.priceRange?.max;
       }
       if (filterData.distance > 0) {
         payload.distance = filterData?.distance;
+      }
+      if (filterData.sortBy) {
+        payload.sortBy = filterData?.sortBy;
+      }
+      if(filterData?.amenities?.length > 0){
+        payload.amenities = filterData?.amenities
       }
       const res = await postAPI("spaces/getSpacesByCity", payload);
       return res.data;
@@ -443,7 +450,7 @@ const Listing = ({ spaceType, city, locationName, spaceCategoryData, locationDat
                 </div>
                 {
                   mapToggle && (
-                    <div className="map lg:w-2/5 w-full flex flex-col md:sticky md:top-10 mt-3 lg:mt-1 lg:hidden">
+                    <div className="map lg:w-2/5 w-full flex flex-col md:sticky md:top-10 mt-3 lg:mt-1 lg:hidden [&_.gm-style-iw-d]:!overflow-hidden [&_.gm-style-iw-d]:!max-w-[336px] [&_.gm-style-iw-d]:!max-h-full [&_.gm-style-iw-c]:!p-0 [&_.gm-style-iw-chr]:!hidden [&_.gm-style-iw]:!rounded-xl">
                       <MapWithPrices spaceType={spaceType} spaces={productData} hoveredSpaceId={hoveredSpaceId} />
                     </div>
                   )
@@ -673,7 +680,7 @@ const Listing = ({ spaceType, city, locationName, spaceCategoryData, locationDat
             </div>
             {
               mapToggle && (
-                <div className="map lg:w-1/3 w-full lg:flex flex-col md:sticky md:top-10 hidden">
+                <div className="map lg:w-1/3 w-full lg:flex flex-col md:sticky md:top-10 hidden [&_.gm-style-iw-d]:!overflow-hidden [&_.gm-style-iw-d]:!max-w-[336px] [&_.gm-style-iw-d]:!max-h-full [&_.gm-style-iw-c]:!p-0 [&_.gm-style-iw-chr]:!hidden [&_.gm-style-iw]:!rounded-xl">
                   <MapWithPrices spaceType={spaceType} spaces={productData} hoveredSpaceId={hoveredSpaceId} />
                 </div>
               )

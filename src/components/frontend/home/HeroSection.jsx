@@ -8,9 +8,9 @@ import { useQuery } from "@tanstack/react-query";
 import { getApi } from "@/services/ApiService";
 import { useRouter } from "next/navigation";
 import { slugGenerator } from "@/services/Comman";
-
+ 
 const Select = dynamic(() => import("react-select"), { ssr: false });
-
+ 
 const images = [
   "/images/coworking-spaces.webp",
   "/images/desk-spaces.webp",
@@ -29,13 +29,13 @@ const texts = [
   "Private Offices",
   "Workspaces",
 ];
-
+ 
 export default function HeroSection({spaceCategoryData}) {
   const router = useRouter();
   const [type, setType] = useState(null);
   const [location, setLocation] = useState(null);
   console.log({ type, location });
-
+ 
   const DropdownIndicator = (props) => {
     const { menuIsOpen } = props.selectProps;
     return (
@@ -49,7 +49,7 @@ export default function HeroSection({spaceCategoryData}) {
       </RSComponents.DropdownIndicator>
     );
   };
-
+ 
   const ClearIndicator = (props) => {
     return (
       <RSComponents.ClearIndicator {...props}>
@@ -59,7 +59,7 @@ export default function HeroSection({spaceCategoryData}) {
       </RSComponents.ClearIndicator>
     );
   };
-
+ 
   const customStyles = {
     container: (base) => ({
       ...base,
@@ -90,8 +90,8 @@ export default function HeroSection({spaceCategoryData}) {
     }),
     menuList: (base) => ({
       ...base,
-      maxHeight: "160px", // 5 items ke baad scroll
-      // overflowY: "auto",
+      maxHeight: "160px",
+      overflowY: "auto",
       paddingRight: "4px",
       className:
         " [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]",
@@ -141,7 +141,7 @@ export default function HeroSection({spaceCategoryData}) {
   };
   const [currentImage, setCurrentImage] = useState(0);
   const [currentText, setCurrentText] = useState(0);
-
+ 
   useEffect(() => {
     const interval = setInterval(
       () => setCurrentImage((prev) => (prev + 1) % images.length),
@@ -149,7 +149,7 @@ export default function HeroSection({spaceCategoryData}) {
     );
     return () => clearInterval(interval);
   }, [images.length]);
-
+ 
   useEffect(() => {
     const interval = setInterval(
       () => setCurrentText((prev) => (prev + 1) % texts.length),
@@ -157,7 +157,7 @@ export default function HeroSection({spaceCategoryData}) {
     );
     return () => clearInterval(interval);
   }, [texts.length]);
-
+ 
   const { data: allLocations } = useQuery({
     queryKey: ["allLocations", type?.label],
     queryFn: async () => {
@@ -166,15 +166,15 @@ export default function HeroSection({spaceCategoryData}) {
     },
     enabled: !!type?.label,
   });
-
+ 
   const locationData = useMemo(() => {
     return allLocations || [];
   }, [allLocations]);
-
+ 
   const filterLocations = (option, inputValue) => {
     return option.label.toLowerCase().startsWith(inputValue.toLowerCase());
   };
-
+ 
   const handleSearch = (type,location)=>{
     const typeSlug = slugGenerator(type?.label);
     const citySlug = slugGenerator(location?.city || "");
@@ -184,7 +184,7 @@ export default function HeroSection({spaceCategoryData}) {
     }
     router.push(`/in/${typeSlug}/${citySlug}/${locationSlug}`);
   }
-
+ 
   return (
     <section className="relative w-full md:h-[calc(100dvh-82px)] h-[calc(100dvh-60px)] lg:mt-[82px] sm:mt-[62px] mt-[64px] overflow-hidden">
       {images.map((img, idx) => (
@@ -206,7 +206,7 @@ export default function HeroSection({spaceCategoryData}) {
           </div>
         </div>
       ))}
-
+ 
       <div className="absolute inset-0 bg-black/40  text-white z-1 lg:py-0 sm:py-4 py-0">
         <div className="container px-[15px] mx-auto w-full h-full">
           <div className="flex flex-col md:items-start md:justify-center items-center justify-end h-full">
@@ -214,7 +214,7 @@ export default function HeroSection({spaceCategoryData}) {
               <h1 className="text-[34px] md:text-[56px] leading-[1.2] font-semibold transition-all duration-700 ease-in-out md:mb-[5px]">
                 Discover Amazing{" "}
               </h1>
-
+ 
               <div
                 key={texts[currentText]}
                 className="text-[#f76900] [text-shadow:0px_0px_40px_black] inline-block animate-fadeSlide text-[30px] md:text-5xl font-semibold"
@@ -224,26 +224,22 @@ export default function HeroSection({spaceCategoryData}) {
             </div>
             <div className="flex md:flex-row flex-col md:bg-transparent bg-white md:px-0 md:py-0 px-[15px] pt-5 pb-4 rounded-[15px] items-center gap-y-5 gap-x-4 sm:mt-9 mt-17 sm:mb-0 mb-4 w-full">
               <div className="flex gap-y-5 md:flex-row flex-col bg-white md:rounded-[15px] overflow-hidden w-full xl:max-w-[536px] md:max-w-[449px] px-[7px]">
-              <Select
-  options={spaceCategoryData}
-  placeholder="What are you looking for?"
-  value={type}
-  onChange={(opt) => setType(opt)}
-  styles={customStyles}
-  menuPortalTarget={typeof document !== "undefined" ? document.body : null}
-  menuPlacement="auto"       // 👈 Auto decide karega upar/neeche
-  menuPosition="fixed"       // 👈 Viewport ke hisaab se render hoga (parent overflow ke bahar bhi)
-  className="md:border-r max-md:border items-center flex justify-between border-black max-md:rounded-[15px] !w-full md:border-[#d0c2c2] [&_div>div>div]:!text-black [&_div>div>div]:!text-sm [&_div>div>div]:!text-nowrap md:!h-[46px] !h-[52px]"
-  isClearable
-  components={{
-    ClearIndicator,
-    DropdownIndicator,
-    IndicatorSeparator: null,
-  }}
-  noOptionsMessage={() => "Space not found"}
-/>
-
-
+                <Select
+                  options={spaceCategoryData}
+                  placeholder="What are you looking for?"
+                  value={type}
+                  onChange={(opt) => setType(opt)}
+                  styles={customStyles}
+                  menuPortalTarget={typeof document !== "undefined" ? document.body : null}
+                  className="md:border-r max-md:border items-center flex justify-between border-black max-md:rounded-[15px] !w-full md:border-[#d0c2c2] [&_div>div>div]:!text-black [&_div>div>div]:!text-sm [&_div>div>div]:!text-nowrap md:!h-[46px] !h-[52px]"
+                  isClearable
+                  components={{
+                    ClearIndicator,
+                    DropdownIndicator,
+                    IndicatorSeparator: null,
+                  }}
+                  noOptionsMessage={() => "Space not found"}
+                />
                 <Select
                   options={locationData}
                   placeholder="Where?"
@@ -264,7 +260,7 @@ export default function HeroSection({spaceCategoryData}) {
                   noOptionsMessage={() => "Location not found"}
                 />
               </div>
-
+ 
               <button
                 onClick={()=>handleSearch(type,location)}
                 className="bg-[#f76900] px-5 text-white font-medium h-[46px] flex items-center justify-center rounded-xl w-full md:w-auto text-sm cursor-pointer"
@@ -278,3 +274,4 @@ export default function HeroSection({spaceCategoryData}) {
     </section>
   );
 }
+ 

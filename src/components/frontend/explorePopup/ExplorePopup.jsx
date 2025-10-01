@@ -104,12 +104,13 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {/* First Name */}
             <div className="relative">
               <label className="block text-sm font-semibold mb-1">
                 First name <span className="text-[#dc3545]">*</span>
               </label>
+              <div className="relative">
               <input
                   {...register("firstName", { required: true })}
                   placeholder="Enter First Name"
@@ -121,10 +122,11 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                     `}
                 />
               {errors.firstName && (
-                <p className="text-red-500 text-sm mt-1">
+                <p className="text-red-500 text-[10px] absolute -bottom-4">
                   {errors.firstName.message}
                 </p>
               )}
+              </div>
             </div>
 
             {/* Last Name */}
@@ -132,21 +134,23 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
               <label className="block text-sm font-semibold mb-1">
                 Last name <span className="text-[#dc3545]">*</span>
               </label>
-              <input
-                {...register("lastName")}
-                placeholder="Enter Last Name"
-               className={`w-full rounded-sm border-2 px-3 py-2.5
-                      border-[#dbdbdb] h-12
-                      ${errors.lastName 
-                        ? "border-[#f44336] focus:border-[#f44336]" 
-                        : "hover:border-black focus:border-[#3f51b5]"}
-                    `}
-              />
-              {errors.lastName && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.lastName.message}
-                </p>
-              )}
+              <div className="relative">
+                <input
+                  {...register("lastName")}
+                  placeholder="Enter Last Name"
+                className={`w-full rounded-sm border-2 px-3 py-2.5
+                        border-[#dbdbdb] h-12
+                        ${errors.lastName 
+                          ? "border-[#f44336] focus:border-[#f44336]" 
+                          : "hover:border-black focus:border-[#3f51b5]"}
+                      `}
+                />
+                {errors.lastName && (
+                  <p className="text-red-500 text-[10px] absolute -bottom-4">
+                    {errors.lastName.message}
+                  </p>
+                )}
+              </div>
             </div>
 
             {/* Email */}
@@ -166,7 +170,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                     `}
               />
               {errors.email && (
-                <p className="text-red-500 text-sm mt-1">
+                <p className="text-red-500 text-[10px] absolute -bottom-4">
                   {errors.email.message}
                 </p>
               )}
@@ -196,7 +200,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
               />
               {/* {values?.country?.name} */}
               {errors.mobile && (
-                <p className="text-red-500 text-sm mt-1">
+                <p className="text-red-500 text-[10px] absolute -bottom-4">
                   {errors.mobile.message}
                 </p>
               )}
@@ -222,7 +226,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                 <option value="Bangalore">Bangalore</option>
               </select>
               {errors.city && (
-                <p className="text-red-500 text-sm mt-1">
+                <p className="text-red-500 text-[10px] absolute -bottom-4">
                   {errors.city.message}
                 </p>
               )}
@@ -248,7 +252,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                 <option value="21+">21+</option>
               </select>
               {errors.seats && (
-                <p className="text-red-500 text-sm mt-1">
+                <p className="text-red-500 text-[10px] absolute -bottom-4">
                   {errors.seats.message}
                 </p>
               )}

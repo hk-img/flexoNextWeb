@@ -211,7 +211,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                     nearBySpacesData?.map((item, index) => (
                       <a
                         key={index}
-                        className={`${item?.location_name?.split(" ")?.map(word => word.charAt(0).toLowerCase() + word.slice(1))?.join(" ") == locationName?.replace(/-/g, " ") ? "text-[#4343e8] border-[#7d9dd9] bg-[#e9e9ff]" : "text-[#9e9e9e] border-[#d4d4d4] bg-white"} inline-block text-center me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border max-w-[240px] w-[160px] whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]`}
+                        className={`${item?.location_name?.split(" ")?.map(word => word.charAt(0).toLowerCase() + word.slice(1))?.join(" ") == locationNameSlug?.replace(/-/g, " ") ? "text-[#4343e8] border-[#7d9dd9] bg-[#e9e9ff]" : "text-[#9e9e9e] border-[#d4d4d4] bg-white"} inline-block text-center me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border max-w-[240px] w-[160px] whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]`}
                         href={`/in/${spaceTypeSlug}/${citySlug}/${slugGenerator(item?.location_name || "")}`}
                         target="_blank"
                       >
@@ -710,6 +710,25 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
           </div>
         </div>
       </section>
+      <div className="fixed bottom-0 left-0 w-full max-w-[790px] bg-white z-50">
+          <div className=" mx-auto flex md:flex-row flex-col gap-1 items-center justify-between px-7 py-3">
+              <div className="flex items-center gap-2">
+                <div>
+                  <Svg name="checkTic" className="size-3 text-[#f76900]"/>
+                </div>
+                <div className="text-sm font-light ">Our service is <span className="font-semibold ">FREE</span> </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <div>
+                  <Svg name="checkTic" className="size-3 text-[#f76900]"/>
+                </div>
+                <div className="text-sm font-light">We help secure the <span className="font-semibold ">best deal</span> </div>
+              </div>
+              <div className="flex items-center gap-2 ">
+                <button className="bg-[#f76900] text-white px-10 text-sm py-[15px] rounded-sm uppercase">FIND MY PERFECT OFFICE NOW</button>
+              </div>
+          </div>
+      </div>
       {
         faqData?.length > 0 && <Faq spaceType={spaceType} city={city} locationName={locationName} faqData={faqData} />
       }

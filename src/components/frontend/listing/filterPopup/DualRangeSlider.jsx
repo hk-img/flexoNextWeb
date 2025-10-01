@@ -42,15 +42,25 @@ const DualRangeSlider = ({ min, max, step, values, onChange }) => {
       </div>
 
       {/* inputs */}
-      <input
-        type="range"
-        min={min}
-        max={max}
-        step={step}
-        value={minValue}
-        onChange={handleMinChange}
-        className="absolute top-[34px] w-full h-2 bg-transparent appearance-none pointer-events-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#f76900] [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:pointer-events-auto"
-      />
+     <input
+  type="range"
+  min={min}
+  max={max}
+  step={step}
+  value={minValue}
+  onChange={handleMinChange}
+  className="
+    absolute top-[34px] w-full h-2 bg-transparent appearance-none pointer-events-none
+    [&::-webkit-slider-thumb]:appearance-none
+    [&::-webkit-slider-thumb]:w-8 [&::-webkit-slider-thumb]:h-8
+    [&::-webkit-slider-thumb]:rounded-full
+    [&::-webkit-slider-thumb]:bg-[#f76900]
+    [&::-webkit-slider-thumb]:cursor-pointer
+    [&::-webkit-slider-thumb]:pointer-events-auto
+    [&::-webkit-slider-thumb]:bg-[radial-gradient(circle,white_4px,transparent_3px)]
+  "
+/>
+
       <input
         type="range"
         min={min}
@@ -58,7 +68,7 @@ const DualRangeSlider = ({ min, max, step, values, onChange }) => {
         step={step}
         value={maxValue}
         onChange={handleMaxChange}
-        className="absolute top-[34px] w-full h-2 bg-transparent appearance-none pointer-events-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#f76900] [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:pointer-events-auto"
+        className="absolute top-[34px] w-full h-2 bg-transparent appearance-none pointer-events-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-8 [&::-webkit-slider-thumb]:h-8 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#f76900] [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:bg-[radial-gradient(circle,white_4px,transparent_3px)]"
       />
     </div>
   );

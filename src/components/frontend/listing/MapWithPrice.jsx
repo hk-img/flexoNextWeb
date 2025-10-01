@@ -33,7 +33,7 @@ const calculateCenter = (markers) => {
   return { lat: centerLat, lng: centerLng };
 };
  
-export default function MapWithPrices({ spaceType, spaces, hoveredSpaceId }) {
+export default function MapWithPrices({ spaceTypeSlug, spaces, hoveredSpaceId }) {
   const [selectedSpace, setSelectedSpace] = useState(null);
   const [center,setCenter] = useState(null);
   const { isLoaded } = useLoadScript({
@@ -56,7 +56,7 @@ useEffect(()=>{
             space.id === hoveredSpaceId ? "%23000000" : "%23ffffff";
  
         let price = 0;
-        const type = getTypeOfSpaceByWorkSpace(spaceType || "");
+        const type = getTypeOfSpaceByWorkSpace(spaceTypeSlug || "");
         if (type === "coworking") {
           if (!space.flexible_desk_price) {
             price = space.privatecabin_price;

@@ -5,7 +5,11 @@ import React from 'react'
 
 const page = async({params}) => {
   const slug = await params?.data || [];
-  const [spaceType,city,locationName] = slug;
+  const [spaceTypeSlug,citySlug,locationNameSlug] = slug;
+
+  const spaceType = convertSlugToCapitalLetter(spaceTypeSlug || "");
+  const city = convertSlugToCapitalLetter(citySlug || "");
+  const locationName = convertSlugToCapitalLetter(locationNameSlug || "");
   async function fetchAPI1() {
     const res = await fetch(`${BASE_URL}/getAllActiveSpaceCategory`, {
       headers: {
@@ -16,8 +20,7 @@ const page = async({params}) => {
     return res.json();
   }
   async function fetchAPI2() {
-    const capitalSpaceType = convertSlugToCapitalLetter(spaceType || "");
-    const res = await fetch(`${BASE_URL}/user/getAllLocations?spaceType=${capitalSpaceType}`,{
+    const res = await fetch(`${BASE_URL}/user/getAllLocations?spaceType=${spaceType}`,{
       headers: {
         Accept: "application/json",
       },
@@ -27,7 +30,7 @@ const page = async({params}) => {
   }
   const payload = {
     cityId: city,
-    spaceType: spaceType == "coworking" ? "coworking space" : spaceType?.replace(/-/g, " ")
+    spaceType: spaceTypeSlug == "coworking" ? "coworking space" : spaceTypeSlug?.replace(/-/g, " ")
   }
   async function fetchAPI3() {
     const res = await fetch(`${BASE_URL}/spaces/getNearBySpacesByCityId`, {
@@ -44,7 +47,7 @@ const page = async({params}) => {
   const [data1,data2,data3] = await Promise.all([fetchAPI1(),fetchAPI2(),fetchAPI3()]);
   return (
     <>
-      <Listing spaceType={spaceType} city={city} locationName = {locationName} spaceCategoryData={data1} locationData = {data2} nearBySpacesData={data3}/>
+      <Listing spaceTypeSlug={spaceTypeSlug} citySlug={citySlug} locationNameSlug={locationNameSlug} spaceType={spaceType} city={city} locationName = {locationName}  spaceCategoryData={data1} locationData = {data2} nearBySpacesData={data3}/>
     </>
   )
 }

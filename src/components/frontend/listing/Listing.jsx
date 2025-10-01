@@ -10,7 +10,7 @@ import { postAPI } from "@/services/ApiService";
 import { useQuery } from "@tanstack/react-query";
 import Pagination from "../pagination/Pagination";
 import ExplorePopup from "../explorePopup/ExplorePopup";
-import { convertSlugToCapitalLetter, convertSlugToSmallLetter, getTypeOfSpaceByWorkSpace, slugGenerator } from "@/services/Comman";
+import { convertSlugToSmallLetter, getTypeOfSpaceByWorkSpace, slugGenerator } from "@/services/Comman";
 import MapWithPrices from "./MapWithPrice";
 import Faq from "./Faq";
 const coworkingTypes = [
@@ -22,7 +22,7 @@ const coworkingTypes = [
   "Day Pass",
 ]
 
-const Listing = ({ spaceType, city, locationName, spaceCategoryData, locationData, nearBySpacesData }) => {
+const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, locationName, spaceCategoryData, locationData, nearBySpacesData }) => {
   console.log({ locationData, spaceCategoryData, nearBySpacesData })
   const [isOpen, setIsOpen] = useState(false);
   const spacesTypeRef = useRef(null);
@@ -96,14 +96,14 @@ const Listing = ({ spaceType, city, locationName, spaceCategoryData, locationDat
   }, []);
 
   useEffect(() => {
-    if (spaceType === "coworking") {
+    if (spaceTypeSlug === "coworking") {
       setSelectedRadio("Coworking Space");
       setSelectedCheckboxes(coworkingTypes);
       return;
     }
     const selectedSpaceType = spaceCategoryData?.find((item) => {
       const categorySpaceType = slugGenerator(item?.spaceType || "");
-      if (categorySpaceType === spaceType) {
+      if (categorySpaceType === spaceTypeSlug) {
         return item
       }
     });
@@ -115,7 +115,7 @@ const Listing = ({ spaceType, city, locationName, spaceCategoryData, locationDat
       const smallSpaceType = convertSlugToSmallLetter(selectedSpaceType?.spaceType || "");
       setSelectedCheckboxes([smallSpaceType]);
     }
-  }, [spaceCategoryData, spaceType])
+  }, [spaceCategoryData, spaceTypeSlug])
 
   useEffect(() => {
     if (locationData?.length > 0 && locationName) {
@@ -135,7 +135,7 @@ const Listing = ({ spaceType, city, locationName, spaceCategoryData, locationDat
   const { data: allSpaces, refetch: refetchSpaces } = useQuery({
     queryKey: ["allSpaces", page, city, selectedCheckboxes, selectedLocation],
     queryFn: async () => {
-      const type = getTypeOfSpaceByWorkSpace(spaceType || "");
+      const type = getTypeOfSpaceByWorkSpace(spaceTypeSlug || "");
       console.log({ type }, "Rftyhryryry")
       let payload = {
         city_name: convertSlugToSmallLetter(selectedLocation?.city || ""),
@@ -203,7 +203,7 @@ const Listing = ({ spaceType, city, locationName, spaceCategoryData, locationDat
           <div className="group/mainBox w-full flex flex-col lg:flex-row gap-6 items-start">
             <div className="lg:w-2/3 w-full grow flex flex-col justify-center lg:mt-8 mt-16">
               <h1 className="text-xl flex flex-wrap font-bold text-[#141414] mb-4">
-                {locationName ? `${convertSlugToCapitalLetter(spaceType || "")} in ${convertSlugToCapitalLetter(locationName || "")}, ${convertSlugToCapitalLetter(city || "")}` : spaceType == "coworking" ? `Coworking Space in ${convertSlugToCapitalLetter(city || "")}` : `${convertSlugToCapitalLetter(spaceType || "")} in ${convertSlugToCapitalLetter(city || "")}`}
+                {locationName ? `${spaceType} in ${locationName}, ${city}` : spaceTypeSlug == "coworking" ? `Coworking Space in ${city}` : `${spaceType} in ${city}`}
               </h1>
               <div className="form-group filter-group">
                 <div className="scrollMenus overflow-auto whitespace-nowrap pb-2 mb-4">
@@ -212,7 +212,7 @@ const Listing = ({ spaceType, city, locationName, spaceCategoryData, locationDat
                       <a
                         key={index}
                         className={`${item?.location_name?.split(" ")?.map(word => word.charAt(0).toLowerCase() + word.slice(1))?.join(" ") == locationName?.replace(/-/g, " ") ? "text-[#4343e8] border-[#7d9dd9] bg-[#e9e9ff]" : "text-[#9e9e9e] border-[#d4d4d4] bg-white"} inline-block text-center me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border max-w-[240px] w-[160px] whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]`}
-                        href={`/in/${spaceType}/${city}/${slugGenerator(item?.location_name || "")}`}
+                        href={`/in/${spaceTypeSlug}/${citySlug}/${slugGenerator(item?.location_name || "")}`}
                         target="_blank"
                       >
                         {" "}
@@ -459,7 +459,7 @@ const Listing = ({ spaceType, city, locationName, spaceCategoryData, locationDat
                 {
                   mapToggle && (
                     <div className="map lg:w-2/5 w-full flex flex-col md:sticky md:top-10 mt-3 lg:mt-1 lg:hidden [&_.gm-style-iw-d]:!overflow-hidden [&_.gm-style-iw-d]:!max-w-[336px] [&_.gm-style-iw-d]:!max-h-full [&_.gm-style-iw-c]:!p-0 [&_.gm-style-iw-chr]:!hidden [&_.gm-style-iw]:!rounded-xl">
-                      <MapWithPrices spaceType={spaceType} spaces={productData} hoveredSpaceId={hoveredSpaceId} />
+                      <MapWithPrices spaceTypeSlug={spaceTypeSlug} spaces={productData} hoveredSpaceId={hoveredSpaceId} />
                     </div>
                   )
                 }
@@ -689,7 +689,7 @@ const Listing = ({ spaceType, city, locationName, spaceCategoryData, locationDat
             {
               mapToggle && (
                 <div className="map lg:w-1/3 w-full lg:flex flex-col md:sticky md:top-10 hidden [&_.gm-style-iw-d]:!overflow-hidden [&_.gm-style-iw-d]:!max-w-[336px] [&_.gm-style-iw-d]:!max-h-full [&_.gm-style-iw-c]:!p-0 [&_.gm-style-iw-chr]:!hidden [&_.gm-style-iw]:!rounded-xl">
-                  <MapWithPrices spaceType={spaceType} spaces={productData} hoveredSpaceId={hoveredSpaceId} />
+                  <MapWithPrices spaceTypeSlug={spaceTypeSlug} spaces={productData} hoveredSpaceId={hoveredSpaceId} />
                 </div>
               )
             }
@@ -711,7 +711,7 @@ const Listing = ({ spaceType, city, locationName, spaceCategoryData, locationDat
         </div>
       </section>
       {
-        faqData?.length > 0 && <Faq spaceTypeSlug={spaceType} citySlug={city} locationNameSlug={locationName} faqData={faqData} />
+        faqData?.length > 0 && <Faq spaceType={spaceType} city={city} locationName={locationName} faqData={faqData} />
       }
       {isFilterOpen && (
         <FilterPopup

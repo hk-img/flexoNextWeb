@@ -1,11 +1,7 @@
 import React from "react";
 import DOMPurify from "dompurify";
-import { convertSlugToCapitalLetter } from "@/services/Comman";
 
-const Faq = ({ spaceTypeSlug,citySlug,locationNameSlug,faqData }) => {
-  const spaceType = convertSlugToCapitalLetter(spaceTypeSlug || "");
-  const city = convertSlugToCapitalLetter(citySlug || "");
-  const locationName = convertSlugToCapitalLetter(locationNameSlug || "");
+const Faq = ({ spaceType,city,locationName,faqData }) => {
   return (
     <>
       <section className=" mt-18 bg-[#f9f9f9]">

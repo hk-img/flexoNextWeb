@@ -15,19 +15,6 @@ const FilterPopup = ({
   handleClear,
 }) => {
   console.log({filterData},"Rtyhrthyrtyr")
-    const popupRef = useRef(null)
-  useEffect(() => {
-    if (!isFilterOpen) return;
- 
-    const handleClickOutside = (e) => {
-      if (popupRef.current && !popupRef.current.contains(e.target)) {
-        setIsFilterOpen(false);
-      }
-    };
- 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isFilterOpen, setIsFilterOpen]);
  
   const {data:allAmenities,isLoading} = useQuery({
     queryKey: ['allAmenities'],
@@ -39,11 +26,15 @@ const FilterPopup = ({
   console.log({allAmenities});
   return (
     <>
-      <section className="w-full relative z-50">
-        <div className="fixed inset-0 bg-black/40" aria-hidden="true"></div>
-        <div className="w-full fixed inset-0 flex items-center justify-center lg:px-4">
+      <section className="w-full relative ">
+       
+        <div className="w-full fixed inset-0 z-50 flex items-center justify-center lg:px-4">
+          <div
+              className="absolute inset-0 bg-black/40"
+              onClick={() => setIsFilterOpen(false)}
+            />
           <div className="w-full h-full lg:max-w-[546px] flex items-center justify-center">
-            <div ref={popupRef} className="scrollDropdown block p-6 bg-white h-[90%] lg:overflow-y-auto text-black shadow-[0px_11px_15px_-7px_rgba(0,0,0,0.2),0px_24px_38px_3px_rgba(0,0,0,0.14),0px_9px_46px_8px_rgba(0,0,0,0.12)] rounded-sm overflow-auto outline-0 w-full max-h-full">
+            <div className="scrollDropdown block p-6 bg-white h-[90%] lg:overflow-y-auto text-black shadow-[0px_11px_15px_-7px_rgba(0,0,0,0.2),0px_24px_38px_3px_rgba(0,0,0,0.14),0px_9px_46px_8px_rgba(0,0,0,0.12)] rounded-sm overflow-auto outline-0 w-full max-h-full z-10">
               {
                 isLoading ? (
                   <div className="w-full h-full flex items-center justify-center">

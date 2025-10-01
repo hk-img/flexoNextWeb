@@ -50,9 +50,10 @@ const Header = () => {
                   src="/images/logo.webp"
                   alt="logo"
                   title="logo"
-                  className="xl:w-[130px] lg:w-[114px] md:w-[74px] w-[100px]"
+                  className="xl:w-[130px] lg:w-[114px] md:w-[74px] w-[100px] h-auto"
                   width={137}
                   height={37}
+                  priority={true}
                 />
               </Link>
             </div>

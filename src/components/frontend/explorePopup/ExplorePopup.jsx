@@ -112,14 +112,14 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                   {...register("firstName", { required: true })}
                   placeholder="Enter First Name"
                   className={`w-full rounded-sm border-2 px-2 tracking-normal py-2.5
-                      border-[#dbdbdb] h-[45px] text-sm font-semibold
+                      border-[#dbdbdb] h-[45px] text-sm font-semibold font-roboto
                       ${errors.firstName 
                         ? "border-[#f44336] focus:border-[#f44336]" 
                         : "hover:border-black focus:border-[#3f51b5]"}
                     `}
                 />
               {errors.firstName && (
-                <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4">
+                <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
                   {errors.firstName.message}
                 </p>
               )}
@@ -143,7 +143,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                       `}
                 />
                 {errors.lastName && (
-                  <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4">
+                  <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
                     {errors.lastName.message}
                   </p>
                 )}
@@ -160,14 +160,14 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                 {...register("email")}
                 placeholder="Enter Email"
                 className={`w-full rounded-sm border-2 px-2 tracking-normal py-2.5
-                      border-[#dbdbdb] h-[45px] text-sm font-semibold
+                      border-[#dbdbdb] h-[45px] text-sm font-semibold font-roboto
                       ${errors.email 
                         ? "border-[#f44336] focus:border-[#f44336]" 
                         : "hover:border-black focus:border-[#3f51b5]"}
                     `}
               />
               {errors.email && (
-                <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4">
+                <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
                   {errors.email.message}
                 </p>
               )}
@@ -197,7 +197,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
               />
               {/* {values?.country?.name} */}
               {errors.mobile && (
-                <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4">
+                <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
                   {errors.mobile.message}
                 </p>
               )}
@@ -211,7 +211,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
               <select
                 {...register("city")}
                 className={`w-full rounded-sm border-2 px-2 tracking-normal py-2.5
-                      border-[#dbdbdb] h-[45px] text-sm font-semibold
+                      border-[#dbdbdb] h-[45px] text-sm font-semibold font-roboto
                       ${errors.city 
                         ? "border-[#f44336] focus:border-[#f44336]" 
                         : "hover:border-black focus:border-[#3f51b5]"}
@@ -223,7 +223,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                 <option value="Bangalore">Bangalore</option>
               </select>
               {errors.city && (
-                <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4">
+                <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
                   {errors.city.message}
                 </p>
               )}
@@ -237,7 +237,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
               <select
                 {...register("seats")}
                 className={`w-full rounded-sm border-2 px-2 tracking-normal py-2.5
-                      border-[#dbdbdb] h-[45px] text-sm font-semibold
+                      border-[#dbdbdb] h-[45px] text-sm font-semibold font-roboto
                       ${errors.seats 
                         ? "border-[#f44336] focus:border-[#f44336]" 
                         : "hover:border-black focus:border-[#3f51b5]"}
@@ -249,7 +249,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                 <option value="21+">21+</option>
               </select>
               {errors.seats && (
-                <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4">
+                <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
                   {errors.seats.message}
                 </p>
               )}

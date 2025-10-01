@@ -204,8 +204,8 @@ const ProductCard = ({ item = {}, setIsOpen }) => {
               </div>
               {
                 type == "longterm" && item?.spaceStatus === "Furnished" && (
-                <div className="flex gap-2 items-center">
-                  <span className="bg-[##000080] p-1 text-xs rounded-sm text-[#343a40]">
+                <div className="flex gap-2 items-center bg-[#000080] rounded-sm">
+                  <span className="bg-[##000080] p-1 text-[13px] text-white ">
                     {item?.spaceStatus}
                   </span>
                 </div>

@@ -1,6 +1,5 @@
 import Detail from "@/components/frontend/detail/Detail";
 import { BASE_URL } from "@/services/ApiService";
-import { convertSlugToSmallLetter } from "@/services/Comman";
 import React from "react";
 
 async function getSpaceDetails(spaceId) {

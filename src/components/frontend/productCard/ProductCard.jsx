@@ -92,7 +92,7 @@ const ProductCard = ({ item = {}, setIsOpen }) => {
           <div className="flex flex-col justify-between items-start md:mb-2 mb-1">
             {type == "coworking" && (
               <h3 className="text-lg cursor-pointer font-medium text-[#141414] text-ellipsis line-clamp-1">
-                {item?.name}
+                {item?.name} {item?.spaceTitle}
               </h3>
             )}
             {type == "longterm" && (

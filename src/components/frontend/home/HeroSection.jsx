@@ -233,6 +233,7 @@ export default function HeroSection({spaceCategoryData}) {
                   menuPortalTarget={typeof document !== "undefined" ? document.body : null}
                   className="md:border-r max-md:border items-center flex justify-between border-black max-md:rounded-[15px] !w-full md:border-[#d0c2c2] [&_div>div>div]:!text-black [&_div>div>div]:!text-sm [&_div>div>div]:!text-nowrap md:!h-[46px] !h-[52px]"
                   isClearable
+                  menuShouldScrollIntoView={false}
                   components={{
                     ClearIndicator,
                     DropdownIndicator,

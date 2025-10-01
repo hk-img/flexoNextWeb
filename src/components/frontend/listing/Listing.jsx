@@ -137,26 +137,33 @@ const Listing = ({ spaceType, city, locationName, spaceCategoryData, locationDat
       const type = getTypeOfSpaceByWorkSpace(spaceType || "");
       console.log({ type }, "Rftyhryryry")
       let payload = {
-        city_name: selectedLocation?.city,
+        city_name: convertSlugToSmallLetter(selectedLocation?.city || ""),
         spaceType: selectedCheckboxes,
         type: type,
         userId: 0,
         capacity: null,
-        min_price: 0,
-        max_price: 0,
-        amenities: filterData?.amenities,
-        location_name: selectedLocation?.location_name,
+        min_price: null,
+        max_price: null,
+        amenities: [],
+        location_name: convertSlugToSmallLetter(selectedLocation?.location_name || ""),
         city_lat: 0,
         city_long: 0,
         location_lat: 19.1121947,
         location_longi: 72.8792898,
         page_no: page
       }
-      if (filterData.sortBy) {
-        payload.sortBy = filterData?.sortBy;
+      if (filterData.priceRange.min != 50000 || filterData.priceRange.max != 50000000) {
+        payload.min_price = filterData?.priceRange?.min;
+        payload.max_price = filterData?.priceRange?.max;
       }
       if (filterData.distance > 0) {
         payload.distance = filterData?.distance;
+      }
+      if (filterData.sortBy) {
+        payload.sortBy = filterData?.sortBy;
+      }
+      if(filterData?.amenities?.length > 0){
+        payload.amenities = filterData?.amenities
       }
       const res = await postAPI("spaces/getSpacesByCity", payload);
       return res.data;

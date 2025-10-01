@@ -26,6 +26,7 @@ const coworkingTypes = [
 const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, locationName, spaceCategoryData, locationData, nearBySpacesData }) => {
   console.log({ locationData, spaceCategoryData, nearBySpacesData })
   const [isOpen, setIsOpen] = useState(false);
+  const [type,setType] = useState("");
   const [isLongTermPopupOpen, setIsLongTermPopupOpen] = useState(false);
   const spacesTypeRef = useRef(null);
   const locationRef = useRef(null);
@@ -51,7 +52,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
   const [appliedFilter, setAppliedFilter] = useState(filterData);
   const [page, setPage] = useState(1);
   const [hoveredSpaceId, setHoveredSpaceId] = useState(null);
-  const type = getTypeOfSpaceByWorkSpace(spaceTypeSlug || "");
+  // const type = getTypeOfSpaceByWorkSpace(spaceTypeSlug || "");
   const perPage = 30;
 
   const handleRadioChange = (e) => {
@@ -59,11 +60,17 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
     if (value == "Coworking Space") {
       setSelectedCheckboxes(coworkingTypes);
     } else {
-      setSelectedCheckboxes([value]);
+      const smallSpaceType = convertSlugToSmallLetter(value || "");
+      setSelectedCheckboxes([smallSpaceType]);
     }
     setSelectedRadio(value);
   };
-
+  useEffect(()=>{
+    if(selectedRadio){
+      const type = getTypeOfSpaceByWorkSpace(selectedRadio || "");
+      setType(type);
+    } 
+  },[selectedRadio])
   const handleCheckbox = (type) => {
     if (selectedCheckboxes.includes(type)) {
       setSelectedCheckboxes(selectedCheckboxes.filter((item) => item !== type));
@@ -467,7 +474,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                 {
                   mapToggle && (
                     <div className="map lg:w-2/5 w-full flex flex-col md:sticky md:top-10 mt-3 lg:mt-1 lg:hidden [&_.gm-style-iw-d]:!overflow-hidden [&_.gm-style-iw-d]:!max-w-[336px] [&_.gm-style-iw-d]:!max-h-full [&_.gm-style-iw-c]:!p-0 [&_.gm-style-iw-chr]:!hidden [&_.gm-style-iw]:!rounded-xl">
-                      <MapWithPrices spaceTypeSlug={spaceTypeSlug} spaces={productData} hoveredSpaceId={hoveredSpaceId} />
+                      <MapWithPrices type={type} spaces={productData} hoveredSpaceId={hoveredSpaceId} />
                     </div>
                   )
                 }
@@ -697,7 +704,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
             {
               mapToggle && (
                 <div className="map lg:w-1/3 w-full lg:flex flex-col md:sticky md:top-10 hidden [&_.gm-style-iw-d]:!overflow-hidden [&_.gm-style-iw-d]:!max-w-[336px] [&_.gm-style-iw-d]:!max-h-full [&_.gm-style-iw-c]:!p-0 [&_.gm-style-iw-chr]:!hidden [&_.gm-style-iw]:!rounded-xl">
-                  <MapWithPrices spaceTypeSlug={spaceTypeSlug} spaces={productData} hoveredSpaceId={hoveredSpaceId} />
+                  <MapWithPrices type={type} spaces={productData} hoveredSpaceId={hoveredSpaceId} />
                 </div>
               )
             }

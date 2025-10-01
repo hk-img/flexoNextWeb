@@ -77,12 +77,12 @@ const Header = () => {
             </div>
 
             <div className="flex lg:hidden items-center gap-[15px] px-[15px]">
-              <a href="#">
+              <Link href="tel:95133 92400">
                 <Svg name="call" className="size-[15px] text-black" />
-              </a>
-              <a href="#">
+              </Link>
+              <Link href="/list-with-us">
                 <Svg name="homePlus" className="size-[18px] text-black" />
-              </a>
+              </Link>
               <div className="cursor-pointer" onClick={() => setIsOpen(true)}>
                 <Svg name="logOut" className="size-[22px] text-black" />
               </div>

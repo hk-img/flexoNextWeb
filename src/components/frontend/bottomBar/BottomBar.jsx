@@ -7,12 +7,12 @@ import { usePathname } from "next/navigation";
 
 export const BottomBar = () => {
   const pathname = usePathname();
-  const routes = ["/detail", "/listing"];
+  const routes = ["/contact","/enterprise","/joy-of-giving","/list-with-us"];
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
-      {routes.includes(pathname) && (
+      {!routes.includes(pathname) && (
         <>
           <div className="fixed bottom-0 bg-[#f76900] w-full md:hidden block z-50">
             <div className="flex items-center justify-between p-4">

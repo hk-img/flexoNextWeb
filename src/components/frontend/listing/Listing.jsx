@@ -13,6 +13,7 @@ import ExplorePopup from "../explorePopup/ExplorePopup";
 import { convertSlugToSmallLetter, getTypeOfSpaceByWorkSpace, slugGenerator } from "@/services/Comman";
 import MapWithPrices from "./MapWithPrice";
 import Faq from "./Faq";
+import LongTermPopup from "./LongTermPopup";
 const coworkingTypes = [
   "Private Office",
   "Managed Office",
@@ -25,6 +26,7 @@ const coworkingTypes = [
 const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, locationName, spaceCategoryData, locationData, nearBySpacesData }) => {
   console.log({ locationData, spaceCategoryData, nearBySpacesData })
   const [isOpen, setIsOpen] = useState(false);
+  const [isLongTermPopupOpen, setIsLongTermPopupOpen] = useState(false);
   const spacesTypeRef = useRef(null);
   const locationRef = useRef(null);
   const [mapToggle, setMapToggle] = useState(true);
@@ -46,9 +48,10 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
     sortBy: "",
     amenities: [],
   });
+  const [appliedFilter, setAppliedFilter] = useState(filterData);
   const [page, setPage] = useState(1);
   const [hoveredSpaceId, setHoveredSpaceId] = useState(null);
-  console.log({ hoveredSpaceId })
+  const type = getTypeOfSpaceByWorkSpace(spaceTypeSlug || "");
   const perPage = 30;
 
   const handleRadioChange = (e) => {
@@ -133,10 +136,8 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
   }, [locationData, locationName])
 
   const { data: allSpaces, refetch: refetchSpaces } = useQuery({
-    queryKey: ["allSpaces", page, city, selectedCheckboxes, selectedLocation],
+    queryKey: ["allSpaces", page, city,type,selectedCheckboxes, selectedLocation,appliedFilter],
     queryFn: async () => {
-      const type = getTypeOfSpaceByWorkSpace(spaceTypeSlug || "");
-      console.log({ type }, "Rftyhryryry")
       let payload = {
         city_name: convertSlugToSmallLetter(selectedLocation?.city || ""),
         spaceType: selectedCheckboxes,
@@ -153,18 +154,21 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
         location_longi: 72.8792898,
         page_no: page
       }
-      if (filterData.priceRange.min != 50000 || filterData.priceRange.max != 50000000) {
-        payload.min_price = filterData?.priceRange?.min;
-        payload.max_price = filterData?.priceRange?.max;
+      if (
+        appliedFilter?.priceRange?.min !== 50000 ||
+        appliedFilter?.priceRange?.max !== 50000000
+      ) {
+        payload.min_price = appliedFilter?.priceRange?.min;
+        payload.max_price = appliedFilter?.priceRange?.max;
       }
-      if (filterData.distance > 0) {
-        payload.distance = filterData?.distance;
+      if (appliedFilter.distance > 0) {
+        payload.distance = appliedFilter?.distance;
       }
-      if (filterData.sortBy) {
-        payload.sortBy = filterData?.sortBy;
+      if (appliedFilter.sortBy) {
+        payload.sortBy = appliedFilter?.sortBy;
       }
-      if(filterData?.amenities?.length > 0){
-        payload.amenities = filterData?.amenities
+      if (appliedFilter?.amenities?.length > 0) {
+        payload.amenities = appliedFilter?.amenities;
       }
       const res = await postAPI("spaces/getSpacesByCity", payload);
       return res.data;
@@ -179,19 +183,20 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
   }, [allSpaces]);
 
   const handleApply = () => {
-    refetchSpaces();
+    setAppliedFilter(filterData);
     setIsFilterOpen(false);
   };
 
   const handleClear = () => {
-    setFilterData({
+    const resetFilters = {
       priceRange: { min: 50000, max: 50000000 },
       distance: 0,
       sortBy: "",
       amenities: [],
-    });
+    };
+    setFilterData(resetFilters);
+    setAppliedFilter(resetFilters);
     setIsFilterOpen(false);
-    refetchSpaces();
   };
   const total = allSpaces?.space_count || 0;
   const start = total > 0 ? (page - 1) * perPage + 1 : 0;
@@ -211,7 +216,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                     nearBySpacesData?.map((item, index) => (
                       <a
                         key={index}
-                        className={`${item?.location_name?.split(" ")?.map(word => word.charAt(0).toLowerCase() + word.slice(1))?.join(" ") == locationName?.replace(/-/g, " ") ? "text-[#4343e8] border-[#7d9dd9] bg-[#e9e9ff]" : "text-[#9e9e9e] border-[#d4d4d4] bg-white"} inline-block text-center me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border max-w-[240px] w-[160px] whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]`}
+                        className={`${item?.location_name?.split(" ")?.map(word => word.charAt(0).toLowerCase() + word.slice(1))?.join(" ") == locationNameSlug?.replace(/-/g, " ") ? "text-[#4343e8] border-[#7d9dd9] bg-[#e9e9ff]" : "text-[#9e9e9e] border-[#d4d4d4] bg-white"} inline-block text-center me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border max-w-[240px] w-[160px] whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]`}
                         href={`/in/${spaceTypeSlug}/${citySlug}/${slugGenerator(item?.location_name || "")}`}
                         target="_blank"
                       >
@@ -711,6 +716,29 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
         </div>
       </section>
       {
+        type == "longterm" && (
+          <div className="fixed bottom-0 left-0 w-full max-w-[790px] bg-white z-50">
+              <div className=" mx-auto flex md:flex-row flex-col gap-1 items-center justify-between px-7 py-3">
+                  <div className="flex items-center gap-2">
+                    <div>
+                      <Svg name="checkTic" className="size-3 text-[#f76900]"/>
+                    </div>
+                    <div className="text-sm font-light ">Our service is <span className="font-semibold ">FREE</span> </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div>
+                      <Svg name="checkTic" className="size-3 text-[#f76900]"/>
+                    </div>
+                    <div className="text-sm font-light">We help secure the <span className="font-semibold ">best deal</span> </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button onClick={() => setIsLongTermPopupOpen((prev) => !prev)} className="cursor-pointer bg-[#f76900] text-white px-10 text-sm py-[15px] rounded-sm uppercase">FIND MY PERFECT OFFICE NOW</button>
+                  </div>
+              </div>
+          </div>
+        )
+      }
+      {
         faqData?.length > 0 && <Faq spaceType={spaceType} city={city} locationName={locationName} faqData={faqData} />
       }
       {isFilterOpen && (
@@ -723,6 +751,9 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
           handleClear={handleClear}
         />
       )}
+      {
+        isLongTermPopupOpen && <LongTermPopup isOpen={isLongTermPopupOpen} setIsOpen={setIsLongTermPopupOpen} />
+      }
       {isOpen && <ExplorePopup isOpen={isOpen} setIsOpen={setIsOpen} />}
     </>
   );

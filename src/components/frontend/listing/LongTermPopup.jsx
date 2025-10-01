@@ -18,8 +18,6 @@ const schema = z
       })
       .nullable()
       .optional(),
-    city: z.string().min(1, "Select city"),
-    seats: z.string().min(1, "Seats required"),
   })
   .refine(
     (data) => {
@@ -34,7 +32,7 @@ const schema = z
     }
   );
 
-const ExplorePopup = ({ isOpen, setIsOpen }) => {
+const LongTermPopup = ({ isOpen, setIsOpen }) => {
   const {
     register,
     handleSubmit,
@@ -50,8 +48,6 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
       lastName: "",
       email: "",
       mobile: "",
-      city: "",
-      seats: "",
       country: {
         name: "India",
         dialCode: "91",
@@ -74,15 +70,11 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center animate-fadeIn">
-      {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/40"
         onClick={() => setIsOpen(false)}
       />
-
-      {/* Popup Box */}
       <div className="relative w-full lg:max-w-[55vw] mx-[12px] rounded-[11px] bg-white p-6 overflow-y-auto h-full md:h-auto [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]  animate-scaleIn">
-        {/* Header */}
         <div className="pb-6 flex items-center justify-between">
           <h2 className="text-lg font-semibold">Get Quotes</h2>
           <button
@@ -125,8 +117,6 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
               )}
               </div>
             </div>
-
-            {/* Last Name */}
             <div className="relative">
               <label className="block text-sm font-semibold mb-1">
                 Last name <span className="text-[#dc3545]">*</span>
@@ -149,8 +139,6 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                 )}
               </div>
             </div>
-
-            {/* Email */}
             <div className="relative">
               <label className="block text-sm font-semibold mb-1">
                 Email <span className="text-[#dc3545]">*</span>
@@ -172,8 +160,6 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                 </p>
               )}
             </div>
-
-            {/* Mobile */}
             <div className="relative">
               <label className="block text-sm font-semibold mb-1">
                 Mobile <span className="text-[#dc3545]">*</span>
@@ -195,62 +181,9 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                   />
                 )}
               />
-              {/* {values?.country?.name} */}
               {errors.mobile && (
                 <p className="text-red-500 text-[10px] absolute -bottom-4">
                   {errors.mobile.message}
-                </p>
-              )}
-            </div>
-
-            {/* City */}
-            <div className="relative">
-              <label className="block text-sm font-semibold mb-1">
-                City <span className="text-[#dc3545]">*</span>
-              </label>
-              <select
-                {...register("city")}
-                className={`w-full rounded-sm border-2 px-3 py-2.5
-                      border-[#dbdbdb] h-12
-                      ${errors.city 
-                        ? "border-[#f44336] focus:border-[#f44336]" 
-                        : "hover:border-black focus:border-[#3f51b5]"}
-                    `}
-              >
-                <option value="">Select City</option>
-                <option value="Delhi">Delhi</option>
-                <option value="Mumbai">Mumbai</option>
-                <option value="Bangalore">Bangalore</option>
-              </select>
-              {errors.city && (
-                <p className="text-red-500 text-[10px] absolute -bottom-4">
-                  {errors.city.message}
-                </p>
-              )}
-            </div>
-
-            {/* Seats */}
-            <div className="relative">
-              <label className="block text-sm font-semibold mb-1">
-                No. of Seats <span className="text-[#dc3545]">*</span>
-              </label>
-              <select
-                {...register("seats")}
-                className={`w-full rounded-sm border-2 px-3 py-2.5
-                      border-[#dbdbdb] h-12
-                      ${errors.seats 
-                        ? "border-[#f44336] focus:border-[#f44336]" 
-                        : "hover:border-black focus:border-[#3f51b5]"}
-                    `}
-              >
-                <option value="">Select No. of Seats</option>
-                <option value="1-5">1–5</option>
-                <option value="6-20">6–20</option>
-                <option value="21+">21+</option>
-              </select>
-              {errors.seats && (
-                <p className="text-red-500 text-[10px] absolute -bottom-4">
-                  {errors.seats.message}
                 </p>
               )}
             </div>
@@ -265,19 +198,9 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
             </button>
           </div>
         </form>
-
-        <p className="mt-4 pb-5 px-5 text-[11px] text-[#000000de] text-center">
-          After you submit a workspace enquiry to us, we may share your details
-          with workspace providers, who may contact you to follow up on your
-          enquiry. Please read our{" "}
-          <a href="#" className="text-[#f76900]">
-            Privacy Policy
-          </a>{" "}
-          for details of how we process the information.
-        </p>
       </div>
     </div>
   );
 };
 
-export default ExplorePopup;
+export default LongTermPopup;

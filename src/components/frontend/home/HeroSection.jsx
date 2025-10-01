@@ -120,6 +120,10 @@ export default function HeroSection({spaceCategoryData}) {
         ? "#f5faff"
         : "#fff",
       color: "#333",
+      width: "100%",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+      overflow: "hidden",
       fontSize: "14px",
       fontWeight: state.isSelected ? "500" : "normal",
       cursor: "pointer",
@@ -252,6 +256,7 @@ export default function HeroSection({spaceCategoryData}) {
                   }
                   className=" [&_div>div>div]:!text-black [&_div>div>div]:!text-sm max-md:border border-black rounded-[15px] !w-full md:!h-[46px] !h-[52px] items-center flex justify-between"
                   isClearable
+                  menuShouldScrollIntoView={false}
                   components={{
                     ClearIndicator: null,
                     DropdownIndicator: null,

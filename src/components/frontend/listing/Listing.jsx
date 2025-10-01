@@ -12,6 +12,7 @@ import Pagination from "../pagination/Pagination";
 import ExplorePopup from "../explorePopup/ExplorePopup";
 import { convertSlugToCapitalLetter, convertSlugToSmallLetter, getTypeOfSpaceByWorkSpace, slugGenerator } from "@/services/Comman";
 import MapWithPrices from "./MapWithPrice";
+import Faq from "./Faq";
 const coworkingTypes = [
   "Private Office",
   "Managed Office",
@@ -709,68 +710,9 @@ const Listing = ({ spaceType, city, locationName, spaceCategoryData, locationDat
           </div>
         </div>
       </section>
-      <section className=" mt-18 bg-[#f9f9f9]">
-        <div className="container mx-auto md:px-0 px-[15px] py-10">
-          <div>
-            <h2 className="text-[#141414] font-medium leading-[1.6] md:text-[26px] text-xl">Frequently Asked Questions About Coworking Space in Andheri East Mumbai | Best Coworking Space in Andheri East Mumbai</h2>
-          </div>
-          <div className="max-w-[975px] mx-auto mt-4">
-            <div className="space-y-4">
-              <div>
-                <div>
-                  <p className="font-extrabold text-[#777] 2xl:text-base text-sm">Q- What are the best coworking spaces in Andheri East?</p>
-                </div>
-                <div className="flex text-[#7b7b7b] 2xl:text-base text-sm pt-1">
-                  <p>Ans-</p>
-                  <p>Top coworking spaces in Andheri East include Quest Coworks, Redbrick Offices, Wework Raheja Platinum, DevX Dynasty, Awfis Skyline Icon, Yessss Works, Wework Vijay Diamond, Innov8, to name a few.</p>
-                </div>
-              </div>
-              <div>
-                <div>
-                  <p className="font-extrabold text-[#777] 2xl:text-base text-sm">Q- What are the best coworking spaces in Andheri East?</p>
-                </div>
-                <div className="flex text-[#7b7b7b] 2xl:text-base text-sm pt-1">
-                  <p>Ans-</p>
-                  <p>Top coworking spaces in Andheri East include Quest Coworks, Redbrick Offices, Wework Raheja Platinum, DevX Dynasty, Awfis Skyline Icon, Yessss Works, Wework Vijay Diamond, Innov8, to name a few.</p>
-                </div>
-                <div className="mt-4">
-                  <h4 className="text-[#7b7b7b] font-bold leading-[20px] text-[15px]">Top Coworking Spaces in Andheri East</h4>
-                  <ol className="list-decimal list-inside text-black  2xl:text-base text-sm space-y-1 my-6">
-                    <li className="hover:text-[#7b7b7b]"> WeWork Andheri East</li>
-
-                    <li className="hover:text-[#7b7b7b]">  Innov8 Andheri East</li>
-
-                    <li className="hover:text-[#7b7b7b]"> Awfis Andheri East</li>
-
-                    <li className="hover:text-[#7b7b7b]">  Quest Coworks Andheri East</li>
-
-                    <li className="hover:text-[#7b7b7b]">  Regus Andheri East</li>
-
-                    <li className="hover:text-[#7b7b7b]"> YesssWorks Andheri East</li>
-
-                    <li className="hover:text-[#7b7b7b]"> Executive Spaces Andheri East</li>
-                    <li className="hover:text-[#7b7b7b]" > Incuspaze Andheri East</li>
-
-                    <li className="hover:text-[#7b7b7b]"> DevX Andheri East</li>
-
-                    <li className="hover:text-[#7b7b7b]"> DBS Business Center Andheri East</li>
-                  </ol>
-                  <div className="space-y-6">
-                    <div>
-                      <h5 className="text-black  2xl:text-base text-sm"> WeWork Andheri East</h5>
-                      <p className="text-[#7b7b7b] 2xl:text-base text-sm pt-4">Experience the grandeur of WeWork Vijay Diamond, a hub of coworking excellence in Andheri East. Immerse yourself in meticulously designed meeting booths, hot desks, and communal areas, all enhanced with state-of-the-art HVAC standards for utmost comfort. Indulge in the community spirit at the vibrant community bar or host impactful gatherings in the well-appointed conference rooms. Enjoy the flexibility of private offices and dedicated desks tailored to your needs. With amenities like parking, bike storage, wellness rooms, and a dedicated mother's room, every aspect of your workday is catered to. Take advantage of the outdoor space for small gatherings or utilize the expansive event space for larger events. Plus, with a dedicated area for your furry companions, you can bring your dog to work stress-free. Conveniently located just a 2-minute walk from the MIDC bus stop, WeWork Vijay Diamond offers a seamless blend of productivity and convenience for your work-life balance.</p>
-                    </div>
-                    <div>
-                      <h5 className="text-black  2xl:text-base text-sm"> WeWork Andheri East</h5>
-                      <p className="text-[#7b7b7b] 2xl:text-base text-sm pt-4">Experience the grandeur of WeWork Vijay Diamond, a hub of coworking excellence in Andheri East. Immerse yourself in meticulously designed meeting booths, hot desks, and communal areas, all enhanced with state-of-the-art HVAC standards for utmost comfort. Indulge in the community spirit at the vibrant community bar or host impactful gatherings in the well-appointed conference rooms. Enjoy the flexibility of private offices and dedicated desks tailored to your needs. With amenities like parking, bike storage, wellness rooms, and a dedicated mother's room, every aspect of your workday is catered to. Take advantage of the outdoor space for small gatherings or utilize the expansive event space for larger events. Plus, with a dedicated area for your furry companions, you can bring your dog to work stress-free. Conveniently located just a 2-minute walk from the MIDC bus stop, WeWork Vijay Diamond offers a seamless blend of productivity and convenience for your work-life balance.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {
+        faqData?.length > 0 && <Faq spaceTypeSlug={spaceType} citySlug={city} locationNameSlug={locationName} faqData={faqData} />
+      }
       {isFilterOpen && (
         <FilterPopup
           isFilterOpen={isFilterOpen}

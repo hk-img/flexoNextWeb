@@ -41,6 +41,21 @@ const Detail = ({ detailData }) => {
     }
   };
 
+  function convertTo12Hour(time) {
+    if (!time) return "";
+
+    // Agar time string "HH:mm" format me hai
+    const [hourStr, minuteStr] = time.split(":");
+    let hour = parseInt(hourStr, 10);
+    const minute = minuteStr || "00";
+    const ampm = hour >= 12 ? "PM" : "AM";
+
+    // 24h -> 12h conversion
+    hour = hour % 12 || 12; 
+
+    return `${hour}:${minute} ${ampm}`;
+  }
+
   return (
     <>
       <HeroSection spaceData={spaceData}/>
@@ -72,14 +87,14 @@ const Detail = ({ detailData }) => {
                 <div className="flex items-center space-x-11 text-sm text-[#646464] px-2">
                   <div className="flex gap-[5px] items-center ">
                     <Svg name="user2" className="size-[15px] text-[#7f7f7f]" />
-                    <span className="2xl:text-base text-sm">people</span>
+                    <span className="2xl:text-base text-sm">{spaceData?.howManyPeopleInYourSpace} people</span>
                   </div>
                   <div className="flex gap-[5px] items-center">
                     <Svg
                       name="scaleRuler"
                       className="size-[15px] text-[#7f7f7f]"
                     />
-                    <span className="2xl:text-base text-sm"> sqft</span>
+                    <span className="2xl:text-base text-sm">{spaceData?.spacesqft} sqft</span>
                   </div>
                 </div>
                 <div className="flex items-center space-x-1 border border-[#ddd] rounded-full w-fit md:px-3.5 px-3 md:py-2 py-1">
@@ -535,10 +550,10 @@ const Detail = ({ detailData }) => {
                         </div>
                         <div>
                           <h3 className="text-[#777] text-xs font-normal">
-                            NA
+                            {spaceData?.near_by_metro || "N/A"}
                           </h3>
                           <h3 className="text-[#777] text-xs font-normal">
-                            NA
+                            {spaceData?.metro_distance || "N/A"}
                           </h3>
                         </div>
                       </div>
@@ -551,10 +566,10 @@ const Detail = ({ detailData }) => {
                         </div>
                         <div>
                           <h3 className="text-[#777] text-xs font-normal">
-                            NA
+                            {spaceData?.near_by_railway_name || "N/A"}
                           </h3>
                           <h3 className="text-[#777] text-xs font-normal">
-                            1 Kms
+                            {spaceData?.railway_distance || "N/A"} Kms
                           </h3>
                         </div>
                       </div>
@@ -569,20 +584,24 @@ const Detail = ({ detailData }) => {
                     </h2>
                     <div>
                       <div className=" ">
-                        <div className="flex items-center gap-2 mb-[25px]">
-                          <div className="flex items-center border border-[#f76900] rounded-full md:px-5 px-[10px] py-3 text-[#646464]">
-                            <span className="mr-3">
-                              <Image
-                                width={25}
-                                height={25}
-                                className="w-[25px] h-[25px]"
-                                src="/images/clock-24-7.webp"
-                                alt=""
-                              />
-                            </span>{" "}
-                            This space is operational 24x7
-                          </div>
-                        </div>
+                        {
+                          spaceData?.has_247_access === 1 && (
+                            <div className="flex items-center gap-2 mb-[25px]">
+                              <div className="flex items-center border border-[#f76900] rounded-full md:px-5 px-[10px] py-3 text-[#646464]">
+                                <span className="mr-3">
+                                  <Image
+                                    width={25}
+                                    height={25}
+                                    className="w-[25px] h-[25px]"
+                                    src="/images/clock-24-7.webp"
+                                    alt=""
+                                  />
+                                </span>{" "}
+                                This space is operational 24x7
+                              </div>
+                            </div>
+                          )
+                        }
 
                         <div className="grid md:gap-4 gap-2 md:p-6 px-[15px]">
                           {spaceData?.working_time?.map((item, index) => (
@@ -596,7 +615,7 @@ const Detail = ({ detailData }) => {
                                 </span>
                               ) : (
                                 <span className="text-[#777] text-[15px]">
-                                  {item.openingTime} AM – {item.closingTime} PM
+                                  {convertTo12Hour(item.openingTime)} – {convertTo12Hour(item.closingTime)} 
                                 </span>
                               )}
                             </div>
@@ -608,7 +627,7 @@ const Detail = ({ detailData }) => {
                   <div id="reviews" className="py-6">
                     <div className="flex flex-wrap md:items-center  md:gap-7 gap-3">
                       <h2 className="text-xl font-medium text-[#141414] mb-2">
-                        Reviews & Ratings <span>(1)</span>{" "}
+                        Reviews & Ratings <span>({detailData?.existingReview?.length})</span>{" "}
                       </h2>
                       <div>
                         <button className="bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white px-5.5 py-2.5 rounded-[15px] font-semibold duration-500 transition flex items-center gap-2 uppercase tracking-[1px]">
@@ -720,15 +739,15 @@ const Detail = ({ detailData }) => {
               </div>
 
               <div className="space-y-2.5 mb-10">
-                <button className="w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">
+                <button onClick={()=>setIsOpen((prev) => !prev)} className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">
                   Get Quote{" "}
                 </button>
-                <button className="w-full border uppercase tracking-[1px] border-[#000e54] text-[#000e54] 2xl:text-base text-sm font-semibold md:py-[15px] py-[10px] rounded-[15px]">
+                <button className="cursor-pointer w-full border uppercase tracking-[1px] border-[#000e54] text-[#000e54] 2xl:text-base text-sm font-semibold md:py-[15px] py-[10px] rounded-[15px]">
                   Schedule a visit
                 </button>
                 {
                   spaceData?.originalPrice > 0 && (
-                    <button className="w-full bg-[#2c864f] 2xl:text-[15px] text-sm hover:bg-[#40a667] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">
+                    <button className="cursor-pointer w-full bg-[#2c864f] 2xl:text-[15px] text-sm hover:bg-[#40a667] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">
                       Buy Pass
                     </button>
                   )

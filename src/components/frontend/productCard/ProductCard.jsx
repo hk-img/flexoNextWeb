@@ -184,6 +184,7 @@ const ProductCard = ({ item = {}, setIsOpen }) => {
           )}
           <div className="flex gap-10 items-center w-full mb-2">
             {(type == "longterm" || type == "shortterm") && (
+              <>
               <div className="bg-[#f76900] text-white w-fit flex items-center py-1.5 pr-1.5 m-0">
                 <div className="flex items-center">
                   <Svg name="rupee" className="size-[15px]" />
@@ -201,6 +202,16 @@ const ProductCard = ({ item = {}, setIsOpen }) => {
                   </span>
                 )}
               </div>
+              {
+                type == "longterm" && item?.spaceStatus === "Furnished" && (
+                <div className="flex gap-2 items-center">
+                  <span className="bg-[##000080] p-1 text-xs rounded-sm text-[#343a40]">
+                    {item?.spaceStatus}
+                  </span>
+                </div>
+                )
+              }
+              </>
             )}
             {item?.isInstant == 1 ? (
               <div className="flex items-center m-0">

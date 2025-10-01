@@ -172,7 +172,7 @@ export default function HeroSection({spaceCategoryData}) {
   });
  
   const locationData = useMemo(() => {
-    return allLocations || [];
+    return allLocations?.map((item)=>({...item,value:item?.id})) || [];
   }, [allLocations]);
  
   const filterLocations = (option, inputValue) => {

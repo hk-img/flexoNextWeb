@@ -183,7 +183,14 @@ const Listing = ({ spaceType, city, locationName, spaceCategoryData, locationDat
   };
 
   const handleClear = () => {
+    setFilterData({
+      priceRange: { min: 50000, max: 50000000 },
+      distance: 0,
+      sortBy: "",
+      amenities: [],
+    });
     setIsFilterOpen(false);
+    refetchSpaces();
   };
   const total = allSpaces?.space_count || 0;
   const start = total > 0 ? (page - 1) * perPage + 1 : 0;

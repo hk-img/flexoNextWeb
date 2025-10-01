@@ -53,7 +53,7 @@ const CoworkingBrands = () => {
                       md:hover:shadow-[5px_5px_20px_#0000001a] transition-all duration-500 ease-in-out"
                     >
                       <Image
-                        width={185}
+                        width={144}
                         height={40}
                         src={logo.src}
                         alt={`${logo.name} Logo`}

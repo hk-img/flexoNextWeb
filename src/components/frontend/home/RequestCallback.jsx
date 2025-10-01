@@ -7,7 +7,7 @@ const RequestCallback = () => {
     <section className="relative w-full py-15 lg:h-[400px] h-full flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0">
             <Image
-              width={1520}
+              width={1356}
               height={400}
               src="/images/ready-to-move.webp" 
               alt="Handshake background"

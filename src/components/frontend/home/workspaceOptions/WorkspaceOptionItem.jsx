@@ -8,7 +8,7 @@ const WorkspaceOptionItem = ({ space,setIsOpen }) => {
       <div className="embla__slide shrink-0 px-[5px] basis-[100%] sm:basis-[50%] md:basis-[50%] lg:basis-[25%] xl:basis-[25%]">
         <div className="group relative rounded-[5px] overflow-hidden shadow-lg">
           <Image
-            width={405}
+            width={268}
             height={400}
             src={space.img}
             alt={space.title}

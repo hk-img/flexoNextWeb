@@ -81,7 +81,7 @@ export default function HeroSection({spaceCategoryData}) {
     }),
     menu: (base) => ({
       ...base,
-      marginTop: 4,
+      marginTop: 0,
       borderRadius: "12px",
       backgroundColor: "#fff",
       boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
@@ -90,8 +90,8 @@ export default function HeroSection({spaceCategoryData}) {
     }),
     menuList: (base) => ({
       ...base,
-      maxHeight: "150px", // 5 items ke baad scroll
-      overflowY: "auto",
+      maxHeight: "100%", // 5 items ke baad scroll
+      // overflowY: "auto",
       paddingRight: "4px",
       className:
         " [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]",
@@ -224,24 +224,25 @@ export default function HeroSection({spaceCategoryData}) {
             </div>
             <div className="flex md:flex-row flex-col md:bg-transparent bg-white md:px-0 md:py-0 px-[15px] pt-5 pb-4 rounded-[15px] items-center gap-y-5 gap-x-4 sm:mt-9 mt-17 sm:mb-0 mb-4 w-full">
               <div className="flex gap-y-5 md:flex-row flex-col bg-white md:rounded-[15px] overflow-hidden w-full xl:max-w-[536px] md:max-w-[449px] px-[7px]">
-                <Select
-                  options={spaceCategoryData}
-                  placeholder="What are you looking for?"
-                  value={type}
-                  onChange={(opt) => setType(opt)}
-                  styles={customStyles}
-                  menuPortalTarget={
-                    typeof document !== "undefined" ? document.body : null
-                  }
-                  className="md:border-r max-md:border items-center flex justify-between border-black max-md:rounded-[15px] !w-full md:border-[#d0c2c2] [&_div>div>div]:!text-black [&_div>div>div]:!text-sm [&_div>div>div]:!text-nowrap md:!h-[46px] !h-[52px]"
-                  isClearable
-                  components={{
-                    ClearIndicator,
-                    DropdownIndicator,
-                    IndicatorSeparator: null,
-                  }}
-                  noOptionsMessage={() => "Space not found"}
-                />
+              <Select
+  options={spaceCategoryData}
+  placeholder="What are you looking for?"
+  value={type}
+  onChange={(opt) => setType(opt)}
+  styles={customStyles}
+  menuPortalTarget={typeof document !== "undefined" ? document.body : null}
+  menuPlacement="auto"       // 👈 Auto decide karega upar/neeche
+  menuPosition="fixed"       // 👈 Viewport ke hisaab se render hoga (parent overflow ke bahar bhi)
+  className="md:border-r max-md:border items-center flex justify-between border-black max-md:rounded-[15px] !w-full md:border-[#d0c2c2] [&_div>div>div]:!text-black [&_div>div>div]:!text-sm [&_div>div>div]:!text-nowrap md:!h-[46px] !h-[52px]"
+  isClearable
+  components={{
+    ClearIndicator,
+    DropdownIndicator,
+    IndicatorSeparator: null,
+  }}
+  noOptionsMessage={() => "Space not found"}
+/>
+
 
                 <Select
                   options={locationData}

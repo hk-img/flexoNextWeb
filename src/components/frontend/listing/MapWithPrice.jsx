@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect} from "react";
 import {
   GoogleMap,
   Marker,
@@ -35,11 +35,17 @@ const calculateCenter = (markers) => {
  
 export default function MapWithPrices({ spaceType, spaces, hoveredSpaceId }) {
   const [selectedSpace, setSelectedSpace] = useState(null);
+  const [center,setCenter] = useState(null);
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY,
   });
  
-  const center = calculateCenter(spaces || []);
+useEffect(()=>{
+    if(spaces.length > 0){
+      const center = calculateCenter(spaces || []);
+      setCenter(center);
+    }
+  },[spaces])
  
   if (!isLoaded) return <div>Loading...</div>;
  
@@ -73,14 +79,14 @@ export default function MapWithPrices({ spaceType, spaces, hoveredSpaceId }) {
             position={{ lat: space.lat, lng: space.longi }}
             icon={{
               url: `data:image/svg+xml;charset=UTF-8,
-              <svg xmlns="http://www.w3.org/2000/svg" width="80" height="40">
-                <rect x='0' y='0' rx='20' ry='20' width="80" height="40" fill="%23ff6600" />
-                <text x="50%" y="55%" font-size="16" font-weight="bold" fill="${fillColor}" text-anchor="middle" alignment-baseline="middle">
-                  ₹${price}
+              <svg xmlns="http://www.w3.org/2000/svg" width="90" height="30">
+                <rect x='0' y='0' rx='20' ry='20' width="90" height="30" fill="%23ff6600" />
+                <text x="50%" y="55%" font-size="16" font-family="Roboto, Arial, sans-serif" font-weight="900" fill="${fillColor}" text-anchor="middle" alignment-baseline="middle">
+                   ₹${Number(price).toLocaleString("en-IN")}
                 </text>
               </svg>`,
-              scaledSize: new window.google.maps.Size(80, 40),
-              anchor: new window.google.maps.Point(40, 20),
+              scaledSize: new window.google.maps.Size(80, 30),
+              anchor: new window.google.maps.Point(40, 0),
             }}
           >
             {selectedSpace?.id === space.id && (
@@ -89,7 +95,7 @@ export default function MapWithPrices({ spaceType, spaces, hoveredSpaceId }) {
                 position={{ lat: space.lat, lng: space.longi }}
                 onCloseClick={() => setSelectedSpace(null)}
               >
-                <div className="w-70 bg-white rounded-lg shadow-xl overflow-hidden z-50 [&_.emblaarrows]:left-3 [&_.emblaarrows]:right-3 [&_.emblaarrows_button]:w-[30px] [&_.emblaarrows_button]:h-[30px] [&_.emblaarrows_button_Svg]:size-[18px] [&_.emblaarrows_button]:!border-0 [&_.emblaarrows_button]:opacity-50 [&_.emblaarrows_button]:hover:opacity-100 [&_.emblaarrows_button_Svg]:!text-black">
+                <div className="max-w-70 bg-white rounded-lg shadow-xl overflow-hidden z-50 [&_.emblaarrows]:left-3 [&_.emblaarrows]:right-3 [&_.emblaarrows_button]:w-[30px] [&_.emblaarrows_button]:h-[30px] [&_.emblaarrows_button_Svg]:size-[18px] [&_.emblaarrows_button]:!border-0 [&_.emblaarrows_button]:opacity-50 [&_.emblaarrows_button]:hover:opacity-100 [&_.emblaarrows_button_Svg]:!text-black">
                   <div className="relative">
                     <div>
                       <button

@@ -90,7 +90,7 @@ export default function HeroSection({spaceCategoryData}) {
     }),
     menuList: (base) => ({
       ...base,
-      maxHeight: "150px", // 5 items ke baad scroll
+      maxHeight: "160px", // 5 items ke baad scroll
       // overflowY: "auto",
       paddingRight: "4px",
       className:

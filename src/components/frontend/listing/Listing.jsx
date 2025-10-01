@@ -139,7 +139,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
     queryKey: ["allSpaces", page, city,type,selectedCheckboxes, selectedLocation,appliedFilter],
     queryFn: async () => {
       let payload = {
-        city_name: convertSlugToSmallLetter(selectedLocation?.city || ""),
+        city_name: convertSlugToSmallLetter(city || ""),
         spaceType: selectedCheckboxes,
         type: type,
         userId: 0,
@@ -147,12 +147,15 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
         min_price: null,
         max_price: null,
         amenities: [],
-        location_name: convertSlugToSmallLetter(selectedLocation?.location_name || ""),
         city_lat: 0,
         city_long: 0,
         location_lat: 19.1121947,
         location_longi: 72.8792898,
         page_no: page
+      }
+      if (selectedLocation) {
+        payload.city_name = convertSlugToSmallLetter(selectedLocation?.city || "");
+        payload.location_name = convertSlugToSmallLetter(selectedLocation?.location_name || "");
       }
       if (
         appliedFilter?.priceRange?.min !== 50000 ||

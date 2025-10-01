@@ -105,21 +105,21 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
             {/* First Name */}
             <div className="relative">
               <label className="block text-sm font-semibold mb-1">
-                First name <span className="text-[#dc3545]">*</span>
+                First name<span className="text-[#dc3545]">*</span>
               </label>
               <div className="relative">
               <input
                   {...register("firstName", { required: true })}
                   placeholder="Enter First Name"
-                  className={`w-full rounded-sm border-2 px-3 py-2.5
-                      border-[#dbdbdb] h-12
+                  className={`w-full rounded-sm border-2 px-2 tracking-normal py-2.5
+                      border-[#dbdbdb] h-[45px] text-sm font-semibold
                       ${errors.firstName 
                         ? "border-[#f44336] focus:border-[#f44336]" 
                         : "hover:border-black focus:border-[#3f51b5]"}
                     `}
                 />
               {errors.firstName && (
-                <p className="text-red-500 text-[10px] absolute -bottom-4">
+                <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4">
                   {errors.firstName.message}
                 </p>
               )}
@@ -129,21 +129,21 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
             {/* Last Name */}
             <div className="relative">
               <label className="block text-sm font-semibold mb-1">
-                Last name <span className="text-[#dc3545]">*</span>
+                Last name<span className="text-[#dc3545]">*</span>
               </label>
               <div className="relative">
                 <input
                   {...register("lastName")}
                   placeholder="Enter Last Name"
                 className={`w-full rounded-sm border-2 px-3 py-2.5
-                        border-[#dbdbdb] h-12
+                        border-[#dbdbdb] h-[45px]  text-sm font-semibold
                         ${errors.lastName 
                           ? "border-[#f44336] focus:border-[#f44336]" 
                           : "hover:border-black focus:border-[#3f51b5]"}
                       `}
                 />
                 {errors.lastName && (
-                  <p className="text-red-500 text-[10px] absolute -bottom-4">
+                  <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4">
                     {errors.lastName.message}
                   </p>
                 )}
@@ -153,21 +153,21 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
             {/* Email */}
             <div className="relative">
               <label className="block text-sm font-semibold mb-1">
-                Email <span className="text-[#dc3545]">*</span>
+                Email<span className="text-[#dc3545]">*</span>
               </label>
               <input
                 type="email"
                 {...register("email")}
                 placeholder="Enter Email"
-                className={`w-full rounded-sm border-2 px-3 py-2.5
-                      border-[#dbdbdb] h-12
+                className={`w-full rounded-sm border-2 px-2 tracking-normal py-2.5
+                      border-[#dbdbdb] h-[45px] text-sm font-semibold
                       ${errors.email 
                         ? "border-[#f44336] focus:border-[#f44336]" 
                         : "hover:border-black focus:border-[#3f51b5]"}
                     `}
               />
               {errors.email && (
-                <p className="text-red-500 text-[10px] absolute -bottom-4">
+                <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4">
                   {errors.email.message}
                 </p>
               )}
@@ -176,7 +176,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
             {/* Mobile */}
             <div className="relative">
               <label className="block text-sm font-semibold mb-1">
-                Mobile <span className="text-[#dc3545]">*</span>
+                Mobile<span className="text-[#dc3545]">*</span>
               </label>
               <Controller
                 name="mobile"
@@ -197,7 +197,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
               />
               {/* {values?.country?.name} */}
               {errors.mobile && (
-                <p className="text-red-500 text-[10px] absolute -bottom-4">
+                <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4">
                   {errors.mobile.message}
                 </p>
               )}
@@ -206,12 +206,12 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
             {/* City */}
             <div className="relative">
               <label className="block text-sm font-semibold mb-1">
-                City <span className="text-[#dc3545]">*</span>
+                City<span className="text-[#dc3545]">*</span>
               </label>
               <select
                 {...register("city")}
-                className={`w-full rounded-sm border-2 px-3 py-2.5
-                      border-[#dbdbdb] h-12
+                className={`w-full rounded-sm border-2 px-2 tracking-normal py-2.5
+                      border-[#dbdbdb] h-[45px] text-sm font-semibold
                       ${errors.city 
                         ? "border-[#f44336] focus:border-[#f44336]" 
                         : "hover:border-black focus:border-[#3f51b5]"}
@@ -223,7 +223,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                 <option value="Bangalore">Bangalore</option>
               </select>
               {errors.city && (
-                <p className="text-red-500 text-[10px] absolute -bottom-4">
+                <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4">
                   {errors.city.message}
                 </p>
               )}
@@ -232,12 +232,12 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
             {/* Seats */}
             <div className="relative">
               <label className="block text-sm font-semibold mb-1">
-                No. of Seats <span className="text-[#dc3545]">*</span>
+                No. of Seats<span className="text-[#dc3545]">*</span>
               </label>
               <select
                 {...register("seats")}
-                className={`w-full rounded-sm border-2 px-3 py-2.5
-                      border-[#dbdbdb] h-12
+                className={`w-full rounded-sm border-2 px-2 tracking-normal py-2.5
+                      border-[#dbdbdb] h-[45px] text-sm font-semibold
                       ${errors.seats 
                         ? "border-[#f44336] focus:border-[#f44336]" 
                         : "hover:border-black focus:border-[#3f51b5]"}
@@ -249,7 +249,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                 <option value="21+">21+</option>
               </select>
               {errors.seats && (
-                <p className="text-red-500 text-[10px] absolute -bottom-4">
+                <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4">
                   {errors.seats.message}
                 </p>
               )}

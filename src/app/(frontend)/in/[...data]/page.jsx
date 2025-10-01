@@ -1,7 +1,45 @@
 import Listing from '@/components/frontend/listing/Listing';
 import { BASE_URL } from '@/services/ApiService';
-import { convertSlugToCapitalLetter } from '@/services/Comman';
+import { convertSlugToCapitalLetter, getTypeOfSpaceByWorkSpace } from '@/services/Comman';
 import React from 'react'
+
+export async function generateMetadata({params}) {
+  const slug = await params?.data || [];
+  const [spaceTypeSlug,citySlug,locationNameSlug] = slug;
+  const spaceType = convertSlugToCapitalLetter(spaceTypeSlug || "");
+  const city = convertSlugToCapitalLetter(citySlug || "");
+  const locationName = convertSlugToCapitalLetter(locationNameSlug || "");
+  const type = getTypeOfSpaceByWorkSpace(spaceTypeSlug || "");
+  let title = "";
+  let description = "";
+  if(locationNameSlug){
+    if(type == "coworking"){
+      title = `Best Coworking Space in ${locationName} | Book A Shared Office`;
+      description = `Book coworking spaces in ${locationName}, ${city}.Compare prices and amenities of coworking spaces and get quotes. Free, fast and easy!`;
+    }else if(type == "shortterm"){
+      title = `${spaceType} in ${locationName} | Book Now`;
+      description = `Book ${spaceType} in ${locationName}, ${city} Starting from Rs.20000 /hour. Compare prices, services and amenities. Explore available options now.`;
+    }else{
+      title = `Office Space for Rent in ${locationName}, ${city}`;
+      description = `Find office space for rent in ${locationName}, ${city}. Choose from a variety of furnished, unfurnished, and custom-built options to suit your needs.`;
+    }
+  }else{
+    if(type == "coworking"){
+      title = `Best Coworking Space in ${city} (${new Date().getFullYear()}) | Compare & Book`;
+      description = `Book coworking spaces in ${city} with flexible pricing and premium amenities at prime locations. Find your shared office fast and FREE with Flexo.`
+    }else if(type == "shortterm"){
+      title = `Book ${spaceType} in ${city} from Rs.20000 /hour`;
+      description = `Book ${spaceType} in ${city} starting from Rs.20000 /hour. View images, amenities, pricing to find the best fit.Explore and book now!.`
+    }else{
+      title = `Office Space for Rent in ${city} | Managed Offices`;
+      description = `Explore offices for rent in ${city}. Choose from a wide range of furnished, unfurnished, built-to-suit and managed office options.`
+    }
+  }
+  return {
+    title:title,
+    description:description,
+  };
+}
 
 const page = async({params}) => {
   const slug = await params?.data || [];

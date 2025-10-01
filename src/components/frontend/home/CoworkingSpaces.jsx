@@ -1,25 +1,26 @@
 import React from "react"
 import EmblaCarousel from "../emblaCarousel/EmblaCarousel"
 import Image from "next/image"
+import Link from "next/link"
 
 const CoworkingSpaces = () => {
   const cities = [
-    { name: "Bengaluru", image: "/images/Bengaluru.webp" },
-    { name: "Hyderabad", image: "/images/Hyderabad.webp" },
-    { name: "Pune", image: "/images/Pune.webp" },
-    { name: "Delhi", image: "/images/Delhi.webp" },
-    { name: "Gurgaon", image: "/images/Gurgaon.webp" },
-    { name: "Noida", image: "/images/Noida.webp" },
-    { name: "Chennai", image: "/images/Chennai.webp" },
-    { name: "Ahmedabad", image: "/images/Ahmedabad.webp" },
-    { name: "Jaipur", image: "/images/Jaipur.webp" },
-    { name: "Coimbatore", image: "/images/Coimbatore.webp" },
-    { name: "Kochi", image: "/images/Kochi.webp" },
-    { name: "Indore", image: "/images/Indore.webp" },
-    { name: "Lucknow", image: "/images/Lucknow.webp" },
-    { name: "Chandigarh", image: "/images/Chandigarh.webp" },
-    { name: "Goa", image: "/images/Goa.webp" },
-    { name: "Surat", image: "/images/Surat.webp" },
+    { name: "Bengaluru", image: "/images/Bengaluru.webp",link:"/in/coworking/bangalore" },
+    { name: "Hyderabad", image: "/images/Hyderabad.webp",link:"/in/coworking/hyderabad" },
+    { name: "Pune", image: "/images/Pune.webp",link:"/in/coworking/pune" },
+    { name: "Delhi", image: "/images/Delhi.webp",link:"/in/coworking/delhi" },
+    { name: "Gurgaon", image: "/images/Gurgaon.webp",link:"/in/coworking/gurgaon" },
+    { name: "Noida", image: "/images/Noida.webp",link:"/in/coworking/noida" },
+    { name: "Chennai", image: "/images/Chennai.webp",link:"/in/coworking/chennai" },
+    { name: "Ahmedabad", image: "/images/Ahmedabad.webp",link:"/in/coworking/ahmedabad" },
+    { name: "Jaipur", image: "/images/Jaipur.webp",link:"/in/coworking/jaipur" },
+    { name: "Coimbatore", image: "/images/Coimbatore.webp",link:"/in/coworking/coimbatore" },
+    { name: "Kochi", image: "/images/Kochi.webp",link:"/in/coworking/kochi" },
+    { name: "Indore", image: "/images/Indore.webp",link:"/in/coworking/indore" },
+    { name: "Lucknow", image: "/images/Lucknow.webp",link:"/in/coworking/lucknow" },
+    { name: "Chandigarh", image: "/images/Chandigarh.webp",link:"/in/coworking/chandigarh" },
+    { name: "Goa", image: "/images/Goa.webp",link:"/in/coworking/goa" },
+    { name: "Surat", image: "/images/Surat.webp",link:"/in/coworking/surat" },
   ]
 
   return (
@@ -31,7 +32,7 @@ const CoworkingSpaces = () => {
 
       <div className="md:mt-10 mt-6 flex flex-col md:flex-row gap-1">
         <div className="w-full md:w-1/3">
-          <a href="#">
+          <Link href="/in/coworking/mumbai">
             <div className="relative rounded-sm overflow-hidden h-full">
               <div className="before:content-[''] before:w-full before:h-full before:absolute before:top-0 before:left-0 before:bg-[#0000002b]" />
               <div className="h-full">
@@ -51,7 +52,7 @@ const CoworkingSpaces = () => {
                 </h3>
               </div>
             </div>
-          </a>
+          </Link>
         </div>
         <div className="w-full md:w-2/3 md:[&_.emblaarrows]:-left-6 md:[&_.emblaarrows]:-right-5 [&_.emblaarrows]:-left-3 [&_.emblaarrows]:-right-3 [&_.emblaarrows_button]:w-10 [&_.emblaarrows_button]:h-10 [&_.emblaarrows_button_Svg]:size-[18px]">
           <EmblaCarousel options={{ loop: true,autoplay:false,showButton: true ,  align: "start"  }}>
@@ -66,7 +67,7 @@ const CoworkingSpaces = () => {
                     {cities
                       .slice(colIdx * 2, colIdx * 2 + 2)
                       .map((city, idx) => (
-                        <a  key={idx} href="#">
+                        <Link key={idx} href={city.link}>
                           <div
                             className="relative rounded-sm overflow-hidden shadow-md h-full"
                           >
@@ -87,7 +88,7 @@ const CoworkingSpaces = () => {
                               </h3>
                             </div>
                           </div>
-                        </a>
+                        </Link>
                       ))}
                   </div>
                 </div>

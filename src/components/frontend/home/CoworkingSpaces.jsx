@@ -37,8 +37,8 @@ const CoworkingSpaces = () => {
               <div className="before:content-[''] before:w-full before:h-full before:absolute before:top-0 before:left-0 before:bg-[#0000002b]" />
               <div className="h-full">
                 <Image
-                  width={405}
-                  height={420}
+                  width={379}
+                  height={405}
                   src="/images/Mumbai.webp"
                   alt="mumbai coworking"
                   title="mumbai coworking"
@@ -73,7 +73,7 @@ const CoworkingSpaces = () => {
                           >
                             <div className="before:content-[''] before:w-full before:h-full before:absolute before:top-0 before:left-0 before:bg-[#0000002b]" />
                             <Image
-                              width={200}
+                              width={248}
                               height={200}
                               src={city.image}
                               alt={city.name}

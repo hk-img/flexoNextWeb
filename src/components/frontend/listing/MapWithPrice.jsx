@@ -74,7 +74,7 @@ export default function MapWithPrices({ spaceType, spaces, hoveredSpaceId }) {
             icon={{
               url: `data:image/svg+xml;charset=UTF-8,
               <svg xmlns="http://www.w3.org/2000/svg" width="80" height="40">
-                <rect x="0" y="0" rx="12" ry="12" width="80" height="40" fill="%23ff6600" />
+                <rect x='0' y='0' rx='20' ry='20' width="80" height="40" fill="%23ff6600" />
                 <text x="50%" y="55%" font-size="16" font-weight="bold" fill="${fillColor}" text-anchor="middle" alignment-baseline="middle">
                   ₹${price}
                 </text>

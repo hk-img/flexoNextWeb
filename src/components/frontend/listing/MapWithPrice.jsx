@@ -155,7 +155,21 @@ export default function MapWithPrices({ type, spaces, hoveredSpaceId }) {
                       </EmblaCarousel>
                     </div>
                     <div className="p-3">
-                      <h2 className="text-lg font-bold">{space.name}</h2>
+                      {type == "coworking" && (
+                        <h2 className="text-lg font-bold">
+                          {space?.name} {space?.spaceTitle}
+                        </h2>
+                      )}
+                      {type == "longterm" && (
+                        <h2 className="text-lg font-bold">
+                          {space?.spaceTitle}
+                        </h2>
+                      )}
+                      {type == "shortterm" && (
+                        <h2 className="text-lg font-bold">
+                          {space?.name} {space?.about}
+                        </h2>
+                      )}
                       <p className="mt-2 text-orange-600 flex items-center gap-1">
                         <Svg
                           name="scaleRuler"

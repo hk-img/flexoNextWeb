@@ -1,6 +1,6 @@
 import Listing from '@/components/frontend/listing/Listing';
 import { BASE_URL } from '@/services/ApiService';
-import { convertSlugToCapitalLetter, getTypeOfSpaceByWorkSpace } from '@/services/Comman';
+import { convertSlugToCapitalLetter, convertSlugToSmallLetter, getTypeOfSpaceByWorkSpace,coworkingTypes } from '@/services/Comman';
 import React from 'react'
 
 export async function generateMetadata({params}) {
@@ -42,6 +42,18 @@ export async function generateMetadata({params}) {
   };
 }
 
+
+const getListingData = async (payload) => {
+  const res = await fetch(`${BASE_URL}/spaces/getSpacesByCity`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+  return res.json();
+};
+
 const page = async({params}) => {
   const data = await params;
   const slug = data?.data || [];
@@ -50,6 +62,8 @@ const page = async({params}) => {
   const spaceType = convertSlugToCapitalLetter(spaceTypeSlug || "");
   const city = convertSlugToCapitalLetter(citySlug || "");
   const locationName = convertSlugToCapitalLetter(locationNameSlug || "");
+  const type = getTypeOfSpaceByWorkSpace(spaceTypeSlug || "");
+
   async function fetchAPI1() {
     const res = await fetch(`${BASE_URL}/getAllActiveSpaceCategory`, {
       headers: {
@@ -85,9 +99,27 @@ const page = async({params}) => {
     return res.json();
   }
   const [data1,data2,data3] = await Promise.all([fetchAPI1(),fetchAPI2(),fetchAPI3()]);
+  const otherTypes = convertSlugToSmallLetter(spaceTypeSlug || "");
+  const listingPayload = {
+    city_name: convertSlugToSmallLetter(city || ""),
+    spaceType: type == "coworking" ? coworkingTypes : [otherTypes],
+    "type": type,
+    "userId": 0,
+    "capacity": null,
+    "min_price": null,
+    "max_price": null,
+    "amenities": [],
+    "city_lat": 0,
+    "city_long": 0,
+    "location_lat": 19.1121947,
+    "location_longi": 72.8792898,
+    "page_no": 1,
+    "location_name": convertSlugToSmallLetter(locationNameSlug || "") || null,
+  }
+  const listingData = await getListingData(listingPayload) || {};
   return (
     <>
-      <Listing spaceTypeSlug={spaceTypeSlug} citySlug={citySlug} locationNameSlug={locationNameSlug} spaceType={spaceType} city={city} locationName = {locationName}  spaceCategoryData={data1} locationData = {data2} nearBySpacesData={data3}/>
+      <Listing spaceTypeSlug={spaceTypeSlug} citySlug={citySlug} locationNameSlug={locationNameSlug} spaceType={spaceType} city={city} locationName = {locationName}  spaceCategoryData={data1} locationData = {data2} nearBySpacesData={data3} listingData={listingData}/>
     </>
   )
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import DOMPurify from "dompurify";
+import FaqAnswer from "./FaqAnswer";
 
 const Faq = ({ spaceType,city,locationName,faqData }) => {
   return (
@@ -23,11 +23,7 @@ const Faq = ({ spaceType,city,locationName,faqData }) => {
                   </div>
                   <div className="flex text-[#7b7b7b] 2xl:text-base text-sm pt-1">
                     <p>Ans-</p>
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(item.answer),
-                      }}
-                    />
+                    <FaqAnswer answer={item.answer} />
                   </div>
                 </div>
               ))}

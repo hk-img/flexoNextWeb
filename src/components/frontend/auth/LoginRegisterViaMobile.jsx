@@ -133,7 +133,7 @@ const LoginRegisterViaMobile = ({ isLogin, setMobile, setIsShowOtp }) => {
                   enableSearch
                   countryCodeEditable={false} 
                   inputProps={{ name: "mobile" }}
-                  className="w-full [&_input]:!w-full [&_input]:!h-full h-[42px]"
+                  className="w-full [&_input]:!w-full [&_input]:!h-full h-[42px] [&_.country-list]:overflow-x-hidden"
                 />
               )}
             />

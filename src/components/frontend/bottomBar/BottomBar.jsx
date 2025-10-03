@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 
 export const BottomBar = () => {
   const pathname = usePathname();
-  const routes = ["/contact","/enterprise","/joy-of-giving","/list-with-us"];
+  const routes = ["/","/contact","/enterprise","/joy-of-giving","/list-with-us"];
   const [isOpen, setIsOpen] = useState(false);
 
   return (

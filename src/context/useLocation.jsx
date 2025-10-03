@@ -5,7 +5,6 @@ const LocationContext = createContext();
 
 export const LocationProvider = ({ children }) => {
   const [coordinates, setCoordinates] = useState(null);
-  console.log({ coordinates });
 
   useEffect(() => {
     if (navigator.geolocation) {

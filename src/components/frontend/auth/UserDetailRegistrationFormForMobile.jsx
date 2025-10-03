@@ -38,7 +38,6 @@ export default function UserDetailRegistrationFormForMobile({ otpVerified = true
       return response.data;
     },
     onSuccess: (data) => {
-      console.log({ data });
       if (data.success) {
         toast.success(data.message);
         setToken(data.result.accessToken);

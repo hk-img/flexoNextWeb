@@ -139,22 +139,28 @@ const ProductCard = ({ item = {}, setIsOpen }) => {
                   Private Office from
                 </p>
                 <div className="w-1/2">
-                  <div className="lg:text-sm text-[13px] text-[#141414] m-0 p-0 font-medium">
-                    <div className="flex items-center m-0">
-                      <div className="flex items-center">
-                        <Svg
-                          name="rupee"
-                          className="text-[#7f7f7f] size-[15px]"
-                        />
-                        <span className="text-black font-semibold text-sm">
-                          {item?.privatecabin_price}
+                {
+                  item?.privatecabin_price ? (
+                    <div className="lg:text-sm text-[13px] text-[#141414] m-0 p-0 font-medium">
+                      <div className="flex items-center m-0">
+                        <div className="flex items-center">
+                          <Svg
+                            name="rupee"
+                            className="text-[#7f7f7f] size-[15px]"
+                          />
+                          <span className="text-black font-semibold text-sm">
+                            {item?.privatecabin_price}
+                          </span>
+                        </div>
+                        <span className="ps-1 text-[11px] font-normal !leading-4">
+                          per seat/month
                         </span>
                       </div>
-                      <span className="ps-1 text-[11px] font-normal !leading-4">
-                        per seat/month
-                      </span>
                     </div>
-                  </div>
+                  ):(
+                    "N/A"
+                  )
+                }
                 </div>
               </div>
               <div className="flex justify-between align-items-center lg:flex-nowrap flex-wrap m-0">
@@ -162,22 +168,28 @@ const ProductCard = ({ item = {}, setIsOpen }) => {
                   Desks from
                 </p>
                 <div className="w-1/2">
-                  <div className="lg:text-sm text-[13px] text-[#141414] m-0 p-0 font-medium">
-                    <div className="flex items-center m-0">
-                      <div className="flex items-center">
-                        <Svg
-                          name="rupee"
-                          className="text-[#7f7f7f] size-[15px]"
-                        />
-                        <span className="text-black font-semibold text-sm">
-                          {item?.flexible_desk_price || item?.desks_price}
+                {
+                  (item?.flexible_desk_price || item?.desks_price) ? (
+                    <div className="lg:text-sm text-[13px] text-[#141414] m-0 p-0 font-medium">
+                      <div className="flex items-center m-0">
+                        <div className="flex items-center">
+                          <Svg
+                            name="rupee"
+                            className="text-[#7f7f7f] size-[15px]"
+                          />
+                          <span className="text-black font-semibold text-sm">
+                            {item?.flexible_desk_price || item?.desks_price}
+                          </span>
+                        </div>
+                        <span className="ps-1 text-[11px] font-normal !leading-4">
+                          per seat/month
                         </span>
                       </div>
-                      <span className="ps-1 text-[11px] font-normal !leading-4">
-                        per seat/month
-                      </span>
                     </div>
-                  </div>
+                  ):(
+                    "N/A"
+                  )
+                }
                 </div>
               </div>
             </>

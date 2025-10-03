@@ -8,16 +8,18 @@ import ProductCard from "../productCard/ProductCard";
 import ExplorePopup from "../explorePopup/ExplorePopup";
 import MapComponent from "./MapComponent";
 import HeroSection from "./heroSection/HeroSection";
+import ReviewSection from "./reviewSection/ReviewSection";
+import Auth from "../auth/Auth";
 
-const Detail = ({ detailData }) => {
+const Detail = ({ detailData,reviewData }) => {
   const spaceData = detailData?.data;
   const [showAll, setShowAll] = useState(false);
   const displayedFacilities = showAll
     ? spaceData?.facilities
     : spaceData?.facilities?.slice(0, 3);
-  console.log({ spaceData });
   const [isFixed, setIsFixed] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY >= 700) {
@@ -83,21 +85,27 @@ const Detail = ({ detailData }) => {
                 <Svg name="location2" className="size-5 text-[#f76900]" />
                 <span>{spaceData?.location_name}</span>
               </div>
-              <div className="flex items-center sm:gap-14 gap-6 sm:mb-0 mb-3">
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center gap-1 text-[#f76900]">
-                    <Svg name="star" className="sm:size-6 size-5" />
-                    <Svg name="star" className="sm:size-6 size-5" />
-                    <Svg name="star" className="sm:size-6 size-5" />
-                    <Svg name="star" className="sm:size-6 size-5" />
-                    <Svg name="star" className="sm:size-6 size-5" />
+              {
+                reviewData?.length > 0 && (
+                  <div className="flex items-center sm:gap-14 gap-6 sm:mb-0 mb-3">
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-1 text-[#f76900]">
+                        {[...Array(5)].map((_, i) => (
+                          <Svg
+                              key={i}
+                              name={i < spaceData?.rating ? "star" : "emptyStar"}
+                              className="size-5"
+                          />
+                      ))}
+                      </div>
+                      <div className="border border-[#f76900] text-black font-medium text-sm px-4 py-1 rounded-full">
+                        {spaceData?.ratingsAvg}
+                      </div>
+                    </div>
+                    <h6 className="text-[#646464] text-sm">{reviewData?.length} reviews</h6>
                   </div>
-                  <div className="border border-[#f76900] text-black font-medium text-sm px-4 py-1 rounded-full">
-                    5.0
-                  </div>
-                </div>
-                <h6 className="text-[#646464] text-sm">1 reviews</h6>
-              </div>
+                )
+              }
               <div className="flex md:flex-row flex-col md:space-y-0 md:gap-y-0 gap-y-1 space-y-3 md:items-center justify-between mb-[25px]">
                 <div className="flex items-center space-x-11 text-sm text-[#646464] px-2">
                   <div className="flex gap-[5px] items-center ">
@@ -347,7 +355,7 @@ const Detail = ({ detailData }) => {
                             </div>
                           </div>
                           <div>
-                            <button className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
+                            <button onClick={() => setIsOpen(true)} className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
                               ENQUIRE NOW
                             </button>
                           </div>
@@ -385,7 +393,7 @@ const Detail = ({ detailData }) => {
                             </div>
                           </div>
                           <div>
-                            <button className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
+                            <button onClick={() => setIsOpen(true)} className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
                               ENQUIRE NOW
                             </button>
                           </div>
@@ -423,7 +431,7 @@ const Detail = ({ detailData }) => {
                             </div>
                           </div>
                           <div>
-                            <button className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
+                            <button onClick={() => setIsOpen(true)} className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
                               ENQUIRE NOW
                             </button>
                           </div>
@@ -461,7 +469,7 @@ const Detail = ({ detailData }) => {
                             </div>
                           </div>
                           <div>
-                            <button className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
+                            <button onClick={() => setIsOpen(true)} className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
                               ENQUIRE NOW
                             </button>
                           </div>
@@ -499,7 +507,7 @@ const Detail = ({ detailData }) => {
                             </div>
                           </div>
                           <div>
-                            <button className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
+                            <button onClick={() => setIsOpen(true)} className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
                               ENQUIRE NOW
                             </button>
                           </div>
@@ -537,7 +545,7 @@ const Detail = ({ detailData }) => {
                             </div>
                           </div>
                           <div>
-                            <button className="cursor-pointer md:mt-3 mt-2 bg-[#4b975f] border border-[#4b975f] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px]">
+                            <button onClick={() => setIsAuthOpen(true)} className="cursor-pointer md:mt-3 mt-2 bg-[#4b975f] border border-[#4b975f] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px]">
                               Buy Pass
                             </button>
                           </div>
@@ -639,83 +647,9 @@ const Detail = ({ detailData }) => {
                       </div>
                     </div>
                   </div>
-                  <div id="reviews" className="py-6">
-                    <div className="flex flex-wrap md:items-center  md:gap-7 gap-3">
-                      <h2 className="text-xl font-medium text-[#141414] mb-2">
-                        Reviews & Ratings <span>({detailData?.existingReview?.length})</span>{" "}
-                      </h2>
-                      <div>
-                        <button className="bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white px-5.5 py-2.5 rounded-[15px] font-semibold duration-500 transition flex items-center gap-2 uppercase tracking-[1px]">
-                          <Svg name="pencil" className="size-5" />
-                          <span>Leave a Review</span>
-                        </button>
-                      </div>
-                    </div>
-                    {detailData?.existingReview?.length > 0 ? (
-                      <div>
-                        <div className="space-y-6 pt-5 md:pt-8 ">
-                          <div className="flex items-center gap-2">
-                            <div className="flex items-center gap-1 text-[#f76900]">
-                              <Svg name="star" className="size-4" />
-                              <Svg name="star" className="size-4" />
-                              <Svg name="star" className="size-4" />
-                              <Svg name="star" className="size-4" />
-                              <Svg name="emptyStar" className="size-4" />
-                            </div>
-                            <div className="border border-[#f76900] text-[#777] text-sm px-3 py-0.5 rounded-full">
-                              4.0
-                            </div>
-                          </div>
-
-                          <div className="flex items-start gap-4">
-                            <div className="w-12 h-12 rounded-full flex items-center justify-center">
-                              <Image
-                                width={50}
-                                height={50}
-                                src="/images/user_image.webp"
-                                alt=""
-                              />
-                            </div>
-
-                            <div className="flex-1 space-y-1">
-                              <div className="">
-                                <h3 className="font-medium text-[#141414]">
-                                  Hitesh
-                                </h3>
-                                <div className="flex md:flex-row flex-col md:items-center md:gap-10 gap-1">
-                                  <div className="flex text-[#f76900] gap-1 text-sm">
-                                    <Svg name="star" className="size-5" />
-                                    <Svg name="star" className="size-5" />
-                                    <Svg name="star" className="size-5" />
-                                    <Svg name="star" className="size-5" />
-                                    <Svg name="emptyStar" className="size-5" />
-                                  </div>
-                                  <p className="mt-1 text-base font-medium text-black flex items-center gap-1">
-                                    <Svg
-                                      name="checkTic"
-                                      className="size-3 text-[#7f7f7f]"
-                                    />
-                                    Yes I would book again
-                                  </p>
-                                </div>
-                              </div>
-
-                              <p className="text-[#777] text-sm">test review</p>
-                              <p className="text-[#777] text-xs">
-                                September 11, 2025
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="pt-5 md:pt-10">
-                        <h3 className="text-[#343a40] text-lg">
-                          No Reviews Yet
-                        </h3>
-                      </div>
-                    )}
-                  </div>
+                  {
+                    <ReviewSection reviewData={reviewData} rating={spaceData?.rating} avgRating={spaceData?.ratingsAvg}/>
+                  }
                 </div>
               </div>
             </div>
@@ -757,12 +691,12 @@ const Detail = ({ detailData }) => {
                 <button onClick={()=>setIsOpen((prev) => !prev)} className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">
                   Get Quote{" "}
                 </button>
-                <button className="cursor-pointer w-full border uppercase tracking-[1px] border-[#000e54] text-[#000e54] 2xl:text-base text-sm font-semibold md:py-[15px] py-[10px] rounded-[15px]">
+                <button onClick={() => setIsAuthOpen(true)} className="cursor-pointer w-full border uppercase tracking-[1px] border-[#000e54] text-[#000e54] 2xl:text-base text-sm font-semibold md:py-[15px] py-[10px] rounded-[15px]">
                   Schedule a visit
                 </button>
                 {
                   spaceData?.originalPrice > 0 && (
-                    <button className="cursor-pointer w-full bg-[#2c864f] 2xl:text-[15px] text-sm hover:bg-[#40a667] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">
+                    <button onClick={() => setIsAuthOpen(true)} className="cursor-pointer w-full bg-[#2c864f] 2xl:text-[15px] text-sm hover:bg-[#40a667] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">
                       Buy Pass
                     </button>
                   )
@@ -809,6 +743,7 @@ const Detail = ({ detailData }) => {
         </div>
       </section>
       {isOpen && <ExplorePopup isOpen={isOpen} setIsOpen={setIsOpen} />}
+      {isAuthOpen && <Auth isOpen={isAuthOpen} setIsOpen={setIsAuthOpen} />}
     </>
   );
 };

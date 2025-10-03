@@ -34,7 +34,6 @@ export default function HeroSection({spaceCategoryData}) {
   const router = useRouter();
   const [type, setType] = useState(null);
   const [location, setLocation] = useState(null);
-  console.log({ type, location });
  
   const DropdownIndicator = (props) => {
     const { menuIsOpen } = props.selectProps;

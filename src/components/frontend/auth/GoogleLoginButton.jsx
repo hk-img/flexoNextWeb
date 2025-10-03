@@ -5,7 +5,6 @@ import axios from "axios";
 
 const GoogleLoginButton = () => {
   const handleLoginSuccess = async (credentialResponse) => {
-    console.log(credentialResponse, "it enter in");
     const Token = credentialResponse.access_token;
     try {
       const response = await axios.get(
@@ -21,7 +20,6 @@ const GoogleLoginButton = () => {
         name: response.data.name,
         picture: response.data.picture,
       };
-      console.log({ userData }, "rtyhrthrth");
     } catch (error) {
       toast.error("Somthing Went Wrong");
     }

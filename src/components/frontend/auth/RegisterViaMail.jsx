@@ -28,7 +28,6 @@ const RegisterViaMail = ({setEmail,setIsShowOtp}) => {
         return response.data;
       },
       onSuccess: (data,payload) => {
-        console.log({ data });
         if(data?.newEmail){
           toast.success(data.message);
           setEmail(payload.email);

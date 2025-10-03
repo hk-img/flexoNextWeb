@@ -57,13 +57,11 @@ const LongTermPopup = ({ isOpen, setIsOpen }) => {
     },
   });
   const values = watch();
-  console.log({ values }, "Rtyryrtyrt");
 
   const onSubmit = (values) => {
     const country_code = values.country ? `+${values.country.dialCode}` : "";
     const dialCode = values.country ? values.country.dialCode : "";
     const mobile = values.mobile.replace(dialCode, "").replace(/^\+/, "");
-    console.log("Quote form data:", { ...values, country_code, mobile });
   };
 
   if (!isOpen) return null;

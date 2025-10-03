@@ -10,6 +10,7 @@ import MapComponent from "./MapComponent";
 import HeroSection from "./heroSection/HeroSection";
 import ReviewSection from "./reviewSection/ReviewSection";
 import Auth from "../auth/Auth";
+import { Facilities } from "@/services/Comman";
 
 const Detail = ({ detailData,reviewData }) => {
   const spaceData = detailData?.data;
@@ -280,7 +281,7 @@ const Detail = ({ detailData,reviewData }) => {
                           <div key={index} className="flex items-center gap-3">
                             <div>
                               <Svg
-                                name="clock"
+                                name={Facilities[item?.id]}
                                 className="size-3.5 text-[#f76900]"
                               />
                             </div>

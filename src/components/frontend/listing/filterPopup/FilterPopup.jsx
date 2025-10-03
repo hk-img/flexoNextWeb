@@ -14,7 +14,6 @@ const FilterPopup = ({
   handleApply,
   handleClear,
 }) => {
-  console.log({filterData},"Rtyhrthyrtyr")
  
   const {data:allAmenities,isLoading} = useQuery({
     queryKey: ['allAmenities'],
@@ -23,7 +22,6 @@ const FilterPopup = ({
       return res.data;
     }
   })
-  console.log({allAmenities});
   return (
     <>
       <section className="w-full relative ">

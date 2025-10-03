@@ -24,7 +24,6 @@ const coworkingTypes = [
 ]
 
 const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, locationName, spaceCategoryData, locationData, nearBySpacesData }) => {
-  console.log({ locationData, spaceCategoryData, nearBySpacesData })
   const [isOpen, setIsOpen] = useState(false);
   const [type,setType] = useState("");
   const [isLongTermPopupOpen, setIsLongTermPopupOpen] = useState(false);
@@ -34,14 +33,11 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
   const [toggleSpaceType, setToggleSpaceType] = useState(false);
   const [toggleSpace, setToggleSpace] = useState(false);
   const [selectedRadio, setSelectedRadio] = useState(spaceCategoryData?.[0]?.spaceType);
-  console.log({ selectedRadio })
   const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
-  console.log({ selectedCheckboxes })
   const [toggleLocation, setToggleLocation] = useState(false);
   const [toggleLocationOptions, setToggleLocationOptions] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedLocation, setSelectedLocation] = useState(null);
-  console.log({ selectedLocation })
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filterData, setFilterData] = useState({
     priceRange: { min: 50000, max: 50000000 },
@@ -52,7 +48,6 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
   const [appliedFilter, setAppliedFilter] = useState(filterData);
   const [page, setPage] = useState(1);
   const [hoveredSpaceId, setHoveredSpaceId] = useState(null);
-  // const type = getTypeOfSpaceByWorkSpace(spaceTypeSlug || "");
   const perPage = 30;
 
   const handleRadioChange = (e) => {
@@ -117,7 +112,6 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
         return item
       }
     });
-    console.log({ selectedSpaceType })
     setSelectedRadio(selectedSpaceType?.spaceType)
     if (selectedSpaceType?.spaceType === "Coworking Space") {
       setSelectedCheckboxes(coworkingTypes);
@@ -130,13 +124,11 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
   useEffect(() => {
     if (locationData?.length > 0 && locationName) {
       const smallLetterLocationName = convertSlugToSmallLetter(locationName || "");
-      console.log({ smallLetterLocationName, locationData })
       const selectedLocation = locationData?.find((item) => {
         if (item?.location_name.toLowerCase() === smallLetterLocationName) {
           return item
         }
       })
-      console.log({ selectedLocation })
       setQuery(selectedLocation?.label || "");
       setSelectedLocation(selectedLocation || null);
     }
@@ -403,11 +395,11 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                     </>
                   )}
                   {toggleLocation && (
-                    <div className="relative toggle-location">
+                    <div className="relative">
                       {/* Search box */}
                       <div className="relative top-6 -left-0 w-full md:w-[400px] lg:w-3/5 rounded-xl z-10 pb-7">
                         <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center py-[9px] px-4 rounded-[42px]">
-                          <div className="w-full">
+                          <div className="w-full toggle-location">
                             <div className="bg-white shadow-mb rounded-full h-10 w-full flex items-center justify-between">
                               <div className="w-full flex justify-between items-center">
                                 <button className="text-[#777777] w-[15px] h-[15px]">
@@ -563,13 +555,13 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                   </>
                 )}
                 {toggleLocation && (
-                  <div className="relative toggle-location">
+                  <div className="relative">
                     {/* Search box */}
                     <div className="relative top-6 -left-0 w-full md:w-[400px] lg:w-3/5 rounded-xl z-10 pb-7">
                       <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center py-[9px] px-4 rounded-[42px]">
                         <div className="w-full">
                           <div className="bg-white shadow-mb rounded-full h-10 w-full flex items-center justify-between">
-                            <div className="w-full flex justify-between items-center">
+                            <div className="w-full flex justify-between items-center toggle-location">
                               <button className="text-[#777777] w-[15px] h-[15px]">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"

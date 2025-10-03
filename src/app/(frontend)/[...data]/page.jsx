@@ -1,16 +1,7 @@
 import Detail from "@/components/frontend/detail/Detail";
 import { BASE_URL } from "@/services/ApiService";
+import { convertSlugToCapitalLetter, getTypeOfSpaceByWorkSpace } from "@/services/Comman";
 import React from "react";
-
-// export async function generateMetadata({params}) {
-//   const slug = (await params?.data) || [];
-//   console.log({ slug });
-//   const [spaceType, spaceSlug] = slug;
-//   return {
-//     title:"",
-//     description:"",
-//   };
-// }
 
 async function getSpaceDetails(spaceId) {
   const res = await fetch(`${BASE_URL}/spaces/getSpaceDetails/${spaceId}`, {
@@ -29,10 +20,20 @@ async function getDetailData(payload) {
   return res.json();
 }
 
+async function getReviewData(spaceId) {
+  const res = await fetch(
+    `${BASE_URL}/ratings/reviews/${spaceId}?sortBy=topRating`,
+    {
+      cache: "no-store",
+    }
+  );
+  return res.json();
+}
+
 const page = async ({ params }) => {
-  const slug = (await params?.data) || [];
-  console.log({ slug });
-  const [spaceType, spaceSlug] = slug;
+  const data = await params;
+  const slug = data?.data || [];
+  const [spaceTypeSlug, spaceSlug] = slug;
   const spaceId = spaceSlug?.split("-").pop();
   const spaceDetails = await getSpaceDetails(spaceId);
   const payload = {
@@ -42,11 +43,47 @@ const page = async ({ params }) => {
     country: spaceDetails?.spaceData?.country,
   };
   const detailData = await getDetailData(payload);
+  const reviews = await getReviewData(spaceId);
+  const reviewData = reviews?.data?.reviews || [];
   return (
     <>
-      <Detail detailData={detailData} />
+      <Detail detailData={detailData} reviewData={reviewData} />
     </>
   );
 };
 
 export default page;
+
+
+export async function generateMetadata({ params }) {
+  const data = await params;
+  const slug = data?.data || [];
+  const [spaceTypeSlug, spaceSlug] = slug;
+  const type = getTypeOfSpaceByWorkSpace(spaceTypeSlug || "");
+  const spaceId = spaceSlug?.split("-").pop();
+  const spaceDetails = await getSpaceDetails(spaceId);
+  const payload = {
+    spaceId: spaceId,
+    city: spaceDetails?.spaceData?.contact_city_name,
+    spaceType: spaceDetails?.spaceData?.spaceType,
+    country: spaceDetails?.spaceData?.country,
+  };
+  const detailData = await getDetailData(payload);
+  const {actual_name,location_name,contact_city_name,spaceType} = detailData?.data || {};
+  let title = "";
+  let description = "";
+  if (type == "coworking") {
+    title = `${actual_name} ${location_name} - ${spaceType} | Pricing - FLEXO`;
+    description = `Discover ${actual_name}, ${location_name}, a coworking space with modern amenities and great pricing, Get customised quotes today!`;
+  } else if (type == "shortterm") {
+    title = `${spaceTitle} at ${location_name}, ${contact_city_name}`;
+    description = `Book ${spaceTitle} at ${location_name}, ${contact_city_name} for Rs.2000 /hour on FLEXO.`;
+  } else {
+    title = `${spaceType} for Rent at ${location_name}, ${contact_city_name}`;
+    description = `Rent ${spaceTitle} at ${location_name}, ${contact_city_name} for Rs.2000 /month`;
+  }
+  return {
+    title: title,
+    description: description,
+  };
+}

@@ -34,14 +34,12 @@ export default function PasswordScreen({email,}) {
     },
   });
   const values = watch();
-  console.log({ values, errors }, "rfthrthrtrt");
   const { mutate: submitPasswordMutation, isPending } = useMutation({
     mutationFn: async (payload) => {
       const response = await postAPI(`user/createPassword/${email}`, payload);
       return response.data;
     },
     onSuccess: (data) => {
-      console.log({ data });
       if (data.success) {
         toast.success(data.message);
         setToken(data.data.accessToken);

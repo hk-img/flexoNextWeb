@@ -66,7 +66,6 @@ const LoginRegisterViaMobile = ({ isLogin, setMobile, setIsShowOtp }) => {
       return response.data;
     },
     onSuccess: (data, payload) => {
-      console.log({ data });
       if (data.success) {
         toast.success(data.message);
         setMobile(payload);
@@ -86,7 +85,6 @@ const LoginRegisterViaMobile = ({ isLogin, setMobile, setIsShowOtp }) => {
       return response.data;
     },
     onSuccess: (data, payload) => {
-      console.log({ data });
       if (data?.success) {
         toast.success(data.message);
         setMobile(payload);
@@ -104,7 +102,6 @@ const LoginRegisterViaMobile = ({ isLogin, setMobile, setIsShowOtp }) => {
     const country_code = values.country ? `+${values.country.dialCode}` : "";
     const dialCode = values.country ? values.country.dialCode : "";
     const mobile = values.mobile.replace(dialCode, "").replace(/^\+/, "");
-    console.log({ country_code, mobile });
     const payload = { phone_code: country_code, mobile: mobile };
     if (isLogin) {
       sendOtpMutationForLogin(payload);

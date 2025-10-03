@@ -4,9 +4,10 @@ import { convertSlugToCapitalLetter, getTypeOfSpaceByWorkSpace } from '@/service
 import React from 'react'
 
 export async function generateMetadata({params}) {
-  const slug = await params?.data || [];
+  const data = await params;
+  const slug = data?.data || [];
   const [spaceTypeSlug,citySlug,locationNameSlug] = slug;
-  const spaceType = convertSlugToCapitalLetter(spaceTypeSlug || "");
+  const spaceType = spaceTypeSlug == "coworking" ? "Coworking Space" : convertSlugToCapitalLetter(spaceTypeSlug || "");
   const city = convertSlugToCapitalLetter(citySlug || "");
   const locationName = convertSlugToCapitalLetter(locationNameSlug || "");
   const type = getTypeOfSpaceByWorkSpace(spaceTypeSlug || "");
@@ -42,7 +43,8 @@ export async function generateMetadata({params}) {
 }
 
 const page = async({params}) => {
-  const slug = await params?.data || [];
+  const data = await params;
+  const slug = data?.data || [];
   const [spaceTypeSlug,citySlug,locationNameSlug] = slug;
 
   const spaceType = convertSlugToCapitalLetter(spaceTypeSlug || "");

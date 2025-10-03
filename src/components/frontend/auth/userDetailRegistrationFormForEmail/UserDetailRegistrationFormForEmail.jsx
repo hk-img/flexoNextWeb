@@ -74,7 +74,6 @@ export default function UserDetailRegistrationFormForEmail({
     },
   });
   const values = watch();
-  console.log({ values, errors }, "rfthrthrtrt");
   const { mutate: submitUserDetailsMutation, isPending } = useMutation({
     mutationFn: async (payload) => {
       const response = await postAPI("user/loginWithMobilePopup", payload);

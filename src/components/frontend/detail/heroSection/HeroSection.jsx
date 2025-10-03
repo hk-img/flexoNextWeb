@@ -63,7 +63,7 @@ const HeroSection = ({ spaceData }) => {
               </div>
             </div>
           </div>
-          <div onClick={() => setViewImagePopup((prev) => !prev)} className="bg-white cursor-pointer text-[#000e54] font-medium text-xs px-[10px] py-2 rounded-sm absolute bottom-7 right-6  z-0">
+          <div onClick={() => setViewImagePopup((prev) => !prev)} className="bg-white cursor-pointer text-[#000e54] font-medium text-xs px-[10px] py-2 rounded-sm absolute md:bottom-7 bottom-20 right-6  z-0">
             View More
           </div>
         </div>

@@ -123,7 +123,6 @@ const VerifyOtp = ({
       return response.data;
     },
     onSuccess: (data) => {
-      console.log({ token: data.user.accessToken },"Rtyhrtyhrtyryrt");
       if (data?.success) {
         setErrorMsg("");
         toast.success(data.message);

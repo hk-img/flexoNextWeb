@@ -282,7 +282,7 @@ const Detail = ({ detailData,reviewData }) => {
                             <div>
                               <Svg
                                 name={Facilities[item?.id]}
-                                className="size-3.5 text-[#f76900]"
+                                className="size-4 text-[#f76900]"
                               />
                             </div>
                             <h3 className="text-[#141414] text-[15px] font-medium leading-[1.6]">

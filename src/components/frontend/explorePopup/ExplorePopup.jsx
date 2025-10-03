@@ -1,4 +1,3 @@
-"use client";
 import Svg from "@/components/svg";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -187,6 +186,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                       setValue("mobile", value, { shouldValidate: true });
                       setValue("country", country);
                     }}
+                    countryCodeEditable={false} 
                     enableSearch
                     inputProps={{ name: "mobile" }}
                     className="w-full [&_input]:!w-full [&_input]:!h-full h-12"

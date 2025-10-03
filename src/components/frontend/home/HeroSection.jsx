@@ -179,6 +179,7 @@ export default function HeroSection({spaceCategoryData}) {
   };
  
   const handleSearch = (type,location)=>{
+    if(!type || !location) return;
     const typeSlug = slugGenerator(type?.label);
     const citySlug = slugGenerator(location?.city || "");
     const locationSlug = slugGenerator(location?.location_name || "");

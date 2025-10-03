@@ -3,14 +3,26 @@ import React from "react";
 import EmblaCarousel from "../emblaCarousel/EmblaCarousel";
 import ImageWithFallback from "@/components/ImageWithFallback";
 import AboutText from "./AboutText";
-import { getTypeOfSpaceByWorkSpace } from "@/services/Comman";
+import { getTypeOfSpaceByWorkSpace, slugGenerator } from "@/services/Comman";
 
 const ProductCard = ({ item = {}, setIsOpen }) => {
   const type = getTypeOfSpaceByWorkSpace(item?.spaceType || "");
   return (
     <>
       <div
-        onClick={() => window.open(`/${item?.slug}`, "_blank")}
+        onClick={() =>{
+          const spaceTypeSlug = slugGenerator(item?.spaceType);
+          const locationNameSlug = slugGenerator(item?.location_name || "");
+          const cityNameSlug = slugGenerator(item?.contact_city_name || "");
+          const spaceId = item?.id;
+          let url = "";
+          if(type == "coworking"){
+            url = `/${item?.slug}`;
+          }else{ 
+            url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
+          }
+          window.open(`${url}`, "_blank")
+        }}
         className="space-card [&_.emblaarrows]:left-3 [&_.emblaarrows]:right-3 [&_.emblaarrows_button]:w-[30px] [&_.emblaarrows_button]:h-[30px] [&_.emblaarrows_button_Svg]:size-[18px] [&_.emblaarrows_button]:!border-0 [&_.emblaarrows_button]:opacity-50 [&_.emblaarrows_button]:hover:opacity-100 [&_.emblaarrows_button_Svg]:!text-black w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col"
       >
         <EmblaCarousel

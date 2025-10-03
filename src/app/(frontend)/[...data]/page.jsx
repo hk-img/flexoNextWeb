@@ -1,6 +1,9 @@
 import Detail from "@/components/frontend/detail/Detail";
 import { BASE_URL } from "@/services/ApiService";
-import { convertSlugToCapitalLetter, getTypeOfSpaceByWorkSpace } from "@/services/Comman";
+import {
+  convertSlugToCapitalLetter,
+  getTypeOfSpaceByWorkSpace,
+} from "@/services/Comman";
 import React from "react";
 
 async function getSpaceDetails(spaceId) {
@@ -33,8 +36,16 @@ async function getReviewData(spaceId) {
 const page = async ({ params }) => {
   const data = await params;
   const slug = data?.data || [];
-  const [spaceTypeSlug, spaceSlug] = slug;
-  const spaceId = spaceSlug?.split("-").pop();
+  const spaceTypeSlug = slug?.spaceTypeSlug;
+  const type = getTypeOfSpaceByWorkSpace(spaceTypeSlug || "");
+  let spaceId = "";
+  if (type == "coworking") {
+    const [spaceTypeSlug, spaceSlug] = slug;
+    spaceId = spaceSlug?.split("-").pop();
+  } else {
+    const [spaceTypeSlug, citySlug, locationSlug, spaceIdd] = slug;
+    spaceId = spaceIdd;
+  }
   const spaceDetails = await getSpaceDetails(spaceId);
   const payload = {
     spaceId: spaceId,
@@ -42,9 +53,9 @@ const page = async ({ params }) => {
     spaceType: spaceDetails?.spaceData?.spaceType,
     country: spaceDetails?.spaceData?.country,
   };
-  const detailData = await getDetailData(payload);
+  let detailData = await getDetailData(payload);
   const reviews = await getReviewData(spaceId);
-  const reviewData = reviews?.data?.reviews || [];
+  let reviewData = reviews?.data?.reviews || [];
   return (
     <>
       <Detail detailData={detailData} reviewData={reviewData} />
@@ -54,13 +65,19 @@ const page = async ({ params }) => {
 
 export default page;
 
-
 export async function generateMetadata({ params }) {
   const data = await params;
   const slug = data?.data || [];
-  const [spaceTypeSlug, spaceSlug] = slug;
+  const spaceTypeSlug = slug?.spaceTypeSlug;
   const type = getTypeOfSpaceByWorkSpace(spaceTypeSlug || "");
-  const spaceId = spaceSlug?.split("-").pop();
+  let spaceId = "";
+  if (type == "coworking") {
+    const [spaceTypeSlug, spaceSlug] = slug;
+    spaceId = spaceSlug?.split("-").pop();
+  } else {
+    const [spaceTypeSlug, citySlug, locationSlug, spaceIdd] = slug;
+    spaceId = spaceIdd;
+  }
   const spaceDetails = await getSpaceDetails(spaceId);
   const payload = {
     spaceId: spaceId,
@@ -68,8 +85,14 @@ export async function generateMetadata({ params }) {
     spaceType: spaceDetails?.spaceData?.spaceType,
     country: spaceDetails?.spaceData?.country,
   };
-  const detailData = await getDetailData(payload);
-  const {actual_name,location_name,contact_city_name,spaceType} = detailData?.data || {};
+  let detailData = await getDetailData(payload);
+  const {
+    spaceTitle,
+    actual_name,
+    location_name,
+    contact_city_name,
+    spaceType,
+  } = detailData?.data || {};
   let title = "";
   let description = "";
   if (type == "coworking") {

@@ -25,9 +25,13 @@ const ProductCard = ({ item = {}, setIsOpen }) => {
         }}
         className="space-card relative [&_.emblaarrows]:left-3 [&_.emblaarrows]:right-3 [&_.emblaarrows_button]:w-[30px] [&_.emblaarrows_button]:h-[30px] [&_.emblaarrows_button_Svg]:size-[18px] [&_.emblaarrows_button]:!border-0 [&_.emblaarrows_button]:opacity-50 [&_.emblaarrows_button]:hover:opacity-100 [&_.emblaarrows_button_Svg]:!text-black w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col"
       >
-        <div className="bg-black text-white font-medium text-sm px-[10px] py-2 rounded-sm absolute -top-4 -left-2  z-10">
-            Premium
-          </div>
+        {
+          item?.ribbon_name && (
+            <div className="bg-black text-white font-medium text-sm px-[10px] py-2 rounded-sm absolute -top-4 -left-2  z-10">
+              {item?.ribbon_name}
+            </div>
+          )
+        }
         <EmblaCarousel
           options={{
             loop: true,

@@ -35,7 +35,7 @@ export const Facilities = {
   25: 'support',
   26: 'call',
   27: 'branding',
-  28: 'weekend',
+  28: 'breakout',
   29: 'train',
   30: 'services',
   31: 'fitness',

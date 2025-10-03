@@ -78,9 +78,9 @@ export default function MapWithPrices({ type, spaces, hoveredSpaceId }) {
             position={{ lat: space.lat, lng: space.longi }}
             icon={{
               url: `data:image/svg+xml;charset=UTF-8,
-              <svg xmlns="http://www.w3.org/2000/svg" width="90" height="30">
-                <rect x='0' y='0' rx='20' ry='20' width="90" height="30" fill="%23ff6600" />
-                <text x="50%" y="55%" font-size="15" font-family="Roboto, Arial, sans-serif" font-weight="900" fill="${fillColor}" text-anchor="middle" alignment-baseline="middle">
+              <svg xmlns="http://www.w3.org/2000/svg" width="80" height="30">
+                <rect x='0' y='0' rx='20' ry='20' width="80" height="30" fill="%23ff6600" />
+                <text x="50%" y="55%" font-size="0.88rem" letter-spacing="1.2px" width="max-content" display="flex" align-items="center" justify-content="center" font-family="Roboto, Arial, sans-serif" font-weight="700" fill="${fillColor}" text-anchor="middle" alignment-baseline="middle">
                    ₹${Number(price).toLocaleString("en-IN")}
                 </text>
               </svg>`,

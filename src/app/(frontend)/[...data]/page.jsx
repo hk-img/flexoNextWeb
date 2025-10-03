@@ -36,7 +36,7 @@ async function getReviewData(spaceId) {
 const page = async ({ params }) => {
   const data = await params;
   const slug = data?.data || [];
-  const spaceTypeSlug = slug?.spaceTypeSlug;
+  const [spaceTypeSlug] = slug;
   const type = getTypeOfSpaceByWorkSpace(spaceTypeSlug || "");
   let spaceId = "";
   if (type == "coworking") {
@@ -68,7 +68,7 @@ export default page;
 export async function generateMetadata({ params }) {
   const data = await params;
   const slug = data?.data || [];
-  const spaceTypeSlug = slug?.spaceTypeSlug;
+  const [spaceTypeSlug] = slug;
   const type = getTypeOfSpaceByWorkSpace(spaceTypeSlug || "");
   let spaceId = "";
   if (type == "coworking") {

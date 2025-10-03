@@ -12,18 +12,11 @@ import Pagination from "../pagination/Pagination";
 import ExplorePopup from "../explorePopup/ExplorePopup";
 import { convertSlugToSmallLetter, getTypeOfSpaceByWorkSpace, slugGenerator } from "@/services/Comman";
 import MapWithPrices from "./MapWithPrice";
-import Faq from "./Faq";
+import Faq from "./faq/Faq";
 import LongTermPopup from "./LongTermPopup";
-const coworkingTypes = [
-  "Private Office",
-  "Managed Office",
-  "Dedicated Desk",
-  "Flexible Desk",
-  "Virtual Office",
-  "Day Pass",
-]
+import { coworkingTypes } from "@/services/Comman";
 
-const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, locationName, spaceCategoryData, locationData, nearBySpacesData }) => {
+const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, locationName, spaceCategoryData, locationData, nearBySpacesData,listingData }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [type,setType] = useState("");
   const [isLongTermPopupOpen, setIsLongTermPopupOpen] = useState(false);
@@ -176,6 +169,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
       return res.data;
     },
     keepPreviousData: true,
+    initialData: listingData
   });
   const productData = useMemo(() => {
     return allSpaces?.data || []

@@ -26,7 +26,7 @@ const FilterPopup = ({
     <>
       <section className="w-full relative ">
        
-        <div className="w-full fixed inset-0 z-50 flex items-center justify-center lg:px-4">
+        <div className="w-full fixed inset-0 z-50 flex items-center justify-center px-4">
           <div
               className="absolute inset-0 bg-black/40"
               onClick={() => setIsFilterOpen(false)}

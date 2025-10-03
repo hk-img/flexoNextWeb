@@ -156,17 +156,17 @@ export default function MapWithPrices({ type, spaces, hoveredSpaceId }) {
                     </div>
                     <div className="p-3">
                       {type == "coworking" && (
-                        <h2 className="text-lg font-bold">
+                        <h2 className="2xl:text-lg text-base font-medium truncate tracking-wide">
                           {space?.name} {space?.spaceTitle}
                         </h2>
                       )}
                       {type == "longterm" && (
-                        <h2 className="text-lg font-bold">
+                        <h2 className="2xl:text-lg text-base font-medium truncate tracking-wide">
                           {space?.spaceTitle}
                         </h2>
                       )}
                       {type == "shortterm" && (
-                        <h2 className="text-lg font-bold">
+                        <h2 className="2xl:text-lg text-base font-medium truncate tracking-wide">
                           {space?.name} {space?.about}
                         </h2>
                       )}

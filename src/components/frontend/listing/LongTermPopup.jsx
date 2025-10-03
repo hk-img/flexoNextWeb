@@ -176,7 +176,7 @@ const LongTermPopup = ({ isOpen, setIsOpen }) => {
                     enableSearch
                     countryCodeEditable={false} 
                     inputProps={{ name: "mobile" }}
-                    className="w-full [&_input]:!w-full [&_input]:!h-full h-12"
+                    className="w-full [&_input]:!w-full [&_input]:!h-full h-12 [&_.country-list]:overflow-x-hidden"
                   />
                 )}
               />

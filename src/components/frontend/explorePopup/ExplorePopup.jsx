@@ -189,7 +189,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                     countryCodeEditable={false} 
                     enableSearch
                     inputProps={{ name: "mobile" }}
-                    className="w-full [&_input]:!w-full [&_input]:!h-full h-12"
+                    className="w-full [&_input]:!w-full [&_input]:!h-full h-12 [&_.country-list]:overflow-x-hidden"
                   />
                 )}
               />

@@ -193,6 +193,7 @@ export default function UserDetailRegistrationFormForEmail({
                       setValue("country", country);
                     }}
                     enableSearch
+                    countryCodeEditable={false} 
                     inputProps={{ name: "mobile" }}
                     className="w-full [&_input]:!w-full [&_input]:!h-full h-12"
                   />

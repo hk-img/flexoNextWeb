@@ -10,11 +10,10 @@ import { postAPI } from "@/services/ApiService";
 import { useQuery } from "@tanstack/react-query";
 import Pagination from "../pagination/Pagination";
 import ExplorePopup from "../explorePopup/ExplorePopup";
-import { convertSlugToSmallLetter, getTypeOfSpaceByWorkSpace, slugGenerator } from "@/services/Comman";
+import { convertSlugToSmallLetter, getTypeOfSpaceByWorkSpace, slugGenerator,coworkingTypes } from "@/services/Comman";
 import MapWithPrices from "./MapWithPrice";
 import Faq from "./faq/Faq";
 import LongTermPopup from "./LongTermPopup";
-import { coworkingTypes } from "@/services/Comman";
 
 const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, locationName, spaceCategoryData, locationData, nearBySpacesData,listingData }) => {
   const [isOpen, setIsOpen] = useState(false);

@@ -296,7 +296,7 @@ const Detail = ({ detailData,reviewData }) => {
                           <div key={index} className="flex items-center gap-3">
                             <div>
                               <Svg
-                                name="clock"
+                                name={Facilities[item?.id]}
                                 className="size-3.5 text-[#f76900]"
                               />
                             </div>

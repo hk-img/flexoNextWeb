@@ -73,36 +73,48 @@ const ProductCard = ({ item = {}, setIsOpen }) => {
             </div>
             <ul className="absolute top-[45px] right-[-6px] flex flex-row">
               <li className="bg-[#3b5998] items-center justify-center w-8 h-8 rounded-full inline-block border-1 border-[#000000] text-center text-[15px] opacity-0 transition-all duration-500 ms-1 group-hover:opacity-100">
-                <a
-                  href="https://www.facebook.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="share-button flex items-center justify-center w-full h-full"
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    window.open(
+                      "https://www.facebook.com",
+                      "_blank"
+                    );
+                  }}
+                  className="cursor-pointer share-button flex items-center justify-center w-full h-full"
                 >
                   <Svg name="facebook" className="text-white size-[15px]" />
-                </a>
+                </div>
               </li>
 
               <li className="bg-[#34aaf3] items-center justify-center w-8 h-8 rounded-full inline-block border-1 border-[#000000] text-center text-[15px] opacity-0 transition-all duration-500 ms-1 group-hover:opacity-100">
-                <a
-                  href="https://www.linkedin.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="share-button flex items-center justify-center w-full h-full"
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    window.open(
+                      "https://www.linkedin.com",
+                      "_blank"
+                    );
+                  }}
+                  className="cursor-pointer share-button flex items-center justify-center w-full h-full"
                 >
                   <Svg name="linkedin2" className="text-white size-[15px]" />
-                </a>
+                </div>
               </li>
 
               <li className="bg-[#25D366] items-center justify-center w-8 h-8 rounded-full inline-block border-1 border-[#000000] text-center text-[15px] opacity-0 transition-all duration-500 ms-1 group-hover:opacity-100">
-                <a
-                  href="https://api.whatsapp.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="share-button flex items-center justify-center w-full h-full"
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    window.open(
+                      "https://web.whatsapp.com",
+                      "_blank"
+                    );
+                  }}
+                  className="cursor-pointer share-button flex items-center justify-center w-full h-full"
                 >
                   <Svg name="whatsapp" className="text-white size-[15px]" />
-                </a>
+                </div>
               </li>
             </ul>
           </div>

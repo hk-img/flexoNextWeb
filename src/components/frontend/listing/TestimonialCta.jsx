@@ -42,7 +42,7 @@ const testimonials = [
   },
 ];
 
-const TestimonialCta = () => {
+const TestimonialCta = ({setIsOpen}) => {
   return (
     <section className="w-full relative lg:py-4 md:py-3 py-4 px-4 rounded-2xl items-center mt-6 mb-8 shadow-[0_4px_10px_#00000014] mx-auto bg-no-repeat bg-cover overflow-hidden bg-gradient-to-r from-[#ffd7ba] to-[#FFE7DA]">
         <div className="max-w-full xl:px-4 lg:px-4 md:px-3 px-4 mx-auto pt-4">
@@ -50,9 +50,12 @@ const TestimonialCta = () => {
               <div className="lg:w-2/5 w-full flex flex-col gap-y-6">
                 <h4 className="text-base/relaxed text-[#141414] font-semibold">Still Searching? Let Us Help.</h4>
                 <h5 className="text-base/relaxed text-[#141414] font-semibold">Leave the hassle to us. Connect with an expert workspace advisor today.</h5>
-                <a href="#" className="w-fit bg-[#f76900] text-[12px] border border-[#f76900]  text-white py-3 px-7 rounded-2xl font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">
+                <div onClick={() => {
+                    setIsOpen((prev) => !prev);
+                  }
+                } className="w-fit bg-[#f76900] text-[12px] border border-[#f76900]  text-white py-3 px-7 rounded-2xl font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">
                   Enquire Now
-                </a>
+                </div>
               </div>
               <div className="lg:w-3/5 w-full flex flex-col gap-y-6">
                 <div className="w-full [&_.embla__arrows]:hidden sm:[&_.embla__arrows]:flex [&_.embla__dots]:flex sm:[&_.embla__dots]:hidden [&_.embla__button]:w-10 [&_.embla__button]:h-10 [&_.embla__button svg]:w-4.5 [&_.embla__button svg]:h-4.5">

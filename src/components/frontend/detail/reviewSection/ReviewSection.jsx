@@ -5,11 +5,15 @@ import React from "react";
 const ReviewSection = ({reviewData,rating=0,avgRating="5.0"}) => {
   return (
     <>
-      <div id="reviews" className="py-6">
+      <div id="reviews" className="py-10">
         <div className="flex flex-wrap md:items-center  md:gap-7 gap-3">
           <h2 className="text-xl font-medium text-[#141414] mb-2">
             Reviews & Ratings{" "}
-            <span>({reviewData?.length})</span>{" "}
+            {
+              reviewData?.length > 0 && (
+                <span>({reviewData?.length})</span>
+              )
+            }
           </h2>
           <div>
             <button className="bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white px-5.5 py-2.5 rounded-[15px] font-semibold duration-500 transition flex items-center gap-2 uppercase tracking-[1px]">

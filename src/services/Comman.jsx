@@ -9,9 +9,9 @@ export const coworkingTypes = [
 
 export const Facilities = {
   1: 'clock-half',
-  2: 'carParking',
+  2: 'parkingP',
   3: 'motorcycle',
-  4: 'commute',
+  4: 'car-parking',
   5: 'mailFill',
   6: 'wifi',
   7: 'router',

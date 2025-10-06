@@ -92,8 +92,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
 
         <div className="px-5 py-[10px] bg-[#f4f4f4] mb-6">
           <p className="text-[#000000de] text-[13px]">
-            Our workspace advisor will get in touch to help you with your
-            requirement.
+            Our workspace advisor will get in touch to help you with your requirement.
           </p>
         </div>
 
@@ -112,7 +111,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                       border-[#dbdbdb] h-[45px] text-sm font-semibold font-roboto
                       ${errors.firstName 
                         ? "border-[#f44336] focus:border-[#f44336]" 
-                        : "hover:border-black focus:border-[#3f51b5]"}
+                        : "hover:border-black focus:border-[#3f51b5] active:border-[#3f51b5]"}
                     `}
                 />
               {errors.firstName && (
@@ -136,7 +135,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                         border-[#dbdbdb] h-[45px]  text-sm font-semibold
                         ${errors.lastName 
                           ? "border-[#f44336] focus:border-[#f44336]" 
-                          : "hover:border-black focus:border-[#3f51b5]"}
+                          : "hover:border-black focus:border-[#3f51b5] active:border-[#3f51b5]"}
                       `}
                 />
                 {errors.lastName && (
@@ -160,7 +159,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                       border-[#dbdbdb] h-[45px] text-sm font-semibold font-roboto
                       ${errors.email 
                         ? "border-[#f44336] focus:border-[#f44336]" 
-                        : "hover:border-black focus:border-[#3f51b5]"}
+                        : "hover:border-black focus:border-[#3f51b5] active:border-[#3f51b5]"}
                     `}
               />
               {errors.email && (
@@ -212,7 +211,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                       border-[#dbdbdb] h-[45px] text-sm font-semibold font-roboto
                       ${errors.city 
                         ? "border-[#f44336] focus:border-[#f44336]" 
-                        : "hover:border-black focus:border-[#3f51b5]"}
+                        : "hover:border-black focus:border-[#3f51b5] active:border-[#3f51b5]"}
                     `}
               >
                 <option value="">Select City</option>
@@ -238,7 +237,7 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
                       border-[#dbdbdb] h-[45px] text-sm font-semibold font-roboto
                       ${errors.seats 
                         ? "border-[#f44336] focus:border-[#f44336]" 
-                        : "hover:border-black focus:border-[#3f51b5]"}
+                        : "hover:border-black focus:border-[#3f51b5] active:border-[#3f51b5]"}
                     `}
               >
                 <option value="">Select No. of Seats</option>

@@ -73,8 +73,8 @@ const FilterPopup = ({
                     <div className="border-b border-[#0000001a] my-4"></div>
                     <p className="text-base font-extralight">Price</p>
                     <DualRangeSlider
-                      min={50000}
-                      max={50000000}
+                      min={500}
+                      max={50000}
                       step={500}
                       values={filterData.priceRange}
                       onChange={(range) =>

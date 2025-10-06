@@ -3,7 +3,7 @@ import React from "react";
 import EmblaCarousel from "../emblaCarousel/EmblaCarousel";
 import ImageWithFallback from "@/components/ImageWithFallback";
 import AboutText from "./AboutText";
-import { getTypeOfSpaceByWorkSpace, slugGenerator } from "@/services/Comman";
+import { convertSlugToCapitalLetter, getTypeOfSpaceByWorkSpace, slugGenerator } from "@/services/Comman";
 
 const ProductCard = ({ item = {}, setIsOpen }) => {
   const type = getTypeOfSpaceByWorkSpace(item?.spaceType || "");
@@ -141,8 +141,8 @@ const ProductCard = ({ item = {}, setIsOpen }) => {
                 name="location2"
                 className="text-[#f76900] size-[15px] me-1"
               />
-              {item?.location_name || "BKC"},{" "}
-              {item?.contact_city_name || "Mumbai"}
+              {convertSlugToCapitalLetter(item?.location_name || "")},{" "}
+              {item?.contact_city_name}
             </span>
           </div>
           <div className="flex items-center space-x-2 text-sm text-[#777777] mb-1 font-light">

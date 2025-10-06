@@ -10,7 +10,7 @@ import MapComponent from "./MapComponent";
 import HeroSection from "./heroSection/HeroSection";
 import ReviewSection from "./reviewSection/ReviewSection";
 import Auth from "../auth/Auth";
-import { Facilities, getTypeOfSpaceByWorkSpace } from "@/services/Comman";
+import { convertSlugToCapitalLetter, Facilities, getTypeOfSpaceByWorkSpace } from "@/services/Comman";
 
 const Detail = ({ detailData,reviewData }) => {
   const spaceData = detailData?.data;
@@ -76,7 +76,7 @@ const Detail = ({ detailData,reviewData }) => {
                 <Svg name="rightArrow" className="size-2 text-gray-500" />
               </li>
               <li className="text-[#141414] hover:text-[#777]">
-                <a href="#">{spaceData?.location_name} </a>
+                <a href="#">{convertSlugToCapitalLetter(spaceData?.location_name || "")} </a>
               </li>
             </ol>
             <div className="">
@@ -85,19 +85,14 @@ const Detail = ({ detailData,reviewData }) => {
                   {spaceData?.name} {spaceData?.spaceTitle}
                 </h1>
               )}
-              {type == "longterm" && (
+              {type == "longterm" || type == "shortterm" && (
                 <h1 className="2xl:text-[30px] text-lg leading-[1.6] font-medium text-[#141414] mb-4">
                   {spaceData?.spaceTitle}
                 </h1>
               )}
-              {type == "shortterm" && (
-                <h1 className="2xl:text-[30px] text-lg leading-[1.6] font-medium text-[#141414] mb-4">
-                  {spaceData?.name} {spaceData?.about}
-                </h1>
-              )}
               <div className="flex items-center text-[#141414] 2xl:text-base text-sm mb-4.5">
                 <Svg name="location2" className="size-5 text-[#f76900]" />
-                <span>{spaceData?.location_name}</span>
+                <span>{convertSlugToCapitalLetter(spaceData?.location_name || "")}</span>
               </div>
               {
                 reviewData?.length > 0 && (
@@ -136,6 +131,12 @@ const Detail = ({ detailData,reviewData }) => {
                       <span>{spaceData?.spaceStatus}</span>
                     </div>
                   )}
+                  {type=="shortterm" && (
+                    <div className="flex gap-1 items-center">
+                      <Svg name="clock-half" className="size-[12px] text-[#7f7f7f]" />
+                      <span>{spaceData?.minimum_hours / 60} hrs min</span>
+                    </div>
+                  )}
                   <div className="flex gap-[5px] items-center">
                     <Svg
                       name="scaleRuler"
@@ -144,16 +145,20 @@ const Detail = ({ detailData,reviewData }) => {
                     <span className="2xl:text-base text-sm">{spaceData?.spacesqft} sqft</span>
                   </div>
                 </div>
-                <div className="flex items-center space-x-1 border border-[#ddd] rounded-full w-fit md:px-3.5 px-3 md:py-2 py-1">
-                  <div className="flex items-center space-x-1 p-1 pr-3 border-r border-[#ddd]">
-                    <Svg name="thumbUp" className="size-3.5 text-black" />
-                    <span className="text-[15px]">0</span>
-                  </div>
+                {
+                  type != "longterm" && (
+                    <div className="flex items-center space-x-1 border border-[#ddd] rounded-full w-fit md:px-3.5 px-3 md:py-2 py-1">
+                      <div className="flex items-center space-x-1 p-1 pr-3 border-r border-[#ddd]">
+                        <Svg name="thumbUp" className="size-3.5 text-black" />
+                        <span className="text-[15px]">0</span>
+                      </div>
 
-                  <div className="flex items-center space-x-1 p-1">
-                    <Svg name="thumbDown" className="size-3.5 text-black" />
-                  </div>
-                </div>
+                      <div className="flex items-center space-x-1 p-1">
+                        <Svg name="thumbDown" className="size-3.5 text-black" />
+                      </div>
+                    </div>
+                  )
+                }
               </div>
             </div>
           </div>
@@ -537,7 +542,7 @@ const Detail = ({ detailData,reviewData }) => {
                           </div>
                         </div>
                       )}
-                      {spaceData?.originalPrice > 0 && (
+                      {type == "coworking" && spaceData?.originalPrice > 0 && (
                         <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
                           <div className="grid md:grid-cols-3 grid-cols-1 md:items-center md:gap-4 gap-2 justify-between">
                             <div className="md:col-span-2">
@@ -600,7 +605,7 @@ const Detail = ({ detailData,reviewData }) => {
                             {spaceData?.near_by_metro || "N/A"}
                           </h3>
                           <h3 className="text-[#777] text-xs font-normal">
-                            {spaceData?.metro_distance ? `${spaceData?.metro_distance} Kms`:"N/A"}
+                            {spaceData?.metro_distance ? `${spaceData?.metro_distance} Km`:"N/A"}
                           </h3>
                         </div>
                       </div>
@@ -616,7 +621,7 @@ const Detail = ({ detailData,reviewData }) => {
                             {spaceData?.near_by_railway_name || "N/A"}
                           </h3>
                           <h3 className="text-[#777] text-xs font-normal">
-                            {spaceData?.railway_distance ? `${spaceData?.railway_distance} Kms` : "N/A"}
+                            {spaceData?.railway_distance ? `${spaceData?.railway_distance} Km` : "N/A"}
                           </h3>
                         </div>
                       </div>
@@ -678,67 +683,162 @@ const Detail = ({ detailData,reviewData }) => {
               </div>
             </div>
           </div>
-          <div className="lg:w-1/3 w-full pl-[36px] max-lg:pl-0 lg:order-2 order-1 lg:pb-0 pb-4">
-            <div className="w-full border border-[#dbdbdb] py-[22px] px-[19px] rounded-sm md:sticky md:top-[90px]  bg-white">
-              <h3 className="text-xl font-medium text-center mb-5 pt-[10px]">
-                Interested in this space?
-              </h3>
-              <div className="columns-2  space-y-2  mb-4 text-sm text-black">
-                <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5]">
-                  <span className="text-[#f76900]">
-                    <Svg name="checkRound" className="size-[22px]" />
-                  </span>
-                  Zero Brokerage
-                </div>
-                <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5]">
-                  <span className="text-[#f76900]">
-                    <Svg name="checkRound" className="size-[22px]" />
-                  </span>
-                  1000+ Clients Served
-                </div>
-                <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5] ps-2">
-                  <span className="text-[#f76900]">
-                    <Svg name="checkRound" className="size-[22px]" />
-                  </span>
-                  Best Deals
-                </div>
-
-                <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5] ps-2">
-                  <span className="text-[#f76900]">
-                    <Svg name="checkRound" className="size-[22px]" />
-                  </span>
-                  Expert Advisors
-                </div>
-              </div>
-
-              <div className="space-y-2.5 mb-10">
-                <button onClick={()=>setIsOpen((prev) => !prev)} className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">
-                  Get Quote{" "}
-                </button>
-                <button onClick={() => setIsAuthOpen(true)} className="cursor-pointer w-full border uppercase tracking-[1px] border-[#000e54] text-[#000e54] 2xl:text-base text-sm font-semibold md:py-[15px] py-[10px] rounded-[15px]">
-                  Schedule a visit
-                </button>
-                {
-                  spaceData?.originalPrice > 0 && (
-                    <button onClick={() => setIsAuthOpen(true)} className="cursor-pointer w-full bg-[#2c864f] 2xl:text-[15px] text-sm hover:bg-[#40a667] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">
-                      Buy Pass
-                    </button>
-                  )
-                }
-              </div>
-              <div className="text-center">
-                <p className="text-center text-sm leading-[1.5] text-black ">
-                  Speak to our office space experts.
+          {
+            type == "longterm" && (
+              <div>
+                <p>
+                  Monthly Rental
                 </p>
-                <a
-                  href="#"
-                  className="font-semibold text-base leading-[1.5] text-black"
-                >
-                  Call +91 95133 92400
-                </a>
+                <h2>
+                  <Svg name = "rupee" className="size-5" /> 
+                  {spaceData?.originalPrice}
+                </h2>
+                <p>
+                  <Svg name = "rupee" className="size-5" />
+                  {spaceData?.originalPrice / spaceData?.spacesqft}
+                </p>
+                <p>
+                  Carpet Area: {spaceData?.spacesqft} sq. ft. | {spaceData?.spaceStatus}
+                </p>
               </div>
-            </div>
-          </div>
+            )
+          }
+          {
+            (type == "coworking" || type == "longterm") && (
+              <div className="lg:w-1/3 w-full pl-[36px] max-lg:pl-0 lg:order-2 order-1 lg:pb-0 pb-4">
+                <div className="w-full border border-[#dbdbdb] py-[22px] px-[19px] rounded-sm md:sticky md:top-[90px]  bg-white">
+                  <h3 className="text-xl font-medium text-center mb-5 pt-[10px]">
+                    Interested in this space?
+                  </h3>
+                  <div className="columns-2  space-y-2  mb-4 text-sm text-black">
+                    {
+                      type == "coworking" && (
+                        <>
+                          <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5]">
+                            <span className="text-[#f76900]">
+                              <Svg name="checkRound" className="size-[22px]" />
+                            </span>
+                            Zero Brokerage
+                          </div>
+                          <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5]">
+                            <span className="text-[#f76900]">
+                              <Svg name="checkRound" className="size-[22px]" />
+                            </span>
+                            1000+ Clients Served
+                          </div>
+                          <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5] ps-2">
+                            <span className="text-[#f76900]">
+                              <Svg name="checkRound" className="size-[22px]" />
+                            </span>
+                            Best Deals
+                          </div>
+                          <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5] ps-2">
+                            <span className="text-[#f76900]">
+                              <Svg name="checkRound" className="size-[22px]" />
+                            </span>
+                            Expert Advisors
+                          </div>
+                        </>
+                      )
+                    }
+                    {
+                      type == "longterm" && (
+                        <>
+                          <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5]">
+                            <span className="text-[#f76900]">
+                              <Svg name="checkRound" className="size-[22px]" />
+                            </span>
+                            1000+ Clients Served
+                          </div>
+                          <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5]">
+                            <span className="text-[#f76900]">
+                              <Svg name="checkRound" className="size-[22px]" />
+                            </span>
+                            End-to-End Support
+                          </div>
+                          <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5] ps-2">
+                            <span className="text-[#f76900]">
+                              <Svg name="checkRound" className="size-[22px]" />
+                            </span>
+                            Expert Advisors
+                          </div>
+                          <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5] ps-2">
+                            <span className="text-[#f76900]">
+                              <Svg name="checkRound" className="size-[22px]" />
+                            </span>
+                            Best Deals
+                          </div>
+                        </>
+                      )
+                    }
+                  </div>
+
+                  <div className="space-y-2.5 mb-10">
+                    <button onClick={()=>setIsOpen((prev) => !prev)} className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">
+                      {type == "coworking" ? "Get Quote" : "REQUEST A CALL BACK"}
+                    </button>
+                    <button onClick={() => setIsAuthOpen(true)} className={`cursor-pointer w-full border uppercase tracking-[1px] border-[#000e54] ${type == "longterm" ? "text-[#f76900]": "text-[#000e54]"} 2xl:text-base text-sm font-semibold md:py-[15px] py-[10px] rounded-[15px]`}>
+                      Schedule a visit
+                    </button>
+                    {
+                      type == "coworking" &&spaceData?.originalPrice > 0 && (
+                        <button onClick={() => setIsAuthOpen(true)} className="cursor-pointer w-full bg-[#2c864f] 2xl:text-[15px] text-sm hover:bg-[#40a667] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">
+                          Buy Pass
+                        </button>
+                      )
+                    }
+                  </div>
+                  <div className="text-center">
+                    <p className="text-center text-sm leading-[1.5] text-black ">
+                      Speak to our office space experts.
+                    </p>
+                    <a
+                      href="#"
+                      className="font-semibold text-base leading-[1.5] text-black"
+                    >
+                      Call +91 95133 92400
+                    </a>
+                  </div>
+                </div>
+              </div>
+            )
+          }
+          {
+            type == "shortterm" && (
+              <div className="lg:w-1/3 w-full pl-[36px] max-lg:pl-0 lg:order-2 order-1 lg:pb-0 pb-4">
+                <div className="w-full border border-[#dbdbdb] py-[22px] px-[19px] rounded-sm md:sticky md:top-[90px]  bg-white">
+                  <h3 className="text-xl font-medium text-center mb-5 pt-[10px]">
+                    <Svg name="rupee" className="size-6" />{spaceData?.originalPrice} /hr
+                  </h3>
+                  <p>
+                    {spaceData?.minimum_hours / 60} hrs minimum
+                  </p>
+                  {
+                    spaceData?.isInstant == 0 ?(
+                      <button className="cursor-pointer w-full border uppercase tracking-[1px] border-[#000e54] text-[#000e54] 2xl:text-base text-sm font-semibold md:py-[15px] py-[10px] rounded-[15px]">
+                        Request To Book
+                      </button> 
+                    ):(
+                      <button className="cursor-pointer w-full border uppercase tracking-[1px] border-[#000e54] text-[#000e54] 2xl:text-base text-sm font-semibold md:py-[15px] py-[10px] rounded-[15px]">
+                        Book Now
+                      </button>
+                    )
+                  }
+                  <div>
+                    <div className="flex items-center m-0">
+                      <div className="flex gap-2 items-center">
+                        <Svg name="bolt" className="size-[15px] text-[#ffbf00]" />
+                        <span className="bg-[#ffbf00] p-1 text-xs rounded-sm text-[#343a40]">
+                          Instant Book
+                        </span>
+                      </div>
+                    </div>
+                    <p>After payment, your booking will be instantly confirmed.</p>
+                  </div>
+                </div>
+              </div>
+            )
+          }
         </div>
       </section>
 

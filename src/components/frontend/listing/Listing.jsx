@@ -5,7 +5,7 @@ import TestimonialCta from "./TestimonialCta";
 import ProductCard from "../productCard/ProductCard";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import FilterPopup from "./filterPopup/FilterPopup";
-import { postAPI } from "@/services/ApiService";
+import { getApi, postAPI } from "@/services/ApiService";
 import { useQuery } from "@tanstack/react-query";
 import Pagination from "../pagination/Pagination";
 import ExplorePopup from "../explorePopup/ExplorePopup";
@@ -32,7 +32,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filterData, setFilterData] = useState({
-    priceRange: { min: 50000, max: 50000000 },
+    priceRange: { min: 500, max: 50000 },
     distance: 0,
     sortBy: "",
     amenities: [],
@@ -113,19 +113,6 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
     }
   }, [spaceCategoryData, spaceTypeSlug])
 
-  useEffect(() => {
-    if (locationData?.length > 0 && locationName) {
-      const smallLetterLocationName = convertSlugToSmallLetter(locationName || "");
-      const selectedLocation = locationData?.find((item) => {
-        if (item?.location_name.toLowerCase() === smallLetterLocationName) {
-          return item
-        }
-      })
-      setQuery(selectedLocation?.label || "");
-      setSelectedLocation(selectedLocation || null);
-    }
-  }, [locationData, locationName])
-
   const { data: allSpaces, refetch: refetchSpaces } = useQuery({
     queryKey: ["allSpaces", page, city,type,selectedCheckboxes, selectedLocation,appliedFilter],
     queryFn: async () => {
@@ -149,8 +136,8 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
         payload.location_name = convertSlugToSmallLetter(selectedLocation?.location_name || "");
       }
       if (
-        appliedFilter?.priceRange?.min !== 50000 ||
-        appliedFilter?.priceRange?.max !== 50000000
+        appliedFilter?.priceRange?.min !== 500 ||
+        appliedFilter?.priceRange?.max !== 50000
       ) {
         payload.min_price = appliedFilter?.priceRange?.min;
         payload.max_price = appliedFilter?.priceRange?.max;
@@ -177,6 +164,29 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
     return allSpaces?.faqs || []
   }, [allSpaces]);
 
+  const {data: allLocations} = useQuery({
+    queryKey: ["allLocations",selectedRadio],
+    queryFn: async () => {
+      const res = await getApi(`/user/getAllLocations?spaceType=${selectedRadio}`);
+      return res.data;
+    },
+    keepPreviousData: true,
+    initialData: locationData,
+  })
+
+  useEffect(() => {
+    if (allLocations?.length > 0 && locationName) {
+      const smallLetterLocationName = convertSlugToSmallLetter(locationName || "");
+      const selectedLocation = allLocations?.find((item) => {
+        if (item?.location_name.toLowerCase() === smallLetterLocationName) {
+          return item
+        }
+      })
+      setQuery(selectedLocation?.label || "");
+      setSelectedLocation(selectedLocation || null);
+    }
+  }, [allLocations, locationName])
+
   const handleApply = () => {
     setAppliedFilter(filterData);
     setIsFilterOpen(false);
@@ -184,7 +194,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
 
   const handleClear = () => {
     const resetFilters = {
-      priceRange: { min: 50000, max: 50000000 },
+      priceRange: { min: 500, max: 50000 },
       distance: 0,
       sortBy: "",
       amenities: [],
@@ -434,7 +444,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                           ref={locationRef}
                           className="dropdown-menu-location scrollDropdown max-h-72 overflow-y-auto absolute top-[70px] left-4  bg-white shadow-lg z-20"
                         >
-                          {locationData
+                          {allLocations
                             .filter((loc) =>
                               loc?.label?.toLowerCase()?.includes(query?.toLowerCase())
                             )
@@ -594,7 +604,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                         ref={locationRef}
                         className="dropdown-menu-location scrollDropdown max-h-72 overflow-y-auto absolute top-[70px] left-4 w-[420px] bg-white shadow-lg z-20"
                       >
-                        {locationData
+                        {allLocations
                           .filter((loc) =>
                             loc?.label?.toLowerCase()?.includes(query?.toLowerCase())
                           )

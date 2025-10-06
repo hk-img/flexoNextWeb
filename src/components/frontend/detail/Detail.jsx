@@ -202,17 +202,20 @@ const Detail = ({ detailData, reviewData }) => {
                   >
                     About the Space
                   </button>
-
-                  <button
-                    onClick={() => scrollToSection("pricing", 2)}
-                    className={`2xl:py-[25px] py-[10px] relative 2xl:text-base text-sm leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
-                      activeTab === 2
-                        ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]"
-                        : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
-                    }`}
-                  >
-                    Pricing
-                  </button>
+                  {
+                    type == "coworking" && (
+                      <button
+                        onClick={() => scrollToSection("pricing", 2)}
+                        className={`2xl:py-[25px] py-[10px] relative 2xl:text-base text-sm leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
+                          activeTab === 2
+                            ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]"
+                            : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
+                        }`}
+                      >
+                        Pricing
+                      </button>
+                    )
+                  }
 
                   <button
                     onClick={() => scrollToSection("location", 3)}
@@ -224,22 +227,35 @@ const Detail = ({ detailData, reviewData }) => {
                   >
                     Location
                   </button>
-
+                    {
+                      type != "longterm" && (
+                        <button
+                          onClick={() => scrollToSection("hours", 4)}
+                          className={`2xl:py-[25px] py-[10px] relative 2xl:text-base text-sm leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
+                            activeTab === 4
+                              ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]"
+                              : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
+                          }`}
+                        >
+                          Business Hours
+                        </button>
+                      )
+                    }
                   <button
-                    onClick={() => scrollToSection("hours", 4)}
+                    onClick={() => scrollToSection("cancellation", 5)}
                     className={`2xl:py-[25px] py-[10px] relative 2xl:text-base text-sm leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
-                      activeTab === 4
+                      activeTab === 5
                         ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]"
                         : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
                     }`}
                   >
-                    Business Hours
+                    Cancellation Policy
                   </button>
 
                   <button
-                    onClick={() => scrollToSection("reviews", 5)}
+                    onClick={() => scrollToSection("reviews", 6)}
                     className={`2xl:py-[25px] py-[10px] relative 2xl:text-base text-sm leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
-                      activeTab === 5
+                      activeTab === 6
                         ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]"
                         : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
                     }`}
@@ -895,7 +911,7 @@ const Detail = ({ detailData, reviewData }) => {
                       </div>
                     )}
                   {type == "shortterm" && (
-                    <div className="py-10">
+                    <div id="cancellation" className="py-10">
                       <h3 className="text-[#141414] text-xl font-medium pb-6">
                         Cancellation Policy
                       </h3>

@@ -245,17 +245,20 @@ const Detail = ({ detailData, reviewData }) => {
                         </button>
                       )
                     }
-                  <button
-                    onClick={() => scrollToSection("cancellation", 5)}
-                    className={`2xl:py-[25px] py-[10px] relative 2xl:text-base text-sm leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
-                      activeTab === 5
-                        ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]"
-                        : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
-                    }`}
-                  >
-                    Cancellation Policy
-                  </button>
-
+                    {
+                      type == "shortterm" && (
+                        <button
+                          onClick={() => scrollToSection("cancellation", 5)}
+                          className={`2xl:py-[25px] py-[10px] relative 2xl:text-base text-sm leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
+                            activeTab === 5
+                              ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]"
+                              : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
+                          }`}
+                        >
+                          Cancellation Policy
+                        </button>
+                      )
+                    }
                   <button
                     onClick={() => scrollToSection("reviews", 6)}
                     className={`2xl:py-[25px] py-[10px] relative 2xl:text-base text-sm leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${

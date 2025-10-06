@@ -85,7 +85,7 @@ const Detail = ({ detailData,reviewData }) => {
                   {spaceData?.name} {spaceData?.spaceTitle}
                 </h1>
               )}
-              {type == "longterm" || type == "shortterm" && (
+              {(type == "longterm" || type == "shortterm") && (
                 <h1 className="2xl:text-[30px] text-lg leading-[1.6] font-medium text-[#141414] mb-4">
                   {spaceData?.spaceTitle}
                 </h1>
@@ -234,7 +234,7 @@ const Detail = ({ detailData,reviewData }) => {
                     id="about"
                     className="md:pt-[30px] pt-5 md:pb-[50px] pb-7 border-b border-[#dbdbdb]"
                   >
-                    <div>
+                    <div className="mb-2">
                       <h2 className="text-xl leading-[1.6] font-medium text-[#141414] mb-[15px]">
                         About the Space
                       </h2>
@@ -243,8 +243,8 @@ const Detail = ({ detailData,reviewData }) => {
                       </p>
                     </div>
                     {
-                      spaceData?.parkingOptionsValue?.length > 0 && spaceData?.parkingDescription && (
-                        <div className="py-6">
+                      spaceData?.parkingDescription && (
+                        <div className="pb-6">
                           <div>
                             <input
                               type="checkbox"
@@ -301,7 +301,7 @@ const Detail = ({ detailData,reviewData }) => {
                     }
                     {
                       type != "coworking" && spaceData?.lightingDescription && (
-                        <div className="py-6">
+                        <div className="pb-6">
                           <div>
                             <input
                               type="checkbox"
@@ -315,7 +315,7 @@ const Detail = ({ detailData,reviewData }) => {
                             >
                               <div className="flex items-center gap-1">
                                 <Svg
-                                  name="parking"
+                                  name="sun"
                                   className="size-7 text-[#f76900]"
                                 />
                                 <span className="font-medium text-lg">Lighting</span>
@@ -347,7 +347,7 @@ const Detail = ({ detailData,reviewData }) => {
                     }
                     {
                       type != "coworking" && spaceData?.soundDescription && (
-                        <div className="py-6">
+                        <div className="pb-6">
                           <div>
                             <input
                               type="checkbox"
@@ -361,7 +361,7 @@ const Detail = ({ detailData,reviewData }) => {
                             >
                               <div className="flex items-center gap-1">
                                 <Svg
-                                  name="parking"
+                                  name="sound"
                                   className="size-7 text-[#f76900]"
                                 />
                                 <span className="font-medium text-lg">Sound</span>
@@ -393,7 +393,7 @@ const Detail = ({ detailData,reviewData }) => {
                     }
                     {
                       spaceData?.hostRulesDescription && (
-                        <div className="py-6">
+                        <div className="pb-6">
                           <div>
                             <input
                               type="checkbox"
@@ -406,7 +406,7 @@ const Detail = ({ detailData,reviewData }) => {
                             >
                               <div className="flex items-center gap-1">
                                 <Svg
-                                  name="parking"
+                                  name="fileMinus"
                                   className="size-7 text-[#f76900]"
                                 />
                                 <span className="font-medium text-lg">Host rules</span>
@@ -825,29 +825,32 @@ const Detail = ({ detailData,reviewData }) => {
                   }
                   {
                     type == "shortterm" && spaceData?.spaceServiceDetailsArray?.length > 0 &&(
-                      <div>
-                        <h3>Add-ons from the host</h3>
-                        <p>Host provided services, items or options. Available at checkout.</p>
-                        {
-                          spaceData?.spaceServiceDetailsArray?.map((item,index)=>(
-                            <div key={index}>
-                              <h3>{item.serviceName}</h3>
-                              <div>
-                                <Svg name="rupee" className="size-5" />{item?.servicePrice} / {item?.servicePriceType}
+                      <div className=" md:pb-14 pb-7 border-b border-[#dbdbdb]">
+                        <h3 className="text-[#141414] text-xl font-medium">Add-ons from the host</h3>
+                        <p className="text-[#646464] text-base leading-[1.8] py-4">Host provided services, items or options. Available at checkout.</p>
+                        <div className="grid grid-cols-2 items-center justify-between">
+                          {
+                            spaceData?.spaceServiceDetailsArray?.map((item,index)=>(
+                              <div key={index}>
+                                <h3 className="text-[#141414] text-base font-medium mb-1">{item.serviceName}</h3>
+                                <div className="flex items-center gap-1">
+                                  <Svg name="rupee " className="size-5 text-[#777]" />
+                                  <span className="text-[#777] 2xl:text-base text-sm">{item?.servicePrice} / {item?.servicePriceType}</span>
+                                </div>
                               </div>
-                            </div>
-                          ))
-                        }
+                            ))
+                          }
+                        </div>
                       </div>
                     )
                   }
                   {
                     type == "shortterm" && (
-                      <div>
-                        <h3>Cancellation Policy</h3>
-                        <div>
-                          <h4>{spaceData?.cancellationPolicy}</h4>
-                          <p>{spaceData?.cancellationPolicyDescription}</p>
+                      <div className="py-10">
+                        <h3 className="text-[#141414] text-xl font-medium pb-6">Cancellation Policy</h3>
+                        <div >
+                          <h4 className="text-[#141414] text-lg font-medium">{spaceData?.cancellationPolicy}</h4>
+                          <p className="text-[#646464] text-base leading-[1.8] pt-6">{spaceData?.cancellationPolicyDescription}</p>
                         </div>
                       </div>
                     )
@@ -996,26 +999,31 @@ const Detail = ({ detailData,reviewData }) => {
                   <div className="p-5">
                     {
                       spaceData?.isInstant == 0 ?(
-                        <button className="cursor-pointer w-full border uppercase tracking-[1px] border-[#000e54] text-[#000e54] 2xl:text-base text-sm font-semibold md:py-[15px] py-[10px] rounded-[15px] mt-[10px]">
+                        <button className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">
                           Request To Book
                         </button>
                       ):(
-                        <button className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]  mt-[10px]">
-                          Book Now
-                        </button>
+                        <>
+                          <button className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]  mt-[10px]">
+                            Book Now
+                            </button>
+                           <div>
+                              <div className="flex items-center m-0">
+                                <div className="flex gap-2 items-center">
+                                  <Svg name="bolt" className="size-[15px] text-[#ffbf00]" />
+                                  <span className="text-sm font-light text-[#777]">
+                                    Instant Book
+                                  </span>
+                                </div>
+                              </div>
+                              <p>After payment, your booking will be instantly confirmed.</p>
+                            </div>
+                        </>
+                       
                       )
+
                     }
-                    <div>
-                      <div className="flex items-center m-0">
-                        <div className="flex gap-2 items-center">
-                          <Svg name="bolt" className="size-[15px] text-[#ffbf00]" />
-                          <span className="text-sm font-light text-[#777]">
-                            Instant Book
-                          </span>
-                        </div>
-                      </div>
-                      <p>After payment, your booking will be instantly confirmed.</p>
-                    </div>
+                 
                    </div>
                 </div>
               </div>

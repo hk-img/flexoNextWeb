@@ -1132,34 +1132,37 @@ const Detail = ({ detailData, reviewData }) => {
           )}
         </div>
       </section>
-
-      <section className="container px-[15px] mx-auto pb-[50px] pt-10">
-        <h2 className="text-2xl font-medium text-[#141414] mb-[3px] leading-[1.6] md:pl-3 pl-0">
-          Nearby{" "}
-          {spaceData?.spaceType == "Coworking spaces"
-            ? "Coworking Spaces"
-            : spaceData?.spaceType}
-        </h2>
-        <div>
-          <EmblaCarousel
-            options={{
-              loop: true,
-              autoplay: false,
-              showDots: true,
-              align: "start",
-            }}
-          >
-            {spaceData?.similar_spaces?.map((item, index) => (
-              <div
-                key={index}
-                className="shrink-0 md:px-[9px] px-0 basis-[100%] sm:basis-[50%] md:basis-[50%] lg:basis-[33.3%] xl:basis-[33.3%] py-3"
+      {
+        spaceData?.similar_spaces?.length > 0 && (
+          <section className="container px-[15px] mx-auto pb-[50px] pt-10">
+            <h2 className="text-2xl font-medium text-[#141414] mb-[3px] leading-[1.6] md:pl-3 pl-0">
+              Nearby{" "}
+              {spaceData?.spaceType == "Coworking spaces"
+                ? "Coworking Spaces"
+                : spaceData?.spaceType}
+            </h2>
+            <div>
+              <EmblaCarousel
+                options={{
+                  loop: true,
+                  autoplay: false,
+                  showDots: true,
+                  align: "start",
+                }}
               >
-                <ProductCard item={item} setIsOpen={setIsOpen} />
-              </div>
-            ))}
-          </EmblaCarousel>
-        </div>
-      </section>
+                {spaceData?.similar_spaces?.map((item, index) => (
+                  <div
+                    key={index}
+                    className="shrink-0 md:px-[9px] px-0 basis-[100%] sm:basis-[50%] md:basis-[50%] lg:basis-[33.3%] xl:basis-[33.3%] py-3"
+                  >
+                    <ProductCard item={item} setIsOpen={setIsOpen} />
+                  </div>
+                ))}
+              </EmblaCarousel>
+            </div>
+          </section>
+        )
+      }
       {isOpen && <ExplorePopup isOpen={isOpen} setIsOpen={setIsOpen} />}
       {isAuthOpen && <Auth isOpen={isAuthOpen} setIsOpen={setIsAuthOpen} />}
     </>

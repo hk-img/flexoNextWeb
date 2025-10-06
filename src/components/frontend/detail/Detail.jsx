@@ -299,7 +299,143 @@ const Detail = ({ detailData,reviewData }) => {
                         </div>
                       )
                     }
+                    {
+                      type != "coworking" && spaceData?.lightingDescription && (
+                        <div className="py-6">
+                          <div>
+                            <input
+                              type="checkbox"
+                              id="lighting-toggle"
+                              className="hidden peer"
+                            />
 
+                            <label
+                              htmlFor="lighting-toggle"
+                              className="flex cursor-pointer items-center justify-between border-b border-[#dbdbdb] py-5 px-1 hover:bg-[#0000000a]"
+                            >
+                              <div className="flex items-center gap-1">
+                                <Svg
+                                  name="parking"
+                                  className="size-7 text-[#f76900]"
+                                />
+                                <span className="font-medium text-lg">Lighting</span>
+                              </div>
+                            </label>
+                            <Svg
+                              name="leftArrow"
+                              className="size-3.5 -rotate-90 transition-transform duration-300 peer-checked:rotate-90 ml-auto mr-1 -mt-10"
+                            />
+
+                            <div
+                              className="
+                              overflow-hidden
+                              transition-[max-height] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
+                              max-h-0 peer-checked:max-h-[1000px]
+                            "
+                            >
+                              <div className="pt-8 mt-8 space-y-5">
+                                <div>
+                                  <p className="text-[#646464] text-base leading-[1.8]">
+                                    {spaceData?.parkingDescription}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )
+                    }
+                    {
+                      type != "coworking" && spaceData?.soundDescription && (
+                        <div className="py-6">
+                          <div>
+                            <input
+                              type="checkbox"
+                              id="sound-toggle"
+                              className="hidden peer"
+                            />
+
+                            <label
+                              htmlFor="sound-toggle"
+                              className="flex cursor-pointer items-center justify-between border-b border-[#dbdbdb] py-5 px-1 hover:bg-[#0000000a]"
+                            >
+                              <div className="flex items-center gap-1">
+                                <Svg
+                                  name="parking"
+                                  className="size-7 text-[#f76900]"
+                                />
+                                <span className="font-medium text-lg">Sound</span>
+                              </div>
+                            </label>
+                            <Svg
+                              name="leftArrow"
+                              className="size-3.5 -rotate-90 transition-transform duration-300 peer-checked:rotate-90 ml-auto mr-1 -mt-10"
+                            />
+
+                            <div
+                              className="
+                              overflow-hidden
+                              transition-[max-height] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
+                              max-h-0 peer-checked:max-h-[1000px]
+                            "
+                            >
+                              <div className="pt-8 mt-8 space-y-5">
+                                <div>
+                                  <p className="text-[#646464] text-base leading-[1.8]">
+                                    {spaceData?.soundDescription}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )
+                    }
+                    {
+                      spaceData?.hostRulesDescription && (
+                        <div className="py-6">
+                          <div>
+                            <input
+                              type="checkbox"
+                              id="host-toggle"
+                              className="hidden peer"
+                            />
+                            <label
+                              htmlFor="host-toggle"
+                              className="flex cursor-pointer items-center justify-between border-b border-[#dbdbdb] py-5 px-1 hover:bg-[#0000000a]"
+                            >
+                              <div className="flex items-center gap-1">
+                                <Svg
+                                  name="parking"
+                                  className="size-7 text-[#f76900]"
+                                />
+                                <span className="font-medium text-lg">Host rules</span>
+                              </div>
+                            </label>
+                            <Svg
+                              name="leftArrow"
+                              className="size-3.5 -rotate-90 transition-transform duration-300 peer-checked:rotate-90 ml-auto mr-1 -mt-10"
+                            />
+
+                            <div
+                              className="
+                              overflow-hidden
+                              transition-[max-height] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
+                              max-h-0 peer-checked:max-h-[1000px]
+                            "
+                            >
+                              <div className="pt-8 mt-8 space-y-5">
+                                <div>
+                                  <p className="text-[#646464] text-base leading-[1.8]">
+                                    {spaceData?.hostRulesDescription}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )
+                    }
                     <div className="pt-12">
                       <h2 className="text-xl font-medium text-[#141414] mb-6">
                         Amenities
@@ -344,244 +480,248 @@ const Detail = ({ detailData,reviewData }) => {
                       )}
                     </div>
                   </div>
-                  <div
-                    id="pricing"
-                    className="md:pt-[50px] pt-5 md:pb-14 pb-10 border-b border-[#dbdbdb]"
-                  >
-                    <h2 className="text-xl font-medium text-[#141414] mb-[15px]">
-                      Pricing
-                    </h2>
-                    <div className="space-y-5">
-                      {spaceData?.privatecabin_price > 0 && (
-                        <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
-                          <div className="grid md:grid-cols-3 grid-cols-1 md:items-center md:gap-4 gap-0 justify-between">
-                            <div className="md:col-span-2">
-                              <h3 className="2xl:text-xl text-lg leading-[1.6] font-medium text-[#010101]">
-                                Private Office
-                              </h3>
-                              <p className="2xl:text-base text-sm leading-[1.5] text-[#777]">
-                                Private space for you and your team
-                              </p>
-                            </div>
-                            <div className="md:ps-[15px]">
-                              <span className="block text-[15px] leading-[30px] font-light">
-                                from
-                              </span>
-                              <div className="flex items-center">
-                                <h2 className=" text-lg font-medium flex items-center leading-[1.6]">
-                                  <span className="text-lg text-[#141414]">
-                                    <Svg
-                                      name="rupee"
-                                      className="size-[18px] text-[#f76900]"
-                                    />
-                                  </span>{" "}
-                                  {spaceData?.privatecabin_price}
-                                </h2>
-                                <span className=" text-[15px] leading-[30px] font-light">
-                                  /seat/month
-                                </span>
+                  {
+                    type == "coworking" && (
+                      <div
+                        id="pricing"
+                        className="md:pt-[50px] pt-5 md:pb-14 pb-10 border-b border-[#dbdbdb]"
+                      >
+                        <h2 className="text-xl font-medium text-[#141414] mb-[15px]">
+                          Pricing
+                        </h2>
+                        <div className="space-y-5">
+                          {spaceData?.privatecabin_price > 0 && (
+                            <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
+                              <div className="grid md:grid-cols-3 grid-cols-1 md:items-center md:gap-4 gap-0 justify-between">
+                                <div className="md:col-span-2">
+                                  <h3 className="2xl:text-xl text-lg leading-[1.6] font-medium text-[#010101]">
+                                    Private Office
+                                  </h3>
+                                  <p className="2xl:text-base text-sm leading-[1.5] text-[#777]">
+                                    Private space for you and your team
+                                  </p>
+                                </div>
+                                <div className="md:ps-[15px]">
+                                  <span className="block text-[15px] leading-[30px] font-light">
+                                    from
+                                  </span>
+                                  <div className="flex items-center">
+                                    <h2 className=" text-lg font-medium flex items-center leading-[1.6]">
+                                      <span className="text-lg text-[#141414]">
+                                        <Svg
+                                          name="rupee"
+                                          className="size-[18px] text-[#f76900]"
+                                        />
+                                      </span>{" "}
+                                      {spaceData?.privatecabin_price}
+                                    </h2>
+                                    <span className=" text-[15px] leading-[30px] font-light">
+                                      /seat/month
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div>
+                                <button onClick={() => setIsOpen(true)} className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
+                                  ENQUIRE NOW
+                                </button>
                               </div>
                             </div>
-                          </div>
-                          <div>
-                            <button onClick={() => setIsOpen(true)} className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
-                              ENQUIRE NOW
-                            </button>
-                          </div>
-                        </div>
-                      )}
-                      {spaceData?.manage_office_price > 0 && (
-                        <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
-                          <div className="grid md:grid-cols-3 grid-cols-1 md:items-center md:gap-4 gap-2 justify-between">
-                            <div className="md:col-span-2">
-                              <h3 className="2xl:text-xl text-lg leading-[1.6] font-medium text-[#010101]">
-                                Managed Office
-                              </h3>
-                              <p className="2xl:text-base text-sm leading-[1.5] text-[#777]">
-                                Customised space for specific requirements
-                              </p>
-                            </div>
-                            <div className="md:ps-[15px]">
-                              <span className="block text-[15px] leading-[30px] font-light">
-                                from
-                              </span>
-                              <div className="flex items-center">
-                                <h2 className=" text-lg font-medium flex items-center leading-[1.6]">
-                                  <span className="text-lg text-[#141414]">
-                                    <Svg
-                                      name="rupee"
-                                      className="size-[18px] text-[#f76900]"
-                                    />
-                                  </span>{" "}
-                                  {spaceData?.manage_office_price}
-                                </h2>
-                                <span className=" text-[15px] leading-[30px] font-light">
-                                  /seat/month
-                                </span>
+                          )}
+                          {spaceData?.manage_office_price > 0 && (
+                            <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
+                              <div className="grid md:grid-cols-3 grid-cols-1 md:items-center md:gap-4 gap-2 justify-between">
+                                <div className="md:col-span-2">
+                                  <h3 className="2xl:text-xl text-lg leading-[1.6] font-medium text-[#010101]">
+                                    Managed Office
+                                  </h3>
+                                  <p className="2xl:text-base text-sm leading-[1.5] text-[#777]">
+                                    Customised space for specific requirements
+                                  </p>
+                                </div>
+                                <div className="md:ps-[15px]">
+                                  <span className="block text-[15px] leading-[30px] font-light">
+                                    from
+                                  </span>
+                                  <div className="flex items-center">
+                                    <h2 className=" text-lg font-medium flex items-center leading-[1.6]">
+                                      <span className="text-lg text-[#141414]">
+                                        <Svg
+                                          name="rupee"
+                                          className="size-[18px] text-[#f76900]"
+                                        />
+                                      </span>{" "}
+                                      {spaceData?.manage_office_price}
+                                    </h2>
+                                    <span className=" text-[15px] leading-[30px] font-light">
+                                      /seat/month
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div>
+                                <button onClick={() => setIsOpen(true)} className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
+                                  ENQUIRE NOW
+                                </button>
                               </div>
                             </div>
-                          </div>
-                          <div>
-                            <button onClick={() => setIsOpen(true)} className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
-                              ENQUIRE NOW
-                            </button>
-                          </div>
-                        </div>
-                      )}
-                      {spaceData?.desks_price > 0 && (
-                        <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
-                          <div className="grid md:grid-cols-3 grid-cols-1 md:items-center md:gap-4 gap-2 justify-between">
-                            <div className="md:col-span-2">
-                              <h3 className="2xl:text-xl text-lg leading-[1.6] font-medium text-[#010101]">
-                                Dedicated Desk
-                              </h3>
-                              <p className="2xl:text-base text-sm leading-[1.5] text-[#777]">
-                                Fixed workstation in a shared area
-                              </p>
-                            </div>
-                            <div className="md:ps-[15px]">
-                              <span className="block text-[15px] leading-[30px] font-light">
-                                from
-                              </span>
-                              <div className="flex items-center">
-                                <h2 className=" text-lg font-medium flex items-center leading-[1.6]">
-                                  <span className="text-lg text-[#141414]">
-                                    <Svg
-                                      name="rupee"
-                                      className="size-[18px] text-[#f76900]"
-                                    />
-                                  </span>{" "}
-                                  {spaceData?.desks_price}
-                                </h2>
-                                <span className=" text-[15px] leading-[30px] font-light">
-                                  /seat/month
-                                </span>
+                          )}
+                          {spaceData?.desks_price > 0 && (
+                            <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
+                              <div className="grid md:grid-cols-3 grid-cols-1 md:items-center md:gap-4 gap-2 justify-between">
+                                <div className="md:col-span-2">
+                                  <h3 className="2xl:text-xl text-lg leading-[1.6] font-medium text-[#010101]">
+                                    Dedicated Desk
+                                  </h3>
+                                  <p className="2xl:text-base text-sm leading-[1.5] text-[#777]">
+                                    Fixed workstation in a shared area
+                                  </p>
+                                </div>
+                                <div className="md:ps-[15px]">
+                                  <span className="block text-[15px] leading-[30px] font-light">
+                                    from
+                                  </span>
+                                  <div className="flex items-center">
+                                    <h2 className=" text-lg font-medium flex items-center leading-[1.6]">
+                                      <span className="text-lg text-[#141414]">
+                                        <Svg
+                                          name="rupee"
+                                          className="size-[18px] text-[#f76900]"
+                                        />
+                                      </span>{" "}
+                                      {spaceData?.desks_price}
+                                    </h2>
+                                    <span className=" text-[15px] leading-[30px] font-light">
+                                      /seat/month
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div>
+                                <button onClick={() => setIsOpen(true)} className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
+                                  ENQUIRE NOW
+                                </button>
                               </div>
                             </div>
-                          </div>
-                          <div>
-                            <button onClick={() => setIsOpen(true)} className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
-                              ENQUIRE NOW
-                            </button>
-                          </div>
-                        </div>
-                      )}
-                      {spaceData?.flexible_desk_price > 0 && (
-                        <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
-                          <div className="grid md:grid-cols-3 grid-cols-1 md:items-center md:gap-4 gap-2 justify-between">
-                            <div className="md:col-span-2">
-                              <h3 className="2xl:text-xl text-lg leading-[1.6] font-medium text-[#010101]">
-                                Flexible Desk
-                              </h3>
-                              <p className="2xl:text-base text-sm leading-[1.5] text-[#777]">
-                                Any workstation in a shared area
-                              </p>
-                            </div>
-                            <div className="md:ps-[15px]">
-                              <span className="block text-[15px] leading-[30px] font-light">
-                                from
-                              </span>
-                              <div className="flex items-center">
-                                <h2 className=" text-lg font-medium flex items-center leading-[1.6]">
-                                  <span className="text-lg text-[#141414]">
-                                    <Svg
-                                      name="rupee"
-                                      className="size-[18px] text-[#f76900]"
-                                    />
-                                  </span>{" "}
-                                  {spaceData?.flexible_desk_price}
-                                </h2>
-                                <span className=" text-[15px] leading-[30px] font-light">
-                                  /seat/month
-                                </span>
+                          )}
+                          {spaceData?.flexible_desk_price > 0 && (
+                            <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
+                              <div className="grid md:grid-cols-3 grid-cols-1 md:items-center md:gap-4 gap-2 justify-between">
+                                <div className="md:col-span-2">
+                                  <h3 className="2xl:text-xl text-lg leading-[1.6] font-medium text-[#010101]">
+                                    Flexible Desk
+                                  </h3>
+                                  <p className="2xl:text-base text-sm leading-[1.5] text-[#777]">
+                                    Any workstation in a shared area
+                                  </p>
+                                </div>
+                                <div className="md:ps-[15px]">
+                                  <span className="block text-[15px] leading-[30px] font-light">
+                                    from
+                                  </span>
+                                  <div className="flex items-center">
+                                    <h2 className=" text-lg font-medium flex items-center leading-[1.6]">
+                                      <span className="text-lg text-[#141414]">
+                                        <Svg
+                                          name="rupee"
+                                          className="size-[18px] text-[#f76900]"
+                                        />
+                                      </span>{" "}
+                                      {spaceData?.flexible_desk_price}
+                                    </h2>
+                                    <span className=" text-[15px] leading-[30px] font-light">
+                                      /seat/month
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div>
+                                <button onClick={() => setIsOpen(true)} className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
+                                  ENQUIRE NOW
+                                </button>
                               </div>
                             </div>
-                          </div>
-                          <div>
-                            <button onClick={() => setIsOpen(true)} className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
-                              ENQUIRE NOW
-                            </button>
-                          </div>
-                        </div>
-                      )}
-                      {spaceData?.virtual_office_price > 0 && (
-                        <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
-                          <div className="grid md:grid-cols-3 grid-cols-1 md:items-center md:gap-4 gap-2 justify-between">
-                            <div className="md:col-span-2">
-                              <h3 className="2xl:text-xl text-lg leading-[1.6] font-medium text-[#010101]">
-                                Virtual Office
-                              </h3>
-                              <p className="2xl:text-base text-sm leading-[1.5] text-[#777]">
-                                Premium business and mailing address
-                              </p>
-                            </div>
-                            <div className="md:ps-[15px]">
-                              <span className="block text-[15px] leading-[30px] font-light">
-                                from
-                              </span>
-                              <div className="flex items-center">
-                                <h2 className=" text-lg font-medium flex items-center leading-[1.6]">
-                                  <span className="text-lg text-[#141414]">
-                                    <Svg
-                                      name="rupee"
-                                      className="size-[18px] text-[#f76900]"
-                                    />
-                                  </span>{" "}
-                                  {spaceData?.virtual_office_price}
-                                </h2>
-                                <span className=" text-[15px] leading-[30px] font-light">
-                                  /seat/month
-                                </span>
+                          )}
+                          {spaceData?.virtual_office_price > 0 && (
+                            <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
+                              <div className="grid md:grid-cols-3 grid-cols-1 md:items-center md:gap-4 gap-2 justify-between">
+                                <div className="md:col-span-2">
+                                  <h3 className="2xl:text-xl text-lg leading-[1.6] font-medium text-[#010101]">
+                                    Virtual Office
+                                  </h3>
+                                  <p className="2xl:text-base text-sm leading-[1.5] text-[#777]">
+                                    Premium business and mailing address
+                                  </p>
+                                </div>
+                                <div className="md:ps-[15px]">
+                                  <span className="block text-[15px] leading-[30px] font-light">
+                                    from
+                                  </span>
+                                  <div className="flex items-center">
+                                    <h2 className=" text-lg font-medium flex items-center leading-[1.6]">
+                                      <span className="text-lg text-[#141414]">
+                                        <Svg
+                                          name="rupee"
+                                          className="size-[18px] text-[#f76900]"
+                                        />
+                                      </span>{" "}
+                                      {spaceData?.virtual_office_price}
+                                    </h2>
+                                    <span className=" text-[15px] leading-[30px] font-light">
+                                      /seat/month
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div>
+                                <button onClick={() => setIsOpen(true)} className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
+                                  ENQUIRE NOW
+                                </button>
                               </div>
                             </div>
-                          </div>
-                          <div>
-                            <button onClick={() => setIsOpen(true)} className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out">
-                              ENQUIRE NOW
-                            </button>
-                          </div>
-                        </div>
-                      )}
-                      {type == "coworking" && spaceData?.originalPrice > 0 && (
-                        <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
-                          <div className="grid md:grid-cols-3 grid-cols-1 md:items-center md:gap-4 gap-2 justify-between">
-                            <div className="md:col-span-2">
-                              <h3 className="2xl:text-xl text-lg leading-[1.6] font-medium text-[#010101]">
-                                Day Pass
-                              </h3>
-                              {/* <p className="2xl:text-base text-sm leading-[1.5] text-[#777]">
-                                Premium business and mailing address
-                              </p> */}
-                            </div>
-                            <div className="md:ps-[15px]">
-                              <span className="block text-[15px] leading-[30px] font-light">
-                                from
-                              </span>
-                              <div className="flex items-center">
-                                <h2 className=" text-lg font-medium flex items-center leading-[1.6]">
-                                  <span className="text-lg text-[#141414]">
-                                    <Svg
-                                      name="rupee"
-                                      className="size-[18px] text-[#f76900]"
-                                    />
-                                  </span>{" "}
-                                  {spaceData?.originalPrice}
-                                </h2>
-                                <span className=" text-[15px] leading-[30px] font-light">
-                                  /seat/day
-                                </span>
+                          )}
+                          {type == "coworking" && spaceData?.originalPrice > 0 && (
+                            <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
+                              <div className="grid md:grid-cols-3 grid-cols-1 md:items-center md:gap-4 gap-2 justify-between">
+                                <div className="md:col-span-2">
+                                  <h3 className="2xl:text-xl text-lg leading-[1.6] font-medium text-[#010101]">
+                                    Day Pass
+                                  </h3>
+                                  {/* <p className="2xl:text-base text-sm leading-[1.5] text-[#777]">
+                                    Premium business and mailing address
+                                  </p> */}
+                                </div>
+                                <div className="md:ps-[15px]">
+                                  <span className="block text-[15px] leading-[30px] font-light">
+                                    from
+                                  </span>
+                                  <div className="flex items-center">
+                                    <h2 className=" text-lg font-medium flex items-center leading-[1.6]">
+                                      <span className="text-lg text-[#141414]">
+                                        <Svg
+                                          name="rupee"
+                                          className="size-[18px] text-[#f76900]"
+                                        />
+                                      </span>{" "}
+                                      {spaceData?.originalPrice}
+                                    </h2>
+                                    <span className=" text-[15px] leading-[30px] font-light">
+                                      /seat/day
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div>
+                                <button onClick={() => setIsAuthOpen(true)} className="cursor-pointer md:mt-3 mt-2 bg-[#4b975f] border border-[#4b975f] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px]">
+                                  Buy Pass
+                                </button>
                               </div>
                             </div>
-                          </div>
-                          <div>
-                            <button onClick={() => setIsAuthOpen(true)} className="cursor-pointer md:mt-3 mt-2 bg-[#4b975f] border border-[#4b975f] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px]">
-                              Buy Pass
-                            </button>
-                          </div>
+                          )}
                         </div>
-                      )}
-                    </div>
-                  </div>
+                      </div>
+                    )
+                  }
                   <div
                     id="location"
                     className="md:pt-[50px] pt-5 md:pb-14 pb-7 border-b border-[#dbdbdb]"
@@ -627,57 +767,90 @@ const Detail = ({ detailData,reviewData }) => {
                       </div>
                     </div>
                   </div>
-                  <div
-                    id="hours"
-                    className="md:pt-9 pt-5 md:pb-14 pb-7 border-b border-[#dbdbdb]"
-                  >
-                    <h2 className="text-xl font-medium text-[#141414] mb-[15px] leading-[1.6]">
-                      Business Hours
-                    </h2>
-                    <div>
-                      <div className=" ">
-                        {
-                          spaceData?.has_247_access === 1 && (
-                            <div className="flex items-center gap-2 mb-[25px]">
-                              <div className="flex items-center border border-[#f76900] rounded-full md:px-5 px-[10px] py-3 text-[#646464]">
-                                <span className="mr-3">
-                                  <Image
-                                    width={25}
-                                    height={25}
-                                    className="w-[25px] h-[25px]"
-                                    src="/images/clock-24-7.webp"
-                                    alt=""
-                                  />
-                                </span>{" "}
-                                This space is operational 24x7
-                              </div>
-                            </div>
-                          )
-                        }
+                  {
+                    type != "longterm" && (
+                      <div
+                        id="hours"
+                        className="md:pt-9 pt-5 md:pb-14 pb-7 border-b border-[#dbdbdb]"
+                      >
+                        <h2 className="text-xl font-medium text-[#141414] mb-[15px] leading-[1.6]">
+                          Business Hours
+                        </h2>
+                        <div>
+                          <div className=" ">
+                            {
+                              spaceData?.has_247_access === 1 && (
+                                <div className="flex items-center gap-2 mb-[25px]">
+                                  <div className="flex items-center border border-[#f76900] rounded-full md:px-5 px-[10px] py-3 text-[#646464]">
+                                    <span className="mr-3">
+                                      <Image
+                                        width={25}
+                                        height={25}
+                                        className="w-[25px] h-[25px]"
+                                        src="/images/clock-24-7.webp"
+                                        alt=""
+                                      />
+                                    </span>{" "}
+                                    This space is operational 24x7
+                                  </div>
+                                </div>
+                              )
+                            }
 
-                        <div className="grid md:gap-4 gap-2 md:p-6 px-[15px]">
-                          {spaceData?.working_time?.map((item, index) => (
-                            <div key={index} className="flex justify-between">
-                              <span className="text-[#777] text-[15px]">
-                                {item.day}
-                              </span>
-                              {item.isClosed ? (
-                                <span className="text-[#ff3a6d] text-[15px]">
-                                  Closed
-                                </span>
-                              ) : (
-                                <span className="text-[#777] text-[15px]">
-                                  {convertTo12Hour(item.openingTime)} – {convertTo12Hour(item.closingTime)} 
-                                </span>
-                              )}
+                            <div className="grid md:gap-4 gap-2 md:p-6 px-[15px]">
+                              {spaceData?.working_time?.map((item, index) => (
+                                <div key={index} className="flex justify-between">
+                                  <span className="text-[#777] text-[15px]">
+                                    {item.day}
+                                  </span>
+                                  {item.isClosed ? (
+                                    <span className="text-[#ff3a6d] text-[15px]">
+                                      Closed
+                                    </span>
+                                  ) : (
+                                    <span className="text-[#777] text-[15px]">
+                                      {convertTo12Hour(item.openingTime)} – {convertTo12Hour(item.closingTime)} 
+                                    </span>
+                                  )}
+                                </div>
+                              ))}
                             </div>
-                          ))}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
+                    )
+                  }
                   {
                     <ReviewSection reviewData={reviewData} rating={spaceData?.rating} avgRating={spaceData?.ratingsAvg}/>
+                  }
+                  {
+                    type == "shortterm" && spaceData?.spaceServiceDetailsArray?.length > 0 &&(
+                      <div>
+                        <h3>Add-ons from the host</h3>
+                        <p>Host provided services, items or options. Available at checkout.</p>
+                        {
+                          spaceData?.spaceServiceDetailsArray?.map((item,index)=>(
+                            <div key={index}>
+                              <h3>{item.serviceName}</h3>
+                              <div>
+                                <Svg name="rupee" className="size-5" />{item?.servicePrice} / {item?.servicePriceType}
+                              </div>
+                            </div>
+                          ))
+                        }
+                      </div>
+                    )
+                  }
+                  {
+                    type == "shortterm" && (
+                      <div>
+                        <h3>Cancellation Policy</h3>
+                        <div>
+                          <h4>{spaceData?.cancellationPolicy}</h4>
+                          <p>{spaceData?.cancellationPolicyDescription}</p>
+                        </div>
+                      </div>
+                    )
                   }
                 </div>
               </div>
@@ -806,35 +979,44 @@ const Detail = ({ detailData,reviewData }) => {
           {
             type == "shortterm" && (
               <div className="lg:w-1/3 w-full pl-[36px] max-lg:pl-0 lg:order-2 order-1 lg:pb-0 pb-4">
-                <div className="w-full border border-[#dbdbdb] py-[22px] px-[19px] rounded-sm md:sticky md:top-[90px]  bg-white">
-                  <h3 className="text-xl font-medium text-center mb-5 pt-[10px]">
-                    <Svg name="rupee" className="size-6" />{spaceData?.originalPrice} /hr
-                  </h3>
-                  <p>
-                    {spaceData?.minimum_hours / 60} hrs minimum
-                  </p>
-                  {
-                    spaceData?.isInstant == 0 ?(
-                      <button className="cursor-pointer w-full border uppercase tracking-[1px] border-[#000e54] text-[#000e54] 2xl:text-base text-sm font-semibold md:py-[15px] py-[10px] rounded-[15px]">
-                        Request To Book
-                      </button> 
-                    ):(
-                      <button className="cursor-pointer w-full border uppercase tracking-[1px] border-[#000e54] text-[#000e54] 2xl:text-base text-sm font-semibold md:py-[15px] py-[10px] rounded-[15px]">
-                        Book Now
-                      </button>
-                    )
-                  }
-                  <div>
-                    <div className="flex items-center m-0">
-                      <div className="flex gap-2 items-center">
-                        <Svg name="bolt" className="size-[15px] text-[#ffbf00]" />
-                        <span className="bg-[#ffbf00] p-1 text-xs rounded-sm text-[#343a40]">
-                          Instant Book
-                        </span>
-                      </div>
+                <div className="w-full border border-[#dbdbdb]   rounded-sm md:sticky md:top-[90px]  bg-white">
+                  <div className="border-b p-5 border-[#dbdbdb]">
+ 
+                    <div className="flex items-center justify-center pt-[10px] ">
+                      <Svg name="boltFull" className="size-[15px] text-[#ffbf00]" />
+                      <Svg name="rupee" className="size-[18px] text-[#f76900]" />
+                      <h3 className="text-[26px] font-bold text-center">
+                        {spaceData?.originalPrice} <span className="text-base"> /hr</span>
+                      </h3>
                     </div>
-                    <p>After payment, your booking will be instantly confirmed.</p>
+                    <p className="2xl:text-base text-sm leading-[1.5] text-[#777] text-center">
+                      {spaceData?.minimum_hours / 60} hrs minimum
+                    </p>
                   </div>
+                  <div className="p-5">
+                    {
+                      spaceData?.isInstant == 0 ?(
+                        <button className="cursor-pointer w-full border uppercase tracking-[1px] border-[#000e54] text-[#000e54] 2xl:text-base text-sm font-semibold md:py-[15px] py-[10px] rounded-[15px] mt-[10px]">
+                          Request To Book
+                        </button>
+                      ):(
+                        <button className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]  mt-[10px]">
+                          Book Now
+                        </button>
+                      )
+                    }
+                    <div>
+                      <div className="flex items-center m-0">
+                        <div className="flex gap-2 items-center">
+                          <Svg name="bolt" className="size-[15px] text-[#ffbf00]" />
+                          <span className="text-sm font-light text-[#777]">
+                            Instant Book
+                          </span>
+                        </div>
+                      </div>
+                      <p>After payment, your booking will be instantly confirmed.</p>
+                    </div>
+                   </div>
                 </div>
               </div>
             )

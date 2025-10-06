@@ -21,6 +21,7 @@ const Detail = ({ detailData, reviewData }) => {
   const spaceData = detailData?.data;
   const type = getTypeOfSpaceByWorkSpace(spaceData?.spaceType || "");
   const [showAll, setShowAll] = useState(false);
+  const [open, setOpen] = useState(null);
   const displayedFacilities = showAll
     ? spaceData?.facilities
     : spaceData?.facilities?.slice(0, 3);
@@ -48,6 +49,9 @@ const Detail = ({ detailData, reviewData }) => {
     if (el) {
       el.scrollIntoView({ block: "start" });
     }
+  };
+  const toggle = (id) => {
+    setOpen(open === id ? null : id); // close if same clicked, else open new
   };
 
   function convertTo12Hour(time) {
@@ -277,193 +281,137 @@ const Detail = ({ detailData, reviewData }) => {
                       </p>
                     </div>
                     {spaceData?.parkingDescription && (
-                      <div className="pb-6">
-                        <div>
-                          <input
-                            type="checkbox"
-                            id="parking-toggle"
-                            className="hidden peer"
-                          />
-
-                          <label
-                            htmlFor="parking-toggle"
-                            className="flex cursor-pointer items-center justify-between border-b border-[#dbdbdb] py-5 px-1 hover:bg-[#0000000a]"
-                          >
-                            <div className="flex items-center gap-1">
-                              <Svg
-                                name="parking"
-                                className="size-7 text-[#f76900]"
-                              />
-                              <span className="font-medium text-lg">
-                                Parking
-                              </span>
-                            </div>
-                          </label>
-                          <Svg
-                            name="leftArrow"
-                            className="size-3.5 -rotate-90 transition-transform duration-300 peer-checked:rotate-90 ml-auto mr-1 -mt-10"
-                          />
-
-                          <div
-                            className="
-                              overflow-hidden
-                              transition-[max-height] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
-                              max-h-0 peer-checked:max-h-[1000px]
-                            "
-                          >
-                            <div className="pt-8 mt-8 space-y-5">
-                              <div>
-                                <h4 className="font-semibold text-[#000000de] leading-[20px] text-[17px] mb-2">
-                                  Parking options
-                                </h4>
-                                <p className="text-[#646464] text-base leading-[1.8]">
-                                  {spaceData?.parkingOptionsValue?.join(", ")}
-                                </p>
+                      <div>
+                          <div>
+                            <button
+                              onClick={() => toggle("parking")}
+                              className="flex w-full items-center justify-between border-b border-[#dbdbdb] py-5 px-1 hover:bg-[#0000000a]"
+                            >
+                              <div className="flex items-center gap-1">
+                                <Svg name="parking" className="size-7 text-[#f76900]" />
+                                <span className="font-medium text-lg">Parking</span>
                               </div>
-                              <div>
-                                <h4 className="font-semibold text-[#000000de] leading-[20px] text-[17px] mb-2">
-                                  Parking description
-                                </h4>
-                                <p className="text-[#646464] text-base leading-[1.8]">
-                                  {spaceData?.parkingDescription}
-                                </p>
+                              <Svg
+                                name="leftArrow"
+                                className={`size-3.5 transition-transform duration-300 ${
+                                  open === "parking" ? "rotate-90" : "-rotate-90"
+                                }`}
+                              />
+                            </button>
+
+                            <div
+                              className={`overflow-hidden transition-[max-height] duration-300 ease-in-out ${
+                                open === "parking" ? "max-h-[1000px]" : "max-h-0"
+                              }`}
+                            >
+                              <div className="pt-8 space-y-5">
+                                <div>
+                                  <h4 className="font-semibold text-[#000000de] leading-[20px] text-[17px] mb-2">
+                                    Parking options
+                                  </h4>
+                                  <p className="text-[#646464] text-base leading-[1.8]">
+                                    {spaceData?.parkingOptionsValue?.join(", ")}
+                                  </p>
+                                </div>
+                                <div>
+                                  <h4 className="font-semibold text-[#000000de] leading-[20px] text-[17px] mb-2">
+                                    Parking description
+                                  </h4>
+                                  <p className="text-[#646464] text-base leading-[1.8]">
+                                    {spaceData?.parkingDescription}
+                                  </p>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
                     )}
                     {type != "coworking" && spaceData?.lightingDescription && (
-                      <div className="pb-6">
-                        <div>
-                          <input
-                            type="checkbox"
-                            id="lighting-toggle"
-                            className="hidden peer"
-                          />
-
-                          <label
-                            htmlFor="lighting-toggle"
-                            className="flex cursor-pointer items-center justify-between border-b border-[#dbdbdb] py-5 px-1 hover:bg-[#0000000a]"
-                          >
-                            <div className="flex items-center gap-1">
-                              <Svg
-                                name="sun"
-                                className="size-7 text-[#f76900]"
-                              />
-                              <span className="font-medium text-lg">
-                                Lighting
-                              </span>
-                            </div>
-                          </label>
+                     <div className="">
+                        <button
+                          onClick={() => toggle("lighting")}
+                          className="flex w-full items-center justify-between border-b border-[#dbdbdb] py-5 px-1 hover:bg-[#0000000a]"
+                        >
+                          <div className="flex items-center gap-1">
+                            <Svg name="sun" className="size-7 text-[#f76900]" />
+                            <span className="font-medium text-lg">Lighting</span>
+                          </div>
                           <Svg
                             name="leftArrow"
-                            className="size-3.5 -rotate-90 transition-transform duration-300 peer-checked:rotate-90 ml-auto mr-1 -mt-10"
+                            className={`size-3.5 transition-transform duration-300 ${
+                              open === "lighting" ? "rotate-90" : "-rotate-90"
+                            }`}
                           />
-
-                          <div
-                            className="
-                              overflow-hidden
-                              transition-[max-height] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
-                              max-h-0 peer-checked:max-h-[1000px]
-                            "
-                          >
-                            <div className="pt-8 mt-8 space-y-5">
-                              <div>
-                                <p className="text-[#646464] text-base leading-[1.8]">
-                                  {spaceData?.parkingDescription}
-                                </p>
-                              </div>
-                            </div>
+                        </button>
+                        <div
+                          className={`overflow-hidden transition-[max-height] duration-300 ease-in-out ${
+                            open === "lighting" ? "max-h-[1000px]" : "max-h-0"
+                          }`}
+                        >
+                          <div className="pt-8 space-y-5">
+                            <p className="text-[#646464] text-base leading-[1.8]">
+                              {spaceData?.lightingDescription}
+                            </p>
                           </div>
                         </div>
                       </div>
                     )}
                     {type != "coworking" && spaceData?.soundDescription && (
-                      <div className="pb-6">
-                        <div>
-                          <input
-                            type="checkbox"
-                            id="sound-toggle"
-                            className="hidden peer"
-                          />
-
-                          <label
-                            htmlFor="sound-toggle"
-                            className="flex cursor-pointer items-center justify-between border-b border-[#dbdbdb] py-5 px-1 hover:bg-[#0000000a]"
-                          >
-                            <div className="flex items-center gap-1">
-                              <Svg
-                                name="sound"
-                                className="size-7 text-[#f76900]"
-                              />
-                              <span className="font-medium text-lg">Sound</span>
-                            </div>
-                          </label>
+                      <div className="">
+                        <button
+                          onClick={() => toggle("sound")}
+                          className="flex w-full items-center justify-between border-b border-[#dbdbdb] py-5 px-1 hover:bg-[#0000000a]"
+                        >
+                          <div className="flex items-center gap-1">
+                            <Svg name="sound" className="size-7 text-[#f76900]" />
+                            <span className="font-medium text-lg">Sound</span>
+                          </div>
                           <Svg
                             name="leftArrow"
-                            className="size-3.5 -rotate-90 transition-transform duration-300 peer-checked:rotate-90 ml-auto mr-1 -mt-10"
+                            className={`size-3.5 transition-transform duration-300 ${
+                              open === "sound" ? "rotate-90" : "-rotate-90"
+                            }`}
                           />
-
-                          <div
-                            className="
-                              overflow-hidden
-                              transition-[max-height] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
-                              max-h-0 peer-checked:max-h-[1000px]
-                            "
-                          >
-                            <div className="pt-8 mt-8 space-y-5">
-                              <div>
-                                <p className="text-[#646464] text-base leading-[1.8]">
-                                  {spaceData?.soundDescription}
-                                </p>
-                              </div>
-                            </div>
+                        </button>
+                        <div
+                          className={`overflow-hidden transition-[max-height] duration-300 ease-in-out ${
+                            open === "sound" ? "max-h-[1000px]" : "max-h-0"
+                          }`}
+                        >
+                          <div className="pt-8 space-y-5">
+                            <p className="text-[#646464] text-base leading-[1.8]">
+                              {spaceData?.soundDescription}
+                            </p>
                           </div>
                         </div>
                       </div>
                     )}
                     {spaceData?.hostRulesDescription && (
-                      <div className="pb-6">
-                        <div>
-                          <input
-                            type="checkbox"
-                            id="host-toggle"
-                            className="hidden peer"
-                          />
-                          <label
-                            htmlFor="host-toggle"
-                            className="flex cursor-pointer items-center justify-between border-b border-[#dbdbdb] py-5 px-1 hover:bg-[#0000000a]"
-                          >
-                            <div className="flex items-center gap-1">
-                              <Svg
-                                name="fileMinus"
-                                className="size-7 text-[#f76900]"
-                              />
-                              <span className="font-medium text-lg">
-                                Host rules
-                              </span>
-                            </div>
-                          </label>
+                      <div className="">
+                        <button
+                          onClick={() => toggle("host")}
+                          className="flex w-full items-center justify-between border-b border-[#dbdbdb] py-5 px-1 hover:bg-[#0000000a]"
+                        >
+                          <div className="flex items-center gap-1">
+                            <Svg name="fileMinus" className="size-7 text-[#f76900]" />
+                            <span className="font-medium text-lg">Host rules</span>
+                          </div>
                           <Svg
                             name="leftArrow"
-                            className="size-3.5 -rotate-90 transition-transform duration-300 peer-checked:rotate-90 ml-auto mr-1 -mt-10"
+                            className={`size-3.5 transition-transform duration-300 ${
+                              open === "host" ? "rotate-90" : "-rotate-90"
+                            }`}
                           />
-
-                          <div
-                            className="
-                              overflow-hidden
-                              transition-[max-height] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
-                              max-h-0 peer-checked:max-h-[1000px]
-                            "
-                          >
-                            <div className="pt-8 mt-8 space-y-5">
-                              <div>
-                                <p className="text-[#646464] text-base leading-[1.8]">
-                                  {spaceData?.hostRulesDescription}
-                                </p>
-                              </div>
-                            </div>
+                        </button>
+                        <div
+                          className={`overflow-hidden transition-[max-height] duration-300 ease-in-out ${
+                            open === "host" ? "max-h-[1000px]" : "max-h-0"
+                          }`}
+                        >
+                          <div className="pt-8 space-y-5">
+                            <p className="text-[#646464] text-base leading-[1.8]">
+                              {spaceData?.hostRulesDescription}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -870,16 +818,10 @@ const Detail = ({ detailData, reviewData }) => {
                       </div>
                     </div>
                   )}
-                  {
-                    <ReviewSection
-                      reviewData={reviewData}
-                      rating={spaceData?.rating}
-                      avgRating={spaceData?.ratingsAvg}
-                    />
-                  }
+                  
                   {type == "shortterm" &&
                     spaceData?.spaceServiceDetailsArray?.length > 0 && (
-                      <div className=" md:pb-14 pb-7 border-b border-[#dbdbdb]">
+                      <div className=" md:py-14 py-7 border-b border-[#dbdbdb]">
                         <h3 className="text-[#141414] text-xl font-medium">
                           Add-ons from the host
                         </h3>
@@ -911,7 +853,7 @@ const Detail = ({ detailData, reviewData }) => {
                       </div>
                     )}
                   {type == "shortterm" && (
-                    <div id="cancellation" className="py-10">
+                    <div id="cancellation" className="py-10 border-b border-[#dbdbdb]">
                       <h3 className="text-[#141414] text-xl font-medium pb-6">
                         Cancellation Policy
                       </h3>
@@ -927,6 +869,13 @@ const Detail = ({ detailData, reviewData }) => {
                       </div>
                     </div>
                   )}
+                  {
+                    <ReviewSection
+                      reviewData={reviewData}
+                      rating={spaceData?.rating}
+                      avgRating={spaceData?.ratingsAvg}
+                    />
+                  }
                 </div>
               </div>
             </div>

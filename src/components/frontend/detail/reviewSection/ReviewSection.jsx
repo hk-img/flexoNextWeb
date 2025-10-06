@@ -5,7 +5,7 @@ import React from "react";
 const ReviewSection = ({reviewData,rating=0,avgRating="5.0"}) => {
   return (
     <>
-      <div id="reviews" className="py-6">
+      <div id="reviews" className="py-10">
         <div className="flex flex-wrap md:items-center  md:gap-7 gap-3">
           <h2 className="text-xl font-medium text-[#141414] mb-2">
             Reviews & Ratings{" "}

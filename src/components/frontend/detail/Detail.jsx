@@ -10,10 +10,11 @@ import MapComponent from "./MapComponent";
 import HeroSection from "./heroSection/HeroSection";
 import ReviewSection from "./reviewSection/ReviewSection";
 import Auth from "../auth/Auth";
-import { Facilities } from "@/services/Comman";
+import { Facilities, getTypeOfSpaceByWorkSpace } from "@/services/Comman";
 
 const Detail = ({ detailData,reviewData }) => {
   const spaceData = detailData?.data;
+  const type = getTypeOfSpaceByWorkSpace(spaceData?.spaceType || "");
   const [showAll, setShowAll] = useState(false);
   const displayedFacilities = showAll
     ? spaceData?.facilities
@@ -79,9 +80,21 @@ const Detail = ({ detailData,reviewData }) => {
               </li>
             </ol>
             <div className="">
-              <h1 className="2xl:text-[30px] text-lg leading-[1.6] font-medium text-[#141414] mb-4">
-                {spaceData?.actual_name} {spaceData?.location_name}
-              </h1>
+              {type == "coworking" && (
+                <h1 className="2xl:text-[30px] text-lg leading-[1.6] font-medium text-[#141414] mb-4">
+                  {spaceData?.name} {spaceData?.spaceTitle}
+                </h1>
+              )}
+              {type == "longterm" && (
+                <h1 className="2xl:text-[30px] text-lg leading-[1.6] font-medium text-[#141414] mb-4">
+                  {spaceData?.spaceTitle}
+                </h1>
+              )}
+              {type == "shortterm" && (
+                <h1 className="2xl:text-[30px] text-lg leading-[1.6] font-medium text-[#141414] mb-4">
+                  {spaceData?.name} {spaceData?.about}
+                </h1>
+              )}
               <div className="flex items-center text-[#141414] 2xl:text-base text-sm mb-4.5">
                 <Svg name="location2" className="size-5 text-[#f76900]" />
                 <span>{spaceData?.location_name}</span>
@@ -109,10 +122,20 @@ const Detail = ({ detailData,reviewData }) => {
               }
               <div className="flex md:flex-row flex-col md:space-y-0 md:gap-y-0 gap-y-1 space-y-3 md:items-center justify-between mb-[25px]">
                 <div className="flex items-center space-x-11 text-sm text-[#646464] px-2">
-                  <div className="flex gap-[5px] items-center ">
-                    <Svg name="user2" className="size-[15px] text-[#7f7f7f]" />
-                    <span className="2xl:text-base text-sm">{spaceData?.howManyPeopleInYourSpace} people</span>
-                  </div>
+                  {
+                    (type == "coworking" || type == "shortterm") && (
+                      <div className="flex gap-[5px] items-center ">
+                        <Svg name="user2" className="size-[15px] text-[#7f7f7f]" />
+                        <span className="2xl:text-base text-sm">{spaceData?.howManyPeopleInYourSpace} people</span>
+                      </div>
+                    )
+                  }
+                  {spaceData?.spaceStatus && (
+                    <div className="flex gap-1 items-center">
+                      <Svg name="user2" className="size-[12px] text-[#f76900]" />
+                      <span>{spaceData?.spaceStatus}</span>
+                    </div>
+                  )}
                   <div className="flex gap-[5px] items-center">
                     <Svg
                       name="scaleRuler"
@@ -540,7 +563,7 @@ const Detail = ({ detailData,reviewData }) => {
                                   {spaceData?.originalPrice}
                                 </h2>
                                 <span className=" text-[15px] leading-[30px] font-light">
-                                  /seat/month
+                                  /seat/day
                                 </span>
                               </div>
                             </div>
@@ -577,7 +600,7 @@ const Detail = ({ detailData,reviewData }) => {
                             {spaceData?.near_by_metro || "N/A"}
                           </h3>
                           <h3 className="text-[#777] text-xs font-normal">
-                            {spaceData?.metro_distance || "N/A"}
+                            {spaceData?.metro_distance ? `${spaceData?.metro_distance} Kms`:"N/A"}
                           </h3>
                         </div>
                       </div>
@@ -593,7 +616,7 @@ const Detail = ({ detailData,reviewData }) => {
                             {spaceData?.near_by_railway_name || "N/A"}
                           </h3>
                           <h3 className="text-[#777] text-xs font-normal">
-                            {spaceData?.railway_distance || "N/A"} Kms
+                            {spaceData?.railway_distance ? `${spaceData?.railway_distance} Kms` : "N/A"}
                           </h3>
                         </div>
                       </div>
@@ -721,7 +744,7 @@ const Detail = ({ detailData,reviewData }) => {
 
       <section className="container px-[15px] mx-auto pb-[50px] pt-10">
         <h2 className="text-2xl font-medium text-[#141414] mb-[3px] leading-[1.6] md:pl-3 pl-0">
-          Nearby Coworking Spaces
+          Nearby {spaceData?.spaceType == "Coworking spaces" ? "Coworking Spaces" : spaceData?.spaceType}
         </h2>
         <div>
           <EmblaCarousel

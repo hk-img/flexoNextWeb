@@ -859,7 +859,7 @@ const Detail = ({ detailData,reviewData }) => {
               </div>
             </div>
           </div>
-          {
+          {/* {
             type == "longterm" && (
               <div>
                 <p>
@@ -878,8 +878,8 @@ const Detail = ({ detailData,reviewData }) => {
                 </p>
               </div>
             )
-          }
-          {
+          } */}
+          {/* {
             (type == "coworking" || type == "longterm") && (
               <div className="lg:w-1/3 w-full pl-[36px] max-lg:pl-0 lg:order-2 order-1 lg:pb-0 pb-4">
                 <div className="w-full border border-[#dbdbdb] py-[22px] px-[19px] rounded-sm md:sticky md:top-[90px]  bg-white">
@@ -974,6 +974,132 @@ const Detail = ({ detailData,reviewData }) => {
                     >
                       Call +91 95133 92400
                     </a>
+                  </div>
+                </div>
+              </div>
+            )
+          } */}
+          {
+            (type == "coworking" || type == "longterm") && (
+              <div className="lg:w-1/3 w-full pl-[36px] max-lg:pl-0 lg:order-2 order-1 lg:pb-0 pb-4">
+                
+                <div className="w-full border border-[#dbdbdb] rounded-sm md:sticky md:top-[90px]  bg-white">
+                  <div className="text-center p-5 border-b border-[#dbdbdb]">
+                    <p className="2xl:text-base text-sm font-normal  leading-[1.5] text-[#777]">
+                      Monthly Rental
+                    </p>
+                    <div className="flex items-center justify-center">
+                       <Svg name = "rupee" className="size-[18px] text-[#f76900]" /> 
+                      <h2 className="text-[26px] font-bold">
+                       
+                        {spaceData?.originalPrice}
+                      </h2>
+                    </div>
+                    <div className="text-xs font-normal  leading-[1.5] text-[#777] flex items-center justify-center mb-2">
+                      <Svg name = "rupee" className="size-[18px] text-[#f76900]" />
+                      <p>6/Sqft 
+                      <span className=" font-bold">
+                        (Negotiable)
+                      </span>
+                      </p>
+                    </div>
+                    <p className="text-xs font-normal  leading-[1.5] text-[#777]">
+                      <span className="font-bold">Carpet Area:</span> {spaceData?.spacesqft} sq. ft. | <span className="font-bold">{spaceData?.spaceStatus}</span>
+                    </p>
+                  </div>
+                  <div className="p-5">
+                    <h3 className="text-xl font-medium text-center mb-5 pt-[10px]">
+                      Interested in this space?
+                    </h3>
+                    <div className="columns-2  space-y-2  mb-4 text-sm text-black">
+                      {
+                        type == "coworking" && (
+                          <>
+                            <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5]">
+                              <span className="text-[#f76900]">
+                                <Svg name="checkRound" className="size-[22px]" />
+                              </span>
+                              Zero Brokerage
+                            </div>
+                            <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5]">
+                              <span className="text-[#f76900]">
+                                <Svg name="checkRound" className="size-[22px]" />
+                              </span>
+                              1000+ Clients Served
+                            </div>
+                            <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5] ps-2">
+                              <span className="text-[#f76900]">
+                                <Svg name="checkRound" className="size-[22px]" />
+                              </span>
+                              Best Deals
+                            </div>
+                            <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5] ps-2">
+                              <span className="text-[#f76900]">
+                                <Svg name="checkRound" className="size-[22px]" />
+                              </span>
+                              Expert Advisors
+                            </div>
+                          </>
+                        )
+                      }
+                      {
+                        type == "longterm" && (
+                          <>
+                            <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5]">
+                              <span className="text-[#f76900]">
+                                <Svg name="checkRound" className="size-[22px]" />
+                              </span>
+                              1000+ Clients Served
+                            </div>
+                            <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5]">
+                              <span className="text-[#f76900]">
+                                <Svg name="checkRound" className="size-[22px]" />
+                              </span>
+                              End-to-End Support
+                            </div>
+                            <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5] ps-2">
+                              <span className="text-[#f76900]">
+                                <Svg name="checkRound" className="size-[22px]" />
+                              </span>
+                              Expert Advisors
+                            </div>
+                            <div className="flex items-center gap-0.5 2xl:text-[13px] text-[11px] leading-[1.5] ps-2">
+                              <span className="text-[#f76900]">
+                                <Svg name="checkRound" className="size-[22px]" />
+                              </span>
+                              Best Deals
+                            </div>
+                          </>
+                        )
+                      }
+                    </div>
+
+                    <div className="space-y-2.5 mb-10">
+                      <button onClick={()=>setIsOpen((prev) => !prev)} className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">
+                        {type == "coworking" ? "Get Quote" : "REQUEST A CALL BACK"}
+                      </button>
+                      <button onClick={() => setIsAuthOpen(true)} className={`cursor-pointer w-full border uppercase tracking-[1px] border-[#000e54] ${type == "longterm" ? "text-[#f76900]": "text-[#000e54]"} 2xl:text-base text-sm font-semibold md:py-[15px] py-[10px] rounded-[15px]`}>
+                        Schedule a visit
+                      </button>
+                      {
+                        type == "coworking" &&spaceData?.originalPrice > 0 && (
+                          <button onClick={() => setIsAuthOpen(true)} className="cursor-pointer w-full bg-[#2c864f] 2xl:text-[15px] text-sm hover:bg-[#40a667] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">
+                            Buy Pass
+                          </button>
+                        )
+                      }
+                    </div>
+                    <div className="text-center">
+                      <p className="text-center text-sm leading-[1.5] text-black ">
+                        Speak to our office space experts.
+                      </p>
+                      <a
+                        href="#"
+                        className="font-semibold text-base leading-[1.5] text-black"
+                      >
+                        Call +91 95133 92400
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>

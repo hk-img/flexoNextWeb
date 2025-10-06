@@ -154,7 +154,7 @@ const ProductCard = ({ item = {}, setIsOpen }) => {
             )}
             {item?.spaceStatus && (
               <div className="flex gap-1 items-center">
-                <Svg name="user2" className="size-[12px] text-[#f76900]" />
+                <Svg name="home" className="size-[12px] text-[#f76900]" />
                 <span>{item?.spaceStatus}</span>
               </div>
             )}

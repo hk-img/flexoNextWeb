@@ -132,7 +132,7 @@ const Detail = ({ detailData,reviewData }) => {
                   }
                   {spaceData?.spaceStatus && (
                     <div className="flex gap-1 items-center">
-                      <Svg name="user2" className="size-[12px] text-[#f76900]" />
+                      <Svg name="building" className="size-[12px] text-[#7f7f7f]" />
                       <span>{spaceData?.spaceStatus}</span>
                     </div>
                   )}

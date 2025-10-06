@@ -344,7 +344,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                       {toggleSpace && (
                         <div
                           ref={spacesTypeRef}
-                          className="dropdown-menu-space-type scrollDropdown absolute top-[72px] left-0 w-[550px] bg-white block shadow-lg z-20 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700"
+                          className="dropdown-menu-space-type scrollDropdown absolute top-[72px] left-0 md:w-[550px] w-full bg-white block shadow-lg z-20 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700"
                         >
                           {
                             spaceCategoryData?.map((item, index) => {
@@ -432,7 +432,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                       {toggleLocationOptions && (
                         <div
                           ref={locationRef}
-                          className="dropdown-menu-location scrollDropdown max-h-72 overflow-y-auto absolute top-[70px] left-4 w-[420px] bg-white shadow-lg z-20"
+                          className="dropdown-menu-location scrollDropdown max-h-72 overflow-y-auto absolute top-[70px] left-4  bg-white shadow-lg z-20"
                         >
                           {locationData
                             .filter((loc) =>

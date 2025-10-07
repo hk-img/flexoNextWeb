@@ -1,14 +1,15 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Svg from "@/components/svg";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import GoogleLoginButton from "./GoogleLoginButton";
+import GoogleLoginButton from "./loginRegisterViaGoogle/GoogleLoginButton";
 import VerifyOtp from "./VerifyOtp";
 import LoginViaMailPassword from "./loginViaMailPassword/LoginViaMailPassword";
 import LoginRegisterViaMobile from "./LoginRegisterViaMobile";
 import RegisterViaMail from "./RegisterViaMail";
 import UserDetailRegistrationFormForEmail from "./userDetailRegistrationFormForEmail/UserDetailRegistrationFormForEmail";
 import UserDetailRegistrationFormForMobile from "./UserDetailRegistrationFormForMobile";
+import RegistrationScreenForGoogleRegister from "./loginRegisterViaGoogle/RegistrationScreenForGoogleRegister";
 
 const Auth = ({ isOpen, setIsOpen }) => {
   const [isLogin, setIsLogin] = useState(false);
@@ -17,6 +18,8 @@ const Auth = ({ isOpen, setIsOpen }) => {
   const [isShowUserDetailForm, setIsShowUserDetailForm] = useState(false);
   const [mobile, setMobile] = useState(null);
   const [email, setEmail] = useState("");
+  const [googleDetails,setGoogleDetails] = useState(null);
+  console.log({googleDetails},"rtyrtyrtyrt")
 
   if (!isOpen) return null;
 
@@ -54,92 +57,98 @@ const Auth = ({ isOpen, setIsOpen }) => {
                 <Svg name="close" className="size-5" />
               </button>
             </div>
-            {isShowUserDetailForm ? (
-              <>
-                {
-                  mobile ? (
-                    <UserDetailRegistrationFormForMobile mobile={mobile} setIsOpen={setIsOpen}/>
-                  ):(
-                    <UserDetailRegistrationFormForEmail email={email} setIsOpen={setIsOpen}/>
-                  )
-                }
-              </>
-            ) : (
-              <>
-                {!isShowOtp ? (
-                  <div className="py-5">
-                    {isShowMobile ? (
-                      <LoginRegisterViaMobile
-                        isLogin={isLogin}
-                        setMobile={setMobile}
-                        setIsShowOtp={setIsShowOtp}
-                      />
+            {
+              googleDetails ? (
+                <RegistrationScreenForGoogleRegister googleDetails={googleDetails}/>
+              ):(
+                isShowUserDetailForm ? (
+                  <>
+                    {
+                      mobile ? (
+                        <UserDetailRegistrationFormForMobile mobile={mobile} setIsOpen={setIsOpen}/>
+                      ):(
+                        <UserDetailRegistrationFormForEmail email={email} setIsOpen={setIsOpen}/>
+                      )
+                    }
+                  </>
+                ) : (
+                  <>
+                    {!isShowOtp ? (
+                      <div className="py-5">
+                        {isShowMobile ? (
+                          <LoginRegisterViaMobile
+                            isLogin={isLogin}
+                            setMobile={setMobile}
+                            setIsShowOtp={setIsShowOtp}
+                          />
+                        ) : (
+                          <RegisterViaMail
+                            setEmail={setEmail}
+                            setIsShowOtp={setIsShowOtp}
+                          />
+                        )}
+                        <div className="my-6 flex items-center">
+                          <hr className="flex-1 border-gray-300" />
+                          <span className="px-2 text-sm text-[#000000de]">
+                            or Continue with
+                          </span>
+                          <hr className="flex-1 border-gray-300" />
+                        </div>
+                        <div className="flex gap-3 px-10">
+                          <GoogleOAuthProvider
+                            clientId={process.env.NEXT_PUBLIC_CLIENT_ID}
+                          >
+                            <GoogleLoginButton setGoogleDetails={setGoogleDetails}/>
+                          </GoogleOAuthProvider>
+                          {isShowMobile ? (
+                            <button
+                              onClick={() => {
+                                setIsShowMobile(false);
+                              }}
+                              className="cursor-pointer flex-1 border border-[#dbdbdb] rounded-md py-1 flex items-center justify-center gap-2"
+                            >
+                              <Svg name="mail" className="size-4 text-black" />
+                              <span> Mail</span>
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => {
+                                setIsShowMobile(true);
+                              }}
+                              className="cursor-pointer flex-1 border border-[#dbdbdb] rounded-md py-1 flex items-center justify-center gap-2"
+                            >
+                              <Svg name="call" className="size-4 text-black" />
+                              <span> Mobile</span>
+                            </button>
+                          )}
+                        </div>
+                        <div className="mt-6 text-center flex items-center justify-center gap-4">
+                          <span className="text-sm text-black">
+                            {!isLogin
+                              ? "Already have an account ?"
+                              : "Don't have an account ?"}
+                          </span>
+                          <button
+                            onClick={handleIsLoginToggle}
+                            className="cursor-pointer bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white py-3 px-5 rounded-full font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px]"
+                          >
+                            {!isLogin ? "LOGIN" : "REGISTER"}
+                          </button>
+                        </div>
+                      </div>
                     ) : (
-                      <RegisterViaMail
-                        setEmail={setEmail}
-                        setIsShowOtp={setIsShowOtp}
+                      <VerifyOtp
+                        mobile={mobile}
+                        email={email}
+                        isLogin={isLogin}
+                        setIsShowUserDetailForm={setIsShowUserDetailForm}
+                        setIsOpen={setIsOpen}
                       />
                     )}
-                    <div className="my-6 flex items-center">
-                      <hr className="flex-1 border-gray-300" />
-                      <span className="px-2 text-sm text-[#000000de]">
-                        or Continue with
-                      </span>
-                      <hr className="flex-1 border-gray-300" />
-                    </div>
-                    <div className="flex gap-3 px-10">
-                      <GoogleOAuthProvider
-                        clientId={process.env.NEXT_PUBLIC_CLIENT_ID}
-                      >
-                        <GoogleLoginButton />
-                      </GoogleOAuthProvider>
-                      {isShowMobile ? (
-                        <button
-                          onClick={() => {
-                            setIsShowMobile(false);
-                          }}
-                          className="cursor-pointer flex-1 border border-[#dbdbdb] rounded-md py-1 flex items-center justify-center gap-2"
-                        >
-                          <Svg name="mail" className="size-4 text-black" />
-                          <span> Mail</span>
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => {
-                            setIsShowMobile(true);
-                          }}
-                          className="cursor-pointer flex-1 border border-[#dbdbdb] rounded-md py-1 flex items-center justify-center gap-2"
-                        >
-                          <Svg name="call" className="size-4 text-black" />
-                          <span> Mobile</span>
-                        </button>
-                      )}
-                    </div>
-                    <div className="mt-6 text-center flex items-center justify-center gap-4">
-                      <span className="text-sm text-black">
-                        {!isLogin
-                          ? "Already have an account ?"
-                          : "Don't have an account ?"}
-                      </span>
-                      <button
-                        onClick={handleIsLoginToggle}
-                        className="cursor-pointer bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white py-3 px-5 rounded-full font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px]"
-                      >
-                        {!isLogin ? "LOGIN" : "REGISTER"}
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <VerifyOtp
-                    mobile={mobile}
-                    email={email}
-                    isLogin={isLogin}
-                    setIsShowUserDetailForm={setIsShowUserDetailForm}
-                    setIsOpen={setIsOpen}
-                  />
-                )}
-              </>
-            )}
+                  </>
+                )
+              )
+            }
           </div>
         </>
       )}

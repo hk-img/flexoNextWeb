@@ -37,6 +37,11 @@ export const AuthProvider = ({ children }) => {
 //     }
 //   }, [userData]);
 
+  useEffect(() => {
+    const storedToken = localStorage.getItem(`${TOKEN_NAME}`);
+    if (storedToken) setToken(storedToken);
+  }, []);
+
   return (
     <AuthContext.Provider
       value={{

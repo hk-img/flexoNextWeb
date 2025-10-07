@@ -4,8 +4,10 @@ import Svg from "@/components/svg";
 import Image from "next/image";
 import Auth from "../auth/Auth";
 import Link from "next/link";
+import { useAuth } from "@/context/useAuth";
 
 const Header = () => {
+  const {token} = useAuth();
   const [isOpen,setIsOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [lastScrollTop, setLastScrollTop] = useState(0);
@@ -34,6 +36,10 @@ const Header = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollTop]);
+
+  const handleLogout = ()=>{
+    
+  }
 
   return (
     <>
@@ -64,17 +70,23 @@ const Header = () => {
                   List Your Space
                 </Link>
               </div>
-              <div>
-                <div
-                  className="flex items-center gap-1 border-[2px] border-[#ffe9d8] bg-[#f7690012] text-[#f76900] rounded-[15px] py-[8px] px-5.5 cursor-pointer"
-                  onClick={() => setIsOpen(true)}
-                >
-                  <span>
-                    <Svg name="logIn" className="size-[22px]" />
-                  </span>
-                  <span className="xl:text-[15px] lg:text-sm">Sign in</span>
-                </div>
-              </div>
+              {
+                token ? (
+                  <></>
+                ):(
+                  <div>
+                    <div
+                      className="flex items-center gap-1 border-[2px] border-[#ffe9d8] bg-[#f7690012] text-[#f76900] rounded-[15px] py-[8px] px-5.5 cursor-pointer"
+                      onClick={() => setIsOpen(true)}
+                    >
+                      <span>
+                        <Svg name="logIn" className="size-[22px]" />
+                      </span>
+                      <span className="xl:text-[15px] lg:text-sm">Sign in</span>
+                    </div>
+                  </div>
+                )
+              }
             </div>
 
             <div className="flex lg:hidden items-center gap-[15px] px-[15px]">

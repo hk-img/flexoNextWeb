@@ -26,8 +26,32 @@ const page = async () => {
       value: item?.id,
       label: item?.spaceType,
     })) || [];
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Flexo",
+    "url": process.env.NEXT_PUBLIC_WEBSITE_URL,
+    "logo": `${process.env.NEXT_PUBLIC_WEBSITE_URL}/images/logo.webp`,
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+91-9513392400",
+      "contactType": "Customer Service",
+      "areaServed": "IN",
+      "availableLanguage": ["English"]
+    },
+    "sameAs": [
+      "https://www.linkedin.com/company/flexospaces",
+      "https://twitter.com/flexospaces",
+      "https://www.instagram.com/flexospaces"
+    ]
+  };
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Home spaceCategoryData={spaceCategoryData} />
     </>
   );

@@ -57,8 +57,64 @@ const page = async ({ params }) => {
   let detailData = await getDetailData(payload);
   const reviews = await getReviewData(spaceId);
   let reviewData = reviews?.data?.reviews || [];
+  const {spaceType,actual_name,contact_city_name,location_name,images,originalPrice,spaceStatus} = detailData?.data;
+  const spaceTypeSmallLetter = convertSlugToSmallLetter(spaceType || "");
+  const locationNameSmallLetter = convertSlugToSmallLetter(location_name || "");
+  const actualNameSmallLetter = convertSlugToSmallLetter(actual_name || "");
+  const spaceStatusSmallLetter = convertSlugToSmallLetter(spaceStatus || "");
+  let minPrice = ""
+  let maxPrice = ""
+  let detail = "";
+  if (type === 'coworking') {
+    minPrice = detailData?.data?.flexible_desk_price
+    maxPrice = detailData?.data?.privatecabin_price;
+    detail = `Book your workspace at ${actualNameSmallLetter}, a fully furnished coworking space in ${locationNameSmallLetter}, ${contact_city_name}. With flexible membership plans, premium facilities, and a collaborative environment, it's the perfect place for freelancers, startups, and teams.`;
+  } else if (type === 'shortterm') {
+    minPrice = originalPrice;
+    maxPrice = "none";
+    detail = `Reserve this ${spaceTypeSmallLetter} at, located in ${locationNameSmallLetter}, ${contact_city_name}. Available by the hour, this space offers top-notch amenities, flexible bookings, and a professional setup perfect for your next project, event or activity.`;
+  } else {
+    minPrice = originalPrice;
+    maxPrice = "none";
+    detail = `Rent your ${spaceTypeSmallLetter}, at ${locationNameSmallLetter}, ${contact_city_name}. This ${spaceStatusSmallLetter} office is listed at Rs. ${originalPrice}/month. Get in touch with Flexo now to schedule your visit`;
+  }
+ 
+  let offer = "";
+  if (maxPrice === "none") {
+    offer = "Offer"
+  } else {
+    offer = "AggregateOffer"
+  }
+  let jsonLd = {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": `${spaceTypeSmallLetter} in ${locationNameSmallLetter || 'an unknown location'}`,
+    "image": images?.[0],
+    "description": detail,
+    "brand": {
+      "@type": "Brand",
+      "name": "Flexo"
+    },
+    "offers": {
+      "@type": offer,
+      "url": `${process.env.NEXT_PUBLIC_WEBSITE_URL}/${slug.join("/")}`,
+      "priceCurrency": "INR",
+      "availability": "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition"
+    }
+  };
+  if (maxPrice === "none") {
+    jsonLd.offers.price = minPrice;
+  } else {
+    jsonLd.offers.lowPrice = minPrice;
+    jsonLd.offers.highPrice = maxPrice;
+  }
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Detail detailData={detailData} reviewData={reviewData} />
     </>
   );

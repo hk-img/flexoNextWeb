@@ -3,7 +3,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { toast } from "sonner";
 import axios from "axios";
 
-const GoogleLoginButton = () => {
+const GoogleLoginButton = ({setGoogleDetails}) => {
   const handleLoginSuccess = async (credentialResponse) => {
     const Token = credentialResponse.access_token;
     try {
@@ -16,10 +16,11 @@ const GoogleLoginButton = () => {
         }
       );
       const userData = {
-        email: response.data.email,
-        name: response.data.name,
-        picture: response.data.picture,
+        first_name : response.data.given_name,
+        last_name : response.data.family_name,
+        email: response.data.email
       };
+      setGoogleDetails(userData);
     } catch (error) {
       toast.error("Somthing Went Wrong");
     }

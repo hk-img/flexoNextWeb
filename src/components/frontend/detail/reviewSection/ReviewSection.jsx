@@ -2,7 +2,7 @@ import Svg from "@/components/svg";
 import Image from "next/image";
 import React from "react";
 
-const ReviewSection = ({reviewData,rating=0,avgRating="5.0"}) => {
+const ReviewSection = ({reviewData,rating=0,avgRating="5.0",setIsAuthOpen}) => {
   return (
     <>
       <div id="reviews" className="py-10">
@@ -16,7 +16,7 @@ const ReviewSection = ({reviewData,rating=0,avgRating="5.0"}) => {
             }
           </h2>
           <div>
-            <button className="bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white px-5.5 py-2.5 rounded-[15px] font-semibold duration-500 transition flex items-center gap-2 uppercase tracking-[1px]">
+            <button onClick={()=>setIsAuthOpen((prev)=>!prev)} className="cursor-pointer bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white px-5.5 py-2.5 rounded-[15px] font-semibold duration-500 transition flex items-center gap-2 uppercase tracking-[1px]">
               <Svg name="pencil" className="size-5" />
               <span>Leave a Review</span>
             </button>

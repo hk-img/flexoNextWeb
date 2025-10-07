@@ -1,15 +1,15 @@
 import Listing from '@/components/frontend/listing/Listing';
 import { BASE_URL } from '@/services/ApiService';
-import { convertSlugToCapitalLetter, convertSlugToSmallLetter, getTypeOfSpaceByWorkSpace,coworkingTypes } from '@/services/Comman';
+import { convertSlugToCapitalLetter, convertSlugToSmallLetter, getTypeOfSpaceByWorkSpace,coworkingTypes, convertSlugToAllCapitalLetter } from '@/services/Comman';
 import React from 'react'
 
 export async function generateMetadata({params}) {
   const data = await params;
   const slug = data?.data || [];
   const [spaceTypeSlug,citySlug,locationNameSlug] = slug;
-  const spaceType = spaceTypeSlug == "coworking" ? "Coworking Space" : convertSlugToCapitalLetter(spaceTypeSlug || "");
-  const city = convertSlugToCapitalLetter(citySlug || "");
-  const locationName = convertSlugToCapitalLetter(locationNameSlug || "");
+  const spaceType = spaceTypeSlug == "coworking" ? "coworking space" : convertSlugToSmallLetter(spaceTypeSlug || "");
+  const city = convertSlugToAllCapitalLetter(citySlug || "");
+  const locationName = convertSlugToAllCapitalLetter(locationNameSlug || "");
   const type = getTypeOfSpaceByWorkSpace(spaceTypeSlug || "");
   let title = "";
   let description = "";
@@ -19,7 +19,7 @@ export async function generateMetadata({params}) {
       description = `Book coworking spaces in ${locationName}, ${city}.Compare prices and amenities of coworking spaces and get quotes. Free, fast and easy!`;
     }else if(type == "shortterm"){
       title = `${spaceType} in ${locationName} | Book Now`;
-      description = `Book ${spaceType} in ${locationName}, ${city} Starting from Rs.20000 /hour. Compare prices, services and amenities. Explore available options now.`;
+      description = `Book ${spaceType} in ${convertSlugToSmallLetter(locationNameSlug || "")}, ${city} Starting from Rs.20000 /hour. Compare prices, services and amenities. Explore available options now.`;
     }else{
       title = `Office Space for Rent in ${locationName}, ${city}`;
       description = `Find office space for rent in ${locationName}, ${city}. Choose from a variety of furnished, unfurnished, and custom-built options to suit your needs.`;
@@ -36,9 +36,13 @@ export async function generateMetadata({params}) {
       description = `Explore offices for rent in ${city}. Choose from a wide range of furnished, unfurnished, built-to-suit and managed office options.`
     }
   }
+  const canonicalUrl = `${process.env.NEXT_PUBLIC_WEBSITE_URL}/in/${slug.join("/")}`;
   return {
     title:title,
     description:description,
+    alternates: {
+      canonical:canonicalUrl,
+    },
   };
 }
 

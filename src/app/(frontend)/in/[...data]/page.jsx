@@ -58,6 +58,24 @@ const getListingData = async (payload) => {
   return res.json();
 };
 
+export function stripTags(html){
+  if (!html) return '';
+  if (typeof window !== 'undefined') {
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    return (div.textContent || div.innerText || '').trim();
+  }
+  return html
+    .replace(/<[^>]*>/g, '') 
+    .replace(/&nbsp;/g, ' ')  
+    .replace(/&amp;/g, '&')      
+    .replace(/&quot;/g, '"')    
+    .replace(/&#39;/g, "'")       
+    .replace(/&lt;/g, '<')        
+    .replace(/&gt;/g, '>')        
+    .replace(/\s+/g, ' ')         
+    .trim();
+}
 const page = async({params}) => {
   const data = await params;
   const slug = data?.data || [];
@@ -121,8 +139,21 @@ const page = async({params}) => {
     "location_name": convertSlugToSmallLetter(locationNameSlug || "") || null,
   }
   const listingData = await getListingData(listingPayload) || {};
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": listingData?.faqs?.map((faq) => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": stripTags(faq.answer)
+      }
+    }) || [])
+  };
   return (
     <>
+      <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       <Listing spaceTypeSlug={spaceTypeSlug} citySlug={citySlug} locationNameSlug={locationNameSlug} spaceType={spaceType} city={city} locationName = {locationName}  spaceCategoryData={data1} locationData = {data2} nearBySpacesData={data3} listingData={listingData}/>
     </>
   )

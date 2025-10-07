@@ -2,6 +2,7 @@ import Detail from "@/components/frontend/detail/Detail";
 import { BASE_URL } from "@/services/ApiService";
 import {
   convertSlugToCapitalLetter,
+  convertSlugToSmallLetter,
   getTypeOfSpaceByWorkSpace,
 } from "@/services/Comman";
 import React from "react";
@@ -86,12 +87,12 @@ export async function generateMetadata({ params }) {
     country: spaceDetails?.spaceData?.country,
   };
   let detailData = await getDetailData(payload);
+  const spaceType = spaceTypeSlug == "coworking" ? "coworking space" : convertSlugToSmallLetter(spaceTypeSlug || "");
   const {
     spaceTitle,
     actual_name,
     location_name,
     contact_city_name,
-    spaceType,
   } = detailData?.data || {};
   let title = "";
   let description = "";
@@ -105,8 +106,12 @@ export async function generateMetadata({ params }) {
     title = `${spaceType} for Rent at ${location_name}, ${contact_city_name}`;
     description = `Rent ${spaceTitle} at ${location_name}, ${contact_city_name} for Rs.2000 /month`;
   }
+  const canonicalUrl = `${process.env.NEXT_PUBLIC_WEBSITE_URL}/${slug.join("/")}`;
   return {
     title: title,
     description: description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
   };
 }

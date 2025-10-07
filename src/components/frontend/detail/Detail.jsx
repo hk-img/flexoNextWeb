@@ -288,7 +288,7 @@ const Detail = ({ detailData, reviewData }) => {
                           <div>
                             <button
                               onClick={() => toggle("parking")}
-                              className="flex w-full items-center justify-between border-b border-[#dbdbdb] py-5 px-1 hover:bg-[#0000000a]"
+                              className="cursor-pointer flex w-full items-center justify-between border-b border-[#dbdbdb] py-5 px-1 hover:bg-[#0000000a]"
                             >
                               <div className="flex items-center gap-1">
                                 <Svg name="parking" className="size-7 text-[#f76900]" />
@@ -333,7 +333,7 @@ const Detail = ({ detailData, reviewData }) => {
                      <div className="">
                         <button
                           onClick={() => toggle("lighting")}
-                          className="flex w-full items-center justify-between border-b border-[#dbdbdb] py-5 px-1 hover:bg-[#0000000a]"
+                          className="cursor-pointer flex w-full items-center justify-between border-b border-[#dbdbdb] py-5 px-1 hover:bg-[#0000000a]"
                         >
                           <div className="flex items-center gap-1">
                             <Svg name="sun" className="size-7 text-[#f76900]" />
@@ -363,7 +363,7 @@ const Detail = ({ detailData, reviewData }) => {
                       <div className="">
                         <button
                           onClick={() => toggle("sound")}
-                          className="flex w-full items-center justify-between border-b border-[#dbdbdb] py-5 px-1 hover:bg-[#0000000a]"
+                          className="cursor-pointer flex w-full items-center justify-between border-b border-[#dbdbdb] py-5 px-1 hover:bg-[#0000000a]"
                         >
                           <div className="flex items-center gap-1">
                             <Svg name="sound" className="size-7 text-[#f76900]" />
@@ -393,7 +393,7 @@ const Detail = ({ detailData, reviewData }) => {
                       <div className="">
                         <button
                           onClick={() => toggle("host")}
-                          className="flex w-full items-center justify-between border-b border-[#dbdbdb] py-5 px-1 hover:bg-[#0000000a]"
+                          className="cursor-pointer flex w-full items-center justify-between border-b border-[#dbdbdb] py-5 px-1 hover:bg-[#0000000a]"
                         >
                           <div className="flex items-center gap-1">
                             <Svg name="fileMinus" className="size-7 text-[#f76900]" />
@@ -877,6 +877,7 @@ const Detail = ({ detailData, reviewData }) => {
                       reviewData={reviewData}
                       rating={spaceData?.rating}
                       avgRating={spaceData?.ratingsAvg}
+                      setIsAuthOpen={setIsAuthOpen}
                     />
                   }
                 </div>
@@ -1051,12 +1052,12 @@ const Detail = ({ detailData, reviewData }) => {
                 </div>
                 <div className="p-5">
                   {spaceData?.isInstant == 0 ? (
-                    <button className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">
+                    <button onClick={()=>setIsAuthOpen((prev)=>!prev)} className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">
                       Request To Book
                     </button>
                   ) : (
                     <>
-                      <button className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]  mt-[10px]">
+                      <button onClick={()=>setIsAuthOpen((prev)=>!prev)} className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]  mt-[10px]">
                         Book Now
                       </button>
                       <div className="pt-5">

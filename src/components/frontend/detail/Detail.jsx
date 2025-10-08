@@ -16,8 +16,14 @@ import {
   getTypeOfSpaceByWorkSpace,
 } from "@/services/Comman";
 import ShowHtmlData from "../showHtmlData/ShowHtmlData";
+import LikeDislike from "./LikeDislike";
+import ScheduleVisitPopup from "./scheduleVisitPopup/ScheduleVisitPopup";
+import { set } from "zod";
+import { useAuth } from "@/context/useAuth";
+import BuyPassPopup from "./buyPassPopup/BuyPassPopup";
 
 const Detail = ({ detailData, reviewData }) => {
+  const {token} = useAuth();
   const spaceData = detailData?.data;
   const type = getTypeOfSpaceByWorkSpace(spaceData?.spaceType || "");
   const [showAll, setShowAll] = useState(false);
@@ -28,6 +34,8 @@ const Detail = ({ detailData, reviewData }) => {
   const [isFixed, setIsFixed] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [isScheduleVisitOpen, setIsScheduleVisitOpen] = useState(false);
+  const [isBuyPassOpen, setIsBuyPassOpen] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY >= 700) {
@@ -67,6 +75,21 @@ const Detail = ({ detailData, reviewData }) => {
     hour = hour % 12 || 12;
 
     return `${hour}:${minute} ${ampm}`;
+  }
+
+  const handleScheduleVisit = ()=>{
+    if(!token){
+      setIsAuthOpen(true);
+    }else{
+      setIsScheduleVisitOpen(true);
+    }
+  }
+  const handleBuyPass = ()=>{
+    if(!token){
+      setIsAuthOpen(true);
+    }else{
+      setIsBuyPassOpen(true);
+    }
   }
 
   return (
@@ -170,16 +193,7 @@ const Detail = ({ detailData, reviewData }) => {
                   </div>
                 </div>
                 {type != "longterm" && (
-                  <div className="flex items-center space-x-1 border border-[#ddd] rounded-full w-fit md:px-3.5 px-3 md:py-2 py-1">
-                    <div className="flex items-center space-x-1 p-1 pr-3 border-r border-[#ddd]">
-                      <Svg name="thumbUp" className="size-3.5 text-black" />
-                      <span className="text-[15px]">0</span>
-                    </div>
-
-                    <div className="flex items-center space-x-1 p-1">
-                      <Svg name="thumbDown" className="size-3.5 text-black" />
-                    </div>
-                  </div>
+                  <LikeDislike spaceData={spaceData} setIsAuthOpen={setIsAuthOpen}/>
                 )}
               </div>
             </div>
@@ -996,7 +1010,7 @@ const Detail = ({ detailData, reviewData }) => {
                         : "REQUEST A CALL BACK"}
                     </button>
                     <button
-                      onClick={() => setIsAuthOpen(true)}
+                      onClick={handleScheduleVisit}
                       className={`cursor-pointer w-full border uppercase tracking-[1px] border-[#000e54] ${
                         type == "longterm" ? "text-[#f76900]" : "text-[#000e54]"
                       } 2xl:text-base text-sm font-semibold md:py-[15px] py-[10px] rounded-[15px]`}
@@ -1005,7 +1019,7 @@ const Detail = ({ detailData, reviewData }) => {
                     </button>
                     {type == "coworking" && spaceData?.originalPrice > 0 && (
                       <button
-                        onClick={() => setIsAuthOpen(true)}
+                        onClick={handleBuyPass}
                         className="cursor-pointer w-full bg-[#2c864f] 2xl:text-[15px] text-sm hover:bg-[#40a667] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]"
                       >
                         Buy Pass
@@ -1118,6 +1132,8 @@ const Detail = ({ detailData, reviewData }) => {
       }
       {isOpen && <ExplorePopup isOpen={isOpen} setIsOpen={setIsOpen} />}
       {isAuthOpen && <Auth isOpen={isAuthOpen} setIsOpen={setIsAuthOpen} />}
+      {isScheduleVisitOpen &&<ScheduleVisitPopup isOpen={isScheduleVisitOpen} setIsOpen={setIsScheduleVisitOpen}/>}
+      {isBuyPassOpen && <BuyPassPopup isOpen={isBuyPassOpen} setIsOpen={setIsBuyPassOpen}/>}
     </>
   );
 };

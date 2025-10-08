@@ -106,16 +106,16 @@ const Footer = () => {
               <h4 className="font-medium mb-5 leading-[1.6] text-[#333] text-xl">Follow us on</h4>
             </div>
             <div className="flex items-center gap-3.5">
-              <Link href="#" className="text-[#f76900]">
+              <Link href="https://www.facebook.com/flexospaces/" target="_blank" className="text-[#f76900]">
                 <Svg name="facebook" className="size-[22px]" />
               </Link>
-              <Link href="#" className="text-[#f76900]">
+              <Link href="https://x.com/flexospaces" target='_blank' className="text-[#f76900]">
                 <Svg name="twitter" className="size-[22px]" />
               </Link>
-              <Link href="#" className="text-[#f76900]">
+              <Link href="https://www.linkedin.com/company/flexospaces/" target='_blank' className="text-[#f76900]">
                 <Svg name="linkedin" className="size-[22px]" />
               </Link>
-              <Link href="#" className="text-[#f76900]">
+              <Link href="https://www.instagram.com/flexospaces/" target='_blank' className="text-[#f76900]">
                 <Svg name="instagram" className="size-[22px]" />
               </Link>
 
@@ -132,10 +132,10 @@ const Footer = () => {
             </div>
             <div className='flex flex-col md:items-end'>
               <div className="md:space-x-4 space-x-3 flex flex-wrap">
-                <Link href="#" className="after:content-['|'] hover:text-black text-[#555] after:absolute relative me-6  after:-right-3 after:text-[#ccc] text-nowrap text-sm leading-[30px]">Terms Of Use</Link>
-                <Link href="#" className="after:content-['|'] hover:text-black text-[#555] after:absolute relative me-6 after:-right-3 after:text-[#ccc] text-nowrap text-sm leading-[30px]">Privacy Policy</Link>
-                <Link href="#" className="after:content-['|'] hover:text-black text-[#555] after:absolute relative me-6 after:-right-3 after:text-[#ccc] text-nowrap text-sm leading-[30px]">Refund Policy</Link>
-                <Link href="#" className="after:content-['|'] hover:text-black text-[#555] after:absolute relative me-6 after:-right-3 after:text-[#ccc] text-nowrap text-sm leading-[30px]">Host Terms & Conditions</Link>
+                <Link href="/terms-conditions" className="after:content-['|'] hover:text-black text-[#555] after:absolute relative me-6  after:-right-3 after:text-[#ccc] text-nowrap text-sm leading-[30px]">Terms Of Use</Link>
+                <Link href="/privacy-policy" className="after:content-['|'] hover:text-black text-[#555] after:absolute relative me-6 after:-right-3 after:text-[#ccc] text-nowrap text-sm leading-[30px]">Privacy Policy</Link>
+                <Link href="refund-policy" className="after:content-['|'] hover:text-black text-[#555] after:absolute relative me-6 after:-right-3 after:text-[#ccc] text-nowrap text-sm leading-[30px]">Refund Policy</Link>
+                <Link href="/host-terms-conditions" className="after:content-['|'] hover:text-black text-[#555] after:absolute relative me-6 after:-right-3 after:text-[#ccc] text-nowrap text-sm leading-[30px]">Host Terms & Conditions</Link>
               </div>
               <div className="text-[#333] text-[13px] leading-[30px]">
                 Copyright Flexo Proptech Pvt Ltd 2025. All Rights Reserved.

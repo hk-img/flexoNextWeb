@@ -66,36 +66,32 @@ const RegistrationScreenForGoogleRegister = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <div className="flex gap-4">
-        <div className="w-1/2">
-          <input
-            type="text"
-            placeholder="First Name *"
-            {...register("firstName")}
-            className="w-full border rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-orange-400"
-          />
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 p-6">
+      <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
+        <div class="relative">
+          <input {...register("firstName")} type="text" id="first-name" class={`block px-2.5 pb-2.5 pt-4 w-full text-sm border border-[#0000001f] rounded-md p-3  focus:outline-none focus:ring-1 focus:border-[#3f51b5] peer ${
+                    errors.firstName ? "border-red-500 focus:ring-red-200" : "border-gray-300 focus:ring-indigo-200"
+                  }`} placeholder=" " />
+          <label for="first-name" class="absolute text-xs text-[#00000099] font-semibold duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#3f51b5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">First Name *</label>
           {errors.firstName && (
-            <p className="text-red-500 text-sm mt-1">
+            <p className="text-red-500 text-[10px] absolute -bottom-4">
               {errors.firstName.message}
             </p>
           )}
         </div>
-        <div className="w-1/2">
-          <input
-            type="text"
-            placeholder="Last Name *"
-            {...register("lastName")}
-            className="w-full border rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-orange-400"
-          />
+        <div class="relative">
+          <input {...register("lastName")} type="text" id="last-name" class={`block px-2.5 pb-2.5 pt-4 w-full text-sm border border-[#0000001f] rounded-md p-3  focus:outline-none focus:ring-1 focus:border-[#3f51b5] peer ${
+                    errors.firstName ? "border-red-500 focus:ring-red-200" : "border-gray-300 focus:ring-indigo-200"
+                  }`} placeholder=" " />
+          <label for="last-name" class="absolute text-xs text-[#00000099] font-semibold duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#3f51b5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">last Name *</label>
           {errors.lastName && (
-            <p className="text-red-500 text-sm mt-1">
+            <p className="text-red-500 text-[10px] absolute -bottom-4">
               {errors.lastName.message}
             </p>
           )}
         </div>
-      </div>
-      <div>
+        
+        <div className="relative">
         <Controller
           name="mobile"
           control={control}
@@ -117,24 +113,26 @@ const RegistrationScreenForGoogleRegister = () => {
           )}
         />
         {errors.mobile && (
-          <p className="text-red-500 text-sm mt-1">{errors.mobile.message}</p>
+          <p className="text-red-500 text-[10px] absolute -bottom-4">{errors.mobile.message}</p>
         )}
       </div>
 
       {/* Company Name */}
-      <div>
-        <input
-          type="text"
-          placeholder="Company Name"
-          {...register("companyName")}
-          className="w-full border rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-orange-400"
-        />
+     
+      <div class="relative">
+        <input {...register("companyName")} type="text" id="company-name" class={`block px-2.5 pb-2.5 pt-4 w-full text-sm border border-[#0000001f] rounded-md p-3  focus:outline-none focus:ring-1 focus:border-[#3f51b5] peer ${
+                    errors.firstName ? "border-red-500 focus:ring-red-200" : "border-gray-300 focus:ring-indigo-200"
+                  }`} placeholder=" " />
+        <label for="company-name" class="absolute text-xs text-[#00000099] font-semibold duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#3f51b5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Company Name</label>
+        
       </div>
+      </div>
+      
 
       {/* Register Button */}
       <button
         type="submit"
-        className="w-full bg-orange-500 text-white font-semibold py-3 rounded-md hover:bg-orange-600 transition"
+        className="w-full bg-orange-500 text-white mt-4 font-semibold py-3 rounded-md hover:bg-orange-600 transition"
       >
         REGISTER
       </button>

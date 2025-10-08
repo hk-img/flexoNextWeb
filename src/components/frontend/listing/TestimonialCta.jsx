@@ -44,17 +44,20 @@ const testimonials = [
 
 const TestimonialCta = ({setIsOpen}) => {
   return (
-    <section className="w-full relative lg:py-4 md:py-3 py-4 px-4 rounded-2xl items-center mt-6 mb-8 shadow-[0_4px_10px_#00000014] mx-auto bg-no-repeat bg-cover overflow-hidden bg-gradient-to-r from-[#ffd7ba] to-[#FFE7DA]">
-        <div className="max-w-full xl:px-4 lg:px-4 md:px-3 px-4 mx-auto pt-4">
+    <section className="w-full relative  md:py-3 py-1 px-4 rounded-2xl items-center mt-6 mb-8 shadow-[0_4px_10px_#00000014] mx-auto bg-no-repeat bg-cover overflow-hidden bg-gradient-to-r from-[#ffd7ba] to-[#FFE7DA]">
+        <div className="max-w-full xl:px-4 lg:px-4 md:px-3 px-4 mx-auto ">
           <div className="flex lg:flex-row flex-col items-center gap-4">
-              <div className="lg:w-2/5 w-full flex flex-col gap-y-6">
-                <h4 className="text-base/relaxed text-[#141414] font-semibold">Still Searching? Let Us Help.</h4>
-                <h5 className="text-base/relaxed text-[#141414] font-semibold">Leave the hassle to us. Connect with an expert workspace advisor today.</h5>
-                <div onClick={() => {
-                    setIsOpen((prev) => !prev);
-                  }
-                } className="w-fit bg-[#f76900] text-[12px] border border-[#f76900]  text-white py-3 px-7 rounded-2xl font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">
-                  Enquire Now
+              <div className="lg:w-2/5 w-full">
+                <h3 className="text-2xl text-[#141414] font-bold mb-6"> Client's Testimonials</h3>
+                <div className=" flex flex-col gap-y-3">
+                  <h4 className="text-base/relaxed text-[#141414] font-semibold">Still Searching? Let Us Help.</h4>
+                  <h5 className="text-base/relaxed text-[#141414] font-semibold">Leave the hassle to us. Connect with an expert workspace advisor today.</h5>
+                  <div onClick={() => {
+                      setIsOpen((prev) => !prev);
+                    }
+                  } className="w-fit bg-[#f76900] text-[12px] border border-[#f76900]  text-white py-3 px-7 rounded-2xl font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">
+                    Enquire Now
+                  </div>
                 </div>
               </div>
               <div className="lg:w-3/5 w-full flex flex-col gap-y-6">
@@ -67,14 +70,14 @@ const TestimonialCta = ({setIsOpen}) => {
                         key={idx}
                         className="embla__slide shrink-0 lg:px-4 sm:px-3 px-1 basis-full py-10"
                       >
-                        <div className="relative flex flex-col items-start gap-y-4">
+                        <div className="relative flex flex-col items-start gap-y-2">
                           <div className="flex items-center space-x-4">
                             <Image
                               src={t.img}
                               alt={t.name}
                               width={110}
                               height={110}
-                              className="w-[110px] h-[110px] rounded-full p-2 border border-[#f76900] object-cover"
+                              className="w-[90px] h-[90px] rounded-full p-2 border border-[#f76900] object-cover"
                             />
 
                             <div>

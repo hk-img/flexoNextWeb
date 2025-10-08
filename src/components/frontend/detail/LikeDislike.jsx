@@ -1,28 +1,36 @@
 import Svg from "@/components/svg";
 import { useAuth } from "@/context/useAuth";
-import { postAPIAuth } from "@/services/ApiService";
+import { postAPIAuthWithoutBearer } from "@/services/ApiService";
 import { useMutation } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { set } from "zod";
 
-const LikeDislike = ({ spaceData, setIsAuthOpen }) => {
-  const [upVote, setUpVote] = useState(false);
-  const [downVote, setDownVote] = useState(false);
+const LikeDislike = ({ spaceData, setIsAuthOpen, existingVote }) => {
+  const [upVoteCount, setUpVoteCount] = useState(0);
+  const [downVoteCount, setDownVoteCount] = useState(0);
+  const [voteData, setVoteData] = useState(null);
   const { token } = useAuth();
   const { mutate: upVoteMutate } = useMutation({
     mutationFn: async (payload) => {
-      const response = await postAPIAuth(
-        `spaces/vote/${spaceData?._id}`,
+      const response = await postAPIAuthWithoutBearer(
+        `spaces/vote/${spaceData?.id}`,
         payload,
         token
       );
       return response.data;
     },
     onSuccess: (data, payload) => {
-      if (data.success) {
-        toast.success(data.message);
+      if (data?.result?.success) {
+        toast.success(data?.result?.message);
+        setVoteData(data?.result?.existingVote);
+        if(data?.result?.existingVote?.upvote == 1){
+          setUpVoteCount((prev) => prev + 1);
+        }else{
+          setUpVoteCount((prev) => prev - 1);
+        }
       } else {
-        toast.error(data.message);
+        toast.error(data.message || data?.result?.message);
       }
     },
     onError: (error) => {
@@ -41,18 +49,24 @@ const LikeDislike = ({ spaceData, setIsAuthOpen }) => {
   };
   const { mutate: downVoteMutate } = useMutation({
     mutationFn: async (payload) => {
-      const response = await postAPIAuth(
-        `spaces/vote/${spaceData?._id}`,
+      const response = await postAPIAuthWithoutBearer(
+        `spaces/vote/${spaceData?.id}`,
         payload,
         token
       );
       return response.data;
     },
     onSuccess: (data, payload) => {
-      if (data.success) {
-        toast.success(data.message);
+      if (data?.result?.success) {
+        toast.success(data?.result?.message);
+        setVoteData(data?.result?.existingVote);
+        if(data?.result?.existingVote?.downvote == 1){
+          setDownVoteCount((prev) => prev + 1);
+        }else{
+          setDownVoteCount((prev) => prev - 1);
+        }
       } else {
-        toast.error(data.message);
+        toast.error(data?.message || data?.result?.message);
       }
     },
     onError: (error) => {
@@ -69,6 +83,20 @@ const LikeDislike = ({ spaceData, setIsAuthOpen }) => {
     };
     downVoteMutate(payload);
   };
+
+  useEffect(() => {
+    if (existingVote) {
+      setVoteData(existingVote);
+    }
+  }, [existingVote]);
+
+  useEffect(() => {
+    if (spaceData) {
+      setUpVoteCount(spaceData?.upvote);
+      setDownVoteCount(spaceData?.downvote);
+    }
+  }, [spaceData]);
+
   return (
     <>
       <div className="flex items-center space-x-1 border border-[#ddd] rounded-full w-fit md:px-3.5 px-3 md:py-2 py-1">
@@ -76,9 +104,12 @@ const LikeDislike = ({ spaceData, setIsAuthOpen }) => {
           onClick={handleUpvote}
           className="flex items-center space-x-1 p-1 pr-3 border-r border-[#ddd]"
         >
-          <Svg name={upVote ? "thump-up-fill" : "thumbUp"} className="size-3.5 text-black" />
+          <Svg
+            name={voteData?.upvote == 1 ? "thump-up-fill" : "thumbUp"}
+            className="size-3.5 text-black"
+          />
           {spaceData?.upvote > 0 && (
-            <span className="text-[15px]">{spaceData?.upvote}</span>
+            <span className="text-[15px]">{upVoteCount}</span>
           )}
         </div>
 
@@ -86,9 +117,12 @@ const LikeDislike = ({ spaceData, setIsAuthOpen }) => {
           onClick={handleDownvote}
           className="flex items-center space-x-1 p-1"
         >
-          <Svg name={downVote ? "thumb-down-fill" : "thumbDown"}className="size-3.5 text-black" />
+          <Svg
+            name={voteData?.downvote == 1 ? "thumb-down-fill" : "thumbDown"}
+            className="size-3.5 text-black"
+          />
           {spaceData?.downvote > 0 && (
-            <span className="text-[15px]">{spaceData?.downvote}</span>
+            <span className="text-[15px]">{downVoteCount}</span>
           )}
         </div>
       </div>

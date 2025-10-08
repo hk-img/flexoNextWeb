@@ -18,7 +18,6 @@ import {
 import ShowHtmlData from "../showHtmlData/ShowHtmlData";
 import LikeDislike from "./LikeDislike";
 import ScheduleVisitPopup from "./scheduleVisitPopup/ScheduleVisitPopup";
-import { set } from "zod";
 import { useAuth } from "@/context/useAuth";
 import BuyPassPopup from "./buyPassPopup/BuyPassPopup";
 import { useQuery } from "@tanstack/react-query";
@@ -91,7 +90,6 @@ const Detail = ({ spaceId,spaceDetailsData,detailData,reviewData }) => {
   const displayedFacilities = showAll
     ? spaceData?.facilities
     : spaceData?.facilities?.slice(0, 3);
-  console.log({spaceDeatil},"ERtyretyry");
 
   const handleScheduleVisit = ()=>{
     if(!token){
@@ -209,7 +207,7 @@ const Detail = ({ spaceId,spaceDetailsData,detailData,reviewData }) => {
                   </div>
                 </div>
                 {type != "longterm" && (
-                  <LikeDislike spaceData={spaceData} setIsAuthOpen={setIsAuthOpen}/>
+                  <LikeDislike spaceData={spaceData} setIsAuthOpen={setIsAuthOpen} existingVote={spaceDeatil?.existingVote}/>
                 )}
               </div>
             </div>

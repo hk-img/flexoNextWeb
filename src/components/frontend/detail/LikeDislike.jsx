@@ -8,7 +8,6 @@ import { set } from "zod";
 
 const LikeDislike = ({ spaceData, setIsAuthOpen, existingVote }) => {
   const [upVoteCount, setUpVoteCount] = useState(0);
-  const [downVoteCount, setDownVoteCount] = useState(0);
   const [voteData, setVoteData] = useState(null);
   const { token } = useAuth();
   const { mutate: upVoteMutate } = useMutation({
@@ -24,11 +23,7 @@ const LikeDislike = ({ spaceData, setIsAuthOpen, existingVote }) => {
       if (data?.result?.success) {
         toast.success(data?.result?.message);
         setVoteData(data?.result?.existingVote);
-        if(data?.result?.existingVote?.upvote == 1){
-          setUpVoteCount((prev) => prev + 1);
-        }else{
-          setUpVoteCount((prev) => prev - 1);
-        }
+        setUpVoteCount(data?.result?.space?.upvote);
       } else {
         toast.error(data.message || data?.result?.message);
       }
@@ -60,11 +55,7 @@ const LikeDislike = ({ spaceData, setIsAuthOpen, existingVote }) => {
       if (data?.result?.success) {
         toast.success(data?.result?.message);
         setVoteData(data?.result?.existingVote);
-        if(data?.result?.existingVote?.downvote == 1){
-          setDownVoteCount((prev) => prev + 1);
-        }else{
-          setDownVoteCount((prev) => prev - 1);
-        }
+        setUpVoteCount(data?.result?.space?.upvote);
       } else {
         toast.error(data?.message || data?.result?.message);
       }
@@ -93,7 +84,6 @@ const LikeDislike = ({ spaceData, setIsAuthOpen, existingVote }) => {
   useEffect(() => {
     if (spaceData) {
       setUpVoteCount(spaceData?.upvote);
-      setDownVoteCount(spaceData?.downvote);
     }
   }, [spaceData]);
 
@@ -121,9 +111,6 @@ const LikeDislike = ({ spaceData, setIsAuthOpen, existingVote }) => {
             name={voteData?.downvote == 1 ? "thumb-down-fill" : "thumbDown"}
             className="size-3.5 text-black"
           />
-          {spaceData?.downvote > 0 && (
-            <span className="text-[15px]">{downVoteCount}</span>
-          )}
         </div>
       </div>
     </>

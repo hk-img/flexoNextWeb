@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import Svg from "@/components/svg";
 import Image from "next/image";
 import { useForm, Controller } from "react-hook-form";
@@ -7,6 +7,18 @@ import { set, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import { useAuth } from "@/context/useAuth";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getApi, postAPIAuthWithoutBearer } from "@/services/ApiService";
+import dynamic from "next/dynamic";
+import { toast } from "sonner";
+const Select = dynamic(() => import("react-select"), { ssr: false });
+
+const genderOptions = [
+  { value: "male", label: "Male" },
+  { value: "female", label: "Female" },
+  { value: "other", label: "Pefer not to say" },
+];
 
 const profileSchema = z
   .object({
@@ -15,7 +27,7 @@ const profileSchema = z
     mobile: z.string().min(10, "Valid Mobile Number is required"),
     country: z
       .object({
-        dialCode: z.string().optional(),
+        dialCode: z.union([z.string(), z.number()]).optional(),
       })
       .nullable()
       .optional(),
@@ -23,13 +35,13 @@ const profileSchema = z
     email: z.string().email("Invalid email").optional(),
     gender: z.string().optional(),
     dob: z.string().optional(),
-    billingCountry: z.string().optional(),
-    state: z.string().optional(),
-    city: z.string().optional(),
+    billingCountry: z.number().optional(),
+    state: z.number().optional(),
+    city: z.number().optional(),
     pincode: z.string().optional(),
     gst: z.string().optional(),
     pan: z.string().optional(),
-    billingAddress1: z.string().optional(),
+    billingAddress1: z.string().min(1, "Billing address is required"),
     billingAddress2: z.string().optional(),
   })
   .superRefine((data, ctx) => {
@@ -53,18 +65,21 @@ const profileSchema = z
   });
 
 const MyProfile = () => {
+  const { token, user } = useAuth();
   const {
     register,
     handleSubmit,
     setValue,
     control,
+    reset,
     formState: { errors },
+    watch,
   } = useForm({
     resolver: zodResolver(profileSchema),
     defaultValues: {
       firstName: "",
       lastName: "",
-      mobile: "+91",
+      mobile: "91",
       country: {
         name: "India",
         dialCode: "91",
@@ -75,7 +90,7 @@ const MyProfile = () => {
       email: "",
       gender: "",
       dob: "",
-      billingCountry: "India",
+      billingCountry: "",
       state: "",
       city: "",
       pincode: "",
@@ -85,7 +100,136 @@ const MyProfile = () => {
       billingAddress2: "",
     },
   });
-  const onSubmit = (values) => {};
+  const values = watch();
+  console.log({ values, errors }, "Rthrtyhrtyrty");
+  useEffect(() => {
+    if (user) {
+      reset({
+        firstName: user.firstName || "",
+        lastName: user.lastName || "",
+        mobile: user.mobile ? `${user.phone_code}${user.mobile}` : "",
+        country: {
+          dialCode: user.phone_code || "91",
+        },
+        companyName: user.companyName || "",
+        email: user.email || "",
+        gender: user.gender || "",
+        dob: user.dob || "",
+        billingCountry: user.billingCountry || "",
+        state: user.state || "",
+        city: user.city || "",
+        pincode: user.pincode || "",
+        gst: user.gst || "",
+        pan: user.pan || "",
+        billingAddress1: user.billingAddress1 || "",
+        billingAddress2: user.billingAddress2 || "",
+      });
+    }
+  }, [user, reset]);
+  const { data: allCountry } = useQuery({
+    queryKey: ["allCountry"],
+    queryFn: async () => {
+      const res = await getApi("user/getAllCountries");
+      return res.data;
+    },
+  });
+  const countryData = useMemo(() => {
+    return (
+      allCountry?.map((item) => ({
+        label: item?.country_name,
+        value: item?.id,
+      })) || []
+    );
+  }, [allCountry]);
+
+  const { data: allState } = useQuery({
+    queryKey: ["allState"],
+    queryFn: async () => {
+      const res = await getApi(
+        `user/getAllStatesById?countryId=${values.billingCountry}`
+      );
+      return res.data;
+    },
+    enabled: !!values.billingCountry,
+  });
+  const stateData = useMemo(() => {
+    return (
+      allState?.map((item) => ({ label: item?.name, value: item?.id })) || []
+    );
+  }, [allState]);
+
+  const { data: allCity } = useQuery({
+    queryKey: ["allCity"],
+    queryFn: async () => {
+      const res = await getApi(`user/getAllCities?stateId=${values?.state}`);
+      return res.data;
+    },
+    enabled: !!values.state,
+  });
+  const cityData = useMemo(() => {
+    return (
+      allCity?.map((item) => ({ label: item?.name, value: item?.id })) || []
+    );
+  }, [allCity]);
+
+  useEffect(() => {
+    setValue("state", "");
+    setValue("city", "");
+    setValue("pincode", "");
+  }, [values.billingCountry]);
+  useEffect(() => {
+    setValue("city", "");
+    setValue("pincode", "");
+  }, [values.state]);
+  useEffect(() => {
+    setValue("pincode", "");
+  }, [values.city]);
+
+  const { mutate: updateProfileMutate } = useMutation({
+    mutationFn: async (payload) => {
+      const res = await postAPIAuthWithoutBearer(
+        "user/updateProfile",
+        payload,
+        token
+      );
+      return res.data;
+    },
+    onSuccess: (data) => {
+      if (data.success) {
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
+      }
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+  const onSubmit = (values) => {
+    const country_code = values.country ? `+${values.country.dialCode}` : "";
+    const dialCode = values.country ? values.country.dialCode : "";
+    const mobile = values.mobile.replace(dialCode, "").replace(/^\+/, "");
+    const payload = {
+      phone_code: country_code,
+      mobile: mobile,
+      email: values.email,
+      firstName: values.firstName,
+      lastName: values.lastName,
+      gender: values.gender,
+      dateOfBirth: values.dob,
+      companyName: values.companyName,
+      panNumber: values.pan,
+      gstNumber: values.gst,
+      billingAddress: values.billingAddress1,
+      country_id: values.billingCountry,
+      state_id: values.state,
+      city_id: values.city,
+      pincode: values.pincode,
+      billingAddress2: values.billingAddress2,
+    };
+    console.log({ payload }, "rtrtrtrt");
+    updateProfileMutate(payload);
+  };
   return (
     <>
       <div className="relative w-full lg:mt-[82px] sm:mt-[62px] mt-[63px]">
@@ -106,12 +250,17 @@ const MyProfile = () => {
                       alt=""
                     />
                     <label
-                        htmlFor="imageUpload"
-                        className="absolute bottom-0 right-0 w-10 h-10 bg-black rounded-full flex items-center justify-center cursor-pointer hover:shadow-[5px_5px_15px_#00000080] hover:scale-[1.2] transition-all duration-300"
-                      >
-                      <input type="file" id="imageUpload" accept="image/*" className="hidden" />
+                      htmlFor="imageUpload"
+                      className="absolute bottom-0 right-0 w-10 h-10 bg-black rounded-full flex items-center justify-center cursor-pointer hover:shadow-[5px_5px_15px_#00000080] hover:scale-[1.2] transition-all duration-300"
+                    >
+                      <input
+                        type="file"
+                        id="imageUpload"
+                        accept="image/*"
+                        className="hidden"
+                      />
                       <Svg name="camera" className=" text-white size-4 " />
-                   </label>
+                    </label>
                   </div>
                 </div>
                 <div className="mt-10">
@@ -127,7 +276,7 @@ const MyProfile = () => {
                       <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
                         {/* First Name */}
                         <div className="relative">
-                           <label className=" text-sm text-black font-semibold bg-white px-2">
+                          <label className=" text-sm text-black font-semibold bg-white px-2">
                             First Name <span className="text-[#dc3545]">*</span>
                           </label>
                           <input
@@ -140,7 +289,7 @@ const MyProfile = () => {
                                 : "border-[#e0e0e0] focus:ring-indigo-200"
                             }`}
                           />
-                         
+
                           {errors.firstName && (
                             <p className="text-red-500 text-[10px] absolute -bottom-4">
                               {errors.firstName.message}
@@ -161,13 +310,13 @@ const MyProfile = () => {
                               errors.lastName
                                 ? "border-red-500 focus:ring-red-200"
                                 : "border-[#e0e0e0] focus:ring-indigo-200"
-                            }`} 
+                            }`}
                           />
                         </div>
 
                         {/* Mobile */}
                         <div className="relative">
-                           <label className=" text-sm text-black font-semibold px-2">
+                          <label className=" text-sm text-black font-semibold px-2">
                             Mobile <span className="text-[#dc3545]">*</span>
                           </label>
                           <Controller
@@ -212,7 +361,7 @@ const MyProfile = () => {
 
                         {/* Email */}
                         <div className="relative md:col-span-2">
-                           <label className=" text-sm text-black font-semibold px-2">
+                          <label className=" text-sm text-black font-semibold px-2">
                             Enter Email
                           </label>
                           <input
@@ -226,24 +375,65 @@ const MyProfile = () => {
 
                         {/* Gender */}
                         <div className="relative">
-                           <label className=" text-sm text-black font-semibold px-2">
-                           Gender 
+                          <label className="text-sm text-black font-semibold px-2">
+                            Gender
                           </label>
-                          <select
-                            {...register("gender")}
-                            className="h-12 border-[#e0e0e0] w-full placeholder:text-[#777] placeholder:font-medium text-black mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2"
-                          >
-                            <option value="">Select Gender</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="other">Other</option>
-                          </select>
+
+                          <Controller
+                            name="gender"
+                            control={control}
+                            render={({ field }) => {
+                              const handleChange = (selectedOption) => {
+                                field.onChange(selectedOption?.value || "");
+                              };
+
+                              const selectedValue = genderOptions.find(
+                                (option) => option.value === field.value
+                              );
+
+                              return (
+                                <Select
+                                  value={selectedValue || null}
+                                  onChange={handleChange}
+                                  options={genderOptions}
+                                  placeholder="Select Gender"
+                                  classNamePrefix="react-select"
+                                  className="mt-1 text-sm"
+                                  styles={{
+                                    control: (base, state) => ({
+                                      ...base,
+                                      borderColor: state.isFocused
+                                        ? "#3f51b5"
+                                        : "#e0e0e0",
+                                      boxShadow: "none",
+                                      height: "48px",
+                                      borderRadius: "4px",
+                                      paddingLeft: "2px",
+                                    }),
+                                    placeholder: (base) => ({
+                                      ...base,
+                                      color: "#777",
+                                      fontWeight: 500,
+                                    }),
+                                    singleValue: (base) => ({
+                                      ...base,
+                                      color: "#000",
+                                    }),
+                                    menu: (base) => ({
+                                      ...base,
+                                      zIndex: 50,
+                                    }),
+                                  }}
+                                />
+                              );
+                            }}
+                          />
                         </div>
 
                         {/* DOB */}
                         <div className="relative">
                           <label className=" text-sm text-black font-semibold px-2">
-                           Date of birth
+                            Date of birth
                           </label>
                           <input
                             {...register("dob")}
@@ -262,51 +452,178 @@ const MyProfile = () => {
 
                       <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
                         <div className="relative">
-                          <label className=" text-sm text-black font-semibold px-2">
-                           Country
+                          <label className="text-sm text-black font-semibold px-2">
+                            Country
                           </label>
-                          <select
-                            {...register("billingCountry")}
-                            disabled
-                            className="border-[#e0e0e0] w-full placeholder:text-[#777] placeholder:font-medium text-black mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-12"
-                          >
-                            <option value="India" selected>
-                              India
-                            </option>
-                          </select>
+
+                          <Controller
+                            name="billingCountry"
+                            control={control}
+                            render={({ field }) => {
+                              const handleChange = (selectedOption) => {
+                                field.onChange(selectedOption?.value || ""); // ✅ store only country ID
+                              };
+
+                              const selectedValue =
+                                countryData?.find(
+                                  (option) => option.value === field.value
+                                ) || null;
+
+                              return (
+                                <Select
+                                  value={selectedValue}
+                                  onChange={handleChange}
+                                  options={countryData}
+                                  placeholder="Select Country"
+                                  classNamePrefix="react-select"
+                                  className="mt-1 text-sm"
+                                  styles={{
+                                    control: (base, state) => ({
+                                      ...base,
+                                      borderColor: state.isFocused
+                                        ? "#3f51b5"
+                                        : "#e0e0e0",
+                                      boxShadow: "none",
+                                      height: "48px",
+                                      borderRadius: "4px",
+                                      paddingLeft: "2px",
+                                    }),
+                                    placeholder: (base) => ({
+                                      ...base,
+                                      color: "#777",
+                                      fontWeight: 500,
+                                    }),
+                                    singleValue: (base) => ({
+                                      ...base,
+                                      color: "#000",
+                                    }),
+                                    menu: (base) => ({
+                                      ...base,
+                                      zIndex: 50,
+                                    }),
+                                  }}
+                                />
+                              );
+                            }}
+                          />
+                        </div>
+                        <div className="relative">
+                          <label className="text-sm text-black font-semibold px-2">
+                            State
+                          </label>
+
+                          <Controller
+                            name="state"
+                            control={control}
+                            render={({ field }) => {
+                              const handleChange = (selectedOption) => {
+                                field.onChange(selectedOption?.value || "");
+                              };
+
+                              const selectedValue =
+                                stateData?.find(
+                                  (option) => option.value === field.value
+                                ) || null;
+
+                              return (
+                                <Select
+                                  value={selectedValue}
+                                  onChange={handleChange}
+                                  options={stateData}
+                                  placeholder="Select State"
+                                  classNamePrefix="react-select"
+                                  className="mt-1 text-sm"
+                                  styles={{
+                                    control: (base, state) => ({
+                                      ...base,
+                                      borderColor: state.isFocused
+                                        ? "#3f51b5"
+                                        : "#e0e0e0",
+                                      boxShadow: "none",
+                                      height: "48px",
+                                      borderRadius: "4px",
+                                      paddingLeft: "2px",
+                                    }),
+                                    placeholder: (base) => ({
+                                      ...base,
+                                      color: "#777",
+                                      fontWeight: 500,
+                                    }),
+                                    singleValue: (base) => ({
+                                      ...base,
+                                      color: "#000",
+                                    }),
+                                    menu: (base) => ({
+                                      ...base,
+                                      zIndex: 50, // ✅ keeps dropdown above modals
+                                    }),
+                                  }}
+                                />
+                              );
+                            }}
+                          />
+                        </div>
+
+                        <div className="relative">
+                          <label className="text-sm text-black font-semibold px-2">
+                            City
+                          </label>
+
+                          <Controller
+                            name="city"
+                            control={control}
+                            render={({ field }) => {
+                              const handleChange = (selectedOption) => {
+                                field.onChange(selectedOption?.value || "");
+                              };
+
+                              const selectedValue =
+                                cityData?.find(
+                                  (option) => option.value === field.value
+                                ) || null;
+
+                              return (
+                                <Select
+                                  value={selectedValue}
+                                  onChange={handleChange}
+                                  options={cityData}
+                                  placeholder="Select City"
+                                  classNamePrefix="react-select"
+                                  className="mt-1 text-sm"
+                                  styles={{
+                                    control: (base, state) => ({
+                                      ...base,
+                                      borderColor: state.isFocused
+                                        ? "#3f51b5"
+                                        : "#e0e0e0",
+                                      boxShadow: "none",
+                                      height: "48px",
+                                      borderRadius: "4px",
+                                      paddingLeft: "2px",
+                                    }),
+                                    placeholder: (base) => ({
+                                      ...base,
+                                      color: "#777",
+                                      fontWeight: 500,
+                                    }),
+                                    singleValue: (base) => ({
+                                      ...base,
+                                      color: "#000",
+                                    }),
+                                    menu: (base) => ({
+                                      ...base,
+                                      zIndex: 50, // ✅ ensures dropdown shows above modals
+                                    }),
+                                  }}
+                                />
+                              );
+                            }}
+                          />
                         </div>
 
                         <div className="relative">
                           <label className=" text-sm text-black font-semibold px-2">
-                           State
-                          </label>
-                          <select
-                            {...register("state")}
-                            className="border-[#e0e0e0] w-full placeholder:text-[#777] placeholder:font-medium text-black mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-12"
-                          >
-                            <option value="rajasthan" selected>
-                              rajasthan
-                            </option>
-                          </select>
-                        </div>
-
-                        <div className="relative">
-                          <label className=" text-sm text-black font-semibold px-2">
-                           City
-                          </label>
-                          <select
-                            {...register("city")}
-                            className="border-[#e0e0e0] w-full placeholder:text-[#777] placeholder:font-medium text-black mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-12"
-                          >
-                            <option value="jaipur" selected>
-                              jaipur
-                            </option>
-                          </select>
-                        </div>
-
-                        <div className="relative">
-                          <label className=" text-sm text-black font-semibold px-2">
-                          Pincode
+                            Pincode
                           </label>
                           <input
                             {...register("pincode")}
@@ -318,7 +635,7 @@ const MyProfile = () => {
 
                         <div className="relative">
                           <label className=" text-sm text-black font-semibold px-2">
-                          GST no.
+                            GST no.
                           </label>
                           <input
                             {...register("gst")}
@@ -338,13 +655,13 @@ const MyProfile = () => {
                             placeholder="Enter PAN no. "
                             className="border-[#e0e0e0] w-full placeholder:text-[#777] placeholder:font-medium text-black mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-12"
                           />
-                          
                         </div>
                       </div>
                       <div className="relative mt-6">
                         <label className="text-sm text-black font-semibold px-2">
-                            Billing address 1 <span className="text-[#dc3545]">*</span>
-                          </label>
+                          Billing address 1{" "}
+                          <span className="text-[#dc3545]">*</span>
+                        </label>
                         <input
                           {...register("billingAddress1", {
                             required: "Billing address 1 is required",
@@ -366,9 +683,9 @@ const MyProfile = () => {
 
                       {/* Billing Address 2 */}
                       <div className="relative mt-6">
-                         <label className="text-sm text-black font-semibold px-2">
-                            Billing address <span className="text-[#dc3545]">*</span>
-                          </label>
+                        <label className="text-sm text-black font-semibold px-2">
+                          Billing address{" "}
+                        </label>
                         <input
                           {...register("billingAddress2")}
                           type="text"

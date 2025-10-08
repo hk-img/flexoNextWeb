@@ -108,12 +108,12 @@ const RegistrationScreenForGoogleRegister = ({ googleDetails,setIsOpen }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 p-6">
       <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
-        <div class="relative">
+        <div className="relative">
           <input
             {...register("firstName")}
             type="text"
             id="first-name"
-            class={`block px-2.5 pb-2.5 pt-4 w-full text-sm border border-[#0000001f] rounded-md p-3  focus:outline-none focus:ring-1 focus:border-[#3f51b5] peer ${
+            className={`block px-2.5 pb-2.5 pt-4 w-full text-sm border border-[#0000001f] rounded-md p-3  focus:outline-none focus:ring-1 focus:border-[#3f51b5] peer ${
               errors.firstName
                 ? "border-red-500 focus:ring-red-200"
                 : "border-gray-300 focus:ring-indigo-200"
@@ -123,7 +123,7 @@ const RegistrationScreenForGoogleRegister = ({ googleDetails,setIsOpen }) => {
           />
           <label
             for="first-name"
-            class="absolute text-xs text-[#00000099] font-semibold duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#3f51b5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+            className="absolute text-xs text-[#00000099] font-semibold duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#3f51b5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
           >
             First Name *
           </label>
@@ -133,12 +133,12 @@ const RegistrationScreenForGoogleRegister = ({ googleDetails,setIsOpen }) => {
             </p>
           )}
         </div>
-        <div class="relative">
+        <div className="relative">
           <input
             {...register("lastName")}
             type="text"
             id="last-name"
-            class={`block px-2.5 pb-2.5 pt-4 w-full text-sm border border-[#0000001f] rounded-md p-3  focus:outline-none focus:ring-1 focus:border-[#3f51b5] peer ${
+            className={`block px-2.5 pb-2.5 pt-4 w-full text-sm border border-[#0000001f] rounded-md p-3  focus:outline-none focus:ring-1 focus:border-[#3f51b5] peer ${
               errors.firstName
                 ? "border-red-500 focus:ring-red-200"
                 : "border-gray-300 focus:ring-indigo-200"
@@ -148,7 +148,7 @@ const RegistrationScreenForGoogleRegister = ({ googleDetails,setIsOpen }) => {
           />
           <label
             for="last-name"
-            class="absolute text-xs text-[#00000099] font-semibold duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#3f51b5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+            className="absolute text-xs text-[#00000099] font-semibold duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#3f51b5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
           >
             last Name *
           </label>
@@ -187,12 +187,12 @@ const RegistrationScreenForGoogleRegister = ({ googleDetails,setIsOpen }) => {
           )}
         </div>
 
-        <div class="relative">
+        <div className="relative">
           <input
             {...register("companyName")}
             type="text"
             id="company-name"
-            class={`block px-2.5 pb-2.5 pt-4 w-full text-sm border border-[#0000001f] rounded-md p-3  focus:outline-none focus:ring-1 focus:border-[#3f51b5] peer ${
+            className={`block px-2.5 pb-2.5 pt-4 w-full text-sm border border-[#0000001f] rounded-md p-3  focus:outline-none focus:ring-1 focus:border-[#3f51b5] peer ${
               errors.firstName
                 ? "border-red-500 focus:ring-red-200"
                 : "border-gray-300 focus:ring-indigo-200"
@@ -201,7 +201,7 @@ const RegistrationScreenForGoogleRegister = ({ googleDetails,setIsOpen }) => {
           />
           <label
             for="company-name"
-            class="absolute text-xs text-[#00000099] font-semibold duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#3f51b5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+            className="absolute text-xs text-[#00000099] font-semibold duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#3f51b5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
           >
             Company Name
           </label>

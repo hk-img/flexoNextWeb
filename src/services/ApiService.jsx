@@ -15,7 +15,7 @@ export const getApi = async (url) => {
     console.log("error?.response?.status", error);
 
     if (
-      error?.status === 401 ||
+      error?.status === 401 || error?.response?.data?.status === 401 || 
       error?.response?.data?.message === "Invalid token"
     ) {
       localStorage.removeItem(TOKEN_NAME);
@@ -39,7 +39,7 @@ export const getAPIAuth = async (url, tokenInit) => {
     console.log("error?.response?.status", error);
 
     if (
-      error?.status === 401 ||
+      error?.status === 401 || error?.response?.data?.status === 401 ||
       error?.response?.data?.message === "Invalid token"
     ) {
       localStorage.removeItem(TOKEN_NAME);
@@ -65,7 +65,7 @@ export const deleteAPIAuth = async (url, tokenInit) => {
     console.log("error?.response?.status", error);
 
     if (
-      error?.status === 401 ||
+      error?.status === 401 || error?.response?.data?.status === 401 ||
       error?.response?.data?.message === "Invalid token"
     ) {
       localStorage.removeItem(TOKEN_NAME);
@@ -89,7 +89,7 @@ export const postAPIFormData = async (url, params, token) => {
     console.log("error?.response?.status", error);
 
     if (
-      error?.status === 401 ||
+      error?.status === 401 || error?.response?.data?.status === 401 ||
       error?.response?.data?.message === "Invalid token"
     ) {
       localStorage.removeItem(TOKEN_NAME);
@@ -113,7 +113,7 @@ export const postAPI = async (url, params) => {
     console.log("error?.response?.status", error);
 
     if (
-      error?.status === 401 ||
+      error?.status === 401 || error?.response?.data?.status === 401 ||
       error?.response?.data?.message === "Invalid token"
     ) {
       localStorage.removeItem(TOKEN_NAME);
@@ -139,7 +139,7 @@ export const postAPIAuth = async (url, params, tokenInit) => {
     console.log("error?.response?.status", error);
 
     if (
-      error?.status === 401 ||
+      error?.status === 401 || error?.response?.data?.status === 401 ||
       error?.response?.data?.message === "Invalid token"
     ) {
       localStorage.removeItem(TOKEN_NAME);
@@ -165,7 +165,7 @@ export const patchAPIAuth = async (url, params, tokenInit) => {
     console.log("error?.response?.status", error);
 
     if (
-      error?.status === 401 ||
+      error?.status === 401 || error?.response?.data?.status === 401 ||
       error?.response?.data?.message === "Invalid token"
     ) {
       localStorage.removeItem(TOKEN_NAME);

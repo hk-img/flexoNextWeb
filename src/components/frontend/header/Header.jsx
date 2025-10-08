@@ -5,6 +5,9 @@ import Image from "next/image";
 import Auth from "../auth/Auth";
 import Link from "next/link";
 import { useAuth } from "@/context/useAuth";
+import { toast } from "sonner";
+import { useMutation } from "@tanstack/react-query";
+import { postAPIAuth } from "@/services/ApiService";
 
 const Header = () => {
   const {token} = useAuth();
@@ -37,8 +40,28 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollTop]);
 
+  const {mutate: logoutMutate} = useMutation({
+    mutationFn: async (payload) => {
+      const response = await postAPIAuth("user/userLogOut",payload,token);
+      return response.data;
+    },
+    onSuccess: (data) => {
+      if (data.success) {
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
+      }
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  })
+
   const handleLogout = ()=>{
-    
+    const payload = {
+
+    };
+    logoutMutate(payload);
   }
 
   return (
@@ -101,7 +124,7 @@ const Header = () => {
                               <li><Link href="/visit-scheduling" className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Visits</Link></li>
                               <li><Link href="/favourite-workspace" className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Favorites</Link></li>
                               <li><Link href="/workspace-review-rating-list" className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Riviews</Link></li>
-                              <li><div onClick={handleLogout} className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">Logout</div></li>
+                              <li><div onClick={handleLogout} className="cursor-pointer block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">Logout</div></li>
                             </ul>
                           </div>
                           

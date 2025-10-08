@@ -59,7 +59,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
             </div>
             {
               googleDetails ? (
-                <RegistrationScreenForGoogleRegister googleDetails={googleDetails}/>
+                <RegistrationScreenForGoogleRegister googleDetails={googleDetails} setIsOpen={setIsOpen}/>
               ):(
                 isShowUserDetailForm ? (
                   <>
@@ -98,7 +98,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
                           <GoogleOAuthProvider
                             clientId={process.env.NEXT_PUBLIC_CLIENT_ID}
                           >
-                            <GoogleLoginButton setGoogleDetails={setGoogleDetails}/>
+                            <GoogleLoginButton setGoogleDetails={setGoogleDetails} setIsOpen={setIsOpen}/>
                           </GoogleOAuthProvider>
                           {isShowMobile ? (
                             <button

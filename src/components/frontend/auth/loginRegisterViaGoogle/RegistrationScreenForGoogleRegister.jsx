@@ -5,6 +5,10 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import { useMutation } from "@tanstack/react-query";
+import { postAPI } from "@/services/ApiService";
+import { toast } from "sonner";
+import { useAuth } from "@/context/useAuth";
 
 const registerSchema = z
   .object({
@@ -39,17 +43,19 @@ const registerSchema = z
     }
   });
 
-const RegistrationScreenForGoogleRegister = () => {
+const RegistrationScreenForGoogleRegister = ({ googleDetails,setIsOpen }) => {
+  const {setToken} = useAuth();
   const {
     register,
     handleSubmit,
+    setValue,
     control,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
+      firstName: googleDetails?.first_name,
+      lastName: googleDetails?.last_name,
       mobile: "+91",
       country: {
         name: "India",
@@ -61,18 +67,66 @@ const RegistrationScreenForGoogleRegister = () => {
     },
   });
 
-  const onSubmit = (data) => {
-    console.log("Form Submitted ✅", data);
+  const { mutate: submitMutate,isPending } = useMutation({
+    mutationFn: async (payload) => {
+      const response = await postAPI(
+        `/user/newemail/${googleDetails?.email}`,
+        payload
+      );
+      return response.data;
+    },
+    onSuccess: (data, payload) => {
+      if (data.success) {
+        toast.success(data.message);
+        setToken(data.result.accessToken);
+        setIsOpen(false);
+      } else {
+        toast.error(data.message);
+      }
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  const onSubmit = (values) => {
+    const country_code = values.country ? `+${values.country.dialCode}` : "";
+    const dialCode = values.country ? values.country.dialCode : "";
+    const mobile = values.mobile.replace(dialCode, "").replace(/^\+/, "");
+    const payload = {
+      firstName: values?.firstName,
+      lastName: values?.lastName,
+      mobile: mobile,
+      phone_code: country_code,
+      email: googleDetails?.email,
+      companyName: values?.companyName,
+      regType: "google",
+    };
+    submitMutate(payload);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 p-6">
       <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
         <div class="relative">
-          <input {...register("firstName")} type="text" id="first-name" class={`block px-2.5 pb-2.5 pt-4 w-full text-sm border border-[#0000001f] rounded-md p-3  focus:outline-none focus:ring-1 focus:border-[#3f51b5] peer ${
-                    errors.firstName ? "border-red-500 focus:ring-red-200" : "border-gray-300 focus:ring-indigo-200"
-                  }`} placeholder=" " />
-          <label for="first-name" class="absolute text-xs text-[#00000099] font-semibold duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#3f51b5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">First Name *</label>
+          <input
+            {...register("firstName")}
+            type="text"
+            id="first-name"
+            class={`block px-2.5 pb-2.5 pt-4 w-full text-sm border border-[#0000001f] rounded-md p-3  focus:outline-none focus:ring-1 focus:border-[#3f51b5] peer ${
+              errors.firstName
+                ? "border-red-500 focus:ring-red-200"
+                : "border-gray-300 focus:ring-indigo-200"
+            }`}
+            placeholder=" "
+            disabled
+          />
+          <label
+            for="first-name"
+            class="absolute text-xs text-[#00000099] font-semibold duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#3f51b5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+          >
+            First Name *
+          </label>
           {errors.firstName && (
             <p className="text-red-500 text-[10px] absolute -bottom-4">
               {errors.firstName.message}
@@ -80,61 +134,85 @@ const RegistrationScreenForGoogleRegister = () => {
           )}
         </div>
         <div class="relative">
-          <input {...register("lastName")} type="text" id="last-name" class={`block px-2.5 pb-2.5 pt-4 w-full text-sm border border-[#0000001f] rounded-md p-3  focus:outline-none focus:ring-1 focus:border-[#3f51b5] peer ${
-                    errors.firstName ? "border-red-500 focus:ring-red-200" : "border-gray-300 focus:ring-indigo-200"
-                  }`} placeholder=" " />
-          <label for="last-name" class="absolute text-xs text-[#00000099] font-semibold duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#3f51b5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">last Name *</label>
+          <input
+            {...register("lastName")}
+            type="text"
+            id="last-name"
+            class={`block px-2.5 pb-2.5 pt-4 w-full text-sm border border-[#0000001f] rounded-md p-3  focus:outline-none focus:ring-1 focus:border-[#3f51b5] peer ${
+              errors.firstName
+                ? "border-red-500 focus:ring-red-200"
+                : "border-gray-300 focus:ring-indigo-200"
+            }`}
+            placeholder=" "
+            disabled
+          />
+          <label
+            for="last-name"
+            class="absolute text-xs text-[#00000099] font-semibold duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#3f51b5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+          >
+            last Name *
+          </label>
           {errors.lastName && (
             <p className="text-red-500 text-[10px] absolute -bottom-4">
               {errors.lastName.message}
             </p>
           )}
         </div>
-        
+
         <div className="relative">
-        <Controller
-          name="mobile"
-          control={control}
-          render={({ field }) => (
-            <PhoneInput
-              country="in"
-              value={field.value}
-              onChange={(value, country) => {
-                setValue("mobile", value, {
-                  shouldValidate: true,
-                });
-                setValue("country", country);
-              }}
-              enableSearch
-              countryCodeEditable={false}
-              inputProps={{ name: "mobile" }}
-              className="w-full [&_input]:!w-full [&_input]:!h-full h-[42px] [&_.country-list]:overflow-x-hidden"
-            />
+          <Controller
+            name="mobile"
+            control={control}
+            render={({ field }) => (
+              <PhoneInput
+                country="in"
+                value={field.value}
+                onChange={(value, country) => {
+                  setValue("mobile", value, {
+                    shouldValidate: true,
+                  });
+                  setValue("country", country);
+                }}
+                enableSearch
+                countryCodeEditable={false}
+                inputProps={{ name: "mobile" }}
+                className="w-full [&_input]:!w-full [&_input]:!h-full h-[42px] [&_.country-list]:overflow-x-hidden"
+              />
+            )}
+          />
+          {errors.mobile && (
+            <p className="text-red-500 text-[10px] absolute -bottom-4">
+              {errors.mobile.message}
+            </p>
           )}
-        />
-        {errors.mobile && (
-          <p className="text-red-500 text-[10px] absolute -bottom-4">{errors.mobile.message}</p>
-        )}
-      </div>
+        </div>
 
-      {/* Company Name */}
-     
-      <div class="relative">
-        <input {...register("companyName")} type="text" id="company-name" class={`block px-2.5 pb-2.5 pt-4 w-full text-sm border border-[#0000001f] rounded-md p-3  focus:outline-none focus:ring-1 focus:border-[#3f51b5] peer ${
-                    errors.firstName ? "border-red-500 focus:ring-red-200" : "border-gray-300 focus:ring-indigo-200"
-                  }`} placeholder=" " />
-        <label for="company-name" class="absolute text-xs text-[#00000099] font-semibold duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#3f51b5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Company Name</label>
-        
+        <div class="relative">
+          <input
+            {...register("companyName")}
+            type="text"
+            id="company-name"
+            class={`block px-2.5 pb-2.5 pt-4 w-full text-sm border border-[#0000001f] rounded-md p-3  focus:outline-none focus:ring-1 focus:border-[#3f51b5] peer ${
+              errors.firstName
+                ? "border-red-500 focus:ring-red-200"
+                : "border-gray-300 focus:ring-indigo-200"
+            }`}
+            placeholder=" "
+          />
+          <label
+            for="company-name"
+            class="absolute text-xs text-[#00000099] font-semibold duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#3f51b5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+          >
+            Company Name
+          </label>
+        </div>
       </div>
-      </div>
-      
-
-      {/* Register Button */}
       <button
         type="submit"
-        className="w-full bg-orange-500 text-white mt-4 font-semibold py-3 rounded-md hover:bg-orange-600 transition"
+        disabled={isPending}
+        className="cursor-pointer w-full bg-orange-500 text-white mt-4 font-semibold py-3 rounded-md hover:bg-orange-600 transition"
       >
-        REGISTER
+        {isPending ? "Submitting..." : "REGISTER"}
       </button>
     </form>
   );

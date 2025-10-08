@@ -2,8 +2,30 @@ import React from "react";
 import { useGoogleLogin } from "@react-oauth/google";
 import { toast } from "sonner";
 import axios from "axios";
+import { useMutation } from "@tanstack/react-query";
+import { useAuth } from "@/context/useAuth";
+import { postAPI } from "@/services/ApiService";
 
-const GoogleLoginButton = ({setGoogleDetails}) => {
+const GoogleLoginButton = ({ setGoogleDetails, setIsOpen }) => {
+  const { setToken } = useAuth();
+  const { mutate: checkGoogleAccountMutate } = useMutation({
+    mutationFn: async (payload) => {
+      const response = await postAPI("user/checkGoogleAccount", payload);
+      return response.data;
+    },
+    onSuccess: (data, payload) => {
+      if (data?.existsEmail) {
+        toast.success(data?.message || "Login Successfully");
+        setToken(data?.userdata?.accessToken);
+        setIsOpen(false);
+      } else {
+        setGoogleDetails(payload);
+      }
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
   const handleLoginSuccess = async (credentialResponse) => {
     const Token = credentialResponse.access_token;
     try {
@@ -15,12 +37,12 @@ const GoogleLoginButton = ({setGoogleDetails}) => {
           },
         }
       );
-      const userData = {
-        first_name : response.data.given_name,
-        last_name : response.data.family_name,
-        email: response.data.email
+      const payload = {
+        first_name: response.data.given_name,
+        last_name: response.data.family_name,
+        email: response.data.email,
       };
-      setGoogleDetails(userData);
+      checkGoogleAccountMutate(payload);
     } catch (error) {
       toast.error("Somthing Went Wrong");
     }

@@ -138,16 +138,60 @@ const VerifyOtp = ({
   });
 
   // Resend OTP API
-  const { mutate: sendOtpMutation } = useMutation({
+  const { mutate: sendOtpMutationForLoginMobile } = useMutation({
     mutationFn: async (payload) => {
-      //   const response = await postAPI(`${LOGIN}`, payload);
-      //   return response.data;
+        const response = await postAPI("user/login-Mobile-New", payload);
+        return response.data;
     },
-    onSuccess: () => {
-      setTimer(30);
-      setIsResendDisabled(true);
-      setOtp(Array(4).fill(""));
-      inputRefs.current[0]?.focus();
+    onSuccess: (data) => {
+      if(data?.success){
+        setTimer(30);
+        setIsResendDisabled(true);
+        setOtp(Array(4).fill(""));
+        inputRefs.current[0]?.focus();
+      }else{
+        toast.error(data.message);
+      }
+    },
+    onError: (err) => {
+      toast.error(err.response?.data?.message || "Something went wrong");
+    },
+  });
+
+  const { mutate: sendOtpMutationForRegisterMobile } = useMutation({
+    mutationFn: async (payload) => {
+        const response = await postAPI("user/loginWithMobile", payload);
+        return response.data;
+    },
+    onSuccess: (data) => {
+      if(data?.success){
+        setTimer(30);
+        setIsResendDisabled(true);
+        setOtp(Array(4).fill(""));
+        inputRefs.current[0]?.focus();
+      }else{
+        toast.error(data.message);
+      }
+    },
+    onError: (err) => {
+      toast.error(err.response?.data?.message || "Something went wrong");
+    },
+  });
+
+  const { mutate: sendOtpMutationForRegisterEmail } = useMutation({
+    mutationFn: async (payload) => {
+        const response = await postAPI("user/check-email", payload);
+        return response.data;
+    },
+    onSuccess: (data) => {
+      if(data?.success){
+        setTimer(30);
+        setIsResendDisabled(true);
+        setOtp(Array(4).fill(""));
+        inputRefs.current[0]?.focus();
+      }else{
+        toast.error(data.message);
+      }
     },
     onError: (err) => {
       toast.error(err.response?.data?.message || "Something went wrong");
@@ -155,8 +199,26 @@ const VerifyOtp = ({
   });
 
   const handleResendOtp = () => {
-    const payload = { loginType: "sendOtp", mobile };
-    sendOtpMutation(payload);
+    if(isLogin){
+      const payload = {
+        mobile: mobile?.mobile,
+        phone_code: mobile?.phone_code
+      }
+      sendOtpMutationForLoginMobile(payload);
+    }else{
+      if(mobile){
+        const payload = {
+          mobile: mobile?.mobile,
+          phone_code: mobile?.phone_code
+        }
+        sendOtpMutationForRegisterMobile(payload);
+      }else{
+        payload = {
+          email: email
+        }
+        sendOtpMutationForRegisterEmail(payload);
+      }
+    }
   };
 
   // Submit OTP
@@ -199,7 +261,7 @@ const VerifyOtp = ({
           Enter the OTP send to{" "}
           {
             mobile
-              ? <span className="font-semibold text-black">+{mobile.phone_code} {mobile.mobile}</span>
+              ? <span className="font-semibold text-black">{mobile.phone_code} {mobile.mobile}</span>
               : <span className="font-semibold text-black">{email}</span>
           }
         </p>
@@ -241,7 +303,7 @@ const VerifyOtp = ({
               : "text-[#f76900]"
           }`}
         >
-          <span className="uppercase font-semibold">Resend OTP</span>
+          <span className="uppercase font-semibold cursor-pointer">Resend OTP</span>
         </button>{" "}
         {isResendDisabled && ` in ${timer}s`}
       </div>

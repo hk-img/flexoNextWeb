@@ -9,7 +9,7 @@ const LikeDislike = ({ spaceData, setIsAuthOpen }) => {
   const [upVote, setUpVote] = useState(false);
   const [downVote, setDownVote] = useState(false);
   const { token } = useAuth();
-  const { data: upVoteMutate } = useMutation({
+  const { mutate: upVoteMutate } = useMutation({
     mutationFn: async (payload) => {
       const response = await postAPIAuth(
         `spaces/vote/${spaceData?._id}`,
@@ -39,7 +39,7 @@ const LikeDislike = ({ spaceData, setIsAuthOpen }) => {
     };
     upVoteMutate(payload);
   };
-  const { data: downVoteMutate } = useMutation({
+  const { mutate: downVoteMutate } = useMutation({
     mutationFn: async (payload) => {
       const response = await postAPIAuth(
         `spaces/vote/${spaceData?._id}`,

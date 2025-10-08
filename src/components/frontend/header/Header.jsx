@@ -66,13 +66,49 @@ const Header = () => {
 
             <div className="lg:flex hidden items-center gap-5 px-[15px]">
               <div>
-                <Link href="/list-with-us" className="bg-[#f76900] border-[2px] border-[#f76900] rounded-[15px] xl:text-[15px] lg:text-sm text-white py-[8px] px-5.5">
+                <Link href="/list-with-us" className="bg-[#f76900] block border-[2px] border-[#f76900] rounded-[15px] xl:text-[15px] lg:text-sm text-white py-[8px] px-5.5">
                   List Your Space
                 </Link>
               </div>
               {
-                token ? (
-                  <></>
+                !token ? (
+                  <>
+                    <div>
+                      <div class="relative">
+                          
+                        <input type="checkbox" id="user-dropdown" class="peer hidden" />
+                          <label
+                              for="user-dropdown"
+                              class="fixed inset-0 hidden peer-checked:block z-10 cursor-default"
+                            ></label>
+                        <label
+                          for="user-dropdown"
+                          class="flex items-center justify-center border hover:bg-[#f76900] bg-[#001740] text-white w-[30px] h-[30px] rounded-full cursor-pointer transition"
+                        >
+                         <Svg name="user" className="size-[15px]" />
+                        </label>
+
+                        <div
+                          class="absolute right-0 top-13 w-[250px] bg-white text-black rounded-sm 
+                                opacity-0 scale-95 pointer-events-none transition-all duration-200 shadow-[10px_10px_20px_#0000006b]
+                                peer-checked:opacity-100 peer-checked:scale-100 peer-checked:pointer-events-auto"
+                        >
+                          <div className="py-2">
+                            <ul>
+                              <li><a href="/" class="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Profile</a></li>
+                              <li><a href="/" class="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Bookings</a></li>
+                              <li><a href="/" class="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Booking requests</a></li>
+                              <li><a href="/" class="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Visits</a></li>
+                              <li><a href="/" class="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Favorites</a></li>
+                              <li><a href="/" class="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Riviews</a></li>
+                              <li><a href="/" class="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">Logout</a></li>
+                            </ul>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </>
                 ):(
                   <div>
                     <div

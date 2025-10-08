@@ -1,7 +1,7 @@
 "use client";
 import Svg from "@/components/svg";
 import Image from "next/image";
-import React from "react";
+import React, { useMemo } from "react";
 import { useEffect, useState } from "react";
 import EmblaCarousel from "../emblaCarousel/EmblaCarousel";
 import ProductCard from "../productCard/ProductCard";
@@ -16,18 +16,22 @@ import {
   getTypeOfSpaceByWorkSpace,
 } from "@/services/Comman";
 import ShowHtmlData from "../showHtmlData/ShowHtmlData";
+import LikeDislike from "./LikeDislike";
+import ScheduleVisitPopup from "./scheduleVisitPopup/ScheduleVisitPopup";
+import { useAuth } from "@/context/useAuth";
+import BuyPassPopup from "./buyPassPopup/BuyPassPopup";
+import { useQuery } from "@tanstack/react-query";
+import { getApi } from "@/services/ApiService";
 
-const Detail = ({ detailData, reviewData }) => {
-  const spaceData = detailData?.data;
-  const type = getTypeOfSpaceByWorkSpace(spaceData?.spaceType || "");
+const Detail = ({ spaceId,spaceDetailsData,detailData,reviewData }) => {
+  const {token,user} = useAuth();
   const [showAll, setShowAll] = useState(false);
   const [open, setOpen] = useState(null);
-  const displayedFacilities = showAll
-    ? spaceData?.facilities
-    : spaceData?.facilities?.slice(0, 3);
   const [isFixed, setIsFixed] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [isScheduleVisitOpen, setIsScheduleVisitOpen] = useState(false);
+  const [isBuyPassOpen, setIsBuyPassOpen] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY >= 700) {
@@ -51,22 +55,55 @@ const Detail = ({ detailData, reviewData }) => {
     }
   };
   const toggle = (id) => {
-    setOpen(open === id ? null : id); // close if same clicked, else open new
+    setOpen(open === id ? null : id); 
   };
 
   function convertTo12Hour(time) {
     if (!time) return "";
-
-    // Agar time string "HH:mm" format me hai
     const [hourStr, minuteStr] = time.split(":");
     let hour = parseInt(hourStr, 10);
     const minute = minuteStr || "00";
     const ampm = hour >= 12 ? "PM" : "AM";
-
-    // 24h -> 12h conversion
     hour = hour % 12 || 12;
-
     return `${hour}:${minute} ${ampm}`;
+  }
+
+   const { data: spaceDeatil } = useQuery({
+    queryKey: ["space-detail",spaceId,spaceDetailsData,user?.id],
+    queryFn: async () => {
+      let query = ""
+      if(user?.id){
+        query = `&userId=${user?.id}`
+      }
+      const res = await getApi(`/spaces/details?spaceId=${spaceId}&city=${spaceDetailsData?.contact_city_name}&spaceType=${spaceDetailsData?.spaceType}&country=${spaceDetailsData?.country}${query}`);
+      return res.data;
+    },
+    keepPreviousData: true,
+    initialData: detailData
+  });
+
+  const spaceData = useMemo(()=>{
+    return spaceDeatil?.data;
+  },[spaceDeatil]);
+
+  const type = getTypeOfSpaceByWorkSpace(spaceData?.spaceType || "");
+  const displayedFacilities = showAll
+    ? spaceData?.facilities
+    : spaceData?.facilities?.slice(0, 3);
+
+  const handleScheduleVisit = ()=>{
+    if(!token){
+      setIsAuthOpen(true);
+    }else{
+      setIsScheduleVisitOpen(true);
+    }
+  }
+  const handleBuyPass = ()=>{
+    if(!token){
+      setIsAuthOpen(true);
+    }else{
+      setIsBuyPassOpen(true);
+    }
   }
 
   return (
@@ -170,16 +207,7 @@ const Detail = ({ detailData, reviewData }) => {
                   </div>
                 </div>
                 {type != "longterm" && (
-                  <div className="flex items-center space-x-1 border border-[#ddd] rounded-full w-fit md:px-3.5 px-3 md:py-2 py-1">
-                    <div className="flex items-center space-x-1 p-1 pr-3 border-r border-[#ddd]">
-                      <Svg name="thumbUp" className="size-3.5 text-black" />
-                      <span className="text-[15px]">0</span>
-                    </div>
-
-                    <div className="flex items-center space-x-1 p-1">
-                      <Svg name="thumbDown" className="size-3.5 text-black" />
-                    </div>
-                  </div>
+                  <LikeDislike spaceData={spaceData} setIsAuthOpen={setIsAuthOpen} existingVote={spaceDeatil?.existingVote}/>
                 )}
               </div>
             </div>
@@ -996,7 +1024,7 @@ const Detail = ({ detailData, reviewData }) => {
                         : "REQUEST A CALL BACK"}
                     </button>
                     <button
-                      onClick={() => setIsAuthOpen(true)}
+                      onClick={handleScheduleVisit}
                       className={`cursor-pointer w-full border uppercase tracking-[1px] border-[#000e54] ${
                         type == "longterm" ? "text-[#f76900]" : "text-[#000e54]"
                       } 2xl:text-base text-sm font-semibold md:py-[15px] py-[10px] rounded-[15px]`}
@@ -1005,7 +1033,7 @@ const Detail = ({ detailData, reviewData }) => {
                     </button>
                     {type == "coworking" && spaceData?.originalPrice > 0 && (
                       <button
-                        onClick={() => setIsAuthOpen(true)}
+                        onClick={handleBuyPass}
                         className="cursor-pointer w-full bg-[#2c864f] 2xl:text-[15px] text-sm hover:bg-[#40a667] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]"
                       >
                         Buy Pass
@@ -1118,6 +1146,8 @@ const Detail = ({ detailData, reviewData }) => {
       }
       {isOpen && <ExplorePopup isOpen={isOpen} setIsOpen={setIsOpen} />}
       {isAuthOpen && <Auth isOpen={isAuthOpen} setIsOpen={setIsAuthOpen} />}
+      {isScheduleVisitOpen &&<ScheduleVisitPopup isOpen={isScheduleVisitOpen} setIsOpen={setIsScheduleVisitOpen}/>}
+      {isBuyPassOpen && <BuyPassPopup isOpen={isBuyPassOpen} setIsOpen={setIsBuyPassOpen}/>}
     </>
   );
 };

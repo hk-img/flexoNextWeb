@@ -32,7 +32,7 @@ const TrustedCompaniesCta = ({setIsOpen}) => {
       <h2 className="sm:text-[32px] text-2xl font-medium text-center text-[#333] leading-[1.2] py-6">
             Trusted By Leading Companies in India
           </h2>
-      <div className="relative lg:pt-6 lg:pb-12 py-7 px-6 rounded-2xl items-center shadow-[0_4px_10px_#00000014] mx-auto bg-no-repeat bg-cover overflow-hidden bg-gradient-to-r from-[#ffd7ba] to-transparent">
+      <div className="relative lg:py-5.5 py-7 px-6 rounded-2xl items-center shadow-[0_4px_10px_#00000014] mx-auto bg-no-repeat bg-cover overflow-hidden bg-gradient-to-r from-[#ffd7ba] to-transparent">
         <div className="container mx-auto text-center px-[15px] before:absolute before:inset-0 before:w-full before:h-full before:opacity-50 before:-z-10 ">
             <EmblaCarousel options={{ loop: true, autoscroll: true, align: "start"}}>
               {companies.map((s, i) => (
@@ -46,7 +46,7 @@ const TrustedCompaniesCta = ({setIsOpen}) => {
                     title={s.title}
                     width={120}
                     height={50}
-                    className="object-contain transition md:w-[145px] w-[105px]"
+                    className="object-contain transition md:w-[120px] w-[105px]"
                   />
                 </div>
               ))}

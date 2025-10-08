@@ -1,7 +1,7 @@
 "use client";
 import { createContext, useContext, useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getAPIAuth } from "@/services/ApiService";
+import { getAPIAuthWithoutBearer } from "@/services/ApiService";
 import { TOKEN_NAME } from "@/constant/constant";
 
 const AuthContext = createContext();
@@ -17,25 +17,23 @@ export const AuthProvider = ({ children }) => {
     }
   }, [token]);
 
-//   const getUserDetails = async () => {
-//     const response = await getAPIAuth("profile", token);
-//     return response.data;
-//   };
-
-//   const {
-//     data: userData,
-//     refetch: refetchUserDetails,
-//   } = useQuery({
-//     queryKey: ["userDetails", token],
-//     queryFn: getUserDetails,
-//     enabled: !!token,
-//   });
+  const {
+    data: userData,
+    refetch: refetchUserDetails,
+  } = useQuery({
+    queryKey: ["userDetails", token],
+    queryFn: async () => {
+      const res = await getAPIAuthWithoutBearer("user/viewProfile",token);
+      return res.data;
+    },
+    enabled: !!token,
+  });
   
-//   useEffect(() => {
-//     if (!userData?.error) {
-//       setUser(userData?.data.user);
-//     }
-//   }, [userData]);
+  useEffect(() => {
+    if (userData?.success) {
+      setUser(userData?.data);
+    }
+  }, [userData]);
 
   useEffect(() => {
     const storedToken = localStorage.getItem(`${TOKEN_NAME}`);
@@ -49,7 +47,7 @@ export const AuthProvider = ({ children }) => {
         setToken,
         user,
         setUser,
-        // getUserDetails: refetchUserDetails
+        getUserDetails: refetchUserDetails
       }}
     >
       {children}

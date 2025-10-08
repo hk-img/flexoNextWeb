@@ -5,9 +5,15 @@ import Image from "next/image";
 import Auth from "../auth/Auth";
 import Link from "next/link";
 import { useAuth } from "@/context/useAuth";
+import { toast } from "sonner";
+import { useMutation } from "@tanstack/react-query";
+import { postAPIAuthWithoutBearer } from "@/services/ApiService";
+import { TOKEN_NAME } from "@/constant/constant";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
-  const {token} = useAuth();
+  const router = useRouter();
+  const {token,setToken,setUser} = useAuth();
   const [isOpen,setIsOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [lastScrollTop, setLastScrollTop] = useState(0);
@@ -37,8 +43,33 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollTop]);
 
+  const {mutate: logoutMutate} = useMutation({
+    mutationFn: async (payload) => {
+      const response = await postAPIAuthWithoutBearer("user/userLogOut",payload,token);
+      return response.data;
+    },
+    onSuccess: (data) => {
+      if (data.success) {
+        toast.success(data.message);
+        setToken("");
+        setUser({});
+        localStorage.removeItem(`${TOKEN_NAME}`);
+        document.cookie = `${TOKEN_NAME}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+        router.push("/");
+      } else {
+        toast.error(data.message);
+      }
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  })
+
   const handleLogout = ()=>{
-    
+    const payload = {
+
+    };
+    logoutMutate(payload);
   }
 
   return (
@@ -66,13 +97,54 @@ const Header = () => {
 
             <div className="lg:flex hidden items-center gap-5 px-[15px]">
               <div>
-                <Link href="/list-with-us" className="bg-[#f76900] border-[2px] border-[#f76900] rounded-[15px] xl:text-[15px] lg:text-sm text-white py-[8px] px-5.5">
+                <Link href="/list-with-us" className="bg-[#f76900] block border-[2px] border-[#f76900] rounded-[15px] xl:text-[15px] lg:text-sm text-white py-[8px] px-5.5">
                   List Your Space
                 </Link>
               </div>
               {
                 token ? (
-                  <></>
+                  <>
+                    <div>
+                      <div className="group relative z-[9999]">
+                          
+                        <input type="checkbox" id="user-dropdown" className="peer hidden" />
+                          <label
+                              htmlFor="user-dropdown"
+                              className="fixed inset-0 hidden peer-checked:block z-10 cursor-default"
+                            ></label>
+                        <label
+                          htmlFor="user-dropdown"
+                          className="flex items-center justify-center border hover:bg-[#f76900] bg-[#001740] text-white w-[30px] h-[30px] rounded-full cursor-pointer transition"
+                        >
+                         <Svg name="user" className="size-[15px]" />
+                        </label>
+                      
+                        <div
+                          className="absolute right-0 top-13 w-[250px] bg-white text-black rounded-sm 
+                                opacity-0 scale-95 pointer-events-none transition-all duration-200 shadow-[10px_10px_20px_#0000006b]
+                                peer-checked:opacity-100 peer-checked:scale-100 peer-checked:pointer-events-auto"
+                        >
+                          <div className="py-2">
+                            <ul>
+                              <li><Link href="/profile-management" className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Profile</Link></li>
+                              <li><Link href="/booking-management" className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Bookings</Link></li>
+                              <li><Link href="/booking-request-inquires" className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Booking requests</Link></li>
+                              <li><Link href="/visit-scheduling" className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Visits</Link></li>
+                              <li><Link href="/favourite-workspace" className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Favorites</Link></li>
+                              <li><Link href="/workspace-review-rating-list" className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Riviews</Link></li>
+                              <li><div onClick={handleLogout} className="cursor-pointer block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">Logout</div></li>
+                            </ul>
+                          </div>
+                          
+                        </div>
+                          <label
+                        htmlFor="user-dropdown"
+                        className="fixed inset-0 hidden peer-checked:block z-[90] cursor-default"
+                      ></label>
+                      </div>
+                     
+                    </div>
+                  </>
                 ):(
                   <div>
                     <div

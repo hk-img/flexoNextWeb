@@ -90,7 +90,7 @@ const MyProfile = () => {
     <>
       <div className="relative w-full lg:mt-[82px] sm:mt-[62px] mt-[63px]">
         <div className="container mx-auto md:px-0 px-[15px] py-10">
-          <div className="w-[55%] mx-auto">
+          <div className="md:w-[55%] w-full mx-auto">
             <div>
               <h2 className="text-[22px] md:text-[26px] font-semibold leading-[1.6]">
                 Profile Management
@@ -105,17 +105,20 @@ const MyProfile = () => {
                       src="/images/user_image_profile.webp"
                       alt=""
                     />
-                    <div className="w-10 h-10 rounded-full bg-black  flex items-center justify-center absolute right-0 bottom-0">
+                    <label
+                        htmlFor="imageUpload"
+                        className="absolute bottom-0 right-0 w-10 h-10 bg-black rounded-full flex items-center justify-center cursor-pointer hover:shadow-[5px_5px_15px_#00000080] hover:scale-[1.2] transition-all duration-300"
+                      >
+                      <input type="file" id="imageUpload" accept="image/*" className="hidden" />
                       <Svg name="camera" className=" text-white size-4 " />
-                    </div>
+                   </label>
                   </div>
                 </div>
                 <div className="mt-10">
                   <form
                     onSubmit={handleSubmit(onSubmit)}
-                    className="mt-10 space-y-6"
+                    className="mt-10 space-y-10"
                   >
-                    {/* Basic Information */}
                     <div>
                       <h4 className="text-lg font-semibold mb-5">
                         Basic Information
@@ -124,19 +127,20 @@ const MyProfile = () => {
                       <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
                         {/* First Name */}
                         <div className="relative">
+                           <label className=" text-sm text-black font-semibold bg-white px-2">
+                            First Name <span className="text-[#dc3545]">*</span>
+                          </label>
                           <input
                             {...register("firstName")}
                             type="text"
-                            className={`block px-2.5 pb-2.5 pt-4 w-full text-sm border rounded-md focus:outline-none ${
+                            placeholder="Enter first name"
+                            className={`block px-2.5 h-12 w-full text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none placeholder:text-[#777] placeholder:font-medium ${
                               errors.firstName
                                 ? "border-red-500 focus:ring-red-200"
-                                : "border-gray-300 focus:ring-indigo-200"
+                                : "border-[#e0e0e0] focus:ring-indigo-200"
                             }`}
-                            placeholder=" "
                           />
-                          <label className="absolute text-xs text-[#00000099] font-semibold top-2 left-2 bg-white px-2">
-                            First Name *
-                          </label>
+                         
                           {errors.firstName && (
                             <p className="text-red-500 text-[10px] absolute -bottom-4">
                               {errors.firstName.message}
@@ -146,23 +150,26 @@ const MyProfile = () => {
 
                         {/* Last Name */}
                         <div className="relative">
+                          <label className=" text-sm text-black font-semibold px-2">
+                            Last Name <span className="text-[#dc3545]">*</span>
+                          </label>
                           <input
                             {...register("lastName")}
                             type="text"
-                            className={`block px-2.5 pb-2.5 pt-4 w-full text-sm border rounded-md focus:outline-none ${
+                            placeholder="Enter last name"
+                            className={`block px-2.5 h-12 w-full text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none placeholder:text-[#777] placeholder:font-medium ${
                               errors.lastName
                                 ? "border-red-500 focus:ring-red-200"
-                                : "border-gray-300 focus:ring-indigo-200"
-                            }`}
-                            placeholder=" "
+                                : "border-[#e0e0e0] focus:ring-indigo-200"
+                            }`} 
                           />
-                          <label className="absolute text-xs text-[#00000099] font-semibold top-2 left-2 bg-white px-2">
-                            Last Name *
-                          </label>
                         </div>
 
                         {/* Mobile */}
                         <div className="relative">
+                           <label className=" text-sm text-black font-semibold px-2">
+                            Mobile <span className="text-[#dc3545]">*</span>
+                          </label>
                           <Controller
                             name="mobile"
                             control={control}
@@ -179,7 +186,7 @@ const MyProfile = () => {
                                 enableSearch
                                 countryCodeEditable={false}
                                 inputProps={{ name: "mobile" }}
-                                className="w-full [&_input]:!w-full [&_input]:!h-full h-[42px]"
+                                className="w-full [&_input]:!w-full mt-1 border-[#e0e0e0] focus:border-[#3f51b5] rounded-sm focus:outline-none [&_input]:!h-full h-12"
                               />
                             )}
                           />
@@ -192,36 +199,39 @@ const MyProfile = () => {
 
                         {/* Company Name */}
                         <div className="relative">
+                          <label className=" text-sm text-black font-semibold px-2">
+                            Company Name
+                          </label>
                           <input
                             {...register("companyName")}
                             type="text"
-                            placeholder=" "
-                            className="block px-2.5 pb-2.5 pt-4 w-full text-sm border border-gray-300 rounded-md"
+                            placeholder="Enter company name"
+                            className="block px-2.5 h-12 w-full placeholder:text-[#777] placeholder:font-medium border-[#e0e0e0] text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none"
                           />
-                          <label className="absolute text-xs text-[#00000099] font-semibold top-2 left-2 bg-white px-2">
-                            Company Name
-                          </label>
                         </div>
 
                         {/* Email */}
-                        <div className="relative">
+                        <div className="relative md:col-span-2">
+                           <label className=" text-sm text-black font-semibold px-2">
+                            Enter Email
+                          </label>
                           <input
                             {...register("email")}
                             type="email"
                             disabled
-                            placeholder=" "
-                            className="block px-2.5 pb-2.5 pt-4 w-full text-sm border border-gray-300 rounded-md"
+                            placeholder=" Emter email"
+                            className="block px-2.5 h-12 border-[#e0e0e0] placeholder:text-[#777] placeholder:font-medium w-full text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none"
                           />
-                          <label className="absolute text-xs text-[#00000099] font-semibold top-2 left-2 bg-white px-2">
-                            Email
-                          </label>
                         </div>
 
                         {/* Gender */}
                         <div className="relative">
+                           <label className=" text-sm text-black font-semibold px-2">
+                           Gender 
+                          </label>
                           <select
                             {...register("gender")}
-                            className="block w-full text-sm border border-gray-300 rounded-md p-3"
+                            className="h-12 border-[#e0e0e0] w-full placeholder:text-[#777] placeholder:font-medium text-black mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2"
                           >
                             <option value="">Select Gender</option>
                             <option value="male">Male</option>
@@ -232,97 +242,116 @@ const MyProfile = () => {
 
                         {/* DOB */}
                         <div className="relative">
+                          <label className=" text-sm text-black font-semibold px-2">
+                           Date of birth
+                          </label>
                           <input
                             {...register("dob")}
                             type="date"
-                            className="block w-full text-sm border border-gray-300 rounded-md p-3"
+                            className="border-[#e0e0e0] w-full placeholder:text-[#777] placeholder:font-medium text-black mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-12"
                           />
                         </div>
                       </div>
                     </div>
 
                     {/* Billing Details */}
-                    <div className="pt-4 border-t">
+                    <div className="pt-8 border-t border-[#ddd]">
                       <h4 className="text-lg font-semibold mb-5">
                         Billing Details
                       </h4>
 
                       <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
                         <div className="relative">
-                          <input
-                            {...register("billingCountry")}
-                            type="text"
-                            value="India"
-                            disabled
-                            className="block w-full text-sm border border-gray-300 rounded-md p-3 bg-gray-100"
-                          />
-                        </div>
-
-                        <div className="relative">
-                          <input
-                            {...register("state")}
-                            type="text"
-                            placeholder=" "
-                            className="block w-full text-sm border border-gray-300 rounded-md p-3"
-                          />
-                        </div>
-
-                        <div className="relative">
-                          <input
-                            {...register("city")}
-                            type="text"
-                            placeholder=" "
-                            className="block w-full text-sm border border-gray-300 rounded-md p-3"
-                          />
-                          <label className="absolute text-xs text-[#00000099] font-semibold top-2 left-2 bg-white px-2">
-                            City
+                          <label className=" text-sm text-black font-semibold px-2">
+                           Country
                           </label>
+                          <select
+                            {...register("billingCountry")}
+                            disabled
+                            className="border-[#e0e0e0] w-full placeholder:text-[#777] placeholder:font-medium text-black mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-12"
+                          >
+                            <option value="India" selected>
+                              India
+                            </option>
+                          </select>
                         </div>
 
                         <div className="relative">
+                          <label className=" text-sm text-black font-semibold px-2">
+                           State
+                          </label>
+                          <select
+                            {...register("state")}
+                            className="border-[#e0e0e0] w-full placeholder:text-[#777] placeholder:font-medium text-black mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-12"
+                          >
+                            <option value="rajasthan" selected>
+                              rajasthan
+                            </option>
+                          </select>
+                        </div>
+
+                        <div className="relative">
+                          <label className=" text-sm text-black font-semibold px-2">
+                           City
+                          </label>
+                          <select
+                            {...register("city")}
+                            className="border-[#e0e0e0] w-full placeholder:text-[#777] placeholder:font-medium text-black mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-12"
+                          >
+                            <option value="jaipur" selected>
+                              jaipur
+                            </option>
+                          </select>
+                        </div>
+
+                        <div className="relative">
+                          <label className=" text-sm text-black font-semibold px-2">
+                          Pincode
+                          </label>
                           <input
                             {...register("pincode")}
                             type="text"
-                            placeholder=" "
-                            className="block w-full text-sm border border-gray-300 rounded-md p-3"
+                            placeholder="Enter pincode "
+                            className="border-[#e0e0e0] w-full placeholder:text-[#777] placeholder:font-medium text-black mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-12"
                           />
-                          <label className="absolute text-xs text-[#00000099] font-semibold top-2 left-2 bg-white px-2">
-                            Pin Code
-                          </label>
                         </div>
 
                         <div className="relative">
+                          <label className=" text-sm text-black font-semibold px-2">
+                          GST no.
+                          </label>
                           <input
                             {...register("gst")}
                             type="text"
-                            placeholder=" "
-                            className="block w-full text-sm border border-gray-300 rounded-md p-3"
+                            placeholder=" Enter GST no."
+                            className="border-[#e0e0e0] w-full placeholder:text-[#777] placeholder:font-medium text-black mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-12"
                           />
-                          <label className="absolute text-xs text-[#00000099] font-semibold top-2 left-2 bg-white px-2">
-                            GST No.
-                          </label>
                         </div>
 
                         <div className="relative">
+                          <label className="text-sm text-black font-semibold px-2">
+                            PAN No.
+                          </label>
                           <input
                             {...register("pan")}
                             type="text"
-                            placeholder=" "
-                            className="block w-full text-sm border border-gray-300 rounded-md p-3"
+                            placeholder="Enter PAN no. "
+                            className="border-[#e0e0e0] w-full placeholder:text-[#777] placeholder:font-medium text-black mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-12"
                           />
-                          <label className="absolute text-xs text-[#00000099] font-semibold top-2 left-2 bg-white px-2">
-                            PAN No.
-                          </label>
+                          
                         </div>
                       </div>
                       <div className="relative mt-6">
+                        <label className="text-sm text-black font-semibold px-2">
+                            Billing address 1 <span className="text-[#dc3545]">*</span>
+                          </label>
                         <input
                           {...register("billingAddress1", {
                             required: "Billing address 1 is required",
                           })}
                           type="text"
-                          placeholder="Enter Billing address"
-                          className={`block w-full text-sm border rounded-md p-3 ${
+                          placeholder="Enter Billing address "
+                          className={`border-[#e0e0e0] w-full placeholder:text-[#777] placeholder:font-medium text-black mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-12 ${
                             errors.billingAddress1
                               ? "border-red-500 focus:ring-red-200"
                               : "border-gray-300 focus:ring-indigo-200"
@@ -337,18 +366,21 @@ const MyProfile = () => {
 
                       {/* Billing Address 2 */}
                       <div className="relative mt-6">
+                         <label className="text-sm text-black font-semibold px-2">
+                            Billing address <span className="text-[#dc3545]">*</span>
+                          </label>
                         <input
                           {...register("billingAddress2")}
                           type="text"
                           placeholder="Enter Billing address 2"
-                          className="block w-full text-sm border border-gray-300 rounded-md p-3"
+                          className="border-[#e0e0e0] w-full placeholder:text-[#777] placeholder:font-medium text-black mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-12"
                         />
                       </div>
                     </div>
 
                     <button
                       type="submit"
-                      className="cursor-pointer w-full bg-orange-500 text-white mt-6 font-semibold py-3 rounded-md hover:bg-orange-600 transition"
+                      className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]"
                     >
                       UPDATE
                     </button>

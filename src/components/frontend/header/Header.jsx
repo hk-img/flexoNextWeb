@@ -95,13 +95,13 @@ const Header = () => {
                         >
                           <div className="py-2">
                             <ul>
-                              <li><a href="/" class="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Profile</a></li>
-                              <li><a href="/" class="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Bookings</a></li>
-                              <li><a href="/" class="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Booking requests</a></li>
-                              <li><a href="/" class="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Visits</a></li>
-                              <li><a href="/" class="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Favorites</a></li>
-                              <li><a href="/" class="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Riviews</a></li>
-                              <li><a href="/" class="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">Logout</a></li>
+                              <li><Link href="/profile-management" class="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Profile</Link></li>
+                              <li><Link href="/booking-management" class="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Bookings</Link></li>
+                              <li><Link href="/booking-request-inquires" class="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Booking requests</Link></li>
+                              <li><Link href="/visit-scheduling" class="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Visits</Link></li>
+                              <li><Link href="/favourite-workspace" class="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Favorites</Link></li>
+                              <li><Link href="/workspace-review-rating-list" class="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Riviews</Link></li>
+                              <li><div onClick={handleLogout} class="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">Logout</div></li>
                             </ul>
                           </div>
                           

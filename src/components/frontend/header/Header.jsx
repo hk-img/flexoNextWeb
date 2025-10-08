@@ -7,10 +7,13 @@ import Link from "next/link";
 import { useAuth } from "@/context/useAuth";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
-import { postAPIAuth } from "@/services/ApiService";
+import { postAPIAuthWithoutBearer } from "@/services/ApiService";
+import { TOKEN_NAME } from "@/constant/constant";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
-  const {token} = useAuth();
+  const router = useRouter();
+  const {token,setToken,setUser} = useAuth();
   const [isOpen,setIsOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [lastScrollTop, setLastScrollTop] = useState(0);
@@ -42,12 +45,17 @@ const Header = () => {
 
   const {mutate: logoutMutate} = useMutation({
     mutationFn: async (payload) => {
-      const response = await postAPIAuth("user/userLogOut",payload,token);
+      const response = await postAPIAuthWithoutBearer("user/userLogOut",payload,token);
       return response.data;
     },
     onSuccess: (data) => {
       if (data.success) {
         toast.success(data.message);
+        setToken("");
+        setUser({});
+        localStorage.removeItem(`${TOKEN_NAME}`);
+        document.cookie = `${TOKEN_NAME}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+        router.push("/");
       } else {
         toast.error(data.message);
       }

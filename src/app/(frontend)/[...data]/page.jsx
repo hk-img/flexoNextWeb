@@ -48,11 +48,12 @@ const page = async ({ params }) => {
     spaceId = spaceIdd;
   }
   const spaceDetails = await getSpaceDetails(spaceId);
+  const spaceDetailsData = spaceDetails?.spaceData;
   const payload = {
     spaceId: spaceId,
-    city: spaceDetails?.spaceData?.contact_city_name,
-    spaceType: spaceDetails?.spaceData?.spaceType,
-    country: spaceDetails?.spaceData?.country,
+    city: spaceDetailsData?.contact_city_name,
+    spaceType: spaceDetailsData?.spaceType,
+    country: spaceDetailsData?.country,
   };
   let detailData = await getDetailData(payload);
   const reviews = await getReviewData(spaceId);
@@ -115,7 +116,7 @@ const page = async ({ params }) => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Detail detailData={detailData} reviewData={reviewData} />
+      <Detail spaceId={spaceId} spaceDetailsData={spaceDetailsData} detailData={detailData} reviewData={reviewData} />
     </>
   );
 };
@@ -136,11 +137,12 @@ export async function generateMetadata({ params }) {
     spaceId = spaceIdd;
   }
   const spaceDetails = await getSpaceDetails(spaceId);
+  const spaceDetailsData = spaceDetails?.spaceData;
   const payload = {
     spaceId: spaceId,
-    city: spaceDetails?.spaceData?.contact_city_name,
-    spaceType: spaceDetails?.spaceData?.spaceType,
-    country: spaceDetails?.spaceData?.country,
+    city: spaceDetailsData?.contact_city_name,
+    spaceType: spaceDetailsData?.spaceType,
+    country: spaceDetailsData?.country,
   };
   let detailData = await getDetailData(payload);
   const spaceType = spaceTypeSlug == "coworking" ? "coworking space" : convertSlugToSmallLetter(spaceTypeSlug || "");

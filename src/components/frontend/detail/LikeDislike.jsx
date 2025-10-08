@@ -76,7 +76,7 @@ const LikeDislike = ({ spaceData, setIsAuthOpen }) => {
           onClick={handleUpvote}
           className="flex items-center space-x-1 p-1 pr-3 border-r border-[#ddd]"
         >
-          <Svg name="thumbUp" className="size-3.5 text-black" />
+          <Svg name={upVote ? "thump-up-fill" : "thumbUp"} className="size-3.5 text-black" />
           {spaceData?.upvote > 0 && (
             <span className="text-[15px]">{spaceData?.upvote}</span>
           )}
@@ -86,7 +86,7 @@ const LikeDislike = ({ spaceData, setIsAuthOpen }) => {
           onClick={handleDownvote}
           className="flex items-center space-x-1 p-1"
         >
-          <Svg name="thumbDown" className="size-3.5 text-black" />
+          <Svg name={downVote ? "thumb-down-fill" : "thumbDown"}className="size-3.5 text-black" />
           {spaceData?.downvote > 0 && (
             <span className="text-[15px]">{spaceData?.downvote}</span>
           )}

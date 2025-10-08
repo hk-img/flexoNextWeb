@@ -1,7 +1,7 @@
 "use client";
 import Svg from "@/components/svg";
 import Image from "next/image";
-import React from "react";
+import React, { useMemo } from "react";
 import { useEffect, useState } from "react";
 import EmblaCarousel from "../emblaCarousel/EmblaCarousel";
 import ProductCard from "../productCard/ProductCard";
@@ -21,16 +21,13 @@ import ScheduleVisitPopup from "./scheduleVisitPopup/ScheduleVisitPopup";
 import { set } from "zod";
 import { useAuth } from "@/context/useAuth";
 import BuyPassPopup from "./buyPassPopup/BuyPassPopup";
+import { useQuery } from "@tanstack/react-query";
+import { getApi } from "@/services/ApiService";
 
-const Detail = ({ detailData, reviewData }) => {
-  const {token} = useAuth();
-  const spaceData = detailData?.data;
-  const type = getTypeOfSpaceByWorkSpace(spaceData?.spaceType || "");
+const Detail = ({ spaceId,spaceDetailsData,detailData,reviewData }) => {
+  const {token,user} = useAuth();
   const [showAll, setShowAll] = useState(false);
   const [open, setOpen] = useState(null);
-  const displayedFacilities = showAll
-    ? spaceData?.facilities
-    : spaceData?.facilities?.slice(0, 3);
   const [isFixed, setIsFixed] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
@@ -59,23 +56,42 @@ const Detail = ({ detailData, reviewData }) => {
     }
   };
   const toggle = (id) => {
-    setOpen(open === id ? null : id); // close if same clicked, else open new
+    setOpen(open === id ? null : id); 
   };
 
   function convertTo12Hour(time) {
     if (!time) return "";
-
-    // Agar time string "HH:mm" format me hai
     const [hourStr, minuteStr] = time.split(":");
     let hour = parseInt(hourStr, 10);
     const minute = minuteStr || "00";
     const ampm = hour >= 12 ? "PM" : "AM";
-
-    // 24h -> 12h conversion
     hour = hour % 12 || 12;
-
     return `${hour}:${minute} ${ampm}`;
   }
+
+   const { data: spaceDeatil } = useQuery({
+    queryKey: ["space-detail",spaceId,spaceDetailsData,user?.id],
+    queryFn: async () => {
+      let query = ""
+      if(user?.id){
+        query = `&userId=${user?.id}`
+      }
+      const res = await getApi(`/spaces/details?spaceId=${spaceId}&city=${spaceDetailsData?.contact_city_name}&spaceType=${spaceDetailsData?.spaceType}&country=${spaceDetailsData?.country}${query}`);
+      return res.data;
+    },
+    keepPreviousData: true,
+    initialData: detailData
+  });
+
+  const spaceData = useMemo(()=>{
+    return spaceDeatil?.data;
+  },[spaceDeatil]);
+
+  const type = getTypeOfSpaceByWorkSpace(spaceData?.spaceType || "");
+  const displayedFacilities = showAll
+    ? spaceData?.facilities
+    : spaceData?.facilities?.slice(0, 3);
+  console.log({spaceDeatil},"ERtyretyry");
 
   const handleScheduleVisit = ()=>{
     if(!token){

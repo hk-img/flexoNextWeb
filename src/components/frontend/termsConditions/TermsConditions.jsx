@@ -4,7 +4,7 @@ import Link from "next/link";
 const TermsConditions = () => {
   return (
     <>
-      <section className="bg-[#808080] md:h-64 flex justify-center items-center relative w-full lg:mt-[82px] sm:mt-[62px] mt-[63px]">
+      <section className="bg-[#808080] h-64 flex justify-center items-center relative w-full lg:mt-[82px] sm:mt-[62px] mt-[63px]">
         <div className="container mx-auto text-center md:px-0 px-[15px]">
           <div className="w-full">
             <h1 className="text-[28px] text-white font-semibold">
@@ -13,10 +13,10 @@ const TermsConditions = () => {
           </div>
         </div>
       </section>
-      <section className="bg-white md:py-16 py-10">
-        <div className="container mx-auto md:px-0 px-[15px]">
-          <div className="flex flex-col gap-6">
-            <p className="text-sm text-[#777] font-normal">
+      <section className="bg-white md:py-16 py-10 " >
+        <div className=" max-w:[1224px] w-[92%] mx-auto px-[15px]">
+          <div className="flex flex-col gap-3">
+            <p className="text-sm 2xl:text-base text-[#777] font-normal leading-[1.5]">
               Welcome to{" "}
               <Link
                 href="flexospaces.com"
@@ -33,7 +33,7 @@ const TermsConditions = () => {
               and conditions as stated in our Privacy Policy (please refer to
               the Privacy Policy section below for more information).
             </p>
-            <p className="text-sm text-[#777] font-normal">
+            <p className="text-sm 2xl:text-base text-[#777] font-normal">
               We reserve the right to change this Agreement from time to time
               with/without notice. You acknowledge and agree that it is your
               responsibility to review this Agreement periodically to
@@ -51,7 +51,7 @@ const TermsConditions = () => {
               <h3 className="text-[#000e54] text-lg underline font-semibold">
                 Scope of Agreement
               </h3>
-              <p className="text-sm text-[#777] font-normal">
+              <p className="text-sm 2xl:text-base text-[#777] font-normal">
                 These Terms govern your use of the Platform, including browsing,
                 enquiries, communications, and bookings.
               </p>
@@ -60,7 +60,7 @@ const TermsConditions = () => {
               <h3 className="text-[#000e54] text-lg underline font-semibold">
                 Responsible Use and Conduct
               </h3>
-              <ul className="flex flex-col gap-3 text-sm pl-6 text-[#777] list-disc font-normal">
+              <ul className="flex flex-col gap-3 text-sm pl-12 text-[#777] list-disc font-normal text-[13px]">
                 <li>
                   You must provide accurate, current, and complete information
                   during registration or enquiry submission.
@@ -91,7 +91,7 @@ const TermsConditions = () => {
               <h3 className="text-[#000e54] text-lg underline font-semibold">
                 Privacy
               </h3>
-              <p className="text-sm text-[#777] font-normal">
+              <p className="text-sm 2xl:text-base text-[#777] font-normal">
                 Flexo strongly believes in protecting user privacy. Please refer
                 to our Privacy Policy, incorporated herein by reference.
               </p>
@@ -100,13 +100,13 @@ const TermsConditions = () => {
               <h3 className="text-[#000e54] text-lg underline font-semibold">
                 Customer Communication
               </h3>
-              <p className="text-sm text-[#777] font-normal">
+              <p className="text-sm 2xl:text-base text-[#777] font-normal">
                 By providing your contact information, you consent to receive
                 communications from Flexo via email, phone calls, SMS, and
                 WhatsApp, even if your number is registered under DND/NCPR under
                 TRAI.
               </p>
-              <p className="text-sm text-[#777] font-normal">
+              <p className="text-sm 2xl:text-base text-[#777] font-normal">
                 You may opt out by:
               </p>
               <ul className="flex flex-col gap-3 text-sm pl-6 text-[#777] list-decimal font-normal">
@@ -114,6 +114,182 @@ const TermsConditions = () => {
                 <li>Emailing us at hello@flexospaces.com</li>
                 <li>Communicating your preference during calls.</li>
               </ul>
+            </div>
+            <div className="flex flex-col gap-3">
+              <h3 className="text-[#000e54] text-lg underline font-semibold">
+                Services & Space Bookings
+              </h3>
+              <p className="text-sm 2xl:text-base text-[#777] font-normal">The Platform enables you to search for, enquire about, and book workspaces (including short-term bookings such as hourly, daily, weekly, monthly, day passes, and virtual offices).</p>
+              <ul className="flex flex-col gap-3 text-sm pl-12 text-[#777] list-disc font-normal text-[13px]">
+                <li>
+                  Flexo acts as a broker and intermediary and is not the operator of the spaces.
+                </li>
+                <li>
+                  After you submit an enquiry or booking request, Flexo may share your details with internal teams, workspace partners, and broker partners to provide support and fulfillment.
+                </li>
+                <li>
+                  Workspace providers may contact you directly.
+                </li>
+              </ul>
+              <p className="text-sm 2xl:text-base text-[#777] font-normal">If you book a space, you must:</p>
+              <ul className="flex flex-col gap-3 text-sm pl-12 text-[#777] list-disc font-normal text-[13px]">
+                <li>
+                  Comply with the terms of use, rules, and payment obligations set by the host/provider.
+                </li>
+                <li>
+                  After you submit an enquiry or booking request, Flexo may share your details with internal teams, workspace partners, and broker partners to provide support and fulfillment.
+                </li>
+              </ul>
+            </div>
+            <div className="flex flex-col gap-3">
+              <h3 className="text-[#000e54] text-lg underline font-semibold">
+                Refund Policy
+              </h3>
+              <p className="text-sm 2xl:text-base text-[#777] font-normal">
+                All refund requests, if any, will be handled per our Refund Policy available on the website
+              </p>
+            </div>
+            <div className="flex flex-col gap-3">
+              <h3 className="text-[#000e54] text-lg underline font-semibold">
+                User Content & Posting
+              </h3>
+              <p className="text-sm 2xl:text-base text-[#777] font-normal">By posting or submitting content on the Platform:</p>
+              <ul className="flex flex-col gap-3 text-sm pl-12 text-[#777] list-disc font-normal text-[13px]">
+                <li>
+                  You grant Flexo a worldwide, royalty-free, perpetual license to use, display, publish, adapt, or distribute your content
+                </li>
+                <li>
+                  You must not post unlawful, defamatory, infringing, obscene, misleading, or unauthorized promotional content.
+                </li>
+                <li>
+                  Flexo reserves the right to moderate or remove user content at its sole discretion.
+                </li>
+              </ul>
+            </div>
+            <div className="flex flex-col gap-3">
+              <h3 className="text-[#000e54] text-lg underline font-semibold">
+                Intellectual Property
+
+              </h3>
+              <ul className="flex flex-col gap-3 text-sm pl-12 text-[#777] list-disc font-normal text-[13px]">
+                <li>
+                  All Platform content (text, images, design, software, trademarks, trade dress) is owned by or licensed to Flexo Proptech Pvt. Ltd
+                </li>
+                <li>
+                  You are granted a limited, non-exclusive, non-transferable license to use Platform content for <span className="font-bold">personal, non-commercial purposes.</span>
+                </li>
+              </ul>
+            </div>
+            <div className="flex flex-col gap-3">
+              <h3 className="text-[#000e54] text-lg underline font-semibold">
+                Third-Party Links
+              </h3>
+              <ul className="flex flex-col gap-3 text-sm pl-12 text-[#777] list-disc font-normal text-[13px]">
+                <li>
+                  Flexo may display links to third-party sites for convenience.
+
+                </li>
+                <li>
+                  Flexo disclaims liability for content, accuracy, or transactions occurring on third-party sites. Use at your own risk
+                </li>
+              </ul>
+            </div>
+            <div className="flex flex-col gap-3">
+              <h3 className="text-[#000e54] text-lg underline font-semibold">
+                Domestic Use
+              </h3>
+              <p className="text-sm 2xl:text-base text-[#777] font-normal">Flexo makes no representation that Platform services or content are appropriate for use outside India. Users who access from other jurisdictions do so at their own risk and are responsible for compliance with local laws.</p>
+            </div>
+            <div className="flex flex-col gap-3">
+              <h3 className="text-[#000e54] text-lg underline font-semibold">
+                Indemnity
+              </h3>
+              <p className="text-sm 2xl:text-base text-[#777] font-normal">You agree to indemnify and hold harmless Flexo Proptech Pvt. Ltd., its directors, officers, employees, and agents from any claims, losses, damages, liabilities, or expenses (including attorneys' fees) arising from:</p>
+              <ul className="flex flex-col gap-3 text-sm pl-12 text-[#777] list-disc font-normal text-[13px]">
+                <li>
+                  Your breach of these Terms
+                </li>
+                <li>
+                 Your misuse of the Platform
+                </li>
+                <li>
+                 Your violation of any third-party rights or applicable laws.
+                </li>
+              </ul>
+            </div>
+             <div className="flex flex-col gap-3">
+              <h3 className="text-[#000e54] text-lg underline font-semibold">
+                Disclaimer of Warranties
+              </h3>
+              <ul className="flex flex-col gap-3 text-sm pl-12 text-[#777] list-disc font-normal text-[13px]">
+                <li>
+                  The Platform and its services are provided "as is" and "as available".
+                </li>
+                <li>
+                 Flexo disclaims all warranties of any kind, express or implied, including merchantability, fitness for purpose, or non-infringement
+                </li>
+              </ul>
+            </div>
+            <div className="flex flex-col gap-3">
+              <h3 className="text-[#000e54] text-lg underline font-semibold">
+                Limitation of Liability
+              </h3>
+              <ul className="flex flex-col gap-3 text-sm pl-12 text-[#777] list-disc font-normal text-[13px]">
+                <li>
+                  Flexo’s total liability shall not exceed the amount paid by you, if any, for use of the Platform.
+                </li>
+                <li>
+                 Flexo shall not be liable for indirect, incidental, special, or consequential damages.
+                </li>
+              </ul>
+            </div>
+            <div className="flex flex-col gap-3">
+              <h3 className="text-[#000e54] text-lg underline font-semibold">
+                Termination
+              </h3>
+              <p className="text-sm 2xl:text-base text-[#777] font-normal">Flexo may terminate or suspend your access to the Platform at its sole discretion for breach of these Terms. Upon termination, all rights granted to you cease immediately.</p>
+            </div>
+            <div className="flex flex-col gap-3">
+              <h3 className="text-[#000e54] text-lg underline font-semibold">
+                Force Majeure
+              </h3>
+              <p className="text-sm 2xl:text-base text-[#777] font-normal">Flexo shall not be liable for any delay or failure in performance due to causes beyond its reasonable control, including acts of God, war, pandemic, strikes, lockouts, or Internet disruptions.</p>
+            </div>
+            <div className="flex flex-col gap-3">
+              <h3 className="text-[#000e54] text-lg underline font-semibold">
+                Governing Law and Jurisdiction
+              </h3>
+              <p className="text-sm 2xl:text-base text-[#777] font-normal">This Agreement is governed by and construed under the laws of India, with exclusive jurisdiction in the courts of Mumbai, Maharashtra. You waive any objection to jurisdiction, venue, or inconvenient forum.</p>
+            </div>
+            <div className="flex flex-col gap-3">
+              <h3 className="text-[#000e54] text-lg underline font-semibold">
+                Statute of Limitations
+              </h3>
+              <p className="text-sm 2xl:text-base text-[#777] font-normal">Any claim arising from use of the Platform must be brought within one (1) year from the cause of action.</p>
+            </div>
+            <div className="flex flex-col gap-3">
+              <h3 className="text-[#000e54] text-lg underline font-semibold">
+                Waiver of Class Actions
+              </h3>
+              <p className="text-sm 2xl:text-base text-[#777] font-normal">You waive any right to pursue claims as part of a class action.</p>
+            </div>
+            <div className="flex flex-col gap-3">
+              <h3 className="text-[#000e54] text-lg underline font-semibold">
+                Assignment
+              </h3>
+              <p className="text-sm 2xl:text-base text-[#777] font-normal">You may not assign your rights or obligations under these Terms without prior consent. Flexo may assign its rights at its discretion.</p>
+            </div>
+            <div className="flex flex-col gap-3">
+              <h3 className="text-[#000e54] text-lg underline font-semibold">
+                Entire Agreement
+              </h3>
+              <p className="text-sm 2xl:text-base text-[#777] font-normal">These Terms constitute the entire agreement between you and Flexo regarding the Platform, superseding any prior agreements.</p>
+            </div>
+            <div className="flex flex-col gap-3">
+              <h3 className="text-[#000e54] text-lg underline font-semibold">
+                Contact Information
+              </h3>
+              <p className="text-sm 2xl:text-base text-[#777] font-normal">If you have any questions about these Terms, email: hello@flexospaces.com</p>
             </div>
           </div>
         </div>

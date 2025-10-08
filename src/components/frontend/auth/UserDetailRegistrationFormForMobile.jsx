@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { postAPI } from "@/services/ApiService";
 import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/context/useAuth";
+import Svg from "@/components/svg";
 
 const schema = z.object({
   firstName: z.string().min(1, "First name is required"),

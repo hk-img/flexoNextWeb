@@ -68,7 +68,7 @@ const TestimonialCta = ({setIsOpen}) => {
                     {testimonials.map((t, idx) => (
                       <div
                         key={idx}
-                        className="embla__slide shrink-0 lg:px-4 sm:px-3 px-1 basis-full py-10"
+                        className="embla__slide shrink-0 lg:px-4 sm:px-3 px-1 basis-full pt-8 pb-6"
                       >
                         <div className="relative flex flex-col items-start gap-y-2">
                           <div className="flex items-center space-x-4">
@@ -82,7 +82,7 @@ const TestimonialCta = ({setIsOpen}) => {
 
                             <div>
                               <span className="text-[#f76900] text-4xl font-bold opacity-30 mb-4 -mt-10 block">
-                                <Svg name="quots" className="w-8 h-8 rotate-180" />
+                                <Svg name="quots" className="w-7 h-7 rotate-180" />
                               </span>
                               <h5 className="text-base text-[#060D45] font-semibold">
                                 {t.name}, 
@@ -99,7 +99,7 @@ const TestimonialCta = ({setIsOpen}) => {
                             </div>
                           </div>
 
-                          <p className="text-[#303030] md:text-sm/6 text-[13px] font-normal line-clamp-5 transition-all duration-500 cursor-default">
+                          <p className="text-[#303030] md:text-sm text-[13px] font-normal  leading-[1.6] line-clamp-5 transition-all duration-500 cursor-default">
                             {t.review}
                           </p>
                         </div>

@@ -71,42 +71,47 @@ const Header = () => {
                 </Link>
               </div>
               {
-                !token ? (
+                token ? (
                   <>
                     <div>
-                      <div class="relative">
+                      <div className="group relative z-[9999]">
                           
-                        <input type="checkbox" id="user-dropdown" class="peer hidden" />
+                        <input type="checkbox" id="user-dropdown" className="peer hidden" />
                           <label
-                              for="user-dropdown"
-                              class="fixed inset-0 hidden peer-checked:block z-10 cursor-default"
+                              htmlFor="user-dropdown"
+                              className="fixed inset-0 hidden peer-checked:block z-10 cursor-default"
                             ></label>
                         <label
-                          for="user-dropdown"
-                          class="flex items-center justify-center border hover:bg-[#f76900] bg-[#001740] text-white w-[30px] h-[30px] rounded-full cursor-pointer transition"
+                          htmlFor="user-dropdown"
+                          className="flex items-center justify-center border hover:bg-[#f76900] bg-[#001740] text-white w-[30px] h-[30px] rounded-full cursor-pointer transition"
                         >
                          <Svg name="user" className="size-[15px]" />
                         </label>
-
+                      
                         <div
-                          class="absolute right-0 top-13 w-[250px] bg-white text-black rounded-sm 
+                          className="absolute right-0 top-13 w-[250px] bg-white text-black rounded-sm 
                                 opacity-0 scale-95 pointer-events-none transition-all duration-200 shadow-[10px_10px_20px_#0000006b]
                                 peer-checked:opacity-100 peer-checked:scale-100 peer-checked:pointer-events-auto"
                         >
                           <div className="py-2">
                             <ul>
-                              <li><Link href="/profile-management" class="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Profile</Link></li>
-                              <li><Link href="/booking-management" class="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Bookings</Link></li>
-                              <li><Link href="/booking-request-inquires" class="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Booking requests</Link></li>
-                              <li><Link href="/visit-scheduling" class="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Visits</Link></li>
-                              <li><Link href="/favourite-workspace" class="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Favorites</Link></li>
-                              <li><Link href="/workspace-review-rating-list" class="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Riviews</Link></li>
-                              <li><div onClick={handleLogout} class="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">Logout</div></li>
+                              <li><Link href="/profile-management" className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Profile</Link></li>
+                              <li><Link href="/booking-management" className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Bookings</Link></li>
+                              <li><Link href="/booking-request-inquires" className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Booking requests</Link></li>
+                              <li><Link href="/visit-scheduling" className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Visits</Link></li>
+                              <li><Link href="/favourite-workspace" className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Favorites</Link></li>
+                              <li><Link href="/workspace-review-rating-list" className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Riviews</Link></li>
+                              <li><div onClick={handleLogout} className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">Logout</div></li>
                             </ul>
                           </div>
                           
                         </div>
+                          <label
+                        htmlFor="user-dropdown"
+                        className="fixed inset-0 hidden peer-checked:block z-[90] cursor-default"
+                      ></label>
                       </div>
+                     
                     </div>
                   </>
                 ):(

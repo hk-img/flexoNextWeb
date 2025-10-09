@@ -96,7 +96,9 @@ const LikeDislike = ({ spaceData, setIsAuthOpen, existingVote }) => {
         >
           <Svg
             name={voteData?.upvote == 1 ? "thump-up-fill" : "thumbUp"}
-            className="size-3.5 text-black"
+            className={`size-3.5 ${
+              voteData?.upvote == 1 ? "text-[#f76900]" : "text-black"
+            }`}
           />
           {spaceData?.upvote > 0 && (
             <span className="text-[15px]">{upVoteCount}</span>
@@ -109,7 +111,9 @@ const LikeDislike = ({ spaceData, setIsAuthOpen, existingVote }) => {
         >
           <Svg
             name={voteData?.downvote == 1 ? "thumb-down-fill" : "thumbDown"}
-            className="size-3.5 text-black"
+            className={`size-3.5 ${
+              voteData?.downvote == 1 ? "text-[#f76900]" : "text-black"
+            }`}
           />
         </div>
       </div>

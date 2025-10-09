@@ -29,7 +29,7 @@ const BookingDetail = () => {
                 </div>
                 <div className="flex gap-6 mt-8 pb-10 border-b border-gray-200">
                   <div className="bg-white rounded-lg p-6  flex md:flex-row flex-col gap-4 w-full">
-                    <Image width={200} height={150} src="/images/noida.webp" alt="booking space image" className="md:w-[200px] w-full h-[150px] rounded-lg" />
+                    <Image width={200} height={150} src="/images/noida.webp" alt="booking space image" className="w-[200px]  h-[150px] rounded-lg" />
                     <div className="flex flex-col space-y-2 justify-center">
                       <h3 className="text-[26px] font-medium text-black">event space</h3>
                       <p className="text-sm text-[#888888] 2xl:text-base">

@@ -13,8 +13,8 @@ import { useRouter } from "next/navigation";
 
 const Header = () => {
   const router = useRouter();
-  const {token,setToken,setUser} = useAuth();
-  const [isOpen,setIsOpen] = useState(false);
+  const { token, setToken, setUser } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [lastScrollTop, setLastScrollTop] = useState(0);
   const delta = 50;
@@ -43,9 +43,13 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollTop]);
 
-  const {mutate: logoutMutate} = useMutation({
+  const { mutate: logoutMutate } = useMutation({
     mutationFn: async (payload) => {
-      const response = await postAPIAuthWithoutBearer("user/userLogOut",payload,token);
+      const response = await postAPIAuthWithoutBearer(
+        "user/userLogOut",
+        payload,
+        token
+      );
       return response.data;
     },
     onSuccess: (data) => {
@@ -63,23 +67,24 @@ const Header = () => {
     onError: (error) => {
       toast.error(error.message);
     },
-  })
+  });
 
-  const handleLogout = ()=>{
-    const payload = {
-
-    };
+  const handleLogout = () => {
+    const payload = {};
     logoutMutate(payload);
-  }
+  };
 
   return (
     <>
       <header
-        className={`fixed top-0 z-50 w-full transition-transform duration-700 ${
-          hidden ? "-translate-y-full " : "translate-y-0 shadow-[0_0_12px_0_#0000004d]"
+        className={`fixed  top-0 z-50 w-full transition-transform duration-700 ${
+          hidden
+            ? "-translate-y-full "
+            : "translate-y-0 shadow-[0_0_12px_0_#0000004d]"
         } bg-white`}
       >
-        <div className="container w-full mx-auto lg:py-5 sm:py-[20.5px] py-[17px]">
+        <div className="container relative w-full mx-auto group lg:py-5 sm:py-[20.5px] py-[17px]">
+          <input type="checkbox" id="user-toggle" className="hidden" />
           <div className="flex justify-between items-center">
             <div className="px-[15px]">
               <Link href="/">
@@ -97,68 +102,38 @@ const Header = () => {
 
             <div className="lg:flex hidden items-center gap-5 px-[15px]">
               <div>
-                <Link href="/list-with-us" className="bg-[#f76900] block border-[2px] border-[#f76900] rounded-[15px] xl:text-[15px] lg:text-sm text-white py-[8px] px-5.5">
+                <Link
+                  href="/list-with-us"
+                  className="bg-[#f76900] block border-[2px] border-[#f76900] rounded-[15px] xl:text-[15px] lg:text-sm text-white py-[8px] px-5.5"
+                >
                   List Your Space
                 </Link>
               </div>
-              {
-                token ? (
-                  <>
-                    <div>
-                      <div className="group relative z-[9999]">
-                          
-                        <input type="checkbox" id="user-dropdown" className="peer hidden" />
-                          <label
-                              htmlFor="user-dropdown"
-                              className="fixed inset-0 hidden peer-checked:block z-10 cursor-default"
-                            ></label>
-                        <label
-                          htmlFor="user-dropdown"
-                          className="flex items-center justify-center border hover:bg-[#f76900] bg-[#001740] text-white w-[30px] h-[30px] rounded-full cursor-pointer transition"
-                        >
-                         <Svg name="user" className="size-[15px]" />
-                        </label>
-                      
-                        <div
-                          className="absolute right-0 top-13 w-[250px] bg-white text-black rounded-sm 
-                                opacity-0 scale-95 pointer-events-none transition-all duration-200 shadow-[10px_10px_20px_#0000006b]
-                                peer-checked:opacity-100 peer-checked:scale-100 peer-checked:pointer-events-auto"
-                        >
-                          <div className="py-2">
-                            <ul>
-                              <li><Link href="/profile-management" className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Profile</Link></li>
-                              <li><Link href="/booking-management" className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Bookings</Link></li>
-                              <li><Link href="/booking-request-inquires" className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Booking requests</Link></li>
-                              <li><Link href="/visit-scheduling" className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Visits</Link></li>
-                              <li><Link href="/favourite-workspace" className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Favorites</Link></li>
-                              <li><Link href="/workspace-review-rating-list" className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">My Riviews</Link></li>
-                              <li><div onClick={handleLogout} className="cursor-pointer block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white">Logout</div></li>
-                            </ul>
-                          </div>
-                          
-                        </div>
-                          <label
-                        htmlFor="user-dropdown"
-                        className="fixed inset-0 hidden peer-checked:block z-[90] cursor-default"
-                      ></label>
-                      </div>
-                     
-                    </div>
-                  </>
-                ):(
-                  <div>
-                    <div
-                      className="flex items-center gap-1 border-[2px] border-[#ffe9d8] bg-[#f7690012] text-[#f76900] rounded-[15px] py-[8px] px-5.5 cursor-pointer"
-                      onClick={() => setIsOpen(true)}
+              {token ? (
+                <>
+                  <div className="relative group z-[9999]">
+                    <label
+                      htmlFor="user-toggle"
+                      className="flex items-center justify-center border hover:bg-[#f76900] bg-[#001740] text-white 
+                                      w-[30px] h-[30px] rounded-full cursor-pointer transition"
                     >
-                      <span>
-                        <Svg name="logIn" className="size-[22px]" />
-                      </span>
-                      <span className="xl:text-[15px] lg:text-sm">Sign in</span>
-                    </div>
+                      <Svg name="user" className="size-[15px]" />
+                    </label>
                   </div>
-                )
-              }
+                </>
+              ) : (
+                <div>
+                  <div
+                    className="flex items-center gap-1 border-[2px] border-[#ffe9d8] bg-[#f7690012] text-[#f76900] rounded-[15px] py-[8px] px-5.5 cursor-pointer"
+                    onClick={() => setIsOpen(true)}
+                  >
+                    <span>
+                      <Svg name="logIn" className="size-[22px]" />
+                    </span>
+                    <span className="xl:text-[15px] lg:text-sm">Sign in</span>
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="flex lg:hidden items-center gap-[15px] px-[15px]">
@@ -168,16 +143,89 @@ const Header = () => {
               <Link href="/list-with-us">
                 <Svg name="homePlus" className="size-[18px] text-black" />
               </Link>
-              <div className="cursor-pointer" onClick={() => setIsOpen(true)}>
-                <Svg name="logOut" className="size-[22px] text-black" />
-              </div>
+              {token ? (
+                <label htmlFor="user-toggle">
+                  <Svg
+                    name="logOut"
+                    className="size-[22px] text-black cursor-pointer"
+                  />
+                </label>
+              ) : (
+                <div className="cursor-pointer" onClick={() => setIsOpen(true)}>
+                  <Svg name="logOut" className="size-[22px] text-black" />
+                </div>
+              )}
             </div>
           </div>
+          <div className="absolute md:right-0 right-3 z-60 md:top-20 top-15 w-[250px] bg-white text-black rounded-sm opacity-0 scale-95 pointer-events-none transition-all duration-200 shadow-[10px_10px_20px_#0000006b] group-has-[#user-toggle:checked]:opacity-100 group-has-[#user-toggle:checked]:scale-100 group-has-[#user-toggle:checked]:pointer-events-auto">
+            <div className="py-2">
+              <ul>
+                <li>
+                  <Link
+                    href="/profile-management"
+                    className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
+                  >
+                    My Profile
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/booking-management"
+                    className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
+                  >
+                    My Bookings
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/booking-request-inquires"
+                    className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
+                  >
+                    My Booking Requests
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/visit-scheduling"
+                    className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
+                  >
+                    My Visits
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/favourite-workspace"
+                    className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
+                  >
+                    My Favorites
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/workspace-review-rating-list"
+                    className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
+                  >
+                    My Reviews
+                  </Link>
+                </li>
+                <li>
+                  <div
+                    onClick={handleLogout}
+                    className="cursor-pointer block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
+                  >
+                    Logout
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <label
+            htmlFor="user-toggle"
+            className="fixed inset-0 hidden group-has-[#user-toggle:checked]:block z-10 cursor-default"
+          ></label>
         </div>
       </header>
-      {
-        isOpen && <Auth isOpen={isOpen} setIsOpen={setIsOpen} />
-      }
+      {isOpen && <Auth isOpen={isOpen} setIsOpen={setIsOpen} />}
     </>
   );
 };

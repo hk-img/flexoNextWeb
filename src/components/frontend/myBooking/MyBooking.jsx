@@ -100,7 +100,7 @@ const MyBooking = () => {
                       <Image width={200} height={150} src="/images/noida.webp" alt="booking space image" className="md:w-[200px] w-full h-[150px] rounded-lg" />
                     </div>
                      <div
-                        class="absolute bottom-8 left-0 bg-[#f76900] text-white text-sm px-3 py-1
+                        className="absolute bottom-8 left-0 bg-[#f76900] text-white text-sm px-3 py-1
                           before:block before:absolute before:top-0 before:right-[-10px] before:w-[10px] before:h-0
                           before:border-t-[15px] before:!border-t-[#f76900] before:border-transparent before:border-l-0 before:border-r-[10px]
                           after:block after:absolute after:bottom-0 after:right-[-10px] after:w-[10px] after:h-0
@@ -111,37 +111,37 @@ const MyBooking = () => {
                   </div>
                   <div>
                     <div className="flex flex-col text-gray-500 text-sm space-y-3">
-                      <h2 className="text-black underline">Event Space</h2>
+                      <h2 className="text-black text-lg 2xl:text-xl font-semibold underline">Event Space</h2>
                       <div className="flex items-center gap-1">
-                        <Svg name="location2" className="size-4 text-[#f76900]"/>
-                        <h2 className="text-black text-lg ">Sahibpur, Noida</h2>
+                        <Svg name="location2" className="size-5 text-[#f76900]"/>
+                        <h2 className="text-black text-sm 2xl:text-base font-medium ">Sahibpur, Noida</h2>
                       </div>
                       <div className="flex items-center gap-5">
                         <div className="flex items-center gap-1">
-                          <Svg name="clock" className="size-3 text-[#f76900]"/>
-                          <h3 className="text-black text-sm font-medium">0.5</h3>
+                          <Svg name="clock" className="size-[18px] text-[#f76900]"/>
+                          <h3 className="text-black text-sm 2xl:text-base font-medium">0.5</h3>
                         </div>
                         <span className="size-2.5 rounded-full bg-[#ddd]"></span>
                          <div className="flex items-center gap-1">
-                          <Svg name="scaleRuler" className="size-3 text-[#f76900]"/>
-                          <h3 className="text-black  text-sm font-medium">4554 sqft</h3>
+                          <Svg name="scaleRuler" className="size-[15px] text-[#f76900]"/>
+                          <h3 className="text-black  text-sm 2xl:text-base font-medium">4554 sqft</h3>
                         </div>
                       </div>
                       <div className="flex items-center gap-5">
                         <div className="flex items-center gap-1 border-r border-[#f76900] pr-4">
-                          <Svg name="calender" className="size-3 text-[#f76900]"/>
-                          <h3 className="text-black text-sm font-medium">20-10-2025</h3>
+                          <Svg name="calender" className="size-[18px] text-[#f76900]"/>
+                          <h3 className="text-black text-sm 2xl:text-base font-medium">20-10-2025</h3>
                         </div>
                         <span className="border-r text-black text-sm font-medium border-[#f76900] pr-4">1 Day</span>
-                         <span className=" text-black text-sm font-medium">24hrs</span>
+                         <span className=" text-black text-sm 2xl:text-base font-medium">24hrs</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <p className="font-semibold">Booking Status : </p>
+                        <p className="font-medium text-sm 2xl:text-base">Booking Status : </p>
                         <div className="flex items-center gap-1">
                           <span>
-                            <Svg name="checkFill" className="size-5 text-[#2c864f]"/>
+                            <Svg name="checkFill" className="size-[22px] text-[#05ac34]"/>
                           </span>
-                          <h6 className="text-[#2c864f] font-semibold">confirmed</h6>
+                          <h6 className="text-[#05ac34] text-sm 2xl:text-base font-semibold">confirmed</h6>
                         </div>
                       </div>
                     </div>

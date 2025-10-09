@@ -125,6 +125,30 @@ export const postAPIFormData = async (url, params, token) => {
   }
 };
 
+export const postAPIFormDataWithoutBearer = async (url, params, token) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/${url}`, params, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: token ? token : "",
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log("error?.response?.status", error);
+
+    if (
+      error?.status === 401 || error?.response?.data?.status === 401 ||
+      error?.response?.data?.message === "Invalid token"
+    ) {
+      localStorage.removeItem(TOKEN_NAME);
+      document.cookie = `${TOKEN_NAME}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
+      window.location.href = "/";
+    }
+    throw error;
+  }
+};
+
 export const postAPI = async (url, params) => {
   try {
     const response = await axios.post(`${BASE_URL}/${url}`, params, {

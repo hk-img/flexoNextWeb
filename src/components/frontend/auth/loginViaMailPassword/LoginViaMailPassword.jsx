@@ -15,7 +15,7 @@ const schema = z.object({
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
-const LoginViaMailPassword = ({ setIsOpen, setIsShowMobile }) => {
+const LoginViaMailPassword = ({ setIsOpen, setIsShowMobile,setIsShowOtp,setShowForgotPasswordOtp,setEmail }) => {
   const { setToken } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [isForgetPassword, setIsForgetPassword] = useState(false);
@@ -35,10 +35,11 @@ const LoginViaMailPassword = ({ setIsOpen, setIsShowMobile }) => {
     },
     onSuccess: (data) => {
       if (data.success) {
-        toast.success(data.message);
-        setToken(data.data.accessToken);
+        toast.success(data?.message || data?.msg);
+        setToken(data?.accessToken);
+        setIsOpen(false);
       } else {
-        toast.error(data.message);
+        toast.error(data?.message || data?.msg);
       }
     },
     onError: (error) => {
@@ -191,7 +192,7 @@ const LoginViaMailPassword = ({ setIsOpen, setIsShowMobile }) => {
 
               <button
                 type="submit"
-                className="bg-[#f76900] text-white h-12 rounded-md font-semibold hover:bg-orange-600 transition"
+                className="cursor-pointer bg-[#f76900] text-white h-12 rounded-md font-semibold hover:bg-orange-600 transition"
                 disabled={isPending}
               >
                 {isPending? "Loading...": "Login"}
@@ -200,7 +201,7 @@ const LoginViaMailPassword = ({ setIsOpen, setIsShowMobile }) => {
           </div>
         </>
       ) : (
-        <ForgetPassword setIsForgetPassword={setIsForgetPassword} />
+        <ForgetPassword setIsForgetPassword={setIsForgetPassword} setIsShowOtp={setIsShowOtp} setShowForgotPasswordOtp={setShowForgotPasswordOtp} setEmail={setEmail}/>
       )}
     </div>
   );

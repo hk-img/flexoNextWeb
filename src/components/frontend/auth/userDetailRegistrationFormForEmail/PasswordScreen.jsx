@@ -13,9 +13,12 @@ import Svg from "@/components/svg";
 const schema = z.object({
   newPassword: z.string().min(6, "Password must be at least 6 characters"),
   confirmPassword: z.string().min(6, "Password must be at least 6 characters"),
-});
+}).refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Confirm password does not match",
+    path: ["confirmPassword"],
+  });
 
-export default function PasswordScreen({email,}) {
+export default function PasswordScreen({email,setIsOpen}) {
   const { setToken } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -42,7 +45,8 @@ export default function PasswordScreen({email,}) {
     onSuccess: (data) => {
       if (data.success) {
         toast.success(data.message);
-        setToken(data.data.accessToken);
+        setToken(data?.data?.accessToken);
+        setIsOpen(false);
       } else {
         toast.error(data.message);
       }
@@ -122,7 +126,7 @@ export default function PasswordScreen({email,}) {
         <button
           type="submit"
           disabled={isPending}
-          className="w-full bg-[#f76900] text-white py-2 rounded-md hover:bg-[#e65d00] transition"
+          className="cursor-pointer w-full bg-[#f76900] text-white py-2 rounded-md hover:bg-[#e65d00] transition"
         >
           {isPending ? "Submitting..." : "Continue"}
         </button>

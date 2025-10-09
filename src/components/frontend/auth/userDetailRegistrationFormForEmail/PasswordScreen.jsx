@@ -42,7 +42,7 @@ export default function PasswordScreen({email,}) {
     onSuccess: (data) => {
       if (data.success) {
         toast.success(data.message);
-        setToken(data.data.accessToken);
+        setToken(data?.data?.accessToken);
       } else {
         toast.error(data.message);
       }

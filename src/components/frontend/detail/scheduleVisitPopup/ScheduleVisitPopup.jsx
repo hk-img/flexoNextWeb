@@ -197,9 +197,17 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
         className="absolute inset-0 bg-black/40"
         onClick={() => setIsOpen(false)}
       />
-      <div className="relative w-full lg:max-w-[80%] mx-[12px] rounded-[11px] h-full bg-white animate-scaleIn overflow-hidden">
+      <div className="relative w-full max-w-[500px] p-6 mx-[12px] rounded-sm bg-white animate-scaleIn overflow-hidden">
         {successScreen ? (
-          <></>
+          <>
+          <div className="flex space-y-5 flex-col items-center justify-center">
+            <div className="mt-7 ">
+              <Svg name="checkCircle" className="size-[75px] text-[#05ac34]" />
+            </div>
+            <p className=" text-base text-[#212529] text-center">Visit scheduled successfully. Our team will get back to you shortly.</p>
+            <button className="cursor-pointer w-fit px-[35px] mt-1.5 bg-[#f76900] text-lg border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">OK</button>
+          </div>
+          </>
         ) : (
           <>
             <div className="p-6 flex items-center justify-between">
@@ -228,7 +236,7 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
                       <h2 className="text-[#141414] font-thin mb-3 text-lg">
                         What type of space are you looking for?
                       </h2>
-                      <button
+                      {/* <button
                         onClick={() => {
                           setFormData((prev) => ({
                             ...prev,
@@ -239,7 +247,23 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
                         className="cursor-pointer border border-[#DBDBDB] hover:shadow-[5px_5px_15px_#0000004d] rounded-md px-5 py-2 text-sm text-[#141414] transition"
                       >
                         Not sure
-                      </button>
+                      </button> */}
+                      <label className="cursor-pointer">
+                          <input
+                            type="radio"
+                            name="spaceType"
+                            value="notsure"
+                            className="hidden peer"
+                            onChange={handleChange}
+                          />
+                          <span
+                            className="rounded-[5px] px-5 py-2 border peer-checked:border-2 peer-checked:border-[#F76900] text-sm text-[#141414] border-gray-300  
+                              peer-checked:shadow-[5px_5px_15px_#0000004d]  
+                              hover:shadow-[5px_5px_15px_#0000004d] transition"
+                          >
+                            Not sure
+                          </span>
+                        </label>
                       {error?.spaceType && (
                         <span className="text-red-500">{error.spaceType}</span>
                       )}
@@ -257,7 +281,7 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
                             onChange={handleChange}
                           />
                           <span
-                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] border-gray-300 rounded-full 
+                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
                               peer-checked:shadow-[5px_5px_15px_#0000004d]  
                               hover:shadow-[5px_5px_15px_#0000004d] transition"
                           >
@@ -273,7 +297,7 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
                             onChange={handleChange}
                           />
                           <span
-                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] border-gray-300 rounded-full 
+                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
                               peer-checked:shadow-[5px_5px_15px_#0000004d]  
                               hover:shadow-[5px_5px_15px_#0000004d] transition"
                           >
@@ -289,7 +313,7 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
                             onChange={handleChange}
                           />
                           <span
-                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] border-gray-300 rounded-full 
+                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
                               peer-checked:shadow-[5px_5px_15px_#0000004d]  
                               hover:shadow-[5px_5px_15px_#0000004d] transition"
                           >
@@ -305,7 +329,7 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
                             onChange={handleChange}
                           />
                           <span
-                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] border-gray-300 rounded-full 
+                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
                               peer-checked:shadow-[5px_5px_15px_#0000004d]  
                               hover:shadow-[5px_5px_15px_#0000004d] transition"
                           >
@@ -321,7 +345,7 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
                             onChange={handleChange}
                           />
                           <span
-                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] border-gray-300 rounded-full 
+                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
                               peer-checked:shadow-[5px_5px_15px_#0000004d]  
                               hover:shadow-[5px_5px_15px_#0000004d] transition"
                           >
@@ -337,7 +361,7 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
                             onChange={handleChange}
                           />
                           <span
-                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] border-gray-300 rounded-full 
+                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
                               peer-checked:shadow-[5px_5px_15px_#0000004d]  
                               hover:shadow-[5px_5px_15px_#0000004d] transition"
                           >
@@ -353,7 +377,7 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
                             onChange={handleChange}
                           />
                           <span
-                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] border-gray-300 rounded-full 
+                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
                               peer-checked:shadow-[5px_5px_15px_#0000004d]  
                               hover:shadow-[5px_5px_15px_#0000004d] transition"
                           >
@@ -369,7 +393,7 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
                             onChange={handleChange}
                           />
                           <span
-                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] border-gray-300 rounded-full 
+                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
                               peer-checked:shadow-[5px_5px_15px_#0000004d]  
                               hover:shadow-[5px_5px_15px_#0000004d] transition"
                           >
@@ -385,7 +409,7 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
                             onChange={handleChange}
                           />
                           <span
-                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] border-gray-300 rounded-full 
+                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
                               peer-checked:shadow-[5px_5px_15px_#0000004d]  
                               hover:shadow-[5px_5px_15px_#0000004d] transition"
                           >
@@ -401,7 +425,7 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
                             onChange={handleChange}
                           />
                           <span
-                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] border-gray-300 rounded-full 
+                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
                               peer-checked:shadow-[5px_5px_15px_#0000004d]  
                               hover:shadow-[5px_5px_15px_#0000004d] transition"
                           >
@@ -417,7 +441,7 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
                             onChange={handleChange}
                           />
                           <span
-                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] border-gray-300 rounded-full 
+                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
                               peer-checked:shadow-[5px_5px_15px_#0000004d]  
                               hover:shadow-[5px_5px_15px_#0000004d] transition"
                           >
@@ -433,7 +457,7 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
                             onChange={handleChange}
                           />
                           <span
-                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] border-gray-300 rounded-full 
+                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
                               peer-checked:shadow-[5px_5px_15px_#0000004d]  
                               hover:shadow-[5px_5px_15px_#0000004d] transition"
                           >
@@ -449,7 +473,7 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
                             onChange={handleChange}
                           />
                           <span
-                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] border-gray-300 rounded-full 
+                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
                               peer-checked:shadow-[5px_5px_15px_#0000004d]  
                               hover:shadow-[5px_5px_15px_#0000004d] transition"
                           >
@@ -465,7 +489,7 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
                             onChange={handleChange}
                           />
                           <span
-                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] border-gray-300 rounded-full 
+                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
                               peer-checked:shadow-[5px_5px_15px_#0000004d]  
                               hover:shadow-[5px_5px_15px_#0000004d] transition"
                           >
@@ -481,7 +505,7 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
                             onChange={handleChange}
                           />
                           <span
-                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] border-gray-300 rounded-full 
+                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
                               peer-checked:shadow-[5px_5px_15px_#0000004d]  
                               hover:shadow-[5px_5px_15px_#0000004d] transition"
                           >
@@ -497,7 +521,7 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
                             onChange={handleChange}
                           />
                           <span
-                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] border-gray-300 rounded-full 
+                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
                               peer-checked:shadow-[5px_5px_15px_#0000004d]  
                               hover:shadow-[5px_5px_15px_#0000004d] transition"
                           >
@@ -513,7 +537,7 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
                             onChange={handleChange}
                           />
                           <span
-                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] border-gray-300 rounded-full 
+                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
                               peer-checked:shadow-[5px_5px_15px_#0000004d]  
                               hover:shadow-[5px_5px_15px_#0000004d] transition"
                           >
@@ -529,7 +553,7 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
                             onChange={handleChange}
                           />
                           <span
-                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] border-gray-300 rounded-full 
+                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
                               peer-checked:shadow-[5px_5px_15px_#0000004d]  
                               hover:shadow-[5px_5px_15px_#0000004d] transition"
                           >
@@ -545,7 +569,7 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
                             onChange={handleChange}
                           />
                           <span
-                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] border-gray-300 rounded-full 
+                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
                               peer-checked:shadow-[5px_5px_15px_#0000004d]  
                               hover:shadow-[5px_5px_15px_#0000004d] transition"
                           >
@@ -561,7 +585,7 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
                             onChange={handleChange}
                           />
                           <span
-                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] border-gray-300 rounded-full 
+                            className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
                               peer-checked:shadow-[5px_5px_15px_#0000004d]  
                               hover:shadow-[5px_5px_15px_#0000004d] transition"
                           >
@@ -580,7 +604,7 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
                             onChange={handleChange}
                           />
                           <span
-                            className="w-20 h-20 flex items-center justify-center border text-sm text-[#141414] border-gray-300 rounded-full 
+                            className="w-20 h-20 flex items-center justify-center border text-sm text-[#141414] border-gray-300 rounded-full  peer-checked:bg-[#F76900] peer-checked:text-white
                               peer-checked:shadow-[5px_5px_15px_#0000004d]  
                               hover:shadow-[5px_5px_15px_#0000004d] transition"
                           >
@@ -596,7 +620,7 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
                             onChange={handleChange}
                           />
                           <span
-                            className="w-20 h-20 flex items-center justify-center border text-sm text-[#141414] border-gray-300 rounded-full 
+                            className="w-20 h-20 flex items-center justify-center border text-sm text-[#141414] border-gray-300 rounded-full  peer-checked:bg-[#F76900] peer-checked:text-white
                               peer-checked:shadow-[5px_5px_15px_#0000004d]  
                               hover:shadow-[5px_5px_15px_#0000004d] transition"
                           >
@@ -612,7 +636,7 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
                             onChange={handleChange}
                           />
                           <span
-                            className="w-20 h-20 flex items-center justify-center border text-sm text-[#141414] border-gray-300 rounded-full 
+                            className="w-20 h-20 flex items-center justify-center border text-sm text-[#141414] border-gray-300 rounded-full peer-checked:bg-[#F76900] peer-checked:text-white
                               peer-checked:shadow-[5px_5px_15px_#0000004d]  
                               hover:shadow-[5px_5px_15px_#0000004d] transition"
                           >

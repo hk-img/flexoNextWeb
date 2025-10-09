@@ -45,7 +45,11 @@ const Header = () => {
 
   const { mutate: logoutMutate } = useMutation({
     mutationFn: async (payload) => {
-      const response = await postAPIAuthWithoutBearer("user/userLogOut", payload, token);
+      const response = await postAPIAuthWithoutBearer(
+        "user/userLogOut",
+        payload,
+        token
+      );
       return response.data;
     },
     onSuccess: (data) => {
@@ -63,22 +67,22 @@ const Header = () => {
     onError: (error) => {
       toast.error(error.message);
     },
-  })
+  });
 
   const handleLogout = () => {
-    const payload = {
-
-    };
+    const payload = {};
     logoutMutate(payload);
-  }
+  };
 
   return (
     <>
       <header
-        className={`fixed  top-0 z-50 w-full transition-transform duration-700 ${hidden ? "-translate-y-full " : "translate-y-0 shadow-[0_0_12px_0_#0000004d]"
-          } bg-white`}
+        className={`fixed  top-0 z-50 w-full transition-transform duration-700 ${
+          hidden
+            ? "-translate-y-full "
+            : "translate-y-0 shadow-[0_0_12px_0_#0000004d]"
+        } bg-white`}
       >
-
         <div className="container relative w-full mx-auto group lg:py-5 sm:py-[20.5px] py-[17px]">
           <input type="checkbox" id="user-toggle" className="hidden" />
           <div className="flex justify-between items-center">
@@ -98,44 +102,38 @@ const Header = () => {
 
             <div className="lg:flex hidden items-center gap-5 px-[15px]">
               <div>
-                <Link href="/list-with-us" className="bg-[#f76900] block border-[2px] border-[#f76900] rounded-[15px] xl:text-[15px] lg:text-sm text-white py-[8px] px-5.5">
+                <Link
+                  href="/list-with-us"
+                  className="bg-[#f76900] block border-[2px] border-[#f76900] rounded-[15px] xl:text-[15px] lg:text-sm text-white py-[8px] px-5.5"
+                >
                   List Your Space
                 </Link>
               </div>
-              {
-                token ? (
-                  <>
-                    <div className="relative group z-[9999]">
-
-
-                     
-
-                      <label
-                        htmlFor="user-toggle"
-                        className="flex items-center justify-center border hover:bg-[#f76900] bg-[#001740] text-white 
+              {token ? (
+                <>
+                  <div className="relative group z-[9999]">
+                    <label
+                      htmlFor="user-toggle"
+                      className="flex items-center justify-center border hover:bg-[#f76900] bg-[#001740] text-white 
                                       w-[30px] h-[30px] rounded-full cursor-pointer transition"
-                      >
-                        <Svg name="user" className="size-[15px]" />
-                      </label>
-
-
-                    </div>
-
-                  </>
-                ) : (
-                  <div>
-                    <div
-                      className="flex items-center gap-1 border-[2px] border-[#ffe9d8] bg-[#f7690012] text-[#f76900] rounded-[15px] py-[8px] px-5.5 cursor-pointer"
-                      onClick={() => setIsOpen(true)}
                     >
-                      <span>
-                        <Svg name="logIn" className="size-[22px]" />
-                      </span>
-                      <span className="xl:text-[15px] lg:text-sm">Sign in</span>
-                    </div>
+                      <Svg name="user" className="size-[15px]" />
+                    </label>
                   </div>
-                )
-              }
+                </>
+              ) : (
+                <div>
+                  <div
+                    className="flex items-center gap-1 border-[2px] border-[#ffe9d8] bg-[#f7690012] text-[#f76900] rounded-[15px] py-[8px] px-5.5 cursor-pointer"
+                    onClick={() => setIsOpen(true)}
+                  >
+                    <span>
+                      <Svg name="logIn" className="size-[22px]" />
+                    </span>
+                    <span className="xl:text-[15px] lg:text-sm">Sign in</span>
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="flex lg:hidden items-center gap-[15px] px-[15px]">
@@ -145,12 +143,18 @@ const Header = () => {
               <Link href="/list-with-us">
                 <Svg name="homePlus" className="size-[18px] text-black" />
               </Link>
-              <div className="cursor-pointer hidden" onClick={() => setIsOpen(true)}>
-                <Svg name="logOut" className="size-[22px] text-black" />
-              </div>
-              <label htmlFor="user-toggle">
-                <Svg name="logOut" className="size-[22px] text-black cursor-pointer" />
-              </label>
+              {token ? (
+                <label htmlFor="user-toggle">
+                  <Svg
+                    name="logOut"
+                    className="size-[22px] text-black cursor-pointer"
+                  />
+                </label>
+              ) : (
+                <div className="cursor-pointer" onClick={() => setIsOpen(true)}>
+                  <Svg name="logOut" className="size-[22px] text-black" />
+                </div>
+              )}
             </div>
           </div>
           <div className="absolute md:right-0 right-3 z-60 md:top-20 top-15 w-[250px] bg-white text-black rounded-sm opacity-0 scale-95 pointer-events-none transition-all duration-200 shadow-[10px_10px_20px_#0000006b] group-has-[#user-toggle:checked]:opacity-100 group-has-[#user-toggle:checked]:scale-100 group-has-[#user-toggle:checked]:pointer-events-auto">
@@ -215,16 +219,13 @@ const Header = () => {
               </ul>
             </div>
           </div>
-           <label
-              htmlFor="user-toggle"
-              className="fixed inset-0 hidden group-has-[#user-toggle:checked]:block z-10 cursor-default"
-            ></label>
+          <label
+            htmlFor="user-toggle"
+            className="fixed inset-0 hidden group-has-[#user-toggle:checked]:block z-10 cursor-default"
+          ></label>
         </div>
-
       </header>
-      {
-        isOpen && <Auth isOpen={isOpen} setIsOpen={setIsOpen} />
-      }
+      {isOpen && <Auth isOpen={isOpen} setIsOpen={setIsOpen} />}
     </>
   );
 };

@@ -26,32 +26,32 @@ const MyReview = () => {
     <>
       <section className="relative w-full lg:mt-[82px] sm:mt-[62px] mt-[63px] bg-[#f9f9f9]">
         <div className="container mx-auto md:px-0 px-[15px] py-10">
-          <div className="flex flex-col gap-2">
-            <h1 className="font-semibold text-[#141414] text-[26px]">
-              Reviews <span>({reviewData?.length})</span>
+          <div className="flex flex-col gap-8">
+            <h1 className="font-medium text-[#141414] text-[26px]">
+              Reviews <span className="text-[#A0A0A0]">({reviewData?.length})</span>
             </h1>
             <div className="flex flex-col gap-y-8">
               {reviewData?.length > 0 ? (
                 reviewData?.map((item, index) => (
                   <div
                     key={index}
-                    className="w-full flex md:flex-row flex-col items-center gap-y-4 justify-start bg-white p-4 rounded-xl "
+                    className="w-full flex md:flex-row flex-col items-start gap-y-4 justify-start bg-white rounded-xl "
                   >
                     <Link
                       href=""
-                      className="relative md:w-50 h-40 w-full rounded-lg shrink-0 overflow-hidden"
+                      className="relative md:w-40 h-[135px] w-full rounded-lg shrink-0 overflow-hidden"
                     >
                       <ImageWithFallback
                         src={`${item?.base_url}/${item?.images?.[0]}`}
-                        width="200"
-                        height="150"
+                        width="160"
+                        height="135"
                         alt="Coworking Space"
                         className="object-cover w-full h-full"
                         fallback="/images/defaultImg.webp"
                       />
                       {item?.spaceType && (
                         <div
-                          className="absolute top-2 left-0 bg-[#f76900] text-white text-sm font-medium px-3 py-1 
+                          className="absolute top-2 left-0 bg-[#f76900] text-white text-sm font-medium px-3 py-0.5 
               before:block before:absolute before:top-0 before:right-[-10px] before:w-[10px] before:h-0 
               before:border-t-[15px] before:!border-t-[#f76900] before:border-transparent before:border-l-0 before:border-r-[10px] 
               after:block after:absolute after:bottom-0 after:right-[-10px] after:w-[10px] after:h-0 
@@ -61,8 +61,8 @@ const MyReview = () => {
                         </div>
                       )}
                     </Link>
-                    <div className="md:ml-6 space-y-2">
-                      <h2 className="text-lg font-semibold text-[#141414]">
+                    <div className="md:ml-[15px]">
+                      <h2 className="text-lg 2xl:text-xl font-medium text-[#141414]">
                         {item?.spacename}
                       </h2>
                       <div className="flex items-center gap-3">
@@ -75,7 +75,7 @@ const MyReview = () => {
                             />
                           ))}
                         </ul>
-                        <div className="size-7 flex justify-center items-center border border-[#F76900] text-[#000] text-sm rounded-full">
+                        <div className=" flex justify-center items-center border border-[#F76900] text-[#000] text-sm font-semibold px-[10px] py-0.5 rounded-full">
                           {item?.ratingsAvg}
                         </div>
                         <div className="flex justify-center items-center gap-2 text-base font-medium text-black">
@@ -86,7 +86,7 @@ const MyReview = () => {
                           Yes I would book again
                         </div>
                       </div>
-                      <div className="flex flex-col ">
+                      <div className="flex flex-col mt-3">
                         <p className="text-sm font-normal  text-[#808080]">
                           {item?.Review}
                         </p>

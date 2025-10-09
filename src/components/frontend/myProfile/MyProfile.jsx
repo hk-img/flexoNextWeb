@@ -1,15 +1,15 @@
 "use client";
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Svg from "@/components/svg";
 import Image from "next/image";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, Form } from "react-hook-form";
 import { set, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { useAuth } from "@/context/useAuth";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getApi, postAPIAuthWithoutBearer } from "@/services/ApiService";
+import { getApi, postAPIAuthWithoutBearer, postAPIFormDataWithoutBearer } from "@/services/ApiService";
 import dynamic from "next/dynamic";
 import { toast } from "sonner";
 const Select = dynamic(() => import("react-select"), { ssr: false });
@@ -39,8 +39,20 @@ const profileSchema = z
     state: z.number().optional(),
     city: z.number().optional(),
     pincode: z.string().optional(),
-    gst: z.string().optional(),
-    pan: z.string().optional(),
+    gst: z
+      .string()
+      .optional()
+      .refine(
+        (val) =>
+          !val || /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][1-9A-Z]Z[0-9A-Z]$/.test(val),
+        { message: "Invalid GST number format" }
+      ),
+    pan: z
+      .string()
+      .optional()
+      .refine((val) => !val || /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(val), {
+        message: "Invalid PAN number format",
+      }),
     billingAddress1: z.string().min(1, "Billing address is required"),
     billingAddress2: z.string().optional(),
   })
@@ -65,7 +77,8 @@ const profileSchema = z
   });
 
 const MyProfile = () => {
-  const { token, user } = useAuth();
+  const [profileImage,setProfileImage] = useState(null);
+  const { token, user,setUser } = useAuth();
   const {
     register,
     handleSubmit,
@@ -124,6 +137,7 @@ const MyProfile = () => {
         billingAddress1: user?.billingAddress || "",
         billingAddress2: user?.billingAddress2 || "",
       });
+      setProfileImage(user?.picture);
     }
   }, [user, reset]);
   const { data: allCountry } = useQuery({
@@ -143,11 +157,12 @@ const MyProfile = () => {
   }, [allCountry]);
 
   const { data: allState } = useQuery({
-    queryKey: ["allState"],
+    queryKey: ["allState", values.billingCountry, countryData],
     queryFn: async () => {
-      const res = await getApi(
-        `user/getAllStatesById?countryId=${values.billingCountry}`
-      );
+      const countryId = countryData?.find(
+        (item) => item.label === values.billingCountry
+      )?.value;
+      const res = await getApi(`user/getAllStatesById?countryId=${countryId}`);
       return res.data;
     },
     enabled: !!values.billingCountry,
@@ -159,9 +174,12 @@ const MyProfile = () => {
   }, [allState]);
 
   const { data: allCity } = useQuery({
-    queryKey: ["allCity"],
+    queryKey: ["allCity", values.state, stateData],
     queryFn: async () => {
-      const res = await getApi(`user/getAllCities?stateId=${values?.state}`);
+      const stateId = stateData?.find(
+        (item) => item.label === values.state
+      )?.value;
+      const res = await getApi(`user/getAllCities?stateId=${stateId}`);
       return res.data;
     },
     enabled: !!values.state,
@@ -172,20 +190,20 @@ const MyProfile = () => {
     );
   }, [allCity]);
 
-  useEffect(() => {
-    setValue("state", "");
-    setValue("city", "");
-    setValue("pincode", "");
-  }, [values.billingCountry]);
-  useEffect(() => {
-    setValue("city", "");
-    setValue("pincode", "");
-  }, [values.state]);
-  useEffect(() => {
-    setValue("pincode", "");
-  }, [values.city]);
+  // useEffect(() => {
+  //   setValue("state", "");
+  //   setValue("city", "");
+  //   setValue("pincode", "");
+  // }, [values.billingCountry]);
+  // useEffect(() => {
+  //   setValue("city", "");
+  //   setValue("pincode", "");
+  // }, [values.state]);
+  // useEffect(() => {
+  //   setValue("pincode", "");
+  // }, [values.city]);
 
-  const { mutate: updateProfileMutate } = useMutation({
+  const { mutate: updateProfileMutate,isLoading: updateProfileLoading } = useMutation({
     mutationFn: async (payload) => {
       const res = await postAPIAuthWithoutBearer(
         "user/updateProfile",
@@ -209,6 +227,13 @@ const MyProfile = () => {
     const country_code = values.country ? `+${values.country.dialCode}` : "";
     const dialCode = values.country ? values.country.dialCode : "";
     const mobile = values.mobile.replace(dialCode, "").replace(/^\+/, "");
+    const countryId = countryData?.find(
+      (item) => item.label === values.billingCountry
+    )?.value;
+    const stateId = stateData?.find(
+      (item) => item.label === values.state
+    )?.value;
+    const cityId = cityData?.find((item) => item.label === values.city)?.value;
     const payload = {
       phone_code: country_code,
       mobile: mobile,
@@ -221,14 +246,49 @@ const MyProfile = () => {
       panNumber: values.pan,
       gstNumber: values.gst,
       billingAddress: values.billingAddress1,
-      country_id: values.billingCountry,
-      state_id: values.state,
-      city_id: values.city,
+      country_id: countryId,
+      state_id: stateId,
+      city_id: cityId,
       pincode: values.pincode,
       billingAddress2: values.billingAddress2,
     };
-    console.log({ payload }, "rtrtrtrt");
     updateProfileMutate(payload);
+  };
+  const { mutate: imageUploadMutate, isLoading: imageUploadLoading } = useMutation({
+    mutationFn: async (file) => {
+      try {
+        const formData = new FormData();
+        formData.append("file", file);
+        const res = await postAPIFormDataWithoutBearer(
+          "user/updateProfileImage",
+          formData,
+          token
+        );
+        return res.data;
+      } catch (err) {
+        throw new Error(err?.response?.data?.message || err.message);
+      }
+    },
+    onSuccess: (data) => {
+      if (data.success) {
+        toast.success(data?.message);
+        setUser(data?.user);
+      } else {
+        toast.error(data.message || "Something went wrong");
+      }
+    },
+    onError: (error) => {
+      toast.error(error.message || "Something went wrong");
+    },
+  });
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) {
+      toast.error("Please select an image!");
+      return;
+    }
+    imageUploadMutate(file);
   };
   return (
     <>
@@ -246,7 +306,7 @@ const MyProfile = () => {
                       width={125}
                       height={125}
                       className="w-[125px] h-[125px] rounded-full"
-                      src="/images/user_image_profile.webp"
+                      src={profileImage ? profileImage : "/images/user_image_profile.webp"}
                       alt=""
                     />
                     <label
@@ -258,6 +318,7 @@ const MyProfile = () => {
                         id="imageUpload"
                         accept="image/*"
                         className="hidden"
+                        onChange={handleImageUpload}
                       />
                       <Svg name="camera" className=" text-white size-4 " />
                     </label>
@@ -461,12 +522,11 @@ const MyProfile = () => {
                             control={control}
                             render={({ field }) => {
                               const handleChange = (selectedOption) => {
-                                field.onChange(selectedOption?.value || ""); // ✅ store only country ID
+                                field.onChange(selectedOption?.label || "");
                               };
-
                               const selectedValue =
                                 countryData?.find(
-                                  (option) => option.value === field.value
+                                  (option) => option.label === field.value
                                 ) || null;
 
                               return (
@@ -517,12 +577,11 @@ const MyProfile = () => {
                             control={control}
                             render={({ field }) => {
                               const handleChange = (selectedOption) => {
-                                field.onChange(selectedOption?.value || "");
+                                field.onChange(selectedOption?.label || "");
                               };
-
                               const selectedValue =
                                 stateData?.find(
-                                  (option) => option.value === field.value
+                                  (option) => option.label === field.value
                                 ) || null;
 
                               return (
@@ -555,7 +614,7 @@ const MyProfile = () => {
                                     }),
                                     menu: (base) => ({
                                       ...base,
-                                      zIndex: 50, // ✅ keeps dropdown above modals
+                                      zIndex: 50,
                                     }),
                                   }}
                                 />
@@ -574,12 +633,11 @@ const MyProfile = () => {
                             control={control}
                             render={({ field }) => {
                               const handleChange = (selectedOption) => {
-                                field.onChange(selectedOption?.value || "");
+                                field.onChange(selectedOption?.label || "");
                               };
-
                               const selectedValue =
                                 cityData?.find(
-                                  (option) => option.value === field.value
+                                  (option) => option.label === field.value
                                 ) || null;
 
                               return (
@@ -612,7 +670,7 @@ const MyProfile = () => {
                                     }),
                                     menu: (base) => ({
                                       ...base,
-                                      zIndex: 50, // ✅ ensures dropdown shows above modals
+                                      zIndex: 50,
                                     }),
                                   }}
                                 />
@@ -643,6 +701,11 @@ const MyProfile = () => {
                             placeholder=" Enter GST no."
                             className="border-[#e0e0e0] w-full placeholder:text-[#777] placeholder:font-medium text-black mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-12"
                           />
+                          {errors.gst && (
+                            <p className="text-red-500 text-[10px] absolute -bottom-4">
+                              {errors.gst.message}
+                            </p>
+                          )}
                         </div>
 
                         <div className="relative">
@@ -655,6 +718,11 @@ const MyProfile = () => {
                             placeholder="Enter PAN no. "
                             className="border-[#e0e0e0] w-full placeholder:text-[#777] placeholder:font-medium text-black mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-12"
                           />
+                          {errors.pan && (
+                            <p className="text-red-500 text-[10px] absolute -bottom-4">
+                              {errors.pan.message}
+                            </p>
+                          )}
                         </div>
                       </div>
                       <div className="relative mt-6">
@@ -697,9 +765,10 @@ const MyProfile = () => {
 
                     <button
                       type="submit"
+                      disabled={updateProfileLoading}
                       className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]"
                     >
-                      UPDATE
+                      {updateProfileLoading ? "Updating..." : "UPDATE"}
                     </button>
                   </form>
                 </div>

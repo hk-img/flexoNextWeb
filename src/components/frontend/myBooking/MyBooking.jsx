@@ -1,6 +1,7 @@
 "use client";
 import Svg from "@/components/svg";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useState } from "react";
 
 const MyBooking = () => {
@@ -93,14 +94,14 @@ const MyBooking = () => {
               <h3 className="md:text-2xl text-xl font-medium ">Booking not found..</h3>
             </div>
             <div className="md:py-10 py-5 flex md:flex-row flex-col md:items-center items-start space-y-8 justify-between ">
-              <div className="flex flex-col md:flex-row md:items-center md:space-x-6 space-y-3 md:space-y-0 w-full">
-                <div className="flex  md:flex-row flex-col gap-5 w-full">
+              <div className="flex flex-col md:flex-row md:items-center md:space-x-6 space-y-3 md:space-y-0">
+                <div className="flex  md:flex-row flex-col gap-5">
                   <div className="relative">
                     <div>
                       <Image width={200} height={150} src="/images/noida.webp" alt="booking space image" className="md:w-[200px] w-full h-[150px] rounded-lg" />
                     </div>
                      <div
-                        className="absolute bottom-8 left-0 bg-[#f76900] text-white text-sm px-3 py-1
+                        className="absolute top-0 left-0 bg-[#f76900] text-white text-sm px-3 py-1
                           before:block before:absolute before:top-0 before:right-[-10px] before:w-[10px] before:h-0
                           before:border-t-[15px] before:!border-t-[#f76900] before:border-transparent before:border-l-0 before:border-r-[10px]
                           after:block after:absolute after:bottom-0 after:right-[-10px] after:w-[10px] after:h-0
@@ -156,8 +157,8 @@ const MyBooking = () => {
                   <Svg name="cloudDownload" className="size-5 text-[#000e54]"/>
                   <span >INVOICE</span>
                 </button>
-                <button className="flex items-center justify-center cursor-pointer w-full bg-[#2c864f] 2xl:text-[15px] text-sm hover:bg-[#40a667] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px] text-nowrap">BOOKING DETAILS <span>
-                  <Svg name="rightArrow"  className="size-3 " /></span> </button>
+                <Link href="" className="flex items-center justify-center cursor-pointer w-full bg-[#2c864f] 2xl:text-[15px] text-sm hover:bg-[#40a667] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px] text-nowrap">BOOKING DETAILS <span>
+                  <Svg name="rightArrow"  className="size-3 " /></span> </Link>
               </div>
             </div>
             <div className="mt-4">

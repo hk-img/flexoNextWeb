@@ -7,6 +7,7 @@ import { useAuth } from "@/context/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { getAPIAuthWithoutBearer } from "@/services/ApiService";
 import ImageWithFallback from "@/components/ImageWithFallback";
+import { convertSlugToCapitalLetter } from "@/services/Comman";
 
 const MyBookingRequests = () => {
   const { token } = useAuth();
@@ -69,7 +70,7 @@ const MyBookingRequests = () => {
                             className="size-4 text-[#f76900]"
                           />
                         </span>
-                        <span>{item?.spaceAddress}</span>
+                        <span>{convertSlugToCapitalLetter(item?.spaceAddress || "")}</span>
                       </div>
 
                       <div className="flex flex-wrap items-center space-x-3 font-medium text-sm text-[#141414]">
@@ -78,14 +79,12 @@ const MyBookingRequests = () => {
                             name="userHalf"
                             className="size-4 text-[#f76900]"
                           />
-                          <span>1 people</span>
+                          <span>{item?.firstName} {item?.lastName}</span>
                         </div>
-                        <span className="size-[10px] shrink-0 rounded-full bg-[#ddd]"></span>
                         <div className="flex items-center space-x-1">
                           <Svg name="mail" className="size-4 text-[#f76900]" />
                           <span>{item?.userEmail}</span>
                         </div>
-                        <span className="size-[10px] shrink-0 rounded-full bg-[#ddd]"></span>
                         <div className="flex items-center space-x-1">
                           <Svg name="call" className="size-4 text-[#f76900]" />
                           <span>{item?.userMobile}</span>

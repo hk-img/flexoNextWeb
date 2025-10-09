@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAPIAuthWithoutBearer } from "@/services/ApiService";
 import { useAuth } from "@/context/useAuth";
 import ImageWithFallback from "@/components/ImageWithFallback";
+import { convertSlugToCapitalLetter } from "@/services/Comman";
 
 const MyVisit = () => {
   const { token } = useAuth();
@@ -60,15 +61,17 @@ const MyVisit = () => {
                         className="object-cover w-full h-full"
                         fallback="/images/defaultImg.webp"
                       />
-                      <div
-                        className="absolute top-2 left-0 bg-[#f76900] text-white text-sm font-medium px-3 py-1 
-              before:block before:absolute before:top-0 before:right-[-10px] before:w-[10px] before:h-0 
-              before:border-t-[15px] before:!border-t-[#f76900] before:border-transparent before:border-l-0 before:border-r-[10px] 
-              after:block after:absolute after:bottom-0 after:right-[-10px] after:w-[10px] after:h-0 
-              after:border-b-[15px] after:!border-b-[#f76900] after:border-transparent after:border-l-0 after:border-r-[10px]"
-                      >
-                        {item?.spaceDetails?.spaceType}
-                      </div>
+                      {item?.spaceDetails?.spaceType && (
+                        <div
+                          className="absolute top-2 left-0 bg-[#f76900] text-white text-sm font-medium px-3 py-1 
+                                  before:block before:absolute before:top-0 before:right-[-10px] before:w-[10px] before:h-0 
+                                  before:border-t-[15px] before:!border-t-[#f76900] before:border-transparent before:border-l-0 before:border-r-[10px] 
+                                  after:block after:absolute after:bottom-0 after:right-[-10px] after:w-[10px] after:h-0 
+                                  after:border-b-[15px] after:!border-b-[#f76900] after:border-transparent after:border-l-0 after:border-r-[10px]"
+                        >
+                          {item?.spaceDetails?.spaceType}
+                        </div>
+                      )}
                     </Link>
                     <div className="md:ml-6 space-y-2">
                       <h2 className="text-lg font-semibold text-[#141414] underline">
@@ -81,34 +84,34 @@ const MyVisit = () => {
                             className="size-4 text-[#f76900]"
                           />
                         </span>
-                        <span>{item?.spaceLocation}</span>
+                        <span>{convertSlugToCapitalLetter(item?.spaceLocation || "")}</span>
                       </div>
 
                       <div className="flex items-center space-x-4 font-medium text-sm text-[#141414]">
-                        {
-                          item?.howManyPeople != "0" && (
-                            <div className="flex items-center space-x-1">
-                              <Svg
-                                name="userHalf"
-                                className="size-4 text-[#f76900]"
-                              />
-                              <span>{item?.howManyPeople} people</span>
-                            </div>
-                          )
-                        }
                         <div className="flex items-center space-x-1">
                           <Svg
                             name="userHalf"
                             className="size-4 text-[#f76900]"
                           />
-                          <span>{item?.spaceDetails?.spaceStatus}</span>
+                          <span>{item?.spaceDetails?.howManyPeopleInYourSpace || 1} people</span>
                         </div>
+                        {
+                          item?.spaceDetails?.spaceStatus && (
+                            <div className="flex items-center space-x-1">
+                              <Svg
+                                name="userHalf"
+                                className="size-4 text-[#f76900]"
+                              />
+                              <span>{item?.spaceDetails?.spaceStatus}</span>
+                            </div>
+                          )
+                        }
                         <div className="flex items-center space-x-1">
                           <Svg
                             name="scaleRuler"
                             className="size-4 text-[#f76900]"
                           />
-                          <span>{item?.spaceDetails?.spacesqft}sqft</span>
+                          <span>{item?.spaceDetails?.spacesqft} sqft</span>
                         </div>
                       </div>
 
@@ -129,28 +132,28 @@ const MyVisit = () => {
                           <Svg name="clock" className="size-4 text-[#f76900]" />
                           <span>{convertTo12Hour(item?.visitTime || "")}</span>
                         </div>
-                        {
-                          item?.spaceType && (
-                            <>
-                              <span className="text-[#f76900]">|</span>
-                              <div>
-                                <span className="text-[#141414] font-medium">
-                                  Type of Space:
-                                </span>
-                                <span className="font-normal">
-                                  {item?.spaceType}
-                                </span>
-                              </div>
-                            </>
-                          )
-                        }
+                        {item?.coworkingSpaceType && (
+                          <>
+                            <span className="text-[#f76900]">|</span>
+                            <div>
+                              <span className="text-[#141414] font-medium">
+                                Type of Space :
+                              </span>
+                              {" "}
+                              <span className="font-normal">
+                                {item?.coworkingSpaceType}
+                              </span>
+                            </div>
+                          </>
+                        )}
                         {item?.howManyPeople != "0" && (
                           <>
                             <span className="text-[#f76900]">|</span>
                             <div>
                               <span className="text-[#141414] font-medium">
-                                No. Of People:
+                                No. Of People :
                               </span>
+                              {" "}
                               <span className="font-normal">
                                 {item?.howManyPeople}
                               </span>

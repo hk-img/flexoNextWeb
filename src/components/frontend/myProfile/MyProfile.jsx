@@ -105,24 +105,24 @@ const MyProfile = () => {
   useEffect(() => {
     if (user) {
       reset({
-        firstName: user.firstName || "",
-        lastName: user.lastName || "",
-        mobile: user.mobile ? `${user.phone_code}${user.mobile}` : "",
+        firstName: user?.firstName || "",
+        lastName: user?.lastName || "",
+        mobile: user?.mobile ? `${user.phone_code}${user.mobile}` : "",
         country: {
-          dialCode: user.phone_code || "91",
+          dialCode: user?.phone_code || "91",
         },
-        companyName: user.companyName || "",
-        email: user.email || "",
-        gender: user.gender || "",
-        dob: user.dob || "",
-        billingCountry: user.billingCountry || "",
-        state: user.state || "",
-        city: user.city || "",
-        pincode: user.pincode || "",
-        gst: user.gst || "",
-        pan: user.pan || "",
-        billingAddress1: user.billingAddress1 || "",
-        billingAddress2: user.billingAddress2 || "",
+        companyName: user?.companyName || "",
+        email: user?.email || "",
+        gender: user?.gender || "",
+        dob: user?.dateOfBirth ? user.dateOfBirth.split("T")[0] : "",
+        billingCountry: user.country_id || "",
+        state: user.state_id || "",
+        city: user.city_id || "",
+        pincode: user?.pincode || "",
+        gst: user?.gstNumber || "",
+        pan: user?.panNumber || "",
+        billingAddress1: user?.billingAddress || "",
+        billingAddress2: user?.billingAddress2 || "",
       });
     }
   }, [user, reset]);

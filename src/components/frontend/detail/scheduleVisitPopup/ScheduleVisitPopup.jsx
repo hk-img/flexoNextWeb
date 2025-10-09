@@ -1,5 +1,5 @@
 import Svg from "@/components/svg";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -7,12 +7,34 @@ import { useMutation } from "@tanstack/react-query";
 import { postAPIAuthWithoutBearer } from "@/services/ApiService";
 import { toast } from "sonner";
 
+const defaultTime = [
+  { label: "10:00 AM", value: "10:00", disabled: false },
+  { label: "10:30 AM", value: "10:30", disabled: false },
+  { label: "11:00 AM", value: "11:00", disabled: false },
+  { label: "11:30 AM", value: "11:30", disabled: false },
+  { label: "12:00 PM", value: "12:00", disabled: false },
+  { label: "12:30 PM", value: "12:30", disabled: false },
+  { label: "1:00 PM", value: "13:00", disabled: false },
+  { label: "1:30 PM", value: "13:30", disabled: false },
+  { label: "2:00 PM", value: "14:00", disabled: false },
+  { label: "2:30 PM", value: "14:30", disabled: false },
+  { label: "3:00 PM", value: "15:00", disabled: false },
+  { label: "3:30 PM", value: "15:30", disabled: false },
+  { label: "4:00 PM", value: "16:00", disabled: false },
+  { label: "4:30 PM", value: "16:30", disabled: false },
+  { label: "5:00 PM", value: "17:00", disabled: false },
+  { label: "5:30 PM", value: "17:30", disabled: false },
+  { label: "6:00 PM", value: "17:00", disabled: false },
+  { label: "6:30 PM", value: "17:30", disabled: false },
+];
+
 const scheduleSchema = z.object({
   preferedDate: z.string().min(1, "Please select a preferred date"),
   preferredTime: z.string().min(1, "Please select a preferred time"),
 });
 
-const ScheduleVisitPopup = ({ type,setIsOpen,spaceId }) => {
+const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
+  const [timeSlot, setTimeSlot] = useState(defaultTime);
   const [toggleScheduling, setToggleScheduling] = useState(false);
   const [successScreen, setSuccessScreen] = useState(false);
   const [formData, setFormData] = useState({
@@ -37,12 +59,23 @@ const ScheduleVisitPopup = ({ type,setIsOpen,spaceId }) => {
     },
   });
   const values = watch();
-  const TimeOptions = () => {
+  console.log({values},"Rtghrhrhrtrt")
+  const getTimeSlot = (selectedDate) => {
+    // Agar date nahi hai, defaultTime return karo
+    if (!selectedDate) return defaultTime;
+
     const times = [];
+    const now = new Date();
     let start = new Date();
-    start.setHours(10, 0, 0);
+    start.setHours(10, 0, 0, 0);
     let end = new Date();
-    end.setHours(18, 30, 0);
+    end.setHours(18, 30, 0, 0);
+
+    const dateObj = new Date(selectedDate);
+    const isToday =
+      dateObj.getDate() === now.getDate() &&
+      dateObj.getMonth() === now.getMonth() &&
+      dateObj.getFullYear() === now.getFullYear();
 
     while (start <= end) {
       const hours = start.getHours();
@@ -50,23 +83,27 @@ const ScheduleVisitPopup = ({ type,setIsOpen,spaceId }) => {
       const period = hours >= 12 ? "PM" : "AM";
       const displayHours = hours % 12 === 0 ? 12 : hours % 12;
       const displayMinutes = minutes.toString().padStart(2, "0");
-      times.push(`${displayHours}:${displayMinutes} ${period}`);
+      const label = `${displayHours}:${displayMinutes} ${period}`;
+
+      // defaultTime me se value lene ke liye
+      const defaultSlot = defaultTime.find((t) => t.label === label);
+
+      const value = defaultSlot?.value || label;
+      const isDisabled = isToday && start <= now;
+
+      times.push({ label, value, disabled: isDisabled });
       start.setMinutes(start.getMinutes() + 30);
     }
 
-    return (
-      <>
-        <option value="" disabled hidden>
-          Select Time
-        </option>
-        {times.map((time, index) => (
-          <option key={index} value={time}>
-            {time}
-          </option>
-        ))}
-      </>
-    );
+    return times;
   };
+
+  useEffect(() => {
+    if (values?.preferedDate) {
+      const timeSlot = getTimeSlot(values?.preferedDate);
+      setTimeSlot(timeSlot);
+    }
+  }, [values?.preferedDate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -123,31 +160,14 @@ const ScheduleVisitPopup = ({ type,setIsOpen,spaceId }) => {
   });
 
 
-   function convertTo24Hour(timeStr) {
-    if (!timeStr) return "";
-    const [time, modifier] = timeStr.split(" ");
-    let [hours, minutes] = time.split(":").map(Number);
-
-    if (modifier === "PM" && hours !== 12) {
-      hours += 12;
-    } else if (modifier === "AM" && hours === 12) {
-      hours = 0;
-    }
-
-    return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
-      2,
-      "0"
-    )}`;
-  }
   const onSubmit = (values) => {
-    if(type == "coworking"){
+    if (type == "coworking") {
       setToggleScheduling(true);
-    }else if(type == "longterm"){
-      const time = convertTo24Hour(values?.preferredTime || "");
+    } else if (type == "longterm") {
       const payload = {
         visitDate: values.preferedDate,
-        visitTime: time
-      }
+        visitTime: values?.preferredTime,
+      };
       longTermSubmitMutate(payload);
     }
   };
@@ -161,12 +181,11 @@ const ScheduleVisitPopup = ({ type,setIsOpen,spaceId }) => {
     }
     setError(error);
     if (Object.keys(error).length === 0) {
-      const time = convertTo24Hour(values?.preferredTime || "");
       const payload = {
         visitDate: values?.preferedDate,
-        visitTime: time,
+        visitTime: values?.preferredTime,
         spaceType: formData?.spaceType,
-        howManyPeople: formData?.visitTime,
+        howManyPeople: values?.preferredTime,
       };
       coworkingSubmitMutate(payload);
     }
@@ -687,7 +706,18 @@ const ScheduleVisitPopup = ({ type,setIsOpen,spaceId }) => {
                                     : "border-gray-300 hover:border-black"
                                 } bg-transparent px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-[#3f51b5] focus:outline-none focus:ring-0`}
                               >
-                                <TimeOptions />
+                                <option value="" disabled hidden>
+                                  Select Time
+                                </option>
+                                {timeSlot.map((t, i) => (
+                                  <option
+                                    key={i}
+                                    value={t.value}
+                                    disabled={t.disabled}
+                                  >
+                                    {t.label}
+                                  </option>
+                                ))}
                               </select>
                             )}
                           />

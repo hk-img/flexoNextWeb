@@ -302,13 +302,19 @@ const MyProfile = () => {
               <div className="mt-5">
                 <div className=" flex items-center justify-center">
                   <div className="relative">
-                    <Image
-                      width={125}
-                      height={125}
-                      className="w-[125px] h-[125px] rounded-full"
-                      src={profileImage ? profileImage : "/images/user_image_profile.webp"}
-                      alt=""
-                    />
+                    <div className="w-[125px] h-[125px]">
+                      <Image
+                        width={125}
+                        height={125}
+                        className="w-full h-full rounded-full"
+                        src={profileImage ? profileImage : "/images/user_image_profile.webp"}
+                        alt=""
+                      />
+                     
+                    </div>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-8 h-8 border-4 border-gray-300 border-t-[#f76900] rounded-full animate-spin"></div>
+                    </div>
                     <label
                       htmlFor="imageUpload"
                       className="absolute bottom-0 right-0 w-10 h-10 bg-black rounded-full flex items-center justify-center cursor-pointer hover:shadow-[5px_5px_15px_#00000080] hover:scale-[1.2] transition-all duration-300"

@@ -24,7 +24,7 @@ const CoworkingSpaces = () => {
   ]
 
   return (
-    <div className="container mx-auto text-center md:px-0 px-[15px]">
+    <div className="container mx-auto text-center md:px-[10px] px-[15px]">
       <h2 className="sm:text-[32px] text-2xl font-medium text-center text-[#333]">
         Explore India's Premier Network of
         <span className="text-[#f76900]"> Coworking Spaces</span>

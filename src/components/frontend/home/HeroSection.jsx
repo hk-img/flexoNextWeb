@@ -227,7 +227,7 @@ export default function HeroSection({spaceCategoryData}) {
               </div>
             </div>
             <div className="flex md:flex-row flex-col md:bg-transparent bg-white md:px-0 md:py-0 px-[15px] pt-5 pb-4 rounded-[15px] items-center gap-y-5 gap-x-4 sm:mt-9 mt-17 sm:mb-0 mb-4 w-full">
-              <div className="flex gap-y-5 md:flex-row flex-col bg-white md:rounded-[15px] overflow-hidden w-full xl:max-w-[536px] md:max-w-[449px] px-[7px]">
+              <div className="flex gap-y-5 md:flex-row flex-col bg-white md:rounded-[15px] overflow-hidden w-full xl:max-w-[536.66px] md:max-w-[449px] px-[7px]">
                 <Select
                   options={spaceCategoryData}
                   placeholder="What are you looking for?"

@@ -49,15 +49,17 @@ const MyReview = () => {
                         className="object-cover w-full h-full"
                         fallback="/images/defaultImg.webp"
                       />
-                      <div
-                        className="absolute top-2 left-0 bg-[#f76900] text-white text-sm font-medium px-3 py-1 
+                      {item?.spaceType && (
+                        <div
+                          className="absolute top-2 left-0 bg-[#f76900] text-white text-sm font-medium px-3 py-1 
               before:block before:absolute before:top-0 before:right-[-10px] before:w-[10px] before:h-0 
               before:border-t-[15px] before:!border-t-[#f76900] before:border-transparent before:border-l-0 before:border-r-[10px] 
               after:block after:absolute after:bottom-0 after:right-[-10px] after:w-[10px] after:h-0 
               after:border-b-[15px] after:!border-b-[#f76900] after:border-transparent after:border-l-0 after:border-r-[10px]"
-                      >
-                        {item?.spaceType}
-                      </div>
+                        >
+                          {item?.spaceType}
+                        </div>
+                      )}
                     </Link>
                     <div className="md:ml-6 space-y-2">
                       <h2 className="text-lg font-semibold text-[#141414]">

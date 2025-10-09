@@ -76,7 +76,15 @@ export default function UserDetailRegistrationFormForEmail({
   const values = watch();
   const { mutate: submitUserDetailsMutation, isPending } = useMutation({
     mutationFn: async (payload) => {
-      const response = await postAPI("user/loginWithMobilePopup", payload);
+      const data = {
+        firstName: payload?.firstName,
+        lastName: payload?.lastName,
+        mobile: payload?.mobile,
+        phone_code: payload?.phone_code,
+        companyName: payload?.companyName,
+        regType: "email",
+      }
+      const response = await postAPI(`user/newemail/${payload?.email}`, data);
       return response.data;
     },
     onSuccess: (data) => {

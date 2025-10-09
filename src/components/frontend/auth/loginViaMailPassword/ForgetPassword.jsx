@@ -12,7 +12,7 @@ const schema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email address"),
 });
 
-const ForgetPassword = ({ setIsForgetPassword }) => {
+const ForgetPassword = ({ setIsForgetPassword,setIsShowOtp,setShowForgotPasswordOtp,setEmail }) => {
   const {
     register,
     handleSubmit,
@@ -26,9 +26,12 @@ const ForgetPassword = ({ setIsForgetPassword }) => {
       const response = await postAPI("user/forgotPasswordSendEmail", payload);
       return response.data;
     },
-    onSuccess: (data) => {
+    onSuccess: (data,payload) => {
       if (data.success) {
         toast.success(data.message);
+        setIsShowOtp(true);
+        setShowForgotPasswordOtp(true);
+        setEmail(payload.email);
       } else {
         toast.error(data.message);
       }

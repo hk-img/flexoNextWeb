@@ -1146,7 +1146,7 @@ const Detail = ({ spaceId,spaceDetailsData,detailData,reviewData }) => {
       }
       {isOpen && <ExplorePopup isOpen={isOpen} setIsOpen={setIsOpen} />}
       {isAuthOpen && <Auth isOpen={isAuthOpen} setIsOpen={setIsAuthOpen} />}
-      {isScheduleVisitOpen &&<ScheduleVisitPopup isOpen={isScheduleVisitOpen} setIsOpen={setIsScheduleVisitOpen}/>}
+      {isScheduleVisitOpen &&<ScheduleVisitPopup isOpen={isScheduleVisitOpen} setIsOpen={setIsScheduleVisitOpen} type={type} spaceId={spaceData?.id}/>}
       {isBuyPassOpen && <BuyPassPopup isOpen={isBuyPassOpen} setIsOpen={setIsBuyPassOpen}/>}
     </>
   );

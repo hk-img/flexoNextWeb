@@ -15,7 +15,7 @@ const TermsConditions = () => {
       </section>
       <section className="bg-white md:py-16 py-10 " >
         <div className=" max-w:[1224px] w-[92%] mx-auto px-[15px]">
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-5">
             <p className="text-sm 2xl:text-base text-[#777] font-normal leading-[1.5]">
               Welcome to{" "}
               <Link

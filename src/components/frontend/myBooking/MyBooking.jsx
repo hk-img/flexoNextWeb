@@ -1,6 +1,7 @@
 "use client";
 import Svg from "@/components/svg";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useState } from "react";
 
 const MyBooking = () => {
@@ -156,8 +157,8 @@ const MyBooking = () => {
                   <Svg name="cloudDownload" className="size-5 text-[#000e54]"/>
                   <span >INVOICE</span>
                 </button>
-                <button className="flex items-center justify-center cursor-pointer w-full bg-[#2c864f] 2xl:text-[15px] text-sm hover:bg-[#40a667] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px] text-nowrap">BOOKING DETAILS <span>
-                  <Svg name="rightArrow"  className="size-3 " /></span> </button>
+                <Link href="" className="flex items-center justify-center cursor-pointer w-full bg-[#2c864f] 2xl:text-[15px] text-sm hover:bg-[#40a667] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px] text-nowrap">BOOKING DETAILS <span>
+                  <Svg name="rightArrow"  className="size-3 " /></span> </Link>
               </div>
             </div>
             <div className="mt-4">

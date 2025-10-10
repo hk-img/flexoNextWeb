@@ -77,6 +77,7 @@ const VerifyOtp = ({
       if (data?.success) {
         setErrorMsg("");
         toast.success(data.message);
+        setIsShowOtp(false);
         setIsShowUserDetailForm(true);
       } else {
         setErrorMsg(data.message || "Invalid OTP");
@@ -105,6 +106,7 @@ const VerifyOtp = ({
       if (data?.success) {
         setErrorMsg("");
         toast.success(data.message);
+        setIsShowOtp(false);
         setIsShowUserDetailForm(true);
       } else {
         setErrorMsg(data.message || "Invalid OTP");

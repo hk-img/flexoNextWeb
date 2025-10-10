@@ -27,18 +27,18 @@ const MyBookingRequests = () => {
     <>
       <section className="relative w-full lg:mt-[82px] sm:mt-[62px] mt-[63px] bg-[#f9f9f9]">
         <div className="container mx-auto px-[15px] py-10">
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col">
             <div className="pt-[13px]">
               <h1 className="font-semibold text-[#141414] text-[26px]">
                 Booking inquiries
               </h1>
             </div>
-            <div className="flex flex-col gap-y-8">
+            <div className="flex flex-col gap-y-8 pt-[30px]">
               {bookingRequestData?.length > 0 ? (
                 bookingRequestData?.map((item, index) => (
                   <div
                     key={index}
-                    className="w-full flex md:flex-row flex-col items-center gap-y-4 justify-start bg-white p-4 rounded-xl "
+                    className="w-full flex md:flex-row flex-col items-center gap-y-4 justify-start bg-white p-5 rounded-xl "
                   >
                     <Link
                       href=""
@@ -64,7 +64,7 @@ const MyBookingRequests = () => {
                         </div>
                       )}
                     </Link>
-                    <div className="md:ml-6 space-y-2 w-full">
+                    <div className="md:ml-[15px] space-y-2 w-full">
                       <div className="text-[#141414] text-sm font-medium flex items-center space-x-1">
                         <span>
                           <Svg
@@ -75,7 +75,7 @@ const MyBookingRequests = () => {
                         <span>{convertSlugToCapitalLetter(item?.spaceAddress || "")}</span>
                       </div>
 
-                      <div className="flex flex-wrap items-center space-x-3 space-y-2 font-medium text-sm text-[#141414]">
+                      <div className="flex flex-wrap items-center space-x-3 md:space-y-0 space-y-2 font-medium text-sm text-[#141414]">
                         <div className="flex items-center space-x-1">
                           <Svg
                             name="userHalf"
@@ -88,8 +88,9 @@ const MyBookingRequests = () => {
                           <Svg name="mail" className="size-4 text-[#f76900]" />
                           <span>{item?.userEmail}</span>
                         </div>
+                        <span className="h-[10px] w-[10px] rounded-full bg-[#ddd]"></span>
                         <div className="flex items-center space-x-1">
-                          <Svg name="call" className="size-4 text-[#f76900]" />
+                          <Svg name="call" className="size-3 text-[#f76900]" />
                           <span>{item?.userMobile}</span>
                         </div>
                       </div>

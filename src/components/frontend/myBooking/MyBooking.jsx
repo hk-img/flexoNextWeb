@@ -5,23 +5,57 @@ import { useAuth } from "@/context/useAuth";
 import { getAPIAuthWithoutBearer } from "@/services/ApiService";
 import { convertSlugToCapitalLetter } from "@/services/Comman";
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
 import Link from "next/link";
 import React, { useMemo, useState } from "react";
+import { workSpace } from "@/services/Comman";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const MyBooking = () => {
   const [activeTab, setActiveTab] = useState("allBooking");
+  const [spaceType, setSpaceType] = useState("");
+  const [bookingStatus, setBookingStatus] = useState("");
+  const [date, setDate] = useState({
+    startDate: "",
+    endDate: "",
+  });
   const { token, user } = useAuth();
   const { data: allBooking, isPending } = useQuery({
-    queryKey: ["booking-data", activeTab, token, user?.id],
+    queryKey: [
+      "booking-data",
+      activeTab,
+      token,
+      user?.id,
+      spaceType,
+      bookingStatus,
+      date
+    ],
     queryFn: async () => {
       const endpointMap = {
         allBooking: "user-booking-history",
         pastBooking: "previousBookings",
         upcomingBooking: "upcomingBookings",
       };
+      let query = "";
+      if (spaceType) {
+        query = `&spaceType=${spaceType}`;
+      }
+      if (bookingStatus) {
+        query = `&bookingStatus=${bookingStatus}`;
+      }
+      if(date?.startDate && date?.endDate) {
+        const onlyStartDate = new Date(date.startDate);
+        onlyStartDate.setMinutes(onlyStartDate.getMinutes() - onlyStartDate.getTimezoneOffset());
+        const onlyStartDateStr = onlyStartDate.toISOString().split("T")[0];
+
+        const onlyEndDate = new Date(date.endDate);
+        onlyEndDate.setMinutes(onlyEndDate.getMinutes() - onlyEndDate.getTimezoneOffset());
+        const onlyEndDateStr = onlyEndDate.toISOString().split("T")[0];
+
+        query = `&startDate=${onlyStartDateStr}&endDate=${onlyEndDateStr}`;
+      }
       const res = await getAPIAuthWithoutBearer(
-        `user/${endpointMap[activeTab]}?userId=${user?.id}`,
+        `user/${endpointMap[activeTab]}?userId=${user?.id}${query}`,
         token
       );
       return res.data;
@@ -77,7 +111,7 @@ const MyBooking = () => {
                   <button
                     onClick={() => setActiveTab("upcomingBooking")}
                     className={`flex-1 text-center py-[15px] text-[#777] text-sm 2xl:text-base cursor-pointer font-medium border-b-2 transition ${
-                      activeTab === "upcomingBooking" 
+                      activeTab === "upcomingBooking"
                         ? " border-[#f76900]"
                         : " border-transparent"
                     }`}
@@ -89,25 +123,57 @@ const MyBooking = () => {
               <div className="md:w-3/5 w-full md:px-6 px-0">
                 <div className="flex md:flex-row flex-col  items-center gap-6">
                   <div className="bg-white rounded-[15px] w-full">
-                    <input
-                      type="date"
-                      className=" w-full placeholder:text-[#777] placeholder:font-medium text-black mt-1 text-sm  rounded-sm focus:outline-none px-2 h-12"
-                    />
+                    <div className="relative w-64">
+                      <DatePicker
+                        selected={date?.startDate}
+                        onChange={(dates) => {
+                          const [start, end] = dates;
+                          setDate((prev) => ({
+                            ...prev,
+                            startDate: start,
+                            endDate: end,
+                          }));
+                        }}
+                        startDate={date.startDate}
+                        endDate={date.endDate}
+                        selectsRange
+                        minDate={new Date()}
+                        placeholderText="Start date — End date"
+                        className="w-full h-12 px-3 border rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+                      />
+                      {/* <Svg
+                        name="calender"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"
+                      /> */}
+                    </div>
                   </div>
                   <div className="bg-white rounded-[15px] px-2 w-full">
-                    <select className="w-full placeholder:text-[#777] text-black mt-1 text-sm rounded-sm focus:outline-none  h-12">
+                    <select
+                      value={spaceType}
+                      onChange={(e) => setSpaceType(e.target.value)}
+                      className="w-full placeholder:text-[#777] text-black mt-1 text-sm rounded-sm focus:outline-none  h-12"
+                    >
                       <option value="">Select space type</option>
-                      <option value="2025-10-06">6 Oct 2025</option>
-                      <option value="2025-10-07">7 Oct 2025</option>
-                      <option value="2025-10-08">8 Oct 2025</option>
+                      {workSpace?.map((item, index) => (
+                        <option key={index} value={item.workSpaceName}>
+                          {item.workSpaceName}
+                        </option>
+                      ))}
                     </select>
                   </div>
                   <div className="bg-white rounded-[15px] px-2 w-full">
-                    <select className="w-full placeholder:text-[#777] text-black mt-1 text-sm rounded-sm focus:outline-none  h-12">
+                    <select
+                      value={bookingStatus}
+                      onChange={(e) => setBookingStatus(e.target.value)}
+                      className="w-full placeholder:text-[#777] text-black mt-1 text-sm rounded-sm focus:outline-none  h-12"
+                    >
                       <option value="">Select Booking Status</option>
-                      <option value="2025-10-06">6 Oct 2025</option>
-                      <option value="2025-10-07">7 Oct 2025</option>
-                      <option value="2025-10-08">8 Oct 2025</option>
+                      <option value="confirmed">Confirmed</option>
+                      <option value="pending_Host_Confirmation">
+                        Pending Host Confirmation
+                      </option>
+                      <option value="pending_payment"> Pending payment</option>
+                      <option value="cancelled">Cancelled</option>
                     </select>
                   </div>
                 </div>
@@ -272,7 +338,7 @@ const MyBooking = () => {
               ) : (
                 <div className="pt-[30px] pb-[55px]">
                   <p className="text-2xl font-medium text-[#141414]">
-                  Booking not found..
+                    Booking not found..
                   </p>
                 </div>
               )}

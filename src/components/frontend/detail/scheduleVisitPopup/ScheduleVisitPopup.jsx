@@ -133,11 +133,11 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId,workingDays,spaceData }) 
     if (type == "coworking") {
       setToggleScheduling(true);
     } else if (type == "longterm") {
-      const dateOnly = new Date(values?.preferedDate)
-        .toISOString()
-        .split("T")[0];
+      const onlyStartDate = new Date(values?.preferedDate);
+      onlyStartDate.setMinutes(onlyStartDate.getMinutes() - onlyStartDate.getTimezoneOffset());
+      const onlyStartDateStr = onlyStartDate.toISOString().split("T")[0];
       const payload = {
-        visitDate: dateOnly,
+        visitDate: onlyStartDateStr,
         visitTime: values?.preferredTime,
       };
       longTermSubmitMutate(payload);

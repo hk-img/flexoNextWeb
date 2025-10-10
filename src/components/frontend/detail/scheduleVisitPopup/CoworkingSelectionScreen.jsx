@@ -38,11 +38,11 @@ const CoworkingSelectionScreen = ({spaceId,formData,setFormData,error,setError,v
     }
     setError(error);
     if (Object.keys(error).length === 0) {
-      const dateOnly = new Date(values?.preferedDate)
-        .toISOString()
-        .split("T")[0];
+      const onlyStartDate = new Date(values?.preferedDate);
+      onlyStartDate.setMinutes(onlyStartDate.getMinutes() - onlyStartDate.getTimezoneOffset());
+      const onlyStartDateStr = onlyStartDate.toISOString().split("T")[0];
       const payload = {
-        visitDate: dateOnly,
+        visitDate: onlyStartDateStr,
         visitTime: values?.preferredTime,
         spaceType: formData?.spaceType,
         howManyPeople: formData?.howManyPeople,

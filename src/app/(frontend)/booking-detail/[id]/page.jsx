@@ -3,10 +3,9 @@ import React from 'react'
 
 const page = async({params}) => {
   const {id} = await params;
-  console.log({id})
   return (
     <>
-      <BookingDetail/>
+      <BookingDetail bookingId={id}/>
     </>
   )
 }

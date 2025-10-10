@@ -8,18 +8,20 @@ const BookingDetail = () => {
     <>
       <div className="bg-[#f9f9f9]">
         <div className="relative w-full lg:mt-[82px] sm:mt-[62px] mt-[63px]">
-          <div className="container mx-auto md:px-0 px-[15px] py-10">
+          <div className="container mx-auto px-[15px] py-10">
             <div className="flex flex-wrap">
-              <div className="lg:w-2/3 w-full lg:pr-[15px] pr-0">
-                <div className="bg-[#ecf5ef] rounded-[5px] p-5 flex items-start gap-4">
-                  <div className=" text-white w-12 h-12 rounded-full flex items-center justify-center text-2xl">
-                    <Svg name="clockFill" className="size-12 text-[#f76900]"  />
+              <div className="lg:w-2/3 w-full lg:pr-[15px] pr-0 pt-[10px]">
+                <div className="bg-[#ecf5ef] rounded-[5px] p-5 flex items-center gap-2.5 ">
+                  <div className='px-[15px]'>
+                    <div className=" text-white w-12 h-12 rounded-full  flex items-center justify-center text-2xl">
+                      <Svg name="clockFill" className="size-12 shrink-0 text-[#f76900]"  />
+                    </div>
                   </div>
                   <div>
                     <h2 className="text-lg 2xl:text-xl font-bold text-[#343a40] ">
                       Request Sent. Pending Host Confirmation!
                     </h2>
-                    <p className="2xl:text-base text-sm">
+                    <p className="2xl:text-base text-sm leading-[1.2]">
                       Your booking request has been sent to the host. Once the host accepts
                       your booking request, you will receive a payment link via email. If
                       your requested date and time cannot be accommodated, you will be
@@ -27,9 +29,9 @@ const BookingDetail = () => {
                     </p>
                   </div>
                 </div>
-                <div className="flex gap-6 mt-8 pb-10 border-b border-gray-200">
+                <div className="flex gap-6 mt-8 pb-5 border-b border-gray-200">
                   <div className="bg-white rounded-lg p-6  flex md:flex-row flex-col gap-4 w-full">
-                    <Image width={200} height={150} src="/images/noida.webp" alt="booking space image" className="w-[200px]  h-[150px] rounded-lg" />
+                    <Image width={200} height={150} src="/images/noida.webp" alt="booking space image" className="w-[320px]  h-[213px] rounded-lg" />
                     <div className="flex flex-col space-y-2 justify-center">
                       <h3 className="text-[26px] font-medium text-black">event space</h3>
                       <p className="text-sm text-[#888888] 2xl:text-base">
@@ -70,7 +72,7 @@ const BookingDetail = () => {
 
                   </div>
                 </div>
-                <div className='pt-10'>
+                <div className='pt-[30px]'>
                   <h2 className="text-lg 2xl:text-xl mb-6">Booking Details</h2>
 
                   <div className="flex flex-wrap items-center gap-2 mb-8 text-[#777] text-sm 2xl:text-base">
@@ -78,7 +80,7 @@ const BookingDetail = () => {
                     <span className="font-semibold text-[#000]">Event Space</span>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 px-[15px]">
                     <div>
                       <label className="block text-[#777] 2xl:text-base text-sm font-medium mb-2">Date</label>
                       <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black">

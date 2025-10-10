@@ -604,9 +604,13 @@ const MyProfile = () => {
                               placeholder=" Emter email"
                               className="block px-2.5 h-[44px] font-semibold border-[#e0e0e0] placeholder:text-[#777] placeholder:font-medium w-full text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none"
                             />
-                            <span>
-                              <Svg name="lock" className="absolute size-[15px] text-[#777] top-[13px] right-4.5" />
-                            </span>
+                            {
+                              (user?.regType === "social" || user?.regType === "email") && (
+                                <span>
+                                  <Svg name="lock" className="absolute size-[15px] text-[#777] top-[13px] right-4.5" />
+                                </span>
+                              )
+                            }
                             </div>
                             {errors.email && (
                               <p className="text-red-500 text-[10px] absolute -bottom-4">

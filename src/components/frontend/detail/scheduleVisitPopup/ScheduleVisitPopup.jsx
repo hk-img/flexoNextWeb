@@ -6,6 +6,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { postAPIAuthWithoutBearer } from "@/services/ApiService";
 import { toast } from "sonner";
+import CoworkingSelectionScreen from "./CoworkingSelectionScreen";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const defaultTime = [
   { label: "10:00 AM", value: "10:00", disabled: false },
@@ -29,22 +32,22 @@ const defaultTime = [
 ];
 
 const scheduleSchema = z.object({
-  preferedDate: z.string().min(1, "Please select a preferred date"),
+  preferedDate: z.date().min(1, "Please select a preferred date"),
   preferredTime: z.string().min(1, "Please select a preferred time"),
 });
 
-const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
+const ScheduleVisitPopup = ({ type, setIsOpen, spaceId,workingDays,spaceData }) => {
   const [timeSlot, setTimeSlot] = useState(defaultTime);
-  const [toggleScheduling, setToggleScheduling] = useState(false);
-  const [successScreen, setSuccessScreen] = useState(false);
   const [formData, setFormData] = useState({
     spaceType: "",
-    visitTime: "",
+    howManyPeople: "",
   });
   const [error, setError] = useState({
     spaceType: "",
-    visitTime: "",
+    howManyPeople: "",
   });
+  const [toggleScheduling, setToggleScheduling] = useState(false);
+  const [successScreen, setSuccessScreen] = useState(false);
   const {
     register,
     handleSubmit,
@@ -105,39 +108,6 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
     }
   }, [values?.preferedDate]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-    setError((prev) => ({
-      ...prev,
-      [name]: "",
-    }));
-  };
-
-  const { mutate: coworkingSubmitMutate } = useMutation({
-    mutationFn: async (payload) => {
-      const response = await postAPIAuthWithoutBearer(
-        `user/coworkingScheduleVisit/${spaceId}`,
-        payload
-      );
-      return response.data;
-    },
-    onSuccess: (data, payload) => {
-      if (data?.result?.success) {
-        toast.success(data?.result?.message);
-        setSuccessScreen(true);
-      } else {
-        toast.error(data?.result?.message);
-      }
-    },
-    onError: (err) => {
-      toast.error(err.response?.data?.message || "Something went wrong");
-    },
-  });
-
   const { mutate: longTermSubmitMutate } = useMutation({
     mutationFn: async (payload) => {
       const response = await postAPIAuthWithoutBearer(
@@ -163,31 +133,21 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
     if (type == "coworking") {
       setToggleScheduling(true);
     } else if (type == "longterm") {
+      const onlyStartDate = new Date(values?.preferedDate);
+      onlyStartDate.setMinutes(onlyStartDate.getMinutes() - onlyStartDate.getTimezoneOffset());
+      const onlyStartDateStr = onlyStartDate.toISOString().split("T")[0];
       const payload = {
-        visitDate: values.preferedDate,
+        visitDate: onlyStartDateStr,
         visitTime: values?.preferredTime,
       };
       longTermSubmitMutate(payload);
     }
   };
-  const handleCoworkingSubmit = () => {
-    let error = {};
-    if (!formData.spaceType) {
-      error.spaceType = "Please select a space type";
-    }
-    if (!formData.visitTime) {
-      error.visitTime = "Please select a visit time";
-    }
-    setError(error);
-    if (Object.keys(error).length === 0) {
-      const payload = {
-        visitDate: values?.preferedDate,
-        visitTime: values?.preferredTime,
-        spaceType: formData?.spaceType,
-        howManyPeople: values?.preferredTime,
-      };
-      coworkingSubmitMutate(payload);
-    }
+
+  const isClosedDay = (date) => {
+    const dayName = date.toLocaleString("en-US", { weekday: "long" });
+    const dayInfo = workingDays.find((d) => d.day === dayName);
+    return dayInfo?.isClosed;
   };
 
   return (
@@ -233,453 +193,7 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
               </p>
             </div>
             {toggleScheduling ? (
-              <>
-                <div className="overflow-y-auto h-[calc(100%-90px)] [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1] p-5">
-                  <div className="md:max-w-[80%] max-w-full mx-auto text-center py-8 ">
-                    <h2 className="text-[#141414] font-thin mb-3 text-lg">
-                      What type of space are you looking for?
-                    </h2>
-                    {/* <button
-                      onClick={() => {
-                        setFormData((prev) => ({
-                          ...prev,
-                          spaceType: "Not sure",
-                        }));
-                        setError((prev) => ({ ...prev, spaceType: "" }));
-                      }}
-                      className="cursor-pointer border border-[#DBDBDB] hover:shadow-[5px_5px_15px_#0000004d] rounded-md px-5 py-2 text-sm text-[#141414] transition"
-                    >
-                      Not sure
-                    </button> */}
-                    <label className="cursor-pointer">
-                      <input
-                        type="radio"
-                        name="spaceType"
-                        value="notsure"
-                        className="hidden peer"
-                        onChange={handleChange}
-                      />
-                      <span
-                        className="rounded-[5px] px-5 py-2 border peer-checked:border-2 peer-checked:border-[#F76900] text-sm text-[#141414] border-gray-300  
-                            peer-checked:shadow-[5px_5px_15px_#0000004d]  
-                            hover:shadow-[5px_5px_15px_#0000004d] transition"
-                      >
-                        Not sure
-                      </span>
-                    </label>
-                    {error?.spaceType && (
-                      <span className="text-red-500">{error.spaceType}</span>
-                    )}
-                    <h2 className="text-[#141414] font-thin mt-10 mb-3 text-lg">
-                      For How Many People?
-                    </h2>
-
-                    <div className="flex flex-wrap justify-center md:gap-5 gap-3 mb-6">
-                      <label className="cursor-pointer">
-                        <input
-                          type="radio"
-                          name="visitTime"
-                          value="1"
-                          className="hidden peer"
-                          onChange={handleChange}
-                        />
-                        <span
-                          className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
-                            peer-checked:shadow-[5px_5px_15px_#0000004d]  
-                            hover:shadow-[5px_5px_15px_#0000004d] transition"
-                        >
-                          1
-                        </span>
-                      </label>
-                      <label className="cursor-pointer">
-                        <input
-                          type="radio"
-                          name="visitTime"
-                          value="2"
-                          className="hidden peer"
-                          onChange={handleChange}
-                        />
-                        <span
-                          className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
-                            peer-checked:shadow-[5px_5px_15px_#0000004d]  
-                            hover:shadow-[5px_5px_15px_#0000004d] transition"
-                        >
-                          2
-                        </span>
-                      </label>
-                      <label className="cursor-pointer">
-                        <input
-                          type="radio"
-                          name="visitTime"
-                          value="3"
-                          className="hidden peer"
-                          onChange={handleChange}
-                        />
-                        <span
-                          className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
-                            peer-checked:shadow-[5px_5px_15px_#0000004d]  
-                            hover:shadow-[5px_5px_15px_#0000004d] transition"
-                        >
-                          3
-                        </span>
-                      </label>
-                      <label className="cursor-pointer">
-                        <input
-                          type="radio"
-                          name="visitTime"
-                          value="4"
-                          className="hidden peer"
-                          onChange={handleChange}
-                        />
-                        <span
-                          className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
-                            peer-checked:shadow-[5px_5px_15px_#0000004d]  
-                            hover:shadow-[5px_5px_15px_#0000004d] transition"
-                        >
-                          4
-                        </span>
-                      </label>
-                      <label className="cursor-pointer">
-                        <input
-                          type="radio"
-                          name="visitTime"
-                          value="5"
-                          className="hidden peer"
-                          onChange={handleChange}
-                        />
-                        <span
-                          className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
-                            peer-checked:shadow-[5px_5px_15px_#0000004d]  
-                            hover:shadow-[5px_5px_15px_#0000004d] transition"
-                        >
-                          5
-                        </span>
-                      </label>
-                      <label className="cursor-pointer">
-                        <input
-                          type="radio"
-                          name="visitTime"
-                          value="6"
-                          className="hidden peer"
-                          onChange={handleChange}
-                        />
-                        <span
-                          className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
-                            peer-checked:shadow-[5px_5px_15px_#0000004d]  
-                            hover:shadow-[5px_5px_15px_#0000004d] transition"
-                        >
-                          6
-                        </span>
-                      </label>
-                      <label className="cursor-pointer">
-                        <input
-                          type="radio"
-                          name="visitTime"
-                          value="7"
-                          className="hidden peer"
-                          onChange={handleChange}
-                        />
-                        <span
-                          className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
-                            peer-checked:shadow-[5px_5px_15px_#0000004d]  
-                            hover:shadow-[5px_5px_15px_#0000004d] transition"
-                        >
-                          7
-                        </span>
-                      </label>
-                      <label className="cursor-pointer">
-                        <input
-                          type="radio"
-                          name="visitTime"
-                          value="8"
-                          className="hidden peer"
-                          onChange={handleChange}
-                        />
-                        <span
-                          className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
-                            peer-checked:shadow-[5px_5px_15px_#0000004d]  
-                            hover:shadow-[5px_5px_15px_#0000004d] transition"
-                        >
-                          8
-                        </span>
-                      </label>
-                      <label className="cursor-pointer">
-                        <input
-                          type="radio"
-                          name="visitTime"
-                          value="9"
-                          className="hidden peer"
-                          onChange={handleChange}
-                        />
-                        <span
-                          className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
-                            peer-checked:shadow-[5px_5px_15px_#0000004d]  
-                            hover:shadow-[5px_5px_15px_#0000004d] transition"
-                        >
-                          9
-                        </span>
-                      </label>
-                      <label className="cursor-pointer">
-                        <input
-                          type="radio"
-                          name="visitTime"
-                          value="10"
-                          className="hidden peer"
-                          onChange={handleChange}
-                        />
-                        <span
-                          className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
-                            peer-checked:shadow-[5px_5px_15px_#0000004d]  
-                            hover:shadow-[5px_5px_15px_#0000004d] transition"
-                        >
-                          10
-                        </span>
-                      </label>
-                      <label className="cursor-pointer">
-                        <input
-                          type="radio"
-                          name="visitTime"
-                          value="11"
-                          className="hidden peer"
-                          onChange={handleChange}
-                        />
-                        <span
-                          className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
-                            peer-checked:shadow-[5px_5px_15px_#0000004d]  
-                            hover:shadow-[5px_5px_15px_#0000004d] transition"
-                        >
-                          11
-                        </span>
-                      </label>
-                      <label className="cursor-pointer">
-                        <input
-                          type="radio"
-                          name="visitTime"
-                          value="12"
-                          className="hidden peer"
-                          onChange={handleChange}
-                        />
-                        <span
-                          className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
-                            peer-checked:shadow-[5px_5px_15px_#0000004d]  
-                            hover:shadow-[5px_5px_15px_#0000004d] transition"
-                        >
-                          12
-                        </span>
-                      </label>
-                      <label className="cursor-pointer">
-                        <input
-                          type="radio"
-                          name="visitTime"
-                          value="13"
-                          className="hidden peer"
-                          onChange={handleChange}
-                        />
-                        <span
-                          className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
-                            peer-checked:shadow-[5px_5px_15px_#0000004d]  
-                            hover:shadow-[5px_5px_15px_#0000004d] transition"
-                        >
-                          13
-                        </span>
-                      </label>
-                      <label className="cursor-pointer">
-                        <input
-                          type="radio"
-                          name="visitTime"
-                          value="14"
-                          className="hidden peer"
-                          onChange={handleChange}
-                        />
-                        <span
-                          className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
-                            peer-checked:shadow-[5px_5px_15px_#0000004d]  
-                            hover:shadow-[5px_5px_15px_#0000004d] transition"
-                        >
-                          14
-                        </span>
-                      </label>
-                      <label className="cursor-pointer">
-                        <input
-                          type="radio"
-                          name="visitTime"
-                          value="15"
-                          className="hidden peer"
-                          onChange={handleChange}
-                        />
-                        <span
-                          className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
-                            peer-checked:shadow-[5px_5px_15px_#0000004d]  
-                            hover:shadow-[5px_5px_15px_#0000004d] transition"
-                        >
-                          15
-                        </span>
-                      </label>
-                      <label className="cursor-pointer">
-                        <input
-                          type="radio"
-                          name="visitTime"
-                          value="16"
-                          className="hidden peer"
-                          onChange={handleChange}
-                        />
-                        <span
-                          className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
-                            peer-checked:shadow-[5px_5px_15px_#0000004d]  
-                            hover:shadow-[5px_5px_15px_#0000004d] transition"
-                        >
-                          16
-                        </span>
-                      </label>
-                      <label className="cursor-pointer">
-                        <input
-                          type="radio"
-                          name="visitTime"
-                          value="17"
-                          className="hidden peer"
-                          onChange={handleChange}
-                        />
-                        <span
-                          className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
-                            peer-checked:shadow-[5px_5px_15px_#0000004d]  
-                            hover:shadow-[5px_5px_15px_#0000004d] transition"
-                        >
-                          17
-                        </span>
-                      </label>
-                      <label className="cursor-pointer">
-                        <input
-                          type="radio"
-                          name="visitTime"
-                          value="18"
-                          className="hidden peer"
-                          onChange={handleChange}
-                        />
-                        <span
-                          className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
-                            peer-checked:shadow-[5px_5px_15px_#0000004d]  
-                            hover:shadow-[5px_5px_15px_#0000004d] transition"
-                        >
-                          18
-                        </span>
-                      </label>
-                      <label className="cursor-pointer">
-                        <input
-                          type="radio"
-                          name="visitTime"
-                          value="19"
-                          className="hidden peer"
-                          onChange={handleChange}
-                        />
-                        <span
-                          className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
-                            peer-checked:shadow-[5px_5px_15px_#0000004d]  
-                            hover:shadow-[5px_5px_15px_#0000004d] transition"
-                        >
-                          19
-                        </span>
-                      </label>
-                      <label className="cursor-pointer">
-                        <input
-                          type="radio"
-                          name="visitTime"
-                          value="20"
-                          className="hidden peer"
-                          onChange={handleChange}
-                        />
-                        <span
-                          className="w-10 h-10 flex items-center justify-center border text-sm text-[#141414] peer-checked:bg-[#F76900] peer-checked:text-white border-gray-300 rounded-full 
-                            peer-checked:shadow-[5px_5px_15px_#0000004d]  
-                            hover:shadow-[5px_5px_15px_#0000004d] transition"
-                        >
-                          20
-                        </span>
-                      </label>
-                    </div>
-
-                    <div className="flex justify-center gap-5 mb-10">
-                      <label className="cursor-pointer">
-                        <input
-                          type="radio"
-                          name="visitTime"
-                          value="21-50"
-                          className="hidden peer"
-                          onChange={handleChange}
-                        />
-                        <span
-                          className="w-20 h-20 flex items-center justify-center border text-sm text-[#141414] border-gray-300 rounded-full  peer-checked:bg-[#F76900] peer-checked:text-white
-                            peer-checked:shadow-[5px_5px_15px_#0000004d]  
-                            hover:shadow-[5px_5px_15px_#0000004d] transition"
-                        >
-                          21-50
-                        </span>
-                      </label>
-                      <label className="cursor-pointer">
-                        <input
-                          type="radio"
-                          name="visitTime"
-                          value="51-100"
-                          className="hidden peer"
-                          onChange={handleChange}
-                        />
-                        <span
-                          className="w-20 h-20 flex items-center justify-center border text-sm text-[#141414] border-gray-300 rounded-full  peer-checked:bg-[#F76900] peer-checked:text-white
-                            peer-checked:shadow-[5px_5px_15px_#0000004d]  
-                            hover:shadow-[5px_5px_15px_#0000004d] transition"
-                        >
-                          51-100
-                        </span>
-                      </label>
-                      <label className="cursor-pointer">
-                        <input
-                          type="radio"
-                          name="visitTime"
-                          value="100+"
-                          className="hidden peer"
-                          onChange={handleChange}
-                        />
-                        <span
-                          className="w-20 h-20 flex items-center justify-center border text-sm text-[#141414] border-gray-300 rounded-full peer-checked:bg-[#F76900] peer-checked:text-white
-                            peer-checked:shadow-[5px_5px_15px_#0000004d]  
-                            hover:shadow-[5px_5px_15px_#0000004d] transition"
-                        >
-                          100+
-                        </span>
-                      </label>
-                    </div>
-                    {error.visitTime && (
-                      <span className="text-red-500">{error.visitTime}</span>
-                    )}
-                    <div className="flex justify-center gap-4">
-                      <button
-                        onClick={() => setToggleScheduling(false)}
-                        className="cursor-pointer border border-black text-black px-6 py-2 text-sm rounded-[5px]"
-                      >
-                        PREVIOUS
-                      </button>
-                      <button
-                        onClick={handleCoworkingSubmit}
-                        className="cursor-pointer w-fit px-10 bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]"
-                      >
-                        SUBMIT
-                      </button>
-                    </div>
-                  </div>
-                  <div className="p-5 border-t border-[#0000001a]">
-                    <p className="text-[#141414]  font-light text-[11px] text-center py-3">
-                      After you submit a workspace enquiry to us, we may share
-                      your enquiry details (including contact details) with
-                      workspace providers and our commercial broker partners,
-                      who may contact you to follow up on your enquiry. Please
-                      read our{" "}
-                      <a href="" className="text-[#f76900]">
-                        Privacy and Cookies Policy
-                      </a>{" "}
-                      for details of how we process the information you provide.
-                    </p>
-                  </div>
-                </div>
-              </>
+              <CoworkingSelectionScreen spaceId={spaceId} formData={formData} setFormData={setFormData} error={error} setError={setError} values={values} setToggleScheduling={setToggleScheduling} setSuccessScreen={setSuccessScreen} spaceData={spaceData}/>
             ) : (
               <>
                 <div className="overflow-y-auto h-[calc(100%-90px)] [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1] p-5">
@@ -693,31 +207,44 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId }) => {
                       onSubmit={handleSubmit(onSubmit)}
                       className="p-5 space-y-5"
                     >
-                      <div className="relative">
-                        <input
-                          type="date"
-                          id="preferedDate"
-                          {...register("preferedDate")}
-                          min={new Date().toISOString().split("T")[0]}
-                          className={`block h-[58px] px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border ${
-                            errors.preferedDate
-                              ? "border-red-500"
-                              : "border-gray-300 hover:border-black"
-                          } appearance-none focus:outline-none focus:ring-0 focus:border-[#3f51b5] peer`}
-                          placeholder="Prefered View Date*"
-                        />
-                        <label
-                          htmlFor="preferedDate"
-                          className="absolute text-sm font-semibold text-[#00000099] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:text-[#3f51b5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1"
-                        >
-                          Prefered View Date*
-                        </label>
-                        {errors.preferedDate && (
-                          <p className="text-red-500 text-xs mt-1">
-                            {errors.preferedDate.message}
-                          </p>
-                        )}
-                      </div>
+                        <div className="relative [&_.react-datepicker-wrapper]:!w-full">
+                          <Controller
+                            name="preferedDate"
+                            control={control}
+                            rules={{ required: "Preferred view date is required" }}
+                            render={({ field }) => (
+                              <DatePicker
+                                selected={field.value}
+                                onChange={(date) => field.onChange(date)}
+                                minDate={new Date()}
+                                filterDate={(date) => !isClosedDay(date)} // disable closed days
+                                placeholderText="Prefered View Date*"
+                                dateFormat="yyyy-MM-dd"
+                                className={`block h-[58px] px-2.5 py-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border ${
+                                  errors.preferedDate
+                                    ? "border-red-500"
+                                    : "border-gray-300 hover:border-black"
+                                } appearance-none focus:outline-none focus:ring-0 focus:border-[#3f51b5] peer`}
+                              />
+                              
+                            )}
+                          />
+                          <Svg
+                            name="calender"
+                            className="absolute size-4 right-3 top-1/2 -translate-y-1/2 text-[#f76900] pointer-events-none"
+                          />
+                          <label
+                            htmlFor="preferedDate"
+                            className="absolute text-sm font-semibold text-[#00000099] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:text-[#3f51b5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1"
+                          >
+                            Prefered View Date*
+                          </label>
+                          {errors.preferedDate && (
+                            <p className="text-red-500 text-xs mt-1">
+                              {errors.preferedDate.message}
+                            </p>
+                          )}
+                        </div>
                       <div className="relative">
                         <Controller
                           name="preferredTime"

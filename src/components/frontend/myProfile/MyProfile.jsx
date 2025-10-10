@@ -9,6 +9,7 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { useAuth } from "@/context/useAuth";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { components as RSComponents } from "react-select";
 import {
   getApi,
   postAPIAuthWithoutBearer,
@@ -17,6 +18,116 @@ import {
 import dynamic from "next/dynamic";
 import { toast } from "sonner";
 const Select = dynamic(() => import("react-select"), { ssr: false });
+
+const DropdownIndicator = (props) => {
+    const { menuIsOpen } = props.selectProps;
+    return (
+      <RSComponents.DropdownIndicator {...props}>
+        <Svg
+          name="arrowDropDown"
+          className={`size-5 text-[#777] transition-transform duration-200 ${
+            menuIsOpen ? "rotate-180" : "rotate-0"
+          }`}
+        />
+      </RSComponents.DropdownIndicator>
+    );
+  };
+
+  const ClearIndicator = (props) => {
+      return (
+        <RSComponents.ClearIndicator {...props}>
+          <div className="cursor-pointer text-gray-500 hover:text-[#f76900] transition-colors duration-200">
+            ×
+          </div>
+        </RSComponents.ClearIndicator>
+      );
+    };
+   
+    const customStyles = {
+      container: (base) => ({
+        ...base,
+        width: "260px",
+      }),
+      control: (base, state) => ({
+        ...base,
+        borderRadius: "15px",
+        backgroundColor: "transparent",
+        borderColor: "transparent",
+        minHeight: "44px",
+        height: "44px",
+        width: "100%",
+        boxShadow: "none",
+        outline: "none",
+        "&:hover": {
+          borderColor: "transparent",
+        },
+      }),
+      menu: (base) => ({
+        ...base,
+        marginTop: 0,
+        borderRadius: "12px",
+        backgroundColor: "#fff",
+        boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+        outline: "none",
+        overflow: "hidden",
+      }),
+      menuList: (base) => ({
+        ...base,
+        maxHeight: "160px",
+        overflowY: "auto",
+        paddingRight: "4px",
+        className:
+          " [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]",
+      }),
+      valueContainer: (base) => ({
+        ...base,
+        padding: "0 8px",
+      }),
+      placeholder: (base) => ({
+        ...base,
+        color: "black",
+        fontWeight: "600",
+        fontSize: "14px",
+      }),
+      singleValue: (base) => ({
+        ...base,
+        fontSize: "0.95rem",
+        color: "#333",
+      }),
+      option: (base, state) => ({
+        ...base,
+        padding: "10px 14px",
+        borderRadius: "11px",
+        backgroundColor: state.isSelected
+          ? "#ebf5ff"
+          : state.isFocused
+          ? "#f5faff"
+          : "#fff",
+        color: "#333",
+        width: "100%",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        fontSize: "14px",
+        fontWeight: state.isSelected ? "500" : "normal",
+        cursor: "pointer",
+        outline: "none",
+        boxShadow: "none",
+        ":active": {
+          backgroundColor: "#ebf5ff",
+        },
+      }),
+      dropdownIndicator: (base) => ({
+        ...base,
+        color: "#999",
+        padding: "0 8px",
+      }),
+      indicatorsContainer: (base) => ({
+        ...base,
+        // paddingRight: "4px",
+      }),
+    };
+
 
 const genderOptions = [
   { value: "male", label: "Male" },
@@ -36,9 +147,9 @@ const profileSchema = z
       .nullable()
       .optional(),
     companyName: z.string().optional(),
-    email: z.string().email("Invalid email").optional(),
+    email: z.string().min(1, "Email is required").email("Invalid email"),
     gender: z.string().optional(),
-    dob: z.string().optional(),
+    dob: z.string().min(1, "Date of birth is required"),
     billingCountry: z.string().optional(),
     state: z.string().optional(),
     city: z.string().optional(),
@@ -341,13 +452,13 @@ const MyProfile = () => {
   return (
     <>
       <div className="relative w-full lg:mt-[82px] sm:mt-[62px] mt-[63px]">
-        <div className="container mx-auto md:px-0 px-[15px] py-10">
+        <div className="container mx-auto px-[15px] py-10">
           <div className="md:w-[55%] w-full mx-auto">
             <div>
-              <h2 className="text-[22px] md:text-[26px] font-semibold leading-[1.6]">
+              <h2 className="text-[22px] md:text-[26px] pt-[13px] text-[#141414] font-semibold leading-[1.6]">
                 Profile Management
               </h2>
-              <div className="mt-5">
+              <div className="mt-20">
                 <div className=" flex items-center justify-center">
                   <div className="relative">
                     <div className="w-[125px] h-[125px]">
@@ -379,453 +490,398 @@ const MyProfile = () => {
                         className="hidden"
                         onChange={handleImageUpload}
                       />
-                      <Svg name="camera" className=" text-white size-4 " />
+                      <Svg name="camera" className=" text-white size-[18px] " />
                     </label>
                   </div>
                 </div>
-                <div className="mt-10">
+                <div className="mt-[50px]">
                   <form
                     onSubmit={handleSubmit(onSubmit)}
-                    className="mt-10 space-y-10"
+                    className="mt-10 "
                   >
-                    <div>
-                      <h4 className="text-lg font-semibold mb-5">
-                        Basic Information
-                      </h4>
+                    <div className="space-y-[42px]">
+                      <div>
+                        <h4 className="text-lg font-semibold mb-6">
+                          Basic Information
+                        </h4>
 
-                      <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
-                        {/* First Name */}
-                        <div className="relative">
-                          <label className=" text-sm text-black font-semibold bg-white px-2">
-                            First Name <span className="text-[#dc3545]">*</span>
-                          </label>
-                          <input
-                            {...register("firstName")}
-                            type="text"
-                            placeholder="Enter first name"
-                            className={`block px-2.5 h-12 w-full text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none placeholder:text-[#777] placeholder:font-medium ${
-                              errors.firstName
-                                ? "border-red-500 focus:ring-red-200"
-                                : "border-[#e0e0e0] focus:ring-indigo-200"
-                            }`}
-                          />
+                        <div className="grid md:grid-cols-2 grid-cols-1 gap-y-5 gap-x-[30px]">
+                          {/* First Name */}
+                          <div className="relative">
+                            <label className=" text-sm text-black font-semibold bg-white leading-[1.5]">
+                              First name<span className="text-[#dc3545]">*</span>
+                            </label>
+                            <input
+                              {...register("firstName")}
+                              type="text"
+                              placeholder="Enter first name"
+                              className={`block px-2.5 h-[44px] font-semibold w-full text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none placeholder:text-[#777] placeholder:font-medium ${
+                                errors.firstName
+                                  ? "border-red-500 focus:ring-red-200"
+                                  : "border-[#e0e0e0] focus:ring-indigo-200"
+                              }`}
+                            />
 
-                          {errors.firstName && (
-                            <p className="text-red-500 text-[10px] absolute -bottom-4">
-                              {errors.firstName.message}
-                            </p>
-                          )}
-                        </div>
-
-                        {/* Last Name */}
-                        <div className="relative">
-                          <label className=" text-sm text-black font-semibold px-2">
-                            Last Name <span className="text-[#dc3545]">*</span>
-                          </label>
-                          <input
-                            {...register("lastName")}
-                            type="text"
-                            placeholder="Enter last name"
-                            className={`block px-2.5 h-12 w-full text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none placeholder:text-[#777] placeholder:font-medium ${
-                              errors.lastName
-                                ? "border-red-500 focus:ring-red-200"
-                                : "border-[#e0e0e0] focus:ring-indigo-200"
-                            }`}
-                          />
-                        </div>
-
-                        {/* Mobile */}
-                        <div className="relative">
-                          <label className=" text-sm text-black font-semibold px-2">
-                            Mobile <span className="text-[#dc3545]">*</span>
-                          </label>
-                          <Controller
-                            name="mobile"
-                            control={control}
-                            render={({ field }) => (
-                              <PhoneInput
-                                country="in"
-                                value={field.value}
-                                onChange={(value, country) => {
-                                  setValue("mobile", value, {
-                                    shouldValidate: true,
-                                  });
-                                  setValue("country", country);
-                                }}
-                                enableSearch
-                                countryCodeEditable={false}
-                                inputProps={{ name: "mobile" }}
-                                className="w-full [&_input]:!w-full mt-1 border-[#e0e0e0] focus:border-[#3f51b5] rounded-sm focus:outline-none [&_input]:!h-full h-12"
-                              />
+                            {errors.firstName && (
+                              <p className="text-red-500 text-[10px] absolute -bottom-4">
+                                {errors.firstName.message}
+                              </p>
                             )}
+                          </div>
+
+                          {/* Last Name */}
+                          <div className="relative">
+                            <label className=" text-sm text-black font-semibold">
+                              Last name<span className="text-[#dc3545]">*</span>
+                            </label>
+                            <input
+                              {...register("lastName")}
+                              type="text"
+                              placeholder="Enter last name"
+                              className={`block px-2.5 h-[45px] font-semibold w-full text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none placeholder:text-[#777] placeholder:font-medium ${
+                                errors.lastName
+                                  ? "border-red-500 focus:ring-red-200"
+                                  : "border-[#e0e0e0] focus:ring-indigo-200"
+                              }`}
+                            />
+                          </div>
+
+                          {/* Mobile */}
+                          <div className="relative">
+                            <label className=" text-sm text-black font-semibold">
+                              Mobile<span className="text-[#dc3545]">*</span>
+                            </label>
+                            <Controller
+                              name="mobile"
+                              control={control}
+                              render={({ field }) => (
+                                <PhoneInput
+                                  country="in"
+                                  value={field.value}
+                                  onChange={(value, country) => {
+                                    setValue("mobile", value, {
+                                      shouldValidate: true,
+                                    });
+                                    setValue("country", country);
+                                  }}
+                                  enableSearch
+                                  countryCodeEditable={false}
+                                  inputProps={{ name: "mobile" }}
+                                  className="w-full [&_input]:!w-full font-semibold mt-1 border-[#e0e0e0] focus:border-[#3f51b5] rounded-sm focus:outline-none [&_input]:!h-full h-[44px]"
+                                />
+                              )}
+                            />
+                            {errors.mobile && (
+                              <p className="text-red-500 text-[10px] absolute -bottom-4">
+                                {errors.mobile.message}
+                              </p>
+                            )}
+                          </div>
+
+                          {/* Company Name */}
+                          <div className="relative">
+                            <label className=" text-sm text-black font-semibold">
+                              Company Name
+                            </label>
+                            <input
+                              {...register("companyName")}
+                              type="text"
+                              placeholder="Enter company name"
+                              className="block px-2.5 h-[44px] w-full font-semibold placeholder:text-[#777] placeholder:font-medium border-[#e0e0e0] text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none"
+                            />
+                          </div>
+
+                          {/* Email */}
+                          <div className="relative md:col-span-2">
+                            <label className=" text-sm text-black font-semibold">
+                              Email<span className="text-[#dc3545]">*</span>
+                            </label>
+                            <div className="relative">
+                            <input
+                              {...register("email")}
+                              type="email"
+                              readOnly = {(user?.regType === "social" || user?.regType === "email") ? true : false}
+                              placeholder=" Emter email"
+                              className="block px-2.5 h-[44px] font-semibold border-[#e0e0e0] placeholder:text-[#777] placeholder:font-medium w-full text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none"
+                            />
+                            {
+                              (user?.regType === "social" || user?.regType === "email") && (
+                                <span>
+                                  <Svg name="lock" className="absolute size-[15px] text-[#777] top-[13px] right-4.5" />
+                                </span>
+                              )
+                            }
+                            </div>
+                            {errors.email && (
+                              <p className="text-red-500 text-[10px] absolute -bottom-4">
+                                {errors.email.message}
+                              </p>
+                            )}
+                          </div>
+
+                          {/* Gender */}
+                          <div className="relative">
+                            <label className="text-sm text-black font-semibold">
+                              Gender
+                            </label>
+
+                            <Controller
+                              name="gender"
+                              control={control}
+                              render={({ field }) => {
+                                const handleChange = (selectedOption) => {
+                                  field.onChange(selectedOption?.value || "");
+                                };
+
+                                const selectedValue = genderOptions.find(
+                                  (option) => option.value === field.value
+                                );
+
+                                return (
+                                  <Select
+                                    value={selectedValue || null}
+                                    onChange={handleChange}
+                                    options={genderOptions}
+                                    placeholder="Select Gender"
+                                    classNamePrefix="react-select"
+                                    className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px]"
+                                     styles={customStyles}
+                                      components={{
+                                      ClearIndicator,
+                                      DropdownIndicator,
+                                      IndicatorSeparator: null,
+                                    }}
+                                  />
+                                );
+                              }}
+                            />
+                          </div>
+
+                          {/* DOB */}
+                          <div className="relative">
+                            <label className=" text-sm text-black font-semibold">
+                              Date of birth<span className="text-[#dc3545]">*</span>
+                            </label>
+                            <input
+                              {...register("dob")}
+                              type="date"
+                              max={new Date().toISOString().split("T")[0]}
+                              className="border-[#e0e0e0] font-semibold w-full placeholder:text-[#777] placeholder:font-medium text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-[44px]"
+                            />
+                            {errors.dob && (
+                              <p className="text-red-500 text-[10px] absolute -bottom-4">
+                                {errors.dob.message}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Billing Details */}
+                      <div className="pt-[25px] border-t border-[#ddd]">
+                        <h4 className="text-lg font-semibold mb-[25px]">
+                          Billing Details
+                        </h4>
+
+                        <div className="grid md:grid-cols-2 grid-cols-1 gap-y-4 gap-x-[30px]">
+                          <div className="relative">
+                            <label className="text-sm text-black font-semibold">
+                              Country
+                            </label>
+
+                            <Controller
+                              name="billingCountry"
+                              control={control}
+                              render={({ field }) => {
+                                const handleChange = (selectedOption) => {
+                                  field.onChange(selectedOption?.label || "");
+                                };
+                                const selectedValue =
+                                  countryData?.find(
+                                    (option) => option.label === field.value
+                                  ) || null;
+
+                                return (
+                                  <Select
+                                    value={selectedValue}
+                                    onChange={handleChange}
+                                    options={countryData}
+                                    placeholder="Select Country"
+                                    classNamePrefix="react-select"
+                                    className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px]"
+                                     styles={customStyles}
+                                     components={{
+                                      ClearIndicator,
+                                      DropdownIndicator,
+                                      IndicatorSeparator: null,
+                                    }}
+                                  />
+                                );
+                              }}
+                            />
+                          </div>
+                          <div className="relative">
+                            <label className="text-sm text-black font-semibold">
+                              State
+                            </label>
+
+                            <Controller
+                              name="state"
+                              control={control}
+                              render={({ field }) => {
+                                const handleChange = (selectedOption) => {
+                                  field.onChange(selectedOption?.label || "");
+                                };
+                                const selectedValue =
+                                  stateData?.find(
+                                    (option) => option.label === field.value
+                                  ) || null;
+
+                                return (
+                                  <Select
+                                    value={selectedValue}
+                                    onChange={handleChange}
+                                    options={stateData}
+                                    placeholder="Select State"
+                                    classNamePrefix="react-select"
+                                     className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px]"
+                                     styles={customStyles}
+                                     components={{
+                                      ClearIndicator,
+                                      DropdownIndicator,
+                                      IndicatorSeparator: null,
+                                    }}
+                                  />
+                                );
+                              }}
+                            />
+                          </div>
+
+                          <div className="relative">
+                            <label className="text-sm text-black font-semibold">
+                              City
+                            </label>
+
+                            <Controller
+                              name="city"
+                              control={control}
+                              render={({ field }) => {
+                                const handleChange = (selectedOption) => {
+                                  field.onChange(selectedOption?.label || "");
+                                };
+                                const selectedValue =
+                                  cityData?.find(
+                                    (option) => option.label === field.value
+                                  ) || null;
+
+                                return (
+                                  <Select
+                                    value={selectedValue}
+                                    onChange={handleChange}
+                                    options={cityData}
+                                    placeholder="Select City"
+                                    classNamePrefix="react-select"
+                                    className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px]"
+                                     styles={customStyles}
+                                     components={{
+                                      ClearIndicator,
+                                      DropdownIndicator,
+                                      IndicatorSeparator: null,
+                                    }}
+                                  />
+                                );
+                              }}
+                            />
+                          </div>
+
+                          <div className="relative">
+                            <label className=" text-sm text-black font-semibold">
+                              Pincode
+                            </label>
+                            <input
+                              {...register("pincode")}
+                              type="text"
+                              placeholder="Enter pincode "
+                              className="border-[#e0e0e0] font-semibold text-[#777] w-full placeholder:text-[#777] placeholder:font-medium  mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-[44px]"
+                            />
+                          </div>
+
+                          <div className="relative">
+                            <label className=" text-sm text-black font-semibold">
+                              GST no.
+                            </label>
+                            <input
+                              {...register("gst")}
+                              type="text"
+                              placeholder=" Enter GST no."
+                              className="border-[#e0e0e0] font-semibold  w-full placeholder:text-[#777] placeholder:font-medium text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-[44px]"
+                            />
+                            {errors.gst && (
+                              <p className="text-red-500 text-[10px] absolute -bottom-4">
+                                {errors.gst.message}
+                              </p>
+                            )}
+                          </div>
+
+                          <div className="relative">
+                            <label className="text-sm text-black font-semibold">
+                              PAN No.
+                            </label>
+                            <input
+                              {...register("pan")}
+                              type="text"
+                              placeholder="Enter PAN no. "
+                              className="border-[#e0e0e0] font-semibold w-full placeholder:text-[#777] placeholder:font-medium text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-[44px]"
+                            />
+                            {errors.pan && (
+                              <p className="text-red-500 text-[10px] absolute -bottom-4">
+                                {errors.pan.message}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                        <div className="relative mt-6">
+                          <label className="text-sm text-black font-semibold">
+                            Billing address 1
+                            <span className="text-[#dc3545]">*</span>
+                          </label>
+                          <input
+                            {...register("billingAddress1", {
+                              required: "Billing address 1 is required",
+                            })}
+                            type="text"
+                            placeholder="Enter Billing address "
+                            className={`border-[#e0e0e0] font-semibold w-full placeholder:text-[#777] placeholder:font-medium text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-[44px] ${
+                              errors.billingAddress1
+                                ? "border-red-500 focus:ring-red-200"
+                                : "border-gray-300 focus:ring-indigo-200"
+                            }`}
                           />
-                          {errors.mobile && (
+                          {errors.billingAddress1 && (
                             <p className="text-red-500 text-[10px] absolute -bottom-4">
-                              {errors.mobile.message}
+                              {errors.billingAddress1.message}
                             </p>
                           )}
                         </div>
 
-                        {/* Company Name */}
-                        <div className="relative">
-                          <label className=" text-sm text-black font-semibold px-2">
-                            Company Name
+                        {/* Billing Address 2 */}
+                        <div className="relative mt-6">
+                          <label className="text-sm text-black font-semibold">
+                            Billing address{" "}
                           </label>
                           <input
-                            {...register("companyName")}
+                            {...register("billingAddress2")}
                             type="text"
-                            placeholder="Enter company name"
-                            className="block px-2.5 h-12 w-full placeholder:text-[#777] placeholder:font-medium border-[#e0e0e0] text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none"
-                          />
-                        </div>
-
-                        {/* Email */}
-                        <div className="relative md:col-span-2">
-                          <label className=" text-sm text-black font-semibold px-2">
-                            Enter Email
-                          </label>
-                          <input
-                            {...register("email")}
-                            type="email"
-                            disabled
-                            placeholder=" Emter email"
-                            className="block px-2.5 h-12 border-[#e0e0e0] placeholder:text-[#777] placeholder:font-medium w-full text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none"
-                          />
-                        </div>
-
-                        {/* Gender */}
-                        <div className="relative">
-                          <label className="text-sm text-black font-semibold px-2">
-                            Gender
-                          </label>
-
-                          <Controller
-                            name="gender"
-                            control={control}
-                            render={({ field }) => {
-                              const handleChange = (selectedOption) => {
-                                field.onChange(selectedOption?.value || "");
-                              };
-
-                              const selectedValue = genderOptions.find(
-                                (option) => option.value === field.value
-                              );
-
-                              return (
-                                <Select
-                                  value={selectedValue || null}
-                                  onChange={handleChange}
-                                  options={genderOptions}
-                                  placeholder="Select Gender"
-                                  classNamePrefix="react-select"
-                                  className="mt-1 text-sm"
-                                  styles={{
-                                    control: (base, state) => ({
-                                      ...base,
-                                      borderColor: state.isFocused
-                                        ? "#3f51b5"
-                                        : "#e0e0e0",
-                                      boxShadow: "none",
-                                      height: "48px",
-                                      borderRadius: "4px",
-                                      paddingLeft: "2px",
-                                    }),
-                                    placeholder: (base) => ({
-                                      ...base,
-                                      color: "#777",
-                                      fontWeight: 500,
-                                    }),
-                                    singleValue: (base) => ({
-                                      ...base,
-                                      color: "#000",
-                                    }),
-                                    menu: (base) => ({
-                                      ...base,
-                                      zIndex: 50,
-                                    }),
-                                  }}
-                                />
-                              );
-                            }}
-                          />
-                        </div>
-
-                        {/* DOB */}
-                        <div className="relative">
-                          <label className=" text-sm text-black font-semibold px-2">
-                            Date of birth
-                          </label>
-                          <input
-                            {...register("dob")}
-                            type="date"
-                            className="border-[#e0e0e0] w-full placeholder:text-[#777] placeholder:font-medium text-black mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-12"
+                            placeholder="Enter Billing address 2"
+                            className="border-[#e0e0e0] font-semibold w-full placeholder:text-[#777] placeholder:font-medium text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-[44px]"
                           />
                         </div>
                       </div>
                     </div>
-
-                    {/* Billing Details */}
-                    <div className="pt-8 border-t border-[#ddd]">
-                      <h4 className="text-lg font-semibold mb-5">
-                        Billing Details
-                      </h4>
-
-                      <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
-                        <div className="relative">
-                          <label className="text-sm text-black font-semibold px-2">
-                            Country
-                          </label>
-
-                          <Controller
-                            name="billingCountry"
-                            control={control}
-                            render={({ field }) => {
-                              const handleChange = (selectedOption) => {
-                                field.onChange(selectedOption?.label || "");
-                              };
-                              const selectedValue =
-                                countryData?.find(
-                                  (option) => option.label === field.value
-                                ) || null;
-
-                              return (
-                                <Select
-                                  value={selectedValue}
-                                  onChange={handleChange}
-                                  options={countryData}
-                                  placeholder="Select Country"
-                                  classNamePrefix="react-select"
-                                  className="mt-1 text-sm"
-                                  styles={{
-                                    control: (base, state) => ({
-                                      ...base,
-                                      borderColor: state.isFocused
-                                        ? "#3f51b5"
-                                        : "#e0e0e0",
-                                      boxShadow: "none",
-                                      height: "48px",
-                                      borderRadius: "4px",
-                                      paddingLeft: "2px",
-                                    }),
-                                    placeholder: (base) => ({
-                                      ...base,
-                                      color: "#777",
-                                      fontWeight: 500,
-                                    }),
-                                    singleValue: (base) => ({
-                                      ...base,
-                                      color: "#000",
-                                    }),
-                                    menu: (base) => ({
-                                      ...base,
-                                      zIndex: 50,
-                                    }),
-                                  }}
-                                />
-                              );
-                            }}
-                          />
-                        </div>
-                        <div className="relative">
-                          <label className="text-sm text-black font-semibold px-2">
-                            State
-                          </label>
-
-                          <Controller
-                            name="state"
-                            control={control}
-                            render={({ field }) => {
-                              const handleChange = (selectedOption) => {
-                                field.onChange(selectedOption?.label || "");
-                              };
-                              const selectedValue =
-                                stateData?.find(
-                                  (option) => option.label === field.value
-                                ) || null;
-
-                              return (
-                                <Select
-                                  value={selectedValue}
-                                  onChange={handleChange}
-                                  options={stateData}
-                                  placeholder="Select State"
-                                  classNamePrefix="react-select"
-                                  className="mt-1 text-sm"
-                                  styles={{
-                                    control: (base, state) => ({
-                                      ...base,
-                                      borderColor: state.isFocused
-                                        ? "#3f51b5"
-                                        : "#e0e0e0",
-                                      boxShadow: "none",
-                                      height: "48px",
-                                      borderRadius: "4px",
-                                      paddingLeft: "2px",
-                                    }),
-                                    placeholder: (base) => ({
-                                      ...base,
-                                      color: "#777",
-                                      fontWeight: 500,
-                                    }),
-                                    singleValue: (base) => ({
-                                      ...base,
-                                      color: "#000",
-                                    }),
-                                    menu: (base) => ({
-                                      ...base,
-                                      zIndex: 50,
-                                    }),
-                                  }}
-                                />
-                              );
-                            }}
-                          />
-                        </div>
-
-                        <div className="relative">
-                          <label className="text-sm text-black font-semibold px-2">
-                            City
-                          </label>
-
-                          <Controller
-                            name="city"
-                            control={control}
-                            render={({ field }) => {
-                              const handleChange = (selectedOption) => {
-                                field.onChange(selectedOption?.label || "");
-                              };
-                              const selectedValue =
-                                cityData?.find(
-                                  (option) => option.label === field.value
-                                ) || null;
-
-                              return (
-                                <Select
-                                  value={selectedValue}
-                                  onChange={handleChange}
-                                  options={cityData}
-                                  placeholder="Select City"
-                                  classNamePrefix="react-select"
-                                  className="mt-1 text-sm"
-                                  styles={{
-                                    control: (base, state) => ({
-                                      ...base,
-                                      borderColor: state.isFocused
-                                        ? "#3f51b5"
-                                        : "#e0e0e0",
-                                      boxShadow: "none",
-                                      height: "48px",
-                                      borderRadius: "4px",
-                                      paddingLeft: "2px",
-                                    }),
-                                    placeholder: (base) => ({
-                                      ...base,
-                                      color: "#777",
-                                      fontWeight: 500,
-                                    }),
-                                    singleValue: (base) => ({
-                                      ...base,
-                                      color: "#000",
-                                    }),
-                                    menu: (base) => ({
-                                      ...base,
-                                      zIndex: 50,
-                                    }),
-                                  }}
-                                />
-                              );
-                            }}
-                          />
-                        </div>
-
-                        <div className="relative">
-                          <label className=" text-sm text-black font-semibold px-2">
-                            Pincode
-                          </label>
-                          <input
-                            {...register("pincode")}
-                            type="text"
-                            placeholder="Enter pincode "
-                            className="border-[#e0e0e0] w-full placeholder:text-[#777] placeholder:font-medium text-black mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-12"
-                          />
-                        </div>
-
-                        <div className="relative">
-                          <label className=" text-sm text-black font-semibold px-2">
-                            GST no.
-                          </label>
-                          <input
-                            {...register("gst")}
-                            type="text"
-                            placeholder=" Enter GST no."
-                            className="border-[#e0e0e0] w-full placeholder:text-[#777] placeholder:font-medium text-black mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-12"
-                          />
-                          {errors.gst && (
-                            <p className="text-red-500 text-[10px] absolute -bottom-4">
-                              {errors.gst.message}
-                            </p>
-                          )}
-                        </div>
-
-                        <div className="relative">
-                          <label className="text-sm text-black font-semibold px-2">
-                            PAN No.
-                          </label>
-                          <input
-                            {...register("pan")}
-                            type="text"
-                            placeholder="Enter PAN no. "
-                            className="border-[#e0e0e0] w-full placeholder:text-[#777] placeholder:font-medium text-black mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-12"
-                          />
-                          {errors.pan && (
-                            <p className="text-red-500 text-[10px] absolute -bottom-4">
-                              {errors.pan.message}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                      <div className="relative mt-6">
-                        <label className="text-sm text-black font-semibold px-2">
-                          Billing address 1{" "}
-                          <span className="text-[#dc3545]">*</span>
-                        </label>
-                        <input
-                          {...register("billingAddress1", {
-                            required: "Billing address 1 is required",
-                          })}
-                          type="text"
-                          placeholder="Enter Billing address "
-                          className={`border-[#e0e0e0] w-full placeholder:text-[#777] placeholder:font-medium text-black mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-12 ${
-                            errors.billingAddress1
-                              ? "border-red-500 focus:ring-red-200"
-                              : "border-gray-300 focus:ring-indigo-200"
-                          }`}
-                        />
-                        {errors.billingAddress1 && (
-                          <p className="text-red-500 text-[10px] absolute -bottom-4">
-                            {errors.billingAddress1.message}
-                          </p>
-                        )}
-                      </div>
-
-                      {/* Billing Address 2 */}
-                      <div className="relative mt-6">
-                        <label className="text-sm text-black font-semibold px-2">
-                          Billing address{" "}
-                        </label>
-                        <input
-                          {...register("billingAddress2")}
-                          type="text"
-                          placeholder="Enter Billing address 2"
-                          className="border-[#e0e0e0] w-full placeholder:text-[#777] placeholder:font-medium text-black mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-12"
-                        />
-                      </div>
-                    </div>
-
                     <button
                       type="submit"
                       disabled={updateProfileLoading}
-                      className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]"
+                      className="cursor-pointer w-full mt-[22px] bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]"
                     >
                       {updateProfileLoading ? "Updating..." : "UPDATE"}
                     </button>

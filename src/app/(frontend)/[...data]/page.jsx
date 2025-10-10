@@ -116,7 +116,7 @@ const page = async ({ params }) => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Detail spaceId={spaceId} spaceDetailsData={spaceDetailsData} detailData={detailData} reviewData={reviewData} />
+      <Detail slug={slug} spaceId={spaceId} spaceDetailsData={spaceDetailsData} detailData={detailData} reviewData={reviewData} />
     </>
   );
 };

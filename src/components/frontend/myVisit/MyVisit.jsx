@@ -36,21 +36,23 @@ const MyVisit = () => {
   return (
     <>
       <section className="relative w-full lg:mt-[82px] sm:mt-[62px] mt-[63px] bg-[#f9f9f9]">
-        <div className="container mx-auto md:px-0 px-[15px] py-10">
-          <div className="flex flex-col gap-2">
-            <h1 className="font-semibold text-[#141414] text-[26px]">
-              Scheduled Visits
-            </h1>
-            <div className="flex flex-col gap-y-8">
+        <div className="container mx-auto px-[15px] py-10">
+          <div className="flex flex-col">
+            <div className="pt-[13px] pb-[30px]">
+              <h1 className="font-semibold text-[#141414] text-[26px] leading-[1.6]">
+                Scheduled Visits
+              </h1>
+            </div>
+            <div className="flex flex-col gap-y-5">
               {visitData?.length > 0 ? (
                 visitData?.map((item, index) => (
                   <div
                     key={index}
-                    className="w-full flex md:flex-row flex-col items-center gap-y-4 justify-start bg-white p-4 rounded-xl "
+                    className="w-full flex md:flex-row flex-col md:items-center items-start gap-y-4 justify-start bg-white p-5 rounded-xl "
                   >
                     <Link
                       href=""
-                      className="relative shrink-0 md:w-50 h-40 w-full rounded-lg overflow-hidden"
+                      className="relative shrink-0 w-50 h-[150px]  rounded-[10px] overflow-hidden"
                     >
                       <ImageWithFallback
                         width={200}
@@ -63,7 +65,7 @@ const MyVisit = () => {
                       />
                       {item?.spaceDetails?.spaceType && (
                         <div
-                          className="absolute top-2 left-0 bg-[#f76900] text-white text-sm font-medium px-3 py-1 
+                          className="absolute top-[15px] left-0 bg-[#f76900] text-white text-sm font-medium px-2.5 py-0.5 
                                   before:block before:absolute before:top-0 before:right-[-10px] before:w-[10px] before:h-0 
                                   before:border-t-[15px] before:!border-t-[#f76900] before:border-transparent before:border-l-0 before:border-r-[10px] 
                                   after:block after:absolute after:bottom-0 after:right-[-10px] after:w-[10px] after:h-0 
@@ -73,21 +75,21 @@ const MyVisit = () => {
                         </div>
                       )}
                     </Link>
-                    <div className="md:ml-6 space-y-2">
-                      <h2 className="text-lg font-semibold text-[#141414] underline">
+                    <div className="md:ml-[15px] space-y-[5px]">
+                      <h2 className="2xl:text-xl text-lg font-semibold text-[#141414] underline">
                         {item?.spaceName}
                       </h2>
                       <div className="text-[#141414] text-sm font-medium flex items-center space-x-1">
                         <span>
                           <Svg
                             name="location2"
-                            className="size-4 text-[#f76900]"
+                            className="size-[15px] text-[#f76900]"
                           />
                         </span>
                         <span>{convertSlugToCapitalLetter(item?.spaceLocation || "")}</span>
                       </div>
 
-                      <div className="flex items-center space-x-4 font-medium text-sm text-[#141414]">
+                      <div className="flex items-center space-x-2.5 font-medium text-sm text-[#141414]">
                         <div className="flex items-center space-x-1">
                           <Svg
                             name="userHalf"
@@ -106,6 +108,7 @@ const MyVisit = () => {
                             </div>
                           )
                         }
+                         <span className="h-[10px] w-[10px] rounded-full bg-[#ddd]"></span>
                         <div className="flex items-center space-x-1">
                           <Svg
                             name="scaleRuler"
@@ -115,7 +118,7 @@ const MyVisit = () => {
                         </div>
                       </div>
 
-                      <div className="flex flex-wrap items-center space-x-4 text-sm text-[#141414] font-medium pt-2">
+                      <div className="flex flex-wrap items-center space-x-2 mt-5 mb-[10px] text-sm text-[#141414] font-medium ">
                         <div className="flex items-center space-x-1">
                           <Svg
                             name="calender"

@@ -24,6 +24,7 @@ const LikeDislike = ({ spaceData, setIsAuthOpen, existingVote }) => {
         toast.success(data?.result?.message);
         setVoteData(data?.result?.existingVote);
         setUpVoteCount(data?.result?.space?.upvote);
+        localStorage.removeItem("voteData");
       } else {
         toast.error(data.message || data?.result?.message);
       }
@@ -34,6 +35,11 @@ const LikeDislike = ({ spaceData, setIsAuthOpen, existingVote }) => {
   });
   const handleUpvote = () => {
     if (!token) {
+      const payload = {
+        spaceId: spaceData?.id,
+        voteType: "upvote",
+      };
+      localStorage.setItem("voteData", JSON.stringify(payload));
       setIsAuthOpen(true);
       return;
     }
@@ -56,6 +62,7 @@ const LikeDislike = ({ spaceData, setIsAuthOpen, existingVote }) => {
         toast.success(data?.result?.message);
         setVoteData(data?.result?.existingVote);
         setUpVoteCount(data?.result?.space?.upvote);
+        localStorage.removeItem("voteData");
       } else {
         toast.error(data?.message || data?.result?.message);
       }
@@ -66,6 +73,11 @@ const LikeDislike = ({ spaceData, setIsAuthOpen, existingVote }) => {
   });
   const handleDownvote = () => {
     if (!token) {
+      const payload = {
+        spaceId: spaceData?.id,
+        voteType: "downvote",
+      };
+      localStorage.setItem("voteData", JSON.stringify(payload));
       setIsAuthOpen(true);
       return;
     }
@@ -87,12 +99,24 @@ const LikeDislike = ({ spaceData, setIsAuthOpen, existingVote }) => {
     }
   }, [spaceData]);
 
+  useEffect(()=>{
+    const voteData = localStorage.getItem("voteData");
+    if (voteData && token) {
+      const parsedVoteData = JSON.parse(voteData);
+      if(parsedVoteData?.voteType == "upvote" && parsedVoteData?.spaceId){
+        upVoteMutate(parsedVoteData);
+      }else if(parsedVoteData?.voteType == "downvote" && parsedVoteData?.spaceId){
+        downVoteMutate(parsedVoteData);
+      }
+    }
+  },[token])
+
   return (
     <>
       <div className="flex items-center space-x-1 border border-[#ddd] rounded-full w-fit md:px-3.5 px-3 md:py-2 py-1">
         <div
           onClick={handleUpvote}
-          className="flex items-center space-x-1 p-1 pr-3 border-r border-[#ddd]"
+          className="cursor-pointer flex items-center space-x-1 p-1 pr-3 border-r border-[#ddd]"
         >
           <Svg
             name={voteData?.upvote == 1 ? "thump-up-fill" : "thumbUp"}
@@ -107,7 +131,7 @@ const LikeDislike = ({ spaceData, setIsAuthOpen, existingVote }) => {
 
         <div
           onClick={handleDownvote}
-          className="flex items-center space-x-1 p-1"
+          className="cursor-pointer flex items-center space-x-1 p-1"
         >
           <Svg
             name={voteData?.downvote == 1 ? "thumb-down-fill" : "thumbDown"}

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import Svg from "@/components/svg";
 import Image from "next/image";
 import { useForm, Controller, Form } from "react-hook-form";
@@ -9,7 +9,11 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { useAuth } from "@/context/useAuth";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getApi, postAPIAuthWithoutBearer, postAPIFormDataWithoutBearer } from "@/services/ApiService";
+import {
+  getApi,
+  postAPIAuthWithoutBearer,
+  postAPIFormDataWithoutBearer,
+} from "@/services/ApiService";
 import dynamic from "next/dynamic";
 import { toast } from "sonner";
 const Select = dynamic(() => import("react-select"), { ssr: false });
@@ -77,8 +81,8 @@ const profileSchema = z
   });
 
 const MyProfile = () => {
-  const [profileImage,setProfileImage] = useState(null);
-  const { token, user,setUser } = useAuth();
+  const [profileImage, setProfileImage] = useState(null);
+  const { token, user, setUser } = useAuth();
   const {
     register,
     handleSubmit,
@@ -115,31 +119,86 @@ const MyProfile = () => {
   });
   const values = watch();
   console.log({ values, errors }, "Rthrtyhrtyrty");
+  const hasInitialized = useRef(false);
+  const prevValues = useRef({
+    billingCountry: "",
+    state: "",
+    city: "",
+  });
+
+  const billingCountry = watch("billingCountry");
+  const state = watch("state");
+  const city = watch("city");
   useEffect(() => {
     if (user) {
-      reset({
-        firstName: user?.firstName || "",
-        lastName: user?.lastName || "",
-        mobile: user?.mobile ? `${user.phone_code}${user.mobile}` : "",
-        country: {
-          dialCode: user?.phone_code || "91",
-        },
-        companyName: user?.companyName || "",
-        email: user?.email || "",
-        gender: user?.gender || "",
-        dob: user?.dateOfBirth ? user.dateOfBirth.split("T")[0] : "",
-        billingCountry: user.country_id || "",
-        state: user.state_id || "",
-        city: user.city_id || "",
-        pincode: user?.pincode || "",
-        gst: user?.gstNumber || "",
-        pan: user?.panNumber || "",
-        billingAddress1: user?.billingAddress || "",
-        billingAddress2: user?.billingAddress2 || "",
+      Promise.resolve().then(() => {
+        reset({
+          firstName: user?.firstName || "",
+          lastName: user?.lastName || "",
+          mobile: user?.mobile ? `${user.phone_code}${user.mobile}` : "",
+          country: {
+            dialCode: user?.phone_code || "91",
+          },
+          companyName: user?.companyName || "",
+          email: user?.email || "",
+          gender: user?.gender || "",
+          dob: user?.dateOfBirth ? user.dateOfBirth.split("T")[0] : "",
+          billingCountry: user.country_id || "",
+          state: user.state_id || "",
+          city: user.city_id || "",
+          pincode: user?.pincode || "",
+          gst: user?.gstNumber || "",
+          pan: user?.panNumber || "",
+          billingAddress1: user?.billingAddress || "",
+          billingAddress2: user?.billingAddress2 || "",
+        });
+        setProfileImage(user?.picture);
+        hasInitialized.current = true;
+        prevValues.current = {
+          billingCountry: user.country_id || "",
+          state: user.state_id || "",
+          city: user.city_id || "",
+        };
       });
-      setProfileImage(user?.picture);
     }
-  }, [user, reset]);
+  }, [user, reset, setProfileImage]);
+
+  useEffect(() => {
+    if (!hasInitialized.current) return;
+
+    if (
+      prevValues.current.billingCountry &&
+      prevValues.current.billingCountry !== billingCountry
+    ) {
+      setValue("state", "");
+      setValue("city", "");
+      setValue("pincode", "");
+    }
+
+    prevValues.current.billingCountry = billingCountry;
+  }, [billingCountry]);
+
+  useEffect(() => {
+    if (!hasInitialized.current) return;
+
+    if (prevValues.current.state && prevValues.current.state !== state) {
+      setValue("city", "");
+      setValue("pincode", "");
+    }
+
+    prevValues.current.state = state;
+  }, [state]);
+
+  useEffect(() => {
+    if (!hasInitialized.current) return;
+
+    if (prevValues.current.city && prevValues.current.city !== city) {
+      setValue("pincode", "");
+    }
+
+    prevValues.current.city = city;
+  }, [city]);
+
   const { data: allCountry } = useQuery({
     queryKey: ["allCountry"],
     queryFn: async () => {
@@ -190,39 +249,27 @@ const MyProfile = () => {
     );
   }, [allCity]);
 
-  // useEffect(() => {
-  //   setValue("state", "");
-  //   setValue("city", "");
-  //   setValue("pincode", "");
-  // }, [values.billingCountry]);
-  // useEffect(() => {
-  //   setValue("city", "");
-  //   setValue("pincode", "");
-  // }, [values.state]);
-  // useEffect(() => {
-  //   setValue("pincode", "");
-  // }, [values.city]);
-
-  const { mutate: updateProfileMutate,isPending: updateProfileLoading } = useMutation({
-    mutationFn: async (payload) => {
-      const res = await postAPIAuthWithoutBearer(
-        "user/updateProfile",
-        payload,
-        token
-      );
-      return res.data;
-    },
-    onSuccess: (data) => {
-      if (data.success) {
-        toast.success(data.message);
-      } else {
-        toast.error(data.message);
-      }
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  });
+  const { mutate: updateProfileMutate, isPending: updateProfileLoading } =
+    useMutation({
+      mutationFn: async (payload) => {
+        const res = await postAPIAuthWithoutBearer(
+          "user/updateProfile",
+          payload,
+          token
+        );
+        return res.data;
+      },
+      onSuccess: (data) => {
+        if (data.success) {
+          toast.success(data.message);
+        } else {
+          toast.error(data.message);
+        }
+      },
+      onError: (error) => {
+        toast.error(error.message);
+      },
+    });
   const onSubmit = (values) => {
     const country_code = values.country ? `+${values.country.dialCode}` : "";
     const dialCode = values.country ? values.country.dialCode : "";
@@ -254,33 +301,34 @@ const MyProfile = () => {
     };
     updateProfileMutate(payload);
   };
-  const { mutate: imageUploadMutate, isPending: imageUploadLoading } = useMutation({
-    mutationFn: async (file) => {
-      try {
-        const formData = new FormData();
-        formData.append("file", file);
-        const res = await postAPIFormDataWithoutBearer(
-          "user/updateProfileImage",
-          formData,
-          token
-        );
-        return res.data;
-      } catch (err) {
-        throw new Error(err?.response?.data?.message || err.message);
-      }
-    },
-    onSuccess: (data) => {
-      if (data.success) {
-        toast.success(data?.message);
-        setUser(data?.user);
-      } else {
-        toast.error(data.message || "Something went wrong");
-      }
-    },
-    onError: (error) => {
-      toast.error(error.message || "Something went wrong");
-    },
-  });
+  const { mutate: imageUploadMutate, isPending: imageUploadLoading } =
+    useMutation({
+      mutationFn: async (file) => {
+        try {
+          const formData = new FormData();
+          formData.append("file", file);
+          const res = await postAPIFormDataWithoutBearer(
+            "user/updateProfileImage",
+            formData,
+            token
+          );
+          return res.data;
+        } catch (err) {
+          throw new Error(err?.response?.data?.message || err.message);
+        }
+      },
+      onSuccess: (data) => {
+        if (data.success) {
+          toast.success(data?.message);
+          setUser(data?.user);
+        } else {
+          toast.error(data.message || "Something went wrong");
+        }
+      },
+      onError: (error) => {
+        toast.error(error.message || "Something went wrong");
+      },
+    });
 
   const handleImageUpload = (e) => {
     const file = e.target.files?.[0];
@@ -307,18 +355,19 @@ const MyProfile = () => {
                         width={125}
                         height={125}
                         className="w-full h-full rounded-full"
-                        src={profileImage ? profileImage : "/images/user_image_profile.webp"}
+                        src={
+                          profileImage
+                            ? profileImage
+                            : "/images/user_image_profile.webp"
+                        }
                         alt=""
                       />
-                     
                     </div>
-                    {
-                      imageUploadLoading && (
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="w-8 h-8 border-4 border-gray-300 border-t-[#f76900] rounded-full animate-spin"></div>
-                        </div>
-                      )
-                    }
+                    {imageUploadLoading && (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-8 h-8 border-4 border-gray-300 border-t-[#f76900] rounded-full animate-spin"></div>
+                      </div>
+                    )}
                     <label
                       htmlFor="imageUpload"
                       className="absolute bottom-0 right-0 w-10 h-10 bg-black rounded-full flex items-center justify-center cursor-pointer hover:shadow-[5px_5px_15px_#00000080] hover:scale-[1.2] transition-all duration-300"

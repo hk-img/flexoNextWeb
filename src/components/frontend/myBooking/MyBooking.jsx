@@ -139,12 +139,12 @@ const MyBooking = () => {
                         selectsRange
                         minDate={new Date()}
                         placeholderText="Start date — End date"
-                        className="w-full h-12 px-3 border rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+                        className="w-full h-12 px-3 focus:outline-none text-[#777] placeholder:text-[#777] text-sm font-semibold focus:ring-0 "
                       />
-                      {/* <Svg
+                      <Svg
                         name="calender"
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"
-                      /> */}
+                        className="absolute size-4 right-3 top-1/2 -translate-y-1/2 text-[#f76900] pointer-events-none"
+                      />
                     </div>
                   </div>
                   <div className="bg-white rounded-[15px] px-2 w-full">

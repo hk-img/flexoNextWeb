@@ -226,7 +226,12 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId,workingDays,spaceData }) 
                                     : "border-gray-300 hover:border-black"
                                 } appearance-none focus:outline-none focus:ring-0 focus:border-[#3f51b5] peer`}
                               />
+                              
                             )}
+                          />
+                          <Svg
+                            name="calender"
+                            className="absolute size-4 right-3 top-1/2 -translate-y-1/2 text-[#f76900] pointer-events-none"
                           />
                           <label
                             htmlFor="preferedDate"

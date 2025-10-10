@@ -25,11 +25,13 @@ const MyReview = () => {
   return (
     <>
       <section className="relative w-full lg:mt-[82px] sm:mt-[62px] mt-[63px] bg-[#f9f9f9]">
-        <div className="container mx-auto md:px-0 px-[15px] py-10">
-          <div className="flex flex-col gap-8">
-            <h1 className="font-medium text-[#141414] text-[26px]">
-              Reviews <span className="text-[#A0A0A0]">({reviewData?.length})</span>
-            </h1>
+        <div className="container mx-auto px-[15px] py-10">
+          <div className="flex flex-col">
+            <div className="pt-[13px]">
+              <h1 className="font-medium text-[#141414] text-[26px] leading-[1.6]">
+                Reviews <span className="text-[#A0A0A0]">({reviewData?.length})</span>
+              </h1>
+            </div>
             <div className="flex flex-col gap-y-8">
               {reviewData?.length > 0 ? (
                 reviewData?.map((item, index) => (
@@ -105,7 +107,11 @@ const MyReview = () => {
                   </div>
                 ))
               ) : (
-                <div>Reviews not found..</div>
+                <div className=" pb-[55px]">
+                  <p className="text-2xl font-medium text-[#141414] leading-[1.6]">
+                    No review found
+                  </p>
+                </div>
               )}
             </div>
           </div>

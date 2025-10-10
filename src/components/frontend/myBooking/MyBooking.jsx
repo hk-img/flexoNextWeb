@@ -45,10 +45,10 @@ const MyBooking = () => {
     <>
       <div className="bg-[#f9f9f9]">
         <div className="relative w-full lg:mt-[82px] sm:mt-[62px] mt-[63px]">
-          <div className="container mx-auto md:px-0 px-[15px] pt-10">
+          <div className="container mx-auto px-[15px] pt-[50px]">
             <div className="flex flex-wrap">
               <div className="md:w-2/5 w-full md:mb-0 mb-6">
-                <div className="flex md:flex-row flex-col bg-white rounded-[15px] overflow-hidden">
+                <div className="flex md:flex-row flex-col bg-white px-3 rounded-[15px] overflow-hidden">
                   {/* Tab 1 */}
                   <button
                     onClick={() => setActiveTab("allBooking")}
@@ -77,7 +77,7 @@ const MyBooking = () => {
                   <button
                     onClick={() => setActiveTab("upcomingBooking")}
                     className={`flex-1 text-center py-[15px] text-[#777] text-sm 2xl:text-base cursor-pointer font-medium border-b-2 transition ${
-                      activeTab === "upcomingBooking"
+                      activeTab === "upcomingBooking" 
                         ? " border-[#f76900]"
                         : " border-transparent"
                     }`}
@@ -211,7 +211,7 @@ const MyBooking = () => {
                                 <span>
                                   <Svg
                                     name="checkFill"
-                                    className="size-[22px] text-[##0085ff]"
+                                    className="size-[22px] text-[#0085ff]"
                                   />
                                 </span>
                                 <h6 className="text-[#0085ff] text-sm 2xl:text-base font-semibold">
@@ -258,7 +258,7 @@ const MyBooking = () => {
                     )}
                     <Link
                       href=""
-                      className="flex items-center justify-center cursor-pointer w-full bg-[#2c864f] 2xl:text-[15px] text-sm hover:bg-[#40a667] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px] text-nowrap"
+                      className="flex items-center justify-center cursor-pointer w-full px-9 bg-[#2c864f] 2xl:text-[15px] text-sm hover:bg-[#40a667] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px] text-nowrap"
                     >
                       BOOKING DETAILS{" "}
                       <span>
@@ -269,9 +269,11 @@ const MyBooking = () => {
                 </div>
               ))
             ) : (
-              <p className="text-sm font-medium text-[#141414]">
-                No Booking Found
-              </p>
+              <div className="pt-[30px] pb-[55px]">
+                <p className="text-2xl font-medium text-[#141414]">
+                Booking not found..
+                </p>
+              </div>
             )}
             <div className="mt-4">
               {activeTab === "upcomingBooking" && (

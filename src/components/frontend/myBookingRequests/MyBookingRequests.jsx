@@ -26,11 +26,13 @@ const MyBookingRequests = () => {
   return (
     <>
       <section className="relative w-full lg:mt-[82px] sm:mt-[62px] mt-[63px] bg-[#f9f9f9]">
-        <div className="container mx-auto md:px-0 px-[15px] py-10">
+        <div className="container mx-auto px-[15px] py-10">
           <div className="flex flex-col gap-2">
-            <h1 className="font-semibold text-[#141414] text-[26px]">
-              Booking inquiries
-            </h1>
+            <div className="pt-[13px]">
+              <h1 className="font-semibold text-[#141414] text-[26px]">
+                Booking inquiries
+              </h1>
+            </div>
             <div className="flex flex-col gap-y-8">
               {bookingRequestData?.length > 0 ? (
                 bookingRequestData?.map((item, index) => (
@@ -73,7 +75,7 @@ const MyBookingRequests = () => {
                         <span>{convertSlugToCapitalLetter(item?.spaceAddress || "")}</span>
                       </div>
 
-                      <div className="flex flex-wrap items-center space-x-3 font-medium text-sm text-[#141414]">
+                      <div className="flex flex-wrap items-center space-x-3 space-y-2 font-medium text-sm text-[#141414]">
                         <div className="flex items-center space-x-1">
                           <Svg
                             name="userHalf"
@@ -81,6 +83,7 @@ const MyBookingRequests = () => {
                           />
                           <span>{item?.firstName} {item?.lastName}</span>
                         </div>
+                        <span className="h-[10px] w-[10px] rounded-full bg-[#ddd]"></span>
                         <div className="flex items-center space-x-1">
                           <Svg name="mail" className="size-4 text-[#f76900]" />
                           <span>{item?.userEmail}</span>
@@ -94,9 +97,8 @@ const MyBookingRequests = () => {
                   </div>
                 ))
               ) : (
-                <p className="text-[#141414] text-sm font-medium">
-                  No booking requests found
-                </p>
+                <>
+                </>
               )}
             </div>
           </div>

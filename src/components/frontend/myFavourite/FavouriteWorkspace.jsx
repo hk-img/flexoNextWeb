@@ -27,11 +27,13 @@ const MyFavourite = () => {
   return (
     <>
       <section className="relative w-full lg:mt-[82px] sm:mt-[62px] mt-[63px] bg-[#f9f9f9]">
-        <div className="container mx-auto md:px-0 px-[15px] py-10">
-          <div className="flex flex-col gap-2">
-            <h1 className="font-semibold text-[#141414] text-[26px]">
-              Favorite workspaces
-            </h1>
+        <div className="container mx-auto px-[15px] py-10">
+          <div className="flex flex-col">
+            <div className="pt-[14px]">
+              <h1 className="font-semibold text-[#141414] text-[26px] leading-[1.6]">
+                Favorite workspaces
+              </h1>
+            </div>
             <div className="flex flex-col gap-y-8">
               {favouriteData?.length > 0 ? (
                 favouriteData?.map((item, index) => (
@@ -117,9 +119,11 @@ const MyFavourite = () => {
                   </div>
                 ))
               ) : (
-                <p className="text-sm font-medium text-[#141414]">
-                  No favorite spaces found
-                </p>
+                 <div className="pt-[30px] pb-[55px]">
+                  <p className="text-2xl font-medium text-[#141414] leading-[1.6]">
+                Favorite Workspaces not found..
+                  </p>
+                </div>
               )}
             </div>
           </div>

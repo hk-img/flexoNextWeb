@@ -5,7 +5,7 @@ const TermsConditions = () => {
   return (
     <>
       <section className="bg-[#808080] h-64 flex justify-center items-center relative w-full lg:mt-[82px] sm:mt-[62px] mt-[63px]">
-        <div className="container mx-auto text-center md:px-0 px-[15px]">
+        <div className="container mx-auto text-center px-[15px]">
           <div className="w-full">
             <h1 className="text-[28px] text-white font-semibold">
               TERMS OF USE
@@ -13,8 +13,8 @@ const TermsConditions = () => {
           </div>
         </div>
       </section>
-      <section className="bg-white md:py-16 py-10 " >
-        <div className=" max-w:[1224px] w-[92%] mx-auto px-[15px]">
+      <section className="bg-white md:py-20 py-10 " >
+        <div className=" max-w:[1224px] w-[92%] mx-auto px-[12px]">
           <div className="flex flex-col gap-5">
             <p className="text-sm 2xl:text-base text-[#777] font-normal leading-[1.5]">
               Welcome to{" "}

@@ -93,6 +93,10 @@ const Detail = ({ spaceId,spaceDetailsData,detailData,reviewData }) => {
 
   const handleScheduleVisit = ()=>{
     if(!token){
+      localStorage.setItem("scheduleVisitOpenData",JSON.stringify({
+        spaceId:spaceData?.id,
+        scheduleVisitOpen:true
+      }));
       setIsAuthOpen(true);
     }else{
       setIsScheduleVisitOpen(true);
@@ -100,11 +104,30 @@ const Detail = ({ spaceId,spaceDetailsData,detailData,reviewData }) => {
   }
   const handleBuyPass = ()=>{
     if(!token){
+      localStorage.setItem("buyPassOpenData",JSON.stringify({
+        spaceId:spaceData?.id,
+        buyPassOpen:true
+      }));
       setIsAuthOpen(true);
     }else{
       setIsBuyPassOpen(true);
     }
   }
+
+  useEffect(()=>{
+    const scheduleVisitOpenData = localStorage.getItem("scheduleVisitOpenData");
+    const buyPassOpenData = localStorage.getItem("buyPassOpenData");
+    const parsedScheduleVisitOpenData = JSON.parse(scheduleVisitOpenData);
+    const parsedbuyPassOpenData = JSON.parse(buyPassOpenData);
+    if(parsedScheduleVisitOpenData?.spaceId == spaceData?.id && parsedScheduleVisitOpenData?.scheduleVisitOpen && token){
+      localStorage.removeItem("scheduleVisitOpenData");
+      setIsScheduleVisitOpen(true);
+    }
+    if(parsedbuyPassOpenData?.spaceId == spaceData?.id && parsedbuyPassOpenData?.buyPassOpen && token){
+      localStorage.removeItem("buyPassOpenData");
+      setIsBuyPassOpen(true);
+    }
+  },[token])
 
   return (
     <>

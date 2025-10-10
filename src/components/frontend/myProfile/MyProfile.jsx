@@ -36,9 +36,9 @@ const profileSchema = z
       .nullable()
       .optional(),
     companyName: z.string().optional(),
-    email: z.string().email("Invalid email").optional(),
+    email: z.string().min(1, "Email is required").email("Invalid email"),
     gender: z.string().optional(),
-    dob: z.string().optional(),
+    dob: z.string().min(1, "Date of birth is required"),
     billingCountry: z.string().optional(),
     state: z.string().optional(),
     city: z.string().optional(),
@@ -483,15 +483,20 @@ const MyProfile = () => {
                           {/* Email */}
                           <div className="relative md:col-span-2">
                             <label className=" text-sm text-black font-semibold">
-                              Email
+                              Email<span className="text-[#dc3545]">*</span>
                             </label>
                             <input
                               {...register("email")}
                               type="email"
-                              disabled
+                              readOnly = {(user?.regType === "social" || user?.regType === "email") ? true : false}
                               placeholder=" Emter email"
                               className="block px-2.5 h-[44px] font-semibold border-[#e0e0e0] placeholder:text-[#777] placeholder:font-medium w-full text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none"
                             />
+                            {errors.email && (
+                              <p className="text-red-500 text-[10px] absolute -bottom-4">
+                                {errors.email.message}
+                              </p>
+                            )}
                           </div>
 
                           {/* Gender */}
@@ -554,13 +559,19 @@ const MyProfile = () => {
                           {/* DOB */}
                           <div className="relative">
                             <label className=" text-sm text-black font-semibold">
-                              Date of birth
+                              Date of birth<span className="text-[#dc3545]">*</span>
                             </label>
                             <input
                               {...register("dob")}
                               type="date"
+                              max={new Date().toISOString().split("T")[0]}
                               className="border-[#e0e0e0] font-semibold w-full placeholder:text-[#777] placeholder:font-medium text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-[44px]"
                             />
+                            {errors.dob && (
+                              <p className="text-red-500 text-[10px] absolute -bottom-4">
+                                {errors.dob.message}
+                              </p>
+                            )}
                           </div>
                         </div>
                       </div>

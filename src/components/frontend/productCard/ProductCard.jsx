@@ -1,20 +1,66 @@
 import Svg from "@/components/svg";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import EmblaCarousel from "../emblaCarousel/EmblaCarousel";
 import ImageWithFallback from "@/components/ImageWithFallback";
 import AboutText from "./AboutText";
 import { convertSlugToCapitalLetter, getTypeOfSpaceByWorkSpace, slugGenerator } from "@/services/Comman";
+import { fa } from "zod/v4/locales";
+import { postAPIAuthWithoutBearer } from "@/services/ApiService";
+import { useMutation } from "@tanstack/react-query";
+import { useAuth } from "@/context/useAuth";
+import { toast } from "sonner";
 
-const ProductCard = ({ item = {}, setIsOpen }) => {
+const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen }) => {
+  const {token} = useAuth();
+  const [isFavourite, setIsFavourite] = useState(false);
   const type = getTypeOfSpaceByWorkSpace(item?.spaceType || "");
+  const spaceTypeSlug = slugGenerator(item?.spaceType);
+  const locationNameSlug = slugGenerator(item?.location_name || "");
+  const cityNameSlug = slugGenerator(item?.contact_city_name || "");
+  const spaceId = item?.id;
+
+  const {mutate: favouriteMutate} = useMutation({
+    mutationFn: async (payload) => {
+      const response = await postAPIAuthWithoutBearer(`favorite/addToFavorite/${item?.id}`, payload,token);
+      return response.data;
+    },
+    onSuccess: (data, payload) => {
+      toast.success(data?.message);
+      setIsFavourite((prev) => !prev);
+      localStorage.removeItem("isFavourite");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  const handleFavourite = ()=>{
+    if(!token){
+      localStorage.setItem("isFavourite",item?.id);
+      setIsAuthOpen(true);
+    }else{
+      const payload = {};
+      favouriteMutate(payload);
+    }
+  }
+  useEffect(()=>{
+    if(item?.existingfavorite?.favourite){
+      setIsFavourite(true);
+    }else{
+      setIsFavourite(false);
+    }
+  },[item])
+  useEffect(()=>{
+    const favouriteSpaceId = localStorage.getItem("isFavourite")
+    if(favouriteSpaceId == item?.id && token){
+      const payload = {}
+      favouriteMutate(payload);
+    }
+  },[token])
   return (
     <>
       <div
         onClick={() =>{
-          const spaceTypeSlug = slugGenerator(item?.spaceType);
-          const locationNameSlug = slugGenerator(item?.location_name || "");
-          const cityNameSlug = slugGenerator(item?.contact_city_name || "");
-          const spaceId = item?.id;
           let url = "";
           if(type == "coworking"){
             url = `/${item?.slug}`;
@@ -63,8 +109,8 @@ const ProductCard = ({ item = {}, setIsOpen }) => {
               e.stopPropagation();
             }}
           >
-            <div className="flex items-center justify-center rounded-full text-base bg-[#ece8e8] w-[34px] h-[34px] text-[#808080] cursor-pointer">
-              <Svg name="heart" className="size-[18px] text-[#808080]" />
+            <div onClick={handleFavourite} className="flex items-center justify-center rounded-full text-base bg-[#ece8e8] w-[34px] h-[34px] text-[#808080] cursor-pointer">
+              <Svg name={isFavourite ? "heart":"heartTransparent"} className={`size-[18px] ${isFavourite ? 'text-[#f76900]':'text-[#808080]'}`} />
             </div>
           </div>
           <div className="shareBtn relative me-2 group">
@@ -76,8 +122,19 @@ const ProductCard = ({ item = {}, setIsOpen }) => {
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
+
+                    let url = "";
+                    if (type === "coworking") {
+                      url = `/${item?.slug}`;
+                    } else {
+                      url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
+                    }
+                    const shareUrl = encodeURIComponent(
+                      `Checkout this space on FLEXO\n${process.env.NEXT_PUBLIC_WEBSITE_URL}${url}`
+                    );
+
                     window.open(
-                      "https://www.facebook.com",
+                      `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
                       "_blank"
                     );
                   }}
@@ -89,13 +146,25 @@ const ProductCard = ({ item = {}, setIsOpen }) => {
 
               <li className="bg-[#34aaf3] items-center justify-center w-8 h-8 rounded-full inline-block border-1 border-[#000000] text-center text-[15px] opacity-0 transition-all duration-500 ms-1 group-hover:opacity-100">
                 <div
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    window.open(
-                      "https://www.linkedin.com",
-                      "_blank"
-                    );
-                  }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+
+                      let url = "";
+                      if (type === "coworking") {
+                        url = `/${item?.slug}`;
+                      } else {
+                        url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
+                      }
+
+                      const shareUrl = encodeURIComponent(
+                        `Checkout this space on FLEXO\n${process.env.NEXT_PUBLIC_WEBSITE_URL}${url}`
+                      );
+
+                      window.open(
+                        `https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`,
+                        "_blank"
+                      );
+                    }}
                   className="cursor-pointer share-button flex items-center justify-center w-full h-full"
                 >
                   <Svg name="linkedin2" className="text-white size-[15px]" />
@@ -106,10 +175,16 @@ const ProductCard = ({ item = {}, setIsOpen }) => {
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
-                    window.open(
-                      "https://web.whatsapp.com",
-                      "_blank"
+                    let url = "";
+                    if(type == "coworking"){
+                      url = `/${item?.slug}`;
+                    }else{ 
+                      url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
+                    }
+                    const message = encodeURIComponent(
+                      `Checkout this space on FLEXO\n${process.env.NEXT_PUBLIC_WEBSITE_URL}${url}`
                     );
+                    window.open(`https://web.whatsapp.com/send?text=${message}`, "_blank");
                   }}
                   className="cursor-pointer share-button flex items-center justify-center w-full h-full"
                 >

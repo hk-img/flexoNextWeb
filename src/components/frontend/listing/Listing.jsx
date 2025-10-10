@@ -14,9 +14,13 @@ import MapWithPrices from "./MapWithPrice";
 import Faq from "./faq/Faq";
 import LongTermPopup from "./LongTermPopup";
 import RequestCallback from "./RequestCallback";
+import Auth from "../auth/Auth";
+import { useAuth } from "@/context/useAuth";
 
 const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, locationName, spaceCategoryData, locationData, nearBySpacesData,listingData }) => {
+  const {user} = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [type,setType] = useState("");
   const [isLongTermPopupOpen, setIsLongTermPopupOpen] = useState(false);
   const spacesTypeRef = useRef(null);
@@ -114,13 +118,13 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
   }, [spaceCategoryData, spaceTypeSlug])
 
   const { data: allSpaces, refetch: refetchSpaces } = useQuery({
-    queryKey: ["allSpaces", page, city,type,selectedCheckboxes, selectedLocation,appliedFilter],
+    queryKey: ["allSpaces", page, city,type,selectedCheckboxes, selectedLocation,appliedFilter,user?.id],
     queryFn: async () => {
       let payload = {
         city_name: convertSlugToSmallLetter(city || ""),
         spaceType: selectedCheckboxes,
         type: type,
-        userId: 0,
+        userId: user?.id || 0,
         capacity: null,
         min_price: null,
         max_price: null,
@@ -473,20 +477,6 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                     </div>
                   )
                 }
-                {/* {mapToggle && (
-                  <div className="map lg:w-2/5 w-full flex flex-col md:sticky md:top-10 mt-3 lg:mt-1 lg:hidden">
-                    <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.501429411464!2d72.82552997425316!3d19.129516050292203!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b77913e9dd2d%3A0xcb2f5ffbb0662d10!2sSpaces%20-%20Inspire%20Hub%20Andheri%20West!5e0!3m2!1sen!2sin!4v1758019913835!5m2!1sen!2sin"
-                      width="505"
-                      height="700"
-                      style={{ border: 0 }}
-                      allowFullScreen
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                      className="w-full h-full lg:aspect-[505/800] aspect-square object-cover rounded-md"
-                    ></iframe>
-                  </div>
-                )} */}
               </div>
               <div className="lg:w-2/5 w-full items-start flex lg:flex-row lg:hidden flex-col lg:justify-end justify-start lg:pt-2 pt-4">
                 <div className="text-right xs:text-left">
@@ -634,7 +624,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                     onMouseOver={() => setHoveredSpaceId(item?.id)}
                     onMouseLeave={() => setHoveredSpaceId(null)}
                   >
-                    <ProductCard item={item} setIsOpen={setIsOpen} />
+                    <ProductCard item={item} setIsOpen={setIsOpen} setIsAuthOpen={setIsAuthOpen}/>
                   </div>
                 ))}
               </div>
@@ -647,7 +637,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                     onMouseOver={() => setHoveredSpaceId(item?.id)}
                     onMouseLeave={() => setHoveredSpaceId(null)}
                   >
-                    <ProductCard item={item} setIsOpen={setIsOpen} />
+                    <ProductCard item={item} setIsOpen={setIsOpen} setIsAuthOpen={setIsAuthOpen}/>
                   </div>
                 ))}
               </div>
@@ -660,7 +650,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                     onMouseOver={() => setHoveredSpaceId(item?.id)}
                     onMouseLeave={() => setHoveredSpaceId(null)}
                   >
-                    <ProductCard item={item} setIsOpen={setIsOpen} />
+                    <ProductCard item={item} setIsOpen={setIsOpen} setIsAuthOpen={setIsAuthOpen}/>
                   </div>
                 ))}
               </div>
@@ -675,20 +665,6 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                 </div>
               )
             }
-            {/* {mapToggle && (
-              <div className="map lg:w-1/3 w-full lg:flex flex-col md:sticky md:top-10 hidden">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.501429411464!2d72.82552997425316!3d19.129516050292203!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b77913e9dd2d%3A0xcb2f5ffbb0662d10!2sSpaces%20-%20Inspire%20Hub%20Andheri%20West!5e0!3m2!1sen!2sin!4v1758019913835!5m2!1sen!2sin"
-                  width="505"
-                  height="700"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  className=""
-                ></iframe>
-              </div>
-            )} */}
           </div>
         </div>
       </section>
@@ -732,6 +708,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
         isLongTermPopupOpen && <LongTermPopup isOpen={isLongTermPopupOpen} setIsOpen={setIsLongTermPopupOpen} />
       }
       {isOpen && <ExplorePopup isOpen={isOpen} setIsOpen={setIsOpen} />}
+      {isAuthOpen && <Auth isOpen={isAuthOpen} setIsOpen={setIsAuthOpen} />}
     </>
   );
 };

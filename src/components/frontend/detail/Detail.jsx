@@ -23,7 +23,7 @@ import BuyPassPopup from "./buyPassPopup/BuyPassPopup";
 import { useQuery } from "@tanstack/react-query";
 import { getApi } from "@/services/ApiService";
 
-const Detail = ({ spaceId,spaceDetailsData,detailData,reviewData }) => {
+const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
   const {token,user} = useAuth();
   const [showAll, setShowAll] = useState(false);
   const [open, setOpen] = useState(null);
@@ -128,10 +128,9 @@ const Detail = ({ spaceId,spaceDetailsData,detailData,reviewData }) => {
       setIsBuyPassOpen(true);
     }
   },[token])
-
   return (
     <>
-      <HeroSection spaceData={spaceData} />
+      <HeroSection slug={slug} isFavouriteSpace={spaceDeatil?.existingfavorite?.favourite} spaceData={spaceData} setIsAuthOpen={setIsAuthOpen}/>
       <section className="container px-[15px] mx-auto md:py-6 py-[18px]">
         <div className="flex flex-wrap">
           <div className="lg:w-2/3 md:pr-[15px] pr-0">
@@ -1159,7 +1158,7 @@ const Detail = ({ spaceId,spaceDetailsData,detailData,reviewData }) => {
                     key={index}
                     className="shrink-0 md:px-[9px] px-0 basis-[100%] sm:basis-[50%] md:basis-[50%] lg:basis-[33.3%] xl:basis-[33.3%] py-3"
                   >
-                    <ProductCard item={item} setIsOpen={setIsOpen} />
+                    <ProductCard item={item} setIsOpen={setIsOpen} setIsAuthOpen={setIsAuthOpen}/>
                   </div>
                 ))}
               </EmblaCarousel>

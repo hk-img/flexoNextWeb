@@ -157,68 +157,70 @@ const Header = () => {
               )}
             </div>
           </div>
-          <div className="absolute md:right-0 right-3 z-60 md:top-20 top-15 w-[250px] bg-white text-black rounded-sm opacity-0 scale-95 pointer-events-none transition-all duration-200 shadow-[10px_10px_20px_#0000006b] group-has-[#user-toggle:checked]:opacity-100 group-has-[#user-toggle:checked]:scale-100 group-has-[#user-toggle:checked]:pointer-events-auto">
-            <div className="py-2">
-              <ul>
-                <li>
-                  <Link
-                    href="/profile-management"
-                    className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
-                  >
-                    My Profile
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/booking-management"
-                    className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
-                  >
-                    My Bookings
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/booking-request-inquires"
-                    className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
-                  >
-                    My Booking Requests
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/visit-scheduling"
-                    className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
-                  >
-                    My Visits
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/favourite-workspace"
-                    className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
-                  >
-                    My Favorites
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/workspace-review-rating-list"
-                    className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
-                  >
-                    My Reviews
-                  </Link>
-                </li>
-                <li>
-                  <div
-                    onClick={handleLogout}
-                    className="cursor-pointer block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
-                  >
-                    Logout
-                  </div>
-                </li>
-              </ul>
+          {
+            token && <div className="absolute md:right-0 right-3 z-60 md:top-20 top-15 w-[250px] bg-white text-black rounded-sm opacity-0 scale-95 pointer-events-none transition-all duration-200 shadow-[10px_10px_20px_#0000006b] group-has-[#user-toggle:checked]:opacity-100 group-has-[#user-toggle:checked]:scale-100 group-has-[#user-toggle:checked]:pointer-events-auto">
+              <div className="py-2">
+                <ul>
+                  <li>
+                    <Link
+                      href="/profile-management"
+                      className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
+                    >
+                      My Profile
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/booking-management"
+                      className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
+                    >
+                      My Bookings
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/booking-request-inquires"
+                      className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
+                    >
+                      My Booking Requests
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/visit-scheduling"
+                      className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
+                    >
+                      My Visits
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/favourite-workspace"
+                      className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
+                    >
+                      My Favorites
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/workspace-review-rating-list"
+                      className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
+                    >
+                      My Reviews
+                    </Link>
+                  </li>
+                  <li>
+                    <div
+                      onClick={handleLogout}
+                      className="cursor-pointer block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
+                    >
+                      Logout
+                    </div>
+                  </li>
+                </ul>
+              </div>
             </div>
-          </div>
+          }
           <label
             htmlFor="user-toggle"
             className="fixed inset-0 hidden group-has-[#user-toggle:checked]:block z-10 cursor-default"

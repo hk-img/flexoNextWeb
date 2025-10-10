@@ -9,6 +9,7 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { useAuth } from "@/context/useAuth";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { components as RSComponents } from "react-select";
 import {
   getApi,
   postAPIAuthWithoutBearer,
@@ -17,6 +18,116 @@ import {
 import dynamic from "next/dynamic";
 import { toast } from "sonner";
 const Select = dynamic(() => import("react-select"), { ssr: false });
+
+const DropdownIndicator = (props) => {
+    const { menuIsOpen } = props.selectProps;
+    return (
+      <RSComponents.DropdownIndicator {...props}>
+        <Svg
+          name="arrowDropDown"
+          className={`size-5 text-[#777] transition-transform duration-200 ${
+            menuIsOpen ? "rotate-180" : "rotate-0"
+          }`}
+        />
+      </RSComponents.DropdownIndicator>
+    );
+  };
+
+  const ClearIndicator = (props) => {
+      return (
+        <RSComponents.ClearIndicator {...props}>
+          <div className="cursor-pointer text-gray-500 hover:text-[#f76900] transition-colors duration-200">
+            ×
+          </div>
+        </RSComponents.ClearIndicator>
+      );
+    };
+   
+    const customStyles = {
+      container: (base) => ({
+        ...base,
+        width: "260px",
+      }),
+      control: (base, state) => ({
+        ...base,
+        borderRadius: "15px",
+        backgroundColor: "transparent",
+        borderColor: "transparent",
+        minHeight: "44px",
+        height: "44px",
+        width: "100%",
+        boxShadow: "none",
+        outline: "none",
+        "&:hover": {
+          borderColor: "transparent",
+        },
+      }),
+      menu: (base) => ({
+        ...base,
+        marginTop: 0,
+        borderRadius: "12px",
+        backgroundColor: "#fff",
+        boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+        outline: "none",
+        overflow: "hidden",
+      }),
+      menuList: (base) => ({
+        ...base,
+        maxHeight: "160px",
+        overflowY: "auto",
+        paddingRight: "4px",
+        className:
+          " [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]",
+      }),
+      valueContainer: (base) => ({
+        ...base,
+        padding: "0 8px",
+      }),
+      placeholder: (base) => ({
+        ...base,
+        color: "black",
+        fontWeight: "600",
+        fontSize: "14px",
+      }),
+      singleValue: (base) => ({
+        ...base,
+        fontSize: "0.95rem",
+        color: "#333",
+      }),
+      option: (base, state) => ({
+        ...base,
+        padding: "10px 14px",
+        borderRadius: "11px",
+        backgroundColor: state.isSelected
+          ? "#ebf5ff"
+          : state.isFocused
+          ? "#f5faff"
+          : "#fff",
+        color: "#333",
+        width: "100%",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        fontSize: "14px",
+        fontWeight: state.isSelected ? "500" : "normal",
+        cursor: "pointer",
+        outline: "none",
+        boxShadow: "none",
+        ":active": {
+          backgroundColor: "#ebf5ff",
+        },
+      }),
+      dropdownIndicator: (base) => ({
+        ...base,
+        color: "#999",
+        padding: "0 8px",
+      }),
+      indicatorsContainer: (base) => ({
+        ...base,
+        // paddingRight: "4px",
+      }),
+    };
+
 
 const genderOptions = [
   { value: "male", label: "Male" },
@@ -529,31 +640,12 @@ const MyProfile = () => {
                                     options={genderOptions}
                                     placeholder="Select Gender"
                                     classNamePrefix="react-select"
-                                    className="mt-1 text-sm font-semibold h-[44px] [&_.css-10a4w4m-control]:!h-[44px]"
-                                    styles={{
-                                      control: (base, state) => ({
-                                        ...base,
-                                        borderColor: state.isFocused
-                                          ? "#3f51b5"
-                                          : "#e0e0e0",
-                                        boxShadow: "none",
-                                        height: "48px",
-                                        borderRadius: "4px",
-                                        paddingLeft: "2px",
-                                      }),
-                                      placeholder: (base) => ({
-                                        ...base,
-                                        color: "black",
-                                        fontWeight: 600,
-                                      }),
-                                      singleValue: (base) => ({
-                                        ...base,
-                                        color: "#000",
-                                      }),
-                                      menu: (base) => ({
-                                        ...base,
-                                        zIndex: 50,
-                                      }),
+                                    className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px]"
+                                     styles={customStyles}
+                                      components={{
+                                      ClearIndicator,
+                                      DropdownIndicator,
+                                      IndicatorSeparator: null,
                                     }}
                                   />
                                 );
@@ -612,31 +704,12 @@ const MyProfile = () => {
                                     options={countryData}
                                     placeholder="Select Country"
                                     classNamePrefix="react-select"
-                                    className="mt-1 text-sm h-[44px] [&_.css-10a4w4m-control]:!h-[44px]"
-                                    styles={{
-                                      control: (base, state) => ({
-                                        ...base,
-                                        borderColor: state.isFocused
-                                          ? "#3f51b5"
-                                          : "#e0e0e0",
-                                        boxShadow: "none",
-                                        height: "48px",
-                                        borderRadius: "4px",
-                                        paddingLeft: "2px",
-                                      }),
-                                      placeholder: (base) => ({
-                                        ...base,
-                                        color: "#777",
-                                        fontWeight: 500,
-                                      }),
-                                      singleValue: (base) => ({
-                                        ...base,
-                                        color: "#000",
-                                      }),
-                                      menu: (base) => ({
-                                        ...base,
-                                        zIndex: 50,
-                                      }),
+                                    className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px]"
+                                     styles={customStyles}
+                                     components={{
+                                      ClearIndicator,
+                                      DropdownIndicator,
+                                      IndicatorSeparator: null,
                                     }}
                                   />
                                 );
@@ -667,31 +740,12 @@ const MyProfile = () => {
                                     options={stateData}
                                     placeholder="Select State"
                                     classNamePrefix="react-select"
-                                    className="mt-1 text-sm h-[44px] [&_.css-10a4w4m-control]:!h-[44px]"
-                                    styles={{
-                                      control: (base, state) => ({
-                                        ...base,
-                                        borderColor: state.isFocused
-                                          ? "#3f51b5"
-                                          : "#e0e0e0",
-                                        boxShadow: "none",
-                                        height: "48px",
-                                        borderRadius: "4px",
-                                        paddingLeft: "2px",
-                                      }),
-                                      placeholder: (base) => ({
-                                        ...base,
-                                        color: "#777",
-                                        fontWeight: 500,
-                                      }),
-                                      singleValue: (base) => ({
-                                        ...base,
-                                        color: "#000",
-                                      }),
-                                      menu: (base) => ({
-                                        ...base,
-                                        zIndex: 50,
-                                      }),
+                                     className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px]"
+                                     styles={customStyles}
+                                     components={{
+                                      ClearIndicator,
+                                      DropdownIndicator,
+                                      IndicatorSeparator: null,
                                     }}
                                   />
                                 );
@@ -723,31 +777,12 @@ const MyProfile = () => {
                                     options={cityData}
                                     placeholder="Select City"
                                     classNamePrefix="react-select"
-                                    className="mt-1 text-sm h-[44px] [&_.css-10a4w4m-control]:!h-[44px]"
-                                    styles={{
-                                      control: (base, state) => ({
-                                        ...base,
-                                        borderColor: state.isFocused
-                                          ? "#3f51b5"
-                                          : "#e0e0e0",
-                                        boxShadow: "none",
-                                        height: "48px",
-                                        borderRadius: "4px",
-                                        paddingLeft: "2px",
-                                      }),
-                                      placeholder: (base) => ({
-                                        ...base,
-                                        color: "#777",
-                                        fontWeight: 500,
-                                      }),
-                                      singleValue: (base) => ({
-                                        ...base,
-                                        color: "#000",
-                                      }),
-                                      menu: (base) => ({
-                                        ...base,
-                                        zIndex: 50,
-                                      }),
+                                    className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px]"
+                                     styles={customStyles}
+                                     components={{
+                                      ClearIndicator,
+                                      DropdownIndicator,
+                                      IndicatorSeparator: null,
                                     }}
                                   />
                                 );
@@ -763,7 +798,7 @@ const MyProfile = () => {
                               {...register("pincode")}
                               type="text"
                               placeholder="Enter pincode "
-                              className="border-[#e0e0e0] font-semibold w-full placeholder:text-[#777] placeholder:font-medium text-black mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-[44px]"
+                              className="border-[#e0e0e0] font-semibold text-[#777] w-full placeholder:text-[#777] placeholder:font-medium  mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-[44px]"
                             />
                           </div>
 
@@ -775,7 +810,7 @@ const MyProfile = () => {
                               {...register("gst")}
                               type="text"
                               placeholder=" Enter GST no."
-                              className="border-[#e0e0e0] font-semibold w-full placeholder:text-[#777] placeholder:font-medium text-black mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-[44px]"
+                              className="border-[#e0e0e0] font-semibold  w-full placeholder:text-[#777] placeholder:font-medium text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-[44px]"
                             />
                             {errors.gst && (
                               <p className="text-red-500 text-[10px] absolute -bottom-4">
@@ -792,7 +827,7 @@ const MyProfile = () => {
                               {...register("pan")}
                               type="text"
                               placeholder="Enter PAN no. "
-                              className="border-[#e0e0e0] font-semibold w-full placeholder:text-[#777] placeholder:font-medium text-black mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-[44px]"
+                              className="border-[#e0e0e0] font-semibold w-full placeholder:text-[#777] placeholder:font-medium text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-[44px]"
                             />
                             {errors.pan && (
                               <p className="text-red-500 text-[10px] absolute -bottom-4">
@@ -812,7 +847,7 @@ const MyProfile = () => {
                             })}
                             type="text"
                             placeholder="Enter Billing address "
-                            className={`border-[#e0e0e0] font-semibold w-full placeholder:text-[#777] placeholder:font-medium text-black mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-[44px] ${
+                            className={`border-[#e0e0e0] font-semibold w-full placeholder:text-[#777] placeholder:font-medium text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-[44px] ${
                               errors.billingAddress1
                                 ? "border-red-500 focus:ring-red-200"
                                 : "border-gray-300 focus:ring-indigo-200"
@@ -834,7 +869,7 @@ const MyProfile = () => {
                             {...register("billingAddress2")}
                             type="text"
                             placeholder="Enter Billing address 2"
-                            className="border-[#e0e0e0] font-semibold w-full placeholder:text-[#777] placeholder:font-medium text-black mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-[44px]"
+                            className="border-[#e0e0e0] font-semibold w-full placeholder:text-[#777] placeholder:font-medium text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-[44px]"
                           />
                         </div>
                       </div>

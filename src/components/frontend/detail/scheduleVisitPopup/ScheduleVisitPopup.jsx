@@ -207,39 +207,39 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId,workingDays,spaceData }) 
                       onSubmit={handleSubmit(onSubmit)}
                       className="p-5 space-y-5"
                     >
-                        <div className="relative">
-      <Controller
-        name="preferedDate"
-        control={control}
-        rules={{ required: "Preferred view date is required" }}
-        render={({ field }) => (
-          <DatePicker
-            selected={field.value}
-            onChange={(date) => field.onChange(date)}
-            minDate={new Date()}
-            filterDate={(date) => !isClosedDay(date)} // disable closed days
-            placeholderText="Prefered View Date*"
-            dateFormat="yyyy-MM-dd"
-            className={`block h-[58px] px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border ${
-              errors.preferedDate
-                ? "border-red-500"
-                : "border-gray-300 hover:border-black"
-            } appearance-none focus:outline-none focus:ring-0 focus:border-[#3f51b5] peer`}
-          />
-        )}
-      />
-      <label
-        htmlFor="preferedDate"
-        className="absolute text-sm font-semibold text-[#00000099] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:text-[#3f51b5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1"
-      >
-        Prefered View Date*
-      </label>
-      {errors.preferedDate && (
-        <p className="text-red-500 text-xs mt-1">
-          {errors.preferedDate.message}
-        </p>
-      )}
-    </div>
+                        <div className="relative [&_.react-datepicker-wrapper]:!w-full">
+                          <Controller
+                            name="preferedDate"
+                            control={control}
+                            rules={{ required: "Preferred view date is required" }}
+                            render={({ field }) => (
+                              <DatePicker
+                                selected={field.value}
+                                onChange={(date) => field.onChange(date)}
+                                minDate={new Date()}
+                                filterDate={(date) => !isClosedDay(date)} // disable closed days
+                                placeholderText="Prefered View Date*"
+                                dateFormat="yyyy-MM-dd"
+                                className={`block h-[58px] px-2.5 py-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border ${
+                                  errors.preferedDate
+                                    ? "border-red-500"
+                                    : "border-gray-300 hover:border-black"
+                                } appearance-none focus:outline-none focus:ring-0 focus:border-[#3f51b5] peer`}
+                              />
+                            )}
+                          />
+                          <label
+                            htmlFor="preferedDate"
+                            className="absolute text-sm font-semibold text-[#00000099] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:text-[#3f51b5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1"
+                          >
+                            Prefered View Date*
+                          </label>
+                          {errors.preferedDate && (
+                            <p className="text-red-500 text-xs mt-1">
+                              {errors.preferedDate.message}
+                            </p>
+                          )}
+                        </div>
                       <div className="relative">
                         <Controller
                           name="preferredTime"

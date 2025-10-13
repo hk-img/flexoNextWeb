@@ -17,7 +17,6 @@ const CoworkingSelectionScreen = ({spaceId,formData,setFormData,error,setError,v
     },
     onSuccess: (data, payload) => {
       if (data?.result?.success) {
-        toast.success(data?.result?.message);
         setSuccessScreen(true);
       } else {
         toast.error(data?.result?.message);

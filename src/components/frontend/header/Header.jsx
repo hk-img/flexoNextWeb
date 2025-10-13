@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Svg from "@/components/svg";
 import Image from "next/image";
 import Auth from "../auth/Auth";
@@ -14,6 +14,8 @@ import { useRouter } from "next/navigation";
 const Header = () => {
   const router = useRouter();
   const { token, setToken, setUser } = useAuth();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [lastScrollTop, setLastScrollTop] = useState(0);
@@ -42,6 +44,19 @@ const Header = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollTop]);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const { mutate: logoutMutate } = useMutation({
     mutationFn: async (payload) => {
@@ -84,7 +99,6 @@ const Header = () => {
         } bg-white`}
       >
         <div className="container relative w-full mx-auto group lg:py-5 sm:py-[20.5px] py-[17px]">
-          <input type="checkbox" id="user-toggle" className="hidden" />
           <div className="flex justify-between items-center">
             <div className="px-[15px]">
               <Link href="/">
@@ -113,7 +127,7 @@ const Header = () => {
                 <>
                   <div className="relative group z-[9999]">
                     <label
-                      htmlFor="user-toggle"
+                      onClick={() => setIsMenuOpen((prev) => !prev)}
                       className="flex items-center justify-center border hover:bg-[#f76900] bg-[#001740] text-white 
                                       w-[30px] h-[30px] rounded-full cursor-pointer transition"
                     >
@@ -144,12 +158,12 @@ const Header = () => {
                 <Svg name="homePlus" className="size-[18px] text-black" />
               </Link>
               {token ? (
-                <label htmlFor="user-toggle">
+                <button onClick={() => setIsMenuOpen((prev) => !prev)}>
                   <Svg
                     name="logOut"
                     className="size-[22px] text-black cursor-pointer"
                   />
-                </label>
+                </button>
               ) : (
                 <div className="cursor-pointer" onClick={() => setIsOpen(true)}>
                   <Svg name="logOut" className="size-[22px] text-black" />
@@ -158,7 +172,9 @@ const Header = () => {
             </div>
           </div>
           {
-            token && <div className="absolute md:right-0 right-3 z-60 md:top-20 top-15 w-[250px] bg-white text-black rounded-sm opacity-0 scale-95 pointer-events-none transition-all duration-200 shadow-[10px_10px_20px_#0000006b] group-has-[#user-toggle:checked]:opacity-100 group-has-[#user-toggle:checked]:scale-100 group-has-[#user-toggle:checked]:pointer-events-auto">
+            token && <div ref={menuRef} className={`absolute md:right-0 right-3 z-60 md:top-20 top-15 w-[250px] bg-white text-black rounded-sm transition-all duration-200 shadow-[10px_10px_20px_#0000006b]
+            ${isMenuOpen ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-95 pointer-events-none"}
+            `}>
               <div className="py-2">
                 <ul>
                   <li>
@@ -221,10 +237,6 @@ const Header = () => {
               </div>
             </div>
           }
-          <label
-            htmlFor="user-toggle"
-            className="fixed inset-0 hidden group-has-[#user-toggle:checked]:block z-10 cursor-default"
-          ></label>
         </div>
       </header>
       {isOpen && <Auth isOpen={isOpen} setIsOpen={setIsOpen} />}

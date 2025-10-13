@@ -189,93 +189,99 @@ const BookingDetail = ({ bookingId }) => {
                   )
                 }
                 <div className="flex gap-6 mt-8 pb-5 border-b border-gray-200">
-                  <div className="bg-white rounded-lg p-6  flex md:flex-row flex-col gap-4 w-full">
-                    <ImageWithFallback
-                      width={200}
-                      height={150}
-                      src={bookingData?.images?.[0]}
-                      alt="booking space image"
-                      className="w-[320px]  h-[213px] rounded-lg"
-                      fallback="/images/default_image.webp"
-                    />
-                    <div className="flex flex-col space-y-2 justify-center">
-                      <h3 className="text-[26px] font-medium text-black">
-                        {bookingData?.spaceName}
-                      </h3>
-                      <p className="text-sm text-[#888888] 2xl:text-base">
-                        Booking ID :{" "}
-                        <span className="font-medium text-black">
-                          {bookingData?.bookingId}
-                        </span>
-                      </p>
+                  <div className="bg-white rounded-lg p-6 items-center flex md:flex-row flex-col gap-4 w-full">
+                    <div className="flex md:flex-row flex-col gap-4 w-full">
+                      <ImageWithFallback
+                        width={200}
+                        height={150}
+                        src={bookingData?.images?.[0]}
+                        alt="booking space image"
+                        className="w-[165px] min-h-full max-h-[213px] rounded-lg"
+                        fallback="/images/default_image.webp"
+                      />
+                      <div className="flex flex-col space-y-2 justify-center">
+                        <h3 className="text-[26px] font-medium text-black">
+                          {bookingData?.spaceName}
+                        </h3>
+                        <p className="text-sm text-[#888888] 2xl:text-base">
+                          Booking ID :{" "}
+                          <span className="font-medium text-black">
+                            {bookingData?.bookingId}
+                          </span>
+                        </p>
 
-                      <div className="text-[#141414] text-sm font-medium flex items-center space-x-1">
-                        <span>
-                          <Svg
-                            name="location2"
-                            className="size-4 text-[#f76900]"
-                          />
-                        </span>
-                        <span>
-                          {convertSlugToCapitalLetter(
-                            bookingData?.location_name || ""
-                          )}
-                        </span>
-                      </div>
-
-                      <div className="flex items-center space-x-4 font-medium text-sm text-[#141414]">
-                        <div className="flex items-center space-x-1">
-                          <Svg
-                            name="userHalf"
-                            className="size-4 text-[#f76900]"
-                          />
+                        <div className="text-[#141414] text-sm font-medium flex items-center space-x-1">
                           <span>
-                            {bookingData?.howManyPeopleInYourSpace} people
+                            <Svg
+                              name="location2"
+                              className="size-4 text-[#f76900]"
+                            />
+                          </span>
+                          <span>
+                            {convertSlugToCapitalLetter(
+                              bookingData?.location_name || ""
+                            )}
                           </span>
                         </div>
-                        {
-                          bookingData?.spaceType !="Coworking Space" && (
-                            <>
-                              <span className="size-[10px] rounded-full bg-[#ddd]"></span>
-                              <div className="flex items-center space-x-1">
-                                <Svg name="clock" className="size-4 text-[#f76900]" />
-                                <span>{(bookingData.minimum_hours == 0 || bookingData.minimum_hours == null) ? "2":(bookingData?.minimum_hours / 60)} hrs min</span>
-                              </div>
-                            </>
-                          )
-                        }
-                        <span className="size-[10px] rounded-full bg-[#ddd]"></span>
-                        <div className="flex items-center space-x-1">
-                          <Svg
-                            name="scaleRuler"
-                            className="size-4 text-[#f76900]"
-                          />
-                          <span>{bookingData?.spacesqft} sqft</span>
+
+                        <div className="flex flex-wrap items-center space-x-2 font-medium text-sm text-[#141414]">
+                          <div className="flex items-center space-x-1">
+                            <Svg
+                              name="userHalf"
+                              className="size-4 text-[#f76900] shrink-0"
+                            />
+                            <span className="text-nowrap">
+                              {bookingData?.howManyPeopleInYourSpace} people
+                            </span>
+                          </div>
+                          {
+                            bookingData?.spaceType !="Coworking Space" && (
+                              <>
+                                <span className="size-[10px] rounded-full bg-[#ddd] shrink-0"></span>
+                                <div className="flex items-center space-x-1">
+                                  <Svg name="clock" className="size-4 text-[#f76900] shrink-0" />
+                                  <span className="text-nowrap">{(bookingData.minimum_hours == 0 || bookingData.minimum_hours == null) ? "2":(bookingData?.minimum_hours / 60)} hrs min</span>
+                                </div>
+                              </>
+                            )
+                          }
+                          <span className="size-[10px] rounded-full bg-[#ddd] shrink-0"></span>
+                          <div className="flex items-center space-x-1">
+                            <Svg
+                              name="scaleRuler"
+                              className="size-4 text-[#f76900] shrink-0"
+                            />
+                            <span className="text-nowrap">{bookingData?.spacesqft} sqft</span>
+                          </div>
                         </div>
                       </div>
                     </div>
+                     <div>
+                    <div className="flex flex-col space-y-2  max-md:w-full">
+                      {bookingData?.bookingStatus == "confirmed" && (
+                        <>
+                          <button className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px] px-10">
+                            LEAVE A REVIEW
+                          </button>
+                          <button
+                            className="flex items-center bg-[#000e54] justify-center gap-2 cursor-pointer w-full border uppercase tracking-[1px] border-[#000e54] text-white
+                    2xl:text-base text-sm font-semibold md:py-[15px] py-[10px] rounded-[15px] text-nowrap"
+                            onClick={invoiceRefetch}
+                          >
+                            <Svg
+                              name="cloudDownload"
+                              className="size-5 text-white"
+                            />
+                            <span>INVOICE</span>
+                          </button>
+                        </>
+                      )}
+                    </div>
                   </div>
+                  </div>
+                 
                 </div>
-                <div className="flex flex-col space-y-2  max-md:w-full">
-                  {bookingData?.bookingStatus == "confirmed" && (
-                    <>
-                      <button className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 text-nowrap uppercase tracking-[1px] px-10">
-                        LEAVE A REVIEW
-                      </button>
-                      <button
-                        className="flex items-center justify-center gap-2 cursor-pointer w-full border uppercase tracking-[1px] border-[#000e54] text-[#000e54]
-                2xl:text-base text-sm font-semibold md:py-[15px] py-[10px] rounded-[15px] text-nowrap"
-                        onClick={invoiceRefetch}
-                      >
-                        <Svg
-                          name="cloudDownload"
-                          className="size-5 text-[#000e54]"
-                        />
-                        <span>INVOICE</span>
-                      </button>
-                    </>
-                  )}
-                </div>
+               
                 <div className="pt-[30px]">
                   <h2 className="text-lg 2xl:text-xl mb-6">Booking Details</h2>
 
@@ -305,7 +311,7 @@ const BookingDetail = ({ bookingId }) => {
                   }
                   {
                     bookingData?.spaceType == "Coworking Space" && bookingData?.bookingPeriods?.length > 0? (
-                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 px-[15px]">
+                      <div className="">
                         <div>
                           <label className="block text-[#777] 2xl:text-base text-sm font-medium mb-2">
                             Date
@@ -330,10 +336,10 @@ const BookingDetail = ({ bookingId }) => {
                         </div>
                       </div>
                     ):(
-                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 px-[15px]">
-                        <div>
+                      <div className="">
+                        <div className="flex items-center">
                           <label className="block text-[#777] 2xl:text-base text-sm font-medium mb-2">
-                            Date
+                            Date:
                           </label>
                           <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black">
                             {new Date(bookingData?.startDate)
@@ -388,14 +394,14 @@ const BookingDetail = ({ bookingId }) => {
                         {bookingData?.gst} INR
                       </span>
                     </div>
-                    <div className="flex justify-between border-y text-sm 2xl:text-base border-gray-200 mt-2 py-3">
+                    <div className="flex justify-between border-y text-sm 2xl:text-base border-[#ddd] mt-2 py-3">
                       <span className="text-black font-semibold">Total</span>
                       <span className="text-black font-semibold">
                         {bookingData?.bookingPrice} INR
                       </span>
                     </div>
                     {paymentDetails && (
-                      <>
+                      <div className="border-b pb-2 border-[#ddd]">
                         <div className="flex justify-between py-2 text-sm 2xl:text-base">
                           <span className="text-[#777]">Payment Method</span>
                           <span className="text-gray-900 font-medium">
@@ -409,19 +415,25 @@ const BookingDetail = ({ bookingId }) => {
                           </span>
                         </div>
                         <div className="flex justify-between py-2 text-sm 2xl:text-base">
-                          <span className="text-[#777]">Txn Date & Time</span>
-                          <span className="text-gray-900 font-medium">
-                            {formatTimestampToDate(
-                              paymentDetails?.created_at || ""
-                            )}
-                          </span>
-                          <span>
-                            {formatTimestampToTime(
-                              paymentDetails?.created_at || ""
-                            )}
-                          </span>
+                          <div>
+                            <span className="text-[#777]">Txn Date & Time</span>
+                          </div>
+                         
+                          <div>
+                              <p className="text-gray-900 font-medium">
+                                {formatTimestampToDate(
+                                  paymentDetails?.created_at || ""
+                                )}
+                              </p>
+                             <p className="text-[#888888] text-end">
+                              {formatTimestampToTime(
+                                paymentDetails?.created_at || ""
+                              )}
+                            </p>
+                          </div>
+                         
                         </div>
-                      </>
+                      </div>
                     )}
                   </div>
                 </div>

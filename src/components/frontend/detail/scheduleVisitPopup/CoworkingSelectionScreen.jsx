@@ -68,7 +68,7 @@ const CoworkingSelectionScreen = ({spaceId,formData,setFormData,error,setError,v
           <h2 className="text-[#141414] font-thin mb-3 text-lg">
             What type of space are you looking for?
           </h2>
-          <div className="flex justify-center gap-3 items-center">
+          <div className="flex justify-center max-md:space-y-2 flex-wrap gap-3 items-center">
           {
             spaceData?.privatecabin_price > 0 && (
                 <label className="cursor-pointer">

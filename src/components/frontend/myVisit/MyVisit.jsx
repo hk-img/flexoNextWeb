@@ -90,15 +90,19 @@ const MyVisit = () => {
                       </div>
 
                       <div className="flex items-center space-x-2.5 font-medium text-sm text-[#141414]">
-                        <div className="flex items-center space-x-1">
-                          <Svg
-                            name="userHalf"
-                            className="size-4 text-[#f76900]"
-                          />
-                          <span>{item?.spaceDetails?.howManyPeopleInYourSpace || 1} people</span>
-                        </div>
                         {
-                          item?.spaceDetails?.spaceStatus && (
+                          item?.visitSpaceType != "longterm" && (
+                            <div className="flex items-center space-x-1">
+                              <Svg
+                                name="userHalf"
+                                className="size-4 text-[#f76900]"
+                              />
+                              <span>{item?.spaceDetails?.howManyPeopleInYourSpace || 1} people</span>
+                            </div>
+                          ) 
+                        }
+                        {
+                          item?.visitSpaceType === "longterm" && item?.spaceDetails?.spaceStatus && (
                             <div className="flex items-center space-x-1">
                               <Svg
                                 name="userHalf"
@@ -108,7 +112,21 @@ const MyVisit = () => {
                             </div>
                           )
                         }
-                         <span className="h-[10px] w-[10px] rounded-full bg-[#ddd]"></span>
+                        {
+                          item?.visitSpaceType === "shortterm" && (
+                            <div className="flex items-center space-x-1">
+                              <ImageWithFallback
+                                width={200}
+                                height={200}
+                                src="https://flexospaces-images.s3.ap-south-1.amazonaws.com/img/clock-icon-orng.webp"
+                                className="object-cover w-full h-full"
+                                fallback="/images/defaultImg.webp"
+                              />
+                              <span>2 hr min</span>
+                            </div>
+                          )
+                        }
+                        <span className="h-[10px] w-[10px] rounded-full bg-[#ddd]"></span>
                         <div className="flex items-center space-x-1">
                           <Svg
                             name="scaleRuler"
@@ -135,7 +153,7 @@ const MyVisit = () => {
                           <Svg name="clock" className="size-4 text-[#f76900]" />
                           <span>{convertTo12Hour(item?.visitTime || "")}</span>
                         </div>
-                        {item?.coworkingSpaceType && (
+                        {item?.visitSpaceType === "coworking" && (
                           <>
                             <span className="text-[#f76900]">|</span>
                             <div>
@@ -149,7 +167,7 @@ const MyVisit = () => {
                             </div>
                           </>
                         )}
-                        {item?.howManyPeople != "0" && (
+                        {item?.visitSpaceType === "coworking" && item?.howManyPeople != "0" && (
                           <>
                             <span className="text-[#f76900]">|</span>
                             <div>

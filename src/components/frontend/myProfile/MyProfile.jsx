@@ -2,8 +2,8 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Svg from "@/components/svg";
 import Image from "next/image";
-import { useForm, Controller, Form } from "react-hook-form";
-import { set, z } from "zod";
+import { useForm, Controller } from "react-hook-form";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
@@ -139,7 +139,7 @@ const profileSchema = z
   .object({
     firstName: z.string().min(1, "First Name is required"),
     lastName: z.string().min(1, "Last Name is required"),
-    mobile: z.string().min(10, "Valid Mobile Number is required"),
+    mobile: z.string().min(1, "Mobile Number is required"),
     country: z
       .object({
         dialCode: z.union([z.string(), z.number()]).optional(),

@@ -14,17 +14,17 @@ const BuyPassPopup = ({ setIsOpen }) => {
             <h2 className="text-xl font-semibold mb-6">Complete your Day Pass Booking</h2>
 
             <form className="space-y-8">
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid md:grid-cols-2 gap-x-6 gap-y-4">
                 <div className="relative">
                   <input
                     type="text"
                     id="firstName"
-                    placeholder=" "
-                    className="peer w-full border-b border-[#ddd] focus:border-[#f76900] outline-none py-2 bg-transparent"
+                    placeholder="First Name"
+                    className="peer w-full border-b text-sm text-[#0000008a] placeholder:text-[#0000008a] border-[#ddd] focus:border-[#3f51b5] outline-none pt-3 pb-2 bg-transparent"
                   />
                   <label
                     htmlFor="firstName"
-                    className="absolute left-0 top-2 text-[#777] text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-sm peer-placeholder-shown:text-[#777] peer-focus:-top-3 peer-focus:text-xs peer-focus:text-[#f76900] bg-white px-1"
+                    className="absolute duration-300 text-sm transform text-[#0000008a] -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:text-[#3f51b5] peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-0"
                   >
                     First Name *
                   </label>
@@ -34,113 +34,104 @@ const BuyPassPopup = ({ setIsOpen }) => {
                   <input
                     type="text"
                     id="lastName"
-                    placeholder=" "
-                    className="peer w-full border-b border-[#ddd] focus:border-[#f76900] outline-none py-2 bg-transparent"
+                    placeholder="Last Name"
+                    className="peer w-full border-b text-sm text-[#0000008a] placeholder:text-[#0000008a] border-[#ddd] focus:border-[#3f51b5] outline-none pt-3 pb-2 bg-transparent"
                   />
                   <label
-                    for="lastName"
-                    className="absolute left-0 top-2 text-[#777] text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-sm peer-placeholder-shown:text-[#777] peer-focus:-top-3 peer-focus:text-xs peer-focus:text-[#f76900] bg-white px-1"
+                    htmlFor="lastName"
+                    className="absolute duration-300 text-sm transform text-[#0000008a] -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:text-[#3f51b5] peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-0"
                   >
                     Last Name *
                   </label>
                 </div>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="relative">
+               <div className="relative col-span-2">
                   <input
                     type="email"
                     id="email"
-                    placeholder=" "
-                    className="peer w-full border-b border-[#ddd] focus:border-[#f76900] outline-none py-2 bg-transparent"
+                    placeholder="Email Address"
+                    className="peer w-full border-b text-sm text-[#0000008a] placeholder:text-[#0000008a] border-[#ddd] focus:border-[#3f51b5] outline-none pt-3 pb-2 bg-transparent"
                   />
                   <label
-                    for="email"
-                    className="absolute left-0 top-2 text-[#777] text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-sm peer-focus:-top-3 peer-focus:text-xs peer-focus:text-[#f76900] bg-white px-1"
+                    htmlFor="email"
+                    className="absolute duration-300 text-sm transform text-[#0000008a] -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:text-[#3f51b5] peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-0"
                   >
-                    Email Address *
+                   Email Address *
                   </label>
                 </div>
 
                 <div className="relative">
                   <input
-                    type="text"
-                    id="phone"
-                    placeholder=" "
-                    className="peer w-full border-b border-[#ddd] focus:border-[#f76900] outline-none py-2 bg-transparent"
+                    type="tel"
+                    id="phoneNumber"
+                    placeholder="Phone Number"
+                    className="peer w-full border-b text-sm text-[#0000008a] placeholder:text-[#0000008a] border-[#ddd] focus:border-[#3f51b5] outline-none pt-3 pb-2 bg-transparent"
                   />
                   <label
-                    for="phone"
-                    className="absolute left-0 top-2 text-[#777] text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-sm peer-focus:-top-3 peer-focus:text-xs peer-focus:text-[#f76900] bg-white px-1"
+                    htmlFor="phoneNumber"
+                    className="absolute duration-300 text-sm transform text-[#0000008a] -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:text-[#3f51b5] peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-0"
                   >
-                    Phone Number *
+                   Phone Number *
                   </label>
                 </div>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-6">
                 <div className="relative">
                   <input
                     type="text"
                     id="company"
-                    placeholder=" "
-                    className="peer w-full border-b border-[#ddd] focus:border-[#f76900] outline-none py-2 bg-transparent"
+                    placeholder="Company Name" className="peer w-full border-b text-sm text-[#0000008a] placeholder:text-[#0000008a] border-[#ddd] focus:border-[#3f51b5] outline-none pt-3 pb-2 bg-transparent"
                   />
                   <label
-                    for="company"
-                    className="absolute left-0 top-2 text-[#777] text-sm transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-sm peer-focus:-top-3 peer-focus:text-xs peer-focus:text-[#f76900] bg-white px-1"
+                    htmlFor="company"
+                    className="absolute duration-300 text-sm transform text-[#0000008a] -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:text-[#3f51b5] peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-0"
                   >
-                    Company Name
+                   Company Name
                   </label>
+                </div>
+                <div className="relative">
+                  <input
+                    type="date"
+                    id="date"
+                    placeholder=" "
+                    className="peer w-full border-b text-sm text-[#0000008a] placeholder:text-[#0000008a] border-[#ddd] focus:border-[#3f51b5] outline-none pt-2 pb-2 bg-transparent"
+                  />
+                  {/* <label
+                    for="date"
+                    className="absolute left-0 top-2 text-[#777] text-sm transition-all peer-placeholder-shown:top-2 peer-focus:-top-3 peer-focus:text-xs peer-focus:text-[#f76900] bg-white px-1"
+                  >
+                    Choose one and more dates
+                  </label> */}
                 </div>
 
                 <div className="relative">
                   <select
                     id="guests"
-                    className="peer w-full border-b border-[#ddd] focus:border-[#f76900] outline-none py-2 bg-transparent"
+                    placeholder="No. of Guest*"
+                    className="peer w-full border-b text-sm text-[#0000008a] placeholder:text-[#0000008a] border-[#ddd] focus:border-[#3f51b5] outline-none pt-2 pb-2 bg-transparent"
                   >
-                    <option value="" disabled selected hidden></option>
+                    <option selected>No. of Guest*</option>
                     <option>1</option>
                     <option>2</option>
                   </select>
+                  
+                </div>
+                
+
+                <div className="relative col-span-2">
+                  <textarea
+                    id="message"
+                    rows="3"
+                    placeholder=" "
+                    className="peer w-full border border-[#ddd] rounded-md p-2 outline-none focus:border-[#f76900] bg-transparent"
+                  ></textarea>
                   <label
-                    for="guests"
-                    className="absolute left-0 top-2 text-[#777] text-sm transition-all peer-focus:-top-3 peer-focus:text-xs peer-focus:text-[#f76900] bg-white px-1"
+                    htmlFor="message"
+                    className="absolute duration-300 text-sm transform text-[#0000008a] -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-4 peer-focus:text-[#3f51b5] peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-0"
                   >
-                    Number of Guest *
+                    Message or additional requirements
                   </label>
                 </div>
               </div>
 
-              <div className="relative">
-                <input
-                  type="date"
-                  id="date"
-                  placeholder=" "
-                  className="peer w-full border-b border-[#ddd] focus:border-[#f76900] outline-none py-2 bg-transparent"
-                />
-                <label
-                  for="date"
-                  className="absolute left-0 top-2 text-[#777] text-sm transition-all peer-placeholder-shown:top-2 peer-focus:-top-3 peer-focus:text-xs peer-focus:text-[#f76900] bg-white px-1"
-                >
-                  Choose one and more dates
-                </label>
-              </div>
-
-              <div className="relative">
-                <textarea
-                  id="message"
-                  rows="3"
-                  placeholder=" "
-                  className="peer w-full border border-[#ddd] rounded-md p-2 outline-none focus:border-[#f76900] bg-transparent"
-                ></textarea>
-                <label
-                  for="message"
-                  className="absolute left-3 top-2 text-[#777] text-sm transition-all peer-placeholder-shown:top-2 peer-focus:-top-2 peer-focus:text-xs peer-focus:text-[#f76900] bg-white px-1"
-                >
-                  Message or additional requirements
-                </label>
-              </div>
+              
 
               <button
                 type="button"

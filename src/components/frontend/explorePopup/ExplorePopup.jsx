@@ -5,7 +5,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { useAuth } from "@/context/useAuth";
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getApi, postAPI } from "@/services/ApiService";
+import { toast } from "sonner";
 
 const schema = z
   .object({
@@ -41,9 +44,44 @@ const schema = z
       }
     }
   });
-
-const ExplorePopup = ({ isOpen, setIsOpen }) => {
-  const {user,token} = useAuth();
+const schemaForProductCard = z
+  .object({
+    firstName: z.string().min(1, "First name is required"),
+    lastName: z.string().min(1, "Last name is required"),
+    email: z.string().email("Enter a valid email").min(1, "Email is required"),
+    mobile: z.string().min(1, "Mobile Number is required"),
+    country: z
+      .object({
+        dialCode: z.union([z.string(), z.number()]).optional(),
+      })
+      .nullable()
+      .optional(),
+    spaceType: z.string().min(1, "Space Type is required"),
+    seats: z.string().min(1, "Seats required"),
+  })
+  .superRefine((data, ctx) => {
+    if (!data.mobile) {
+      ctx.addIssue({
+        path: ["mobile"],
+        message: "Mobile number is required",
+        code: z.ZodIssueCode.custom,
+      });
+    } else {
+      const code = data.country?.dialCode ?? "";
+      const numeric = data.mobile.replace(/\D/g, "");
+      if (numeric.length <= code.length) {
+        ctx.addIssue({
+          path: ["mobile"],
+          message: "Mobile number is required",
+          code: z.ZodIssueCode.custom,
+        });
+      }
+    }
+  });
+const ExplorePopup = ({ isOpen, setIsOpen, selectedSpaceData = {} }) => {
+  const selectedSchema = selectedSpaceData?.id ? schema : schemaForProductCard;
+  const { user } = useAuth();
+  const [successScreen, setSuccessScreen] = useState(false);
   const {
     register,
     handleSubmit,
@@ -53,13 +91,14 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
     reset,
     watch,
   } = useForm({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(selectedSchema),
     defaultValues: {
       firstName: "",
       lastName: "",
       email: "",
       mobile: "",
       city: "",
+      spaceType:"",
       seats: "",
       country: {
         name: "India",
@@ -70,230 +109,339 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
     },
   });
   const values = watch();
-  console.log({ values,errors,user });
+  console.log({ values, errors, user });
 
-  useEffect(()=>{
-    if(user){
-      setValue("firstName",user.firstName || "");
-      setValue("lastName",user.lastName || "");
-      setValue("email",user.email || "");
-      setValue("mobile",user?.mobile ? `${user.phone_code}${user.mobile}` : "");
-      setValue("country",user?.phone_code || "91");
+  useEffect(() => {
+    if (user) {
+      setValue("firstName", user.firstName || "");
+      setValue("lastName", user.lastName || "");
+      setValue("email", user.email || "");
+      setValue(
+        "mobile",
+        user?.mobile ? `${user.phone_code}${user.mobile}` : ""
+      );
+      setValue("country", { dialCode: user?.phone_code || "91" });
     }
-  },[user])
+  }, [user]);
+
+  const { mutate: submitMutate, isPending: submitLoading } = useMutation({
+    mutationFn: async (payload) => {
+      const res = await postAPI("user/inquiry", payload);
+      return res.data;
+    },
+    onSuccess: (data) => {
+      if (data.result?.success) {
+        setSuccessScreen(true);
+      } else {
+        toast.error(data?.result.message);
+      }
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
 
   const onSubmit = (values) => {
     const country_code = values.country ? `+${values.country.dialCode}` : "";
     const dialCode = values.country ? values.country.dialCode : "";
     const mobile = values.mobile.replace(dialCode, "").replace(/^\+/, "");
+    const payload = {
+      firstName: values?.firstName,
+      lastName: values?.lastName,
+      userEmail: values?.email,
+      phone_code: country_code,
+      userMobile: mobile,
+      city: [values?.city],
+      inquirySpaceCapacity: values?.seats,
+      type: type,
+      userId: user?.id || 0,
+    };
+    submitMutate(payload);
   };
 
   if (!isOpen) return null;
 
+  const { data: allCities } = useQuery({
+    queryKey: ["all-spaces-cities"],
+    queryFn: async () => {
+      const res = await getApi("spaces/getAllSpacesCities?spaceType=Longterm");
+      return res.data;
+    },
+  });
+
+  const cityData = useMemo(() => {
+    return allCities || [];
+  }, [allCities]);
+  console.log({ cityData });
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center animate-fadeIn">
-      {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/40"
         onClick={() => setIsOpen(false)}
       />
-
-      {/* Popup Box */}
-      <div className="relative w-full lg:max-w-[55vw] mx-[12px] rounded-[11px] bg-white p-6 overflow-y-auto h-full md:h-auto [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]  animate-scaleIn">
-        {/* Header */}
-        <div className="pb-6 flex items-center justify-between">
-          <h2 className="text-lg font-semibold">Get Quotes</h2>
-          <button
-            onClick={() => setIsOpen(false)}
-            className="text-black cursor-pointer"
-          >
-            <Svg name="close" className="size-5" />
-          </button>
-        </div>
-
-        <div className="px-5 py-[10px] bg-[#f4f4f4] mb-6">
-          <p className="text-[#000000de] text-[13px]">
-            Our workspace advisor will get in touch to help you with your requirement.
-          </p>
-        </div>
-
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {/* First Name */}
-            <div className="relative">
-              <label className="block text-sm font-semibold mb-1">
-                First name<span className="text-[#dc3545]">*</span>
-              </label>
-              <div className="relative">
-              <input
-                  {...register("firstName", { required: true })}
-                  placeholder="Enter First Name"
-                  className={`w-full rounded-sm border-2 px-2 tracking-normal py-2.5
-                      border-[#dbdbdb] h-[45px] text-sm font-semibold font-roboto
-                      ${errors.firstName 
-                        ? "border-[#f44336] focus:border-[#f44336]" 
-                        : "hover:border-black focus:border-[#3f51b5] active:border-[#3f51b5]"}
-                    `}
-                />
-              {errors.firstName && (
-                <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
-                  {errors.firstName.message}
-                </p>
-              )}
-              </div>
+      {successScreen ? (
+        <div className="relative w-full max-w-[500px] p-6 mx-[12px] rounded-sm bg-white animate-scaleIn overflow-hidden">
+          <div className="flex space-y-5 flex-col items-center justify-center">
+            <div className="mt-7 ">
+              <Svg name="checkCircle" className="size-[75px] text-[#05ac34]" />
             </div>
+            <p className=" text-base text-[#212529] text-center">
+              Inquiry sent successfully. Our team will get back to you shortly.
+            </p>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="cursor-pointer w-fit px-[35px] mt-1.5 bg-[#f76900] text-lg border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="relative w-full lg:max-w-[55vw] mx-[12px] rounded-[11px] bg-white p-6 overflow-y-auto h-full md:h-auto [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]  animate-scaleIn">
+          {/* Header */}
+          <div className="pb-6 flex items-center justify-between">
+            <h2 className="text-lg font-semibold">Get Quotes</h2>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="text-black cursor-pointer"
+            >
+              <Svg name="close" className="size-5" />
+            </button>
+          </div>
 
-            {/* Last Name */}
-            <div className="relative">
-              <label className="block text-sm font-semibold mb-1">
-                Last name<span className="text-[#dc3545]">*</span>
-              </label>
+          <div className="px-5 py-[10px] bg-[#f4f4f4] mb-6">
+            <p className="text-[#000000de] text-[13px]">
+              Our workspace advisor will get in touch to help you with your
+              requirement.
+            </p>
+          </div>
+
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {/* First Name */}
               <div className="relative">
+                <label className="block text-sm font-semibold mb-1">
+                  First name<span className="text-[#dc3545]">*</span>
+                </label>
+                <div className="relative">
+                  <input
+                    {...register("firstName", { required: true })}
+                    placeholder="Enter First Name"
+                    className={`w-full rounded-sm border-2 px-2 tracking-normal py-2.5
+                            border-[#dbdbdb] h-[45px] text-sm font-semibold font-roboto
+                            ${
+                              errors.firstName
+                                ? "border-[#f44336] focus:border-[#f44336]"
+                                : "hover:border-black focus:border-[#3f51b5] active:border-[#3f51b5]"
+                            }
+                          `}
+                  />
+                  {errors.firstName && (
+                    <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
+                      {errors.firstName.message}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {/* Last Name */}
+              <div className="relative">
+                <label className="block text-sm font-semibold mb-1">
+                  Last name<span className="text-[#dc3545]">*</span>
+                </label>
+                <div className="relative">
+                  <input
+                    {...register("lastName")}
+                    placeholder="Enter Last Name"
+                    className={`w-full rounded-sm border-2 px-3 py-2.5
+                              border-[#dbdbdb] h-[45px]  text-sm font-semibold
+                              ${
+                                errors.lastName
+                                  ? "border-[#f44336] focus:border-[#f44336]"
+                                  : "hover:border-black focus:border-[#3f51b5] active:border-[#3f51b5]"
+                              }
+                            `}
+                  />
+                  {errors.lastName && (
+                    <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
+                      {errors.lastName.message}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {/* Email */}
+              <div className="relative">
+                <label className="block text-sm font-semibold mb-1">
+                  Email<span className="text-[#dc3545]">*</span>
+                </label>
                 <input
-                  {...register("lastName")}
-                  placeholder="Enter Last Name"
-                className={`w-full rounded-sm border-2 px-3 py-2.5
-                        border-[#dbdbdb] h-[45px]  text-sm font-semibold
-                        ${errors.lastName 
-                          ? "border-[#f44336] focus:border-[#f44336]" 
-                          : "hover:border-black focus:border-[#3f51b5] active:border-[#3f51b5]"}
-                      `}
+                  type="email"
+                  {...register("email")}
+                  placeholder="Enter Email"
+                  className={`w-full rounded-sm border-2 px-2 tracking-normal py-2.5
+                            border-[#dbdbdb] h-[45px] text-sm font-semibold font-roboto
+                            ${
+                              errors.email
+                                ? "border-[#f44336] focus:border-[#f44336]"
+                                : "hover:border-black focus:border-[#3f51b5] active:border-[#3f51b5]"
+                            }
+                          `}
                 />
-                {errors.lastName && (
+                {errors.email && (
                   <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
-                    {errors.lastName.message}
+                    {errors.email.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Mobile */}
+              <div className="relative">
+                <label className="block text-sm font-semibold mb-1">
+                  Mobile<span className="text-[#dc3545]">*</span>
+                </label>
+                <Controller
+                  name="mobile"
+                  control={control}
+                  render={({ field }) => (
+                    <PhoneInput
+                      country="in"
+                      value={field.value}
+                      onChange={(value, country) => {
+                        setValue("mobile", value, { shouldValidate: true });
+                        setValue("country", country);
+                      }}
+                      countryCodeEditable={false}
+                      enableSearch
+                      inputProps={{ name: "mobile" }}
+                      className="w-full [&_input]:!w-full [&_input]:!h-full h-12 [&_.country-list]:overflow-x-hidden"
+                    />
+                  )}
+                />
+                {/* {values?.country?.name} */}
+                {errors.mobile && (
+                  <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
+                    {errors.mobile.message}
+                  </p>
+                )}
+              </div>
+
+              {/* City */}
+              {selectedSpaceData?.id ? (
+                <div className="relative">
+                  <label className="block text-sm font-semibold mb-1">
+                    City<span className="text-[#dc3545]">*</span>
+                  </label>
+                  <select
+                    {...register("city")}
+                    className={`w-full rounded-sm border-2 px-2 tracking-normal py-2.5
+                            border-[#dbdbdb] h-[45px] text-sm font-semibold font-roboto
+                            ${
+                              errors.city
+                                ? "border-[#f44336] focus:border-[#f44336]"
+                                : "hover:border-black focus:border-[#3f51b5] active:border-[#3f51b5]"
+                            }
+                          `}
+                  >
+                    <option value="">Select City</option>
+                    {cityData?.map((item) => (
+                      <option key={item.id} value={item.name}>
+                        {item.name}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.spaceType && (
+                    <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
+                      {errors.spaceType.message}
+                    </p>
+                  )}
+                </div>
+              ) : (
+                <div className="relative">
+                  <label className="block text-sm font-semibold mb-1">
+                    City<span className="text-[#dc3545]">*</span>
+                  </label>
+                  <select
+                    {...register("city")}
+                    className={`w-full rounded-sm border-2 px-2 tracking-normal py-2.5
+                            border-[#dbdbdb] h-[45px] text-sm font-semibold font-roboto
+                            ${
+                              errors.city
+                                ? "border-[#f44336] focus:border-[#f44336]"
+                                : "hover:border-black focus:border-[#3f51b5] active:border-[#3f51b5]"
+                            }
+                          `}
+                  >
+                    <option value="">Select City</option>
+                    {cityData?.map((item) => (
+                      <option key={item.id} value={item.name}>
+                        {item.name}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.city && (
+                    <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
+                      {errors.city.message}
+                    </p>
+                  )}
+                </div>
+              )}
+
+              {/* Seats */}
+              <div className="relative">
+                <label className="block text-sm font-semibold mb-1">
+                  No. of Seats<span className="text-[#dc3545]">*</span>
+                </label>
+                <select
+                  {...register("seats")}
+                  className={`w-full rounded-sm border-2 px-2 tracking-normal py-2.5
+                            border-[#dbdbdb] h-[45px] text-sm font-semibold font-roboto
+                            ${
+                              errors.seats
+                                ? "border-[#f44336] focus:border-[#f44336]"
+                                : "hover:border-black focus:border-[#3f51b5] active:border-[#3f51b5]"
+                            }
+                          `}
+                >
+                  <option value="">Select No. of Seats</option>
+                  <option value="1-5">1–5</option>
+                  <option value="6-10">6–10</option>
+                  <option value="11-20">11-20</option>
+                  <option value="21-50">21-50</option>
+                  <option value="21-50">51-100</option>
+                  <option value="100+">100+</option>
+                </select>
+                {errors.seats && (
+                  <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
+                    {errors.seats.message}
                   </p>
                 )}
               </div>
             </div>
 
-            {/* Email */}
-            <div className="relative">
-              <label className="block text-sm font-semibold mb-1">
-                Email<span className="text-[#dc3545]">*</span>
-              </label>
-              <input
-                type="email"
-                {...register("email")}
-                placeholder="Enter Email"
-                className={`w-full rounded-sm border-2 px-2 tracking-normal py-2.5
-                      border-[#dbdbdb] h-[45px] text-sm font-semibold font-roboto
-                      ${errors.email 
-                        ? "border-[#f44336] focus:border-[#f44336]" 
-                        : "hover:border-black focus:border-[#3f51b5] active:border-[#3f51b5]"}
-                    `}
-              />
-              {errors.email && (
-                <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
-                  {errors.email.message}
-                </p>
-              )}
-            </div>
-
-            {/* Mobile */}
-            <div className="relative">
-              <label className="block text-sm font-semibold mb-1">
-                Mobile<span className="text-[#dc3545]">*</span>
-              </label>
-              <Controller
-                name="mobile"
-                control={control}
-                render={({ field }) => (
-                  <PhoneInput
-                    country="in"
-                    value={field.value}
-                    onChange={(value, country) => {
-                      setValue("mobile", value, { shouldValidate: true });
-                      setValue("country", country);
-                    }}
-                    countryCodeEditable={false} 
-                    enableSearch
-                    inputProps={{ name: "mobile" }}
-                    className="w-full [&_input]:!w-full [&_input]:!h-full h-12 [&_.country-list]:overflow-x-hidden"
-                  />
-                )}
-              />
-              {/* {values?.country?.name} */}
-              {errors.mobile && (
-                <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
-                  {errors.mobile.message}
-                </p>
-              )}
-            </div>
-
-            {/* City */}
-            <div className="relative">
-              <label className="block text-sm font-semibold mb-1">
-                City<span className="text-[#dc3545]">*</span>
-              </label>
-              <select
-                {...register("city")}
-                className={`w-full rounded-sm border-2 px-2 tracking-normal py-2.5
-                      border-[#dbdbdb] h-[45px] text-sm font-semibold font-roboto
-                      ${errors.city 
-                        ? "border-[#f44336] focus:border-[#f44336]" 
-                        : "hover:border-black focus:border-[#3f51b5] active:border-[#3f51b5]"}
-                    `}
+            <div className="border-b pb-4 border-[#dbdbdb]">
+              <button
+                type="submit"
+                disabled={submitLoading}
+                className="cursor-pointer mt-6 w-full bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white py-4 rounded-[15px] font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px]"
               >
-                <option value="">Select City</option>
-                <option value="Delhi">Delhi</option>
-                <option value="Mumbai">Mumbai</option>
-                <option value="Bangalore">Bangalore</option>
-              </select>
-              {errors.city && (
-                <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
-                  {errors.city.message}
-                </p>
-              )}
+                {submitLoading ? "...Submitting" : "SUBMIT"}
+              </button>
             </div>
+          </form>
 
-            {/* Seats */}
-            <div className="relative">
-              <label className="block text-sm font-semibold mb-1">
-                No. of Seats<span className="text-[#dc3545]">*</span>
-              </label>
-              <select
-                {...register("seats")}
-                className={`w-full rounded-sm border-2 px-2 tracking-normal py-2.5
-                      border-[#dbdbdb] h-[45px] text-sm font-semibold font-roboto
-                      ${errors.seats 
-                        ? "border-[#f44336] focus:border-[#f44336]" 
-                        : "hover:border-black focus:border-[#3f51b5] active:border-[#3f51b5]"}
-                    `}
-              >
-                <option value="">Select No. of Seats</option>
-                <option value="1-5">1–5</option>
-                <option value="6-20">6–20</option>
-                <option value="21+">21+</option>
-              </select>
-              {errors.seats && (
-                <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
-                  {errors.seats.message}
-                </p>
-              )}
-            </div>
-          </div>
-
-          <div className="border-b pb-4 border-[#dbdbdb]">
-            <button
-              type="submit"
-              className="mt-6 w-full bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white py-4 rounded-[15px] font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px]"
-            >
-              SUBMIT
-            </button>
-          </div>
-        </form>
-
-        <p className="mt-4 pb-5 px-5 text-[11px] text-[#000000de] text-center">
-          After you submit a workspace enquiry to us, we may share your details
-          with workspace providers, who may contact you to follow up on your
-          enquiry. Please read our{" "}
-          <a href="#" className="text-[#f76900]">
-            Privacy Policy
-          </a>{" "}
-          for details of how we process the information.
-        </p>
-      </div>
+          <p className="mt-4 pb-5 px-5 text-[11px] text-[#000000de] text-center">
+            After you submit a workspace enquiry to us, we may share your
+            details with workspace providers, who may contact you to follow up
+            on your enquiry. Please read our{" "}
+            <a href="#" className="text-[#f76900]">
+              Privacy Policy
+            </a>{" "}
+            for details of how we process the information.
+          </p>
+        </div>
+      )}
     </div>
   );
 };

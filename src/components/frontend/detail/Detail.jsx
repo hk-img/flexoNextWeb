@@ -32,6 +32,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isScheduleVisitOpen, setIsScheduleVisitOpen] = useState(false);
   const [isBuyPassOpen, setIsBuyPassOpen] = useState(false);
+  const [selectedSpaceData,setSelectedSpaceData] = useState(null);
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY >= 700) {
@@ -1158,7 +1159,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                     key={index}
                     className="shrink-0 md:px-[9px] px-0 basis-[100%] sm:basis-[50%] md:basis-[50%] lg:basis-[33.3%] xl:basis-[33.3%] py-3"
                   >
-                    <ProductCard item={item} setIsOpen={setIsOpen} setIsAuthOpen={setIsAuthOpen}/>
+                    <ProductCard item={item} setIsOpen={setIsOpen} setIsAuthOpen={setIsAuthOpen} setSelectedSpaceData={setSelectedSpaceData}/>
                   </div>
                 ))}
               </EmblaCarousel>
@@ -1166,7 +1167,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
           </section>
         )
       }
-      {isOpen && <ExplorePopup isOpen={isOpen} setIsOpen={setIsOpen} />}
+      {isOpen && <ExplorePopup isOpen={isOpen} setIsOpen={setIsOpen} selectedSpaceData={selectedSpaceData} />}
       {isAuthOpen && <Auth isOpen={isAuthOpen} setIsOpen={setIsAuthOpen} />}
       {isScheduleVisitOpen &&<ScheduleVisitPopup isOpen={isScheduleVisitOpen} setIsOpen={setIsScheduleVisitOpen} type={type} spaceId={spaceData?.id} workingDays={spaceData?.working_time} spaceData={spaceData} hostHolidays={spaceDeatil?.hostHolidays}/>}
       {isBuyPassOpen && <BuyPassPopup isOpen={isBuyPassOpen} setIsOpen={setIsBuyPassOpen}/>}

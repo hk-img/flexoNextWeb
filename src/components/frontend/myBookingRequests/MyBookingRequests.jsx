@@ -52,19 +52,20 @@ const MyBookingRequests = () => {
                         className="object-cover w-full h-full"
                         fallback="/images/default_image.webp"
                       />
-                      {item?.spaceType && (
-                        <div
-                          className="absolute top-2 left-0 bg-[#f76900] text-white text-sm font-medium px-3 py-1 
-                    before:block before:absolute before:top-0 before:right-[-10px] before:w-[10px] before:h-0 
-                    before:border-t-[15px] before:!border-t-[#f76900] before:border-transparent before:border-l-0 before:border-r-[10px] 
-                    after:block after:absolute after:bottom-0 after:right-[-10px] after:w-[10px] after:h-0 
-                    after:border-b-[15px] after:!border-b-[#f76900] after:border-transparent after:border-l-0 after:border-r-[10px]"
-                        >
-                          {item?.spaceType}
-                        </div>
-                      )}
+                      <div
+                        className="absolute top-2 left-0 bg-[#f76900] text-white text-sm font-medium px-3 py-1 
+                  before:block before:absolute before:top-0 before:right-[-10px] before:w-[10px] before:h-0 
+                  before:border-t-[15px] before:!border-t-[#f76900] before:border-transparent before:border-l-0 before:border-r-[10px] 
+                  after:block after:absolute after:bottom-0 after:right-[-10px] after:w-[10px] after:h-0 
+                  after:border-b-[15px] after:!border-b-[#f76900] after:border-transparent after:border-l-0 after:border-r-[10px]"
+                      >
+                        {item?.spaceDetail?.spaceType}
+                      </div>
                     </Link>
                     <div className="md:ml-[15px] space-y-2 w-full">
+                      <h2 className="2xl:text-xl text-lg font-semibold text-[#141414] underline">
+                        {item?.spaceDetail?.actual_name || item?.spaceDetail?.spaceTitle}
+                      </h2>
                       <div className="text-[#141414] text-sm font-medium flex items-center space-x-1">
                         <span>
                           <Svg
@@ -72,7 +73,7 @@ const MyBookingRequests = () => {
                             className="size-4 text-[#f76900]"
                           />
                         </span>
-                        <span>{convertSlugToCapitalLetter(item?.spaceAddress || "")}</span>
+                        <span>{convertSlugToCapitalLetter(item?.spaceDetail?.location_name || "")}</span>
                       </div>
 
                       <div className="flex flex-wrap items-center space-x-3 md:space-y-0 space-y-2 font-medium text-sm text-[#141414]">

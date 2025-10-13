@@ -4,36 +4,46 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import { useAuth } from "@/context/useAuth";
+import { useEffect } from "react";
 
 const schema = z
   .object({
     firstName: z.string().min(1, "First name is required"),
     lastName: z.string().min(1, "Last name is required"),
     email: z.string().email("Enter a valid email").min(1, "Email is required"),
-    mobile: z.string().min(1, "Mobile number is required"),
+    mobile: z.string().min(1, "Mobile Number is required"),
     country: z
       .object({
-        dialCode: z.string().optional(),
+        dialCode: z.union([z.string(), z.number()]).optional(),
       })
       .nullable()
       .optional(),
     city: z.string().min(1, "Select city"),
     seats: z.string().min(1, "Seats required"),
   })
-  .refine(
-    (data) => {
-      if (!data.mobile) return false;
+  .superRefine((data, ctx) => {
+    if (!data.mobile) {
+      ctx.addIssue({
+        path: ["mobile"],
+        message: "Mobile number is required",
+        code: z.ZodIssueCode.custom,
+      });
+    } else {
       const code = data.country?.dialCode ?? "";
       const numeric = data.mobile.replace(/\D/g, "");
-      return numeric.length > code.length;
-    },
-    {
-      message: "Mobile number is required",
-      path: ["mobile"],
+      if (numeric.length <= code.length) {
+        ctx.addIssue({
+          path: ["mobile"],
+          message: "Mobile number is required",
+          code: z.ZodIssueCode.custom,
+        });
+      }
     }
-  );
+  });
 
 const ExplorePopup = ({ isOpen, setIsOpen }) => {
+  const {user,token} = useAuth();
   const {
     register,
     handleSubmit,
@@ -60,6 +70,17 @@ const ExplorePopup = ({ isOpen, setIsOpen }) => {
     },
   });
   const values = watch();
+  console.log({ values,errors,user });
+
+  useEffect(()=>{
+    if(user){
+      setValue("firstName",user.firstName || "");
+      setValue("lastName",user.lastName || "");
+      setValue("email",user.email || "");
+      setValue("mobile",user?.mobile ? `${user.phone_code}${user.mobile}` : "");
+      setValue("country",user?.phone_code || "91");
+    }
+  },[user])
 
   const onSubmit = (values) => {
     const country_code = values.country ? `+${values.country.dialCode}` : "";

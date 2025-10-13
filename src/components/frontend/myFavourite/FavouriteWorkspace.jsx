@@ -64,7 +64,7 @@ const MyFavourite = () => {
       <section className="relative w-full lg:mt-[82px] sm:mt-[62px] mt-[63px] bg-[#f9f9f9]">
         <div className="container mx-auto px-[15px] py-10">
           <div className="flex flex-col">
-            <div className="pt-[14px]">
+            <div className="pt-[14px] pb-[30px]">
               <h1 className="font-semibold text-[#141414] text-[26px] leading-[1.6]">
                 Favorite workspaces
               </h1>

@@ -103,7 +103,7 @@ const bookingItem = ({ item,setShowReviewPopup,setBookingId }) => {
                   <span className="border-r text-black text-sm font-medium border-[#f76900] pr-4">
                     {item?.ofDays || item?.dayCount} Day
                   </span>
-                  <div class="sq-ft booking-list-single-info-single">
+                  <div className="sq-ft booking-list-single-info-single">
                     <p>
                       <span>
                         {item?.spaceType == "Coworking Space"

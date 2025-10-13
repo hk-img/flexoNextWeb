@@ -5,12 +5,12 @@ import { useAuth } from "@/context/useAuth";
 import { getAPIAuthWithoutBearer } from "@/services/ApiService";
 import { convertSlugToCapitalLetter } from "@/services/Comman";
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 const BookingDetail = ({ bookingId }) => {
   const { token } = useAuth();
+  const [paymentDetails, setPaymentDetails] = useState({});
 
   const { data: bookingDetail } = useQuery({
     queryKey: ["bookingDetail", bookingId],
@@ -38,7 +38,7 @@ const BookingDetail = ({ bookingId }) => {
     return `${hour}:${minute} ${ampm}`;
   }
 
-  const {data:invoiceDownload,refetch:invoiceRefetch} = useQuery({
+  const { data: invoiceDownload, refetch: invoiceRefetch } = useQuery({
     queryKey: ["invoiceDownload", bookingData?.id],
     queryFn: async () => {
       const res = await getAPIAuthWithoutBearer(
@@ -47,14 +47,50 @@ const BookingDetail = ({ bookingId }) => {
       );
       return res.data;
     },
-    enabled: false
-  })
-  useEffect(()=>{
-    if(invoiceDownload?.success){
-      const url = `${process.env.NEXT_PUBLIC_BASE_URL}/${invoiceDownload?.pdfFilePath}`
+    enabled: false,
+  });
+  useEffect(() => {
+    if (invoiceDownload?.success) {
+      const url = `${process.env.NEXT_PUBLIC_BASE_URL}/${invoiceDownload?.pdfFilePath}`;
       window.open(url, "_blank");
     }
-  },[invoiceDownload])
+  }, [invoiceDownload]);
+
+  function formatTimestampToDate(timestamp) {
+    if (!timestamp || isNaN(timestamp)) return "";
+
+    const date = new Date(timestamp * 1000);
+
+    if (isNaN(date.getTime())) return "";
+
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+
+    return `${day}-${month}-${year}`;
+  }
+
+  function formatTimestampToTime(timestamp) {
+    if (!timestamp || isNaN(timestamp)) return "";
+    const date = new Date(timestamp * 1000);
+
+    if (isNaN(date.getTime())) return "";
+
+    let hours = date.getHours();
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const ampm = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12 || 12;
+
+    return `${hours}:${minutes} ${ampm}`;
+  }
+
+  useEffect(() => {
+    if (bookingDetail) {
+      const paymentDetails = JSON.parse(bookingData?.payment_detail);
+      console.log({ paymentDetails });
+      setPaymentDetails(paymentDetails);
+    }
+  }, [bookingData]);
   return (
     <>
       <div className="bg-[#f9f9f9]">
@@ -267,19 +303,26 @@ const BookingDetail = ({ bookingId }) => {
                         <div className="flex justify-between py-2 text-sm 2xl:text-base">
                           <span className="text-[#777]">Payment Method</span>
                           <span className="text-gray-900 font-medium">
-                            
+                            {paymentDetails?.method}
                           </span>
                         </div>
                         <div className="flex justify-between py-2 text-sm 2xl:text-base">
                           <span className="text-[#777]">Payment Id</span>
                           <span className="text-gray-900 font-medium">
-                            
+                            {paymentDetails?.id}
                           </span>
                         </div>
                         <div className="flex justify-between py-2 text-sm 2xl:text-base">
                           <span className="text-[#777]">Txn Date & Time</span>
                           <span className="text-gray-900 font-medium">
-                            
+                            {formatTimestampToDate(
+                              paymentDetails?.created_at || ""
+                            )}
+                          </span>
+                          <span>
+                            {formatTimestampToTime(
+                              paymentDetails?.created_at || ""
+                            )}
                           </span>
                         </div>
                       </>

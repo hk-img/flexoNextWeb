@@ -6,8 +6,9 @@ import ImageWithFallback from "@/components/ImageWithFallback";
 import { useQuery } from "@tanstack/react-query";
 import { getAPIAuthWithoutBearer } from "@/services/ApiService";
 import { useAuth } from "@/context/useAuth";
+import { set } from "zod";
 
-const bookingItem = ({ item }) => {
+const bookingItem = ({ item,setShowReviewPopup,setBookingId }) => {
   const { token } = useAuth();
   const { data: invoiceDownload, refetch: invoiceRefetch } = useQuery({
     queryKey: ["invoiceDownload", item?.id],
@@ -195,7 +196,10 @@ const bookingItem = ({ item }) => {
         <div className="flex flex-col space-y-2  max-md:w-full">
           {item?.bookingStatus == "confirmed" && (
             <>
-              <button className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 text-nowrap uppercase tracking-[1px] px-10">
+              <button onClick={() => {
+                setShowReviewPopup(true);
+                setBookingId(item?.id);
+                }} className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 text-nowrap uppercase tracking-[1px] px-10">
                 LEAVE A REVIEW
               </button>
               <button

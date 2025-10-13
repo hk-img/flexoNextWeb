@@ -10,7 +10,7 @@ import React, { useEffect, useMemo, useState } from "react";
 
 const BookingDetail = ({ bookingId }) => {
   const { token } = useAuth();
-  const [paymentDetails, setPaymentDetails] = useState({});
+  const [paymentDetails, setPaymentDetails] = useState(null);
 
   const { data: bookingDetail } = useQuery({
     queryKey: ["bookingDetail", bookingId],
@@ -98,7 +98,7 @@ const BookingDetail = ({ bookingId }) => {
           <div className="container mx-auto px-[15px] py-10">
             <div className="flex flex-wrap">
               <div className="lg:w-2/3 w-full lg:pr-[15px] pr-0 pt-[10px]">
-                {bookingData?.bookingStatus === "pending" ? (
+                {bookingData?.bookingStatus === "pending" && (
                   <div className="bg-[#ecf5ef] rounded-[5px] p-5 flex items-center gap-2.5 ">
                     <div className="px-[15px]">
                       <div className=" text-white w-12 h-12 rounded-full  flex items-center justify-center text-2xl">
@@ -120,27 +120,74 @@ const BookingDetail = ({ bookingId }) => {
                       </p>
                     </div>
                   </div>
-                ) : (
-                  <div className="bg-[#ecf5ef] rounded-[5px] p-5 flex items-center gap-2.5 ">
-                    <div className="px-[15px]">
-                      <div className=" text-white w-12 h-12 rounded-full  flex items-center justify-center text-2xl">
-                        <Svg
-                          name="clockFill"
-                          className="size-12 shrink-0 text-[#f76900]"
-                        />
+                )}
+                {
+                  bookingData?.bookingStatus === "confirmed" && (
+                    <div className="bg-[#ecf5ef] rounded-[5px] p-5 flex items-center gap-2.5 ">
+                      <div className="px-[15px]">
+                        <div className=" text-white w-12 h-12 rounded-full  flex items-center justify-center text-2xl">
+                          <Svg
+                            name="clockFill"
+                            className="size-12 shrink-0 text-[#f76900]"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <h2 className="text-lg 2xl:text-xl font-bold text-[#343a40] ">
+                          Booking confirmed !
+                        </h2>
+                        <p className="2xl:text-base text-sm leading-[1.2]">
+                          You will receive details about the space via email and
+                          whatsapp.
+                        </p>
                       </div>
                     </div>
-                    <div>
-                      <h2 className="text-lg 2xl:text-xl font-bold text-[#343a40] ">
-                        Booking confirmed !
-                      </h2>
-                      <p className="2xl:text-base text-sm leading-[1.2]">
-                        You will receive details about the space via email and
-                        whatsapp.
-                      </p>
+                  )
+                }
+                {
+                  bookingData?.bookingStatus === "cancel" && (
+                    <div className="bg-[#ecf5ef] rounded-[5px] p-5 flex items-center gap-2.5 ">
+                      <div className="px-[15px]">
+                        <div className=" text-white w-12 h-12 rounded-full  flex items-center justify-center text-2xl">
+                          <Svg
+                            name="clockFill"
+                            className="size-12 shrink-0 text-[#f76900]"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <h2 className="text-lg 2xl:text-xl font-bold text-[#343a40] ">
+                          Booking {bookingData?.bookingStatus} !
+                        </h2>
+                        <p className="2xl:text-base text-sm leading-[1.2]">
+                          Your request to update booking has been cancelled
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )
+                }
+                {
+                  bookingData?.bookingStatus === "rejected" && (
+                    <div className="bg-[#ecf5ef] rounded-[5px] p-5 flex items-center gap-2.5 ">
+                      <div className="px-[15px]">
+                        <div className=" text-white w-12 h-12 rounded-full  flex items-center justify-center text-2xl">
+                          <Svg
+                            name="clockFill"
+                            className="size-12 shrink-0 text-[#f76900]"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <h2 className="text-lg 2xl:text-xl font-bold text-[#343a40] ">
+                          Booking {bookingData?.bookingStatus}!
+                        </h2>
+                        <p className="2xl:text-base text-sm leading-[1.2]">
+                          Your request to update booking has been declined.
+                        </p>
+                      </div>
+                    </div>
+                  )
+                }
                 <div className="flex gap-6 mt-8 pb-5 border-b border-gray-200">
                   <div className="bg-white rounded-lg p-6  flex md:flex-row flex-col gap-4 w-full">
                     <ImageWithFallback
@@ -186,11 +233,17 @@ const BookingDetail = ({ bookingId }) => {
                             {bookingData?.howManyPeopleInYourSpace} people
                           </span>
                         </div>
-                        <span className="size-[10px] rounded-full bg-[#ddd]"></span>
-                        <div className="flex items-center space-x-1">
-                          <Svg name="clock" className="size-4 text-[#f76900]" />
-                          <span>{bookingData?.totalHours} hrs</span>
-                        </div>
+                        {
+                          bookingData?.spaceType !="Coworking Space" && (
+                            <>
+                              <span className="size-[10px] rounded-full bg-[#ddd]"></span>
+                              <div className="flex items-center space-x-1">
+                                <Svg name="clock" className="size-4 text-[#f76900]" />
+                                <span>{(bookingData.minimum_hours == 0 || bookingData.minimum_hours == null) ? "2":(bookingData?.minimum_hours / 60)} hrs min</span>
+                              </div>
+                            </>
+                          )
+                        }
                         <span className="size-[10px] rounded-full bg-[#ddd]"></span>
                         <div className="flex items-center space-x-1">
                           <Svg
@@ -232,46 +285,89 @@ const BookingDetail = ({ bookingId }) => {
                       {bookingData?.spaceType}
                     </span>
                   </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 px-[15px]">
-                    <div>
-                      <label className="block text-[#777] 2xl:text-base text-sm font-medium mb-2">
-                        Date
-                      </label>
-                      <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black">
-                        {new Date(bookingData?.startDate)
-                          ?.toLocaleDateString("en-GB")
-                          ?.replace(/\//g, "-")}
+                  {
+                    bookingData?.spaceType == 'Coworking Space' && (
+                      <>
+                        <div className="flex flex-wrap items-center gap-2 mb-8 text-[#777] text-sm 2xl:text-base">
+                          <span>No of Days :</span>
+                          <span className="font-semibold text-[#000]">
+                            {bookingData?.ofDays}
+                          </span>
+                        </div>
+                        <div className="flex flex-wrap items-center gap-2 mb-8 text-[#777] text-sm 2xl:text-base">
+                          <span>No of Guest :</span>
+                          <span className="font-semibold text-[#000]">
+                            {bookingData?.noOfGuest}
+                          </span>
+                        </div>
+                      </>
+                    )
+                  }
+                  {
+                    bookingData?.spaceType == "Coworking Space" && bookingData?.bookingPeriods?.length > 0? (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 px-[15px]">
+                        <div>
+                          <label className="block text-[#777] 2xl:text-base text-sm font-medium mb-2">
+                            Date
+                          </label>
+                          {
+                            bookingData?.bookingPeriods?.map((item, index) => (
+                              <div key={index} className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black">
+                                {new Date(item)
+                                  ?.toLocaleDateString("en-GB")
+                                  ?.replace(/\//g, "-")}
+                              </div>
+                            ))
+                          }
+                        </div>
+                        <div>
+                          <label className="block text-[#777] 2xl:text-base text-sm font-medium mb-2">
+                            Custom Message
+                          </label>
+                          <div  className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black">
+                            {bookingData?.message}
+                          </div>
+                        </div>
                       </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-[#777] 2xl:text-base  text-sm font-medium mb-2">
-                        Start Time
-                      </label>
-                      <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black">
-                        {convertTo12Hour(bookingData?.startTime || "")}
+                    ):(
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 px-[15px]">
+                        <div>
+                          <label className="block text-[#777] 2xl:text-base text-sm font-medium mb-2">
+                            Date
+                          </label>
+                          <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black">
+                            {new Date(bookingData?.startDate)
+                              ?.toLocaleDateString("en-GB")
+                              ?.replace(/\//g, "-")}
+                          </div>
+                        </div>
+                        <div>
+                          <label className="block text-[#777] 2xl:text-base  text-sm font-medium mb-2">
+                            Start Time
+                          </label>
+                          <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black">
+                            {convertTo12Hour(bookingData?.startTime || "")}
+                          </div>
+                        </div>
+                        <div>
+                          <label className="block text-[#777] text-[16px] font-medium mb-2">
+                            End Time
+                          </label>
+                          <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black">
+                            {convertTo12Hour(bookingData?.endTime || "")}
+                          </div>
+                        </div>
+                        <div>
+                          <label className="block text-[#777] text-[16px] font-medium mb-2">
+                            No of Hours
+                          </label>
+                          <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black">
+                            {bookingData?.totalHours}
+                          </div>
+                        </div>
                       </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-[#777] text-[16px] font-medium mb-2">
-                        End Time
-                      </label>
-                      <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black">
-                        {convertTo12Hour(bookingData?.endTime || "")}
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-[#777] text-[16px] font-medium mb-2">
-                        No of Hours
-                      </label>
-                      <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black">
-                        {bookingData?.totalHours}
-                      </div>
-                    </div>
-                  </div>
+                    )
+                  }
                 </div>
               </div>
               <div className="lg:w-1/3 w-full lg:pl-[15px] pl-0">
@@ -298,7 +394,7 @@ const BookingDetail = ({ bookingId }) => {
                         {bookingData?.bookingPrice} INR
                       </span>
                     </div>
-                    {bookingData?.bookingStatus === "confirmed" && (
+                    {paymentDetails && (
                       <>
                         <div className="flex justify-between py-2 text-sm 2xl:text-base">
                           <span className="text-[#777]">Payment Method</span>

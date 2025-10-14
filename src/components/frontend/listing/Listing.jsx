@@ -16,6 +16,7 @@ import LongTermPopup from "./LongTermPopup";
 import RequestCallback from "./RequestCallback";
 import Auth from "../auth/Auth";
 import { useAuth } from "@/context/useAuth";
+import BottomBar from "../bottomBar/BottomBar";
 
 const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, locationName, spaceCategoryData, locationData, nearBySpacesData,listingData }) => {
   const {user} = useAuth();
@@ -669,9 +670,10 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
           </div>
         </div>
       </section>
+      <BottomBar type={type} city={city}/>
       {
         type == "longterm" && (
-          <div className="fixed bottom-0 left-0 w-full max-w-[790px] bg-white z-50">
+          <div className="fixed bottom-0 left-0 w-full max-w-[790px] bg-white z-40">
               <div className=" mx-auto flex md:flex-row flex-col gap-1 items-center justify-between px-7 py-3">
                   <div className="flex items-center gap-2">
                     <div>
@@ -706,9 +708,9 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
         />
       )}
       {
-        isLongTermPopupOpen && <LongTermPopup isOpen={isLongTermPopupOpen} setIsOpen={setIsLongTermPopupOpen} />
+        isLongTermPopupOpen && <LongTermPopup isOpen={isLongTermPopupOpen} setIsOpen={setIsLongTermPopupOpen} city={city} />
       }
-      {isOpen && <ExplorePopup isOpen={isOpen} setIsOpen={setIsOpen} selectedSpaceData={selectedSpaceData}/>}
+      {isOpen && <ExplorePopup isOpen={isOpen} setIsOpen={setIsOpen} selectedSpaceData={selectedSpaceData} type={type}/>}
       {isAuthOpen && <Auth isOpen={isAuthOpen} setIsOpen={setIsAuthOpen} />}
     </>
   );

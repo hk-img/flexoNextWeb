@@ -248,7 +248,7 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId,workingDays,spaceData,hos
                                 minDate={new Date()}
                                 filterDate={(date) => !isDisabledDate(date)} 
                                 placeholderText="Prefered View Date*"
-                                dateFormat="yyyy-MM-dd"
+                                dateFormat="dd-MM-yyyy"
                                 renderDayContents={(day, date) => {
                                   const title = getHolidayTitle(date);
                                   return (

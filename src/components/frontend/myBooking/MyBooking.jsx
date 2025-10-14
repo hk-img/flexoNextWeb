@@ -138,7 +138,7 @@ const MyBooking = () => {
                         startDate={date.startDate}
                         endDate={date.endDate}
                         selectsRange
-                        // minDate={new Date()}
+                        dateFormat="dd-MM-yyyy"
                         placeholderText="Start date — End date"
                         className="w-full h-12 px-3 focus:outline-none text-[#777] placeholder:text-[#777] text-sm font-semibold focus:ring-0 "
                       />

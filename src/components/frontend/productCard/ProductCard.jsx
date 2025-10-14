@@ -129,9 +129,7 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
                     } else {
                       url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
                     }
-                    const shareUrl = encodeURIComponent(
-                      `Checkout this space on FLEXO\n${process.env.NEXT_PUBLIC_WEBSITE_URL}${url}`
-                    );
+                    const shareUrl = `${process.env.NEXT_PUBLIC_WEBSITE_URL}${url}`
 
                     window.open(
                       `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
@@ -156,12 +154,10 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
                         url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
                       }
 
-                      const shareUrl = encodeURIComponent(
-                        `Checkout this space on FLEXO\n${process.env.NEXT_PUBLIC_WEBSITE_URL}${url}`
-                      );
+                      const shareUrl = `${process.env.NEXT_PUBLIC_WEBSITE_URL}${url}`;
 
                       window.open(
-                        `https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`,
+                        `https://www.linkedin.com/feed/?shareActive=false&url=${shareUrl}`,
                         "_blank"
                       );
                     }}

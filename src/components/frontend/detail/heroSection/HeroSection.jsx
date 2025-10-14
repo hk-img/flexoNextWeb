@@ -125,9 +125,7 @@ const HeroSection = ({ slug,isFavouriteSpace,spaceData,setIsAuthOpen }) => {
                 <div
                   onClick={() => {
                     const url = slug.join("/")
-                    const shareUrl = encodeURIComponent(
-                      `Checkout this space on FLEXO\n${process.env.NEXT_PUBLIC_WEBSITE_URL}/${url}`
-                    );
+                    const shareUrl = `${process.env.NEXT_PUBLIC_WEBSITE_URL}/${url}`
                     window.open(
                       `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
                       "_blank"
@@ -140,11 +138,9 @@ const HeroSection = ({ slug,isFavouriteSpace,spaceData,setIsAuthOpen }) => {
                 <div 
                   onClick={() => {
                     const url = slug.join("/")
-                    const shareUrl = encodeURIComponent(
-                      `Checkout this space on FLEXO\n${process.env.NEXT_PUBLIC_WEBSITE_URL}/${url}`
-                    );
+                    const shareUrl = `${process.env.NEXT_PUBLIC_WEBSITE_URL}/${url}`
                     window.open(
-                      `https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`,
+                      `https://www.linkedin.com/feed/?shareActive=false&url=${shareUrl}`,
                       "_blank"
                     );
                   }}
@@ -173,7 +169,7 @@ const HeroSection = ({ slug,isFavouriteSpace,spaceData,setIsAuthOpen }) => {
                     const message = encodeURIComponent(
                       `${process.env.NEXT_PUBLIC_WEBSITE_URL}/${url}`
                     );
-                    window.open(`https://instagram://share?text=${message}`, "_blank");
+                    window.open(`https://instagram.com?text=${message}`, "_blank");
                   }}
                   className="cursor-pointer bg-[radial-gradient(circle_at_30%_107%,_#fdf497_0%,_#fdf497_5%,_#fd5949_45%,#d6249f_60%,#285AEB_90%)] border w-[30px] h-[30px] flex items-center justify-center rounded-full shadow "
                 >

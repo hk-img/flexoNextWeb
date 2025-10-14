@@ -1,7 +1,6 @@
 import Detail from "@/components/frontend/detail/Detail";
 import { BASE_URL } from "@/services/ApiService";
 import {
-  convertSlugToCapitalLetter,
   convertSlugToSmallLetter,
   getTypeOfSpaceByWorkSpace,
 } from "@/services/Comman";

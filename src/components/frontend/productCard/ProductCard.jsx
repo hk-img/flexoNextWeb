@@ -5,7 +5,7 @@ import ImageWithFallback from "@/components/ImageWithFallback";
 import AboutText from "./AboutText";
 import { convertSlugToCapitalLetter, getTypeOfSpaceByWorkSpace, slugGenerator } from "@/services/Comman";
 import { fa } from "zod/v4/locales";
-import { postAPIAuthWithoutBearer } from "@/services/ApiService";
+import { postAPIAuthWithoutBearer, WEBSITE_BASE_URL } from "@/services/ApiService";
 import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/context/useAuth";
 import { toast } from "sonner";
@@ -129,7 +129,7 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
                     } else {
                       url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
                     }
-                    const shareUrl = `${process.env.NEXT_PUBLIC_WEBSITE_URL}${url}`
+                    const shareUrl = `${WEBSITE_BASE_URL}${url}`
 
                     window.open(
                       `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
@@ -154,7 +154,7 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
                         url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
                       }
 
-                      const shareUrl = `${process.env.NEXT_PUBLIC_WEBSITE_URL}${url}`;
+                      const shareUrl = `${WEBSITE_BASE_URL}${url}`;
 
                       window.open(
                         `https://www.linkedin.com/feed/?shareActive=false&url=${shareUrl}`,
@@ -178,7 +178,7 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
                       url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
                     }
                     const message = encodeURIComponent(
-                      `Checkout this space on FLEXO\n${process.env.NEXT_PUBLIC_WEBSITE_URL}${url}`
+                      `Checkout this space on FLEXO\n${WEBSITE_BASE_URL}${url}`
                     );
                     window.open(`https://web.whatsapp.com/send?text=${message}`, "_blank");
                   }}

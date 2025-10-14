@@ -1,12 +1,12 @@
 import Home from "@/components/frontend/home/Home";
-import { BASE_URL } from "@/services/ApiService";
+import { BASE_URL, WEBSITE_BASE_URL } from "@/services/ApiService";
 import React from "react";
 
 export const metadata = {
   title: 'Find Coworking & Office Spaces Across India | Flexo',
   description: "Discover top coworking spaces, managed offices, and commercial properties. Find your perfect office with Flexo. Trusted by leading companies - Flexo",
   alternates: {
-    canonical: process.env.NEXT_PUBLIC_WEBSITE_URL,
+    canonical: `${WEBSITE_BASE_URL}`,
   },
 };
 
@@ -31,8 +31,8 @@ const page = async () => {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Flexo",
-    "url": process.env.NEXT_PUBLIC_WEBSITE_URL,
-    "logo": `${process.env.NEXT_PUBLIC_WEBSITE_URL}/images/logo.webp`,
+    "url": `${WEBSITE_BASE_URL}`,
+    "logo": `${WEBSITE_BASE_URL}/images/logo.webp`,
     "contactPoint": {
       "@type": "ContactPoint",
       "telephone": "+91-9513392400",

@@ -469,7 +469,7 @@ const MyProfile = () => {
                 Profile Management
               </h2>
               <div className="mt-20">
-                <div className=" flex items-center justify-center">
+                <div className=" flex flex-col items-center justify-center">
                   <div className="relative">
                     <div className="w-[125px] h-[125px]">
                       <ImageWithFallback
@@ -484,8 +484,9 @@ const MyProfile = () => {
                         alt="User profile"
                         fallback="/images/user_image_profile.webp"
                       />
-                      {error && <p className="text-red-500 mt-2">{error}</p>}
+                     
                     </div>
+                    
                     {imageUploadLoading && (
                       <div className="absolute inset-0 flex items-center justify-center">
                         <div className="w-8 h-8 border-4 border-gray-300 border-t-[#f76900] rounded-full animate-spin"></div>
@@ -505,6 +506,7 @@ const MyProfile = () => {
                       <Svg name="camera" className=" text-white size-[18px] " />
                     </label>
                   </div>
+                   {error && <p className="text-[#dc3545] text-sm min-[1400px]:text-base">{error}</p>}
                 </div>
                 <div className="mt-[50px]">
                   <form

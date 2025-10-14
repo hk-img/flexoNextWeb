@@ -178,52 +178,70 @@ const Header = () => {
               <div className="py-2">
                 <ul>
                   <li>
-                    <Link
-                      href="/profile-management"
-                      className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
+                    <div
+                      onClick={()=>{
+                        setIsMenuOpen(false);
+                        router.push("/profile-management");
+                      }}
+                      className="cursor-pointer block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
                     >
                       My Profile
-                    </Link>
+                    </div>
                   </li>
                   <li>
-                    <Link
-                      href="/booking-management"
-                      className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
+                    <div
+                      onClick={()=>{
+                        setIsMenuOpen(false);
+                        router.push("/booking-management");
+                      }}
+                      className="cursor-pointer block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
                     >
                       My Bookings
-                    </Link>
+                    </div>
                   </li>
                   <li>
-                    <Link
-                      href="/booking-request-inquires"
-                      className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
+                    <div
+                      onClick={()=>{
+                        setIsMenuOpen(false);
+                        router.push("/booking-request-inquires");
+                      }}
+                      className="cursor-pointer block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
                     >
                       My Booking Requests
-                    </Link>
+                    </div>
                   </li>
                   <li>
-                    <Link
-                      href="/visit-scheduling"
-                      className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
+                    <div
+                      onClick={()=>{
+                        setIsMenuOpen(false);
+                        router.push("/visit-scheduling");
+                      }}
+                      className="cursor-pointer block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
                     >
                       My Visits
-                    </Link>
+                    </div>
                   </li>
                   <li>
-                    <Link
-                      href="/favourite-workspace"
-                      className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
+                    <div
+                      onClick={()=>{
+                        setIsMenuOpen(false);
+                        router.push("/favourite-workspace");
+                      }}
+                      className="cursor-pointer block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
                     >
                       My Favorites
-                    </Link>
+                    </div>
                   </li>
                   <li>
-                    <Link
-                      href="/workspace-review-rating-list"
-                      className="block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
+                    <div
+                      onClick={()=>{
+                        setIsMenuOpen(false);
+                        router.push("/workspace-review-rating-list");
+                      }}
+                      className="cursor-pointer block px-4 text-[15px] py-2 hover:bg-[#f76900] hover:text-white"
                     >
                       My Reviews
-                    </Link>
+                    </div>
                   </li>
                   <li>
                     <div

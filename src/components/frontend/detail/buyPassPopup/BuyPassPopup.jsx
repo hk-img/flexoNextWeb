@@ -1,5 +1,5 @@
 import Svg from "@/components/svg";
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,7 +9,7 @@ import { convertSlugToCapitalLetter } from "@/services/Comman";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { toast } from "sonner";
-import { postAPIAuth, postAPIAuthWithoutBearer } from "@/services/ApiService";
+import { postAPIAuthWithoutBearer } from "@/services/ApiService";
 import { useMutation } from "@tanstack/react-query";
 
 const schema = z.object({
@@ -27,7 +27,7 @@ const schema = z.object({
 });
 
 const BuyPassPopup = ({ setIsOpen, spaceData }) => {
-  const { user,token } = useAuth();
+  const { user, token } = useAuth();
   const [open, setOpen] = useState(false);
   const {
     register,
@@ -45,11 +45,12 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
       phoneNumber: "",
       company: "",
       dates: [],
-      guests: "",
+      guests: "1",
       message: "",
     },
   });
   const values = watch();
+  console.log({ values }, "Wefweft");
 
   useEffect(() => {
     if (user) {
@@ -61,9 +62,13 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
     }
   }, [user]);
 
-  const {mutate: submitMutate,isPending:isSubmitPending} = useMutation({
-    mutationFn: async(payload) => {
-      const res = await postAPIAuthWithoutBearer(`user/coworkingCreateBooking/${spaceData?.id}`, payload,token);
+  const { mutate: submitMutate, isPending: isSubmitPending } = useMutation({
+    mutationFn: async (payload) => {
+      const res = await postAPIAuthWithoutBearer(
+        `user/coworkingCreateBooking/${spaceData?.id}`,
+        payload,
+        token
+      );
       return res.data;
     },
     onSuccess: (data) => {
@@ -73,11 +78,11 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
     onError: (error) => {
       toast.error(error.message);
     },
-  })
+  });
   const onSubmit = (values) => {
-   const dates = values.dates.map((date) => {
+    const dates = values.dates.map((date) => {
       const d = new Date(date);
-      d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); 
+      d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
       return d.toISOString().split("T")[0];
     });
     const payload = {
@@ -91,10 +96,13 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
       estimateArrivalTime: "00.00",
       noOfGuest: values.guests,
       message: values?.message,
-      spaceLocation: spaceData?.location_name
-    }
+      spaceLocation: spaceData?.location_name,
+    };
     submitMutate(payload);
   };
+  const subtotal = values?.dates?.reduce((acc,item)=> acc + (spaceData?.originalPrice * values?.guests),0)
+  const gst = subtotal * 0.18;
+  const total = subtotal + gst;
   return (
     <div className="fixed inset-0 z-[99999] flex items-center justify-center animate-fadeIn p-4">
       <div
@@ -226,90 +234,95 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
                   </label>
                 </div>
                 <div className="relative">
-                <Controller
-                  name="dates"
-                  control={control}
-                  render={({ field }) => {
-                    const handleDateChange = (date) => {
-                      const current = field.value || [];
-                      const exists = current.find(
-                        (d) => d.toDateString() === date.toDateString()
-                      );
-
-                      let updatedDates;
-                      if (exists) {
-                        updatedDates = current.filter(
-                          (d) => d.toDateString() !== date.toDateString()
+                  <Controller
+                    name="dates"
+                    control={control}
+                    render={({ field }) => {
+                      const handleDateChange = (date) => {
+                        const current = field.value || [];
+                        const exists = current.find(
+                          (d) => d.toDateString() === date.toDateString()
                         );
-                      } else {
-                        updatedDates = [...current, date];
-                      }
 
-                      field.onChange(updatedDates);
+                        let updatedDates;
+                        if (exists) {
+                          updatedDates = current.filter(
+                            (d) => d.toDateString() !== date.toDateString()
+                          );
+                        } else {
+                          updatedDates = [...current, date];
+                        }
 
-                      // Close calendar after selection
-                      setOpen(false);
-                    };
+                        field.onChange(updatedDates);
 
-                    const removeDate = (dateToRemove) => {
-                      field.onChange(
-                        field.value.filter(
-                          (d) => d.toDateString() !== dateToRemove.toDateString()
-                        )
-                      );
-                    };
+                        // Close calendar after selection
+                        setOpen(false);
+                      };
 
-                    return (
-                      <>
-                        <input
-                          readOnly
-                          onClick={() => setOpen(true)}
-                          value={
-                            field.value.length > 0
-                              ? field.value.map((d) => d.toLocaleDateString("en-IN")).join(", ")
-                              : ""
-                          }
-                          placeholder="Select Dates"
-                          className="border rounded-md px-3 py-2 w-full"
-                        />
-                        <DatePicker
-                          selected={null}
-                          onChange={handleDateChange}
-                          highlightDates={field.value}
-                          open={open}
-                          onClickOutside={() => setOpen(false)}
-                          minDate={new Date()}
-                          calendarClassName="rounded-md border border-[#ddd] shadow-md"
-                        />
+                      const removeDate = (dateToRemove) => {
+                        field.onChange(
+                          field.value.filter(
+                            (d) =>
+                              d.toDateString() !== dateToRemove.toDateString()
+                          )
+                        );
+                      };
 
-                        {/* Selected Dates */}
-                        {field.value.length > 0 && (
-                          <div className="flex flex-wrap gap-2 mt-3">
-                            {field.value.map((d, i) => (
-                              <div
-                                key={i}
-                                className="flex items-center gap-2 bg-gray-100 border rounded-full px-3 py-1 text-sm text-gray-700"
-                              >
-                                {d.toLocaleDateString("en-IN")}
-                                <button
-                                  type="button"
-                                  onClick={() => removeDate(d)}
-                                  className="text-red-500 hover:text-red-700 font-bold"
+                      return (
+                        <>
+                          <input
+                            readOnly
+                            onClick={() => setOpen(true)}
+                            value={
+                              field.value.length > 0
+                                ? field.value
+                                    .map((d) => d.toLocaleDateString("en-IN"))
+                                    .join(", ")
+                                : ""
+                            }
+                            placeholder="Select Dates"
+                            className="border rounded-md px-3 py-2 w-full"
+                          />
+                          <DatePicker
+                            selected={null}
+                            onChange={handleDateChange}
+                            highlightDates={field.value}
+                            open={open}
+                            onClickOutside={() => setOpen(false)}
+                            minDate={new Date()}
+                            calendarClassName="rounded-md border border-[#ddd] shadow-md"
+                          />
+
+                          {/* Selected Dates */}
+                          {field.value.length > 0 && (
+                            <div className="flex flex-wrap gap-2 mt-3">
+                              {field.value.map((d, i) => (
+                                <div
+                                  key={i}
+                                  className="flex items-center gap-2 bg-gray-100 border rounded-full px-3 py-1 text-sm text-gray-700"
                                 >
-                                  ✕
-                                </button>
-                              </div>
-                            ))}
-                          </div>
-                        )}
+                                  {d.toLocaleDateString("en-IN")}
+                                  <button
+                                    type="button"
+                                    onClick={() => removeDate(d)}
+                                    className="text-red-500 hover:text-red-700 font-bold"
+                                  >
+                                    ✕
+                                  </button>
+                                </div>
+                              ))}
+                            </div>
+                          )}
 
-                        {errors.dates && (
-                          <p className="text-red-500 text-xs mt-1">{errors.dates.message}</p>
-                        )}
-                      </>
-                    );
-                  }}
-                />
+                          {errors.dates && (
+                            <p className="text-red-500 text-xs mt-1">
+                              {errors.dates.message}
+                            </p>
+                          )}
+                        </>
+                      );
+                    }}
+                  />
                 </div>
                 {/* Guests */}
                 <div className="relative">
@@ -319,8 +332,14 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
                     className="peer w-full border-b text-sm text-[#0000008a] border-[#ddd] focus:border-[#3f51b5] outline-none pt-2 pb-2 bg-transparent"
                   >
                     <option value="">No. of Guest*</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
+                    {Array?.from(
+                      { length: spaceData?.dayPassSeat },
+                      (_, index) => (
+                        <option key={index + 1} value={index + 1}>
+                          {index + 1}
+                        </option>
+                      )
+                    )}
                   </select>
                   {errors.guests && (
                     <p className="text-red-500 text-xs mt-1">
@@ -406,10 +425,41 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
                 </h4>
               </div>
               <div className="space-y-2">
+                {values?.dates?.map((item, index) => (
+                  <div
+                    key={index}
+                    className="flex justify-between border-b py-1 border-[#DBDBDB]"
+                  >
+                    <span className="text-sm 2xl:text-base">
+                      {new Date(item).toLocaleDateString("en-US", {
+                        weekday: "short",
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      })}
+                      , Guest {values?.guests} X
+                    </span>
+                    <p className="text-black 2xl:text-base text-sm">
+                      {" "}
+                      <Svg
+                        name="rupee"
+                        className="size-4 text-[#f76900] inline"
+                      />{" "}
+                      {spaceData?.originalPrice}
+                    </p>
+                    <span className="font-semibold">
+                      {values?.guests * spaceData?.originalPrice}{" "}
+                      <Svg
+                        name="rupee"
+                        className="size-[18px] text-[#f76900] inline"
+                      />
+                    </span>
+                  </div>
+                ))}
                 <div className="flex justify-between text-[#f76900] border-b py-1 border-[#DBDBDB]">
                   <span className="text-sm 2xl:text-base">Subtotal</span>
                   <span className="font-semibold">
-                    0.00{" "}
+                    {subtotal?.toFixed(2)} {" "}
                     <Svg
                       name="rupee"
                       className="size-[18px] text-[#f76900] inline"
@@ -419,7 +469,7 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
                 <div className="flex justify-between text-[#f76900]  border-b py-1 border-[#DBDBDB]">
                   <span className="text-sm 2xl:text-base">GST(18%)</span>
                   <span className="font-semibold">
-                    0.00{" "}
+                    {gst?.toFixed(2)}{" "}
                     <Svg
                       name="rupee"
                       className="size-[18px] text-[#f76900] inline"
@@ -429,7 +479,7 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
                 <div className="flex justify-between text-[#f76900] font-semibold">
                   <span>Payable Now</span>
                   <span className="font-semibold">
-                    0.00{" "}
+                    {total?.toFixed(2)}{" "}
                     <Svg
                       name="rupee"
                       className="size-[18px] text-[#f76900] inline"

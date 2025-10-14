@@ -237,7 +237,7 @@ const MyProfile = () => {
     state: "",
     city: "",
   });
-
+  const [error,setError] = useState("");
   const billingCountry = watch("billingCountry");
   const state = watch("state");
   const city = watch("city");
@@ -448,6 +448,15 @@ const MyProfile = () => {
       toast.error("Please select an image!");
       return;
     }
+    const maxSizeMB = 1; // 1 MB
+    const maxSizeBytes = maxSizeMB * 1024 * 1024;
+
+    if (file.size > maxSizeBytes) {
+      setError(`File size exceeds ${maxSizeMB} MB. Please select a smaller file`);
+      return;
+    }
+
+    setError("");
     imageUploadMutate(file);
   };
   return (
@@ -475,6 +484,7 @@ const MyProfile = () => {
                         alt="User profile"
                         fallback="/images/user_image_profile.webp"
                       />
+                      {error && <p className="text-red-500 mt-2">{error}</p>}
                     </div>
                     {imageUploadLoading && (
                       <div className="absolute inset-0 flex items-center justify-center">
@@ -488,7 +498,7 @@ const MyProfile = () => {
                       <input
                         type="file"
                         id="imageUpload"
-                        accept="image/*"
+                        accept=".jpg,.jpeg,.png" 
                         className="hidden"
                         onChange={handleImageUpload}
                       />
@@ -546,6 +556,11 @@ const MyProfile = () => {
                                   : "border-[#e0e0e0] focus:ring-indigo-200"
                               }`}
                             />
+                            {errors.lastName && (
+                              <p className="text-red-500 text-[10px] absolute -bottom-4">
+                                {errors.lastName.message}
+                              </p>
+                            )}
                           </div>
 
                           {/* Mobile */}

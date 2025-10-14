@@ -77,7 +77,7 @@ const MyVisit = () => {
                     </Link>
                     <div className="md:ml-[15px] space-y-[5px]">
                       <h2 className="2xl:text-xl text-lg font-semibold text-[#141414] underline">
-                        {item?.spaceName}
+                        {item?.visitSpaceType == "longTerm" ? item?.spaceDetails?.spaceTitle : item?.spaceName}
                       </h2>
                       <div className="text-[#141414] text-sm font-medium flex items-center space-x-1">
                         <span>

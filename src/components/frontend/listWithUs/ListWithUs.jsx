@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import Svg from '@/components/svg';
 import EmblaCarousel from "@/components/frontend/emblaCarousel/EmblaCarousel";
-import Banner from "@/components/frontend/home/Banner";
 import FaqSection from "@/components/frontend/home/FaqSection";
+import RequestCallback from '../home/RequestCallback';
 
 const ListWithUs = () => {
     const person = [
@@ -82,7 +82,7 @@ const ListWithUs = () => {
                 title="List Your Space and Grow Your Earnings"
                 className="absolute inset-0 w-full h-full lg:h-[484px] object-cover"
               />
-            <div className="container mx-auto md:px-0 px-[15px] flex justify-end">
+            <div className="container mx-auto px-[15px] flex justify-end">
               <div className='flex flex-wrap mx-[-15px] justify-end'>
                 <div className="lg:w-10/12 md:w-10/12 px-[15px] w-full">
                   <div className='w-full relative flex flex-col items-start text-white'>
@@ -116,9 +116,9 @@ const ListWithUs = () => {
         </section>
 
         <section className='chooseSpace w-full relative lg:pt-32 md:pt-12 pt-16 pb-10'>
-            <div className='container mx-auto md:px-0 px-[15px]'>
+            <div className='container mx-auto px-[15px]'>
               <div className='flex flex-col lg:flex-row items-center'>
-                <div className='lg:w-7/12 md:w-7/12 w-full flex flex-col'>
+                <div className='lg:w-7/12 md:w-7/12 w-full flex flex-col pe-[13px]'>
                   <div className='relative w-full rounded-lg lg:mt-0 mt-10'>
                       <img  src="/images/list-us.webp"
                           alt="List Your Space and Grow Your Earnings"
@@ -129,9 +129,9 @@ const ListWithUs = () => {
                   </div>
                 </div>
                 <div className='lg:w-5/12 md:w-5/12 w-full flex flex-col'>
-                    <div className='lg:relative lg:z-10 p-3 shadow-[0_0_3px_#bababa] bg-white rounded-md lg:-ml-20 border-2 border-dashed border-[#f76900] lg:mt-0 mt-6'>
+                    <div className='lg:relative lg:z-10 p-3 shadow-[0_0_3px_#bababa] bg-white rounded-md lg:-ml-16 border-2 border-dashed border-[#f76900] lg:mt-0 mt-6'>
                         <h2 className='font-normal text-2xl/10'>Join India's Premier Space Marketplace! </h2>
-                        <p className='text-sm/normal font-normal text-[#777]'>Join hundreds of hosts with 1,800+ listings from 20+ cities across India and start monetizing your space today. Whether you have a coworking space, office for lease, meeting room, studio, event venue or activity space, Flexo helps you connect with businesses and professionals actively looking for the perfect workspace. </p>
+                        <p className='text-sm/normal min-[1400px]:text-base font-normal text-[#777]'>Join hundreds of hosts with 1,800+ listings from 20+ cities across India and start monetizing your space today. Whether you have a coworking space, office for lease, meeting room, studio, event venue or activity space, Flexo helps you connect with businesses and professionals actively looking for the perfect workspace. </p>
                     </div>
                 </div>
               </div>
@@ -139,7 +139,7 @@ const ListWithUs = () => {
         </section>
         
         <section className='w-full relative py-10'>
-          <div className='container mx-auto md:px-0 px-[15px]'>
+          <div className='container mx-auto px-[15px]'>
               <div className='w-full flex flex-col mx-auto px-6 mb-[15px]'>
                 <h2 className='md:text-[32px] text-2xl font-medium text-center text-[#333]'>
                   How It Works
@@ -148,18 +148,18 @@ const ListWithUs = () => {
               <div className='flex lg:flex-row flex-col h-full lg:gap-x-[30px] lg:pt-8 pt-6'>
                 <div className='lg:w-1/3 relative p-6 flex flex-col shadow-[0_0_3px_#8b8b8b] rounded-md overflow-hidden h-auto lg:mb-0 mb-6 before:absolute before:left-[-1px] before:top-[-1px] before:h-[48px] before:border-[3px] before:border-[#f76900] before:rounded-[30px] after:absolute after:right-[-1px] after:bottom-[-1px] after:h-[48px] after:border-[3px] after:border-[#f76900] after:rounded-[30px]  transition-all duration-500 md:hover:-translate-y-[10px]'>
                   <div className='count mb-2'><span className='rounded-full bg-white shadow-[0_0_3px_#f76900] w-10 h-10 flex justify-center items-center text-[18px] font-medium text-[#f76900] border-2 border-[#f76900]'>01</span></div>
-                  <h5 className='text-base/relaxed text-[#f76900] font-medium'>Sign Up and Create Your Listing</h5>
-                  <p className='text-[#777] text-sm/normal'>Provide key details like location, size, amenities, and usage categories. Upload high-quality photos to showcase your space.</p>
+                  <h5 className='text-base/relaxed min-[1400px]:text-lg text-[#f76900] font-medium'>Sign Up and Create Your Listing</h5>
+                  <p className='text-[#777] text-sm/normal min-[1400px]:text-base'>Provide key details like location, size, amenities, and usage categories. Upload high-quality photos to showcase your space.</p>
                 </div>
                 <div className='lg:w-1/3 relative p-6 flex flex-col shadow-[0_0_3px_#8b8b8b] rounded-md overflow-hidden h-auto lg:mb-0 mb-6 before:absolute before:left-[-1px] before:top-[-1px] before:h-[48px] before:border-[3px] before:border-[#f76900] before:rounded-[30px] after:absolute after:right-[-1px] after:bottom-[-1px] after:h-[48px] after:border-[3px] after:border-[#f76900] after:rounded-[30px] transition-all duration-500 md:hover:-translate-y-[10px]'>
                   <div className='count mb-2'><span className='rounded-full bg-white shadow-[0_0_3px_#f76900] w-10 h-10 flex justify-center items-center text-[18px] font-medium text-[#f76900] border-2 border-[#f76900]'>02</span></div>
-                  <h5 className='text-base/relaxed text-[#f76900] font-medium'>Set Your Preferences</h5>
-                  <p className='text-[#777] text-sm/normal'>Choose how you want to rent your space and set your pricing. Offer hourly, daily, or long-term leases based on what works best for your business.</p>
+                  <h5 className='text-base/relaxed min-[1400px]:text-lg text-[#f76900] font-medium'>Set Your Preferences</h5>
+                  <p className='text-[#777] text-sm/normal min-[1400px]:text-base'>Choose how you want to rent your space and set your pricing. Offer hourly, daily, or long-term leases based on what works best for your business.</p>
                 </div>
                 <div className='lg:w-1/3 relative p-6 flex flex-col shadow-[0_0_3px_#8b8b8b] rounded-md overflow-hidden h-auto lg:mb-0 mb-6 before:absolute before:left-[-1px] before:top-[-1px] before:h-[48px] before:border-[3px] before:border-[#f76900] before:rounded-[30px] after:absolute after:right-[-1px] after:bottom-[-1px] after:h-[48px] after:border-[3px] after:border-[#f76900] after:rounded-[30px] transition-all duration-500 md:hover:-translate-y-[10px]'>
                   <div className='count mb-2'><span className='rounded-full bg-white shadow-[0_0_3px_#f76900] w-10 h-10 flex justify-center items-center text-[18px] font-medium text-[#f76900] border-2 border-[#f76900]'>03</span></div>
-                  <h5 className='text-base/relaxed text-[#f76900] font-medium'>Start Earning</h5>
-                  <p className='text-[#777] text-sm/normal'>Go live on the platform, receive inquiries and bookings, and effortlessly manage everything from your dashboard.</p>
+                  <h5 className='text-base/relaxed min-[1400px]:text-lg text-[#f76900] font-medium'>Start Earning</h5>
+                  <p className='text-[#777] text-sm/normal min-[1400px]:text-base'>Go live on the platform, receive inquiries and bookings, and effortlessly manage everything from your dashboard.</p>
                 </div>
               </div>
           </div>
@@ -177,7 +177,7 @@ const ListWithUs = () => {
             <div className="mt-10 flex lg:flex-row gap-[6px] md:[&_.emblaarrows]:-left-9 md:[&_.emblaarrows]:-right-9 [&_.emblaarrows]:-left-6 [&_.emblaarrows]:-right-6 [&_.emblaarrows_button]:w-10 [&_.emblaarrows_button]:h-10 [&_.emblaarrows_button_Svg]:size-[18px]">
               <div className="w-full px-[15px]">
                 <EmblaCarousel
-                  options={{ loop: true, autoplay: false, showButton: true, align: "start" }}
+                  options={{ loop: true, autoplay: true, showButton: true, align: "start" }}
                 >
                   {coworkingSpaces.map((space, idx) => (
                   <div
@@ -210,7 +210,7 @@ const ListWithUs = () => {
           </div>
         </section>
 
-        <section className='w-full relative'>
+        <section className='w-full relative py-10'>
           <div className='container mx-auto md:px-0 px-[15px]'>
               <div className='w-full flex flex-col mx-auto px-6'>
                 <h2 className='md:text-[32px] text-2xl font-medium text-center text-[#333]'>
@@ -297,7 +297,7 @@ const ListWithUs = () => {
           </div>
         </section>
 
-        <Banner heading="Get Tailored Office Space Solutions for Your Business Needs" img="/images/ready-to-move.webp" desc="Our workspace experts will get in touch to help you with your requirements." btnText="REQUEST CALLBACK" btnLink="#"/>
+        <RequestCallback/>
 
         <FaqSection />
 

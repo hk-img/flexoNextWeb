@@ -24,7 +24,7 @@ import React from 'react'
                 </div>
                 <div>
                     <h3 className="font-medium text-[#141414] text-base leading-[1.6] xl:pb-px ">Space shortlisting</h3>
-                    <p className="text-[#777] text-sm leading-[1.5]">
+                    <p className="text-[#777] min-[1400px]:text-base text-sm leading-[1.5]">
                     We find the perfect office that suits your needs and budget.
                     </p>
                 </div>

@@ -5,7 +5,7 @@ import React from 'react'
 
 const Banner = () => {
   return (
-    <section className="relative w-full py-15 lg:h-[343px] h-full flex items-center justify-center overflow-hidden">
+    <section className="relative w-full py-22.5 h-full flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
         <Image
           width={1520}
@@ -13,12 +13,12 @@ const Banner = () => {
           src="/images/become-a-host.webp"
           alt="Handshake background"
           title="Handshake background"
-          className="w-full h-full object-cover aspect:[1024 / 259]"
+          className="w-full h-full object-cover aspect-[1024/259]"
         />
         <div className="absolute inset-0 bg-[#00000061]"></div>
       </div>
 
-      <div className="relative container z-10 text-center px-[15px]">
+      <div className="relative container z-10 text-center p-[15px]">
         <h2 className="text-white text-[22px] md:text-[26px] font-medium mb-2 leading-[1.6]">
           List Your Space and Earn with Flexo
         </h2>

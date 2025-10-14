@@ -28,9 +28,9 @@ const FaqSection = () => {
             <h2 className="text-2xl md:text-[32px] font-medium lg:mb-10 sm:mb-16 mb-8 leading-[1.2] text-center text-[#333]">
                Frequently Asked Question
             </h2>
-            <div className="divide-y divide-gray-200">
+            <div className="divide-y divide-gray-200 space-y-[9px]">
             {faqs.map((faq, index) => (
-                <div key={index} className="md:px-5 py-5 px-2">
+                <div key={index} className="md:px-5 py-[13px] px-2">
                     <button
                         onClick={() => toggleFAQ(index)}
                         className="flex items-center justify-between w-full text-left text-base font-medium text-[#141414]"

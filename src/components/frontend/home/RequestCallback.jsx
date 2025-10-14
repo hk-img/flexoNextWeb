@@ -24,7 +24,7 @@ const RequestCallback = () => {
             <p className="text-white/90 text-lg leading-[1.5]">
               Our workspace experts will get in touch to help you with your requirements.
             </p>
-            <Link href="/contact" className="inline-block bg-[#f76900] mt-6 tracking-[1px]  text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:px-7.5 px-5 md:py-[15px] py-[10px] rounded-[15px] font-semibold duration-500 transition uppercase">
+            <Link href="/contact" className="inline-block bg-[#f76900] mt-6 tracking-[1px] min-[1400px]:text-base  text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:px-7.5 px-5 md:py-[15px] py-[10px] rounded-[15px] font-semibold duration-500 transition uppercase">
               Request Callback
             </Link>
           </div>

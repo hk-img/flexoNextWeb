@@ -43,23 +43,24 @@ const DualRangeSlider = ({ min, max, step, values, onChange }) => {
 
       {/* inputs */}
      <input
-  type="range"
-  min={min}
-  max={max}
-  step={step}
-  value={minValue}
-  onChange={handleMinChange}
-  className="
-    absolute top-[34px] w-full h-2 bg-transparent appearance-none pointer-events-none
-    [&::-webkit-slider-thumb]:appearance-none
-    [&::-webkit-slider-thumb]:w-8 [&::-webkit-slider-thumb]:h-8
-    [&::-webkit-slider-thumb]:rounded-full
-    [&::-webkit-slider-thumb]:bg-[#f76900]
-    [&::-webkit-slider-thumb]:cursor-pointer
-    [&::-webkit-slider-thumb]:pointer-events-auto
-    [&::-webkit-slider-thumb]:bg-[radial-gradient(circle,white_4px,transparent_3px)]
-  "
-/>
+        type="range"
+        min={min}
+        max={max}
+        step={step}
+        value={minValue}
+        onChange={handleMinChange}
+        className="
+          absolute top-[34px] w-full h-2 bg-transparent appearance-none pointer-events-none
+          [&::-webkit-slider-thumb]:appearance-none
+          [&::-webkit-slider-thumb]:w-8 [&::-webkit-slider-thumb]:h-8
+          [&::-webkit-slider-thumb]:rounded-full
+          [&::-webkit-slider-thumb]:bg-[#f76900]
+          [&::-webkit-slider-thumb]:cursor-pointer
+          [&::-webkit-slider-thumb]:pointer-events-auto
+          [&::-webkit-slider-thumb]:relative
+          [&::-webkit-slider-thumb]:bg-[radial-gradient(circle,white_4px,transparent_3px)] [&::-webkit-slider-thumb]:z-50
+        "
+      />
 
       <input
         type="range"
@@ -68,7 +69,7 @@ const DualRangeSlider = ({ min, max, step, values, onChange }) => {
         step={step}
         value={maxValue}
         onChange={handleMaxChange}
-        className="absolute top-[34px] w-full h-2 bg-transparent appearance-none pointer-events-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-8 [&::-webkit-slider-thumb]:h-8 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#f76900] [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:bg-[radial-gradient(circle,white_4px,transparent_3px)]"
+        className="absolute top-[34px] w-full h-2 bg-transparent appearance-none pointer-events-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-8 [&::-webkit-slider-thumb]:h-8 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#f76900] [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:bg-[radial-gradient(circle,white_4px,transparent_3px)] [&::-webkit-slider-thumb]:z-10 [&::-webkit-slider-thumb]:relative"
       />
     </div>
   );

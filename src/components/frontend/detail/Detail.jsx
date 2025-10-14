@@ -561,6 +561,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                                 onClick={() => {
                                   setIsOpen(true);
                                   setSelectedSpaceData(spaceData)
+                                  setSelectedSpaceType("Private Office");
                                 }}
                                 className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out"
                               >
@@ -605,6 +606,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                                 onClick={() => {
                                   setIsOpen(true);
                                   setSelectedSpaceData(spaceData)
+                                  setSelectedSpaceType("Managed Office");
                                 }}
                                 className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out"
                               >
@@ -649,6 +651,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                                 onClick={() => {
                                   setIsOpen(true);
                                   setSelectedSpaceData(spaceData)
+                                  setSelectedSpaceType("Dedicated Desk");
                                 }}
                                 className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out"
                               >
@@ -693,6 +696,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                                 onClick={() => {
                                   setIsOpen(true);
                                   setSelectedSpaceData(spaceData)
+                                  setSelectedSpaceType("Flexible Desk");
                                 }}
                                 className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out"
                               >
@@ -737,6 +741,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                                 onClick={() => {
                                   setIsOpen(true);
                                   setSelectedSpaceData(spaceData)
+                                  setSelectedSpaceType("Virtual Office");
                                 }}
                                 className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out"
                               >
@@ -1059,6 +1064,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                       onClick={() => {
                           setIsOpen(true);
                           setSelectedSpaceData(spaceData);
+                          setSelectedSpaceType("");
                         }
                       }
                       className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]"
@@ -1189,7 +1195,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
         )
       }
       <BottomBar type={type} city={spaceData?.contact_city_name}/>
-      {isOpen && <ExplorePopup isOpen={isOpen} setIsOpen={setIsOpen} selectedSpaceData={selectedSpaceData} type={type}/>}
+      {isOpen && <ExplorePopup isOpen={isOpen} setIsOpen={setIsOpen} selectedSpaceData={selectedSpaceData} type={type} selectedSpaceType={selectedSpaceType}/>}
       {isAuthOpen && <Auth isOpen={isAuthOpen} setIsOpen={setIsAuthOpen} />}
       {isScheduleVisitOpen &&<ScheduleVisitPopup isOpen={isScheduleVisitOpen} setIsOpen={setIsScheduleVisitOpen} type={type} spaceId={spaceData?.id} workingDays={spaceData?.working_time} spaceData={spaceData} hostHolidays={spaceDeatil?.hostHolidays}/>}
       {isBuyPassOpen && <BuyPassPopup isOpen={isBuyPassOpen} setIsOpen={setIsBuyPassOpen}/>}

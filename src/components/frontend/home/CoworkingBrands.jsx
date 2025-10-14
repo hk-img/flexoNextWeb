@@ -40,29 +40,22 @@ const CoworkingBrands = () => {
             >
               <div className="grid grid-rows-2 gap-2">
                 {logos.map((logo, index) => (
-                  <a
-                    href="#"
+                  <div
                     key={index}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title={logo.name}
+                    className="group relative rounded-md overflow-hidden border-b-3 border-[#ffdbc0] 
+                    md:py-6 md:px-12 py-4 px-6 bg-[#fafafa] cursor-pointer flex items-center justify-center 
+                    md:hover:shadow-[5px_5px_20px_#0000001a] transition-all duration-500 ease-in-out"
                   >
-                    <div
-                      className="group relative rounded-md overflow-hidden border-b-3 border-[#ffdbc0] 
-                      md:py-6 md:px-12 py-4 px-6 bg-[#fafafa] cursor-pointer flex items-center justify-center 
-                      md:hover:shadow-[5px_5px_20px_#0000001a] transition-all duration-500 ease-in-out"
-                    >
-                      <Image
-                        width={144}
-                        height={40}
-                        src={logo.src}
-                        alt={`${logo.name} Logo`}
-                        title={logo.name}
-                        className="h-10 object-contain transition-transform duration-500 ease-in-out md:group-hover:scale-110"
-                        loading="lazy"
-                      />
-                    </div>
-                  </a>
+                    <Image
+                      width={144}
+                      height={40}
+                      src={logo.src}
+                      alt={`${logo.name} Logo`}
+                      title={logo.name}
+                      className="h-10 w-full object-contain transition-transform duration-500 ease-in-out md:group-hover:scale-110"
+                      loading="lazy"
+                    />
+                  </div>
                 ))}
               </div>
             </div>

@@ -59,7 +59,7 @@ const WhyChooseUs = () => {
                             </p>
                         </div>
 
-                         <div className="bg-[#0000002b] backdrop-blur-[6px] rounded-lg p-6 shadow-[0_0_3px_#f7f7f7] text-center text-white hover:translate-y-[-10px] transition duration-500 ease-in-out">
+                         <div className="bg-[#0000002b] backdrop-blur-[6px] md:mb-5.5 rounded-lg p-6 shadow-[0_0_3px_#f7f7f7] text-center text-white hover:translate-y-[-10px] transition duration-500 ease-in-out">
                             <div className="mb-2 flex items-center justify-center">
                                 <Svg name="largestCoverage" className="size-14 text-white"/>
                             </div>
@@ -68,7 +68,7 @@ const WhyChooseUs = () => {
                                 Access 1800+ coworking spaces across India with Flexo's extensive network.
                             </p>
                         </div>
-                         <div className="bg-[#0000002b] backdrop-blur-[6px] rounded-lg p-6 shadow-[0_0_3px_#f7f7f7] text-center text-white hover:translate-y-[-10px] transition duration-500 ease-in-out">
+                         <div className="bg-[#0000002b] backdrop-blur-[6px] md:mb-5.5 rounded-lg p-6 shadow-[0_0_3px_#f7f7f7] text-center text-white hover:translate-y-[-10px] transition duration-500 ease-in-out">
                             <div className="mb-2 flex items-center justify-center">
                                 <Svg name="dedicatedAdvisor" className="size-14 text-white"/>
                             </div>

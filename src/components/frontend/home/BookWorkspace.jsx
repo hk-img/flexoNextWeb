@@ -29,7 +29,7 @@ const BookWorkspace = () => {
                       <h6 className="font-medium leading-[1.6] text-base text-[#f76900]">
                         Share Your Requirements
                       </h6>
-                      <p className="text-[#777] leading-[1.5]  text-sm">
+                      <p className="text-[#777] leading-[1.5] min-[1400]:text-base text-sm">
                         Tell us your needs and a dedicated advisor will handle
                         the rest.
                       </p>
@@ -46,7 +46,7 @@ const BookWorkspace = () => {
                       <h6 className="font-medium leading-[1.6] text-base text-[#f76900]">
                         Get Space Options and Personalised Tours
                       </h6>
-                      <p className="text-[#777] leading-[1.5]  text-sm">
+                      <p className="text-[#777] leading-[1.5] min-[1400]:text-base text-sm">
                         Shortlist and take guided tours of your favorite
                         options.
                       </p>
@@ -62,7 +62,7 @@ const BookWorkspace = () => {
                       <h6 className="font-medium leading-[1.6] text-base text-[#f76900]">
                         We Negotiate, You Save
                       </h6>
-                      <p className="text-[#777] leading-[1.5]  text-sm">
+                      <p className="text-[#777] leading-[1.5] min-[1400]:text-base text-sm">
                         We leverage our relationships to help you secure the
                         best terms.
                       </p>
@@ -79,7 +79,7 @@ const BookWorkspace = () => {
                       <h6 className="font-medium leading-[1.6] text-base text-[#f76900]">
                         Move-In Quickly and Get To Work
                       </h6>
-                      <p className="text-[#777] leading-[1.5]  text-sm">
+                      <p className="text-[#777] leading-[1.5] min-[1400]:text-base text-sm">
                         Finalize the agreement and move-in, hassle-free.
                       </p>
                     </div>

@@ -17,6 +17,7 @@ import {
 } from "@/services/ApiService";
 import dynamic from "next/dynamic";
 import { toast } from "sonner";
+import ImageWithFallback from "@/components/ImageWithFallback";
 const Select = dynamic(() => import("react-select"), { ssr: false });
 
 const DropdownIndicator = (props) => {
@@ -462,7 +463,7 @@ const MyProfile = () => {
                 <div className=" flex items-center justify-center">
                   <div className="relative">
                     <div className="w-[125px] h-[125px]">
-                      <Image
+                      <ImageWithFallback
                         width={125}
                         height={125}
                         className="w-full h-full rounded-full"
@@ -471,7 +472,8 @@ const MyProfile = () => {
                             ? profileImage
                             : "/images/user_image_profile.webp"
                         }
-                        alt=""
+                        alt="User profile"
+                        fallback="/images/user_image_profile.webp"
                       />
                     </div>
                     {imageUploadLoading && (

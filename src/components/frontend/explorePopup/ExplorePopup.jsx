@@ -9,6 +9,9 @@ import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getApi, postAPI } from "@/services/ApiService";
 import { toast } from "sonner";
+import {
+  convertSlugToSmallLetter,
+} from "@/services/Comman";
 
 const schema = z
   .object({
@@ -22,8 +25,8 @@ const schema = z
       })
       .nullable()
       .optional(),
-    // city: z.string().min(1, "Select city"),
-    seats: z.string().min(1, "Seats required"),
+    city: z.string().min(1, "City is required"),
+    seats: z.string().min(1, "Seats is required"),
   })
   .superRefine((data, ctx) => {
     if (!data.mobile) {
@@ -57,7 +60,7 @@ const schemaForProductCard = z
       .nullable()
       .optional(),
     spaceType: z.string().min(1, "Space Type is required"),
-    seats: z.string().min(1, "Seats required"),
+    seats: z.string().min(1, "Seats is required"),
   })
   .superRefine((data, ctx) => {
     if (!data.mobile) {
@@ -78,9 +81,51 @@ const schemaForProductCard = z
       }
     }
   });
-const ExplorePopup = ({ isOpen, setIsOpen, selectedSpaceData = null }) => {
-  console.log({ selectedSpaceData });
-  const selectedSchema = selectedSpaceData?.id ? schema : schemaForProductCard;
+const schemaForCity = z
+  .object({
+    firstName: z.string().min(1, "First name is required"),
+    lastName: z.string().min(1, "Last name is required"),
+    email: z.string().email("Enter a valid email").min(1, "Email is required"),
+    mobile: z.string().min(1, "Mobile Number is required"),
+    country: z
+      .object({
+        dialCode: z.union([z.string(), z.number()]).optional(),
+      })
+      .nullable()
+      .optional(),
+  })
+  .superRefine((data, ctx) => {
+    if (!data.mobile) {
+      ctx.addIssue({
+        path: ["mobile"],
+        message: "Mobile number is required",
+        code: z.ZodIssueCode.custom,
+      });
+    } else {
+      const code = data.country?.dialCode ?? "";
+      const numeric = data.mobile.replace(/\D/g, "");
+      if (numeric.length <= code.length) {
+        ctx.addIssue({
+          path: ["mobile"],
+          message: "Mobile number is required",
+          code: z.ZodIssueCode.custom,
+        });
+      }
+    }
+  });
+const ExplorePopup = ({
+  isOpen,
+  setIsOpen,
+  selectedSpaceData = null,
+  cityName = "",
+  type = "",
+}) => {
+  console.log({ selectedSpaceData,cityName });
+  const selectedSchema = (type == "longterm")
+    ? schemaForCity
+    : (Object.values(selectedSpaceData || {})?.length > 0)
+    ? schemaForProductCard
+    : schema;
   const { user } = useAuth();
   const [successScreen, setSuccessScreen] = useState(false);
   const {
@@ -123,10 +168,7 @@ const ExplorePopup = ({ isOpen, setIsOpen, selectedSpaceData = null }) => {
       );
       setValue("country", { dialCode: user?.phone_code || "91" });
     }
-    if(selectedSpaceData){
-      setValue("city", selectedSpaceData?.contact_city_name || "");
-    }
-  }, [user,selectedSpaceData]);
+  }, [user]);
 
   const { mutate: submitMutate, isPending: submitLoading } = useMutation({
     mutationFn: async (payload) => {
@@ -146,24 +188,35 @@ const ExplorePopup = ({ isOpen, setIsOpen, selectedSpaceData = null }) => {
   });
 
   const onSubmit = (values) => {
+    console.log({ values }, "Rtyhrthyt");
     const country_code = values.country ? `+${values.country.dialCode}` : "";
     const dialCode = values.country ? values.country.dialCode : "";
     const mobile = values.mobile.replace(dialCode, "").replace(/^\+/, "");
+    const city = values?.city;
+    const smallLetterCity = convertSlugToSmallLetter(
+      city || ""
+    );
+    const typeWithFirstLetterCapital = type?.charAt(0)?.toUpperCase() + type?.slice(1);
     let payload = {
       firstName: values?.firstName,
       lastName: values?.lastName,
       userEmail: values?.email,
       phone_code: country_code,
       userMobile: mobile,
-      city: [values?.city],
+      city: [smallLetterCity],
       inquirySpaceCapacity: values?.seats,
-      type: "longTerm",
+      type: typeWithFirstLetterCapital || "Longterm",
       userId: user?.id || 0,
     };
-    if(selectedSpaceData){
-      payload.type = "";
-      payload.spaceId = selectedSpaceData?.id;
+    if (Object?.values(selectedSpaceData || {})?.length > 0) {
+      const smallLetterCity = convertSlugToSmallLetter(
+        selectedSpaceData?.contact_city_name || cityName
+      );
+      payload.city = [smallLetterCity];
       payload.spaceType = values?.spaceType;
+    }
+    if(selectedSpaceData?.id){
+      payload.spaceId = selectedSpaceData?.id
     }
     submitMutate(payload);
   };
@@ -335,16 +388,16 @@ const ExplorePopup = ({ isOpen, setIsOpen, selectedSpaceData = null }) => {
                   </p>
                 )}
               </div>
-
-              {/* City */}
-              {selectedSpaceData?.id ? (
-                <div className="relative">
-                  <label className="block text-sm font-semibold mb-1">
-                    Space Type<span className="text-[#dc3545]">*</span>
-                  </label>
-                  <select
-                    {...register("spaceType")}
-                    className={`w-full rounded-sm border-2 px-2 tracking-normal py-2.5
+              {(!cityName || type !== "longterm") && (
+                <>
+                  {Object?.values(selectedSpaceData || {})?.length > 0 ? (
+                    <div className="relative">
+                      <label className="block text-sm font-semibold mb-1">
+                        Space Type<span className="text-[#dc3545]">*</span>
+                      </label>
+                      <select
+                        {...register("spaceType")}
+                        className={`w-full rounded-sm border-2 px-2 tracking-normal py-2.5
                             border-[#dbdbdb] h-[45px] text-sm font-semibold font-roboto
                             ${
                               errors.spaceType
@@ -352,39 +405,39 @@ const ExplorePopup = ({ isOpen, setIsOpen, selectedSpaceData = null }) => {
                                 : "hover:border-black focus:border-[#3f51b5] active:border-[#3f51b5]"
                             }
                           `}
-                  >
-                    <option value="">Select Space Type</option>
-                    {selectedSpaceData?.privatecabin_price > 0 && (
-                      <option value="Private Office">Private Office</option>
-                    )}
-                    {selectedSpaceData?.manage_office_price > 0 && (
-                      <option value="Managed Office">Managed Office</option>
-                    )}
-                    {selectedSpaceData?.desks_price > 0 && (
-                      <option value="Dedicated Desk">Dedicated Desk</option>
-                    )}
-                    {selectedSpaceData?.flexible_desk_price > 0 && (
-                      <option value="Flexible Desk">Flexible Desk</option>
-                    )}
-                    {selectedSpaceData?.virtual_office_price > 0 && (
-                      <option value="Virtual Office">Virtual Office</option>
-                    )}
-                    <option value="Not Sure">Not Sure</option>
-                  </select>
-                  {errors.spaceType && (
-                    <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
-                      {errors.spaceType.message}
-                    </p>
-                  )}
-                </div>
-              ) : (
-                <div className="relative">
-                  <label className="block text-sm font-semibold mb-1">
-                    City<span className="text-[#dc3545]">*</span>
-                  </label>
-                  <select
-                    {...register("city")}
-                    className={`w-full rounded-sm border-2 px-2 tracking-normal py-2.5
+                      >
+                        <option value="">Select Space Type</option>
+                        {selectedSpaceData?.privatecabin_price > 0 && (
+                          <option value="Private Office">Private Office</option>
+                        )}
+                        {selectedSpaceData?.manage_office_price > 0 && (
+                          <option value="Managed Office">Managed Office</option>
+                        )}
+                        {selectedSpaceData?.desks_price > 0 && (
+                          <option value="Dedicated Desk">Dedicated Desk</option>
+                        )}
+                        {selectedSpaceData?.flexible_desk_price > 0 && (
+                          <option value="Flexible Desk">Flexible Desk</option>
+                        )}
+                        {selectedSpaceData?.virtual_office_price > 0 && (
+                          <option value="Virtual Office">Virtual Office</option>
+                        )}
+                        <option value="Not Sure">Not Sure</option>
+                      </select>
+                      {errors.spaceType && (
+                        <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
+                          {errors.spaceType.message}
+                        </p>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="relative">
+                      <label className="block text-sm font-semibold mb-1">
+                        City<span className="text-[#dc3545]">*</span>
+                      </label>
+                      <select
+                        {...register("city")}
+                        className={`w-full rounded-sm border-2 px-2 tracking-normal py-2.5
                             border-[#dbdbdb] h-[45px] text-sm font-semibold font-roboto
                             ${
                               errors.city
@@ -392,30 +445,28 @@ const ExplorePopup = ({ isOpen, setIsOpen, selectedSpaceData = null }) => {
                                 : "hover:border-black focus:border-[#3f51b5] active:border-[#3f51b5]"
                             }
                           `}
-                  >
-                    <option value="">Select City</option>
-                    {cityData?.map((item) => (
-                      <option key={item.id} value={item.name}>
-                        {item.name}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.city && (
-                    <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
-                      {errors.city.message}
-                    </p>
+                      >
+                        <option value="">Select City</option>
+                        {cityData?.map((item) => (
+                          <option key={item.id} value={item.name}>
+                            {item.name}
+                          </option>
+                        ))}
+                      </select>
+                      {errors.city && (
+                        <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
+                          {errors.city.message}
+                        </p>
+                      )}
+                    </div>
                   )}
-                </div>
-              )}
-
-              {/* Seats */}
-              <div className="relative">
-                <label className="block text-sm font-semibold mb-1">
-                  No. of Seats<span className="text-[#dc3545]">*</span>
-                </label>
-                <select
-                  {...register("seats")}
-                  className={`w-full rounded-sm border-2 px-2 tracking-normal py-2.5
+                  <div className="relative">
+                    <label className="block text-sm font-semibold mb-1">
+                      No. of Seats<span className="text-[#dc3545]">*</span>
+                    </label>
+                    <select
+                      {...register("seats")}
+                      className={`w-full rounded-sm border-2 px-2 tracking-normal py-2.5
                             border-[#dbdbdb] h-[45px] text-sm font-semibold font-roboto
                             ${
                               errors.seats
@@ -423,21 +474,23 @@ const ExplorePopup = ({ isOpen, setIsOpen, selectedSpaceData = null }) => {
                                 : "hover:border-black focus:border-[#3f51b5] active:border-[#3f51b5]"
                             }
                           `}
-                >
-                  <option value="">Select No. of Seats</option>
-                  <option value="1-5">1–5</option>
-                  <option value="6-10">6–10</option>
-                  <option value="11-20">11-20</option>
-                  <option value="21-50">21-50</option>
-                  <option value="21-50">51-100</option>
-                  <option value="100+">100+</option>
-                </select>
-                {errors.seats && (
-                  <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
-                    {errors.seats.message}
-                  </p>
-                )}
-              </div>
+                    >
+                      <option value="">Select No. of Seats</option>
+                      <option value="1-5">1–5</option>
+                      <option value="6-10">6–10</option>
+                      <option value="11-20">11-20</option>
+                      <option value="21-50">21-50</option>
+                      <option value="21-50">51-100</option>
+                      <option value="100+">100+</option>
+                    </select>
+                    {errors.seats && (
+                      <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
+                        {errors.seats.message}
+                      </p>
+                    )}
+                  </div>
+                </>
+              )}
             </div>
 
             <div className="border-b pb-4 border-[#dbdbdb]">

@@ -22,6 +22,7 @@ import { useAuth } from "@/context/useAuth";
 import BuyPassPopup from "./buyPassPopup/BuyPassPopup";
 import { useQuery } from "@tanstack/react-query";
 import { getApi } from "@/services/ApiService";
+import BottomBar from "../bottomBar/BottomBar";
 
 const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
   const {token,user} = useAuth();
@@ -1167,7 +1168,8 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
           </section>
         )
       }
-      {isOpen && <ExplorePopup isOpen={isOpen} setIsOpen={setIsOpen} selectedSpaceData={selectedSpaceData} />}
+      <BottomBar type={type} city={spaceData?.contact_city_name}/>
+      {isOpen && <ExplorePopup isOpen={isOpen} setIsOpen={setIsOpen} selectedSpaceData={selectedSpaceData} type={type}/>}
       {isAuthOpen && <Auth isOpen={isAuthOpen} setIsOpen={setIsAuthOpen} />}
       {isScheduleVisitOpen &&<ScheduleVisitPopup isOpen={isScheduleVisitOpen} setIsOpen={setIsScheduleVisitOpen} type={type} spaceId={spaceData?.id} workingDays={spaceData?.working_time} spaceData={spaceData} hostHolidays={spaceDeatil?.hostHolidays}/>}
       {isBuyPassOpen && <BuyPassPopup isOpen={isBuyPassOpen} setIsOpen={setIsBuyPassOpen}/>}

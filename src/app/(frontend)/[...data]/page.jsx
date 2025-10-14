@@ -1,5 +1,5 @@
 import Detail from "@/components/frontend/detail/Detail";
-import { BASE_URL } from "@/services/ApiService";
+import { BASE_URL, WEBSITE_BASE_URL } from "@/services/ApiService";
 import {
   convertSlugToSmallLetter,
   getTypeOfSpaceByWorkSpace,
@@ -101,7 +101,7 @@ const page = async ({ params }) => {
     },
     "offers": {
       "@type": offer,
-      "url": `${process.env.NEXT_PUBLIC_WEBSITE_URL}/${slug.join("/")}`,
+      "url": `${WEBSITE_BASE_URL}/${slug.join("/")}`,
       "priceCurrency": "INR",
       "availability": "https://schema.org/InStock",
       "itemCondition": "https://schema.org/NewCondition"
@@ -167,7 +167,7 @@ export async function generateMetadata({ params }) {
     title = `${spaceType} for Rent at ${location_name}, ${contact_city_name}`;
     description = `Rent ${spaceTitle} at ${location_name}, ${contact_city_name} for Rs.2000 /month`;
   }
-  const canonicalUrl = `${process.env.NEXT_PUBLIC_WEBSITE_URL}/${slug.join("/")}`;
+  const canonicalUrl = `${WEBSITE_BASE_URL}/${slug.join("/")}`;
   return {
     title: title,
     description: description,

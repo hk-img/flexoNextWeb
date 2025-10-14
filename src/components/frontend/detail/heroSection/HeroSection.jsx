@@ -5,7 +5,7 @@ import Svg from "@/components/svg";
 import ImagePopup from "./ImagePopup";
 import { useAuth } from "@/context/useAuth";
 import { toast } from "sonner";
-import { postAPIAuthWithoutBearer } from "@/services/ApiService";
+import { postAPIAuthWithoutBearer, WEBSITE_BASE_URL } from "@/services/ApiService";
 import { useMutation } from "@tanstack/react-query";
 
 const HeroSection = ({ slug,isFavouriteSpace,spaceData,setIsAuthOpen }) => {
@@ -125,7 +125,7 @@ const HeroSection = ({ slug,isFavouriteSpace,spaceData,setIsAuthOpen }) => {
                 <div
                   onClick={() => {
                     const url = slug.join("/")
-                    const shareUrl = `${process.env.NEXT_PUBLIC_WEBSITE_URL}/${url}`
+                    const shareUrl = `${WEBSITE_BASE_URL}/${url}`
                     window.open(
                       `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
                       "_blank"
@@ -138,7 +138,7 @@ const HeroSection = ({ slug,isFavouriteSpace,spaceData,setIsAuthOpen }) => {
                 <div 
                   onClick={() => {
                     const url = slug.join("/")
-                    const shareUrl = `${process.env.NEXT_PUBLIC_WEBSITE_URL}/${url}`
+                    const shareUrl = `${WEBSITE_BASE_URL}/${url}`
                     window.open(
                       `https://www.linkedin.com/feed/?shareActive=false&url=${shareUrl}`,
                       "_blank"
@@ -155,7 +155,7 @@ const HeroSection = ({ slug,isFavouriteSpace,spaceData,setIsAuthOpen }) => {
                   onClick={() => {
                     const url = slug.join("/")
                     const message = encodeURIComponent(
-                      `Checkout this space on FLEXO\n${process.env.NEXT_PUBLIC_WEBSITE_URL}/${url}`
+                      `Checkout this space on FLEXO\n${WEBSITE_BASE_URL}/${url}`
                     );
                     window.open(`https://web.whatsapp.com/send?text=${message}`, "_blank");
                   }}
@@ -167,7 +167,7 @@ const HeroSection = ({ slug,isFavouriteSpace,spaceData,setIsAuthOpen }) => {
                   onClick={() => {
                     const url = slug.join("/")
                     const message = encodeURIComponent(
-                      `${process.env.NEXT_PUBLIC_WEBSITE_URL}/${url}`
+                      `${WEBSITE_BASE_URL}/${url}`
                     );
                     window.open(`https://instagram.com?text=${message}`, "_blank");
                   }}
@@ -181,7 +181,7 @@ const HeroSection = ({ slug,isFavouriteSpace,spaceData,setIsAuthOpen }) => {
                 <div
                   onClick={() => {
                     const url = slug.join("/")
-                    const message = `${process.env.NEXT_PUBLIC_WEBSITE_URL}/${url}`
+                    const message = `${WEBSITE_BASE_URL}/${url}`
                     navigator.clipboard.writeText(message);
                     toast.success("Link copied to clipboard");
                   }}

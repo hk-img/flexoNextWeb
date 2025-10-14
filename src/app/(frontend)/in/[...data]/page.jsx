@@ -1,5 +1,5 @@
 import Listing from '@/components/frontend/listing/Listing';
-import { BASE_URL } from '@/services/ApiService';
+import { BASE_URL, WEBSITE_BASE_URL } from '@/services/ApiService';
 import { convertSlugToCapitalLetter, convertSlugToSmallLetter, getTypeOfSpaceByWorkSpace,coworkingTypes, convertSlugToAllCapitalLetter } from '@/services/Comman';
 import React from 'react'
 
@@ -36,7 +36,7 @@ export async function generateMetadata({params}) {
       description = `Explore offices for rent in ${city}. Choose from a wide range of furnished, unfurnished, built-to-suit and managed office options.`
     }
   }
-  const canonicalUrl = `${process.env.NEXT_PUBLIC_WEBSITE_URL}/in/${slug.join("/")}`;
+  const canonicalUrl = `${WEBSITE_BASE_URL}/in/${slug.join("/")}`;
   return {
     title:title,
     description:description,

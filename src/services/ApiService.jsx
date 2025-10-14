@@ -3,6 +3,7 @@ import { TOKEN_NAME } from "@/constant/constant";
 
 export const BASE_URL = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1`;
 export const IMAGE_BASE_URL = `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}`;
+export const WEBSITE_BASE_URL = `${process.env.NEXT_PUBLIC_WEBSITE_URL}`;
 
 export const getApi = async (url) => {
   try {

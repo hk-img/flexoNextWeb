@@ -68,7 +68,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
           <div className="relative w-full max-w-[600px] rounded-sm bg-white p-6 shadow-xl overflow-y-auto [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]  animate-scaleIn">
             <div className="px-5 py-4 border-b border-[#dbdbdb] flex items-center justify-between">
               {!isLogin ? (
-                <h2 className="text-xl font-medium">
+                <h2 className="min-[1400px]:text-[22px] text-xl font-medium">
                   Register/Create an
                   <span className="text-[#f76900]"> Account</span>
                 </h2>
@@ -117,7 +117,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
                 )}
                 <div className="my-6 flex items-center">
                   <hr className="flex-1 border-gray-300" />
-                  <span className="px-2 text-sm text-[#000000de]">
+                  <span className="px-2 min-[1400px]:text-base text-sm text-[#000000de]">
                     or Continue with
                   </span>
                   <hr className="flex-1 border-gray-300" />
@@ -154,7 +154,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
                   )}
                 </div>
                 <div className="mt-6 text-center flex items-center justify-center gap-4">
-                  <span className="text-sm text-black">
+                  <span className="text-sm min-[1400px]:text-base text-black">
                     {!isLogin
                       ? "Already have an account ?"
                       : "Don't have an account ?"}

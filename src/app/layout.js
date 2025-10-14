@@ -2,6 +2,7 @@ import { Poppins , Roboto } from "next/font/google";
 import "./globals.css";
 import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 import { Toaster } from "sonner";
+import Script from "next/script";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -32,6 +33,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, shrink-to-fit=no" />
+        <Script
+          src="https://checkout.razorpay.com/v1/checkout.js"
+          strategy="afterInteractive"
+        />
       </head>
       <body
         className={`${poppins.className} antialiased overflow-x-hidden font-poppins [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]`}
@@ -52,7 +57,6 @@ export default function RootLayout({ children }) {
             }}
           />
         </ReactQueryProvider>
-        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
       </body>
     </html>
   );

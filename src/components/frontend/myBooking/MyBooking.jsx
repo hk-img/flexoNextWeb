@@ -8,6 +8,7 @@ import { workSpace } from "@/services/Comman";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import BookingItem from "./BookingItem";
+import BookingReviewPopup from "../bookingReviewPopup/BookingReviewPopup";
 
 const MyBooking = () => {
   const [activeTab, setActiveTab] = useState("allBooking");
@@ -17,6 +18,8 @@ const MyBooking = () => {
     startDate: "",
     endDate: "",
   });
+  const [showReviewPopup, setShowReviewPopup] = useState(false);
+  const [bookingId,setBookingId] = useState("");
   const { token, user } = useAuth();
   const { data: allBooking, isPending } = useQuery({
     queryKey: [
@@ -135,7 +138,7 @@ const MyBooking = () => {
                         startDate={date.startDate}
                         endDate={date.endDate}
                         selectsRange
-                        minDate={new Date()}
+                        // minDate={new Date()}
                         placeholderText="Start date — End date"
                         className="w-full h-12 px-3 focus:outline-none text-[#777] placeholder:text-[#777] text-sm font-semibold focus:ring-0 "
                       />
@@ -185,7 +188,7 @@ const MyBooking = () => {
             <div className="space-y-5">
               {bookingData?.length > 0 ? (
                 bookingData?.map((item, index) => (
-                  <BookingItem key={index} item={item} />
+                  <BookingItem key={index} item={item} setShowReviewPopup={setShowReviewPopup} setBookingId={setBookingId}/>
                 ))
               ) : (
                 <div className="pt-[30px] pb-[55px]">
@@ -207,6 +210,7 @@ const MyBooking = () => {
           </div>
         </div>
       </div>
+      {showReviewPopup && <BookingReviewPopup setIsOpen={setShowReviewPopup} isOpen={showReviewPopup} bookingId={bookingId}/>}
     </>
   );
 };

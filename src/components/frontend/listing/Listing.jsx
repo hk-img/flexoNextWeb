@@ -44,6 +44,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
   const [appliedFilter, setAppliedFilter] = useState(filterData);
   const [page, setPage] = useState(1);
   const [hoveredSpaceId, setHoveredSpaceId] = useState(null);
+  const [selectedSpaceData,setSelectedSpaceData] = useState(null);
   const perPage = 30;
 
   const handleRadioChange = (e) => {
@@ -624,7 +625,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                     onMouseOver={() => setHoveredSpaceId(item?.id)}
                     onMouseLeave={() => setHoveredSpaceId(null)}
                   >
-                    <ProductCard item={item} setIsOpen={setIsOpen} setIsAuthOpen={setIsAuthOpen}/>
+                    <ProductCard item={item} setIsOpen={setIsOpen} setIsAuthOpen={setIsAuthOpen} setSelectedSpaceData={setSelectedSpaceData}/>
                   </div>
                 ))}
               </div>
@@ -637,7 +638,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                     onMouseOver={() => setHoveredSpaceId(item?.id)}
                     onMouseLeave={() => setHoveredSpaceId(null)}
                   >
-                    <ProductCard item={item} setIsOpen={setIsOpen} setIsAuthOpen={setIsAuthOpen}/>
+                    <ProductCard item={item} setIsOpen={setIsOpen} setIsAuthOpen={setIsAuthOpen} setSelectedSpaceData={setSelectedSpaceData}/>
                   </div>
                 ))}
               </div>
@@ -650,7 +651,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                     onMouseOver={() => setHoveredSpaceId(item?.id)}
                     onMouseLeave={() => setHoveredSpaceId(null)}
                   >
-                    <ProductCard item={item} setIsOpen={setIsOpen} setIsAuthOpen={setIsAuthOpen}/>
+                    <ProductCard item={item} setIsOpen={setIsOpen} setIsAuthOpen={setIsAuthOpen} setSelectedSpaceData={setSelectedSpaceData}/>
                   </div>
                 ))}
               </div>
@@ -707,7 +708,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
       {
         isLongTermPopupOpen && <LongTermPopup isOpen={isLongTermPopupOpen} setIsOpen={setIsLongTermPopupOpen} />
       }
-      {isOpen && <ExplorePopup isOpen={isOpen} setIsOpen={setIsOpen} />}
+      {isOpen && <ExplorePopup isOpen={isOpen} setIsOpen={setIsOpen} selectedSpaceData={selectedSpaceData}/>}
       {isAuthOpen && <Auth isOpen={isAuthOpen} setIsOpen={setIsAuthOpen} />}
     </>
   );

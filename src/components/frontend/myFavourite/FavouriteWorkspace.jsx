@@ -1,14 +1,20 @@
 "use client";
-import React, { useMemo } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import Svg from "@/components/svg";
+import React, { useEffect, useMemo, useState } from "react";
 import { useAuth } from "@/context/useAuth";
-import { useQuery } from "@tanstack/react-query";
-import { getAPIAuthWithoutBearer } from "@/services/ApiService";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  getAPIAuthWithoutBearer,
+  postAPIAuthWithoutBearer,
+} from "@/services/ApiService";
+import MyFavoriteItem from "./MyFavoriteItem";
+import Svg from "@/components/svg";
+import { toast } from "sonner";
 
 const MyFavourite = () => {
   const { token } = useAuth();
+  const [favouriteData, setFavouriteData] = useState([]);
+  const [isRemovePopupOpen, setIsRemovePopupOpen] = useState(false);
+  const [spaceId, setSpaceId] = useState("");
   const { data: allFavorites } = useQuery({
     queryKey: ["all-favourites", token],
     queryFn: async () => {
@@ -21,107 +27,65 @@ const MyFavourite = () => {
     keepPreviousData: true,
     enabled: !!token,
   });
-  const favouriteData = useMemo(() => {
-    return allFavorites || [];
+  useEffect(() => {
+    if (allFavorites?.favoriteSpaceList?.length > 0) {
+      setFavouriteData(allFavorites?.favoriteSpaceList || []);
+    }
   }, [allFavorites]);
+
+  const { mutate: favouriteMutate } = useMutation({
+    mutationFn: async (payload) => {
+      const response = await postAPIAuthWithoutBearer(
+        `favorite/addToFavorite/${payload?.spaceId}`,
+        payload,
+        token
+      );
+      return response.data;
+    },
+    onSuccess: (data, payload) => {
+      toast.success(data?.message);
+      setFavouriteData((prev)=>(prev.filter((item)=>item?.spaceData?.id !== payload?.spaceId)));
+      setIsRemovePopupOpen(false);
+      setSpaceId("");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  const handleFavourite = () => {
+    const payload = {
+      spaceId: spaceId,
+    };
+    favouriteMutate(payload);
+  };
   return (
     <>
       <section className="relative w-full lg:mt-[82px] sm:mt-[62px] mt-[63px] bg-[#f9f9f9]">
         <div className="container mx-auto px-[15px] py-10">
           <div className="flex flex-col">
-            <div className="pt-[14px]">
+            <div className="pt-[14px] pb-[30px]">
               <h1 className="font-semibold text-[#141414] text-[26px] leading-[1.6]">
                 Favorite workspaces
               </h1>
             </div>
             <div className="flex flex-col gap-y-8">
               {favouriteData?.length > 0 ? (
-                favouriteData?.map((item, index) => (
-                  <div
-                    key={index}
-                    className="w-full flex md:flex-row flex-col items-center gap-y-4 justify-start bg-white p-4 rounded-xl "
-                  >
-                    <Link
-                      href=""
-                      className="relative md:w-50 h-40 w-full rounded-lg shrink-0 overflow-hidden"
-                    >
-                      <Image
-                        src="/images/defaultImg.webp"
-                        width="200"
-                        height="150"
-                        alt="Coworking Space"
-                        className="object-cover w-full h-full"
-                      />
-
-                      <div
-                        className="absolute top-2 left-0 bg-[#f76900] text-white text-sm font-medium px-3 py-1 
-              before:block before:absolute before:top-0 before:right-[-10px] before:w-[10px] before:h-0 
-              before:border-t-[15px] before:!border-t-[#f76900] before:border-transparent before:border-l-0 before:border-r-[10px] 
-              after:block after:absolute after:bottom-0 after:right-[-10px] after:w-[10px] after:h-0 
-              after:border-b-[15px] after:!border-b-[#f76900] after:border-transparent after:border-l-0 after:border-r-[10px]"
-                      >
-                        {item?.spaceType}
-                      </div>
-                    </Link>
-                    <div className="md:ml-6 space-y-2">
-                      <div className="flex justify-between items-center gap-2">
-                        <h2 className="text-lg font-semibold text-[#141414] underline">
-                          WeWork
-                        </h2>
-                        <Link
-                          href=""
-                          className="size-11 flex justify-center items-center bg-[#f4f4f4]  rounded-full"
-                        >
-                          <Svg name="heart" className="size-5 text-[#f76900]" />
-                        </Link>
-                      </div>
-                      <div className="text-[#141414] text-sm font-medium flex items-center space-x-1">
-                        <span>
-                          <Svg
-                            name="location2"
-                            className="size-4 text-[#f76900]"
-                          />
-                        </span>
-                        <span>Andheri-East</span>
-                      </div>
-
-                      <div className="flex items-center space-x-4 font-medium text-sm text-[#141414]">
-                        <div className="flex items-center space-x-1">
-                          <Svg
-                            name="userHalf"
-                            className="size-4 text-[#f76900]"
-                          />
-                          <span>people</span>
-                        </div>
-                        <span className="size-3 rounded-full bg-[#ddd]"></span>
-                        <div className="flex items-center space-x-1">
-                          <Svg
-                            name="scaleRuler"
-                            className="size-4 text-[#f76900]"
-                          />
-                          <span>sqft</span>
-                        </div>
-                      </div>
-                      <p className="text-sm font-normal line-clamp-3 text-[#808080]">
-                        One of the most premium coworking spaces in Mumbai, this
-                        is the ideal platform for high-growth start-ups,
-                        corporates, multinationals and financial services
-                        companies that want the best for their teams. Located in
-                        the highly energetic location of Bandra Kurla C...
-                      </p>
-                      <Link
-                        href=""
-                        className="text-black text-base font-medium underline hover:text-[#f76900]"
-                      >
-                        Read More
-                      </Link>
-                    </div>
-                  </div>
-                ))
+                favouriteData?.map((item, index) => {
+                  console.log(item?.spaceData, "Ergyerre");
+                  return (
+                    <MyFavoriteItem
+                      key={index}
+                      item={item}
+                      setIsRemovePopupOpen={setIsRemovePopupOpen}
+                      setSpaceId={setSpaceId}
+                    />
+                  );
+                })
               ) : (
-                 <div className="pt-[30px] pb-[55px]">
+                <div className="pt-[30px] pb-[55px]">
                   <p className="text-2xl font-medium text-[#141414] leading-[1.6]">
-                Favorite Workspaces not found..
+                    Favorite Workspaces not found..
                   </p>
                 </div>
               )}
@@ -129,6 +93,44 @@ const MyFavourite = () => {
           </div>
         </div>
       </section>
+      {isRemovePopupOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center animate-fadeIn">
+          <div
+            className="absolute inset-0 bg-black/40"
+            onClick={() => {
+              setIsRemovePopupOpen(false);
+              setSpaceId("");
+            }}
+          />
+          <div className="relative w-full max-w-md mx-4 rounded-[11px] bg-white p-8 text-center animate-scaleIn shadow-lg">
+            <div className="flex justify-center mb-4">
+              <div className="border-2 border-orange-500 rounded-full p-4">
+                <span className="text-orange-500 text-4xl font-bold">!</span>
+              </div>
+            </div>
+            <h2 className="text-lg font-semibold text-gray-800 mb-6">
+              Remove this space from favorites?
+            </h2>
+            <div className="flex justify-center gap-4">
+              <button
+                onClick={() => {
+                  setIsRemovePopupOpen(false);
+                  setSpaceId("");
+                }}
+                className="cursor-pointer px-6 py-2 bg-[#f36b1c] text-white font-semibold rounded-md hover:bg-[#d75d10] transition"
+              >
+                NO
+              </button>
+              <button
+                onClick={handleFavourite}
+                className="cursor-pointer px-6 py-2 bg-[#f36b1c] text-white font-semibold rounded-md hover:bg-[#d75d10] transition"
+              >
+                YES
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

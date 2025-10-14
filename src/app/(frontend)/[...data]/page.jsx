@@ -5,6 +5,7 @@ import {
   convertSlugToSmallLetter,
   getTypeOfSpaceByWorkSpace,
 } from "@/services/Comman";
+import { notFound } from "next/navigation";
 import React from "react";
 
 async function getSpaceDetails(spaceId) {
@@ -40,6 +41,9 @@ const page = async ({ params }) => {
   const [spaceTypeSlug] = slug;
   const type = getTypeOfSpaceByWorkSpace(spaceTypeSlug || "");
   let spaceId = "";
+  if(slug?.length > 4){
+    return notFound();
+  }
   if (type == "coworking") {
     const [spaceTypeSlug, spaceSlug] = slug;
     spaceId = spaceSlug?.split("-").pop();

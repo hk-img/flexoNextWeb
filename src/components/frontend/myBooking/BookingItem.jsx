@@ -6,9 +6,10 @@ import ImageWithFallback from "@/components/ImageWithFallback";
 import { useQuery } from "@tanstack/react-query";
 import { getAPIAuthWithoutBearer } from "@/services/ApiService";
 import { useAuth } from "@/context/useAuth";
+import { set } from "zod";
 
-const bookingItem = ({ item }) => {
-    const { token } = useAuth();
+const bookingItem = ({ item,setShowReviewPopup,setBookingId }) => {
+  const { token } = useAuth();
   const { data: invoiceDownload, refetch: invoiceRefetch } = useQuery({
     queryKey: ["invoiceDownload", item?.id],
     queryFn: async () => {
@@ -31,7 +32,7 @@ const bookingItem = ({ item }) => {
       <div className=" p-5 rounded-[10px] bg-white flex md:flex-row flex-col md:items-center items-start  justify-between ">
         <div className="flex flex-col md:flex-row md:items-center md:space-x-6 space-y-3 md:space-y-0">
           <div className="flex  md:flex-row flex-col gap-[15px] items-center">
-            <div div className="relative">
+            <div className="relative">
               <div>
                 <ImageWithFallback
                   width={200}
@@ -63,13 +64,20 @@ const bookingItem = ({ item }) => {
                   </h2>
                 </div>
                 <div className="flex items-center gap-3 pb-[25px]">
-                  <div className="flex items-center gap-1">
-                    <Svg name="clock" className="size-[18px] text-[#f76900]" />
-                    <h3 className="text-black text-sm 2xl:text-base font-medium">
-                      {item?.totalHours} hrs min
-                    </h3>
-                  </div>
-                  <span className="size-2.5 rounded-full bg-[#ddd]"></span>
+                  {item?.spaceType !== "Coworking Space" && (
+                    <>
+                      <div className="flex items-center gap-1">
+                        <Svg
+                          name="clock"
+                          className="size-[18px] text-[#f76900]"
+                        />
+                        <h3 className="text-black text-sm 2xl:text-base font-medium">
+                          {item?.totalHours} hrs min
+                        </h3>
+                      </div>
+                      <span className="size-2.5 rounded-full bg-[#ddd]"></span>
+                    </>
+                  )}
                   <div className="flex items-center gap-1">
                     <Svg
                       name="scaleRuler"
@@ -93,17 +101,67 @@ const bookingItem = ({ item }) => {
                     </h3>
                   </div>
                   <span className="border-r text-black text-sm font-medium border-[#f76900] pr-4">
-                    {item?.dayCount} Day
+                    {item?.ofDays || item?.dayCount} Day
                   </span>
-                  <span className=" text-black text-sm 2xl:text-base font-medium">
-                    {item?.totalHours} hrs
-                  </span>
+                  <div className="sq-ft booking-list-single-info-single">
+                    <p>
+                      <span>
+                        {item?.spaceType == "Coworking Space"
+                          ? item?.noOfGuest || 1
+                          : item?.totalHours || 2}{" "}
+                      </span>{" "}
+                      {item?.spaceType == "Coworking Space" ? "Guest" : "hrs"}
+                    </p>
+                  </div>
                 </div>
                 <div className="flex items-center gap-2 mt-1">
                   <p className="font-medium text-sm 2xl:text-base">
                     Booking Status :{" "}
                   </p>
-                  {item?.bookingStatus === "pending" && (
+                  {(item?.bookingStatus === "pending" || (item?.bookingStatus === "confirmed" && item?.paymentSuccess === 0)) && (
+                    <div className="flex items-center gap-1">
+                      <span>
+                        <Svg
+                          name="warning"
+                          className="size-[22px] text-[#0085ff]"
+                        />
+                      </span>
+                      {item?.bookingStatus === "confirmed" &&
+                        item?.paymentSuccess === 0 && (
+                          <h6 className="text-[#0085ff] text-sm 2xl:text-base font-semibold">
+                            Pending Payment
+                          </h6>
+                        )}
+                      {item?.bookingStatus === "pending" &&
+                        item?.isInstant === "0" && (
+                          <h6 className="text-[#0085ff] text-sm 2xl:text-base font-semibold">
+                            Pending Host Confirmation
+                          </h6>
+                        )}
+                      {item?.bookingStatus === "pending" &&
+                        item?.isInstant === "1" && (
+                          <h6 className="text-[#0085ff] text-sm 2xl:text-base font-semibold">
+                            Waiting
+                          </h6>
+                        )}
+                    </div>
+                  )}
+                  {(item?.bookingStatus === "confirmed" ||
+                    item?.bookingStatus === "confirm") &&
+                    item?.paymentSuccess === 1 && (
+                      <div className="flex items-center gap-1">
+                        <span>
+                          <Svg
+                            name="checkFill"
+                            className="size-[22px] text-[#05ac34]"
+                          />
+                        </span>
+                        <h6 className="text-[#05ac34] text-sm 2xl:text-base font-semibold">
+                          confirmed
+                        </h6>
+                      </div>
+                    )}
+                  {item?.bookingStatus === "cancelled" && (
                     <div className="flex items-center gap-1">
                       <span>
                         <Svg
@@ -112,20 +170,20 @@ const bookingItem = ({ item }) => {
                         />
                       </span>
                       <h6 className="text-[#0085ff] text-sm 2xl:text-base font-semibold">
-                        Pending Host Confirmation
+                        Cancelled
                       </h6>
                     </div>
                   )}
-                  {item?.bookingStatus === "confirmed" && (
+                  {item?.bookingStatus === "rejected" && (
                     <div className="flex items-center gap-1">
                       <span>
                         <Svg
-                          name="checkFill"
-                          className="size-[22px] text-[#05ac34]"
+                          name="warning"
+                          className="size-[22px] text-[#0085ff]"
                         />
                       </span>
-                      <h6 className="text-[#05ac34] text-sm 2xl:text-base font-semibold">
-                        confirmed
+                      <h6 className="text-[#0085ff] text-sm 2xl:text-base font-semibold">
+                        Rejected
                       </h6>
                     </div>
                   )}
@@ -138,7 +196,10 @@ const bookingItem = ({ item }) => {
         <div className="flex flex-col space-y-2  max-md:w-full">
           {item?.bookingStatus == "confirmed" && (
             <>
-              <button className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 text-nowrap uppercase tracking-[1px] px-10">
+              <button onClick={() => {
+                setShowReviewPopup(true);
+                setBookingId(item?.id);
+                }} className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 text-nowrap uppercase tracking-[1px] px-10">
                 LEAVE A REVIEW
               </button>
               <button

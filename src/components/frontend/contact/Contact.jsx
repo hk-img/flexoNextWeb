@@ -14,14 +14,14 @@ const Contact = () => {
       </div>
     </section>
     <section>
-      <div className="w-[92%] max-w-[1224px]  mx-auto grid md:grid-cols-2 gap-[30px] pt-20">
-        <div className="border border-[#eee] rounded-[10px] p-[30px] ">
+      <div className="w-[92%] max-w-[1224px]  mx-auto grid md:grid-cols-2 md:gap-[30px] gap-5 pt-20">
+        <div className="border border-[#eee] rounded-[10px] p-[30px] h-fit">
           <div className='flex flex-col justify-center space-y-5  '>
-            <h2 className="text-[40px] font-semibold text-[#000e54] leading-[1.5] mb-[30px] ">
+            <h2 className="md:text-[40px] text-[22px] font-semibold text-[#000e54] leading-[1.5] mb-[33px] ">
               Stop by and say hi. Or drop us a note if you need support
             </h2>
             
-            <div className="flex items-center space-x-5 text-[#6c757d] border-b pb-[35px] border-[#eee]">
+            <div className="flex items-center space-x-5 text-[#6c757d] border-b pb-[38px] border-[#eee]">
               <span className="text-[#6c757d] font-medium flex items-center gap-1">
                 <Svg name="mail" className="size-[18px] shrink-0 text-[#6c757d]" />
                 <span> Mail :</span>
@@ -32,46 +32,44 @@ const Contact = () => {
             </div>
 
             <div className="flex space-x-2">
-              <a href="#" className="bg-[#ff6600] text-white p-2 rounded-md hover:bg-[#2c3b5a]">
+              <a href="#" className="bg-[#ff6600] text-white p-2 rounded-sm hover:bg-[#2c3b5a]">
                 <Svg name="facebook" className="size-5 " />
               </a>
-               <a href="#" className="bg-[#ff6600] text-white p-2 rounded-md hover:bg-[#2c3b5a]">
+               <a href="#" className="bg-[#ff6600] text-white p-2 rounded-sm hover:bg-[#2c3b5a]">
                 <Svg name="twitter" className="size-5 " />
               </a>
-               <a href="#" className="bg-[#ff6600] text-white p-2 rounded-md hover:bg-[#2c3b5a]">
-                <Svg name="linkedin" className="size-5 " />
+               <a href="#" className="bg-[#ff6600] text-white p-2 rounded-sm hover:bg-[#2c3b5a]">
+                <Svg name="linkedin2" className="size-5 " />
               </a>
-               <a href="#" className="bg-[#ff6600] text-white p-2 rounded-md hover:bg-[#2c3b5a]">
+               <a href="#" className="bg-[#ff6600] text-white p-2 rounded-sm hover:bg-[#2c3b5a]">
                 <Svg name="instagram" className="size-5 " />
               </a>
             </div>
           </div>
         </div>
-        <div className=" py-6">
-          <h3 className="text-lg font-semibold mb-4 text-[#00194b]">Get In Touch</h3>
+        <div className=" py-5">
+          <h3 className="text-lg font-semibold mb-[35px] text-[#00194b]">Get In Touch</h3>
           
-          <form className="space-y-4">
-            <div>
-              <input type="text" className="w-full border border-gray-300 rounded-md p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#ff6600]" placeholder="Enter your name"/>
+          <form className="space-y-5">
+            <div className='border border-[#eee] bg-[#f9f9f9] rounded-[6px] flex items-center gap-4 px-[19px] py-[15px]'>
+              <Svg name="user2" className="size-[18px] text-[#ff6600] shrink-0" />
+              <input type="text" className="w-full text-[13px] text-[#74746F] font-medium placeholder:text-[#74746F] focus:outline-none" placeholder="Your Name*"/>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium mb-1 text-gray-700">Email Address *</label>
-              <input type="email" className="w-full border border-gray-300 rounded-md p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#ff6600]" placeholder="Enter your email"/>
+             <div className='border border-[#eee] bg-[#f9f9f9] rounded-[6px] flex items-center gap-4 px-[19px] py-[15px]'>
+              <Svg name="mail" className="size-[18px] text-[#ff6600] shrink-0" />
+              <input type="email" className="w-full text-[13px] text-[#74746F] font-medium placeholder:text-[#74746F] focus:outline-none" placeholder="Email Address*"/>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium mb-1 text-gray-700">Mobile *</label>
-              <input type="tel" className="w-full border border-gray-300 rounded-md p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#ff6600]" placeholder="Enter your mobile number"/>
+             <div className='border border-[#eee] bg-[#f9f9f9] rounded-[6px] flex items-center gap-4 px-[19px] py-[15px]'>
+              <Svg name="phone" className="size-[18px] text-[#ff6600] shrink-0" />
+              <input type="tel" className="w-full text-[13px] text-[#74746F] font-medium placeholder:text-[#74746F] focus:outline-none" placeholder="Mobile*"/>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium mb-1 text-gray-700">Your Message</label>
-              <textarea rows="4" className="w-full border border-gray-300 rounded-md p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#ff6600]" placeholder="Type your message here..."></textarea>
-            </div>
+             <textarea  className="w-full h-[200px] resize-none border border-[#eee] font-medium bg-[#f9f9f9] rounded-[6px] py-[25px] px-[19px] text-sm focus:outline-none text-[13px] text-[#74746F] placeholder:text-[#74746F]" placeholder="Your Message :"></textarea>
 
-            <button type="submit" className="w-full bg-[#ff6600] text-white py-3 rounded-md text-sm font-medium hover:bg-[#e85c00] transition">
-              Send →
+            <button type="submit" className="w-fit min-w-[180px] bg-[#ff6600] hover:bg-[#2C3B5A] text-white  rounded-[5px] p-[15px] text-lg font-medium transition">
+              Send <Svg name="rightLongArrow" className="size-[22px] inline"/>
             </button>
           </form>
         </div>

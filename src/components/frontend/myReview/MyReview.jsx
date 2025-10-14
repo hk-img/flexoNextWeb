@@ -29,7 +29,7 @@ const MyReview = () => {
           <div className="flex flex-col">
             <div className="pt-[13px]">
               <h1 className="font-medium text-[#141414] text-[26px] leading-[1.6]">
-                Reviews <span className="text-[#A0A0A0]">({reviewData?.length})</span>
+                Reviews {reviewData?.length > 0 && <span className="text-[#A0A0A0]">({reviewData?.length})</span> } 
               </h1>
             </div>
             <div className="flex flex-col gap-y-8 mt-[50px]">

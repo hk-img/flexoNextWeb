@@ -41,6 +41,8 @@ const GoogleLoginButton = ({ setGoogleDetails, setIsOpen }) => {
         first_name: response.data.given_name,
         last_name: response.data.family_name,
         email: response.data.email,
+        id: response.data.sub,
+        picture: response.data.picture,
       };
       checkGoogleAccountMutate(payload);
     } catch (error) {

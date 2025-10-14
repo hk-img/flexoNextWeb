@@ -36,7 +36,7 @@ const scheduleSchema = z.object({
   preferredTime: z.string().min(1, "Please select a preferred time"),
 });
 
-const ScheduleVisitPopup = ({ type, setIsOpen, spaceId,workingDays,spaceData }) => {
+const ScheduleVisitPopup = ({ type, setIsOpen, spaceId,workingDays,spaceData,hostHolidays }) => {
   const [timeSlot, setTimeSlot] = useState(defaultTime);
   const [formData, setFormData] = useState({
     spaceType: "",
@@ -118,7 +118,6 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId,workingDays,spaceData }) 
     },
     onSuccess: (data, payload) => {
       if (data?.result?.success) {
-        toast.success(data?.result?.message);
         setSuccessScreen(true);
       } else {
         toast.error(data?.result?.message);
@@ -149,6 +148,36 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId,workingDays,spaceData }) 
     const dayInfo = workingDays.find((d) => d.day === dayName);
     return dayInfo?.isClosed;
   };
+  const isDisabledDate = (date) => {
+    if (isClosedDay(date)) return true;
+    return hostHolidays.some((holiday) => {
+      const holidayDate = new Date(holiday.date);
+      return (
+        holidayDate.getFullYear() === date.getFullYear() &&
+        holidayDate.getMonth() === date.getMonth() &&
+        holidayDate.getDate() === date.getDate()
+      );
+    });
+  };
+
+  const getHolidayTitle = (date) => {
+    const dayName = date.toLocaleString("en-US", { weekday: "long" });
+    const dayInfo = workingDays.find((d) => d.day === dayName);
+    if (dayInfo?.isClosed) {
+      return "Closed";
+    }
+    const found = hostHolidays.find((holiday) => {
+      const holidayDate = new Date(holiday.date);
+      return (
+        holidayDate.getFullYear() === date.getFullYear() &&
+        holidayDate.getMonth() === date.getMonth() &&
+        holidayDate.getDate() === date.getDate()
+      );
+    });
+
+    return found ? found.holidayTitle : "Closed";
+  };
+
 
   return (
     <div className="fixed inset-0 z-100 flex items-center justify-center animate-fadeIn p-4">
@@ -217,9 +246,24 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId,workingDays,spaceData }) 
                                 selected={field.value}
                                 onChange={(date) => field.onChange(date)}
                                 minDate={new Date()}
-                                filterDate={(date) => !isClosedDay(date)} // disable closed days
+                                filterDate={(date) => !isDisabledDate(date)} 
                                 placeholderText="Prefered View Date*"
                                 dateFormat="yyyy-MM-dd"
+                                renderDayContents={(day, date) => {
+                                  const title = getHolidayTitle(date);
+                                  return (
+                                    <span
+                                      title={title} 
+                                      className={
+                                        title
+                                          ? "font-semibold" 
+                                          : ""
+                                      }
+                                    >
+                                      {day}
+                                    </span>
+                                  );
+                                }}
                                 className={`block h-[58px] px-2.5 py-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border ${
                                   errors.preferedDate
                                     ? "border-red-500"

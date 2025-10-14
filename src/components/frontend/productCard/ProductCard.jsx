@@ -10,7 +10,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/context/useAuth";
 import { toast } from "sonner";
 
-const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen }) => {
+const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }) => {
   const {token} = useAuth();
   const [isFavourite, setIsFavourite] = useState(false);
   const type = getTypeOfSpaceByWorkSpace(item?.spaceType || "");
@@ -355,6 +355,7 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen }) => {
                       onClick={(e) => {
                         e.stopPropagation();
                         setIsOpen(true);
+                        setSelectedSpaceData(item);
                       }}
                       className="w-fit bg-[#f76900] text-[12px] border border-[#f76900]  text-white py-1.5 px-3 rounded-sm font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer"
                     >

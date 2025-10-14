@@ -198,15 +198,6 @@ const MyBooking = () => {
                 </div>
               )}
             </div>
-            <div className="mt-4">
-              {activeTab === "upcomingBooking" && (
-                <p className="text-gray-700"></p>
-              )}
-              {activeTab === "pastBooking" && <p className="text-gray-700"></p>}
-              {activeTab === "upcomingBooking" && (
-                <p className="text-gray-700"></p>
-              )}
-            </div>
           </div>
         </div>
       </div>

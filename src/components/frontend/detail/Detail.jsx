@@ -23,6 +23,7 @@ import BuyPassPopup from "./buyPassPopup/BuyPassPopup";
 import { useQuery } from "@tanstack/react-query";
 import { getApi } from "@/services/ApiService";
 import BottomBar from "../bottomBar/BottomBar";
+import BookingReviewPopup from "../bookingReviewPopup/BookingReviewPopup";
 
 const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
   const {token,user} = useAuth();
@@ -35,6 +36,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
   const [isBuyPassOpen, setIsBuyPassOpen] = useState(false);
   const [selectedSpaceData,setSelectedSpaceData] = useState(null);
   const [selectedSpaceType, setSelectedSpaceType] = useState(null);
+  const [showReviewPopup, setShowReviewPopup] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY >= 700) {
@@ -155,7 +157,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
             <div className="">
               {type == "coworking" && (
                 <h1 className="2xl:text-[30px] text-lg leading-[1.6] font-medium text-[#141414] mb-4">
-                  {spaceData?.name} {spaceData?.spaceTitle}
+                  {spaceData?.actual_name || spaceData?.name} {spaceData?.location_name}
                 </h1>
               )}
               {(type == "longterm" || type == "shortterm") && (
@@ -951,6 +953,8 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                       rating={spaceData?.rating}
                       avgRating={spaceData?.ratingsAvg}
                       setIsAuthOpen={setIsAuthOpen}
+                      setShowReviewPopup={setShowReviewPopup}
+                      existingReview={spaceDeatil?.existingReview}
                     />
                   }
                 </div>
@@ -1198,7 +1202,8 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
       {isOpen && <ExplorePopup isOpen={isOpen} setIsOpen={setIsOpen} selectedSpaceData={selectedSpaceData} type={type} selectedSpaceType={selectedSpaceType}/>}
       {isAuthOpen && <Auth isOpen={isAuthOpen} setIsOpen={setIsAuthOpen} />}
       {isScheduleVisitOpen &&<ScheduleVisitPopup isOpen={isScheduleVisitOpen} setIsOpen={setIsScheduleVisitOpen} type={type} spaceId={spaceData?.id} workingDays={spaceData?.working_time} spaceData={spaceData} hostHolidays={spaceDeatil?.hostHolidays}/>}
-      {isBuyPassOpen && <BuyPassPopup isOpen={isBuyPassOpen} setIsOpen={setIsBuyPassOpen}/>}
+      {isBuyPassOpen && <BuyPassPopup isOpen={isBuyPassOpen} setIsOpen={setIsBuyPassOpen} spaceData={spaceData}/>}
+      {showReviewPopup && <BookingReviewPopup setIsOpen={setShowReviewPopup} isOpen={showReviewPopup} bookingId={spaceData?.id}/>}
     </>
   );
 };

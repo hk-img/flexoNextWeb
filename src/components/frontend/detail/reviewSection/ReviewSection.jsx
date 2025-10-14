@@ -1,8 +1,23 @@
+import ImageWithFallback from "@/components/ImageWithFallback";
 import Svg from "@/components/svg";
+import { useAuth } from "@/context/useAuth";
 import Image from "next/image";
 import React from "react";
+import { toast } from "sonner";
 
-const ReviewSection = ({reviewData,rating=0,avgRating="5.0",setIsAuthOpen}) => {
+const ReviewSection = ({reviewData,rating=0,avgRating="5.0",setIsAuthOpen,setShowReviewPopup,existingReview=null}) => {
+  console.log({reviewData});
+  const {token} = useAuth();
+  const handleReview = () => {
+    if(Object.values(existingReview || {})?.length > 0){
+      return toast.error("You have already given review for this space.");
+    }
+    if(!token){
+      setIsAuthOpen(true);
+    }else{
+      setShowReviewPopup(true);
+    }
+  }
   return (
     <>
       <div id="reviews" className="py-10">
@@ -16,7 +31,7 @@ const ReviewSection = ({reviewData,rating=0,avgRating="5.0",setIsAuthOpen}) => {
             }
           </h2>
           <div>
-            <button onClick={()=>setIsAuthOpen((prev)=>!prev)} className="cursor-pointer bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white px-5.5 py-2.5 rounded-[15px] font-semibold duration-500 transition flex items-center gap-2 uppercase tracking-[1px]">
+            <button onClick={handleReview} className="cursor-pointer bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white px-5.5 py-2.5 rounded-[15px] font-semibold duration-500 transition flex items-center gap-2 uppercase tracking-[1px]">
               <Svg name="pencil" className="size-5" />
               <span>Leave a Review</span>
             </button>
@@ -43,12 +58,13 @@ const ReviewSection = ({reviewData,rating=0,avgRating="5.0",setIsAuthOpen}) => {
                 reviewData?.map((item,index)=>(
                     <div key={index} className="flex items-start gap-4">
                         <div className="w-12 h-12 rounded-full flex items-center justify-center">
-                        <Image
-                            width={50}
-                            height={50}
+                          <ImageWithFallback
                             src={item?.profile_image || "/images/user_image.webp"}
                             alt=""
-                        />
+                            width={50}
+                            height={50}
+                            fallback="/images/user_image.webp"
+                          />
                         </div>
 
                         <div className="flex-1 space-y-1">

@@ -34,6 +34,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
   const [isScheduleVisitOpen, setIsScheduleVisitOpen] = useState(false);
   const [isBuyPassOpen, setIsBuyPassOpen] = useState(false);
   const [selectedSpaceData,setSelectedSpaceData] = useState(null);
+  const [selectedSpaceType, setSelectedSpaceType] = useState(null);
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY >= 700) {
@@ -557,7 +558,10 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                             </div>
                             <div>
                               <button
-                                onClick={() => setIsOpen(true)}
+                                onClick={() => {
+                                  setIsOpen(true);
+                                  setSelectedSpaceData(spaceData)
+                                }}
                                 className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out"
                               >
                                 ENQUIRE NOW
@@ -598,7 +602,10 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                             </div>
                             <div>
                               <button
-                                onClick={() => setIsOpen(true)}
+                                onClick={() => {
+                                  setIsOpen(true);
+                                  setSelectedSpaceData(spaceData)
+                                }}
                                 className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out"
                               >
                                 ENQUIRE NOW
@@ -639,7 +646,10 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                             </div>
                             <div>
                               <button
-                                onClick={() => setIsOpen(true)}
+                                onClick={() => {
+                                  setIsOpen(true);
+                                  setSelectedSpaceData(spaceData)
+                                }}
                                 className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out"
                               >
                                 ENQUIRE NOW
@@ -680,7 +690,10 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                             </div>
                             <div>
                               <button
-                                onClick={() => setIsOpen(true)}
+                                onClick={() => {
+                                  setIsOpen(true);
+                                  setSelectedSpaceData(spaceData)
+                                }}
                                 className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out"
                               >
                                 ENQUIRE NOW
@@ -721,7 +734,10 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                             </div>
                             <div>
                               <button
-                                onClick={() => setIsOpen(true)}
+                                onClick={() => {
+                                  setIsOpen(true);
+                                  setSelectedSpaceData(spaceData)
+                                }}
                                 className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out"
                               >
                                 ENQUIRE NOW
@@ -763,7 +779,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                               </div>
                               <div>
                                 <button
-                                  onClick={() => setIsAuthOpen(true)}
+                                  onClick={handleBuyPass}
                                   className="cursor-pointer md:mt-3 mt-2 bg-[#4b975f] border border-[#4b975f] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px]"
                                 >
                                   Buy Pass
@@ -1040,7 +1056,11 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
 
                   <div className="space-y-2.5 mb-10">
                     <button
-                      onClick={() => setIsOpen((prev) => !prev)}
+                      onClick={() => {
+                          setIsOpen(true);
+                          setSelectedSpaceData(spaceData);
+                        }
+                      }
                       className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]"
                     >
                       {type == "coworking"

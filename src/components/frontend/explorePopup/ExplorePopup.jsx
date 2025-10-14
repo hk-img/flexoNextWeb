@@ -250,7 +250,7 @@ const ExplorePopup = ({
         onClick={() => setIsOpen(false)}
       />
       {successScreen ? (
-        <div className="relative w-full max-w-[500px] p-6 mx-[12px] rounded-sm bg-white animate-scaleIn overflow-hidden">
+        <div className="relative w-full max-w-[500px] p-6 mx-[12px] rounded-sm placeholder:text-[#0000006B] bg-white animate-scaleIn overflow-hidden">
           <div className="flex space-y-5 flex-col items-center justify-center">
             <div className="mt-7 ">
               <Svg name="checkCircle" className="size-[75px] text-[#05ac34]" />
@@ -269,7 +269,7 @@ const ExplorePopup = ({
       ) : (
         <div className="relative w-full lg:max-w-[55vw] mx-[12px] rounded-[11px] bg-white p-6 overflow-y-auto h-full md:h-auto [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]  animate-scaleIn">
           {/* Header */}
-          <div className="pb-6 flex items-center justify-between">
+          <div className="pb-[26px] flex items-center justify-between">
             <h2 className="text-lg font-semibold">Get Quotes</h2>
             <button
               onClick={() => setIsOpen(false)}
@@ -281,13 +281,12 @@ const ExplorePopup = ({
 
           <div className="px-5 py-[10px] bg-[#f4f4f4] mb-6">
             <p className="text-[#000000de] text-[13px]">
-              Our workspace advisor will get in touch to help you with your
-              requirement.
+              Our workspace advisor will get in touch to help you with your requirement.
             </p>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-[18.5px] gap-x-[30px]">
               {/* First Name */}
               <div className="relative">
                 <label className="block text-sm font-semibold mb-1">
@@ -297,8 +296,8 @@ const ExplorePopup = ({
                   <input
                     {...register("firstName", { required: true })}
                     placeholder="Enter First Name"
-                    className={`w-full rounded-sm border-2 px-2 tracking-normal py-2.5
-                            border-[#dbdbdb] h-[45px] text-sm font-semibold font-roboto
+                    className={`w-full rounded-sm placeholder:text-[#0000006B] border px-2 tracking-normal py-2.5
+                            border-[#dbdbdb] h-[45px] text-sm font-medium
                             ${
                               errors.firstName
                                 ? "border-[#f44336] focus:border-[#f44336]"
@@ -307,7 +306,7 @@ const ExplorePopup = ({
                           `}
                   />
                   {errors.firstName && (
-                    <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
+                    <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4">
                       {errors.firstName.message}
                     </p>
                   )}
@@ -323,8 +322,8 @@ const ExplorePopup = ({
                   <input
                     {...register("lastName")}
                     placeholder="Enter Last Name"
-                    className={`w-full rounded-sm border-2 px-3 py-2.5
-                              border-[#dbdbdb] h-[45px]  text-sm font-semibold
+                    className={`w-full rounded-sm placeholder:text-[#0000006B] border px-2 py-2.5
+                              border-[#dbdbdb] h-[45px]  text-sm font-medium
                               ${
                                 errors.lastName
                                   ? "border-[#f44336] focus:border-[#f44336]"
@@ -333,7 +332,7 @@ const ExplorePopup = ({
                             `}
                   />
                   {errors.lastName && (
-                    <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
+                    <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4">
                       {errors.lastName.message}
                     </p>
                   )}
@@ -349,8 +348,8 @@ const ExplorePopup = ({
                   type="email"
                   {...register("email")}
                   placeholder="Enter Email"
-                  className={`w-full rounded-sm border-2 px-2 tracking-normal py-2.5
-                            border-[#dbdbdb] h-[45px] text-sm font-semibold font-roboto
+                  className={`w-full rounded-sm placeholder:text-[#0000006B] border px-2 tracking-normal py-2.5
+                            border-[#dbdbdb] h-[45px] text-sm font-medium
                             ${
                               errors.email
                                 ? "border-[#f44336] focus:border-[#f44336]"
@@ -359,7 +358,7 @@ const ExplorePopup = ({
                           `}
                 />
                 {errors.email && (
-                  <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
+                  <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4">
                     {errors.email.message}
                   </p>
                 )}
@@ -390,7 +389,7 @@ const ExplorePopup = ({
                 />
                 {/* {values?.country?.name} */}
                 {errors.mobile && (
-                  <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
+                  <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4">
                     {errors.mobile.message}
                   </p>
                 )}
@@ -407,8 +406,8 @@ const ExplorePopup = ({
                           </label>
                           <select
                             {...register("spaceType")}
-                            className={`w-full rounded-sm border-2 px-2 tracking-normal py-2.5
-                                border-[#dbdbdb] h-[45px] text-sm font-semibold font-roboto
+                            className={`w-full rounded-sm placeholder:text-[#0000006B] border px-2 tracking-normal py-2.5
+                                border-[#dbdbdb] h-[45px] text-sm font-medium
                                 ${
                                   errors.spaceType
                                     ? "border-[#f44336] focus:border-[#f44336]"
@@ -435,7 +434,7 @@ const ExplorePopup = ({
                             <option value="Not Sure">Not Sure</option>
                           </select>
                           {errors.spaceType && (
-                            <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
+                            <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4">
                               {errors.spaceType.message}
                             </p>
                           )}
@@ -450,8 +449,8 @@ const ExplorePopup = ({
                       </label>
                       <select
                         {...register("city")}
-                        className={`w-full rounded-sm border-2 px-2 tracking-normal py-2.5
-                            border-[#dbdbdb] h-[45px] text-sm font-semibold font-roboto
+                        className={`w-full rounded-sm placeholder:text-[#0000006B] border px-1 tracking-normal py-2.5
+                            border-[#dbdbdb] h-[45px] text-sm font-medium
                             ${
                               errors.city
                                 ? "border-[#f44336] focus:border-[#f44336]"
@@ -467,7 +466,7 @@ const ExplorePopup = ({
                         ))}
                       </select>
                       {errors.city && (
-                        <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
+                        <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4">
                           {errors.city.message}
                         </p>
                       )}
@@ -479,8 +478,8 @@ const ExplorePopup = ({
                     </label>
                     <select
                       {...register("seats")}
-                      className={`w-full rounded-sm border-2 px-2 tracking-normal py-2.5
-                            border-[#dbdbdb] h-[45px] text-sm font-semibold font-roboto
+                      className={`w-full rounded-sm placeholder:text-[#0000006B] border px-1 tracking-normal py-2.5
+                            border-[#dbdbdb] h-[45px] text-sm font-medium
                             ${
                               errors.seats
                                 ? "border-[#f44336] focus:border-[#f44336]"
@@ -497,7 +496,7 @@ const ExplorePopup = ({
                       <option value="100+">100+</option>
                     </select>
                     {errors.seats && (
-                      <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
+                      <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4">
                         {errors.seats.message}
                       </p>
                     )}
@@ -510,7 +509,7 @@ const ExplorePopup = ({
               <button
                 type="submit"
                 disabled={submitLoading}
-                className="cursor-pointer mt-6 w-full bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white py-4 rounded-[15px] font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px]"
+                className="cursor-pointer mt-5 w-full bg-[#f76900] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white py-4 rounded-[15px] font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px]"
               >
                 {submitLoading ? "...Submitting" : "SUBMIT"}
               </button>
@@ -520,7 +519,7 @@ const ExplorePopup = ({
           <p className="mt-4 pb-5 px-5 text-[11px] text-[#000000de] text-center">
             After you submit a workspace enquiry to us, we may share your
             details with workspace providers, who may contact you to follow up
-            on your enquiry. Please read our{" "}
+            on your enquiry." Please  read our{" "}
             <a href="#" className="text-[#f76900]">
               Privacy Policy
             </a>{" "}

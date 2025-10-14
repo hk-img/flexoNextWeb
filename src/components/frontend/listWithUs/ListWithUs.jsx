@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import Svg from '@/components/svg';
 import EmblaCarousel from "@/components/frontend/emblaCarousel/EmblaCarousel";
-import FaqSection from "@/components/frontend/home/FaqSection";
 import RequestCallback from '../home/RequestCallback';
+import ListFaqSection from './ListFaqSection';
 
 const ListWithUs = () => {
     const person = [
@@ -299,7 +299,7 @@ const ListWithUs = () => {
 
         <RequestCallback/>
 
-        <FaqSection />
+        <ListFaqSection />
 
 
     </>

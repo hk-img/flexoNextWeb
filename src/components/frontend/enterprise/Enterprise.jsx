@@ -85,13 +85,13 @@ const Enterprise = () => {
                 </div>
               </div>
             </div>
-            <div className="flex md:flex-row flex-col md:items-center items-start md:gap-20 gap-4 justify-between">
-              <div className='order-2 md:order-1'>
+            <div className="flex md:flex-row flex-col md:items-center items-start max-md:gap-4 justify-between">
+              <div className='order-2 md:order-1 flex-1 '>
                 <div>
                   <h3 className='text-[17px] font-bold'>Why go with FLEXO™?</h3>
                 </div>
                 <div className='mt-5'>
-                  <ul>
+                  <ul className='md:max-w-[85%] w-full'>
                      <li className=' leading-[30px] items-start text-[#777]'>
                         <Svg name="smallDot" className="size-[15px] text-[#6c757d] inline"/>
                         <span className='ps-1'>
@@ -133,7 +133,7 @@ const Enterprise = () => {
                   </ul>
                 </div>
               </div>
-              <div className='order-1 md:order-2'>
+              <div className='order-1 md:order-2 flex-1'>
                 <Image width="680" height="453" src="/images/enterprise-2.webp" alt="" />
               </div>
             </div>

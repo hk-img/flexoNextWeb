@@ -119,6 +119,7 @@ const ExplorePopup = ({
   selectedSpaceData = null,
   cityName = "",
   type = "",
+  selectedSpaceType=""
 }) => {
   console.log({ selectedSpaceData,cityName });
   const selectedSchema = (type == "longterm")
@@ -169,6 +170,12 @@ const ExplorePopup = ({
       setValue("country", { dialCode: user?.phone_code || "91" });
     }
   }, [user]);
+
+  useEffect(()=>{
+    if(selectedSpaceType){
+      setValue("spaceType", selectedSpaceType);
+    }
+  },[selectedSpaceType])
 
   const { mutate: submitMutate, isPending: submitLoading } = useMutation({
     mutationFn: async (payload) => {
@@ -391,45 +398,51 @@ const ExplorePopup = ({
               {(!cityName || type !== "longterm") && (
                 <>
                   {Object?.values(selectedSpaceData || {})?.length > 0 ? (
-                    <div className="relative">
-                      <label className="block text-sm font-semibold mb-1">
-                        Space Type<span className="text-[#dc3545]">*</span>
-                      </label>
-                      <select
-                        {...register("spaceType")}
-                        className={`w-full rounded-sm border-2 px-2 tracking-normal py-2.5
-                            border-[#dbdbdb] h-[45px] text-sm font-semibold font-roboto
-                            ${
-                              errors.spaceType
-                                ? "border-[#f44336] focus:border-[#f44336]"
-                                : "hover:border-black focus:border-[#3f51b5] active:border-[#3f51b5]"
-                            }
-                          `}
-                      >
-                        <option value="">Select Space Type</option>
-                        {selectedSpaceData?.privatecabin_price > 0 && (
-                          <option value="Private Office">Private Office</option>
-                        )}
-                        {selectedSpaceData?.manage_office_price > 0 && (
-                          <option value="Managed Office">Managed Office</option>
-                        )}
-                        {selectedSpaceData?.desks_price > 0 && (
-                          <option value="Dedicated Desk">Dedicated Desk</option>
-                        )}
-                        {selectedSpaceData?.flexible_desk_price > 0 && (
-                          <option value="Flexible Desk">Flexible Desk</option>
-                        )}
-                        {selectedSpaceData?.virtual_office_price > 0 && (
-                          <option value="Virtual Office">Virtual Office</option>
-                        )}
-                        <option value="Not Sure">Not Sure</option>
-                      </select>
-                      {errors.spaceType && (
-                        <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
-                          {errors.spaceType.message}
-                        </p>
-                      )}
-                    </div>
+                    <>
+                    {
+                      !selectedSpaceType && (
+                        <div className="relative">
+                          <label className="block text-sm font-semibold mb-1">
+                            Space Type<span className="text-[#dc3545]">*</span>
+                          </label>
+                          <select
+                            {...register("spaceType")}
+                            className={`w-full rounded-sm border-2 px-2 tracking-normal py-2.5
+                                border-[#dbdbdb] h-[45px] text-sm font-semibold font-roboto
+                                ${
+                                  errors.spaceType
+                                    ? "border-[#f44336] focus:border-[#f44336]"
+                                    : "hover:border-black focus:border-[#3f51b5] active:border-[#3f51b5]"
+                                }
+                              `}
+                          >
+                            <option value="">Select Space Type</option>
+                            {selectedSpaceData?.privatecabin_price > 0 && (
+                              <option value="Private Office">Private Office</option>
+                            )}
+                            {selectedSpaceData?.manage_office_price > 0 && (
+                              <option value="Managed Office">Managed Office</option>
+                            )}
+                            {selectedSpaceData?.desks_price > 0 && (
+                              <option value="Dedicated Desk">Dedicated Desk</option>
+                            )}
+                            {selectedSpaceData?.flexible_desk_price > 0 && (
+                              <option value="Flexible Desk">Flexible Desk</option>
+                            )}
+                            {selectedSpaceData?.virtual_office_price > 0 && (
+                              <option value="Virtual Office">Virtual Office</option>
+                            )}
+                            <option value="Not Sure">Not Sure</option>
+                          </select>
+                          {errors.spaceType && (
+                            <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4 font-roboto">
+                              {errors.spaceType.message}
+                            </p>
+                          )}
+                        </div>
+                      )
+                    }
+                    </>
                   ) : (
                     <div className="relative">
                       <label className="block text-sm font-semibold mb-1">

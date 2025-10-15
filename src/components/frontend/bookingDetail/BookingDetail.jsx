@@ -268,7 +268,7 @@ const BookingDetail = ({ bookingId }) => {
                             <button
                               className="flex items-center justify-center gap-2 cursor-pointer w-full  uppercase tracking-[1px] hover:bg-[#1d37b5] text-white bg-[#000e54]
                 2xl:text-base text-sm font-semibold md:py-[15px] py-[10px] rounded-[15px] text-nowrap"
-                              onClick={invoiceRefetch}
+                              onClick={()=>invoiceRefetch()}
                             >
                               <Svg
                                 name="cloudDownload"

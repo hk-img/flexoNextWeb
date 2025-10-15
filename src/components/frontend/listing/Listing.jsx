@@ -670,7 +670,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
           </div>
         </div>
       </section>
-      <BottomBar type={type} city={city}/>
+      {type != "shortterm" && <BottomBar type={type} city={city}/>}
       {
         type == "longterm" && (
           <div className="fixed bottom-0 left-0 w-full lg:w-7/12  bg-white z-40">

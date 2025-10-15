@@ -121,7 +121,7 @@ const ExplorePopup = ({
   type = "",
   selectedSpaceType=""
 }) => {
-  console.log({ selectedSpaceData,cityName });
+  console.log({ selectedSpaceData,cityName,type });
   const selectedSchema = (type == "longterm")
     ? schemaForCity
     : (Object.values(selectedSpaceData || {})?.length > 0)
@@ -394,7 +394,7 @@ const ExplorePopup = ({
                   </p>
                 )}
               </div>
-              {(!cityName || type !== "longterm") && (
+              {(!cityName || type != "longterm") && (
                 <>
                   {Object?.values(selectedSpaceData || {})?.length > 0 ? (
                     <>

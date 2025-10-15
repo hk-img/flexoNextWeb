@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import ExplorePopup from "../explorePopup/ExplorePopup";
 import { usePathname } from "next/navigation";
 
-export const BottomBar = ({ type, city }) => {
+export const BottomBar = ({ type, city,spaceData={name:"Dummy Data"}}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -56,7 +56,7 @@ export const BottomBar = ({ type, city }) => {
         <ExplorePopup
           isOpen={isOpen}
           setIsOpen={setIsOpen}
-          selectedSpaceData={{name:"Dummy Data"}}
+          selectedSpaceData={spaceData}
           type={type}
           cityName={city}
         />

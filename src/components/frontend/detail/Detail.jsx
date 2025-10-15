@@ -24,6 +24,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getApi } from "@/services/ApiService";
 import BottomBar from "../bottomBar/BottomBar";
 import BookingReviewPopup from "../bookingReviewPopup/BookingReviewPopup";
+import RequestToBookPopup from "./requestToBookPopup/RequestToBookPopup";
 
 const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
   const {token,user} = useAuth();
@@ -37,6 +38,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
   const [selectedSpaceData,setSelectedSpaceData] = useState(null);
   const [selectedSpaceType, setSelectedSpaceType] = useState(null);
   const [showReviewPopup, setShowReviewPopup] = useState(false);
+  const [requestToBookOpen,setRequestToBookOpen] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY >= 700) {
@@ -119,11 +121,25 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
     }
   }
 
+  const handleRequestToBook = ()=>{
+    if(!token){
+      localStorage.setItem("requestToBookOpenData",JSON.stringify({
+        spaceId:spaceData?.id,
+        requestToBookOpen:true
+      }));
+      setIsAuthOpen(true);
+    }else{
+      setRequestToBookOpen(true);
+    }
+  }
+
   useEffect(()=>{
     const scheduleVisitOpenData = localStorage.getItem("scheduleVisitOpenData");
     const buyPassOpenData = localStorage.getItem("buyPassOpenData");
+    const requestToBookOpenData = localStorage.getItem("requestToBookOpenData");
     const parsedScheduleVisitOpenData = JSON.parse(scheduleVisitOpenData);
     const parsedbuyPassOpenData = JSON.parse(buyPassOpenData);
+    const parsedrequestToBookOpenData = JSON.parse(requestToBookOpenData);
     if(parsedScheduleVisitOpenData?.spaceId == spaceData?.id && parsedScheduleVisitOpenData?.scheduleVisitOpen && token){
       localStorage.removeItem("scheduleVisitOpenData");
       setIsScheduleVisitOpen(true);
@@ -131,6 +147,10 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
     if(parsedbuyPassOpenData?.spaceId == spaceData?.id && parsedbuyPassOpenData?.buyPassOpen && token){
       localStorage.removeItem("buyPassOpenData");
       setIsBuyPassOpen(true);
+    }
+    if(parsedrequestToBookOpenData?.spaceId == spaceData?.id && parsedrequestToBookOpenData?.requestToBookOpen && token){
+      localStorage.removeItem("requestToBookOpenData");
+      setRequestToBookOpen(true);
     }
   },[token])
   return (
@@ -1134,7 +1154,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                 </div>
                 <div className="p-5">
                   {spaceData?.isInstant == 0 ? (
-                    <button onClick={()=>setIsAuthOpen((prev)=>!prev)} className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">
+                    <button onClick={handleRequestToBook} className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">
                       Request To Book
                     </button>
                   ) : (
@@ -1203,6 +1223,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
       {isAuthOpen && <Auth isOpen={isAuthOpen} setIsOpen={setIsAuthOpen} />}
       {isScheduleVisitOpen &&<ScheduleVisitPopup isOpen={isScheduleVisitOpen} setIsOpen={setIsScheduleVisitOpen} type={type} spaceId={spaceData?.id} workingDays={spaceData?.working_time} spaceData={spaceData} hostHolidays={spaceDeatil?.hostHolidays}/>}
       {isBuyPassOpen && <BuyPassPopup isOpen={isBuyPassOpen} setIsOpen={setIsBuyPassOpen} spaceData={spaceData}/>}
+      {requestToBookOpen && <RequestToBookPopup isOpen={requestToBookOpen} setIsOpen={setRequestToBookOpen} spaceData={spaceData}/>}
       {showReviewPopup && <BookingReviewPopup setIsOpen={setShowReviewPopup} isOpen={showReviewPopup} bookingId={spaceData?.id}/>}
     </>
   );

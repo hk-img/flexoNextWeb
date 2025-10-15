@@ -5,7 +5,7 @@ const ChatBot = () => {
   return (
     <div className='fixed md:block hidden bottom-3 right-3 z-2'>
       <div className=' flex flex-col space-y-2'>
-        <a href="#" target="_blank" className="relative group">
+        <div className="relative group">
           <div className="bg-[#276ad6] text-white w-[45px] h-[45px] flex items-center justify-center rounded-full">
             <Svg name="call" className="size-4.5" />
           </div>
@@ -13,16 +13,10 @@ const ChatBot = () => {
           > +91 95133 92400
             <span className="absolute right-[-3px] w-[9px] h-[9px] bg-[#276ad6] rotate-45 z-[-1]"></span>
           </div>
-        </a>
-
+        </div>
         <a href="https://api.whatsapp.com/send/?phone=919136153810&text=Hi&type=phone_number&app_absent=0" target='_blank'>
           <div className='bg-[#25d366] text-white w-[45px] h-[45px] flex items-center justify-center rounded-full'>
             <Svg name="whatsapp" className="size-6" />
-          </div>
-        </a>
-        <a href="#" target='_blank'>
-          <div className='bg-[#f76900] text-white w-[45px] h-[45px] flex items-center justify-center rounded-full'>
-            <Svg name="chat" className="size-6" />
           </div>
         </a>
       </div>

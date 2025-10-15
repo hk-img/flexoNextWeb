@@ -62,7 +62,7 @@ const Testimonial = () => {
                 key={idx}
                 className="embla__slide shrink-0 lg:px-[15px] sm:px-[12px] px-1 basis-[100%] sm:basis-[50%] md:basis-[50%] lg:basis-[33.3%] xl:basis-[33.3%] py-3"
               >
-                <div className=" group rounded-md shadow-[0_0_3px_#cbcbcb] p-6 relative bg-white md:hover:transform md:hover:translate-y-[-10px] transition-all duration-500 min-h-[280px]">
+                <div className=" group/info rounded-md shadow-[0_0_3px_#cbcbcb] p-6 relative bg-white md:hover:transform md:hover:translate-y-[-10px] transition-all duration-500 min-h-[280px]">
                   <span className="absolute top-3 right-3 text-[#f76900] text-4xl font-bold opacity-40">
                     <Svg name="quots" className="size-[34px]" />
                   </span>
@@ -99,7 +99,7 @@ const Testimonial = () => {
                   </div>
 
                  <p
-                    className="text-[#777] text-sm 2xl:text-base line-clamp-5 group-hover:max-h-[500px] group-hover:line-clamp-none transition-[max-height] duration-500 ease-in-out overflow-hidden cursor-default"
+                    className="text-[#777] text-sm 2xl:text-base line-clamp-5 group-hover/info:line-clamp-none transition-all duration-500 ease-in-out overflow-hidden cursor-default"
                   >
                     {t.review}
                   </p>

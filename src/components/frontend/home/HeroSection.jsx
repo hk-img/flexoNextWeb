@@ -235,7 +235,7 @@ export default function HeroSection({spaceCategoryData}) {
                   onChange={(opt) => setType(opt)}
                   styles={customStyles}
                   menuPortalTarget={typeof document !== "undefined" ? document.body : null}
-                  className="md:border-r max-md:border items-center flex justify-between border-black max-md:rounded-[15px] !w-full md:border-[#d0c2c2] [&_div>div>div]:!text-black [&_div>div>div]:!text-sm [&_div>div>div]:!text-nowrap md:!h-[46px] !h-[52px]"
+                  className="md:border-r max-md:border items-center flex justify-between border-black max-md:rounded-[15px] md:!w-1/2 !w-full md:border-[#d0c2c2] [&_div>div>div]:!text-black [&_div>div>div]:!text-sm [&_div>div>div]:!text-nowrap md:!h-[46px] !h-[52px]"
                   isClearable
                   menuShouldScrollIntoView={false}
                   components={{
@@ -254,7 +254,7 @@ export default function HeroSection({spaceCategoryData}) {
                   menuPortalTarget={
                     typeof document !== "undefined" ? document.body : null
                   }
-                  className=" [&_div>div>div]:!text-black [&_div>div>div]:!text-sm max-md:border border-black rounded-[15px] !w-full md:!h-[46px] !h-[52px] items-center flex justify-between"
+                  className=" [&_div>div>div]:!text-black [&_div>div>div]:!text-sm max-md:border border-black rounded-[15px] md:!w-1/2 !w-full md:!h-[46px] !h-[52px] items-center flex justify-between"
                   isClearable
                   menuShouldScrollIntoView={false}
                   components={{

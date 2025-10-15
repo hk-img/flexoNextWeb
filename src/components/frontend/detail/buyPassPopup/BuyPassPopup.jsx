@@ -218,7 +218,7 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
                       id="firstName"
                       placeholder="First Name"
                       {...register("firstName")}
-                      className="peer w-full border-b text-sm text-[#0000008a] placeholder:text-[#0000008a] border-[#ddd] focus:border-[#3f51b5] outline-none pt-2 pb-1.5 bg-transparent"
+                      className="peer w-full border-b text-sm text-black placeholder:text-[#0000008a] border-[#0000006b] focus:border-[#3f51b5] outline-none pt-2.5 pb-1.5 bg-transparent"
                     />
                     <label
                       htmlFor="firstName"
@@ -227,7 +227,7 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
                       First Name *
                     </label>
                     {errors.firstName && (
-                      <p className="text-red-500 text-xs mt-1">
+                      <p className="text-[#f44336] text-[11px] mt-1 absolute -bottom-4.5">
                         {errors.firstName.message}
                       </p>
                     )}
@@ -240,7 +240,7 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
                       id="lastName"
                       placeholder="Last Name"
                       {...register("lastName")}
-                      className="peer w-full border-b text-sm text-[#0000008a] placeholder:text-[#0000008a] border-[#ddd] focus:border-[#3f51b5] outline-none pt-2 pb-1.5 bg-transparent"
+                      className="peer w-full border-b text-sm text-black placeholder:text-[#0000008a] border-[#0000006b] focus:border-[#3f51b5] outline-none pt-2.5 pb-1.5 bg-transparent"
                     />
                     <label
                       htmlFor="lastName"
@@ -249,7 +249,7 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
                       Last Name *
                     </label>
                     {errors.lastName && (
-                      <p className="text-red-500 text-xs mt-1">
+                      <p className="text-[#f44336] text-[11px] mt-1 absolute -bottom-4.5">
                         {errors.lastName.message}
                       </p>
                     )}
@@ -262,7 +262,7 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
                       id="email"
                       placeholder="Email Address"
                       {...register("email")}
-                      className="peer w-full border-b text-sm text-[#0000008a] placeholder:text-[#0000008a] border-[#ddd] focus:border-[#3f51b5] outline-none pt-2 pb-1.5 bg-transparent"
+                      className="peer w-full border-b text-sm text-black placeholder:text-[#0000008a] border-[#0000006b] focus:border-[#3f51b5] outline-none pt-2.5 pb-1.5 bg-transparent"
                     />
                     <label
                       htmlFor="email"
@@ -271,7 +271,7 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
                       Email Address *
                     </label>
                     {errors.email && (
-                      <p className="text-red-500 text-xs mt-1">
+                      <p className="text-[#f44336] text-[11px] mt-1 absolute -bottom-4.5">
                         {errors.email.message}
                       </p>
                     )}
@@ -284,7 +284,7 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
                       id="phoneNumber"
                       placeholder="Phone Number"
                       {...register("phoneNumber")}
-                      className="peer w-full border-b text-sm text-[#0000008a] placeholder:text-[#0000008a] border-[#ddd] focus:border-[#3f51b5] outline-none pt-2 pb-1.5 bg-transparent"
+                      className="peer w-full border-b text-sm text-black placeholder:text-[#0000008a] border-[#0000006b] focus:border-[#3f51b5] outline-none pt-2.5 pb-1.5 bg-transparent"
                     />
                     <label
                       htmlFor="phoneNumber"
@@ -293,7 +293,7 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
                       Phone Number *
                     </label>
                     {errors.phoneNumber && (
-                      <p className="text-red-500 text-xs mt-1">
+                      <p className="text-[#f44336] text-[11px] mt-1 absolute -bottom-4.5">
                         {errors.phoneNumber.message}
                       </p>
                     )}
@@ -306,7 +306,7 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
                       id="company"
                       placeholder="Company Name"
                       {...register("company")}
-                      className="peer w-full border-b text-sm text-[#0000008a] placeholder:text-[#0000008a] border-[#ddd] focus:border-[#3f51b5] outline-none pt-2 pb-1.5 bg-transparent"
+                      className="peer w-full border-b text-sm text-black placeholder:text-[#0000008a] border-[#0000006b] focus:border-[#3f51b5] outline-none pt-2.5 pb-1.5 bg-transparent"
                     />
                     <label
                       htmlFor="company"
@@ -351,97 +351,101 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
                         };
 
                         return (
-                          <>
-                            <input
-                              readOnly
-                              onClick={() => setOpen(true)}
-                              value={
-                                field.value.length > 0
-                                  ? field.value
-                                      .map((d) => d.toLocaleDateString("en-IN"))
-                                      .join(", ")
-                                  : ""
-                              }
-                              placeholder="Select Dates"
-                              className="border rounded-md px-3 py-2 w-full"
-                            />
-                            <DatePicker
-                              selected={null}
-                              onChange={handleDateChange}
-                              highlightDates={field.value}
-                              open={open}
-                              onClickOutside={() => setOpen(false)}
-                              minDate={new Date()}
-                              calendarClassName="rounded-md border border-[#ddd] shadow-md"
-                            />
-
-                            {/* Selected Dates */}
-                            {field.value.length > 0 && (
-                              <div className="flex flex-wrap gap-2 mt-3">
-                                {field.value.map((d, i) => (
-                                  <div
-                                    key={i}
-                                    className="flex items-center gap-2 bg-gray-100 border rounded-full px-3 py-1 text-sm text-gray-700"
-                                  >
-                                    {d.toLocaleDateString("en-IN")}
-                                    <button
-                                      type="button"
-                                      onClick={() => removeDate(d)}
-                                      className="text-red-500 hover:text-red-700 font-bold"
+                         <>
+                            <div className="flex items-center border-b border-[#0000006b] ">
+                              <span><Svg name="calender" className="size-4 text-[#f76900]" /></span>
+                            
+                              <div
+                                className=" px-3 py-2 w-full cursor-pointer text-sm flex flex-wrap items-center gap-2 min-h-[39px]"
+                                onClick={() => setOpen(true)}
+                              >
+                                
+                                {field.value.length === 0 ? (
+                                  <span className="text-[#0000008a] text-[10px]">Choose one and more dates</span>
+                                ) : (
+                                  field.value.map((d, i) => (
+                                    <div
+                                      key={i}
+                                      className="flex items-center gap-2 bg-[#e0e0e0] hover:bg-[#c5c5c5]  px-3 py-1.5 rounded-full text-xs shadow-sm"
                                     >
-                                      ✕
-                                    </button>
-                                  </div>
-                                ))}
+                                      {d.toLocaleDateString("en-IN")}
+                                      <button
+                                        type="button"
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          removeDate(d);
+                                        }}
+                                        className="text-white bg-black/40 size-4 flex items-center justify-center rounded-full text-xs"
+                                      >
+                                        <Svg name="close" className="size-3 text-white"/>
+                                      </button>
+                                    </div>
+                                  ))
+                                )}
+                              </div>
+                            </div>
+                            {open && (
+                              <div className="absolute bottom-2 mt-2 z-50">
+                                <DatePicker
+                                  selected={null}
+                                  onChange={handleDateChange}
+                                  highlightDates={field.value}
+                                  inline
+                                  minDate={new Date()}
+                                  calendarClassName="rounded-md border border-[#0000006b] shadow-md"
+                                  onClickOutside={() => setOpen(false)}
+                                />
                               </div>
                             )}
 
                             {errors.dates && (
-                              <p className="text-red-500 text-xs mt-1">
-                                {errors.dates.message}
-                              </p>
+                              <p className="text-[#f44336] text-[11px] mt-1 absolute -bottom-4.5">{errors.dates.message}</p>
                             )}
                           </>
+
                         );
                       }}
                     />
                   </div>
                   {/* Guests */}
-                  <div className="relative">
-                    <select
-                      id="guests"
-                      {...register("guests")}
-                      className="peer w-full border-b text-sm text-[#0000008a] border-[#ddd] focus:border-[#3f51b5] outline-none pt-2 pb-2 bg-transparent"
-                    >
-                      <option value="">No. of Guest*</option>
-                      {Array?.from(
-                        { length: spaceData?.dayPassSeat },
-                        (_, index) => (
-                          <option key={index + 1} value={index + 1}>
-                            {index + 1}
-                          </option>
-                        )
-                      )}
-                    </select>
+                  <div>
+                    <div className="relative flex items-end">
+                      <select
+                        id="guests"
+                        {...register("guests")}
+                        className="peer w-full border-b text-sm text-black border-[#0000006b] focus:border-[#3f51b5] outline-none pt-2 pb-2 bg-transparent"
+                      >
+                        <option value="">No. of Guest*</option>
+                        {Array?.from(
+                          { length: spaceData?.dayPassSeat },
+                          (_, index) => (
+                            <option key={index + 1} value={index + 1}>
+                              {index + 1}
+                            </option>
+                          )
+                        )}
+                      </select>
+                    
+                    </div>
                     {errors.guests && (
-                      <p className="text-red-500 text-xs mt-1">
-                        {errors.guests.message}
-                      </p>
-                    )}
-                  </div>
+                        <p className="text-[#f44336] text-[11px] mt-1 absolute -bottom-4.5">
+                          {errors.guests.message}
+                        </p>
+                      )}
+                    </div>
 
                   {/* Message */}
                   <div className="relative md:col-span-2">
                     <textarea
                       id="message"
-                      rows="1"
+                      rows="2"
                       placeholder="Message or additional requirements"
                       {...register("message")}
-                      className="peer w-full border-b border-[#ddd] text-sm text-[#0000008a] py-2 outline-none focus:border-[#3f51b5] bg-transparent"
+                      className="peer w-full border-b border-[#0000006b] text-sm text-black py-1 outline-none focus:border-[#3f51b5] bg-transparent"
                     ></textarea>
                     <label
                       htmlFor="message"
-                      className="absolute duration-300 text-sm transform text-[#0000008a] -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-4 peer-focus:text-[#3f51b5] peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1"
+                      className="absolute duration-300 text-sm transform text-[#0000008a] -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-4 peer-focus:text-[#3f51b5] peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-0"
                     >
                       Message or additional requirements
                     </label>
@@ -462,7 +466,7 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
                 next screen
               </p>
             </div>
-            <div className="bg-[#FFF0E6] p-5  flex flex-col gap-3">
+            <div className="bg-[#FFF0E6] px-5  py-10 flex flex-col gap-3">
               <div className="flex items-center justify-between rounded-[10px] bg-white p-5">
                 <div className="flex items-center gap-3">
                   <ImageWithFallback

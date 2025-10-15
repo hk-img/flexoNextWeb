@@ -39,26 +39,31 @@ const DualRangeSlider = ({ min, max, step, values, onChange }) => {
  
       {/* inputs handled by react-range but styled exactly like your thumbs */}
       <Range
-        step={step}
-        min={min}
-        max={max}
-        values={sliderValues}
-        onChange={handleChange}
-        renderTrack={({ props, children }) => (
-          <div {...props} style={{ ...props.style, height: 0 }}>
-            {children}
-          </div>
-        )}
-        renderThumb={({ props }) => (
-          <div
-            {...props}
-            className="
-              w-8 h-8 rounded-full bg-[#f76900] cursor-pointer
-              bg-[radial-gradient(circle,white_4px,transparent_3px)]
-            "
-          />
-        )}
-      />
+  step={step}
+  min={min}
+  max={max}
+  values={sliderValues}
+  onChange={handleChange}
+  renderTrack={({ props, children }) => (
+    <div
+      {...props}
+      style={{ ...props.style, height: 0 }}
+      className="relative w-full h-2 bg-gray-200 rounded-full"
+    >
+      {children}
+    </div>
+  )}
+  renderThumb={({ props, index }) => (
+    <div
+      {...props}
+      className={`
+        w-8 h-8 rounded-full bg-[#f76900] cursor-pointer
+        bg-[radial-gradient(circle,white_4px,transparent_3px)]
+        ${index === 0 ? 'translate-x-[14px] translate-y-[-4px]' : 'translate-x-[-14px] translate-y-[-4px]'}
+      `}
+    />
+  )}
+/>
     </div>
   );
 };

@@ -102,9 +102,9 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
             </div>
           ))}
         </EmblaCarousel>
-        <div className="shortlistIcon absolute top-[16px] z-10 right-[8px] flex p-3">
+        <div className="shortlistIcon absolute top-[3px] z-1 right-[2px] gap-[10px] flex p-[10px]">
           <div
-            className="shareBtn relative me-2"
+            className="shareBtn relative"
             onClick={(e) => {
               e.stopPropagation();
             }}
@@ -113,7 +113,7 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
               <Svg name={isFavourite ? "heart":"heartTransparent"} className={`size-[18px] ${isFavourite ? 'text-[#f76900]':'text-[#808080]'}`} />
             </div>
           </div>
-          <div className="shareBtn relative me-2 group">
+          <div className="shareBtn relative group">
             <div className="flex items-center justify-center rounded-full text-base bg-[#ece8e8] w-[34px] h-[34px] text-[#808080] cursor-pointer">
               <Svg name="share" className="size-[18px] text-[#808080]" />
             </div>
@@ -219,7 +219,7 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
           <div className="flex items-center space-x-2 text-sm text-[#777777] mb-1 font-light">
             {(type == "coworking" || type == "shortterm") && (
               <div className="flex gap-1 items-center">
-                <Svg name="user2" className="size-[12px] text-[#f76900]" />
+                <Svg name="user" className="size-[12px] text-[#f76900]" />
                 <span>{item?.howManyPeopleInYourSpace} people</span>
               </div>
             )}
@@ -237,7 +237,7 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
           {type == "coworking" && (
             <>
               <div className="flex justify-between align-items-center lg:flex-nowrap flex-wrap m-0">
-                <p className="w-1/2 lg:text-sm text-[13px] text-[#141414] m-0 p-0 font-normal">
+                <p className="w-1/2 min-[1400px]:text-base text-sm text-[#141414] m-0 p-0 font-normal">
                   Private Office from
                 </p>
                 <div className="w-1/2">
@@ -250,11 +250,11 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
                             name="rupee"
                             className="text-[#7f7f7f] size-[15px]"
                           />
-                          <span className="text-black font-semibold text-sm">
+                          <span className="text-black font-semibold min-[1400]:text-[17px] text-sm">
                             {item?.privatecabin_price}
                           </span>
                         </div>
-                        <span className="ps-1 text-[11px] font-normal !leading-4">
+                        <span className="ps-1 min-[1400px]:text-[13px] text-[11px] font-normal !leading-4">
                           per seat/month
                         </span>
                       </div>
@@ -266,7 +266,7 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
                 </div>
               </div>
               <div className="flex justify-between align-items-center lg:flex-nowrap flex-wrap m-0">
-                <p className="w-1/2 lg:text-sm text-[13px] text-[#141414] m-0 p-0 font-normal">
+                <p className="w-1/2 min-[1400px]:text-base text-sm text-[#141414] m-0 p-0 font-normal">
                   Desks from
                 </p>
                 <div className="w-1/2">
@@ -279,11 +279,11 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
                             name="rupee"
                             className="text-[#7f7f7f] size-[15px]"
                           />
-                          <span className="text-black font-semibold text-sm">
+                          <span className="text-black font-semibold  min-[1400]:text-[17px] text-sm">
                             {item?.flexible_desk_price || item?.desks_price}
                           </span>
                         </div>
-                        <span className="ps-1 text-[11px] font-normal !leading-4">
+                        <span className="ps-1 min-[1400px]:text-[13px] text-[11px] font-normal !leading-4">
                           per seat/month
                         </span>
                       </div>
@@ -353,7 +353,7 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
                         setIsOpen(true);
                         setSelectedSpaceData(item);
                       }}
-                      className="w-fit bg-[#f76900] text-[12px] border border-[#f76900]  text-white py-1.5 px-3 rounded-sm font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer"
+                      className="w-fit bg-[#f76900] text-xs border border-[#f76900]  text-white py-1.5 px-3 rounded-sm font-semibold duration-500 transition text-center gap-2 uppercase cursor-pointer"
                     >
                       Get Offer{" "}
                     </button>

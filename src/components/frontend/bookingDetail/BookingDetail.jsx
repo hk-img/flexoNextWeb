@@ -439,10 +439,7 @@ const BookingDetail = ({ bookingId }) => {
                                   No of Hours
                                 </label>
                                 <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black px-10">
-                                  {getDurationInHours(
-                                    item?.startTime,
-                                    item?.endTime
-                                  )}
+                                  {getDurationInHours(item?.startTime,item?.endTime) == 0 ? 24 : getDurationInHours(item?.startTime,item?.endTime)}
                                 </div>
                               </div>
                             </div>

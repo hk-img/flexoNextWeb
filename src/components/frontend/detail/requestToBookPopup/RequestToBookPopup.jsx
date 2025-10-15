@@ -106,15 +106,20 @@ const getTimeDateSlot = (selectedDate) => {
   const times = [];
   const now = new Date();
   const dateObj = new Date(selectedDate);
-  const dayName = dateObj.toLocaleString("en-US", { weekday: "long" }); 
-
-  // Get opening/closing time for the selected day
+  const dayName = dateObj.toLocaleString("en-US", { weekday: "long" });
   const daySlot = workingDays?.find((d) => d.day === dayName);
 
-  if (!daySlot || daySlot.isClosed) return []; // No slots if closed
+  if (!daySlot || daySlot.isClosed) return [];
 
-  const [startHour, startMinute] = daySlot.openingTime.split(":").map(Number);
-  const [endHour, endMinute] = daySlot.closingTime.split(":").map(Number);
+  let [startHour, startMinute] = daySlot.openingTime.split(":").map(Number);
+  let [endHour, endMinute] = daySlot.closingTime.split(":").map(Number);
+
+  if (daySlot.openingTime === "00:00" && daySlot.closingTime === "00:00") {
+    startHour = 0;
+    startMinute = 0;
+    endHour = 23;
+    endMinute = 59;
+  }
 
   let start = new Date(dateObj);
   start.setHours(startHour, startMinute, 0, 0);
@@ -139,7 +144,6 @@ const getTimeDateSlot = (selectedDate) => {
       label = "12:00 AM Midnight";
     }
 
-    // Disable past time if selected date is today
     const isDisabled = isToday && start <= now;
 
     times.push({
@@ -150,11 +154,12 @@ const getTimeDateSlot = (selectedDate) => {
       disabled: isDisabled,
     });
 
-    start.setMinutes(start.getMinutes() + 30); // 30 min interval
+    start.setMinutes(start.getMinutes() + 30); // 30-min interval
   }
 
   return times;
 };
+
 
 
   const { mutate: submitMutate, isPending: isSubmitPending } = useMutation({

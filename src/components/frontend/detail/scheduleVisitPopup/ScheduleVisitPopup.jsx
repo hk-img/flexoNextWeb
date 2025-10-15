@@ -201,7 +201,7 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId,workingDays,spaceData,hos
           </div>
         </div>
       ) : (
-        <div className="relative w-full lg:max-w-[80%] h-full p-6 mx-[12px] rounded-sm bg-white animate-scaleIn overflow-hidden">
+        <div className="relative w-full lg:max-w-[80%] h-full mx-[12px] rounded-sm bg-white animate-scaleIn overflow-hidden">
           <div className="p-6 flex items-center justify-between">
             <h2 className="2xl:text-xl text-lg font-medium text-[#141414]">
               {toggleScheduling ? "Visit Scheduling" : "Schedule Visit"}
@@ -225,10 +225,10 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId,workingDays,spaceData,hos
               <CoworkingSelectionScreen spaceId={spaceId} formData={formData} setFormData={setFormData} error={error} setError={setError} values={values} setToggleScheduling={setToggleScheduling} setSuccessScreen={setSuccessScreen} spaceData={spaceData}/>
             ) : (
               <>
-                <div className="overflow-y-auto h-[calc(100%-90px)] [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1] p-5">
+                <div className="overflow-y-auto h-[calc(100%-90px)] mx-6 [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]">
                   <div className="md:max-w-[80%] max-w-full mx-auto text-center py-8 ">
                     <div>
-                      <h2 className="text-[#141414]  font-light text-[26px] text-center py-3">
+                      <h2 className="text-[#141414]  font-light text-[26px] text-center pb-3">
                         When would you like to visit?
                       </h2>
                     </div>

@@ -3,7 +3,10 @@ import ImageWithFallback from "@/components/ImageWithFallback";
 import Svg from "@/components/svg";
 import { useAuth } from "@/context/useAuth";
 import { getAPIAuthWithoutBearer } from "@/services/ApiService";
-import { convertSlugToCapitalLetter } from "@/services/Comman";
+import {
+  convertSlugToCapitalLetter,
+  getTypeOfSpaceByWorkSpace,
+} from "@/services/Comman";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import React, { useEffect, useMemo, useState } from "react";
@@ -29,7 +32,8 @@ const BookingDetail = ({ bookingId }) => {
   const bookingData = useMemo(() => {
     return bookingDetail?.booking?.booking?.[0] || [];
   }, [bookingDetail]);
-  console.log({ bookingData });
+  const type = getTypeOfSpaceByWorkSpace(bookingData?.spaceType || "");
+  console.log({ bookingData, type });
 
   function convertTo12Hour(time) {
     if (!time) return "";
@@ -48,7 +52,7 @@ const BookingDetail = ({ bookingId }) => {
         token
       );
       const data = res.data;
-      if(data?.success){
+      if (data?.success) {
         const url = `${process.env.NEXT_PUBLIC_BASE_URL}/${data?.pdfFilePath}`;
         window.open(url, "_blank");
       }
@@ -92,6 +96,19 @@ const BookingDetail = ({ bookingId }) => {
       setPaymentDetails(paymentDetails);
     }
   }, [bookingData]);
+
+  function getDurationInHours(startTime, endTime) {
+    if (!startTime || !endTime) return 0;
+    if (startTime == "00:00" && endTime == "00:00") return 24;
+    const [startH, startM] = startTime.split(":").map(Number);
+    const [endH, endM] = endTime.split(":").map(Number);
+    const startTotalMinutes = startH * 60 + startM;
+    const endTotalMinutes = endH * 60 + endM;
+    let durationMinutes = endTotalMinutes - startTotalMinutes;
+    if (durationMinutes < 0) durationMinutes += 24 * 60;
+    const decimalHours = durationMinutes / 60;
+    return Math.round(decimalHours * 100) / 100;
+  }
   return (
     <>
       <div className="bg-[#f9f9f9]">
@@ -229,17 +246,24 @@ const BookingDetail = ({ bookingId }) => {
                               {bookingData?.howManyPeopleInYourSpace} people
                             </span>
                           </div>
-                          {
-                            bookingData?.spaceType != "Coworking Space" && (
-                              <>
-                                <span className="size-[10px] rounded-full bg-[#ddd]"></span>
-                                <div className="flex items-center space-x-1">
-                                  <Svg name="clock" className="size-4 text-[#f76900] shrink-0" />
-                                  <span>{(bookingData.minimum_hours == 0 || bookingData.minimum_hours == null) ? "2" : (bookingData?.minimum_hours / 60)} hrs min</span>
-                                </div>
-                              </>
-                            )
-                          }
+                          {bookingData?.spaceType != "Coworking Space" && (
+                            <>
+                              <span className="size-[10px] rounded-full bg-[#ddd]"></span>
+                              <div className="flex items-center space-x-1">
+                                <Svg
+                                  name="clock"
+                                  className="size-4 text-[#f76900] shrink-0"
+                                />
+                                <span>
+                                  {bookingData.minimum_hours == 0 ||
+                                  bookingData.minimum_hours == null
+                                    ? "2"
+                                    : bookingData?.minimum_hours / 60}{" "}
+                                  hrs min
+                                </span>
+                              </div>
+                            </>
+                          )}
                           <span className="size-[10px] rounded-full bg-[#ddd]"></span>
                           <div className="flex items-center space-x-1">
                             <Svg
@@ -307,70 +331,172 @@ const BookingDetail = ({ bookingId }) => {
                       </>
                     )}
                   </div>
-                  {bookingData?.spaceType == "Coworking Space" &&
-                  bookingData?.bookingPeriods?.length > 0 ? (
-                    <div className="">
-                      <div className="flex flex-wrap items-center space-x-4">
-                        <label className="block text-[#777] 2xl:text-base text-sm font-medium mb-2">
-                          Date :
-                        </label>
-                        {bookingData?.bookingPeriods?.map((item, index) => (
-                          <div
-                            key={index}
-                            className="bg-white border px-4 border-[#ddd] rounded-[5px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black"
-                          >
-                            {new Date(item)
-                              ?.toLocaleDateString("en-GB")
-                              ?.replace(/\//g, "-")}
+                  {type == "coworking" && (
+                    <>
+                      {bookingData?.bookingPeriods?.length > 0 ? (
+                        <div className="">
+                          <div className="flex flex-wrap items-center space-x-4">
+                            <label className="block text-[#777] 2xl:text-base text-sm font-medium mb-2">
+                              Date :
+                            </label>
+                            {bookingData?.bookingPeriods?.map((item, index) => (
+                              <div
+                                key={index}
+                                className="bg-white border px-4 border-[#ddd] rounded-[5px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black"
+                              >
+                                {new Date(item)
+                                  ?.toLocaleDateString("en-GB")
+                                  ?.replace(/\//g, "-")}
+                              </div>
+                            ))}
                           </div>
-                        ))}
-                      </div>
-                      <div className="mt-4">
-                        <label className="block text-[#777] 2xl:text-base text-sm font-medium mb-2">
-                          Custom Message
-                        </label>
-                        <div className="bg-white border border-[#ddd] rounded-[5px] py-[15px] px-[30px] text-sm 2xl:text-base font-medium text-black">
-                          {bookingData?.message}
+                          <div className="mt-4">
+                            <label className="block text-[#777] 2xl:text-base text-sm font-medium mb-2">
+                              Custom Message
+                            </label>
+                            <div className="bg-white border border-[#ddd] rounded-[5px] py-[15px] px-[30px] text-sm 2xl:text-base font-medium text-black">
+                              {bookingData?.message}
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 px-[15px]">
-                      <div>
-                        <label className="block text-[#777] 2xl:text-base text-sm font-medium mb-2">
-                          Date
-                        </label>
-                        <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black">
-                          {new Date(bookingData?.startDate)
-                            ?.toLocaleDateString("en-GB")
-                            ?.replace(/\//g, "-")}
+                      ) : (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 px-[15px]">
+                          <div>
+                            <label className="block text-[#777] 2xl:text-base text-sm font-medium mb-2">
+                              Date
+                            </label>
+                            <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black px-10">
+                              {new Date(bookingData?.startDate)
+                                ?.toLocaleDateString("en-GB")
+                                ?.replace(/\//g, "-")}
+                            </div>
+                          </div>
+                          <div>
+                            <label className="block text-[#777] 2xl:text-base  text-sm font-medium mb-2">
+                              Start Time
+                            </label>
+                            <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black px-10">
+                              {convertTo12Hour(bookingData?.startTime || "")}
+                            </div>
+                          </div>
+                          <div>
+                            <label className="block text-[#777] text-[16px] font-medium mb-2">
+                              End Time
+                            </label>
+                            <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black px-10">
+                              {convertTo12Hour(bookingData?.endTime || "")}
+                            </div>
+                          </div>
+                          <div>
+                            <label className="block text-[#777] text-[16px] font-medium mb-2">
+                              No of Hours
+                            </label>
+                            <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black px-10">
+                              {bookingData?.totalHours}
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                      <div>
-                        <label className="block text-[#777] 2xl:text-base  text-sm font-medium mb-2">
-                          Start Time
-                        </label>
-                        <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black">
-                          {convertTo12Hour(bookingData?.startTime || "")}
+                      )}
+                    </>
+                  )}
+                  {type == "shortterm" && (
+                    <>
+                      {bookingData?.bookingPeriods?.length > 0 ? (
+                        <div className="">
+                          {bookingData?.bookingPeriods?.map((item, index) => (
+                            <div
+                              key={index}
+                              className="flex max-md:flex-wrap items-center space-x-4 w-full"
+                            >
+                              <div className="w-full">
+                                <label className="block text-[#777] 2xl:text-base text-sm font-medium mb-2">
+                                  Date :
+                                </label>
+                                <div className="bg-white border px-4 border-[#ddd] rounded-[5px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black">
+                                  {new Date(item?.startDate)
+                                    ?.toLocaleDateString("en-GB")
+                                    ?.replace(/\//g, "-")}
+                                </div>
+                              </div>
+                              <div className="w-full">
+                                <label className="block text-[#777] 2xl:text-base  text-sm font-medium mb-2">
+                                  Start Time
+                                </label>
+                                <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black px-10">
+                                  {convertTo12Hour(item?.startTime || "")}
+                                </div>
+                              </div>
+                              <div className="w-full">
+                                <label className="block text-[#777] text-[16px] font-medium mb-2">
+                                  End Time
+                                </label>
+                                <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black px-10">
+                                  {convertTo12Hour(item?.endTime || "")}
+                                </div>
+                              </div>
+                              <div className="w-full">
+                                <label className="block text-[#777] text-[16px] font-medium mb-2">
+                                  No of Hours
+                                </label>
+                                <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black px-10">
+                                  {getDurationInHours(
+                                    item?.startTime,
+                                    item?.endTime
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                          {bookingData?.message && (
+                            <div className="mt-4">
+                              <label className="block text-[#777] 2xl:text-base text-sm font-medium mb-2">
+                                Custom Message
+                              </label>
+                              <div className="bg-white border border-[#ddd] rounded-[5px] py-[15px] px-[30px] text-sm 2xl:text-base font-medium text-black">
+                                {bookingData?.message}
+                              </div>
+                            </div>
+                          )}
                         </div>
-                      </div>
-                      <div>
-                        <label className="block text-[#777] text-[16px] font-medium mb-2">
-                          End Time
-                        </label>
-                        <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black">
-                          {convertTo12Hour(bookingData?.endTime || "")}
+                      ) : (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 px-[15px]">
+                          <div>
+                            <label className="block text-[#777] 2xl:text-base text-sm font-medium mb-2">
+                              Date
+                            </label>
+                            <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black px-10">
+                              {new Date(bookingData?.startDate)
+                                ?.toLocaleDateString("en-GB")
+                                ?.replace(/\//g, "-")}
+                            </div>
+                          </div>
+                          <div>
+                            <label className="block text-[#777] 2xl:text-base  text-sm font-medium mb-2">
+                              Start Time
+                            </label>
+                            <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black px-10">
+                              {convertTo12Hour(bookingData?.startTime || "")}
+                            </div>
+                          </div>
+                          <div>
+                            <label className="block text-[#777] text-[16px] font-medium mb-2">
+                              End Time
+                            </label>
+                            <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black px-10">
+                              {convertTo12Hour(bookingData?.endTime || "")}
+                            </div>
+                          </div>
+                          <div>
+                            <label className="block text-[#777] text-[16px] font-medium mb-2">
+                              No of Hours
+                            </label>
+                            <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black px-10">
+                              {bookingData?.totalHours}
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                      <div>
-                        <label className="block text-[#777] text-[16px] font-medium mb-2">
-                          No of Hours
-                        </label>
-                        <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black">
-                          {bookingData?.totalHours}
-                        </div>
-                      </div>
-                    </div>
+                      )}
+                    </>
                   )}
                 </div>
               </div>

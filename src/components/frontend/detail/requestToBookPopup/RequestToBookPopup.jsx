@@ -73,7 +73,7 @@ const schema = z.object({
   slots: z.array(slotSchema).min(1, "Please add at least one booking slot"),
 });
 
-const RequestToBookPopup = ({ setIsOpen, spaceData }) => {
+const RequestToBookPopup = ({ setIsOpen, spaceData, workingDays,hostHolidays }) => {
   const minHours = spaceData?.minimum_hours / 60;
   const router = useRouter();
   const { token } = useAuth();
@@ -100,45 +100,62 @@ const RequestToBookPopup = ({ setIsOpen, spaceData }) => {
   const values = watch();
   console.log(values, "Rthrthrth");
 
-  const getTimeDateSlot = (selectedDate) => {
-    if (!selectedDate) return defaultTime;
+const getTimeDateSlot = (selectedDate) => {
+  if (!selectedDate) return [];
 
-    const times = [];
-    const now = new Date();
-    let start = new Date();
-    start.setHours(0, 0, 0, 0);
-    let end = new Date();
-    end.setHours(23, 30, 0, 0);
+  const times = [];
+  const now = new Date();
+  const dateObj = new Date(selectedDate);
+  const dayName = dateObj.toLocaleString("en-US", { weekday: "long" }); 
 
-    const dateObj = new Date(selectedDate);
-    const isToday =
-      dateObj.getDate() === now.getDate() &&
-      dateObj.getMonth() === now.getMonth() &&
-      dateObj.getFullYear() === now.getFullYear();
+  // Get opening/closing time for the selected day
+  const daySlot = workingDays?.find((d) => d.day === dayName);
 
-    while (start <= end) {
-      const hours = start.getHours();
-      const minutes = start.getMinutes();
-      const period = hours >= 12 ? "PM" : "AM";
-      const displayHours = hours % 12 === 0 ? 12 : hours % 12;
-      const displayMinutes = minutes.toString().padStart(2, "0");
-      let label = "";
-      if (`${displayHours}:${displayMinutes} ${period}` == "12:00 AM") {
-        label = "12:00 AM Midnight";
-      } else {
-        label = `${displayHours}:${displayMinutes} ${period}`;
-      }
-      const defaultSlot = defaultTime.find((t) => t.label == label);
+  if (!daySlot || daySlot.isClosed) return []; // No slots if closed
 
-      const value = defaultSlot?.value || label;
-      const isDisabled = isToday && start <= now;
+  const [startHour, startMinute] = daySlot.openingTime.split(":").map(Number);
+  const [endHour, endMinute] = daySlot.closingTime.split(":").map(Number);
 
-      times.push({ label, value, disabled: isDisabled });
-      start.setMinutes(start.getMinutes() + 30);
+  let start = new Date(dateObj);
+  start.setHours(startHour, startMinute, 0, 0);
+
+  const end = new Date(dateObj);
+  end.setHours(endHour, endMinute, 0, 0);
+
+  const isToday =
+    dateObj.getDate() === now.getDate() &&
+    dateObj.getMonth() === now.getMonth() &&
+    dateObj.getFullYear() === now.getFullYear();
+
+  while (start <= end) {
+    const hours = start.getHours();
+    const minutes = start.getMinutes();
+    const period = hours >= 12 ? "PM" : "AM";
+    const displayHours = hours % 12 === 0 ? 12 : hours % 12;
+    const displayMinutes = minutes.toString().padStart(2, "0");
+    let label = `${displayHours}:${displayMinutes} ${period}`;
+
+    if (`${displayHours}:${displayMinutes} ${period}` === "12:00 AM") {
+      label = "12:00 AM Midnight";
     }
 
-    return times;
-  };
+    // Disable past time if selected date is today
+    const isDisabled = isToday && start <= now;
+
+    times.push({
+      label,
+      value: `${hours.toString().padStart(2, "0")}:${minutes
+        .toString()
+        .padStart(2, "0")}`,
+      disabled: isDisabled,
+    });
+
+    start.setMinutes(start.getMinutes() + 30); // 30 min interval
+  }
+
+  return times;
+};
+
 
   const { mutate: submitMutate, isPending: isSubmitPending } = useMutation({
     mutationFn: async (payload) => {
@@ -189,14 +206,14 @@ const RequestToBookPopup = ({ setIsOpen, spaceData }) => {
         dateMap[startDate] = [];
       }
       const isOverlap = dateMap[startDate].some(
-        (s) => !(endTime <= s.startTime || startTime >= s.endTime)
+        (s) => !(endTime < s.startTime || startTime > s.endTime)
       );
 
       if (isOverlap) {
         toast.error(
           `Slots on ${startDate} are overlapping. Please fix before submitting.`
         );
-        return; 
+        return;
       }
       dateMap[startDate].push({ startTime, endTime });
     }
@@ -220,6 +237,41 @@ const RequestToBookPopup = ({ setIsOpen, spaceData }) => {
     const decimalHours = durationMinutes / 60;
     return Math.round(decimalHours * 100) / 100;
   }
+
+  const isClosedDay = (date) => {
+    const dayName = date.toLocaleString("en-US", { weekday: "long" });
+    const dayInfo = workingDays.find((d) => d.day === dayName);
+    return dayInfo?.isClosed;
+  };
+  const isDisabledDate = (date) => {
+    if (isClosedDay(date)) return true;
+    return hostHolidays.some((holiday) => {
+      const holidayDate = new Date(holiday.date);
+      return (
+        holidayDate.getFullYear() === date.getFullYear() &&
+        holidayDate.getMonth() === date.getMonth() &&
+        holidayDate.getDate() === date.getDate()
+      );
+    });
+  };
+
+  const getHolidayTitle = (date) => {
+    const dayName = date.toLocaleString("en-US", { weekday: "long" });
+    const dayInfo = workingDays.find((d) => d.day === dayName);
+    if (dayInfo?.isClosed) {
+      return "Closed";
+    }
+    const found = hostHolidays.find((holiday) => {
+      const holidayDate = new Date(holiday.date);
+      return (
+        holidayDate.getFullYear() === date.getFullYear() &&
+        holidayDate.getMonth() === date.getMonth() &&
+        holidayDate.getDate() === date.getDate()
+      );
+    });
+
+    return found ? found.holidayTitle : "Closed";
+  };
 
   const subtotal = values.slots.reduce((acc, item) => {
     const duration = getDurationInHours(item.startTime, item.endTime);
@@ -295,6 +347,19 @@ const RequestToBookPopup = ({ setIsOpen, spaceData }) => {
                         <DatePicker
                           selected={field.value}
                           onChange={(date) => field.onChange(date)}
+                          filterDate={(date) => !isDisabledDate(date)}
+                          dateFormat="dd-MM-yyyy"
+                          renderDayContents={(day, date) => {
+                            const title = getHolidayTitle(date);
+                            return (
+                              <span
+                                title={title}
+                                className={title ? "font-semibold" : ""}
+                              >
+                                {day}
+                              </span>
+                            );
+                          }}
                           minDate={new Date()}
                           placeholderText="Select date"
                           className="w-full border rounded-md px-3 py-2 text-sm outline-none"
@@ -433,6 +498,41 @@ const RequestToBookPopup = ({ setIsOpen, spaceData }) => {
                 <button
                   type="button"
                   onClick={() => {
+                    const slots = values.slots.map((item) => {
+                    const d = new Date(item?.date);
+                    d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+
+                    const day = String(d.getDate()).padStart(2, "0");
+                    const month = String(d.getMonth() + 1).padStart(2, "0");
+                    const year = d.getFullYear();
+
+                    const formattedDate = `${day}/${month}/${year}`;
+
+                    return {
+                        startDate: formattedDate,
+                        startTime: item.startTime,
+                        endTime: item.endTime,
+                    };
+                    });
+                    const dateMap = {};
+
+                    for (let slot of slots) {
+                    const { startDate, startTime, endTime } = slot;
+                    if (!dateMap[startDate]) {
+                        dateMap[startDate] = [];
+                    }
+                    const isOverlap = dateMap[startDate].some(
+                        (s) => !(endTime < s.startTime || startTime > s.endTime)
+                    );
+
+                    if (isOverlap) {
+                        toast.error(
+                        `Slots on ${startDate} are overlapping. Please fix before submitting.`
+                        );
+                        return;
+                    }
+                    dateMap[startDate].push({ startTime, endTime });
+                    }
                     const lastSlot =
                       watch("slots")?.[watch("slots").length - 1];
                     if (
@@ -448,7 +548,7 @@ const RequestToBookPopup = ({ setIsOpen, spaceData }) => {
                       );
                     }
                   }}
-                  className="text-[#f76900] font-semibold text-sm"
+                  className="cursor-pointer text-[#f76900] font-semibold text-sm"
                 >
                   + Add Another Slot
                 </button>
@@ -533,11 +633,11 @@ const RequestToBookPopup = ({ setIsOpen, spaceData }) => {
                             })
                           : "No date selected"}
                         <span className="font-semibold flex items-center gap-1">
-                          {spaceData?.originalPrice}
                           <Svg
                             name="rupee"
                             className="size-[18px] text-[#f76900] inline"
                           />
+                          {spaceData?.originalPrice}
                         </span>
                         {getDurationInHours(slot?.startTime, slot?.endTime) !=
                           0 &&
@@ -547,14 +647,14 @@ const RequestToBookPopup = ({ setIsOpen, spaceData }) => {
                           )} hours`}{" "}
                       </span>
                       <span className="font-semibold flex items-center gap-1">
-                        {(
-                          getDurationInHours(slot?.startTime, slot?.endTime) *
-                          spaceData?.originalPrice
-                        )?.toLocaleString("en-IN")}
                         <Svg
                           name="rupee"
                           className="size-[18px] text-[#f76900] inline"
                         />
+                        {(
+                          getDurationInHours(slot?.startTime, slot?.endTime) *
+                          spaceData?.originalPrice
+                        )?.toLocaleString("en-IN")}
                       </span>
                     </div>
                   ))}

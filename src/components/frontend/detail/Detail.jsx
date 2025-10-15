@@ -133,6 +133,18 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
     }
   }
 
+  const handleInstantBook = ()=>{
+    if(!token){
+      localStorage.setItem("requestToBookOpenData",JSON.stringify({
+        spaceId:spaceData?.id,
+        requestToBookOpen:true
+      }));
+      setIsAuthOpen(true);
+    }else{
+      setRequestToBookOpen(true);
+    }
+  }
+
   useEffect(()=>{
     const scheduleVisitOpenData = localStorage.getItem("scheduleVisitOpenData");
     const buyPassOpenData = localStorage.getItem("buyPassOpenData");
@@ -1159,7 +1171,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                     </button>
                   ) : (
                     <>
-                      <button onClick={()=>setIsAuthOpen((prev)=>!prev)} className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]  mt-[10px]">
+                      <button onClick={handleInstantBook} className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]  mt-[10px]">
                         Book Now
                       </button>
                       <div className="pt-5">

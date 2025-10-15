@@ -209,7 +209,7 @@ const BookingDetail = ({ bookingId }) => {
                           <span>
                             <Svg
                               name="location2"
-                              className="size-4 text-[#f76900]"
+                              className="size-4 text-[#f76900] shrink-0"
                             />
                           </span>
                           <span>
@@ -219,39 +219,32 @@ const BookingDetail = ({ bookingId }) => {
                           </span>
                         </div>
 
-                        <div className="flex items-center space-x-4 font-medium text-sm text-[#141414]">
+                        <div className="flex flex-wrap space-y-2 items-center space-x-4 font-medium text-sm text-[#141414]">
                           <div className="flex items-center space-x-1">
                             <Svg
                               name="userHalf"
-                              className="size-4 text-[#f76900]"
+                              className="size-4 text-[#f76900] shrink-0"
                             />
                             <span>
                               {bookingData?.howManyPeopleInYourSpace} people
                             </span>
                           </div>
-                          {bookingData?.spaceType != "Coworking Space" && (
-                            <>
-                              <span className="size-[10px] rounded-full bg-[#ddd]"></span>
-                              <div className="flex items-center space-x-1">
-                                <Svg
-                                  name="clock"
-                                  className="size-4 text-[#f76900]"
-                                />
-                                <span>
-                                  {bookingData.minimum_hours == 0 ||
-                                  bookingData.minimum_hours == null
-                                    ? "2"
-                                    : bookingData?.minimum_hours / 60}{" "}
-                                  hrs min
-                                </span>
-                              </div>
-                            </>
-                          )}
+                          {
+                            bookingData?.spaceType != "Coworking Space" && (
+                              <>
+                                <span className="size-[10px] rounded-full bg-[#ddd]"></span>
+                                <div className="flex items-center space-x-1">
+                                  <Svg name="clock" className="size-4 text-[#f76900] shrink-0" />
+                                  <span>{(bookingData.minimum_hours == 0 || bookingData.minimum_hours == null) ? "2" : (bookingData?.minimum_hours / 60)} hrs min</span>
+                                </div>
+                              </>
+                            )
+                          }
                           <span className="size-[10px] rounded-full bg-[#ddd]"></span>
                           <div className="flex items-center space-x-1">
                             <Svg
                               name="scaleRuler"
-                              className="size-4 text-[#f76900]"
+                              className="size-4 text-[#f76900] shrink-0"
                             />
                             <span>{bookingData?.spacesqft} sqft</span>
                           </div>

@@ -100,8 +100,8 @@ const bookingItem = ({ item,setShowReviewPopup,setBookingId }) => {
                   <span className="border-r text-black text-sm font-medium border-[#f76900] pr-4">
                     {item?.ofDays || item?.dayCount} Day
                   </span>
-                  <div className="sq-ft booking-list-single-info-single">
-                    <p >
+                  <div className="text-black text-sm 2xl:text-base font-medium">
+                    <p className="  ">
                       <span>
                         {item?.spaceType == "Coworking Space"
                           ? item?.noOfGuest || 1
@@ -202,7 +202,7 @@ const bookingItem = ({ item,setShowReviewPopup,setBookingId }) => {
               <button
                 onClick={handleInvoiceClick}
                 className="flex items-center justify-center gap-2 cursor-pointer w-full border uppercase tracking-[1px] border-[#000e54] text-[#000e54]
-                          2xl:text-base text-sm font-semibold md:py-[15px] py-[10px] rounded-[15px] text-nowrap"
+                          min-[1400px]:text-base text-sm font-semibold md:py-[15px] py-[10px] rounded-[15px] text-nowrap"
               >
                 <Svg name="cloudDownload" className="size-5 text-[#000e54]" />
                 <span>INVOICE</span>

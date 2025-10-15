@@ -673,8 +673,9 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
       <BottomBar type={type} city={city}/>
       {
         type == "longterm" && (
-          <div className="fixed bottom-0 left-0 w-full max-w-[790px] bg-white z-40">
-              <div className=" mx-auto flex md:flex-row flex-col gap-1 items-center justify-between px-7 py-3">
+          <div className="fixed bottom-0 left-0 w-full lg:w-7/12  bg-white z-40">
+              <div className=" mx-auto flex md:flex-row flex-col md:gap-14 gap-1 items-center justify-between px-7 py-3">
+                <div className="flex md:flex-row flex-col w-full items-center justify-between">
                   <div className="flex items-center gap-2">
                     <div>
                       <Svg name="checkTic" className="size-3 text-[#f76900]"/>
@@ -687,9 +688,10 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                     </div>
                     <div className="text-sm font-light">We help secure the <span className="font-semibold ">best deal</span> </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <button onClick={() => setIsLongTermPopupOpen((prev) => !prev)} className="cursor-pointer bg-[#f76900] text-white px-10 text-sm py-[15px] rounded-sm uppercase">FIND MY PERFECT OFFICE NOW</button>
-                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button onClick={() => setIsLongTermPopupOpen((prev) => !prev)} className="cursor-pointer bg-[#f76900] text-white px-10 text-sm py-[15px] rounded-sm uppercase text-nowrap">FIND MY PERFECT OFFICE NOW</button>
+                </div>
               </div>
           </div>
         )

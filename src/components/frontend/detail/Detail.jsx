@@ -1223,7 +1223,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
       {isAuthOpen && <Auth isOpen={isAuthOpen} setIsOpen={setIsAuthOpen} />}
       {isScheduleVisitOpen &&<ScheduleVisitPopup isOpen={isScheduleVisitOpen} setIsOpen={setIsScheduleVisitOpen} type={type} spaceId={spaceData?.id} workingDays={spaceData?.working_time} spaceData={spaceData} hostHolidays={spaceDeatil?.hostHolidays}/>}
       {isBuyPassOpen && <BuyPassPopup isOpen={isBuyPassOpen} setIsOpen={setIsBuyPassOpen} spaceData={spaceData}/>}
-      {requestToBookOpen && <RequestToBookPopup isOpen={requestToBookOpen} setIsOpen={setRequestToBookOpen} spaceData={spaceData}/>}
+      {requestToBookOpen && <RequestToBookPopup isOpen={requestToBookOpen} setIsOpen={setRequestToBookOpen} spaceData={spaceData} workingDays={spaceData?.working_time} hostHolidays={spaceDeatil?.hostHolidays}/>}
       {showReviewPopup && <BookingReviewPopup setIsOpen={setShowReviewPopup} isOpen={showReviewPopup} bookingId={spaceData?.id}/>}
     </>
   );

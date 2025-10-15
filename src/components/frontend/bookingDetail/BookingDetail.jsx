@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import React, { useEffect, useMemo, useState } from "react";
 import BookingReviewPopup from "../bookingReviewPopup/BookingReviewPopup";
+import { toast } from "sonner";
 
 const BookingDetail = ({ bookingId }) => {
   const { token } = useAuth();
@@ -40,23 +41,21 @@ const BookingDetail = ({ bookingId }) => {
     return `${hour}:${minute} ${ampm}`;
   }
 
-  const { data: invoiceDownload, refetch: invoiceRefetch } = useQuery({
-    queryKey: ["invoiceDownload", bookingData?.id],
-    queryFn: async () => {
+  const handleInvoiceClick = async () => {
+    try {
       const res = await getAPIAuthWithoutBearer(
         `user/downloadBookingInvoice/${bookingData?.id}`,
         token
       );
-      return res.data;
-    },
-    enabled: false,
-  });
-  useEffect(() => {
-    if (invoiceDownload?.success) {
-      const url = `${process.env.NEXT_PUBLIC_BASE_URL}/${invoiceDownload?.pdfFilePath}`;
-      window.open(url, "_blank");
+      const data = res.data;
+      if(data?.success){
+        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/${data?.pdfFilePath}`;
+        window.open(url, "_blank");
+      }
+    } catch (error) {
+      toast.error(error.message);
     }
-  }, [invoiceDownload]);
+  };
 
   function formatTimestampToDate(timestamp) {
     if (!timestamp || isNaN(timestamp)) return "";
@@ -123,73 +122,67 @@ const BookingDetail = ({ bookingId }) => {
                     </div>
                   </div>
                 )}
-                {
-                  bookingData?.bookingStatus === "confirmed" && (
-                    <div className="bg-[#ecf5ef] rounded-[5px] p-5 flex items-center gap-2.5 ">
-                      <div className="">
-                        <div className=" text-white rounded-full  flex items-center justify-center text-2xl">
-                          <Svg
-                            name="checkTic"
-                            className="size-[18px] shrink-0 text-[#05ac34]"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <h2 className="text-lg 2xl:text-xl font-bold text-[#05ac34] ">
-                          Booking confirmed !
-                        </h2>
-                        <p className="2xl:text-base text-sm leading-[1.2]">
-                          You will receive details about the space via email and
-                          whatsapp.
-                        </p>
+                {bookingData?.bookingStatus === "confirmed" && (
+                  <div className="bg-[#ecf5ef] rounded-[5px] p-5 flex items-center gap-2.5 ">
+                    <div className="">
+                      <div className=" text-white rounded-full  flex items-center justify-center text-2xl">
+                        <Svg
+                          name="checkTic"
+                          className="size-[18px] shrink-0 text-[#05ac34]"
+                        />
                       </div>
                     </div>
-                  )
-                }
-                {
-                  bookingData?.bookingStatus === "cancel" && (
-                    <div className="bg-[#ecf5ef] rounded-[5px] p-5 flex items-center gap-2.5 ">
-                      <div className="px-[15px]">
-                        <div className=" text-white w-12 h-12 rounded-full  flex items-center justify-center text-2xl">
-                          <Svg
-                            name="clockFill"
-                            className="size-12 shrink-0 text-[#f76900]"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <h2 className="text-lg 2xl:text-xl font-bold text-[#343a40] ">
-                          Booking {bookingData?.bookingStatus} !
-                        </h2>
-                        <p className="2xl:text-base text-sm leading-[1.2]">
-                          Your request to update booking has been cancelled
-                        </p>
+                    <div>
+                      <h2 className="text-lg 2xl:text-xl font-bold text-[#05ac34] ">
+                        Booking confirmed !
+                      </h2>
+                      <p className="2xl:text-base text-sm leading-[1.2]">
+                        You will receive details about the space via email and
+                        whatsapp.
+                      </p>
+                    </div>
+                  </div>
+                )}
+                {bookingData?.bookingStatus === "cancel" && (
+                  <div className="bg-[#ecf5ef] rounded-[5px] p-5 flex items-center gap-2.5 ">
+                    <div className="px-[15px]">
+                      <div className=" text-white w-12 h-12 rounded-full  flex items-center justify-center text-2xl">
+                        <Svg
+                          name="clockFill"
+                          className="size-12 shrink-0 text-[#f76900]"
+                        />
                       </div>
                     </div>
-                  )
-                }
-                {
-                  bookingData?.bookingStatus === "rejected" && (
-                    <div className="bg-[#ecf5ef] rounded-[5px] p-5 flex items-center gap-2.5 ">
-                      <div className="px-[15px]">
-                        <div className=" text-white w-12 h-12 rounded-full  flex items-center justify-center text-2xl">
-                          <Svg
-                            name="clockFill"
-                            className="size-12 shrink-0 text-[#f76900]"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <h2 className="text-lg 2xl:text-xl font-bold text-[#343a40] ">
-                          Booking {bookingData?.bookingStatus}!
-                        </h2>
-                        <p className="2xl:text-base text-sm leading-[1.2]">
-                          Your request to update booking has been declined.
-                        </p>
+                    <div>
+                      <h2 className="text-lg 2xl:text-xl font-bold text-[#343a40] ">
+                        Booking {bookingData?.bookingStatus} !
+                      </h2>
+                      <p className="2xl:text-base text-sm leading-[1.2]">
+                        Your request to update booking has been cancelled
+                      </p>
+                    </div>
+                  </div>
+                )}
+                {bookingData?.bookingStatus === "rejected" && (
+                  <div className="bg-[#ecf5ef] rounded-[5px] p-5 flex items-center gap-2.5 ">
+                    <div className="px-[15px]">
+                      <div className=" text-white w-12 h-12 rounded-full  flex items-center justify-center text-2xl">
+                        <Svg
+                          name="clockFill"
+                          className="size-12 shrink-0 text-[#f76900]"
+                        />
                       </div>
                     </div>
-                  )
-                }
+                    <div>
+                      <h2 className="text-lg 2xl:text-xl font-bold text-[#343a40] ">
+                        Booking {bookingData?.bookingStatus}!
+                      </h2>
+                      <p className="2xl:text-base text-sm leading-[1.2]">
+                        Your request to update booking has been declined.
+                      </p>
+                    </div>
+                  </div>
+                )}
                 <div className="flex gap-6 mt-4.5 pb-5 border-b border-gray-200">
                   <div className="bg-white rounded-lg p-6 flex items-center w-full">
                     <div className=" flex md:flex-row flex-col gap-4 w-full">
@@ -236,17 +229,24 @@ const BookingDetail = ({ bookingId }) => {
                               {bookingData?.howManyPeopleInYourSpace} people
                             </span>
                           </div>
-                          {
-                            bookingData?.spaceType != "Coworking Space" && (
-                              <>
-                                <span className="size-[10px] rounded-full bg-[#ddd]"></span>
-                                <div className="flex items-center space-x-1">
-                                  <Svg name="clock" className="size-4 text-[#f76900]" />
-                                  <span>{(bookingData.minimum_hours == 0 || bookingData.minimum_hours == null) ? "2" : (bookingData?.minimum_hours / 60)} hrs min</span>
-                                </div>
-                              </>
-                            )
-                          }
+                          {bookingData?.spaceType != "Coworking Space" && (
+                            <>
+                              <span className="size-[10px] rounded-full bg-[#ddd]"></span>
+                              <div className="flex items-center space-x-1">
+                                <Svg
+                                  name="clock"
+                                  className="size-4 text-[#f76900]"
+                                />
+                                <span>
+                                  {bookingData.minimum_hours == 0 ||
+                                  bookingData.minimum_hours == null
+                                    ? "2"
+                                    : bookingData?.minimum_hours / 60}{" "}
+                                  hrs min
+                                </span>
+                              </div>
+                            </>
+                          )}
                           <span className="size-[10px] rounded-full bg-[#ddd]"></span>
                           <div className="flex items-center space-x-1">
                             <Svg
@@ -262,13 +262,16 @@ const BookingDetail = ({ bookingId }) => {
                       <div className="flex flex-col space-y-2  max-md:w-full">
                         {bookingData?.bookingStatus == "confirmed" && (
                           <>
-                            <button onClick={() => setShowReviewPopup(true)} className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px] px-10">
+                            <button
+                              onClick={() => setShowReviewPopup(true)}
+                              className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px] px-10"
+                            >
                               LEAVE A REVIEW
                             </button>
                             <button
                               className="flex items-center justify-center gap-2 cursor-pointer w-full  uppercase tracking-[1px] hover:bg-[#1d37b5] text-white bg-[#000e54]
                 2xl:text-base text-sm font-semibold md:py-[15px] py-[10px] rounded-[15px] text-nowrap"
-                              onClick={()=>invoiceRefetch()}
+                              onClick={handleInvoiceClick}
                             >
                               <Svg
                                 name="cloudDownload"
@@ -280,12 +283,13 @@ const BookingDetail = ({ bookingId }) => {
                         )}
                       </div>
                     </div>
-
                   </div>
                 </div>
 
                 <div className="pt-[30px]">
-                  <h2 className="text-lg 2xl:text-xl mb-6 font-medium">Booking Details</h2>
+                  <h2 className="text-lg 2xl:text-xl mb-6 font-medium">
+                    Booking Details
+                  </h2>
                   <div className="flex-col flex space-y-[10px] mb-4">
                     <div className="flex flex-wrap items-center gap-2 text-[#777] text-sm 2xl:text-base">
                       <span>Space Category :</span>
@@ -293,90 +297,88 @@ const BookingDetail = ({ bookingId }) => {
                         {bookingData?.spaceType}
                       </span>
                     </div>
-                    {
-                      bookingData?.spaceType == 'Coworking Space' && (
-                        <>
-                          <div className="flex flex-wrap items-center gap-2 text-[#777] text-sm 2xl:text-base">
-                            <span>No of Days :</span>
-                            <span className="font-semibold text-[#000]">
-                              {bookingData?.ofDays}
-                            </span>
-                          </div>
-                          <div className="flex flex-wrap items-center gap-2 text-[#777] text-sm 2xl:text-base">
-                            <span>No of Guest :</span>
-                            <span className="font-semibold text-[#000]">
-                              {bookingData?.noOfGuest}
-                            </span>
-                          </div>
-                        </>
-                      )
-                    }
+                    {bookingData?.spaceType == "Coworking Space" && (
+                      <>
+                        <div className="flex flex-wrap items-center gap-2 text-[#777] text-sm 2xl:text-base">
+                          <span>No of Days :</span>
+                          <span className="font-semibold text-[#000]">
+                            {bookingData?.ofDays}
+                          </span>
+                        </div>
+                        <div className="flex flex-wrap items-center gap-2 text-[#777] text-sm 2xl:text-base">
+                          <span>No of Guest :</span>
+                          <span className="font-semibold text-[#000]">
+                            {bookingData?.noOfGuest}
+                          </span>
+                        </div>
+                      </>
+                    )}
                   </div>
-                  {
-                    bookingData?.spaceType == "Coworking Space" && bookingData?.bookingPeriods?.length > 0 ? (
-                      <div className="">
-                        <div className="flex flex-wrap items-center space-x-4">
-                          <label className="block text-[#777] 2xl:text-base text-sm font-medium mb-2">
-                            Date :
-                          </label>
-                          {
-                            bookingData?.bookingPeriods?.map((item, index) => (
-                              <div key={index} className="bg-white border px-4 border-[#ddd] rounded-[5px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black">
-                                {new Date(item)
-                                  ?.toLocaleDateString("en-GB")
-                                  ?.replace(/\//g, "-")}
-                              </div>
-                            ))
-                          }
-                        </div>
-                        <div className="mt-4">
-                          <label className="block text-[#777] 2xl:text-base text-sm font-medium mb-2">
-                            Custom Message
-                          </label>
-                          <div className="bg-white border border-[#ddd] rounded-[5px] py-[15px] px-[30px] text-sm 2xl:text-base font-medium text-black">
-                            {bookingData?.message}
-                          </div>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 px-[15px]">
-                        <div>
-                          <label className="block text-[#777] 2xl:text-base text-sm font-medium mb-2">
-                            Date
-                          </label>
-                          <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black">
-                            {new Date(bookingData?.startDate)
+                  {bookingData?.spaceType == "Coworking Space" &&
+                  bookingData?.bookingPeriods?.length > 0 ? (
+                    <div className="">
+                      <div className="flex flex-wrap items-center space-x-4">
+                        <label className="block text-[#777] 2xl:text-base text-sm font-medium mb-2">
+                          Date :
+                        </label>
+                        {bookingData?.bookingPeriods?.map((item, index) => (
+                          <div
+                            key={index}
+                            className="bg-white border px-4 border-[#ddd] rounded-[5px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black"
+                          >
+                            {new Date(item)
                               ?.toLocaleDateString("en-GB")
                               ?.replace(/\//g, "-")}
                           </div>
-                        </div>
-                        <div>
-                          <label className="block text-[#777] 2xl:text-base  text-sm font-medium mb-2">
-                            Start Time
-                          </label>
-                          <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black">
-                            {convertTo12Hour(bookingData?.startTime || "")}
-                          </div>
-                        </div>
-                        <div>
-                          <label className="block text-[#777] text-[16px] font-medium mb-2">
-                            End Time
-                          </label>
-                          <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black">
-                            {convertTo12Hour(bookingData?.endTime || "")}
-                          </div>
-                        </div>
-                        <div>
-                          <label className="block text-[#777] text-[16px] font-medium mb-2">
-                            No of Hours
-                          </label>
-                          <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black">
-                            {bookingData?.totalHours}
-                          </div>
+                        ))}
+                      </div>
+                      <div className="mt-4">
+                        <label className="block text-[#777] 2xl:text-base text-sm font-medium mb-2">
+                          Custom Message
+                        </label>
+                        <div className="bg-white border border-[#ddd] rounded-[5px] py-[15px] px-[30px] text-sm 2xl:text-base font-medium text-black">
+                          {bookingData?.message}
                         </div>
                       </div>
-                    )
-                  }
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 px-[15px]">
+                      <div>
+                        <label className="block text-[#777] 2xl:text-base text-sm font-medium mb-2">
+                          Date
+                        </label>
+                        <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black">
+                          {new Date(bookingData?.startDate)
+                            ?.toLocaleDateString("en-GB")
+                            ?.replace(/\//g, "-")}
+                        </div>
+                      </div>
+                      <div>
+                        <label className="block text-[#777] 2xl:text-base  text-sm font-medium mb-2">
+                          Start Time
+                        </label>
+                        <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black">
+                          {convertTo12Hour(bookingData?.startTime || "")}
+                        </div>
+                      </div>
+                      <div>
+                        <label className="block text-[#777] text-[16px] font-medium mb-2">
+                          End Time
+                        </label>
+                        <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black">
+                          {convertTo12Hour(bookingData?.endTime || "")}
+                        </div>
+                      </div>
+                      <div>
+                        <label className="block text-[#777] text-[16px] font-medium mb-2">
+                          No of Hours
+                        </label>
+                        <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black">
+                          {bookingData?.totalHours}
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="lg:w-1/3 w-full lg:pl-[15px] pl-0">
@@ -467,7 +469,13 @@ const BookingDetail = ({ bookingId }) => {
           </div>
         </div>
       </div>
-      {showReviewPopup && <BookingReviewPopup setIsOpen={setShowReviewPopup} isOpen={showReviewPopup} bookingId={bookingId} />}
+      {showReviewPopup && (
+        <BookingReviewPopup
+          setIsOpen={setShowReviewPopup}
+          isOpen={showReviewPopup}
+          bookingId={bookingId}
+        />
+      )}
     </>
   );
 };

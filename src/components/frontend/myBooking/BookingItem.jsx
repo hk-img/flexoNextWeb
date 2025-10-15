@@ -1,32 +1,29 @@
 import Svg from "@/components/svg";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React from "react";
 import { convertSlugToCapitalLetter } from "@/services/Comman";
 import ImageWithFallback from "@/components/ImageWithFallback";
-import { useQuery } from "@tanstack/react-query";
 import { getAPIAuthWithoutBearer } from "@/services/ApiService";
 import { useAuth } from "@/context/useAuth";
-import { set } from "zod";
+import { toast } from "sonner";
 
 const bookingItem = ({ item,setShowReviewPopup,setBookingId }) => {
   const { token } = useAuth();
-  const { data: invoiceDownload, refetch: invoiceRefetch } = useQuery({
-    queryKey: ["invoiceDownload", item?.id],
-    queryFn: async () => {
-      const res = await getAPIAuthWithoutBearer(
-        `user/downloadBookingInvoice/${item?.id}`,
-        token
-      );
-      return res.data;
-    },
-    enabled: false,
-  });
-  useEffect(() => {
-    if (invoiceDownload?.success) {
-      const url = `${process.env.NEXT_PUBLIC_BASE_URL}/${invoiceDownload?.pdfFilePath}`;
-      window.open(url, "_blank");
-    }
-  }, [invoiceDownload]);
+  const handleInvoiceClick = async () => {
+      try {
+        const res = await getAPIAuthWithoutBearer(
+          `user/downloadBookingInvoice/${item?.id}`,
+          token
+        );
+        const data = res.data;
+        if(data?.success){
+          const url = `${process.env.NEXT_PUBLIC_BASE_URL}/${data?.pdfFilePath}`;
+          window.open(url, "_blank");
+        }
+      } catch (error) {
+        toast.error(error.message);
+      }
+    };
   return (
     <>
       <div className=" p-5 rounded-[10px] bg-white flex md:flex-row flex-col md:items-center items-start  justify-between ">
@@ -203,7 +200,7 @@ const bookingItem = ({ item,setShowReviewPopup,setBookingId }) => {
                 LEAVE A REVIEW
               </button>
               <button
-                onClick={invoiceRefetch}
+                onClick={handleInvoiceClick}
                 className="flex items-center justify-center gap-2 cursor-pointer w-full border uppercase tracking-[1px] border-[#000e54] text-[#000e54]
                           2xl:text-base text-sm font-semibold md:py-[15px] py-[10px] rounded-[15px] text-nowrap"
               >

@@ -73,10 +73,15 @@ const schema = z.object({
   slots: z.array(slotSchema).min(1, "Please add at least one booking slot"),
 });
 
-const RequestToBookPopup = ({ setIsOpen, spaceData, workingDays,hostHolidays }) => {
+const RequestToBookPopup = ({
+  setIsOpen,
+  spaceData,
+  workingDays,
+  hostHolidays,
+}) => {
   const minHours = spaceData?.minimum_hours / 60;
   const router = useRouter();
-  const { token } = useAuth();
+  const { token, user } = useAuth();
   const [successScreen, setSuccessScreen] = useState(false);
 
   const {
@@ -100,67 +105,90 @@ const RequestToBookPopup = ({ setIsOpen, spaceData, workingDays,hostHolidays }) 
   const values = watch();
   console.log(values, "Rthrthrth");
 
-const getTimeDateSlot = (selectedDate) => {
-  if (!selectedDate) return [];
+  const getTimeDateSlot = (selectedDate) => {
+    if (!selectedDate) return [];
 
-  const times = [];
-  const now = new Date();
-  const dateObj = new Date(selectedDate);
-  const dayName = dateObj.toLocaleString("en-US", { weekday: "long" });
-  const daySlot = workingDays?.find((d) => d.day === dayName);
+    const times = [];
+    const now = new Date();
+    const dateObj = new Date(selectedDate);
+    const dayName = dateObj.toLocaleString("en-US", { weekday: "long" });
+    const daySlot = workingDays?.find((d) => d.day === dayName);
 
-  if (!daySlot || daySlot.isClosed) return [];
+    if (!daySlot || daySlot.isClosed) return [];
 
-  let [startHour, startMinute] = daySlot.openingTime.split(":").map(Number);
-  let [endHour, endMinute] = daySlot.closingTime.split(":").map(Number);
+    let [startHour, startMinute] = daySlot.openingTime.split(":").map(Number);
+    let [endHour, endMinute] = daySlot.closingTime.split(":").map(Number);
 
-  if (daySlot.openingTime === "00:00" && daySlot.closingTime === "00:00") {
-    startHour = 0;
-    startMinute = 0;
-    endHour = 23;
-    endMinute = 59;
-  }
-
-  let start = new Date(dateObj);
-  start.setHours(startHour, startMinute, 0, 0);
-
-  const end = new Date(dateObj);
-  end.setHours(endHour, endMinute, 0, 0);
-
-  const isToday =
-    dateObj.getDate() === now.getDate() &&
-    dateObj.getMonth() === now.getMonth() &&
-    dateObj.getFullYear() === now.getFullYear();
-
-  while (start <= end) {
-    const hours = start.getHours();
-    const minutes = start.getMinutes();
-    const period = hours >= 12 ? "PM" : "AM";
-    const displayHours = hours % 12 === 0 ? 12 : hours % 12;
-    const displayMinutes = minutes.toString().padStart(2, "0");
-    let label = `${displayHours}:${displayMinutes} ${period}`;
-
-    if (`${displayHours}:${displayMinutes} ${period}` === "12:00 AM") {
-      label = "12:00 AM Midnight";
+    if (daySlot.openingTime === "00:00" && daySlot.closingTime === "00:00") {
+      startHour = 0;
+      startMinute = 0;
+      endHour = 23;
+      endMinute = 59;
     }
 
-    const isDisabled = isToday && start <= now;
+    let start = new Date(dateObj);
+    start.setHours(startHour, startMinute, 0, 0);
 
-    times.push({
-      label,
-      value: `${hours.toString().padStart(2, "0")}:${minutes
-        .toString()
-        .padStart(2, "0")}`,
-      disabled: isDisabled,
+    const end = new Date(dateObj);
+    end.setHours(endHour, endMinute, 0, 0);
+
+    const isToday =
+      dateObj.getDate() === now.getDate() &&
+      dateObj.getMonth() === now.getMonth() &&
+      dateObj.getFullYear() === now.getFullYear();
+
+    while (start <= end) {
+      const hours = start.getHours();
+      const minutes = start.getMinutes();
+      const period = hours >= 12 ? "PM" : "AM";
+      const displayHours = hours % 12 === 0 ? 12 : hours % 12;
+      const displayMinutes = minutes.toString().padStart(2, "0");
+      let label = `${displayHours}:${displayMinutes} ${period}`;
+
+      if (`${displayHours}:${displayMinutes} ${period}` === "12:00 AM") {
+        label = "12:00 AM Midnight";
+      }
+
+      const isDisabled = isToday && start <= now;
+
+      times.push({
+        label,
+        value: `${hours.toString().padStart(2, "0")}:${minutes
+          .toString()
+          .padStart(2, "0")}`,
+        disabled: isDisabled,
+      });
+
+      start.setMinutes(start.getMinutes() + 30); // 30-min interval
+    }
+
+    return times;
+  };
+
+  const { mutate: paymentStatusMutate, isPending: isPaymentStatusPending } =
+    useMutation({
+      mutationFn: async (payload) => {
+        const res = await postAPIAuthWithoutBearer(
+          `user/payment-status`,
+          payload,
+          token
+        );
+        return res.data;
+      },
+      onSuccess: (data) => {
+        if (data?.success) {
+          setSuccessScreen(true);
+          setTimeout(() => {
+            router.push(`/booking-detail/${data?.bookingId}`);
+          }, 1000);
+        } else {
+          toast.error(data?.message);
+        }
+      },
+      onError: (error) => {
+        toast.error(error?.message);
+      },
     });
-
-    start.setMinutes(start.getMinutes() + 30); // 30-min interval
-  }
-
-  return times;
-};
-
-
 
   const { mutate: submitMutate, isPending: isSubmitPending } = useMutation({
     mutationFn: async (payload) => {
@@ -173,10 +201,45 @@ const getTimeDateSlot = (selectedDate) => {
     },
     onSuccess: (data) => {
       if (data?.success) {
-        setSuccessScreen(true);
-        setTimeout(() => {
-          router.push(`/booking-detail/${data?.bookingRecord?.id}`);
-        }, 1000);
+        if (Object?.values(data?.razorpayOrder || {})?.length > 0) {
+          const options = {
+            key: data.razorpayOrder.key_id,
+            amount: data.razorpayOrder.amount_paid * 100,
+            currency: "INR",
+            name: data.razorpayOrder.product_name || "Booking Payment",
+            description: data.razorpayOrder.description || "Payment",
+            order_id: data.razorpayOrder.order_id,
+            prefill: {
+              name: user?.name,
+              email: user.email,
+              contact: user?.mobile || user.contact,
+            },
+            handler: function (response) {
+              const payload = {
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_signature: response.razorpay_signature,
+                amount: data.razorpayOrder.amount_paid,
+                id: data?.bookingRecord?.id,
+              };
+              paymentStatusMutate(payload);
+            },
+            modal: {
+              ondismiss: function () {
+                console.log("Payment cancelled by user");
+                toast.error("Payment Failed!");
+              },
+            },
+            theme: { color: "#f76900" },
+          };
+          const rzp = new window.Razorpay(options);
+          rzp.open();
+        } else {
+          setSuccessScreen(true);
+          setTimeout(() => {
+            router.push(`/booking-detail/${data?.bookingRecord?.id}`);
+          }, 1000);
+        }
       } else {
         toast.error(data?.message);
       }
@@ -298,14 +361,13 @@ const getTimeDateSlot = (selectedDate) => {
             <div className="mt-7">
               <Svg name="checkCircle" className="size-[75px] text-[#05ac34]" />
             </div>
-            <p className=" text-base text-[#212529] text-center">
-              Thank You For Your Booking Request!
+            <p className="text-lg font-medium text-[#212529] text-center">
+              {spaceData?.isInstant == 1 ? "Thank You For Your Booking!":"Thank You For Your Booking Request!"}
             </p>
-            <div>
-              Your booking request has been sent to the host. Once the host
-              accepts your booking request, you will receive a payment link via
-              email. If your requested date and time cannot be accommodated, you
-              will be promptly notified.
+            <div className="text-center font-normal text-base">
+              {
+                spaceData?.isInstant == 1 ? "Your Booking Is Confirmed! You will receive details about the space via email and whatsapp.":"Your booking request has been sent to the host. Once the host accepts your booking request, you will receive a payment link via email. If your requested date and time cannot be accommodated, you will be promptly notified."
+              }
             </div>
             <button
               onClick={() => setIsOpen(false)}
@@ -329,7 +391,9 @@ const getTimeDateSlot = (selectedDate) => {
             <div className="bg-white p-5">
               <div className="mb-[21px] border-b border-[#DBDBDB] pb-[11px]">
                 <h2 className="2xl:text-xl text-lg font-medium ">
-                  Request To Book
+                  {spaceData?.isInstant == 1
+                    ? "Complete Your Booking"
+                    : "Request To Book"}
                 </h2>
               </div>
 
@@ -504,39 +568,39 @@ const getTimeDateSlot = (selectedDate) => {
                   type="button"
                   onClick={() => {
                     const slots = values.slots.map((item) => {
-                    const d = new Date(item?.date);
-                    d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+                      const d = new Date(item?.date);
+                      d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
 
-                    const day = String(d.getDate()).padStart(2, "0");
-                    const month = String(d.getMonth() + 1).padStart(2, "0");
-                    const year = d.getFullYear();
+                      const day = String(d.getDate()).padStart(2, "0");
+                      const month = String(d.getMonth() + 1).padStart(2, "0");
+                      const year = d.getFullYear();
 
-                    const formattedDate = `${day}/${month}/${year}`;
+                      const formattedDate = `${day}/${month}/${year}`;
 
-                    return {
+                      return {
                         startDate: formattedDate,
                         startTime: item.startTime,
                         endTime: item.endTime,
-                    };
+                      };
                     });
                     const dateMap = {};
 
                     for (let slot of slots) {
-                    const { startDate, startTime, endTime } = slot;
-                    if (!dateMap[startDate]) {
+                      const { startDate, startTime, endTime } = slot;
+                      if (!dateMap[startDate]) {
                         dateMap[startDate] = [];
-                    }
-                    const isOverlap = dateMap[startDate].some(
+                      }
+                      const isOverlap = dateMap[startDate].some(
                         (s) => !(endTime < s.startTime || startTime > s.endTime)
-                    );
+                      );
 
-                    if (isOverlap) {
+                      if (isOverlap) {
                         toast.error(
-                        `Slots on ${startDate} are overlapping. Please fix before submitting.`
+                          `Slots on ${startDate} are overlapping. Please fix before submitting.`
                         );
                         return;
-                    }
-                    dateMap[startDate].push({ startTime, endTime });
+                      }
+                      dateMap[startDate].push({ startTime, endTime });
                     }
                     const lastSlot =
                       watch("slots")?.[watch("slots").length - 1];
@@ -563,7 +627,11 @@ const getTimeDateSlot = (selectedDate) => {
                   type="submit"
                   className="cursor-pointer bg-[#f76900] hover:bg-[#ff7c52] text-white rounded-[15px] font-semibold uppercase tracking-[1px] py-[10px] mt-4"
                 >
-                  {isSubmitPending ? "Please wait..." : "Submit Request"}
+                  {isSubmitPending
+                    ? "Please wait..."
+                    : spaceData?.isInstant == 1
+                    ? "Book Now"
+                    : "Submit Request"}
                 </button>
 
                 <p className="text-xs text-[#000000de] mt-2">

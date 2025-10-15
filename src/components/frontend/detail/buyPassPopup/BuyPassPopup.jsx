@@ -536,7 +536,7 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
                         {spaceData?.originalPrice}
                       </p>
                       <span className="font-semibold">
-                        {values?.guests * spaceData?.originalPrice}{" "}
+                        {(values?.guests * spaceData?.originalPrice)?.toLocaleString("en-IN")}{" "}
                         <Svg
                           name="rupee"
                           className="size-[18px] text-[#f76900] inline"
@@ -547,7 +547,7 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
                   <div className="flex justify-between text-[#f76900] border-b py-1 border-[#DBDBDB]">
                     <span className="text-sm 2xl:text-base">Subtotal</span>
                     <span className="font-semibold">
-                      {subtotal?.toFixed(2)}{" "}
+                      {subtotal?.toLocaleString("en-IN")}{" "}
                       <Svg
                         name="rupee"
                         className="size-[18px] text-[#f76900] inline"
@@ -557,7 +557,7 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
                   <div className="flex justify-between text-[#f76900]  border-b py-1 border-[#DBDBDB]">
                     <span className="text-sm 2xl:text-base">GST(18%)</span>
                     <span className="font-semibold">
-                      {gst?.toFixed(2)}{" "}
+                      {gst?.toLocaleString("en-IN")}{" "}
                       <Svg
                         name="rupee"
                         className="size-[18px] text-[#f76900] inline"
@@ -567,7 +567,7 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
                   <div className="flex justify-between text-[#f76900] font-semibold">
                     <span>Payable Now</span>
                     <span className="font-semibold">
-                      {total?.toFixed(2)}{" "}
+                      {total?.toLocaleString("en-IN")}{" "}
                       <Svg
                         name="rupee"
                         className="size-[18px] text-[#f76900] inline"

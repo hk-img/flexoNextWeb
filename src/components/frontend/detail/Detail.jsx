@@ -1218,8 +1218,8 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
           </section>
         )
       }
-      <BottomBar type={type} city={spaceData?.contact_city_name}/>
-      {isOpen && <ExplorePopup isOpen={isOpen} setIsOpen={setIsOpen} selectedSpaceData={selectedSpaceData} type={type} selectedSpaceType={selectedSpaceType}/>}
+      {type != "shortterm" && <BottomBar type={type} city={spaceData?.contact_city_name} spaceData={spaceData}/>}
+      {isOpen && <ExplorePopup isOpen={isOpen} setIsOpen={setIsOpen} selectedSpaceData={selectedSpaceData} type={type} selectedSpaceType={selectedSpaceType} cityName={spaceData?.contact_city_name}/>}
       {isAuthOpen && <Auth isOpen={isAuthOpen} setIsOpen={setIsAuthOpen} />}
       {isScheduleVisitOpen &&<ScheduleVisitPopup isOpen={isScheduleVisitOpen} setIsOpen={setIsScheduleVisitOpen} type={type} spaceId={spaceData?.id} workingDays={spaceData?.working_time} spaceData={spaceData} hostHolidays={spaceDeatil?.hostHolidays}/>}
       {isBuyPassOpen && <BuyPassPopup isOpen={isBuyPassOpen} setIsOpen={setIsBuyPassOpen} spaceData={spaceData}/>}

@@ -182,16 +182,16 @@ const BookingDetail = ({ bookingId }) => {
                 )}
                 {bookingData?.bookingStatus === "rejected" && (
                   <div className="bg-[#ecf5ef] rounded-[5px] p-5 flex items-center gap-2.5 ">
-                    <div className="px-[15px]">
-                      <div className=" text-white w-12 h-12 rounded-full  flex items-center justify-center text-2xl">
+                    <div>
+                      <div className=" text-white rounded-full  flex items-center justify-center text-2xl">
                         <Svg
-                          name="clockFill"
-                          className="size-12 shrink-0 text-[#f76900]"
+                          name="closeRoundFill"
+                          className="size-12 shrink-0 text-red-600"
                         />
                       </div>
                     </div>
                     <div>
-                      <h2 className="text-lg 2xl:text-xl font-bold text-[#343a40] ">
+                      <h2 className="text-lg 2xl:text-xl font-bold text-red-600 ">
                         Booking {bookingData?.bookingStatus}!
                       </h2>
                       <p className="2xl:text-base text-sm leading-[1.2]">

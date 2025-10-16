@@ -3,6 +3,7 @@ import Svg from '@/components/svg';
 import EmblaCarousel from "@/components/frontend/emblaCarousel/EmblaCarousel";
 import RequestCallback from '../home/RequestCallback';
 import ListFaqSection from './ListFaqSection';
+import Link from 'next/link';
 
 const ListWithUs = () => {
     const person = [
@@ -261,33 +262,35 @@ const ListWithUs = () => {
                 Host Success Stories
               </h2>
             </div>
-            <div className='mt-3 px-4 [&_.emblaarrows]:hidden md:[&_.emblaarrows]:-left-6 md:[&_.emblaarrows]:-right-5 [&_.emblaarrows]:-left-3 [&_.emblaarrows]:-right-3 [&_.emblaarrows_button]:w-10 [&_.emblaarrows_button]:h-10 [&_.emblaarrows_button_Svg]:size-[18px]'>
-            <div className='lg:p-6 p-2 shadow-[0_0_3px_#b3b3b3] rounded-[5px] mb-2'>
-              <EmblaCarousel options={{ loop: true, autoplay: false, showButton: true, align: "start" }}>
+            <div className=' px-4 [&_.emblaarrows]:hidden md:[&_.emblaarrows]:-left-6 md:[&_.emblaarrows]:-right-5 [&_.emblaarrows]:-left-3 [&_.emblaarrows]:-right-3 [&_.emblaarrows_button]:w-10 [&_.emblaarrows_button]:h-10 [&_.emblaarrows_button_Svg]:size-[18px]'>
+            <div >
+              <EmblaCarousel options={{ loop: true, autoplay: true, showButton: true, align: "start" }}>
                 {person.map((person, index) => (
-                <div key={index} className="embla__slide relative h-full shrink-0 basis-full ">
-                  <div className='lg:p-6 p-2 my-2'>
-                  <div className='flex lg:flex-row flex-col h-full items-center'>
-                    <div className='lg:w-1/3 md:w-2/5 w-full flex flex-col items-center'>
-                        <Image
-                            src={person.image}                     
-                            alt={person.name}                      
-                            title={person.name}                    
-                            width={1080}                           
-                            height={970}                         
-                            loading="lazy"                        
-                            className="lg:w-[317px] lg:h-[400px] w-full h-auto aspect-[317/400] object-cover"
-                        />
-                    </div>
-                    <div className='lg:w-7/12 md:w-7/12 w-full flex flex-col items-start ps-6 md:mt-0 mt-4'>
-                      <div className='quoteMark mb-6'>
-                        <Svg name="quoteMark" className="text-gray-400 size-[55px]"/>
+                <div key={index} className="embla__slide relative h-full shrink-0 basis-full mt-[10px] px-[15px]">
+                  <div className='lg:p-6 p-2 shadow-[0_0_3px_#b3b3b3] rounded-[5px] mb-2'>
+                    <div>
+                    <div className='flex lg:flex-row flex-col h-full items-center'>
+                      <div className='lg:w-1/3 md:w-2/5 w-full flex flex-col items-center'>
+                          <Image
+                              src={person.image}                     
+                              alt={person.name}                      
+                              title={person.name}                    
+                              width={1080}                           
+                              height={970}                         
+                              loading="lazy"                        
+                              className="lg:w-[317px] lg:h-[400px] w-full h-auto aspect-[317/400] object-cover"
+                          />
                       </div>
-                      <p className='lg:text-base text-[15px] text-[#777777] mb-6'>{person.content}</p>
-                      <h5 className='text-base/relaxed text-[#141414] font-medium mb-1'>{person.name}</h5>
-                      <p className='text-sm text-[#777777] font-normal'>{person.designation}</p>
+                      <div className='lg:w-7/12 md:w-7/12 w-full flex flex-col items-start ps-4 md:mt-0 mt-4'>
+                        <div className='quoteMark mb-6'>
+                          <Svg name="quoteMark" className="text-[#7f7f7f] size-[55px]"/>
+                        </div>
+                        <p className='text-base text-[#777777] mb-6'>{person.content}</p>
+                        <h5 className='text-base/relaxed min-[1400px]:text-lg  text-[#141414] font-medium mb-1'>{person.name}</h5>
+                        <p className='text-sm min-[1400px]:text-base text-[#777777] font-normal'>{person.designation}</p>
+                      </div>
                     </div>
-                  </div>
+                    </div>
                   </div>
                 </div>
                 ))}
@@ -297,7 +300,28 @@ const ListWithUs = () => {
           </div>
         </section>
 
-        <RequestCallback/>
+         <section className="relative w-full py-15 lg:h-[400px] h-full flex items-center justify-center overflow-hidden">
+            <div className="absolute inset-0">
+              <Image
+                width={1356}
+                height={400}
+                src="/images/ready-to-move.webp" 
+                alt="Handshake background"
+                title="Handshake background"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-[#00000075]"></div>
+            </div>
+      
+            <div className="relative container z-10 text-center px-[15px] py-3">
+              <h2 className="text-white text-[22px] md:text-[26px] font-medium leading-[1.6]">
+               Ready to Earn with Flexo?
+              </h2>
+              <Link href="/contact" className="inline-block bg-[#f76900] mt-6 tracking-[1px] min-[1400px]:text-base  text-[15px] border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:px-7.5 px-5 md:py-[15px] py-[10px] rounded-[6px] font-semibold duration-500 transition uppercase">
+                List Your Space Now
+              </Link>
+            </div>
+          </section>
 
         <ListFaqSection />
 

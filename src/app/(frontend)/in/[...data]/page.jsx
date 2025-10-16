@@ -64,7 +64,7 @@ export async function generateMetadata({params}) {
       return [];
     }
   }
-  async function fetchAPI2() {
+  async function fetchAPI2(spaceType) {
     try{
       const res = await fetch(`${BASE_URL}/user/getAllLocations?spaceType=${spaceType}`,{
         headers: {
@@ -154,7 +154,7 @@ const page = async({params}) => {
     cityId: city,
     spaceType: spaceTypeSlug == "coworking" ? "coworking space" : spaceTypeSlug?.replace(/-/g, " ")
   }
-  const [data1,data2,data3] = await Promise.all([fetchAPI1(),fetchAPI2(),fetchAPI3(payload)]);
+  const [data1,data2,data3] = await Promise.all([fetchAPI1(),fetchAPI2(spaceType),fetchAPI3(payload)]);
   const otherTypes = convertSlugToSmallLetter(spaceTypeSlug || "");
   const listingPayload = {
     city_name: convertSlugToSmallLetter(city || ""),

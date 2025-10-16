@@ -5,8 +5,60 @@ import React, { useState } from "react";
 import ExplorePopup from "../explorePopup/ExplorePopup";
 import { usePathname } from "next/navigation";
 
-export const BottomBar = ({ type, city,spaceData={name:"Dummy Data"}}) => {
+export const BottomBar = ({
+  type,
+  city,
+  spaceData = { name: "Dummy Data" },
+}) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const loadZohoScript = () => {
+    const existingScript = document.getElementById("zoho-salesiq");
+    if (existingScript) existingScript.remove();
+    setTimeout(() => {
+      window.$zoho = window.$zoho || {};
+      window.$zoho.salesiq = {
+        widgetcode:
+          "0fc4dfe126a900d08cd66965a527bbcfebd987ea8870090a53afd7a22440aa53",
+        values: {},
+        ready: function () {},
+      };
+      setTimeout(() => {
+        if (
+          ![
+            "event space",
+            "Coworking Café/Restaurant",
+            "shoot studio",
+            "recording studio",
+            "podcast studio",
+            "activity space",
+            "sports turf",
+            "sports venue",
+            "party space",
+            "banquet hall",
+            "gallery",
+            "classroom",
+            "private cabin",
+            "meeting room",
+            "training room",
+          ].includes(spaceData?.spaceType)
+        ) {
+          clickZohoChatButton();
+        }
+      }, 1000);
+      const script = document.createElement("script");
+      script.type = "text/javascript";
+      script.id = "zsiqscript";
+      script.defer = true;
+      script.src = "https://salesiq.zoho.in/widget";
+      document.body.appendChild(script);
+    }, 200);
+  };
+
+  const clickZohoChatButton = () => {
+    const chatBtn = document.querySelector("#zsiq_float"); 
+    if (chatBtn) chatBtn.click();
+  };
 
   return (
     <>
@@ -15,7 +67,7 @@ export const BottomBar = ({ type, city,spaceData={name:"Dummy Data"}}) => {
           <div>
             <div
               onClick={() => setIsOpen(!isOpen)}
-              className="flex flex-col items-center"
+              className="flex flex-col items-center cursor-pointer"
             >
               <Svg name="fileProtector" className="size-5 text-white" />
               <span className="uppercase text-white text-[11px]/normal font-medium ">
@@ -35,15 +87,18 @@ export const BottomBar = ({ type, city,spaceData={name:"Dummy Data"}}) => {
             </Link>
           </div>
           <div>
-            <Link href="#" className="flex flex-col items-center">
+            <div
+              onClick={loadZohoScript}
+              className="flex flex-col items-center cursor-pointer"
+            >
               <Svg name="chat" className="size-5 text-white" />
               <span className="uppercase text-white text-[11px]/normal font-medium ">
                 Chat
               </span>
-            </Link>
+            </div>
           </div>
           <div>
-            <Link href="tel:95133 92400" className="flex flex-col items-center">
+            <Link href="tel:95133 92400" className="flex flex-col items-center cursor-pointer">
               <Svg name="phoneCall" className="size-5 text-white" />
               <span className="uppercase text-white text-[11px]/normal font-medium ">
                 Call

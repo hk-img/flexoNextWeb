@@ -62,15 +62,15 @@ const CoworkingSelectionScreen = ({spaceId,formData,setFormData,error,setError,v
   };
   return (
     <>
-      <div className="overflow-y-auto h-[calc(100%-90px)] [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1] p-5">
+      <div className="overflow-y-auto h-[calc(100%-90px)] [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]">
         <div className="md:max-w-[80%] max-w-full mx-auto text-center py-8 ">
-          <h2 className="text-[#141414] font-thin mb-3 text-lg">
+          <h2 className="text-[#141414] font-thin mb-5 text-lg">
             What type of space are you looking for?
           </h2>
           <div className="flex justify-center max-md:space-y-2 flex-wrap gap-3 items-center">
           {
             spaceData?.privatecabin_price > 0 && (
-                <label className="cursor-pointer">
+                <label className="cursor-pointer block">
                     <input
                     type="radio"
                     name="spaceType"
@@ -90,7 +90,7 @@ const CoworkingSelectionScreen = ({spaceId,formData,setFormData,error,setError,v
           }
           {
             spaceData?.manage_office_price > 0 && (
-                <label className="cursor-pointer">
+                <label className="cursor-pointer block">
                     <input
                     type="radio"
                     name="spaceType"
@@ -110,7 +110,7 @@ const CoworkingSelectionScreen = ({spaceId,formData,setFormData,error,setError,v
           }
           {
             spaceData?.desks_price > 0 && (
-                <label className="cursor-pointer">
+                <label className="cursor-pointer block">
                     <input
                     type="radio"
                     name="spaceType"
@@ -130,7 +130,7 @@ const CoworkingSelectionScreen = ({spaceId,formData,setFormData,error,setError,v
           }
           {
             spaceData?.flexible_desk_price > 0 && (
-                <label className="cursor-pointer">
+                <label className="cursor-pointer block">
                     <input
                     type="radio"
                     name="spaceType"
@@ -150,7 +150,7 @@ const CoworkingSelectionScreen = ({spaceId,formData,setFormData,error,setError,v
           }
           {
             spaceData?.virtual_office_price > 0 && (
-                <label className="cursor-pointer">
+                <label className="cursor-pointer block">
                     <input
                     type="radio"
                     name="spaceType"
@@ -170,7 +170,7 @@ const CoworkingSelectionScreen = ({spaceId,formData,setFormData,error,setError,v
           }
           {
             spaceData?.originalPrice > 0 && (
-                <label className="cursor-pointer">
+                <label className="cursor-pointer block">
                     <input
                     type="radio"
                     name="spaceType"
@@ -188,7 +188,7 @@ const CoworkingSelectionScreen = ({spaceId,formData,setFormData,error,setError,v
                 </label>
             )
           }
-          <label className="cursor-pointer">
+          <label className="cursor-pointer block">
             <input
               type="radio"
               name="spaceType"
@@ -213,7 +213,7 @@ const CoworkingSelectionScreen = ({spaceId,formData,setFormData,error,setError,v
           </h2>
 
           <div className="flex flex-wrap justify-center md:gap-5 gap-3 mb-6">
-            <label className="cursor-pointer">
+            <label className="cursor-pointer block">
               <input
                 type="radio"
                 name="howManyPeople"

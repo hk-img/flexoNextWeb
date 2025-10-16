@@ -145,3 +145,22 @@
 .animate-wave {
   animation: wave 1.2s ease-in-out infinite;
 }
+
+.zsiq_theme1 .zsiq_flt_rel{
+  width: 45px !important;
+  height: 45px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.zsiq_theme1 .siqicon::before{
+  font-size: 20px !important;
+   display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 40px !important;
+}
+.zsiq_theme1.zsiq_floatmain{
+   width: 45px !important;
+    max-height: 45px !important;
+}

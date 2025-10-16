@@ -818,7 +818,7 @@ const RequestToBookPopup = ({
                   </div>
 
                   <div className="flex justify-between text-[#f76900] py-1.5">
-                    <span>Total</span>
+                    <span className="font-medium">Total</span>
                     <span className="">
                       {total?.toLocaleString("en-IN")}{" "}
                       <Svg

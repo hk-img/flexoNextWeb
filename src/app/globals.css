@@ -90,6 +90,7 @@
   .container {
     max-width: 540px;
   }
+ 
 }
 
 @media (min-width: 768px) {
@@ -163,4 +164,10 @@
 .zsiq_theme1.zsiq_floatmain{
    width: 45px !important;
     max-height: 45px !important;
+}
+
+@media (max-width: 768px) {
+   .zsiq_theme1.zsiq_floatmain{
+    display: none !important;
+  }
 }

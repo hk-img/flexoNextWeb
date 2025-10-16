@@ -133,18 +133,6 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
     }
   }
 
-  const handleInstantBook = ()=>{
-    if(!token){
-      localStorage.setItem("requestToBookOpenData",JSON.stringify({
-        spaceId:spaceData?.id,
-        requestToBookOpen:true
-      }));
-      setIsAuthOpen(true);
-    }else{
-      setRequestToBookOpen(true);
-    }
-  }
-
   useEffect(()=>{
     const scheduleVisitOpenData = localStorage.getItem("scheduleVisitOpenData");
     const buyPassOpenData = localStorage.getItem("buyPassOpenData");
@@ -1170,13 +1158,10 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                     <button onClick={handleRequestToBook} className="cursor-pointer md:block hidden w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[15px]  md:rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">
                       Request To Book
                     </button>
-                    <button onClick={handleRequestToBook} className="cursor-pointer md:hidden block md:relative fixed bottom-0 left-0 w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[15px]  md:rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">
-                      Request To Book
-                    </button>
                     </>
                   ) : (
                     <>
-                      <button onClick={handleInstantBook} className="cursor-pointer md:block hidden w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]  mt-[10px]">
+                      <button onClick={handleRequestToBook} className="cursor-pointer md:block hidden w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]  mt-[10px]">
                         Book Now
                       </button>
                       <div className="pt-5">
@@ -1198,6 +1183,9 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                       </div>
                     </>
                   )}
+                  <button onClick={handleRequestToBook} className="cursor-pointer md:hidden block md:relative fixed bottom-0 left-0 w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[15px]  md:rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">
+                    {spaceData?.isInstant == 1 ? "Book Now": "Request To Book"}
+                  </button>
                 </div>
               </div>
             </div>

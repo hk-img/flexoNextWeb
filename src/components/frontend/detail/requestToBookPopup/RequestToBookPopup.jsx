@@ -708,13 +708,19 @@ const RequestToBookPopup = ({
                         spaceData?.location_name || ""
                       )}
                     </span>
-                    <div className="flex items-center gap-1">
-                      <Svg name="star" className="size-4 shrink-0 text-[#f76900]" />
-                      <Svg name="star" className="size-4 shrink-0 text-[#f76900]" />
-                      <Svg name="star" className="size-4 shrink-0 text-[#f76900]" />
-                      <Svg name="star" className="size-4 shrink-0 text-[#f76900]" />
-                      <Svg name="emptyStar" className="size-4 shrink-0 text-[#f76900]" />
-                    </div>
+                    {
+                      spaceData?.rating > 0 && (
+                        <div className="flex items-center gap-1">
+                          {[...Array(5)].map((_, i) => (
+                            <Svg
+                              key={i}
+                              name={i < spaceData?.rating ? "star" : "emptyStar"}
+                              className="size-4 shrink-0 text-[#f76900]"
+                            />
+                          ))}
+                        </div>
+                      )
+                    }
                     <div className="flex items-center gap-2">
                     <p className="text-black  text-sm font-bold">
                       <Svg
@@ -812,7 +818,7 @@ const RequestToBookPopup = ({
                   </div>
 
                   <div className="flex justify-between text-[#f76900] py-1.5">
-                    <span>Payable Now</span>
+                    <span>Total</span>
                     <span className="">
                       {total?.toLocaleString("en-IN")}{" "}
                       <Svg

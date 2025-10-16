@@ -46,17 +46,82 @@ export async function generateMetadata({params}) {
   };
 }
 
-
-const getListingData = async (payload) => {
-  const res = await fetch(`${BASE_URL}/spaces/getSpacesByCity`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  });
-  return res.json();
-};
+  async function fetchAPI1() {
+    try{
+      const res = await fetch(`${BASE_URL}/getAllActiveSpaceCategory`, {
+        headers: {
+          Accept: "application/json",
+        },
+        next: { revalidate: 3600 }
+      });
+      if (!res.ok) {
+        console.error("API error", res.status, await res.text());
+        return [];
+      }
+      return await res.json();
+    }catch(error){
+      console.log(error);
+      return [];
+    }
+  }
+  async function fetchAPI2() {
+    try{
+      const res = await fetch(`${BASE_URL}/user/getAllLocations?spaceType=${spaceType}`,{
+        headers: {
+          Accept: "application/json",
+        },
+        next: { revalidate: 3600 }
+      });
+      if (!res.ok) {
+        console.error("API error", res.status, await res.text());
+        return [];
+      }
+      return await res.json();
+    }catch(error){
+      console.log(error);
+      return [];
+    }
+  }
+  async function fetchAPI3(payload) {
+    try{
+      const res = await fetch(`${BASE_URL}/spaces/getNearBySpacesByCityId`, {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+        next: { revalidate: 3600 },
+      });
+      if (!res.ok) {
+        console.error("API error", res.status, await res.text());
+        return [];
+      }
+      return await res.json();
+    }catch(error){
+      console.log(error);
+      return [];
+    }
+  }
+  const getListingData = async (payload) => {
+    try{
+      const res = await fetch(`${BASE_URL}/spaces/getSpacesByCity`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) {
+        console.error("API error", res.status, await res.text());
+        return [];
+      }
+      return await res.json();
+    }catch(error){
+      console.log(error);
+      return [];
+    }
+  };
 
 export function stripTags(html){
   if (!html) return '';
@@ -85,42 +150,11 @@ const page = async({params}) => {
   const city = convertSlugToCapitalLetter(citySlug || "");
   const locationName = convertSlugToCapitalLetter(locationNameSlug || "");
   const type = getTypeOfSpaceByWorkSpace(spaceTypeSlug || "");
-
-  async function fetchAPI1() {
-    const res = await fetch(`${BASE_URL}/getAllActiveSpaceCategory`, {
-      headers: {
-        Accept: "application/json",
-      },
-      next: { revalidate: 3600 }
-    });
-    return res.json();
-  }
-  async function fetchAPI2() {
-    const res = await fetch(`${BASE_URL}/user/getAllLocations?spaceType=${spaceType}`,{
-      headers: {
-        Accept: "application/json",
-      },
-      next: { revalidate: 3600 }
-    });
-    return res.json();
-  }
   const payload = {
     cityId: city,
     spaceType: spaceTypeSlug == "coworking" ? "coworking space" : spaceTypeSlug?.replace(/-/g, " ")
   }
-  async function fetchAPI3() {
-    const res = await fetch(`${BASE_URL}/spaces/getNearBySpacesByCityId`, {
-      method: "POST",
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-      next: { revalidate: 3600 },
-    });
-    return res.json();
-  }
-  const [data1,data2,data3] = await Promise.all([fetchAPI1(),fetchAPI2(),fetchAPI3()]);
+  const [data1,data2,data3] = await Promise.all([fetchAPI1(),fetchAPI2(),fetchAPI3(payload)]);
   const otherTypes = convertSlugToSmallLetter(spaceTypeSlug || "");
   const listingPayload = {
     city_name: convertSlugToSmallLetter(city || ""),

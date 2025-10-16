@@ -401,227 +401,269 @@ const RequestToBookPopup = ({
                 onSubmit={handleSubmit(onSubmit)}
                 className="flex flex-col gap-3"
               >
-                {fields.map((item, index) => (
-                  <div
-                    key={item.id}
-                    className="border-b border-[#ddd] pb-3 mb-3"
-                  >
-                    <label className="text-sm font-medium block mb-1">
-                      Choose a date
-                    </label>
-                    <Controller
-                      control={control}
-                      name={`slots.${index}.date`}
-                      render={({ field }) => (
-                        <DatePicker
-                          selected={field.value}
-                          onChange={(date) => field.onChange(date)}
-                          filterDate={(date) => !isDisabledDate(date)}
-                          dateFormat="dd-MM-yyyy"
-                          renderDayContents={(day, date) => {
-                            const title = getHolidayTitle(date);
-                            return (
-                              <span
-                                title={title}
-                                className={title ? "font-semibold" : ""}
-                              >
-                                {day}
-                              </span>
-                            );
-                          }}
-                          minDate={new Date()}
-                          placeholderText="Select date"
-                          className="w-full border rounded-md px-3 py-2 text-sm outline-none"
-                        />
-                      )}
-                    />
-                    {errors?.slots?.[index]?.date && (
-                      <p className="text-red-500 text-xs mt-1">
-                        {errors.slots[index].date.message}
-                      </p>
-                    )}
-
-                    <div className="flex gap-3 mt-2">
-                      <div className="flex-1">
-                        <label className="text-sm font-medium block mb-1">
-                          Start time
-                        </label>
+                <div className="h-[calc(100vh-376px)] overflow-y-auto py-2 [&::-webkit-scrollbar]:w-[7px] [&::-webkit-scrollbar-thumb]:bg-[#f76900] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]">
+                  {fields.map((item, index) => (
+                    <div
+                      key={item.id}
+                      className=" [&_.react-datepicker-wrapper]:w-full pr-0 md:pr-2"
+                    >
+                      <div className="relative">
                         <Controller
                           control={control}
-                          name={`slots.${index}.startTime`}
-                          render={({ field }) => {
-                            const options = getTimeDateSlot(
-                              watch(`slots.${index}.date`)
-                            );
-                            return (
-                              <select
-                                {...field}
-                                className="w-full border rounded-md px-3 py-2 text-sm outline-none"
+                          name={`slots.${index}.date`}
+                          render={({ field }) => (
+                            <div className="relative border-b border-[#0000006b] pt-3 pb-1 focus-within:border-[#3f51b5] transition-all duration-200">
+                              <DatePicker
+                                selected={field.value}
+                                onChange={(date) => field.onChange(date)}
+                                filterDate={(date) => !isDisabledDate(date)}
+                                dateFormat="dd-MM-yyyy"
+                                renderDayContents={(day, date) => {
+                                  const title = getHolidayTitle(date);
+                                  return (
+                                    <span title={title} className={title ? "font-semibold" : ""}>
+                                      {day}
+                                    </span>
+                                  );
+                                }}
+                                minDate={new Date()}
+                                placeholderText=""
+                                className="w-full text-sm text-[#111] bg-transparent outline-none border-none focus:ring-0"
+                              />
+
+                              <label
+                                className={`absolute left-0 bg-white transition-all duration-200 ease-in-out text-gray-500
+                                  ${
+                                    field.value
+                                      ? "text-xs -top-2 text-[#f76900]"
+                                      : "text-sm top-1/2 left-1"
+                                  }
+                                `}
                               >
-                                <option value="">Select start time</option>
-                                {options?.map((t, i) => (
-                                  <option
-                                    key={i}
-                                    value={t.value}
-                                    disabled={t.disabled}
-                                  >
-                                    {t.label}
-                                  </option>
-                                ))}
-                              </select>
-                            );
-                          }}
+                                Choose a date
+                              </label>
+                              <div>
+                                <Svg name="calender" className="text-[#f76900] size-[14px] absolute right-2 top-3 "/>
+                              </div>
+                            </div>
+                          )}
                         />
-                        {errors?.slots?.[index]?.startTime && (
+
+                        {errors?.slots?.[index]?.date && (
                           <p className="text-red-500 text-xs mt-1">
-                            {errors.slots[index].startTime.message}
+                            {errors.slots[index].date.message}
                           </p>
                         )}
                       </div>
-                      <div className="flex-1">
-                        <label className="text-sm font-medium block mb-1">
-                          End time
-                        </label>
-                        <Controller
-                          control={control}
-                          name={`slots.${index}.endTime`}
-                          render={({ field }) => {
-                            const options = getTimeDateSlot(
-                              watch(`slots.${index}.date`)
-                            );
-                            const handleChange = (e) => {
-                              const value = e.target.value;
-                              if (!value) {
-                                field.onChange(value);
-                                return;
-                              }
-                              const existsDate = values.slots?.filter(
-                                (item) =>
-                                  item.time == values.slots?.[index]?.time
+
+
+                      <div className="flex gap-[30px] mt-5">
+                        <div className="flex-1 relative">
+                          <Controller
+                            control={control}
+                            name={`slots.${index}.startTime`}
+                            render={({ field }) => {
+                              const options = getTimeDateSlot(watch(`slots.${index}.date`));
+
+                              return (
+                                <div className="relative border-b border-[#0000006b] pt-3 pb-1 focus-within:border-[#3f51b5] transition-all duration-200">
+                                  <select
+                                    {...field}
+                                    placeholder=""
+                                    className="w-full bg-transparent text-sm text-[#111] outline-none border-none  focus:ring-0"
+                                  >
+                                    <option value="" disabled hidden>
+                                      
+                                    </option>
+                                    {options?.map((t, i) => (
+                                      <option key={i} value={t.value} disabled={t.disabled}>
+                                        {t.label}
+                                      </option>
+                                    ))}
+                                  </select>
+
+                                  <label
+                                    className={`absolute left-0 bg-white px-1 transition-all duration-200 ease-in-out text-gray-500 pointer-events-none
+                                      ${
+                                        field.value
+                                          ? "text-xs -top-2 text-[#f76900]"
+                                          : "text-sm top-1/2 left-0"
+                                      }
+                                    `}
+                                  >
+                                    Start time
+                                  </label>
+
+                                  {/* Custom Dropdown Icon */}
+                                  
+                                </div>
                               );
-                              if (existsDate?.length > 1) {
-                              }
-                              if (
-                                values?.slots?.[index]?.startTime == "00:00" &&
-                                value == "00:00"
-                              ) {
-                                field.onChange(value);
-                                return;
-                              }
-                              const duration = getDurationInHours(
-                                values?.slots?.[index]?.startTime,
-                                value
-                              );
-                              if (duration < minHours) {
-                                return toast.error(
-                                  `Time difference must be at least ${minHours} hours.`
+                            }}
+                          />
+
+                          {errors?.slots?.[index]?.startTime && (
+                            <p className="text-red-500 text-xs mt-1">
+                              {errors.slots[index].startTime.message}
+                            </p>
+                          )}
+                        </div>
+
+                        <div className="flex-1 relative">
+                          <Controller
+                            control={control}
+                            name={`slots.${index}.endTime`}
+                            render={({ field }) => {
+                              const options = getTimeDateSlot(watch(`slots.${index}.date`));
+
+                              const handleChange = (e) => {
+                                const value = e.target.value;
+                                if (!value) {
+                                  field.onChange(value);
+                                  return;
+                                }
+
+                                const existsDate = values.slots?.filter(
+                                  (item) => item.time == values.slots?.[index]?.time
                                 );
-                              }
-                              field.onChange(value);
-                            };
-                            return (
-                              <select
-                                {...field}
-                                className="w-full border rounded-md px-3 py-2 text-sm outline-none"
-                                onChange={handleChange}
-                              >
-                                <option value="">Select end time</option>
-                                {options?.map((t, i) => (
-                                  <option
-                                    key={i}
-                                    value={t.value}
-                                    disabled={t.disabled}
+                                if (existsDate?.length > 1) {
+                                }
+
+                                if (
+                                  values?.slots?.[index]?.startTime == "00:00" &&
+                                  value == "00:00"
+                                ) {
+                                  field.onChange(value);
+                                  return;
+                                }
+
+                                const duration = getDurationInHours(
+                                  values?.slots?.[index]?.startTime,
+                                  value
+                                );
+                                if (duration < minHours) {
+                                  return toast.error(
+                                    `Time difference must be at least ${minHours} hours.`
+                                  );
+                                }
+                                field.onChange(value);
+                              };
+
+                              return (
+                                <div className="relative border-b border-[#0000006b] pt-3 pb-1 focus-within:border-[#3f51b5] transition-all duration-200">
+                                  <select
+                                    {...field}
+                                    onChange={handleChange}
+                                    className="w-full bg-transparent text-sm text-[#111] outline-none border-none  focus:ring-0"
                                   >
-                                    {t.label}
-                                  </option>
-                                ))}
-                              </select>
-                            );
-                          }}
-                        />
+                                    <option value="" disabled hidden>
+                                      
+                                    </option>
+                                    {options?.map((t, i) => (
+                                      <option key={i} value={t.value} disabled={t.disabled}>
+                                        {t.label}
+                                      </option>
+                                    ))}
+                                  </select>
 
-                        {errors?.slots?.[index]?.endTime && (
-                          <p className="text-red-500 text-xs mt-1">
-                            {errors.slots[index].endTime.message}
-                          </p>
-                        )}
+                                  <label
+                                    className={`absolute left-3 bg-white px-1 transition-all duration-200 ease-in-out text-gray-500 pointer-events-none
+                                      ${
+                                        field.value
+                                          ? "text-xs -top-2 text-[#f76900]"
+                                          : "text-sm top-1/2 left-0"
+                                      }
+                                    `}
+                                  >
+                                    End time
+                                  </label>
+                                </div>
+                              );
+                            }}
+                          />
+
+                          {errors?.slots?.[index]?.endTime && (
+                            <p className="text-red-500 text-xs mt-1">
+                              {errors.slots[index].endTime.message}
+                            </p>
+                          )}
+                        </div>
+
                       </div>
+
+                      {fields.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => remove(index)}
+                          className="py-5 flex justify-end w-full"
+                        >
+                        <Svg name="close" className="size-6"/>
+                        </button>
+                      )}
                     </div>
+                  ))}
 
-                    {fields.length > 1 && (
-                      <button
-                        type="button"
-                        onClick={() => remove(index)}
-                        className="text-red-500 text-xs mt-2 underline"
-                      >
-                        Remove Slot
-                      </button>
-                    )}
-                  </div>
-                ))}
+                  {errors?.slots?.message && (
+                    <p className="text-red-500 text-xs">{errors.slots.message}</p>
+                  )}
 
-                {errors?.slots?.message && (
-                  <p className="text-red-500 text-xs">{errors.slots.message}</p>
-                )}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const slots = values.slots.map((item) => {
+                        const d = new Date(item?.date);
+                        d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
 
-                <button
-                  type="button"
-                  onClick={() => {
-                    const slots = values.slots.map((item) => {
-                      const d = new Date(item?.date);
-                      d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+                        const day = String(d.getDate()).padStart(2, "0");
+                        const month = String(d.getMonth() + 1).padStart(2, "0");
+                        const year = d.getFullYear();
 
-                      const day = String(d.getDate()).padStart(2, "0");
-                      const month = String(d.getMonth() + 1).padStart(2, "0");
-                      const year = d.getFullYear();
+                        const formattedDate = `${day}/${month}/${year}`;
 
-                      const formattedDate = `${day}/${month}/${year}`;
+                        return {
+                          startDate: formattedDate,
+                          startTime: item.startTime,
+                          endTime: item.endTime,
+                        };
+                      });
+                      const dateMap = {};
 
-                      return {
-                        startDate: formattedDate,
-                        startTime: item.startTime,
-                        endTime: item.endTime,
-                      };
-                    });
-                    const dateMap = {};
-
-                    for (let slot of slots) {
-                      const { startDate, startTime, endTime } = slot;
-                      if (!dateMap[startDate]) {
-                        dateMap[startDate] = [];
-                      }
-                      const isOverlap = dateMap[startDate].some(
-                        (s) => !(endTime < s.startTime || startTime > s.endTime)
-                      );
-
-                      if (isOverlap) {
-                        toast.error(
-                          `Slots on ${startDate} are overlapping. Please fix before submitting.`
+                      for (let slot of slots) {
+                        const { startDate, startTime, endTime } = slot;
+                        if (!dateMap[startDate]) {
+                          dateMap[startDate] = [];
+                        }
+                        const isOverlap = dateMap[startDate].some(
+                          (s) => !(endTime < s.startTime || startTime > s.endTime)
                         );
-                        return;
-                      }
-                      dateMap[startDate].push({ startTime, endTime });
-                    }
-                    const lastSlot =
-                      watch("slots")?.[watch("slots").length - 1];
-                    if (
-                      lastSlot &&
-                      lastSlot.date &&
-                      lastSlot.startTime &&
-                      lastSlot.endTime
-                    ) {
-                      append({ date: null, startTime: "", endTime: "" });
-                    } else {
-                      toast.warning(
-                        "You can not overlap the time for the same date."
-                      );
-                    }
-                  }}
-                  className="cursor-pointer text-[#f76900] font-semibold text-sm"
-                >
-                  + Add Another Slot
-                </button>
 
+                        if (isOverlap) {
+                          toast.error(
+                            `Slots on ${startDate} are overlapping. Please fix before submitting.`
+                          );
+                          return;
+                        }
+                        dateMap[startDate].push({ startTime, endTime });
+                      }
+                      const lastSlot =
+                        watch("slots")?.[watch("slots").length - 1];
+                      if (
+                        lastSlot &&
+                        lastSlot.date &&
+                        lastSlot.startTime &&
+                        lastSlot.endTime
+                      ) {
+                        append({ date: null, startTime: "", endTime: "" });
+                      } else {
+                        toast.warning(
+                          "You can not overlap the time for the same date."
+                        );
+                      }
+                    }}
+                    className="cursor-pointer text-[#f76900] font-semibold mt-[37px]"
+                  >
+                    Add Another Slot
+                  </button>
+                </div>
                 <button
                   disabled={isSubmitPending}
                   type="submit"

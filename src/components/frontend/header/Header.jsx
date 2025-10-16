@@ -74,7 +74,7 @@ const Header = () => {
         setUser({});
         localStorage.removeItem(`${TOKEN_NAME}`);
         document.cookie = `${TOKEN_NAME}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-        router.push("/");
+        window.location.reload();
       } else {
         toast.error(data.message);
       }

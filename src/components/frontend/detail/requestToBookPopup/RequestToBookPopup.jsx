@@ -378,9 +378,9 @@ const RequestToBookPopup = ({
           </div>
         </div>
       ) : (
-        <div className="relative w-full xl:max-w-[1000px] md:max-w-[80vw] max-w-full md:mx-[12px] rounded-sm bg-white overflow-y-auto h-full md:h-auto [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1] animate-scaleIn">
+        <div className="relative w-full xl:max-w-[1000px] md:max-w-[80vw] max-w-full md:mx-[12px] rounded-sm bg-white overflow-y-auto h-[93vh] [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1] animate-scaleIn">
           <div
-            className="flex absolute top-4 right-4 items-center justify-end"
+            className="flex absolute top-4 right-4 items-center justify-center shadow-[0_0_4px_#000] size-[31px] rounded-full bg-white"
             onClick={() => setIsOpen(false)}
           >
             <Svg name="close" className="size-[18px] cursor-pointer" />
@@ -389,7 +389,7 @@ const RequestToBookPopup = ({
           <div className="grid md:grid-cols-2 grid-cols-1 bg-[#fefaf7]">
             {/* LEFT SIDE */}
             <div className="bg-white p-5">
-              <div className="mb-[21px] border-b border-[#DBDBDB] pb-[11px]">
+              <div className="border-b border-[#DBDBDB] pb-[11px]">
                 <h2 className="2xl:text-xl text-lg font-medium ">
                   {spaceData?.isInstant == 1
                     ? "Complete Your Booking"
@@ -401,12 +401,22 @@ const RequestToBookPopup = ({
                 onSubmit={handleSubmit(onSubmit)}
                 className="flex flex-col gap-3"
               >
-                <div className="h-[calc(100vh-376px)] overflow-y-auto py-2 [&::-webkit-scrollbar]:w-[7px] [&::-webkit-scrollbar-thumb]:bg-[#f76900] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]">
+                <div className="md:h-[calc(100vh-272px)] md:overflow-y-auto py-2 [&::-webkit-scrollbar]:w-[7px] [&::-webkit-scrollbar-thumb]:bg-[#f76900] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]">
                   {fields.map((item, index) => (
                     <div
                       key={item.id}
-                      className=" [&_.react-datepicker-wrapper]:w-full pr-0 md:pr-2"
+                      className=" [&_.react-datepicker-wrapper]:w-full pr-0 md:pr-2 py-2"
                     >
+                      
+                      {fields.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => remove(index)}
+                          className=" flex justify-end w-full cursor-pointer"
+                        >
+                        <Svg name="close" className="size-6"/>
+                        </button>
+                      )}
                       <div className="relative">
                         <Controller
                           control={control}
@@ -436,7 +446,7 @@ const RequestToBookPopup = ({
                                   ${
                                     field.value
                                       ? "text-xs -top-2 text-[#f76900]"
-                                      : "text-sm top-1/2 left-1"
+                                      : "text-sm top-[13px] left-1"
                                   }
                                 `}
                               >
@@ -487,7 +497,7 @@ const RequestToBookPopup = ({
                                       ${
                                         field.value
                                           ? "text-xs -top-2 text-[#f76900]"
-                                          : "text-sm top-1/2 left-0"
+                                          : "text-sm top-[13px] left-0"
                                       }
                                     `}
                                   >
@@ -570,7 +580,7 @@ const RequestToBookPopup = ({
                                       ${
                                         field.value
                                           ? "text-xs -top-2 text-[#f76900]"
-                                          : "text-sm top-1/2 left-0"
+                                          : "text-sm top-[13px] left-0"
                                       }
                                     `}
                                   >
@@ -590,15 +600,6 @@ const RequestToBookPopup = ({
 
                       </div>
 
-                      {fields.length > 1 && (
-                        <button
-                          type="button"
-                          onClick={() => remove(index)}
-                          className="py-5 flex justify-end w-full"
-                        >
-                        <Svg name="close" className="size-6"/>
-                        </button>
-                      )}
                     </div>
                   ))}
 
@@ -667,7 +668,7 @@ const RequestToBookPopup = ({
                 <button
                   disabled={isSubmitPending}
                   type="submit"
-                  className="cursor-pointer bg-[#f76900] hover:bg-[#ff7c52] text-white rounded-[15px] font-semibold uppercase tracking-[1px] py-[10px] mt-4"
+                  className="cursor-pointer w-fit px-5 bg-[#f76900] hover:bg-[#ff7c52] text-white rounded-[15px] font-semibold uppercase tracking-[1px] py-[10px] mt-4"
                 >
                   {isSubmitPending
                     ? "Please wait..."
@@ -676,31 +677,29 @@ const RequestToBookPopup = ({
                     : "Submit Request"}
                 </button>
 
-                <p className="text-xs text-[#000000de] mt-2">
-                  You will not be charged yet. Your booking request will be sent
-                  to the host. Once accepted, you’ll receive a link to make
-                  payment.
+                <p className="text-xs min-[1400px]:text-sm leading-[1.5] text-[#000000de] mt-2">
+                  You will not be charged yet. Your booking request will be sent to the host. Once the host accepts your booking request, you will receive a link to make the payment.
                 </p>
               </form>
             </div>
 
             {/* RIGHT SIDE - Summary */}
             <div className="bg-[#FFF0E6] p-5 flex flex-col gap-3">
-              <div className="flex items-center justify-between rounded-[10px] bg-white p-5">
-                <div className="flex items-center gap-3">
+              <div className="flex  items-center justify-between rounded-[10px] bg-white md:p-5 p-2">
+                <div className="flex md:flex-row flex-col w-full md:items-center gap-3">
                   <ImageWithFallback
                     width="180"
                     height="105"
                     src={spaceData?.images?.[0]}
                     alt="image"
-                    className="w-[180px] h-[105px] rounded-md"
+                    className="md:w-[180px] w-full h-[105px] rounded-md"
                     fallback="/images/default_image.webp"
                   />
                   <div>
                     <h3 className="font-medium text-base 2xl:text-lg text-[#141414]">
                       {spaceData?.actual_name || spaceData?.name}
                     </h3>
-                    <p className="text-sm 2xl:text-base text-[#000000de] flex items-center">
+                    <span className="text-sm 2xl:text-base text-[#000000de] flex items-center">
                       <Svg
                         name="location2"
                         className="size-4 shrink-0 text-black"
@@ -708,8 +707,16 @@ const RequestToBookPopup = ({
                       {convertSlugToCapitalLetter(
                         spaceData?.location_name || ""
                       )}
-                    </p>
-                    <p className="text-black  2xl:text-base text-sm font-bold">
+                    </span>
+                    <div className="flex items-center gap-1">
+                      <Svg name="star" className="size-4 shrink-0 text-[#f76900]" />
+                      <Svg name="star" className="size-4 shrink-0 text-[#f76900]" />
+                      <Svg name="star" className="size-4 shrink-0 text-[#f76900]" />
+                      <Svg name="star" className="size-4 shrink-0 text-[#f76900]" />
+                      <Svg name="emptyStar" className="size-4 shrink-0 text-[#f76900]" />
+                    </div>
+                    <div className="flex items-center gap-2">
+                    <p className="text-black  text-sm font-bold">
                       <Svg
                         name="rupee"
                         className="size-4 text-[#f76900] inline"
@@ -717,12 +724,13 @@ const RequestToBookPopup = ({
                       {spaceData?.originalPrice} / hr
                     </p>
                     <p>{minHours} hr minimum</p>
+                    </div>
                   </div>
                 </div>
               </div>
 
               <div className="bg-white rounded-[10px] p-5">
-                <div className="mb-[21px] border-b border-[#DBDBDB] pb-[10px]">
+                <div className="border-b border-[#DBDBDB] pb-[10px]">
                   <h4 className="font-medium text-[#141414] 2xl:text-lg text-base flex items-center gap-1">
                     <Svg
                       name="calender"
@@ -732,77 +740,84 @@ const RequestToBookPopup = ({
                   </h4>
                 </div>
 
-                <div className="space-y-2">
-                  {values?.slots?.map((slot, i) => (
-                    <div
-                      key={i}
-                      className="flex justify-between border-b py-1 border-[#DBDBDB]"
-                    >
-                      <span className="text-sm 2xl:text-base">
-                        {slot?.date
-                          ? new Date(slot.date).toLocaleDateString("en-US", {
-                              weekday: "short",
-                              year: "numeric",
-                              month: "short",
-                              day: "numeric",
-                            })
-                          : "No date selected"}
-                        <span className="font-semibold flex items-center gap-1">
+                <div className="">
+                  <div className="space-y-2 border-b py-2  max-h-[200px] overflow-y-auto border-[#DBDBDB] [&::-webkit-scrollbar]:w-[7px] [&::-webkit-scrollbar-thumb]:bg-[#f76900] [&::-webkit-scrollbar-track]:bg-[#f1f1f1] pr-2">
+                    {values?.slots?.map((slot, i) => (
+                      <div
+                        key={i}
+                        className="flex justify-between "
+                      >
+                        <div className="text-sm 2xl:text-base flex items-center gap-1">
+                          <span>
+                            {slot?.date
+                              ? new Date(slot.date).toLocaleDateString("en-US", {
+                                  weekday: "short",
+                                  year: "numeric",
+                                  month: "short",
+                                  day: "numeric",
+                                })
+                                
+                              : "No date selected"}
+                            </span>
+                          <span className="flex items-center gap-1 ">
+                            <Svg
+                              name="rupee"
+                              className="size-3 text-[#f76900] inline"
+                            />
+                            {spaceData?.originalPrice}
+                          </span>
+                          <span>
+                          {getDurationInHours(slot?.startTime, slot?.endTime) !=
+                            0 &&
+                            `X ${getDurationInHours(
+                              slot?.startTime,
+                              slot?.endTime
+                            )} hours`}{" "}
+                            </span>
+                        </div>
+                        <span className="flex items-center gap-1 min-[1400px]:text-base text-sm">
                           <Svg
                             name="rupee"
-                            className="size-[18px] text-[#f76900] inline"
+                            className="size-3 text-[#f76900] inline"
                           />
-                          {spaceData?.originalPrice}
+                          {(
+                            getDurationInHours(slot?.startTime, slot?.endTime) *
+                            spaceData?.originalPrice
+                          )?.toLocaleString("en-IN")}
                         </span>
-                        {getDurationInHours(slot?.startTime, slot?.endTime) !=
-                          0 &&
-                          `X ${getDurationInHours(
-                            slot?.startTime,
-                            slot?.endTime
-                          )} hours`}{" "}
-                      </span>
-                      <span className="font-semibold flex items-center gap-1">
-                        <Svg
-                          name="rupee"
-                          className="size-[18px] text-[#f76900] inline"
-                        />
-                        {(
-                          getDurationInHours(slot?.startTime, slot?.endTime) *
-                          spaceData?.originalPrice
-                        )?.toLocaleString("en-IN")}
-                      </span>
-                    </div>
-                  ))}
+                      </div>
+                    ))}
+                  </div>
 
-                  <div className="flex justify-between text-[#f76900] border-b py-1 border-[#DBDBDB]">
+                  <div className="flex justify-between text-[#f76900] border-b py-1.5 border-[#DBDBDB]">
                     <span className="text-sm 2xl:text-base">Subtotal</span>
-                    <span className="font-semibold">
+                    <span className="">
                       {subtotal?.toLocaleString("en-IN")}{" "}
                       <Svg
                         name="rupee"
-                        className="size-[18px] text-[#f76900] inline"
+                        className="size-3.5 text-[#f76900] inline"
                       />
                     </span>
                   </div>
 
-                  <div className="flex justify-between text-[#f76900] border-b py-1 border-[#DBDBDB]">
+                  <div className="flex justify-between text-[#f76900] border-b py-1.5 border-[#DBDBDB]">
                     <span className="text-sm 2xl:text-base">GST (18%)</span>
-                    <span className="font-semibold">
+                    <span className="">
                       {gst?.toLocaleString("en-IN")}{" "}
                       <Svg
                         name="rupee"
-                        className="size-[18px] text-[#f76900] inline"
+                        className="size-3.5 text-[#f76900] inline"
                       />
                     </span>
                   </div>
 
-                  <div className="flex justify-between text-[#f76900] font-semibold">
+                  <div className="flex justify-between text-[#f76900] py-1.5">
                     <span>Payable Now</span>
-                    <span className="font-semibold">
+                    <span className="">
                       {total?.toLocaleString("en-IN")}{" "}
                       <Svg
                         name="rupee"
-                        className="size-[18px] text-[#f76900] inline"
+                        className="size-3.5 text-[#f76900] inline"
                       />
                     </span>
                   </div>

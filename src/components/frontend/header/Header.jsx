@@ -88,7 +88,23 @@ const Header = () => {
     const payload = {};
     logoutMutate(payload);
   };
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     const mobile = window.innerWidth <= 768;
 
+  //     if (mobile) {
+  //       const script = document.getElementById("zoho-salesiq");
+  //       if (script) script.remove();
+  //       if (window.$zoho) delete window.$zoho;
+  //       const widget = document.getElementById("zsiqchat");
+  //       if (widget) widget.remove();
+  //     }
+  //   };
+
+  //   handleResize();
+  //   window.addEventListener("resize", handleResize);
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, []);
   return (
     <>
       <header
@@ -171,15 +187,22 @@ const Header = () => {
               )}
             </div>
           </div>
-          {
-            token && <div ref={menuRef} className={`absolute md:right-0 right-3 z-60 md:top-20 top-15 w-[250px] bg-white text-black rounded-sm transition-all duration-200 shadow-[10px_10px_20px_#0000006b]
-            ${isMenuOpen ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-95 pointer-events-none"}
-            `}>
+          {token && (
+            <div
+              ref={menuRef}
+              className={`absolute md:right-0 right-3 z-60 md:top-20 top-15 w-[250px] bg-white text-black rounded-sm transition-all duration-200 shadow-[10px_10px_20px_#0000006b]
+            ${
+              isMenuOpen
+                ? "opacity-100 scale-100 pointer-events-auto"
+                : "opacity-0 scale-95 pointer-events-none"
+            }
+            `}
+            >
               <div className="py-2">
                 <ul>
                   <li>
                     <div
-                      onClick={()=>{
+                      onClick={() => {
                         setIsMenuOpen(false);
                         router.push("/profile-management");
                       }}
@@ -190,7 +213,7 @@ const Header = () => {
                   </li>
                   <li>
                     <div
-                      onClick={()=>{
+                      onClick={() => {
                         setIsMenuOpen(false);
                         router.push("/booking-management");
                       }}
@@ -201,7 +224,7 @@ const Header = () => {
                   </li>
                   <li>
                     <div
-                      onClick={()=>{
+                      onClick={() => {
                         setIsMenuOpen(false);
                         router.push("/booking-request-inquires");
                       }}
@@ -212,7 +235,7 @@ const Header = () => {
                   </li>
                   <li>
                     <div
-                      onClick={()=>{
+                      onClick={() => {
                         setIsMenuOpen(false);
                         router.push("/visit-scheduling");
                       }}
@@ -223,7 +246,7 @@ const Header = () => {
                   </li>
                   <li>
                     <div
-                      onClick={()=>{
+                      onClick={() => {
                         setIsMenuOpen(false);
                         router.push("/favourite-workspace");
                       }}
@@ -234,7 +257,7 @@ const Header = () => {
                   </li>
                   <li>
                     <div
-                      onClick={()=>{
+                      onClick={() => {
                         setIsMenuOpen(false);
                         router.push("/workspace-review-rating-list");
                       }}
@@ -254,7 +277,7 @@ const Header = () => {
                 </ul>
               </div>
             </div>
-          }
+          )}
         </div>
       </header>
       {isOpen && <Auth isOpen={isOpen} setIsOpen={setIsOpen} />}

@@ -8,30 +8,57 @@ import { notFound } from "next/navigation";
 import React from "react";
 
 async function getSpaceDetails(spaceId) {
-  const res = await fetch(`${BASE_URL}/spaces/getSpaceDetails/${spaceId}`, {
-    cache: "no-store",
-  });
-  return res.json();
+  try{
+    const res = await fetch(`${BASE_URL}/spaces/getSpaceDetails/${spaceId}`, {
+      cache: "no-store",
+    });
+    if (!res.ok) {
+      console.error("API error", res.status, await res.text());
+      return [];
+    }
+    return await res.json();
+  }catch(error){
+    console.log(error);
+    return [];
+  }
 }
 
 async function getDetailData(payload) {
-  const res = await fetch(
-    `${BASE_URL}/spaces/details?spaceId=${payload?.spaceId}&city=${payload?.city}&spaceType=${payload?.spaceType}&country=${payload?.country}`,
-    {
-      cache: "no-store",
+  try{
+    const res = await fetch(
+      `${BASE_URL}/spaces/details?spaceId=${payload?.spaceId}&city=${payload?.city}&spaceType=${payload?.spaceType}&country=${payload?.country}`,
+      {
+        cache: "no-store",
+      }
+    );
+    if (!res.ok) {
+      console.error("API error", res.status, await res.text());
+      return [];
     }
-  );
-  return res.json();
+    return await res.json();
+  }catch(error){
+    console.log(error);
+    return [];
+  }
 }
 
 async function getReviewData(spaceId) {
-  const res = await fetch(
-    `${BASE_URL}/ratings/reviews/${spaceId}?sortBy=topRating`,
-    {
-      cache: "no-store",
+  try{
+     const res = await fetch(
+      `${BASE_URL}/ratings/reviews/${spaceId}?sortBy=topRating`,
+      {
+        cache: "no-store",
+      }
+    );
+     if (!res.ok) {
+      console.error("API error", res.status, await res.text());
+      return [];
     }
-  );
-  return res.json();
+    return await res.json();
+  }catch(error){
+    console.log(error);
+    return [];
+  }
 }
 
 const page = async ({ params }) => {

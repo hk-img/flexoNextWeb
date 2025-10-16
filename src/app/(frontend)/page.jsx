@@ -3,24 +3,35 @@ import { BASE_URL, WEBSITE_BASE_URL } from "@/services/ApiService";
 import React from "react";
 
 export const metadata = {
-  title: 'Find Coworking & Office Spaces Across India | Flexo',
-  description: "Discover top coworking spaces, managed offices, and commercial properties. Find your perfect office with Flexo. Trusted by leading companies - Flexo",
+  title: "Find Coworking & Office Spaces Across India | Flexo",
+  description:
+    "Discover top coworking spaces, managed offices, and commercial properties. Find your perfect office with Flexo. Trusted by leading companies - Flexo",
   alternates: {
     canonical: `${WEBSITE_BASE_URL}`,
   },
 };
 
-const page = async () => {
-  const res = await fetch(`${BASE_URL}/getAllActiveSpaceCategory`, {
-    headers: {
-      Accept: "application/json",
-    },
-    next: { revalidate: 3600 }
-  });
-  if (!res.ok) {
-    throw new Error(`Failed to fetch categories: ${res.status}`);
+const getSpaceCategoryData = async (payload) => {
+  try {
+    const res = await fetch(`${BASE_URL}/getAllActiveSpaceCategory`, {
+      headers: {
+        Accept: "application/json",
+      },
+      next: { revalidate: 3600 },
+    });
+    if (!res.ok) {
+      console.error("API error", res.status, await res.text());
+      return [];
+    }
+    return await res.json();
+  } catch (error) {
+    console.log(error);
+    return [];
   }
-  const data = await res.json();
+};
+
+const page = async () => {
+  const data = await getSpaceCategoryData();
   const spaceCategoryData =
     data?.map((item) => ({
       value: item?.id,
@@ -30,21 +41,21 @@ const page = async () => {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "Flexo",
-    "url": `${WEBSITE_BASE_URL}`,
-    "logo": `${WEBSITE_BASE_URL}/images/logo.webp`,
-    "contactPoint": {
+    name: "Flexo",
+    url: `${WEBSITE_BASE_URL}`,
+    logo: `${WEBSITE_BASE_URL}/images/logo.webp`,
+    contactPoint: {
       "@type": "ContactPoint",
-      "telephone": "+91-9513392400",
-      "contactType": "Customer Service",
-      "areaServed": "IN",
-      "availableLanguage": ["English"]
+      telephone: "+91-9513392400",
+      contactType: "Customer Service",
+      areaServed: "IN",
+      availableLanguage: ["English"],
     },
-    "sameAs": [
+    sameAs: [
       "https://www.linkedin.com/company/flexospaces",
       "https://twitter.com/flexospaces",
-      "https://www.instagram.com/flexospaces"
-    ]
+      "https://www.instagram.com/flexospaces",
+    ],
   };
   return (
     <>

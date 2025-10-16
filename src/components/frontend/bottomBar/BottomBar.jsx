@@ -3,7 +3,6 @@ import Svg from "@/components/svg";
 import Link from "next/link";
 import React, { useState } from "react";
 import ExplorePopup from "../explorePopup/ExplorePopup";
-import { usePathname } from "next/navigation";
 
 export const BottomBar = ({
   type,

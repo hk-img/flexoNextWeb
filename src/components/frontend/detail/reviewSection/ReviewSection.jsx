@@ -57,7 +57,7 @@ const ReviewSection = ({reviewData,rating=0,avgRating="5.0",setIsAuthOpen,setSho
               {
                 reviewData?.map((item,index)=>(
                     <div key={index} className="flex items-start gap-4">
-                        <div className="w-12 h-12 rounded-full flex items-center justify-center">
+                        <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center">
                           <ImageWithFallback
                             src={item?.profile_image || "/images/user_image.webp"}
                             alt=""

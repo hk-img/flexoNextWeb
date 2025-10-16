@@ -180,7 +180,7 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId,workingDays,spaceData,hos
 
 
   return (
-    <div className="fixed inset-0 z-100 flex items-center justify-center animate-fadeIn p-4">
+    <div className="fixed inset-0 z-100 flex items-center justify-center animate-fadeIn px-[1.5px]">
       <div
         className="absolute inset-0 bg-black/40"
         onClick={() => setIsOpen(false)}
@@ -201,9 +201,9 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId,workingDays,spaceData,hos
           </div>
         </div>
       ) : (
-        <div className="relative w-full lg:max-w-[80%] h-full mx-[12px] rounded-sm bg-white animate-scaleIn overflow-hidden">
-          <div className="p-6 flex items-center justify-between">
-            <h2 className="2xl:text-xl text-lg font-medium text-[#141414]">
+        <div className={`relative w-full ${toggleScheduling ? "lg:max-w-[80%]" : "lg:max-w-[65%] max-h-[85vh]"} md:h-auto  h-full  rounded-md bg-white animate-scaleIn overflow-hidden`}>
+          <div className="p-5 flex items-center justify-between">
+            <h2 className="min-[1400px]:text-xl text-lg font-medium leading-[1.6] text-[#141414]">
               {toggleScheduling ? "Visit Scheduling" : "Schedule Visit"}
             </h2>
             <button
@@ -225,16 +225,16 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId,workingDays,spaceData,hos
               <CoworkingSelectionScreen spaceId={spaceId} formData={formData} setFormData={setFormData} error={error} setError={setError} values={values} setToggleScheduling={setToggleScheduling} setSuccessScreen={setSuccessScreen} spaceData={spaceData}/>
             ) : (
               <>
-                <div className="overflow-y-auto h-[calc(100%-90px)] mx-6 [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]">
-                  <div className="md:max-w-[80%] max-w-full mx-auto text-center py-8 ">
+                <div className="overflow-y-auto h-[calc(100%-99px)] [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]">
+                  <div className="md:max-w-[70%] max-w-full mx-auto text-center pt-5 ">
                     <div>
-                      <h2 className="text-[#141414]  font-light text-[26px] text-center pb-3">
+                      <h2 className="text-[#141414]  font-light text-[26px] text-center">
                         When would you like to visit?
                       </h2>
                     </div>
                     <form
                       onSubmit={handleSubmit(onSubmit)}
-                      className="p-5 space-y-5"
+                      className="px-5 pb-4 pt-2 space-y-5"
                     >
                         <div className="relative [&_.react-datepicker-wrapper]:!w-full">
                           <Controller
@@ -346,8 +346,8 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId,workingDays,spaceData,hos
                       </div>
                     </form>
                   </div>
-                  <div className="border-t py-5 border-[#0000001a]">
-                    <p className="text-[#777] text-[11px] text-center">
+                  <div className="border-t m-5 mt-0 pt-4  border-[#0000001a]">
+                    <p className="text-[#777] text-[11px]">
                       After you submit a workspace enquiry to us, we may share
                       your details with workspace providers, who may contact you
                       to follow up on your enquiry. Please read our{" "}

@@ -62,8 +62,8 @@ const CoworkingSelectionScreen = ({spaceId,formData,setFormData,error,setError,v
   };
   return (
     <>
-      <div className="overflow-y-auto h-[calc(100%-90px)] [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]">
-        <div className="md:max-w-[80%] max-w-full mx-auto text-center py-8 ">
+      <div className="overflow-y-auto h-[calc(90vh-100px)] [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]">
+        <div className="md:max-w-[80%] max-w-full mx-auto text-center p-5 ">
           <h2 className="text-[#141414] font-thin mb-5 text-lg">
             What type of space are you looking for?
           </h2>
@@ -208,7 +208,7 @@ const CoworkingSelectionScreen = ({spaceId,formData,setFormData,error,setError,v
           {error?.spaceType && (
             <span className="text-red-500">{error.spaceType}</span>
           )}
-          <h2 className="text-[#141414] font-thin mt-10 mb-3 text-lg">
+          <h2 className="text-[#141414] font-thin mt-6 mb-3 text-lg">
             For How Many People?
           </h2>
 
@@ -535,7 +535,7 @@ const CoworkingSelectionScreen = ({spaceId,formData,setFormData,error,setError,v
             </label>
           </div>
 
-          <div className="flex justify-center gap-5 mb-10">
+          <div className="flex justify-center gap-5 mb-7.5">
             <label className="cursor-pointer">
               <input
                 type="radio"
@@ -591,20 +591,20 @@ const CoworkingSelectionScreen = ({spaceId,formData,setFormData,error,setError,v
           <div className="flex justify-center gap-4">
             <button
               onClick={() => setToggleScheduling(false)}
-              className="cursor-pointer border border-black text-black px-6 py-2 text-sm rounded-[5px]"
+              className="cursor-pointer border border-black font-semibold text-black px-[30px] py-2 text-sm tracking-[1px] rounded-[5px]"
             >
               PREVIOUS
             </button>
             <button
               onClick={handleCoworkingSubmit}
-              className="cursor-pointer w-fit px-10 bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]"
+              className="cursor-pointer w-fit px-[30px] bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]"
             >
               SUBMIT
             </button>
           </div>
         </div>
-        <div className="p-5 border-t border-[#0000001a]">
-          <p className="text-[#141414]  font-light text-[11px] text-center py-3">
+        <div className="m-5 mb-0 border-t border-[#0000001a]">
+          <p className="text-[#777]  font-light text-[11px] text-center py-4">
             After you submit a workspace enquiry to us, we may share your
             enquiry details (including contact details) with workspace providers
             and our commercial broker partners, who may contact you to follow up

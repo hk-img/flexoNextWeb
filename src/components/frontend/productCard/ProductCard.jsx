@@ -114,7 +114,7 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
             </div>
           </div>
           <div className="shareBtn relative group">
-            <div className="flex items-center justify-center rounded-full text-base bg-[#ece8e8] w-[34px] h-[34px] text-[#808080] cursor-pointer">
+            <div onClick={(e) => { e.stopPropagation()}} className="flex items-center justify-center rounded-full text-base bg-[#ece8e8] w-[34px] h-[34px] text-[#808080] cursor-pointer">
               <Svg name="share" className="size-[18px] text-[#808080]" />
             </div>
             <ul className="absolute top-[45px] right-[-6px] flex flex-row">

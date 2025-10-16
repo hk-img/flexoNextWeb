@@ -64,6 +64,7 @@ const ReviewSection = ({reviewData,rating=0,avgRating="5.0",setIsAuthOpen,setSho
                             width={50}
                             height={50}
                             fallback="/images/user_image.webp"
+                            className="w-full h-full object-cover"
                           />
                         </div>
 

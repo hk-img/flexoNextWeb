@@ -26,44 +26,54 @@ const DualRangeSlider = ({ min, max, step, values, onChange }) => {
       </div>
  
       {/* track */}
-      <div className="relative w-full h-2">
-        <div className="absolute top-1/2 left-0 w-full h-1 bg-gray-300 -translate-y-1/2 rounded"></div>
-        <div
-          className="absolute top-1/2 h-1 bg-orange-500 -translate-y-1/2 rounded"
-          style={{
-            left: `${((sliderValues[0] - min) / (max - min)) * 100}%`,
-            right: `${100 - ((sliderValues[1] - min) / (max - min)) * 100}%`,
-          }}
-        ></div>
+      <div className="relative w-full mt-2 mb-6 px-4"> {/* 👈 added px-4 for thumb spacing */}
+  {/* Track background */}
+  <div className="absolute top-1/2 left-0 w-full h-[6px] bg-gray-300 rounded-full -translate-y-1/2"></div>
+
+  {/* Active range */}
+  <div
+    className="absolute top-1/2 h-[6px] bg-[#f76900] rounded-full -translate-y-1/2 transition-all duration-300"
+    style={{
+      left: `calc(${((sliderValues[0] - min) / (max - min)) * 100}% + 8px)`,
+      right: `calc(${100 - ((sliderValues[1] - min) / (max - min)) * 100}% + 8px)`,
+    }}
+  ></div>
+
+  {/* React Range */}
+  <Range
+    step={step}
+    min={min}
+    max={max}
+    values={sliderValues}
+    onChange={handleChange}
+    renderTrack={({ props, children }) => (
+      <div
+        {...props}
+        className="relative w-full h-[6px] bg-transparent"
+      >
+        {children}
       </div>
- 
-      {/* inputs handled by react-range but styled exactly like your thumbs */}
-      <Range
-  step={step}
-  min={min}
-  max={max}
-  values={sliderValues}
-  onChange={handleChange}
-  renderTrack={({ props, children }) => (
-    <div
-      {...props}
-      style={{ ...props.style, height: 0 }}
-      className="relative w-full h-2 bg-gray-200 rounded-full"
-    >
-      {children}
-    </div>
-  )}
-  renderThumb={({ props, index }) => (
-    <div
-      {...props}
-      className={`
-        w-8 h-8 rounded-full bg-[#f76900] cursor-pointer
-        bg-[radial-gradient(circle,white_4px,transparent_3px)]
-        ${index === 0 ? 'translate-x-[14px] translate-y-[-4px]' : 'translate-x-[-14px] translate-y-[-4px]'}
-      `}
-    />
-  )}
-/>
+    )}
+    renderThumb={({ props, index }) => (
+      <div
+        {...props}
+        className={`
+          w-8 h-8 rounded-full bg-[#f76900] cursor-pointer
+          flex items-center justify-center
+          bg-[radial-gradient(circle,white_4px,transparent_3px)]
+          shadow-[0_0_4px_#00000033] focus-within:outline-none
+          -translate-y-[3px]
+          ${index === 0 ? 'z-20' : 'z-10'}
+        `}
+        style={{
+          ...props.style,
+          left: `calc(${props.style?.left} - 16px)` // 👈 prevents thumb from overflowing
+        }}
+      />
+    )}
+  />
+</div>
+
     </div>
   );
 };

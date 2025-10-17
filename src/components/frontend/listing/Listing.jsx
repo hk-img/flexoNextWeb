@@ -220,7 +220,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
       lng: coordinates?.lng || 72.8792898,
     })
   }
-  const [lastCard,setLastCard] = useState(false);
+  const [isPagination,setIsPagination] = useState(false);
   const paginationRef = useRef(null);
 
   useEffect(() => {
@@ -232,9 +232,9 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
       (entries) => {
         const [entry] = entries;
         if (entry.isIntersecting) {
-          setLastCard(true); 
+          setIsPagination(true); 
         } else {
-          setLastCard(false); 
+          setIsPagination(false); 
         }
       },
       {
@@ -703,7 +703,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
             </div>
             {
               mapToggle && (
-                <div className={`${lastCard ? 'hidden':''} map lg:w-1/3 w-full flex flex-col md:sticky md:top-10 [&_.gm-style-iw-d]:!overflow-hidden [&_.gm-style-iw-d]:!max-w-[336px] [&_.gm-style-iw-d]:!max-h-full [&_.gm-style-iw-c]:!p-0 [&_.gm-style-iw-chr]:!hidden [&_.gm-style-iw]:!rounded-xl`}>
+                <div className={`${isPagination ? 'hidden':''} map lg:w-1/3 w-full flex flex-col md:sticky md:top-10 [&_.gm-style-iw-d]:!overflow-hidden [&_.gm-style-iw-d]:!max-w-[336px] [&_.gm-style-iw-d]:!max-h-full [&_.gm-style-iw-c]:!p-0 [&_.gm-style-iw-chr]:!hidden [&_.gm-style-iw]:!rounded-xl`}>
                   <MapWithPrices type={type} spaces={productData} hoveredSpaceId={hoveredSpaceId} />
                 </div>
               )

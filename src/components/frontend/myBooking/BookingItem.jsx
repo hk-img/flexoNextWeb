@@ -27,8 +27,8 @@ const bookingItem = ({ item,setShowReviewPopup,setBookingId }) => {
   return (
     <>
       <div className=" p-5 rounded-[10px] bg-white flex md:flex-row flex-col md:items-center items-start  justify-between ">
-        <div className="flex flex-col md:flex-row md:items-center md:space-x-6 space-y-3 md:space-y-0">
-          <div className="flex  md:flex-row flex-col gap-[15px] items-center">
+        <div className="flex flex-col md:flex-row md:items-center md:space-x-6 space-y-3 md:space-y-0 w-full">
+          <div className="flex  md:flex-row flex-col gap-[15px] items-center w-full">
             <div className="relative">
               <div>
                 <ImageWithFallback

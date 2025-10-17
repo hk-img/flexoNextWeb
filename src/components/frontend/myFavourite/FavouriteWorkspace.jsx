@@ -9,6 +9,7 @@ import {
 import MyFavoriteItem from "./MyFavoriteItem";
 import Svg from "@/components/svg";
 import { toast } from "sonner";
+import Image from "next/image";
 
 const MyFavourite = () => {
   const { token } = useAuth();
@@ -102,13 +103,13 @@ const MyFavourite = () => {
               setSpaceId("");
             }}
           />
-          <div className="relative w-full max-w-md mx-4 rounded-[11px] bg-white p-8 text-center animate-scaleIn shadow-lg">
+          <div className="relative w-full max-w-md mx-4 rounded-sm bg-white p-8 text-center animate-scaleIn shadow-lg">
             <div className="flex justify-center mb-4">
-              <div className="border-2 border-orange-500 rounded-full p-4">
-                <span className="text-orange-500 text-4xl font-bold">!</span>
-              </div>
+             <div>
+              <Image className="" src="/images/triangle-danger-icon.webp" alt="remove" width={141} height={122}/>
+             </div>
             </div>
-            <h2 className="text-lg font-semibold text-gray-800 mb-6">
+            <h2 className="text-lg font-semibold text-gray-800 mb-4">
               Remove this space from favorites?
             </h2>
             <div className="flex justify-center gap-4">
@@ -117,13 +118,13 @@ const MyFavourite = () => {
                   setIsRemovePopupOpen(false);
                   setSpaceId("");
                 }}
-                className="cursor-pointer px-6 py-2 bg-[#f36b1c] text-white font-semibold rounded-md hover:bg-[#d75d10] transition"
+                className="cursor-pointer px-6 py-2 bg-[#f36b1c] text-white font-semibold rounded-md hover:bg-[#ff7c52] duration-300 transition"
               >
                 NO
               </button>
               <button
                 onClick={handleFavourite}
-                className="cursor-pointer px-6 py-2 bg-[#f36b1c] text-white font-semibold rounded-md hover:bg-[#d75d10] transition"
+                className="cursor-pointer px-6 py-2 bg-[#f36b1c] text-white font-semibold rounded-md hover:bg-[#ff7c52] duration-300 transition"
               >
                 YES
               </button>

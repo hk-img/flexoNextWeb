@@ -73,7 +73,7 @@ const ListWithUs = () => {
 ];
   return (
     <>
-        <section className="relative w-full lg:top-20 top-16">
+        <section className="relative w-full lg:mt-[82px] sm:mt-[62px] mt-[63px]">
           <div className='flex items-center h-full justify-center py-[50px]'>
               <img
                 src="/images/list_with_us_banner.webp"
@@ -107,7 +107,11 @@ const ListWithUs = () => {
                         </li>
                       </ul>
                       <div className='mt-5 md:ps-6 ps-2'>
-                        <button className="bg-[#f76900] text-sm text-white px-[30px] py-4 rounded-[3px] cursor-pointer font-medium duration-500 transition flex items-center gap-2"><span>Let's Get Started</span></button>
+                        <Link href="https://staginghost.flexospaces.com/auth/login" target="_blank" >
+                        <div className="bg-[#f76900] text-sm text-white px-[30px] py-4 rounded-[3px] cursor-pointer font-medium duration-500 transition flex items-center gap-2">
+                          <span>Let's Get Started</span>
+                        </div>
+                        </Link>
                       </div>
                   </div>
                 </div>
@@ -116,7 +120,7 @@ const ListWithUs = () => {
           </div>
         </section>
 
-        <section className='chooseSpace w-full relative lg:pt-32 md:pt-12 pt-16 pb-10'>
+        <section className='chooseSpace w-full relative py-10'>
             <div className='container mx-auto px-[15px]'>
               <div className='flex flex-col lg:flex-row items-center'>
                 <div className='lg:w-7/12 md:w-7/12 w-full flex flex-col pe-[13px]'>

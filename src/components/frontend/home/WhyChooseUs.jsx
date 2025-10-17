@@ -24,16 +24,15 @@ const WhyChooseUs = () => {
                            We make your office-search, a hassle-less experience. With an in depth knowledge, let our workspace solution experts find what you're looking for
                         </p>
                         <div>
-                            <a
-                                href="#"
-                                className="relative inline-block px-2 py-1.5 rounded-[10px] font-semibold text-[#f76900] bg-[#0000006b] backdrop-blur-[12px] transition-all duration-500 md:hover:scale-105 text-sm md:hover:underline text-center leading-[1.5] border border-transparent"
+                            <div
+                                className="cursor-pointer relative inline-block px-2 py-1.5 rounded-[10px] font-semibold text-[#f76900] bg-[#0000006b] backdrop-blur-[12px] transition-all duration-500 md:hover:scale-105 text-sm md:hover:underline text-center leading-[1.5] border border-transparent"
                             >
                                 Claim Your Free Consultation with Zero Brokerage Offer Now! 
                                 <Svg
                                     name="rightLongArrow"
                                     className="size-5 text-[#f76900] transition-transform duration-300 inline"
                                 />
-                            </a>
+                            </div>
                         </div>
                     </div>
 

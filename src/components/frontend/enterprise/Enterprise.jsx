@@ -12,7 +12,7 @@ const Enterprise = () => {
             <Image width="1356" height="452" className="w-full h-full" src="/images/enterprise_banner.webp" alt="" />
           </div>
           <div className='absolute left-[12%] bottom-[10%]'>
-            <Link href="" className='inline-block md:text-xl text-base  cursor-pointer bg-[#f76900] text-white p-[10px] font-medium text-center gap-2 uppercase md:min-w-[285px] px-7 rounded-sm'>ENQUIRE NOW</Link>
+            <Link href="https://docs.google.com/forms/d/e/1FAIpQLScCNsY3akGSEpVwWDb-KyhlZ0dYdlvbs1IxiHHXlOZNvPrVJQ/viewform" target="_blank" className='inline-block md:text-xl text-base  cursor-pointer bg-[#f76900] text-white p-[10px] font-medium text-center gap-2 uppercase md:min-w-[285px] px-7 rounded-sm'>ENQUIRE NOW</Link>
           </div>
         </div>
         <div className='max-w-[90%]  mx-auto md:px-[30px] py-5'>

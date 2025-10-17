@@ -11,10 +11,7 @@ import { useMutation } from "@tanstack/react-query";
 const contactSchema = z.object({
   name: z.string().min(1, "Name is required"),
   email: z.string().min(1, "Email is required").email("Invalid email address"),
-  mobile: z
-    .string()
-    .min(10, "Mobile number must be at least 10 digits.")
-    .regex(/^[0-9]+$/, "Mobile must contain only numbers."),
+  mobile: z.string().min(1, "Mobile Number is required"),
   message: z.string().min(5, "Message should be at least 5 characters."),
 });
 
@@ -111,7 +108,7 @@ const ContactForm = () => {
           <div className="border border-[#eee] bg-[#f9f9f9] rounded-[6px] flex items-center gap-4 px-[19px] py-[15px]">
             <Svg name="phone" className="size-[18px] text-[#ff6600] shrink-0" />
             <Controller
-              name="phone"
+              name="mobile"
               control={control}
               render={({ field }) => (
                 <input

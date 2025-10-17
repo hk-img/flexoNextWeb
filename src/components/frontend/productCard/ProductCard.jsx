@@ -243,15 +243,20 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
                   onClick={(e) => {
                     e.stopPropagation();
                     let url = "";
-                    if(type == "coworking"){
+                    if (type === "coworking") {
                       url = `/${item?.slug}`;
-                    }else{ 
+                    } else {
                       url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
                     }
                     const message = encodeURIComponent(
                       `Checkout this space on FLEXO\n${WEBSITE_BASE_URL}${url}`
                     );
-                    window.open(`https://web.whatsapp.com/send?text=${message}`, "_blank");
+                    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+                    const whatsappUrl = isMobile
+                      ? `whatsapp://send?text=${message}`
+                      : `https://web.whatsapp.com/send?text=${message}`;
+
+                    window.open(whatsappUrl, "_blank");
                   }}
                   className="cursor-pointer share-button flex items-center justify-center w-full h-full"
                 >

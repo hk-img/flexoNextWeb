@@ -10,7 +10,7 @@ const coworkingSpaces = [
     teamSize: "3 to 50",
   },
   {
-    title: "private Offices",
+    title: "Private Offices",
     img: "/images/private-offices.webp",
     teamSize: "15 to 500",
   },

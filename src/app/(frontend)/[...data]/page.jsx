@@ -77,7 +77,7 @@ const page = async ({ params }) => {
     const [spaceTypeSlug, citySlug, locationSlug, spaceIdd] = slug;
     spaceId = spaceIdd;
   }
-  const spaceDetails = await getSpaceDetails(spaceId);
+  const [spaceDetails,reviews] = await Promise.all([getSpaceDetails(spaceId),getReviewData(spaceId)]);
   const spaceDetailsData = spaceDetails?.spaceData;
   const payload = {
     spaceId: spaceId,
@@ -86,7 +86,6 @@ const page = async ({ params }) => {
     country: spaceDetailsData?.country,
   };
   let detailData = await getDetailData(payload);
-  const reviews = await getReviewData(spaceId);
   let reviewData = reviews?.data?.reviews || [];
   const {spaceType,actual_name,contact_city_name,location_name,images,originalPrice,spaceStatus} = detailData?.data;
   const spaceTypeSmallLetter = convertSlugToSmallLetter(spaceType || "");

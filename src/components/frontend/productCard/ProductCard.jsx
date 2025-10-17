@@ -114,11 +114,11 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
             </div>
           </div>
           <div className="shareBtn relative group">
-            <div onClick={(e) => { e.stopPropagation()}} className="flex items-center justify-center rounded-full text-base bg-[#ece8e8] w-[34px] h-[34px] text-[#808080] cursor-pointer">
+            <div onClick={(e) => { e.stopPropagation()}} tabIndex="0" className="flex relative peer items-center justify-center rounded-full text-base bg-[#ece8e8] w-[34px] h-[34px] text-[#808080] cursor-pointer focus:outline-none">
               <Svg name="share" className="size-[18px] text-[#808080]" />
             </div>
-            <ul className="absolute top-[45px] right-[-6px] flex flex-row">
-              <li className="bg-[#3b5998] items-center justify-center w-8 h-8 rounded-full inline-block border-1 border-[#000000] text-center text-[15px] opacity-0 transition-all duration-500 ms-1 group-hover:opacity-100">
+            <ul className="absolute top-[45px] right-[-6px] gap-1.5 hidden md:flex flex-row opacity-0 transition-all duration-500 ms-1 group-hover:opacity-100">
+              <li className="bg-[#3b5998] items-center justify-center w-8 h-8 rounded-full inline-block border-1 border-[#000000] text-center text-[15px] ">
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
@@ -142,7 +142,7 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
                 </div>
               </li>
 
-              <li className="bg-[#34aaf3] items-center justify-center w-8 h-8 rounded-full inline-block border-1 border-[#000000] text-center text-[15px] opacity-0 transition-all duration-500 ms-1 group-hover:opacity-100">
+              <li className="bg-[#34aaf3] items-center justify-center w-8 h-8 rounded-full inline-block border-1 border-[#000000] text-center text-[15px]">
                 <div
                     onClick={(e) => {
                       e.stopPropagation();
@@ -167,7 +167,78 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
                 </div>
               </li>
 
-              <li className="bg-[#25D366] items-center justify-center w-8 h-8 rounded-full inline-block border-1 border-[#000000] text-center text-[15px] opacity-0 transition-all duration-500 ms-1 group-hover:opacity-100">
+              <li className="bg-[#25D366] items-center justify-center w-8 h-8 rounded-full inline-block border-1 border-[#000000] text-center text-[15px]">
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    let url = "";
+                    if(type == "coworking"){
+                      url = `/${item?.slug}`;
+                    }else{ 
+                      url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
+                    }
+                    const message = encodeURIComponent(
+                      `Checkout this space on FLEXO\n${WEBSITE_BASE_URL}${url}`
+                    );
+                    window.open(`https://web.whatsapp.com/send?text=${message}`, "_blank");
+                  }}
+                  className="cursor-pointer share-button flex items-center justify-center w-full h-full"
+                >
+                  <Svg name="whatsapp" className="text-white size-[15px]" />
+                </div>
+              </li>
+            </ul>
+             <ul className="absolute top-[45px] right-[-6px] gap-1.5 md:hidden flex flex-row opacity-0 transition-all duration-300 peer-focus:opacity-100 peer-focus:visible peer-active:opacity-100 z-50">
+              <li className="bg-[#3b5998] items-center justify-center w-8 h-8 rounded-full inline-block border-1 border-[#000000] text-center text-[15px]">
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+
+                    let url = "";
+                    if (type === "coworking") {
+                      url = `/${item?.slug}`;
+                    } else {
+                      url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
+                    }
+                    const shareUrl = `${WEBSITE_BASE_URL}${url}`
+
+                    window.open(
+                      `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
+                      "_blank"
+                    );
+                  }}
+                  className="cursor-pointer share-button flex items-center justify-center w-full h-full"
+                >
+                  <Svg name="facebook" className="text-white size-[15px]" />
+                </div>
+              </li>
+
+              <li className="bg-[#34aaf3] items-center justify-center w-8 h-8 rounded-full inline-block border-1 border-[#000000] text-center text-[15px]">
+                <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+
+                      let url = "";
+                      if (type === "coworking") {
+                        url = `/${item?.slug}`;
+                      } else {
+                        url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
+                      }
+
+                      const shareUrl = `${WEBSITE_BASE_URL}${url}`;
+
+                      window.open(
+                        `https://www.linkedin.com/feed/?shareActive=false&url=${shareUrl}`,
+                        "_blank"
+                      );
+                    }}
+                  className="cursor-pointer share-button flex items-center justify-center w-full h-full"
+                >
+                  <Svg name="linkedin2" className="text-white size-[15px]" />
+                </div>
+              </li>
+
+              <li className="bg-[#25D366] items-center justify-center w-8 h-8 rounded-full inline-block border-1 border-[#000000] text-center text-[15px]">
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
@@ -296,7 +367,7 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
               </div>
             </>
           )}
-          <div className="flex gap-10 items-center w-full mb-2">
+          <div className="flex gap-[30px] items-center w-full mb-2">
             {(type == "longterm" || type == "shortterm") && (
               <>
               <div className="bg-[#f76900] text-white w-fit flex items-center py-1.5 pr-1.5 m-0">

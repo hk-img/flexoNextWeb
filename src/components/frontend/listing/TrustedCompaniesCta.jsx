@@ -2,7 +2,7 @@ import React from "react";
 import EmblaCarousel from "../emblaCarousel/EmblaCarousel";
 import Image from "next/image";
 
-const TrustedCompaniesCta = ({setIsOpen}) => {
+const TrustedCompaniesCta = ({setIsOpen,type}) => {
   const companies = [
     { src: "/images/trusted-logo7.webp", alt: "Amethyst partners" , title: "Amethyst partners" },
     { src: "/images/trusted-logo6.webp", alt: "Accord Synergy" , title: "Accord Synergy" },
@@ -54,12 +54,15 @@ const TrustedCompaniesCta = ({setIsOpen}) => {
             <p className="text-[#141414] lg:text-base text-sm lg:mb-8 my-4">
               Over <span className="font-semibold ">250+ enterprises and startups</span> found their perfect office with Flexo.
             </p>
-            
-            <div onClick = {()=>{
-              setIsOpen((prev) => !prev);
-            }} className="flex justify-center items-center w-fit mx-auto bg-[#f76900] text-[12px] border border-[#f76900]  text-white py-3 px-7 rounded-2xl font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">
-              Enquire Now
-            </div>
+            {
+              type != "shortterm" && (
+                <div onClick = {()=>{
+                  setIsOpen((prev) => !prev);
+                }} className="flex justify-center items-center w-fit mx-auto bg-[#f76900] text-[12px] border border-[#f76900]  text-white py-3 px-7 rounded-2xl font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">
+                  Enquire Now
+                </div>
+              )
+            }
         </div>
       </div>
     </section>

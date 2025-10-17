@@ -1,10 +1,9 @@
 import React from "react";
 
-const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+const Pagination = ({ currentPage, totalPages, onPageChange,paginationRef }) => {
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-
   return (
-    <div className="flex items-center justify-center space-x-2 mt-2 mb-16">
+    <div ref={paginationRef} className="flex items-center justify-center space-x-2 mt-2 mb-16">
       {pages.map((page) => (
         <button
           key={page}

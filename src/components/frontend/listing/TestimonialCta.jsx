@@ -42,7 +42,7 @@ const testimonials = [
   },
 ];
 
-const TestimonialCta = ({setIsOpen}) => {
+const TestimonialCta = ({setIsOpen,type}) => {
   return (
     <section className="w-full relative  md:py-3 py-1 px-4 rounded-2xl items-center mt-6 mb-8 shadow-[0_4px_10px_#00000014] mx-auto bg-no-repeat bg-cover overflow-hidden bg-gradient-to-r from-[#ffd7ba] to-[#FFE7DA]">
         <div className="max-w-full xl:px-4 lg:px-4 md:px-3 px-4 mx-auto ">
@@ -52,12 +52,16 @@ const TestimonialCta = ({setIsOpen}) => {
                 <div className=" flex flex-col gap-y-3">
                   <h4 className="text-base/relaxed text-[#141414] font-semibold">Still Searching? Let Us Help.</h4>
                   <h5 className="text-base/relaxed text-[#141414] font-semibold">Leave the hassle to us. Connect with an expert workspace advisor today.</h5>
-                  <div onClick={() => {
-                      setIsOpen((prev) => !prev);
-                    }
-                  } className="w-fit bg-[#f76900] text-[12px] border border-[#f76900]  text-white py-3 px-7 rounded-2xl font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">
-                    Enquire Now
-                  </div>
+                  {
+                    type !="shortterm" && (
+                      <div onClick={() => {
+                          setIsOpen(true);
+                        }
+                      } className="w-fit bg-[#f76900] text-[12px] border border-[#f76900]  text-white py-3 px-7 rounded-2xl font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">
+                        Enquire Now
+                      </div>
+                    )
+                  }
                 </div>
               </div>
               <div className="lg:w-3/5 w-full flex flex-col gap-y-6">
@@ -108,11 +112,9 @@ const TestimonialCta = ({setIsOpen}) => {
                   </EmblaCarousel>
                 </div>
               </div>
-
           </div>
         </div>
     </section>
-    
   );
 };
 

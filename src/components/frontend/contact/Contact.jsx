@@ -16,7 +16,7 @@ const Contact = () => {
         </div>
       </section>
       <section>
-        <div className="w-[92%] max-w-[1224px]  mx-auto grid md:grid-cols-2 md:gap-[30px] gap-5 pt-20">
+        <div className="w-[92%] max-w-[1224px]  mx-auto grid md:grid-cols-2 md:gap-[30px] gap-5 py-20">
           <div className="border border-[#eee] rounded-[10px] p-[30px] h-fit">
             <div className="flex flex-col justify-center space-y-5  ">
               <h2 className="md:text-[40px] text-[22px] font-semibold text-[#000e54] leading-[1.5] mb-[33px] ">
@@ -71,7 +71,7 @@ const Contact = () => {
               </div>
             </div>
           </div>
-          <div className=" py-5">
+          <div className=" pt-5">
             <h3 className="text-lg font-semibold mb-[35px] text-[#00194b]">
               Get In Touch
             </h3>

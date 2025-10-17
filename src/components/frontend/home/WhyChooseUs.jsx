@@ -30,7 +30,7 @@ const WhyChooseUs = () => {
                                 Claim Your Free Consultation with Zero Brokerage Offer Now! 
                                 <Svg
                                     name="rightLongArrow"
-                                    className="size-5 text-[#f76900] transition-transform duration-300 inline"
+                                    className="size-5 ps-1 text-[#f76900] transition-transform duration-300 inline"
                                 />
                             </div>
                         </div>

@@ -25,11 +25,11 @@ const JoyOfGiving = () => {
 
           </div>
           <div className='mt-[30px] space-y-5'>
-            <div className="flex md:flex-row flex-col md:items-center items-start gap-5.5">
+            <div className="flex md:flex-row flex-col md:items-center items-start max-md:gap-5.5">
               <div className=''>
                 <Image width="700" height="466" src="/images/joy_of_giving_1.webp" alt="" />
               </div>
-              <div className='flex-1'>
+              <div className='flex-1 mx-[26px]'>
                 <div>
                   <h3 className='font-bold'>Helping Farmers and Rural Communities</h3>
                 </div>
@@ -38,8 +38,8 @@ const JoyOfGiving = () => {
                 </div>
               </div>
             </div>
-            <div className="flex md:flex-row flex-col md:items-center items-start gap-4 justify-between">
-              <div className='order-2 md:order-1 flex-1 ps-[22px]'>
+            <div className="flex md:flex-row flex-col md:items-center items-start max-md:gap-4 justify-between">
+              <div className='order-2 md:order-1 flex-1  mx-[26px] '>
                 <div>
                   <h3 className=' font-bold'>Towards Sustainability</h3>
                 </div>
@@ -51,11 +51,11 @@ const JoyOfGiving = () => {
                 <Image width="700" height="467" src="/images/joy_of_giving_2.webp" alt="" />
               </div>
             </div>
-             <div className="flex md:flex-row flex-col md:items-center items-start gap-4">
+             <div className="flex md:flex-row flex-col md:items-center items-start max-md:gap-4">
                <div >
                 <Image width="700" height="467" src="/images/joy_of_giving_3.webp" alt="" />
               </div>
-              <div className='flex-1'>
+              <div className='flex-1 mx-[26px]'>
                 <div>
                   <h3 className=' font-bold'>Environment as a Stakeholder</h3>
                 </div>

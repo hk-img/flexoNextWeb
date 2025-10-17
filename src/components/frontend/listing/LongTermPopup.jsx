@@ -176,6 +176,9 @@ const LongTermPopup = ({ isOpen, setIsOpen, city }) => {
                   <input
                     {...register("firstName", { required: true })}
                     placeholder="Enter First Name"
+                    onChange={(e) => {
+                      e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
+                    }}
                     className={`w-full rounded-sm border-2 px-3 py-2.5
                       border-[#dbdbdb] h-12
                       ${
@@ -200,6 +203,9 @@ const LongTermPopup = ({ isOpen, setIsOpen, city }) => {
                   <input
                     {...register("lastName")}
                     placeholder="Enter Last Name"
+                    onChange={(e) => {
+                      e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
+                    }}
                     className={`w-full rounded-sm border-2 px-3 py-2.5
                         border-[#dbdbdb] h-12
                         ${

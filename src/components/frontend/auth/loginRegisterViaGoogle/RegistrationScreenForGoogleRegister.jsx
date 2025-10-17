@@ -113,6 +113,9 @@ const RegistrationScreenForGoogleRegister = ({ googleDetails,setIsOpen }) => {
             {...register("firstName")}
             type="text"
             id="first-name"
+            onChange={(e) => {
+              e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
+            }}
             className={`block px-2.5 pb-2.5 pt-4 w-full text-sm border border-[#0000001f] rounded-md p-3  focus:outline-none focus:ring-1 focus:border-[#3f51b5] peer ${
               errors.firstName
                 ? "border-red-500 focus:ring-red-200"
@@ -139,10 +142,13 @@ const RegistrationScreenForGoogleRegister = ({ googleDetails,setIsOpen }) => {
             type="text"
             id="last-name"
             className={`block px-2.5 pb-2.5 pt-4 w-full text-sm border border-[#0000001f] rounded-md p-3  focus:outline-none focus:ring-1 focus:border-[#3f51b5] peer ${
-              errors.firstName
+              errors.lastName
                 ? "border-red-500 focus:ring-red-200"
                 : "border-gray-300 focus:ring-indigo-200"
             }`}
+            onChange={(e) => {
+              e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
+            }}
             placeholder=" "
             disabled
           />
@@ -193,7 +199,7 @@ const RegistrationScreenForGoogleRegister = ({ googleDetails,setIsOpen }) => {
             type="text"
             id="company-name"
             className={`block px-2.5 pb-2.5 pt-4 w-full text-sm border border-[#0000001f] rounded-md p-3  focus:outline-none focus:ring-1 focus:border-[#3f51b5] peer ${
-              errors.firstName
+              errors.companyName
                 ? "border-red-500 focus:ring-red-200"
                 : "border-gray-300 focus:ring-indigo-200"
             }`}

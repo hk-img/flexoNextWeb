@@ -141,12 +141,15 @@ export default function UserDetailRegistrationFormForEmail({
               <div>
                 <div className="relative">
                   <input
-                  type="text"
+                    type="text"
                     {...register("firstName")}
                     id="firstName"
                     className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#3f51b5] peer ${
                         errors.firstName ? "border-red-500 focus:ring-red-200" : "border-gray-300 focus:ring-indigo-200"
                       }`}
+                      onChange={(e) => {
+                        e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
+                      }}
                     placeholder=" "
                   />
                   <label
@@ -166,6 +169,9 @@ export default function UserDetailRegistrationFormForEmail({
               type="text"
                  {...register("lastName")}
                 id="lastName"
+                onChange={(e) => {
+                  e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
+                }}
                 className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#3f51b5] peer ${
                     errors.lastName ? "border-red-500 focus:ring-red-200" : "border-gray-300 focus:ring-indigo-200"
                   }`}

@@ -529,6 +529,9 @@ const MyProfile = () => {
                               {...register("firstName")}
                               type="text"
                               placeholder="Enter first name"
+                              onChange={(e) => {
+                                e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
+                              }}
                               className={`block px-2.5 h-[44px] font-semibold w-full text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none placeholder:text-[#777] placeholder:font-medium ${
                                 errors.firstName
                                   ? "border-red-500 focus:ring-red-200"
@@ -552,6 +555,9 @@ const MyProfile = () => {
                               {...register("lastName")}
                               type="text"
                               placeholder="Enter last name"
+                              onChange={(e) => {
+                                e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
+                              }}
                               className={`block px-2.5 h-[45px] font-semibold w-full text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none placeholder:text-[#777] placeholder:font-medium ${
                                 errors.lastName
                                   ? "border-red-500 focus:ring-red-200"

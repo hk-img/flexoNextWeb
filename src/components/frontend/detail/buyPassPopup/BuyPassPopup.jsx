@@ -218,6 +218,9 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
                       id="firstName"
                       placeholder="First Name"
                       {...register("firstName")}
+                      onChange={(e) => {
+                        e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
+                      }}
                       className="peer w-full border-b text-sm text-black placeholder:text-[#0000008a] border-[#0000006b] focus:border-[#3f51b5] outline-none pt-2.5 pb-1.5 bg-transparent"
                     />
                     <label
@@ -240,6 +243,9 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
                       id="lastName"
                       placeholder="Last Name"
                       {...register("lastName")}
+                      onChange={(e) => {
+                        e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
+                      }}
                       className="peer w-full border-b text-sm text-black placeholder:text-[#0000008a] border-[#0000006b] focus:border-[#3f51b5] outline-none pt-2.5 pb-1.5 bg-transparent"
                     />
                     <label

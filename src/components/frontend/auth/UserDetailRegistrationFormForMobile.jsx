@@ -81,26 +81,15 @@ export default function UserDetailRegistrationFormForMobile({ otpVerified = true
       )}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* First Name */}
-          {/* <label className="block">
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-sm text-gray-700">First Name <span className="text-[#f76900]">*</span></span>
-            </div>
-            <input
-              type="text"
-              {...register("firstName")}
-              className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring ${
-                errors.firstName ? "border-red-500 focus:ring-red-200" : "border-gray-300 focus:ring-indigo-200"
-              }`}
-            />
-            {errors.firstName && <p className="text-[#f44336] font-medium text-sm mt-1">{errors.firstName.message}</p>}
-          </label> */}
           <div>
             <div className="relative">
               <input
               type="text"
                 {...register("firstName")}
                 id="firstName"
+                onChange={(e) => {
+                  e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
+                }}
                 className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#3f51b5] peer ${
                     errors.firstName ? "border-red-500 focus:ring-red-200" : "border-gray-300 focus:ring-indigo-200"
                   }`}
@@ -121,6 +110,9 @@ export default function UserDetailRegistrationFormForMobile({ otpVerified = true
               type="text"
                  {...register("lastName")}
                 id="lastName"
+                onChange={(e) => {
+                  e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
+                }}
                 className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#3f51b5] peer ${
                     errors.lastName ? "border-red-500 focus:ring-red-200" : "border-gray-300 focus:ring-indigo-200"
                   }`}

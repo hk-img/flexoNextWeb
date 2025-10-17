@@ -132,6 +132,11 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
       setRequestToBookOpen(true);
     }
   }
+  const handleGetQuote = ()=>{
+    setIsOpen(true);
+    setSelectedSpaceData(spaceData);
+    setSelectedSpaceType("");
+  }
 
   useEffect(()=>{
     const scheduleVisitOpenData = localStorage.getItem("scheduleVisitOpenData");
@@ -1085,12 +1090,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
 
                   <div className="space-y-2.5 mb-10">
                     <button
-                      onClick={() => {
-                          setIsOpen(true);
-                          setSelectedSpaceData(spaceData);
-                          setSelectedSpaceType("");
-                        }
-                      }
+                      onClick={handleGetQuote}
                       className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]"
                     >
                       {type == "coworking"

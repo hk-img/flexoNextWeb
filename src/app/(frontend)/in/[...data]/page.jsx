@@ -154,7 +154,6 @@ const page = async({params}) => {
     cityId: city,
     spaceType: spaceTypeSlug == "coworking" ? "coworking space" : spaceTypeSlug?.replace(/-/g, " ")
   }
-  const [data1,data2,data3] = await Promise.all([fetchAPI1(),fetchAPI2(spaceType),fetchAPI3(payload)]);
   const otherTypes = convertSlugToSmallLetter(spaceTypeSlug || "");
   const listingPayload = {
     city_name: convertSlugToSmallLetter(city || ""),
@@ -172,7 +171,7 @@ const page = async({params}) => {
     "page_no": 1,
     "location_name": convertSlugToSmallLetter(locationNameSlug || "") || null,
   }
-  const listingData = await getListingData(listingPayload) || {};
+  const [data1,data2,data3,listingData] = await Promise.all([fetchAPI1(),fetchAPI2(spaceType),fetchAPI3(payload),getListingData(listingPayload)]);
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",

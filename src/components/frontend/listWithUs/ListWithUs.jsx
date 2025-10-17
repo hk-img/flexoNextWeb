@@ -88,27 +88,27 @@ const ListWithUs = () => {
                 <div className="lg:w-10/12 md:w-10/12 px-[15px] w-full">
                   <div className='w-full relative flex flex-col items-start text-white'>
                     <h1 className='w-full lg:text-4xl md:text-[17px] lg:!leading-[1.6] text-white font-medium mb-4'>List Your Space and Grow Your Earnings</h1>
-                      <ul className='flex flex-col text-start ps-2 md:ps-[16px]'>
-                        <li className='lg:mb-4 md:mb-4 mb-2 flex items-center text-white lg:text-[21px] text-base'>
-                          <span className='pe-2'><Svg name="check" className="size-[24px] text-white"/></span>
+                      <ul className='flex flex-col text-start md:pl-4 pl-2 '>
+                        <li className='lg:mb-4 md:mb-4 mb-2 gap-2 flex items-center text-white lg:text-[21px] text-base'>
+                          <span><Svg name="check" className="size-[24px] text-white"/></span>
                             Get Qualified Leads and Bookings 
                         </li>
-                        <li className='lg:mb-4 md:mb-4 mb-2 flex items-center text-white lg:text-[21px] text-base'>
-                            <span className='pe-2'><Svg name="check" className="size-[24px] text-white"/></span>
+                        <li className='lg:mb-4 md:mb-4 mb-2 gap-2 flex items-center text-white lg:text-[21px] text-base'>
+                            <span><Svg name="check" className="size-[24px] text-white"/></span>
                             Maximise Occupancy Levels and Revenue
                         </li>
                         <li className='lg:mb-4 md:mb-4 mb-2 gap-2 flex items-center text-white lg:text-[21px] text-base'>
-                            <span className='pe-2'><Svg name="check" className="size-[24px] text-white"/></span>
+                            <span><Svg name="check" className="size-[24px] text-white"/></span>
                             Increase Visibility and Reach
                         </li>
                         <li className='flex items-center gap-2 text-white lg:text-[21px] text-base'>
-                            <span className='pe-2'><Svg name="check" className="size-[24px] text-white"/></span>
+                            <span><Svg name="check" className="size-[24px] text-white"/></span>
                             Turn Unused Space Into Profit
                         </li>
                       </ul>
-                      <div className='mt-5 md:ps-6 ps-2'>
+                      <div className='mt-6 md:pl-4 pl-2'>
                         <Link href="https://staginghost.flexospaces.com/auth/login" target="_blank" >
-                        <div className="bg-[#f76900] text-sm text-white px-[30px] py-4 rounded-[3px] cursor-pointer font-medium duration-500 transition flex items-center gap-2">
+                        <div className="bg-[#f76900] min-[1400px]:text-base text-sm block text-white px-[30px] py-[15px] rounded-[3px] cursor-pointer font-medium duration-500 transition">
                           <span>Let's Get Started</span>
                         </div>
                         </Link>
@@ -171,13 +171,13 @@ const ListWithUs = () => {
         </section>
         
         <section className='w-full relative py-10'>
-          <div className="container mx-auto md:px-0 px-[15px]">
+          <div className="container mx-auto px-[15px]">
             <div className='w-full flex flex-col mx-auto mb-6'>
               <h2 className="md:text-[32px] text-2xl font-medium text-center text-[#333] ">
                 What Types of Spaces Can You List?
               </h2>
             </div>
-            <p className='text-sm/normal text-[#777777] text-center mx-auto'>From vibrant coworking spaces, sleek offices to creative studios, every space has a home on Flexo. We bring together diverse spaces for work, creativity, activities, and collaboration—all in one marketplace.</p>
+            <p className='text-sm/normal min-[1400px]:text-base text-[#777777] text-center mx-auto'>From vibrant coworking spaces, sleek offices to creative studios, every space has a home on Flexo. We bring together diverse spaces for work, creativity, activities, and collaboration—all in one marketplace.</p>
 
             <div className="mt-10 flex lg:flex-row gap-[6px] md:[&_.emblaarrows]:-left-9 md:[&_.emblaarrows]:-right-9 [&_.emblaarrows]:-left-6 [&_.emblaarrows]:-right-6 [&_.emblaarrows_button]:w-10 [&_.emblaarrows_button]:h-10 [&_.emblaarrows_button_Svg]:size-[18px]">
               <div className="w-full px-[15px]">
@@ -216,41 +216,41 @@ const ListWithUs = () => {
         </section>
 
         <section className='w-full relative py-10'>
-          <div className='container mx-auto md:px-0 px-[15px]'>
+          <div className='container mx-auto px-[15px]'>
               <div className='w-full flex flex-col mx-auto px-6'>
                 <h2 className='md:text-[32px] text-2xl font-medium text-center text-[#333]'>
                   Why List with Flexo?
                 </h2>
               </div>
-              <div className='grid lg:grid-cols-4 grid-cols-1 gap-6 lg:pt-8 pt-6'>
+              <div className='grid lg:grid-cols-4 grid-cols-1 gap-[30px] lg:pt-8 pt-6'>
                 <div className='relative p-6 shadow-[0_0_3px_#8b8b8b] bg-[#f76900] rounded-md overflow-hidden h-full after:absolute after:left-0 after:w-0 after:bottom-0 after:border-[#ffffff] after:border-2 after:rounded-[30px] md:hover:after:w-full after:duration-500 after:transition-all md:hover:-translate-y-[10px] transition-all duration-500 group'>
                   <div className='mb-12'>
-                    <h5 className='text-white font-semibold mb-1'>Reach The Right Audience</h5>
-                    <p className='text-sm text-white'>Tap into a large user base actively searching for spaces like yours.</p>
+                    <h5 className='text-white font-semibold mb-1 min-[1400px]:text-lg text-base'>Reach The Right Audience</h5>
+                    <p className='text-sm text-white min-[1400px]:text-base '>Tap into a large user base actively searching for spaces like yours.</p>
                   </div> 
                   <div className='listCount'><span className='text-[60px] font-medium text-white absolute bottom-[-19px] opacity-20 right-[13px] transition-all duration-500 group-hover:opacity-100 group-hover:text-[40px] group-hover:bottom-0'>01</span></div>
                 </div>
 
                 <div className='relative p-6 shadow-[0_0_3px_#8b8b8b] bg-[#f76900] rounded-md overflow-hidden h-full after:absolute after:left-0 after:w-0 after:bottom-0 after:border-[#ffffff] after:border-2 after:rounded-[30px] md:hover:after:w-full after:duration-500 after:transition-all md:hover:-translate-y-[10px] transition-all duration-500 group'>
                   <div className='mb-12'>
-                    <h5 className='text-white font-semibold mb-1'>Flexible Options</h5>
-                    <p className='text-sm text-white'>List spaces for coworking, meetings, shoots, events, or short-term bookings.</p>
+                    <h5 className='text-white font-semibold mb-1 min-[1400px]:text-lg text-base'>Flexible Options</h5>
+                    <p className='text-sm text-white min-[1400px]:text-base '>List spaces for coworking, meetings, shoots, events, or short-term bookings.</p>
                   </div> 
                   <div className='listCount'><span className='text-[60px] font-medium text-white absolute bottom-[-19px] opacity-20 right-[13px] transition-all duration-500 group-hover:opacity-100 group-hover:text-[40px] group-hover:bottom-0'>02</span></div>
                 </div>
 
                 <div className='relative p-6 shadow-[0_0_3px_#8b8b8b] bg-[#f76900] rounded-md overflow-hidden h-full after:absolute after:left-0 after:w-0 after:bottom-0 after:border-[#ffffff] after:border-2 after:rounded-[30px] md:hover:after:w-full after:duration-500 after:transition-all md:hover:-translate-y-[10px] transition-all duration-500 group'>
                   <div className='mb-12'>
-                    <h5 className='text-white font-semibold mb-1'>Maximize Earnings</h5>
-                    <p className='text-sm text-white'>Control pricing, availability, and usage types to optimize your revenue.</p>
+                    <h5 className='text-white font-semibold mb-1 min-[1400px]:text-lg text-base'>Maximize Earnings</h5>
+                    <p className='text-sm text-white min-[1400px]:text-base '>Control pricing, availability, and usage types to optimize your revenue.</p>
                   </div> 
                   <div className='listCount'><span className='text-[60px] font-medium text-white absolute bottom-[-19px] opacity-20 right-[13px] transition-all duration-500 group-hover:opacity-100 group-hover:text-[40px] group-hover:bottom-0'>03</span></div>
                 </div>
 
                 <div className='relative p-6 shadow-[0_0_3px_#8b8b8b] bg-[#f76900] rounded-md overflow-hidden h-full after:absolute after:left-0 after:w-0 after:bottom-0 after:border-[#ffffff] after:border-2 after:rounded-[30px] md:hover:after:w-full after:duration-500 after:transition-all md:hover:-translate-y-[10px] transition-all duration-500 group'>
                   <div className='mb-12'>
-                    <h5 className='text-white font-semibold mb-1'>End-to-End Support</h5>
-                    <p className='text-sm text-white'>From onboarding to managing bookings, we’ve got you covered.</p>
+                    <h5 className='text-white font-semibold mb-1 min-[1400px]:text-lg text-base'>End-to-End Support</h5>
+                    <p className='text-sm text-white min-[1400px]:text-base '>From onboarding to managing bookings, we’ve got you covered.</p>
                   </div> 
                   <div className='listCount'><span className='text-[60px] font-medium text-white absolute bottom-[-19px] opacity-20 right-[13px] transition-all duration-500 group-hover:opacity-100 group-hover:text-[40px] group-hover:bottom-0'>04</span></div>
                 </div>
@@ -260,7 +260,7 @@ const ListWithUs = () => {
         </section>
 
         <section className='w-full relative lg:py-8 py-4'>
-          <div className='container mx-auto md:px-0 px-[15px]'>
+          <div className='container mx-auto px-[15px]'>
             <div className='w-full flex flex-col mx-auto px-6 mb-10'>
               <h2 className='md:text-[32px] text-2xl font-medium text-center text-[#333]'>
                 Host Success Stories

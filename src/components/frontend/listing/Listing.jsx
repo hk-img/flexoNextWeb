@@ -252,12 +252,13 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
   const total = allSpaces?.space_count || 0;
   const start = total > 0 ? (page - 1) * perPage + 1 : 0;
   const end = total > 0 ? Math.min(page * perPage, total) : 0;
+  console.log(mapToggle, "mapToggle");
   return (
     <>
       <section className="w-full relative lg:pt-16 bg-white">
         <div className="max-w-full xl:px-4 lg:px-4 md:px-3 px-4 mx-auto pt-4">
           <div className="group/mainBox w-full flex flex-col lg:flex-row gap-6 items-start">
-            <div className="lg:w-2/3 w-full flex flex-col justify-center lg:mt-8 mt-16">
+            <div className={`lg:w-2/3 w-full flex ${!mapToggle ? "grow" : ""} flex-col justify-center lg:mt-8 mt-16`}>
               <h1 className="text-xl flex flex-wrap font-bold text-[#141414] mb-4">
                 {locationName ? `${spaceType} in ${locationName}, ${city}` : spaceTypeSlug == "coworking" ? `Coworking Space in ${city}` : `${spaceType} in ${city}`}
               </h1>

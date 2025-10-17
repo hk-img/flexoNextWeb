@@ -60,7 +60,7 @@ const bookingItem = ({ item,setShowReviewPopup,setBookingId }) => {
                     {convertSlugToCapitalLetter(item?.spaceLocation || "")}
                   </h2>
                 </div>
-                <div className="flex items-center gap-3 pb-[25px]">
+                <div className="flex items-center gap-3 md:pb-[25px] pb-3">
                   {item?.spaceType !== "Coworking Space" && (
                     <>
                       <div className="flex items-center gap-1">
@@ -111,7 +111,7 @@ const bookingItem = ({ item,setShowReviewPopup,setBookingId }) => {
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-2 mt-1">
+                <div className="flex items-center gap-2 mt-2 ">
                   <p className="font-medium text-sm 2xl:text-base">
                     Booking Status :{" "}
                   </p>
@@ -190,7 +190,7 @@ const bookingItem = ({ item,setShowReviewPopup,setBookingId }) => {
           </div>
         </div>
 
-        <div className="flex flex-col space-y-2  max-md:w-full">
+        <div className="flex flex-col space-y-2 md:mt-0 mt-4  max-md:w-full">
           {item?.bookingStatus == "confirmed" && (
             <>
               <button onClick={() => {

@@ -196,71 +196,73 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                   {convertSlugToCapitalLetter(spaceData?.location_name || "")}
                 </span>
               </div>
-              {reviewData?.length > 0 && (
-                <div className="flex items-center sm:gap-14 gap-6 sm:mb-0 mb-3">
-                  <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-1 text-[#f76900]">
-                      {[...Array(5)].map((_, i) => (
-                        <Svg
-                          key={i}
-                          name={i < spaceData?.rating ? "star" : "emptyStar"}
-                          className="size-5"
-                        />
-                      ))}
+              <div className="flex flex-wrap gap-2 items-center justify-between mb-[25px]">
+                {reviewData?.length > 0 && (
+                  <div className="flex items-center sm:gap-14 gap-6 sm:mb-0 mb-3">
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-1 text-[#f76900]">
+                        {[...Array(5)].map((_, i) => (
+                          <Svg
+                            key={i}
+                            name={i < spaceData?.rating ? "star" : "emptyStar"}
+                            className="size-5"
+                          />
+                        ))}
+                      </div>
+                      <div className="border border-[#f76900] text-black font-medium text-sm px-4 py-1 rounded-full">
+                        {spaceData?.ratingsAvg}
+                      </div>
                     </div>
-                    <div className="border border-[#f76900] text-black font-medium text-sm px-4 py-1 rounded-full">
-                      {spaceData?.ratingsAvg}
-                    </div>
+                    <h6 className="text-[#646464] text-sm">
+                      {reviewData?.length} reviews
+                    </h6>
                   </div>
-                  <h6 className="text-[#646464] text-sm">
-                    {reviewData?.length} reviews
-                  </h6>
-                </div>
-              )}
-              <div className="flex md:flex-row flex-col md:space-y-0 md:gap-y-0 gap-y-1 space-y-3 md:items-center justify-between mb-[25px]">
-                <div className="flex items-center space-x-11 text-sm text-[#646464] px-2">
-                  {(type == "coworking" || type == "shortterm") && (
-                    <div className="flex gap-[5px] items-center ">
+                )}
+                <div className="flex md:flex-row flex-col md:space-y-0 md:gap-y-0 gap-y-1 space-y-3 md:items-center lg:space-x-10 ">
+                  <div className="flex items-center space-x-11 text-sm text-[#646464] px-2">
+                    {(type == "coworking" || type == "shortterm") && (
+                      <div className="flex gap-[5px] items-center ">
+                        <Svg
+                          name="user2"
+                          className="size-[15px] text-[#7f7f7f]"
+                        />
+                        <span className="2xl:text-base text-sm">
+                          {spaceData?.howManyPeopleInYourSpace} people
+                        </span>
+                      </div>
+                    )}
+                    {spaceData?.spaceStatus && (
+                      <div className="flex gap-1 items-center">
+                        <Svg
+                          name="building"
+                          className="size-[12px] text-[#7f7f7f]"
+                        />
+                        <span>{spaceData?.spaceStatus}</span>
+                      </div>
+                    )}
+                    {type == "shortterm" && (
+                      <div className="flex gap-1 items-center">
+                        <Svg
+                          name="clock"
+                          className="size-5 text-[#7f7f7f]"
+                        />
+                        <span>{spaceData?.minimum_hours / 60} hrs min</span>
+                      </div>
+                    )}
+                    <div className="flex gap-[5px] items-center">
                       <Svg
-                        name="user2"
+                        name="scaleRuler"
                         className="size-[15px] text-[#7f7f7f]"
                       />
                       <span className="2xl:text-base text-sm">
-                        {spaceData?.howManyPeopleInYourSpace} people
+                        {spaceData?.spacesqft} sqft
                       </span>
                     </div>
-                  )}
-                  {spaceData?.spaceStatus && (
-                    <div className="flex gap-1 items-center">
-                      <Svg
-                        name="building"
-                        className="size-[12px] text-[#7f7f7f]"
-                      />
-                      <span>{spaceData?.spaceStatus}</span>
-                    </div>
-                  )}
-                  {type == "shortterm" && (
-                    <div className="flex gap-1 items-center">
-                      <Svg
-                        name="clock"
-                        className="size-5 text-[#7f7f7f]"
-                      />
-                      <span>{spaceData?.minimum_hours / 60} hrs min</span>
-                    </div>
-                  )}
-                  <div className="flex gap-[5px] items-center">
-                    <Svg
-                      name="scaleRuler"
-                      className="size-[15px] text-[#7f7f7f]"
-                    />
-                    <span className="2xl:text-base text-sm">
-                      {spaceData?.spacesqft} sqft
-                    </span>
                   </div>
+                  {type != "longterm" && (
+                    <LikeDislike spaceData={spaceData} setIsAuthOpen={setIsAuthOpen} existingVote={spaceDeatil?.existingVote}/>
+                  )}
                 </div>
-                {type != "longterm" && (
-                  <LikeDislike spaceData={spaceData} setIsAuthOpen={setIsAuthOpen} existingVote={spaceDeatil?.existingVote}/>
-                )}
               </div>
             </div>
           </div>

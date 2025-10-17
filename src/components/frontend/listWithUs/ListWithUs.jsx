@@ -107,7 +107,11 @@ const ListWithUs = () => {
                         </li>
                       </ul>
                       <div className='mt-5 md:ps-6 ps-2'>
-                        <button className="bg-[#f76900] text-sm text-white px-[30px] py-4 rounded-[3px] cursor-pointer font-medium duration-500 transition flex items-center gap-2"><span>Let's Get Started</span></button>
+                        <Link href="https://staginghost.flexospaces.com/auth/login" target="_blank" >
+                        <div className="bg-[#f76900] block h-[52px] text-sm text-white px-[30px] py-4 rounded-[3px] cursor-pointer font-medium duration-500 transition flex items-center gap-2">
+                          <span>Let's Get Started</span>
+                        </div>
+                        </Link>
                       </div>
                   </div>
                 </div>

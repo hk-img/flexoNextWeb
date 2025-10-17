@@ -220,6 +220,35 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
       lng: coordinates?.lng || 72.8792898,
     })
   }
+  const [lastCard,setLastCard] = useState(false);
+  const paginationRef = useRef(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || window.innerWidth < 1024) return;
+
+    if (!paginationRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting) {
+          setLastCard(true); 
+        } else {
+          setLastCard(false); 
+        }
+      },
+      {
+        root: null,
+        threshold: 0.5,
+      }
+    );
+
+    observer.observe(paginationRef.current);
+
+    return () => {
+      if (paginationRef.current) observer.unobserve(paginationRef.current);
+    };
+  }, [productData]);
   const total = allSpaces?.space_count || 0;
   const start = total > 0 ? (page - 1) * perPage + 1 : 0;
   const end = total > 0 ? Math.min(page * perPage, total) : 0;
@@ -228,7 +257,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
       <section className="w-full relative lg:pt-16 bg-white">
         <div className="max-w-full xl:px-4 lg:px-4 md:px-3 px-4 mx-auto pt-4">
           <div className="group/mainBox w-full flex flex-col lg:flex-row gap-6 items-start">
-            <div className="lg:w-2/3 w-full grow flex flex-col justify-center lg:mt-8 mt-16">
+            <div className="lg:w-2/3 w-full flex flex-col justify-center lg:mt-8 mt-16">
               <h1 className="text-xl flex flex-wrap font-bold text-[#141414] mb-4">
                 {locationName ? `${spaceType} in ${locationName}, ${city}` : spaceTypeSlug == "coworking" ? `Coworking Space in ${city}` : `${spaceType} in ${city}`}
               </h1>
@@ -669,13 +698,12 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                   </div>
                 ))}
               </div>
-
               <TestimonialCta setIsOpen={setIsOpen} type={type}/>
-              <Pagination currentPage={page} totalPages={Math.ceil(allSpaces?.space_count / perPage)} onPageChange={setPage} />
+              <Pagination currentPage={page} totalPages={Math.ceil(allSpaces?.space_count / perPage)} onPageChange={setPage} paginationRef={paginationRef}/>
             </div>
             {
               mapToggle && (
-                <div className="map lg:w-1/3 w-full flex flex-col md:sticky md:top-10 [&_.gm-style-iw-d]:!overflow-hidden [&_.gm-style-iw-d]:!max-w-[336px] [&_.gm-style-iw-d]:!max-h-full [&_.gm-style-iw-c]:!p-0 [&_.gm-style-iw-chr]:!hidden [&_.gm-style-iw]:!rounded-xl">
+                <div className={`${lastCard ? 'hidden':''} map lg:w-1/3 w-full flex flex-col md:sticky md:top-10 [&_.gm-style-iw-d]:!overflow-hidden [&_.gm-style-iw-d]:!max-w-[336px] [&_.gm-style-iw-d]:!max-h-full [&_.gm-style-iw-c]:!p-0 [&_.gm-style-iw-chr]:!hidden [&_.gm-style-iw]:!rounded-xl`}>
                   <MapWithPrices type={type} spaces={productData} hoveredSpaceId={hoveredSpaceId} />
                 </div>
               )

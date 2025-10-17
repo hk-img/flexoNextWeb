@@ -157,7 +157,11 @@ const HeroSection = ({ slug,isFavouriteSpace,spaceData,setIsAuthOpen }) => {
                     const message = encodeURIComponent(
                       `Checkout this space on FLEXO\n${WEBSITE_BASE_URL}/${url}`
                     );
-                    window.open(`https://web.whatsapp.com/send?text=${message}`, "_blank");
+                    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+                    const whatsappUrl = isMobile
+                      ? `whatsapp://send?text=${message}`
+                      : `https://web.whatsapp.com/send?text=${message}`;
+                    window.open(whatsappUrl, "_blank");
                   }}
                   className="cursor-pointer bg-[#6ee777] w-[30px] h-[30px] flex border items-center justify-center rounded-full shadow"
                 >

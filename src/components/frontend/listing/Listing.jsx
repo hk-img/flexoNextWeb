@@ -250,8 +250,8 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                 </div>
 
                 <div className="filterRow w-full flex lg:flex-row flex-col items-center gap-4">
-                  <div className="lg:w-[70%] w-full filters-buttons flex justify-between items-center">
-                    <div className="lg:w-1/4 md:w-1/5 w-auto">
+                  <div className="lg:w-2/3 w-full filters-buttons flex justify-between items-center pr-[15px]">
+                    <div className="">
                       <nav className="block">
                         <ul className="flex flex-col p-0 m-0">
                           <li className="text-[13px] !leading-8 font-normal list-style-none p-0 m-0 h-5">
@@ -280,7 +280,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                         </ul>
                       </nav>
                     </div>
-                    <div className="lg:w-1/4 md:w-1/5 w-auto">
+                    <div className="">
                       <nav className="block">
                         <ul className="flex flex-col p-0 m-0">
                           <li className="text-[13px] !leading-8 font-normal list-style-none p-0 m-0 h-5">
@@ -303,7 +303,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                         </ul>
                       </nav>
                     </div>
-                    <div className="lg:w-1/4 md:w-1/5 w-auto">
+                    <div className="">
                       <ul className="flex flex-col p-0 m-0">
                         <li className="text-[13px] !leading-8 font-normal list-style-none">
                           <div
@@ -319,7 +319,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                         </li>
                       </ul>
                     </div>
-                    <div className="lg:w-1/4 md:w-1/5 w-auto">
+                    <div className="">
                       <label className="relative inline-flex items-center cursor-pointer">
                         <input
                           type="checkbox"
@@ -342,9 +342,11 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                       </label>
                     </div>
                   </div>
-                  <div className="lg:w-[30%] w-full items-start lg:flex lg:flex-row hidden flex-col lg:justify-end justify-start">
+                 
+                </div>
+                 <div className=" w-full mt-4 items-start lg:flex lg:flex-row hidden flex-col lg:justify-end justify-start">
                     <div className="text-right xs:text-left">
-                      <p className="text-sm text-[#777777] leading-10 text-[15px]">
+                      <p className="text-sm text-[#777777] leading-10 min-[1400px]:text-[15px]">
                         Showing{" "}
                         <span className="font-medium text-[#f76900]">{start}–{end}</span>{" "}
                         <span className="font-medium text-[#f76900]">
@@ -354,7 +356,6 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                       </p>
                     </div>
                   </div>
-                </div>
                 <div className="relative inline-block lg:hidden w-full">
                   {toggleSpaceType && (
                     <>
@@ -687,7 +688,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
       {
         type == "longterm" && (
           <div className="fixed bottom-0 left-0 w-full lg:w-7/12  bg-white z-40">
-              <div className=" mx-auto flex md:flex-row flex-col md:gap-14 gap-1 items-center justify-between px-7 py-3">
+              <div className=" mx-auto flex md:flex-row flex-col md:gap-[30px] gap-1 items-center justify-between px-7 py-3">
                 <div className="flex md:flex-row flex-col w-full items-center justify-between">
                   <div className="flex items-center gap-2">
                     <div>

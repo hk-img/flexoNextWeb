@@ -124,7 +124,7 @@ const MyBooking = () => {
               <div className="md:w-3/5 w-full md:px-6 px-0">
                 <div className="flex md:flex-row flex-col  items-center gap-6">
                   <div className="bg-white rounded-[15px] w-full">
-                    <div className="relative w-64">
+                    <div className="relative md:w-64 w-full">
                       <DatePicker
                         selected={date?.startDate}
                         onChange={(dates) => {

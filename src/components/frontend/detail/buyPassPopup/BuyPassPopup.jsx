@@ -210,7 +210,7 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
                 className="space-y-[18px] mb-[10px]"
                 noValidate
               >
-                <div className="grid md:grid-cols-2 gap-x-[35px] gap-y-5">
+                <div className="grid md:grid-cols-2 gap-x-[35px] gap-y-[22px]">
                   {/* First Name */}
                   <div className="relative">
                     <input
@@ -447,7 +447,7 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
                       rows="2"
                       placeholder="Message or additional requirements"
                       {...register("message")}
-                      className="peer w-full border-b border-[#0000006b] text-sm text-black py-1 outline-none focus:border-[#3f51b5] bg-transparent"
+                      className="peer w-full border-b border-[#0000006b] text-sm text-black pt-2 pb-1 outline-none focus:border-[#3f51b5] bg-transparent"
                     ></textarea>
                     <label
                       htmlFor="message"

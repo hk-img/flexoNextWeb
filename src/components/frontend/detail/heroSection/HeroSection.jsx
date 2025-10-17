@@ -118,11 +118,11 @@ const HeroSection = ({ slug,isFavouriteSpace,spaceData,setIsAuthOpen }) => {
               </div>
             </div>
             <div className="relative group">
-              <div className="bg-white w-[34px] h-[34px] flex items-center justify-center rounded-full cursor-pointer shadow">
+              <div tabIndex="0" className="bg-white peer w-[34px] h-[34px] flex items-center justify-center rounded-full cursor-pointer shadow">
                 <Svg name="share" className="size-[18px] text-[#343a40]" />
               </div>
-              <div className="absolute -right-25 -translate-x-1/2 mt-2 flex items-center gap-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                <div
+              <ul className="absolute -right-25 -translate-x-1/2 mt-2 md:flex hidden items-center gap-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                <li
                   onClick={() => {
                     const url = slug.join("/")
                     const shareUrl = `${WEBSITE_BASE_URL}/${url}`
@@ -134,8 +134,8 @@ const HeroSection = ({ slug,isFavouriteSpace,spaceData,setIsAuthOpen }) => {
                   className="cursor-pointer bg-[#3b5998] w-[30px] h-[30px] flex border items-center justify-center rounded-full shadow"
                 >
                   <Svg name="facebook" className="size-[15px] text-[#343a40]" />
-                </div>
-                <div 
+                </li>
+                <li 
                   onClick={() => {
                     const url = slug.join("/")
                     const shareUrl = `${WEBSITE_BASE_URL}/${url}`
@@ -150,8 +150,8 @@ const HeroSection = ({ slug,isFavouriteSpace,spaceData,setIsAuthOpen }) => {
                     name="linkedin2"
                     className="size-[15px] text-[#343a40]"
                   />
-                </div>
-                <div
+                </li>
+                <li
                   onClick={() => {
                     const url = slug.join("/")
                     const message = encodeURIComponent(
@@ -162,8 +162,8 @@ const HeroSection = ({ slug,isFavouriteSpace,spaceData,setIsAuthOpen }) => {
                   className="cursor-pointer bg-[#6ee777] w-[30px] h-[30px] flex border items-center justify-center rounded-full shadow"
                 >
                   <Svg name="whatsapp" className="size-[15px] text-[#343a40]" />
-                </div>
-                <div 
+                </li>
+                <li 
                   onClick={() => {
                     const url = slug.join("/")
                     const message = encodeURIComponent(
@@ -177,8 +177,8 @@ const HeroSection = ({ slug,isFavouriteSpace,spaceData,setIsAuthOpen }) => {
                     name="instagram"
                     className="size-[15px] text-[#343a40]"
                   />
-                </div>
-                <div
+                </li>
+                <li
                   onClick={() => {
                     const url = slug.join("/")
                     const message = `${WEBSITE_BASE_URL}/${url}`
@@ -188,8 +188,77 @@ const HeroSection = ({ slug,isFavouriteSpace,spaceData,setIsAuthOpen }) => {
                   className="cursor-pointer bg-white w-[30px] h-[30px] border  flex items-center justify-center rounded-full shadow"
                 >
                   <Svg name="copy" className="size-[15px] text-[#343a40]" />
-                </div>
-              </div>
+                </li>
+              </ul>
+              <ul className="absolute -right-25 -translate-x-1/2 mt-2 md:hidden flex items-center gap-2 opacity-0 transition-all duration-300 peer-focus:opacity-100 peer-focus:visible peer-active:opacity-100 z-50">
+                <li
+                  onClick={() => {
+                    const url = slug.join("/")
+                    const shareUrl = `${WEBSITE_BASE_URL}/${url}`
+                    window.open(
+                      `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
+                      "_blank"
+                    );
+                  }}
+                  className="cursor-pointer bg-[#3b5998] w-[30px] h-[30px] flex border items-center justify-center rounded-full shadow"
+                >
+                  <Svg name="facebook" className="size-[15px] text-[#343a40]" />
+                </li>
+                <li 
+                  onClick={() => {
+                    const url = slug.join("/")
+                    const shareUrl = `${WEBSITE_BASE_URL}/${url}`
+                    window.open(
+                      `https://www.linkedin.com/feed/?shareActive=false&url=${shareUrl}`,
+                      "_blank"
+                    );
+                  }}
+                  className="cursor-pointer bg-[#34aaf3] w-[30px] h-[30px] flex border items-center justify-center rounded-full shadow"
+                >
+                  <Svg
+                    name="linkedin2"
+                    className="size-[15px] text-[#343a40]"
+                  />
+                </li>
+                <li
+                  onClick={() => {
+                    const url = slug.join("/")
+                    const message = encodeURIComponent(
+                      `Checkout this space on FLEXO\n${WEBSITE_BASE_URL}/${url}`
+                    );
+                    window.open(`https://web.whatsapp.com/send?text=${message}`, "_blank");
+                  }}
+                  className="cursor-pointer bg-[#6ee777] w-[30px] h-[30px] flex border items-center justify-center rounded-full shadow"
+                >
+                  <Svg name="whatsapp" className="size-[15px] text-[#343a40]" />
+                </li>
+                <li 
+                  onClick={() => {
+                    const url = slug.join("/")
+                    const message = encodeURIComponent(
+                      `${WEBSITE_BASE_URL}/${url}`
+                    );
+                    window.open(`https://instagram.com?text=${message}`, "_blank");
+                  }}
+                  className="cursor-pointer bg-[radial-gradient(circle_at_30%_107%,_#fdf497_0%,_#fdf497_5%,_#fd5949_45%,#d6249f_60%,#285AEB_90%)] border w-[30px] h-[30px] flex items-center justify-center rounded-full shadow "
+                >
+                  <Svg
+                    name="instagram"
+                    className="size-[15px] text-[#343a40]"
+                  />
+                </li>
+                <li
+                  onClick={() => {
+                    const url = slug.join("/")
+                    const message = `${WEBSITE_BASE_URL}/${url}`
+                    navigator.clipboard.writeText(message);
+                    toast.success("Link copied to clipboard");
+                  }}
+                  className="cursor-pointer bg-white w-[30px] h-[30px] border  flex items-center justify-center rounded-full shadow"
+                >
+                  <Svg name="copy" className="size-[15px] text-[#343a40]" />
+                </li>
+              </ul>
             </div>
           </div>
         </div>

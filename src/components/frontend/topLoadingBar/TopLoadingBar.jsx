@@ -16,17 +16,21 @@ export default function TopLoadingBar() {
   useEffect(() => {
     const originalPush = router.push;
     router.push = async (...args) => {
+      const targetUrl = args[0];
+      if (targetUrl === pathname) return originalPush(...args);
       NProgress.start();
       try {
         await originalPush(...args);
       } finally {
-        // Do nothing here, wait for pathname change
+        // wait for pathname change
       }
     };
 
     const handleClick = (e) => {
       const target = e.target.closest("a");
       if (target && target.href && target.origin === window.location.origin) {
+        const targetPath = target.pathname;
+        if (targetPath === pathname) return;
         NProgress.start();
       }
     };
@@ -37,7 +41,7 @@ export default function TopLoadingBar() {
       router.push = originalPush;
       document.removeEventListener("click", handleClick);
     };
-  }, [router]);
+  }, [router, pathname]);
 
   useEffect(() => {
     if (prevPathname.current !== pathname) {

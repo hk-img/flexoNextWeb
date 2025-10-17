@@ -17,9 +17,11 @@ import RequestCallback from "./RequestCallback";
 import Auth from "../auth/Auth";
 import { useAuth } from "@/context/useAuth";
 import BottomBar from "../bottomBar/BottomBar";
+import { useLocation } from "@/context/useLocation";
 
 const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, locationName, spaceCategoryData, locationData, nearBySpacesData,listingData }) => {
   const {user} = useAuth();
+  const {coordinates} = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [type,setType] = useState("");
@@ -43,6 +45,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
     amenities: [],
   });
   const [appliedFilter, setAppliedFilter] = useState(filterData);
+  const [nearMeData, setNearMeData] = useState(null);
   const [page, setPage] = useState(1);
   const [hoveredSpaceId, setHoveredSpaceId] = useState(null);
   const [selectedSpaceData,setSelectedSpaceData] = useState(null);
@@ -120,7 +123,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
   }, [spaceCategoryData, spaceTypeSlug])
 
   const { data: allSpaces, refetch: refetchSpaces } = useQuery({
-    queryKey: ["allSpaces", page, city,type,selectedCheckboxes, selectedLocation,appliedFilter,user?.id],
+    queryKey: ["allSpaces", page, city,type,selectedCheckboxes,selectedLocation,nearMeData,appliedFilter,user?.id],
     queryFn: async () => {
       let payload = {
         city_name: convertSlugToSmallLetter(city || ""),
@@ -131,11 +134,13 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
         min_price: null,
         max_price: null,
         amenities: [],
-        city_lat: 0,
-        city_long: 0,
-        location_lat: 19.1121947,
-        location_longi: 72.8792898,
+        city_lat: nearMeData?.lat || 0,
+        city_long: nearMeData?.lng || 0,
         page_no: page
+      }
+      if(!nearMeData){
+        payload.location_lat =  19.1121947;
+        payload.location_longi = 72.8792898;
       }
       if (selectedLocation) {
         payload.city_name = convertSlugToSmallLetter(selectedLocation?.city || "");
@@ -209,6 +214,12 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
     setAppliedFilter(resetFilters);
     setIsFilterOpen(false);
   };
+  const handleNearMe = ()=>{
+    setNearMeData({
+      lat: coordinates?.lat || 19.1121947,
+      lng: coordinates?.lng || 72.8792898,
+    })
+  }
   const total = allSpaces?.space_count || 0;
   const start = total > 0 ? (page - 1) * perPage + 1 : 0;
   const end = total > 0 ? Math.min(page * perPage, total) : 0;
@@ -436,7 +447,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                                   onChange={(e) => setQuery(e.target.value)}
                                 />
                               </div>
-                              <div className="flex whitespace-nowrap text-[#777777] cursor-pointer">
+                              <div onClick={handleNearMe} className="flex whitespace-nowrap text-[#777777] cursor-pointer">
                                 Near Me
                               </div>
                             </div>
@@ -462,6 +473,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                                   setQuery(loc?.label);
                                   setSelectedLocation(loc);
                                   setToggleLocationOptions(false);
+                                  setNearMeData(null)
                                 }}
                               >
                                 {loc?.label}
@@ -472,13 +484,13 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                     </div>
                   )}
                 </div>
-                {
+                {/* {
                   mapToggle && (
                     <div className="map lg:w-2/5 w-full flex flex-col md:sticky md:top-10 mt-3 lg:mt-1 lg:hidden [&_.gm-style-iw-d]:!overflow-hidden [&_.gm-style-iw-d]:!max-w-[336px] [&_.gm-style-iw-d]:!max-h-full [&_.gm-style-iw-c]:!p-0 [&_.gm-style-iw-chr]:!hidden [&_.gm-style-iw]:!rounded-xl">
                       <MapWithPrices type={type} spaces={productData} hoveredSpaceId={hoveredSpaceId} />
                     </div>
                   )
-                }
+                } */}
               </div>
               <div className="lg:w-2/5 w-full items-start flex lg:flex-row lg:hidden flex-col lg:justify-end justify-start lg:pt-2 pt-4">
                 <div className="text-right xs:text-left">
@@ -582,7 +594,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                                 onChange={(e) => setQuery(e.target.value)}
                               />
                             </div>
-                            <div className="flex whitespace-nowrap text-[#777777] cursor-pointer">
+                            <div onClick={handleNearMe} className="flex whitespace-nowrap text-[#777777] cursor-pointer">
                               Near Me
                             </div>
                           </div>
@@ -608,6 +620,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                                 setQuery(loc?.label);
                                 setSelectedLocation(loc);
                                 setToggleLocationOptions(false);
+                                setNearMeData(null);
                               }}
                             >
                               {loc?.label}
@@ -630,7 +643,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                   </div>
                 ))}
               </div>
-              <TrustedCompaniesCta setIsOpen={setIsOpen}/>
+              <TrustedCompaniesCta setIsOpen={setIsOpen} type={type}/>
               <div className="spaces flex flex-row flex-wrap -mx-4">
                 {productData?.slice(6, 18)?.map((item, index) => (
                   <div
@@ -657,12 +670,12 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                 ))}
               </div>
 
-              <TestimonialCta setIsOpen={setIsOpen} />
+              <TestimonialCta setIsOpen={setIsOpen} type={type}/>
               <Pagination currentPage={page} totalPages={Math.ceil(allSpaces?.space_count / perPage)} onPageChange={setPage} />
             </div>
             {
               mapToggle && (
-                <div className="map lg:w-1/3 w-full lg:flex flex-col md:sticky md:top-10 hidden [&_.gm-style-iw-d]:!overflow-hidden [&_.gm-style-iw-d]:!max-w-[336px] [&_.gm-style-iw-d]:!max-h-full [&_.gm-style-iw-c]:!p-0 [&_.gm-style-iw-chr]:!hidden [&_.gm-style-iw]:!rounded-xl">
+                <div className="map lg:w-1/3 w-full flex flex-col md:sticky md:top-10 [&_.gm-style-iw-d]:!overflow-hidden [&_.gm-style-iw-d]:!max-w-[336px] [&_.gm-style-iw-d]:!max-h-full [&_.gm-style-iw-c]:!p-0 [&_.gm-style-iw-chr]:!hidden [&_.gm-style-iw]:!rounded-xl">
                   <MapWithPrices type={type} spaces={productData} hoveredSpaceId={hoveredSpaceId} />
                 </div>
               )

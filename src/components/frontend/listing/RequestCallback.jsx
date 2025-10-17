@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const RequestCallback = () => {
@@ -24,9 +25,9 @@ const RequestCallback = () => {
               We negotiate, you save. Our strong relationships with operators
               ensure you get the best terms—zero hassle, zero brokerage.
             </p>
-            <button className="w-fit bg-[#141414] text-sm hover:bg-[#ff7c52] text-white py-4 px-6 rounded-[15px] font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">
+            <Link href="/contact" className="w-fit bg-[#141414] text-sm hover:bg-[#ff7c52] text-white py-4 px-6 rounded-[15px] font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">
               Request call back
-            </button>
+            </Link>
           </div>
         </div>
       </section>

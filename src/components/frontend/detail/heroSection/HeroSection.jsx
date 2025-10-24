@@ -86,7 +86,7 @@ const HeroSection = ({ slug,isFavouriteSpace,spaceData,setIsAuthOpen }) => {
             </div>
             <div>
               <div className="grid md:grid-cols-2 grid-cols-4 gap-[2px]">
-                {spaceData?.images?.slice(1, 5).map((item, index) => (
+                {(youtubeId ? spaceData?.images?.slice(0, 4) : spaceData?.images?.slice(1, 5))?.map((item, index) => (
                   <div key={index}>
                     <div>
                       <ImageWithFallback

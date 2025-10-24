@@ -57,6 +57,39 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
       favouriteMutate(payload);
     }
   },[token])
+  const sharePost = (type,url)=>{ 
+    if(type=='facebook'){
+      window.open( 
+        `https://www.facebook.com/sharer/sharer.php?u=${url}`, 
+          "_blank", "width=600, height=450"); 
+    }else if(type=='twitter'){
+      window.open( 
+        `https://twitter.com/intent/tweet?url=${url}`, 
+          "_blank", "width=600, height=450"); 
+    }else if(type=='linkedin'){
+      window.open( 
+        `https://www.linkedin.com/shareArticle?mini=true&url=${url}`, 
+          "_blank", "width=600, height=450"); 
+    }else if(type=='pinterest'){
+      window.open( 
+        `https://pinterest.com/pin/create/button/?url=${url}`, 
+          "_blank", "width=600, height=450"); 
+    }
+    else if(type=='instagram'){
+      window.open( 
+        `https://www.instagram.com/flexospaces/?url=${url}`, 
+          "_blank", "width=600, height=450"); 
+    }
+    else if(type=='google'){
+      window.open( 
+        `https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=&su=Propira&body=${url}`, 
+          "_blank", "width=600, height=450"); 
+    }else if(type=='whatsup'){
+      window.open( 
+        `https://api.whatsapp.com/send?text=${url}`, 
+          "_blank", "width=600, height=450"); 
+    }
+  }
   return (
     <>
       <div
@@ -130,11 +163,11 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
                       url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
                     }
                     const shareUrl = `${WEBSITE_BASE_URL}${url}`
-
-                    window.open(
-                      `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
-                      "_blank"
-                    );
+                    sharePost("facebook",shareUrl)
+                    // window.open(
+                    //   `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
+                    //   "_blank"
+                    // );
                   }}
                   className="cursor-pointer share-button flex items-center justify-center w-full h-full"
                 >
@@ -155,11 +188,11 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
                       }
 
                       const shareUrl = `${WEBSITE_BASE_URL}${url}`;
-
-                      window.open(
-                        `https://www.linkedin.com/feed/?shareActive=false&url=${shareUrl}`,
-                        "_blank"
-                      );
+                      sharePost("linkedin",shareUrl)
+                      // window.open(
+                      //   `https://www.linkedin.com/feed/?shareActive=false&url=${shareUrl}`,
+                      //   "_blank"
+                      // );
                     }}
                   className="cursor-pointer share-button flex items-center justify-center w-full h-full"
                 >
@@ -180,7 +213,8 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
                     const message = encodeURIComponent(
                       `Checkout this space on FLEXO\n${WEBSITE_BASE_URL}${url}`
                     );
-                    window.open(`https://web.whatsapp.com/send?text=${message}`, "_blank");
+                    sharePost("whatsup",message)
+                    // window.open(`https://web.whatsapp.com/send?text=${message}`, "_blank");
                   }}
                   className="cursor-pointer share-button flex items-center justify-center w-full h-full"
                 >
@@ -201,11 +235,11 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
                       url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
                     }
                     const shareUrl = `${WEBSITE_BASE_URL}${url}`
-
-                    window.open(
-                      `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
-                      "_blank"
-                    );
+                    sharePost("facebook",shareUrl)
+                    // window.open(
+                    //   `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
+                    //   "_blank"
+                    // );
                   }}
                   className="cursor-pointer share-button flex items-center justify-center w-full h-full"
                 >
@@ -226,11 +260,11 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
                       }
 
                       const shareUrl = `${WEBSITE_BASE_URL}${url}`;
-
-                      window.open(
-                        `https://www.linkedin.com/feed/?shareActive=false&url=${shareUrl}`,
-                        "_blank"
-                      );
+                      sharePost("linkedin",shareUrl)
+                      // window.open(
+                      //   `https://www.linkedin.com/feed/?shareActive=false&url=${shareUrl}`,
+                      //   "_blank"
+                      // );
                     }}
                   className="cursor-pointer share-button flex items-center justify-center w-full h-full"
                 >
@@ -251,12 +285,13 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
                     const message = encodeURIComponent(
                       `Checkout this space on FLEXO\n${WEBSITE_BASE_URL}${url}`
                     );
-                    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-                    const whatsappUrl = isMobile
-                      ? `whatsapp://send?text=${message}`
-                      : `https://web.whatsapp.com/send?text=${message}`;
+                    sharePost("whatsup",message)
+                    // const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+                    // const whatsappUrl = isMobile
+                    //   ? `whatsapp://send?text=${message}`
+                    //   : `https://web.whatsapp.com/send?text=${message}`;
 
-                    window.open(whatsappUrl, "_blank");
+                    // window.open(whatsappUrl, "_blank");
                   }}
                   className="cursor-pointer share-button flex items-center justify-center w-full h-full"
                 >

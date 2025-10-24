@@ -76,7 +76,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
     return `${hour}:${minute} ${ampm}`;
   }
 
-   const { data: spaceDeatil } = useQuery({
+   const { data: spaceDeatil,refetch:refetchDetail } = useQuery({
     queryKey: ["space-detail",spaceId,spaceDetailsData,user?.id],
     queryFn: async () => {
       let query = ""
@@ -161,7 +161,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
   },[token])
   return (
     <>
-      <HeroSection slug={slug} isFavouriteSpace={spaceDeatil?.existingfavorite?.favourite} spaceData={spaceData} setIsAuthOpen={setIsAuthOpen}/>
+      <HeroSection slug={slug} isFavouriteSpace={spaceDeatil?.existingfavorite?.favourite} spaceData={spaceData} setIsAuthOpen={setIsAuthOpen} refetchDetail={refetchDetail}/>
       <section className="container px-[15px] mx-auto md:py-6 py-[18px]">
         <div className="flex flex-wrap">
           <div className="lg:w-2/3 md:pr-[15px] pr-0">
@@ -1190,7 +1190,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                       </div>
                     </>
                   )}
-                  <button onClick={handleRequestToBook} className="cursor-pointer md:hidden block md:relative fixed bottom-0 left-0 w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[15px]  md:rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">
+                  <button onClick={handleRequestToBook} className="cursor-pointer md:hidden block md:relative fixed bottom-0 left-0 w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[15px]  md:rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px] z-10">
                     {spaceData?.isInstant == 1 ? "Book Now": "Request To Book"}
                   </button>
                 </div>

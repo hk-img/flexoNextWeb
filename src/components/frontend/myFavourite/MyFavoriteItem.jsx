@@ -1,20 +1,35 @@
 import ImageWithFallback from "@/components/ImageWithFallback";
 import Svg from "@/components/svg";
 import { IMAGE_BASE_URL } from "@/services/ApiService";
-import { convertSlugToCapitalLetter } from "@/services/Comman";
+import {
+  convertSlugToCapitalLetter,
+  getTypeOfSpaceByWorkSpace,
+  slugGenerator,
+} from "@/services/Comman";
 import Link from "next/link";
 import React, { useState } from "react";
 
-const MyFavoriteItem = ({ item,setIsRemovePopupOpen,setSpaceId }) => {
+const MyFavoriteItem = ({ item, setIsRemovePopupOpen, setSpaceId }) => {
   const [expanded, setExpanded] = useState(false);
-  
-
+  const type = getTypeOfSpaceByWorkSpace(item?.spaceData?.spaceType);
+  const spaceTypeSlug = slugGenerator(item?.spaceData?.spaceType);
+  const locationNameSlug = slugGenerator(item?.spaceData?.location_name || "");
+  const cityNameSlug = slugGenerator(item?.spaceData?.contact_city_name || "");
+  const spaceId = item?.spaceData?.id;
   return (
     <>
       <div className="w-full flex md:flex-row flex-col items-center gap-y-4 justify-start bg-white p-5 rounded-xl ">
-        <Link
-          href=""
-          className="relative md:w-50 h-[150px] w-full rounded-lg shrink-0 overflow-hidden"
+        <div
+          onClick={() => {
+            let url = "";
+            if (type == "coworking") {
+              url = `/${item?.spaceData?.slug}`;
+            } else {
+              url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
+            }
+            window.open(`${url}`, "_blank");
+          }}
+          className="cursor-pointer relative md:w-50 h-[150px] w-full rounded-lg shrink-0 overflow-hidden"
         >
           <ImageWithFallback
             src={`${IMAGE_BASE_URL}/${item?.spaceData?.images?.[0]}`}
@@ -33,14 +48,14 @@ const MyFavoriteItem = ({ item,setIsRemovePopupOpen,setSpaceId }) => {
           >
             {item?.spaceData?.spaceType}
           </div>
-        </Link>
+        </div>
         <div className="md:ml-[15px] space-y-2">
           <div className="flex justify-between items-center gap-2 mb-0">
             <h2 className="text-lg font-semibold text-[#141414] underline">
               {item?.spaceData?.actual_name}
             </h2>
             <div
-              onClick={()=>{
+              onClick={() => {
                 setIsRemovePopupOpen(true);
                 setSpaceId(item?.spaceData?.id);
               }}
@@ -71,7 +86,9 @@ const MyFavoriteItem = ({ item,setIsRemovePopupOpen,setSpaceId }) => {
           </div>
           <p
             className={`text-sm font-normal leading-[1.5] text-[#808080] mb-0 overflow-hidden transition-all duration-500 ease-in-out ${
-              expanded ? "max-h-[1000px] line-clamp-none" : "max-h-[80px] line-clamp-3"
+              expanded
+                ? "max-h-[1000px] line-clamp-none"
+                : "max-h-[80px] line-clamp-3"
             }`}
           >
             {item?.spaceData?.about}

@@ -118,13 +118,13 @@ const MyFavourite = () => {
                   setIsRemovePopupOpen(false);
                   setSpaceId("");
                 }}
-                className="cursor-pointer px-6 py-2 bg-[#f36b1c] text-white font-semibold rounded-md hover:bg-[#ff7c52] duration-300 transition"
+                className="cursor-pointer px-6 py-2 bg-[#f76900] text-white font-semibold rounded-md hover:bg-[#ff7c52] duration-300 transition"
               >
                 NO
               </button>
               <button
                 onClick={handleFavourite}
-                className="cursor-pointer px-6 py-2 bg-[#f36b1c] text-white font-semibold rounded-md hover:bg-[#ff7c52] duration-300 transition"
+                className="cursor-pointer px-6 py-2 bg-[#f76900] text-white font-semibold rounded-md hover:bg-[#ff7c52] duration-300 transition"
               >
                 YES
               </button>

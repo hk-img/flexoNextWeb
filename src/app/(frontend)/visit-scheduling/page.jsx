@@ -10,7 +10,6 @@ export const metadata = {
     canonical: `${WEBSITE_BASE_URL}/visit-scheduling`,
   },
 };
-
 const page = () => {
   return (
     <>

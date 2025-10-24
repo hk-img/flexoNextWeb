@@ -374,18 +374,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                   </div>
                  
                 </div>
-                 <div className=" w-full mt-4 items-start lg:flex lg:flex-row hidden flex-col lg:justify-end justify-start">
-                    <div className="text-right xs:text-left">
-                      <p className="text-sm text-[#777777] leading-10 min-[1400px]:text-[15px]">
-                        Showing{" "}
-                        <span className="font-medium text-[#f76900]">{start}–{end}</span>{" "}
-                        <span className="font-medium text-[#f76900]">
-                          of {allSpaces?.space_count}
-                        </span>{" "}
-                        Listings
-                      </p>
-                    </div>
-                  </div>
+                
                 <div className="relative inline-block lg:hidden w-full">
                   {toggleSpaceType && (
                     <>
@@ -662,6 +651,18 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                   </div>
                 )}
               </div>
+              <div className=" w-full mt-4 items-start lg:flex lg:flex-row hidden flex-col lg:justify-end justify-start">
+                  <div className="text-right xs:text-left">
+                    <p className="text-sm text-[#777777] leading-10 min-[1400px]:text-[15px]">
+                      Showing{" "}
+                      <span className="font-medium text-[#f76900]">{start}–{end}</span>{" "}
+                      <span className="font-medium text-[#f76900]">
+                        of {allSpaces?.space_count}
+                      </span>{" "}
+                      Listings
+                    </p>
+                  </div>
+                </div>
               <div className="spaces lg:mt-6 flex flex-row flex-wrap -mx-4">
                 {productData?.slice(0, 6)?.map((item, index) => (
                   <div

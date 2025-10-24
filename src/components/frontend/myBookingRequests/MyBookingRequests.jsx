@@ -1,7 +1,6 @@
 "use client";
 import React, { useMemo } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import Svg from "@/components/svg";
 import { useAuth } from "@/context/useAuth";
 import { useQuery } from "@tanstack/react-query";

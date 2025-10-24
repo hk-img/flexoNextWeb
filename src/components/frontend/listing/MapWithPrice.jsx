@@ -155,14 +155,9 @@ export default function MapWithPrices({ type, spaces, hoveredSpaceId }) {
                       </EmblaCarousel>
                     </div>
                     <div className="p-3">
-                      {type == "coworking" && (
+                      {(type == "coworking" || type == "longterm") && (
                         <h2 className="2xl:text-lg !font-poppins text-base font-medium text-[#141414] truncate tracking-wide">
                           {space?.name} {space?.spaceTitle}
-                        </h2>
-                      )}
-                      {type == "longterm" && (
-                        <h2 className="2xl:text-lg !font-poppins text-base font-medium text-[#141414] truncate tracking-wide">
-                          {space?.spaceTitle}
                         </h2>
                       )}
                       {type == "shortterm" && (

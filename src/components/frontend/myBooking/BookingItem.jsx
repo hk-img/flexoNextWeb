@@ -175,11 +175,11 @@ const bookingItem = ({ item,setShowReviewPopup,setBookingId }) => {
                     <div className="flex items-center gap-1">
                       <span>
                         <Svg
-                          name="warning"
-                          className="size-[22px] text-[#0085ff]"
+                          name="cancel"
+                          className="size-[22px] text-[#ff0000]"
                         />
                       </span>
-                      <h6 className="text-[#0085ff] text-sm 2xl:text-base font-semibold">
+                      <h6 className="text-[#ff0000] text-sm 2xl:text-base font-semibold">
                         Rejected
                       </h6>
                     </div>

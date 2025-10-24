@@ -483,6 +483,7 @@ const MyProfile = () => {
                         }
                         alt="User profile"
                         fallback="/images/user_image_profile.webp"
+                        title="profile_image"
                       />
                      
                     </div>

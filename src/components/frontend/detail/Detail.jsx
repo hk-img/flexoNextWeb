@@ -76,7 +76,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
     return `${hour}:${minute} ${ampm}`;
   }
 
-   const { data: spaceDeatil } = useQuery({
+   const { data: spaceDeatil,refetch:refetchDetail } = useQuery({
     queryKey: ["space-detail",spaceId,spaceDetailsData,user?.id],
     queryFn: async () => {
       let query = ""
@@ -161,7 +161,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
   },[token])
   return (
     <>
-      <HeroSection slug={slug} isFavouriteSpace={spaceDeatil?.existingfavorite?.favourite} spaceData={spaceData} setIsAuthOpen={setIsAuthOpen}/>
+      <HeroSection slug={slug} isFavouriteSpace={spaceDeatil?.existingfavorite?.favourite} spaceData={spaceData} setIsAuthOpen={setIsAuthOpen} refetchDetail={refetchDetail}/>
       <section className="container px-[15px] mx-auto md:py-6 py-[18px]">
         <div className="flex flex-wrap">
           <div className="lg:w-2/3 md:pr-[15px] pr-0">

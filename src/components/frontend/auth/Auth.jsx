@@ -136,7 +136,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
                       onClick={() => {
                         setIsShowMobile(false);
                       }}
-                      className="cursor-pointer flex-1 border border-[#dbdbdb] rounded-md py-1 flex items-center justify-center gap-2"
+                      className="cursor-pointer flex-1 border border-[#dbdbdb] rounded-md py-1 max-md:px-4 flex items-center justify-center gap-2"
                     >
                       <Svg name="mail" className="size-4 text-black" />
                       <span> Mail</span>
@@ -146,7 +146,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
                       onClick={() => {
                         setIsShowMobile(true);
                       }}
-                      className="cursor-pointer flex-1 border border-[#dbdbdb] rounded-md py-1 flex items-center justify-center gap-2"
+                      className="cursor-pointer flex-1 border border-[#dbdbdb] rounded-md py-1 max-md:px-4  flex items-center justify-center gap-2"
                     >
                       <Svg name="call" className="size-4 text-black" />
                       <span> Mobile</span>

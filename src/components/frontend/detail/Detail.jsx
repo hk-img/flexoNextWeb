@@ -361,7 +361,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                       <h2 className="text-xl leading-[1.6] font-medium text-[#141414] mb-[15px]">
                         About the Space
                       </h2>
-                      <p className="text-[#777] text-base leading-[1.8]">
+                      <p className="text-[#777] text-base leading-[1.8] break-all">
                         {spaceData?.about}
                       </p>
                     </div>

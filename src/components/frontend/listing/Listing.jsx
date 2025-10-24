@@ -18,6 +18,7 @@ import Auth from "../auth/Auth";
 import { useAuth } from "@/context/useAuth";
 import BottomBar from "../bottomBar/BottomBar";
 import { useLocation } from "@/context/useLocation";
+import Link from "next/link";
 
 const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, locationName, spaceCategoryData, locationData, nearBySpacesData,listingData }) => {
   const {user} = useAuth();
@@ -252,7 +253,6 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
   const total = allSpaces?.space_count || 0;
   const start = total > 0 ? (page - 1) * perPage + 1 : 0;
   const end = total > 0 ? Math.min(page * perPage, total) : 0;
-  console.log(mapToggle, "mapToggle");
   return (
     <>
       <section className="w-full relative lg:pt-16 bg-white">
@@ -266,7 +266,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                 <div className="scrollMenus overflow-auto whitespace-nowrap pb-2 mb-4">
                   {
                     nearBySpacesData?.map((item, index) => (
-                      <a
+                      <Link
                         key={index}
                         className={`${item?.location_name?.split(" ")?.map(word => word.charAt(0).toLowerCase() + word.slice(1))?.join(" ") == locationNameSlug?.replace(/-/g, " ") ? "text-[#4343e8] border-[#7d9dd9] bg-[#e9e9ff]" : "text-[#9e9e9e] border-[#d4d4d4] bg-white"} inline-block text-center me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border max-w-[240px] w-[160px] whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]`}
                         href={`/in/${slugGenerator(item?.spaceType || "")}/${citySlug}/${slugGenerator(item?.location_name || "")}`}
@@ -274,7 +274,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                       >
                         {" "}
                         {item?.location_name}
-                      </a>
+                      </Link>
                     ))
                   }
                 </div>

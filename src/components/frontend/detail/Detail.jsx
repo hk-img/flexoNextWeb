@@ -25,6 +25,7 @@ import { getApi } from "@/services/ApiService";
 import BottomBar from "../bottomBar/BottomBar";
 import BookingReviewPopup from "../bookingReviewPopup/BookingReviewPopup";
 import RequestToBookPopup from "./requestToBookPopup/RequestToBookPopup";
+import Script from "next/script";
 
 const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
   const {token,user} = useAuth();
@@ -1236,6 +1237,10 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
       {isBuyPassOpen && <BuyPassPopup isOpen={isBuyPassOpen} setIsOpen={setIsBuyPassOpen} spaceData={spaceData}/>}
       {requestToBookOpen && <RequestToBookPopup isOpen={requestToBookOpen} setIsOpen={setRequestToBookOpen} spaceData={spaceData} workingDays={spaceData?.working_time} hostHolidays={spaceDeatil?.hostHolidays}/>}
       {showReviewPopup && <BookingReviewPopup setIsOpen={setShowReviewPopup} isOpen={showReviewPopup} bookingId={spaceData?.id}/>}
+      <Script
+        src="https://checkout.razorpay.com/v1/checkout.js"
+        strategy="afterInteractive"
+      />
     </>
   );
 };

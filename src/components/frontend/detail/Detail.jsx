@@ -361,7 +361,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                       <h2 className="text-xl leading-[1.6] font-medium text-[#141414] mb-[15px]">
                         About the Space
                       </h2>
-                      <p className="text-[#777] text-base leading-[1.8]">
+                      <p className="text-[#777] text-base leading-[1.8] break-all">
                         {spaceData?.about}
                       </p>
                     </div>
@@ -1015,7 +1015,11 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                           spaceData?.originalPrice / spaceData?.spacesqft
                         )}
                         /Sqft
-                        <span className=" font-bold">(Negotiable)</span>
+                        {
+                          spaceData?.negociable_price == 1 && (
+                            <span className=" font-bold">(Negotiable)</span>
+                          )
+                        }
                       </p>
                     </div>
                     <p className="text-xs font-normal  leading-[1.5] text-[#777]">

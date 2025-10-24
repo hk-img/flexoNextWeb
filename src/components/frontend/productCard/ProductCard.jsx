@@ -268,14 +268,9 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
         </div>
         <div className="lg:pt-2 lg:px-6 lg:pb-4 py-[22px] px-[14px] flex flex-col flex-grow">
           <div className="flex flex-col justify-between items-start md:mb-2 mb-1">
-            {type == "coworking" && (
+            {(type == "coworking" || type == "longterm") && (
               <h3 className="text-lg cursor-pointer font-medium text-[#141414] text-ellipsis line-clamp-1 break-all">
                 {item?.name} {item?.spaceTitle}
-              </h3>
-            )}
-            {type == "longterm" && (
-              <h3 className="text-lg cursor-pointer font-medium text-[#141414] text-ellipsis line-clamp-1 break-all">
-                {item?.spaceTitle}
               </h3>
             )}
             {type == "shortterm" && (
@@ -347,7 +342,7 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
                 </p>
                 <div className="w-1/2">
                 {
-                  (item?.flexible_desk_price || item?.desks_price) ? (
+                  (item?.desks_price || item?.flexible_desk_price) ? (
                     <div className="lg:text-sm text-[13px] text-[#141414] m-0 p-0 font-medium">
                       <div className="flex items-center m-0">
                         <div className="flex items-center">
@@ -356,7 +351,7 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
                             className="text-[#7f7f7f] size-[15px]"
                           />
                           <span className="text-black font-semibold  min-[1400]:text-[17px] text-sm">
-                            {item?.flexible_desk_price || item?.desks_price}
+                            {item?.desks_price || item?.flexible_desk_price}
                           </span>
                         </div>
                         <span className="ps-1 min-[1400px]:text-[13px] text-[11px] font-normal !leading-4">

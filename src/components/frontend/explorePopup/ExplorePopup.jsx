@@ -526,9 +526,11 @@ const ExplorePopup = ({
             After you submit a workspace enquiry to us, we may share your
             details with workspace providers, who may contact you to follow up
             on your enquiry." Please  read our{" "}
-            <a href="#" className="text-[#f76900]">
+            <span onClick={()=>{
+              window.open("/privacy-policy", "_blank")
+            }} className="cursor-pointer text-[#f76900]">
               Privacy Policy
-            </a>{" "}
+            </span>{" "}
             for details of how we process the information.
           </p>
         </div>

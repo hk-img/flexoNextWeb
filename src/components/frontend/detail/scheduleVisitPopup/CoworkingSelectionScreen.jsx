@@ -89,7 +89,7 @@ const CoworkingSelectionScreen = ({spaceId,formData,setFormData,error,setError,v
             )
           }
           {
-            spaceData?.manage_office_price > 0 && (
+            spaceData?.customized_space_price > 0 && (
                 <label className="cursor-pointer block">
                     <input
                     type="radio"

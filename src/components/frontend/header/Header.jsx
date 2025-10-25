@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 
 const Header = () => {
   const router = useRouter();
-  const { token, setToken, setUser } = useAuth();
+  const { token, setToken, setUser,user } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -147,6 +147,7 @@ const Header = () => {
                   <div className="relative group z-[9999]">
                     <label
                       onClick={() => setIsMenuOpen((prev) => !prev)}
+                      title={`${user?.firstName} ${user?.lastName}`}
                       className="userClass flex items-center justify-center border hover:bg-[#f76900] bg-[#001740] text-white 
                                       w-[30px] h-[30px] rounded-full cursor-pointer transition"
                     >

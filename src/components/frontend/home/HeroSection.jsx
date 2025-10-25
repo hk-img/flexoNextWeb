@@ -254,6 +254,12 @@ export default function HeroSection({spaceCategoryData}) {
                   menuPortalTarget={
                     typeof document !== "undefined" ? document.body : null
                   }
+                  onInputChange={(inputValue, { action }) => {
+                    if (action === "input-change" && inputValue.length <= 100) {
+                      return inputValue; 
+                    }
+                    return inputValue.slice(0, 100); 
+                  }}
                   className=" [&_div>div>div]:!text-black [&_div>div>div]:!text-sm max-md:border border-black rounded-[15px] md:!w-1/2 !w-full md:!h-[46px] !h-[52px] items-center flex justify-between"
                   isClearable
                   menuShouldScrollIntoView={false}

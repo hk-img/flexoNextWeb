@@ -32,7 +32,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center animate-fadeIn p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center animate-fadeIn p-[19px]">
       <div
         className="absolute inset-0 bg-black/40"
         onClick={() => setIsOpen(false)}
@@ -66,9 +66,9 @@ const Auth = ({ isOpen, setIsOpen }) => {
       ) : (
         <>
           <div className="relative w-full max-w-[600px] rounded-sm bg-white p-6 shadow-xl overflow-y-auto [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]  animate-scaleIn">
-            <div className="px-5 py-4 border-b border-[#dbdbdb] flex items-center justify-between">
+            <div className=" md:px-5 md:py-4 p-[10px] border-b border-[#dbdbdb] flex items-center justify-between">
               {!isLogin ? (
-                <h2 className="min-[1400px]:text-[22px] text-xl font-medium leading-[1.6]">
+                <h2 className="min-[1400px]:text-[22px] md:text-xl text-lg font-medium leading-[1.6]">
                   Register/Create an
                   <span className="text-[#f76900]"> Account</span>
                 </h2>
@@ -102,7 +102,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
                 )}
               </>
             ) : (
-              <div className="py-[25px]">
+              <div className=" md:py-[25px] py-5 max-md:px-[10px]">
                 {isShowMobile ? (
                   <LoginRegisterViaMobile
                     isLogin={isLogin}
@@ -122,7 +122,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
                   </span>
                   <hr className="flex-1 border-gray-300" />
                 </div>
-                <div className="flex gap-3 px-10">
+                <div className="flex gap-5 md:px-10">
                   <GoogleOAuthProvider
                     clientId={process.env.NEXT_PUBLIC_CLIENT_ID}
                   >
@@ -136,7 +136,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
                       onClick={() => {
                         setIsShowMobile(false);
                       }}
-                      className="cursor-pointer flex-1 border border-[#dbdbdb] rounded-md py-1 max-md:px-4 flex items-center justify-center gap-2"
+                      className="cursor-pointer border border-[#dbdbdb] rounded-md py-1 max-md:px-[5px] flex items-center justify-center min-[1400px]:text-base text-sm gap-2 md:w-full"
                     >
                       <Svg name="mail" className="size-4 text-black" />
                       <span> Mail</span>
@@ -153,8 +153,8 @@ const Auth = ({ isOpen, setIsOpen }) => {
                     </button>
                   )}
                 </div>
-                <div className="mt-6 text-center flex items-center justify-center gap-4">
-                  <span className="text-sm min-[1400px]:text-base text-black">
+                <div className="md:mt-6 pt-5 text-center flex items-center justify-center gap-4">
+                  <span className="text-sm min-[1400px]:text-base text-black text-start">
                     {!isLogin
                       ? "Already have an account ?"
                       : "Don't have an account ?"}

@@ -58,9 +58,9 @@ const GoogleLoginButton = ({ setGoogleDetails, setIsOpen }) => {
   return (
     <button
       onClick={() => login()}
-      className="cursor-pointer flex items-center justify-center border rounded-md py-0.5 px-0.5 bg-[#1a73e8] hover:bg-[#5194ee] transition duration-300 text-white"
+      className="cursor-pointer flex items-center border rounded-md py-0.5 px-0.5 bg-[#1a73e8] hover:bg-[#5194ee] transition duration-300 text-white max-md:w-full"
     >
-      <div className="bg-white h-full p-1 flex items-center justify-center rounded-l-sm">
+      <div className="bg-white h-full p-1 w-7 flex items-center justify-center rounded-l-sm">
         {/* Google SVG */}
         <svg
           stroke="currentColor"
@@ -89,7 +89,7 @@ const GoogleLoginButton = ({ setGoogleDetails, setIsOpen }) => {
           ></path>
         </svg>
       </div>
-      <span className="text-sm px-2">Sign in with Google</span>
+      <span className="text-sm px-2 text-nowrap">Sign in with Google</span>
     </button>
   );
 };

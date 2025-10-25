@@ -440,13 +440,13 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
                     </div>
 
                   {/* Message */}
-                  <div className="relative md:col-span-2">
+                  <div className="relative md:col-span-2 py-2">
                     <textarea
                       id="message"
                       rows="2"
                       placeholder="Message or additional requirements"
                       {...register("message")}
-                      className="peer w-full border-b border-[#0000006b] text-sm text-black pt-2 pb-1 outline-none focus:border-[#3f51b5] bg-transparent"
+                      className="peer w-full border-b border-[#0000006b] text-sm text-black outline-none focus:border-[#3f51b5] bg-transparent"
                     ></textarea>
                     <label
                       htmlFor="message"

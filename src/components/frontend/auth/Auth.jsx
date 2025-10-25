@@ -136,7 +136,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
                       onClick={() => {
                         setIsShowMobile(false);
                       }}
-                      className="cursor-pointer border border-[#dbdbdb] rounded-md py-1 max-md:px-[5px] flex items-center justify-center min-[1400px]:text-base text-sm gap-2 md:w-full"
+                      className="cursor-pointer flex-1 border border-[#dbdbdb] rounded-md py-1 max-md:px-4 flex items-center justify-center gap-2"
                     >
                       <Svg name="mail" className="size-4 text-black" />
                       <span> Mail</span>

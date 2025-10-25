@@ -43,6 +43,8 @@ const HeroSection = ({ slug,isFavouriteSpace,spaceData,setIsAuthOpen,refetchDeta
   useEffect(()=>{
     if(isFavouriteSpace){
       setIsFavourite(true);
+    }else{
+      setIsFavourite(false);
     }
   },[isFavouriteSpace])
 

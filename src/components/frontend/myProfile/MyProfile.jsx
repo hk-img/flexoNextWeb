@@ -21,114 +21,113 @@ import ImageWithFallback from "@/components/ImageWithFallback";
 const Select = dynamic(() => import("react-select"), { ssr: false });
 
 const DropdownIndicator = (props) => {
-    const { menuIsOpen } = props.selectProps;
-    return (
-      <RSComponents.DropdownIndicator {...props}>
-        <Svg
-          name="arrowDropDown"
-          className={`size-5 text-[#777] transition-transform duration-200 ${
-            menuIsOpen ? "rotate-180" : "rotate-0"
-          }`}
-        />
-      </RSComponents.DropdownIndicator>
-    );
-  };
+  const { menuIsOpen } = props.selectProps;
+  return (
+    <RSComponents.DropdownIndicator {...props}>
+      <Svg
+        name="arrowDropDown"
+        className={`size-5 text-[#777] transition-transform duration-200 ${
+          menuIsOpen ? "rotate-180" : "rotate-0"
+        }`}
+      />
+    </RSComponents.DropdownIndicator>
+  );
+};
 
-  const ClearIndicator = (props) => {
-      return (
-        <RSComponents.ClearIndicator {...props}>
-          <div className="cursor-pointer text-gray-500 hover:text-[#f76900] transition-colors duration-200">
-            ×
-          </div>
-        </RSComponents.ClearIndicator>
-      );
-    };
-   
-    const customStyles = {
-      container: (base) => ({
-        ...base,
-        width: "260px",
-      }),
-      control: (base, state) => ({
-        ...base,
-        borderRadius: "15px",
-        backgroundColor: "transparent",
-        borderColor: "transparent",
-        minHeight: "44px",
-        height: "44px",
-        width: "100%",
-        boxShadow: "none",
-        outline: "none",
-        "&:hover": {
-          borderColor: "transparent",
-        },
-      }),
-      menu: (base) => ({
-        ...base,
-        marginTop: 0,
-        borderRadius: "12px",
-        backgroundColor: "#fff",
-        boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-        outline: "none",
-        overflow: "hidden",
-      }),
-      menuList: (base) => ({
-        ...base,
-        maxHeight: "160px",
-        overflowY: "auto",
-        paddingRight: "4px",
-        className:
-          " [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]",
-      }),
-      valueContainer: (base) => ({
-        ...base,
-        padding: "0 8px",
-      }),
-      placeholder: (base) => ({
-        ...base,
-        color: "black",
-        fontWeight: "600",
-        fontSize: "14px",
-      }),
-      singleValue: (base) => ({
-        ...base,
-        fontSize: "0.95rem",
-        color: "#333",
-      }),
-      option: (base, state) => ({
-        ...base,
-        padding: "10px 14px",
-        borderRadius: "11px",
-        backgroundColor: state.isSelected
-          ? "#ebf5ff"
-          : state.isFocused
-          ? "#f5faff"
-          : "#fff",
-        color: "#333",
-        width: "100%",
-        textOverflow: "ellipsis",
-        whiteSpace: "nowrap",
-        overflow: "hidden",
-        fontSize: "14px",
-        fontWeight: state.isSelected ? "500" : "normal",
-        cursor: "pointer",
-        outline: "none",
-        boxShadow: "none",
-        ":active": {
-          backgroundColor: "#ebf5ff",
-        },
-      }),
-      dropdownIndicator: (base) => ({
-        ...base,
-        color: "#999",
-        padding: "0 8px",
-      }),
-      indicatorsContainer: (base) => ({
-        ...base,
-        // paddingRight: "4px",
-      }),
-    };
+const ClearIndicator = (props) => {
+  return (
+    <RSComponents.ClearIndicator {...props}>
+      <div className="cursor-pointer text-gray-500 hover:text-[#f76900] transition-colors duration-200">
+        ×
+      </div>
+    </RSComponents.ClearIndicator>
+  );
+};
 
+const customStyles = {
+  container: (base) => ({
+    ...base,
+    width: "260px",
+  }),
+  control: (base, state) => ({
+    ...base,
+    borderRadius: "15px",
+    backgroundColor: "transparent",
+    borderColor: "transparent",
+    minHeight: "44px",
+    height: "44px",
+    width: "100%",
+    boxShadow: "none",
+    outline: "none",
+    "&:hover": {
+      borderColor: "transparent",
+    },
+  }),
+  menu: (base) => ({
+    ...base,
+    marginTop: 0,
+    borderRadius: "12px",
+    backgroundColor: "#fff",
+    boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+    outline: "none",
+    overflow: "hidden",
+  }),
+  menuList: (base) => ({
+    ...base,
+    maxHeight: "160px",
+    overflowY: "auto",
+    paddingRight: "4px",
+    className:
+      " [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]",
+  }),
+  valueContainer: (base) => ({
+    ...base,
+    padding: "0 8px",
+  }),
+  placeholder: (base) => ({
+    ...base,
+    color: "black",
+    fontWeight: "600",
+    fontSize: "14px",
+  }),
+  singleValue: (base) => ({
+    ...base,
+    fontSize: "0.95rem",
+    color: "#333",
+  }),
+  option: (base, state) => ({
+    ...base,
+    padding: "10px 14px",
+    borderRadius: "11px",
+    backgroundColor: state.isSelected
+      ? "#ebf5ff"
+      : state.isFocused
+      ? "#f5faff"
+      : "#fff",
+    color: "#333",
+    width: "100%",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    fontSize: "14px",
+    fontWeight: state.isSelected ? "500" : "normal",
+    cursor: "pointer",
+    outline: "none",
+    boxShadow: "none",
+    ":active": {
+      backgroundColor: "#ebf5ff",
+    },
+  }),
+  dropdownIndicator: (base) => ({
+    ...base,
+    color: "#999",
+    padding: "0 8px",
+  }),
+  indicatorsContainer: (base) => ({
+    ...base,
+    // paddingRight: "4px",
+  }),
+};
 
 const genderOptions = [
   { value: "male", label: "Male" },
@@ -237,7 +236,7 @@ const MyProfile = () => {
     state: "",
     city: "",
   });
-  const [error,setError] = useState("");
+  const [error, setError] = useState("");
   const billingCountry = watch("billingCountry");
   const state = watch("state");
   const city = watch("city");
@@ -452,7 +451,9 @@ const MyProfile = () => {
     const maxSizeBytes = maxSizeMB * 1024 * 1024;
 
     if (file.size > maxSizeBytes) {
-      setError(`File size exceeds ${maxSizeMB} MB. Please select a smaller file`);
+      setError(
+        `File size exceeds ${maxSizeMB} MB. Please select a smaller file`
+      );
       return;
     }
 
@@ -485,9 +486,8 @@ const MyProfile = () => {
                         fallback="/images/user_image_profile.webp"
                         title="profile_image"
                       />
-                     
                     </div>
-                    
+
                     {imageUploadLoading && (
                       <div className="absolute inset-0 flex items-center justify-center">
                         <div className="w-8 h-8 border-4 border-gray-300 border-t-[#f76900] rounded-full animate-spin"></div>
@@ -500,20 +500,21 @@ const MyProfile = () => {
                       <input
                         type="file"
                         id="imageUpload"
-                        accept=".jpg,.jpeg,.png" 
+                        accept=".jpg,.jpeg,.png"
                         className="hidden"
                         onChange={handleImageUpload}
                       />
                       <Svg name="camera" className=" text-white size-[18px] " />
                     </label>
                   </div>
-                   {error && <p className="text-[#dc3545] text-sm min-[1400px]:text-base">{error}</p>}
+                  {error && (
+                    <p className="text-[#dc3545] text-sm min-[1400px]:text-base">
+                      {error}
+                    </p>
+                  )}
                 </div>
                 <div className="mt-[50px]">
-                  <form
-                    onSubmit={handleSubmit(onSubmit)}
-                    className="mt-10 "
-                  >
+                  <form onSubmit={handleSubmit(onSubmit)} className="mt-10 ">
                     <div className="space-y-[42px]">
                       <div>
                         <h4 className="text-lg font-semibold mb-6">
@@ -524,14 +525,18 @@ const MyProfile = () => {
                           {/* First Name */}
                           <div className="relative">
                             <label className=" text-sm text-black font-semibold bg-white leading-[1.5]">
-                              First name<span className="text-[#dc3545]">*</span>
+                              First name
+                              <span className="text-[#dc3545]">*</span>
                             </label>
                             <input
                               {...register("firstName")}
                               type="text"
                               placeholder="Enter first name"
                               onChange={(e) => {
-                                e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
+                                e.target.value = e.target.value.replace(
+                                  /[^A-Za-z\s]/g,
+                                  ""
+                                );
                               }}
                               className={`block px-2.5 h-[44px] font-semibold w-full text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none placeholder:text-[#777] placeholder:font-medium ${
                                 errors.firstName
@@ -557,7 +562,10 @@ const MyProfile = () => {
                               type="text"
                               placeholder="Enter last name"
                               onChange={(e) => {
-                                e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
+                                e.target.value = e.target.value.replace(
+                                  /[^A-Za-z\s]/g,
+                                  ""
+                                );
                               }}
                               className={`block px-2.5 h-[45px] font-semibold w-full text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none placeholder:text-[#777] placeholder:font-medium ${
                                 errors.lastName
@@ -623,20 +631,27 @@ const MyProfile = () => {
                               Email<span className="text-[#dc3545]">*</span>
                             </label>
                             <div className="relative">
-                            <input
-                              {...register("email")}
-                              type="email"
-                              readOnly = {(user?.regType === "social" || user?.regType === "email") ? true : false}
-                              placeholder=" Emter email"
-                              className="block px-2.5 h-[44px] font-semibold border-[#e0e0e0] placeholder:text-[#777] placeholder:font-medium w-full text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none"
-                            />
-                            {
-                              (user?.regType === "social" || user?.regType === "email") && (
+                              <input
+                                {...register("email")}
+                                type="email"
+                                readOnly={
+                                  user?.regType === "social" ||
+                                  user?.regType === "email"
+                                    ? true
+                                    : false
+                                }
+                                placeholder=" Emter email"
+                                className="block px-2.5 h-[44px] font-semibold border-[#e0e0e0] placeholder:text-[#777] placeholder:font-medium w-full text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none"
+                              />
+                              {(user?.regType === "social" ||
+                                user?.regType === "email") && (
                                 <span>
-                                  <Svg name="lock" className="absolute size-[15px] text-[#777] top-[13px] right-4.5" />
+                                  <Svg
+                                    name="lock"
+                                    className="absolute size-[15px] text-[#777] top-[13px] right-4.5"
+                                  />
                                 </span>
-                              )
-                            }
+                              )}
                             </div>
                             {errors.email && (
                               <p className="text-red-500 text-[10px] absolute -bottom-4">
@@ -671,8 +686,8 @@ const MyProfile = () => {
                                     placeholder="Select Gender"
                                     classNamePrefix="react-select"
                                     className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px]"
-                                     styles={customStyles}
-                                      components={{
+                                    styles={customStyles}
+                                    components={{
                                       ClearIndicator,
                                       DropdownIndicator,
                                       IndicatorSeparator: null,
@@ -686,7 +701,8 @@ const MyProfile = () => {
                           {/* DOB */}
                           <div className="relative">
                             <label className=" text-sm text-black font-semibold">
-                              Date of birth<span className="text-[#dc3545]">*</span>
+                              Date of birth
+                              <span className="text-[#dc3545]">*</span>
                             </label>
                             <input
                               {...register("dob")}
@@ -735,8 +751,8 @@ const MyProfile = () => {
                                     placeholder="Select Country"
                                     classNamePrefix="react-select"
                                     className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px]"
-                                     styles={customStyles}
-                                     components={{
+                                    styles={customStyles}
+                                    components={{
                                       ClearIndicator,
                                       DropdownIndicator,
                                       IndicatorSeparator: null,
@@ -770,9 +786,9 @@ const MyProfile = () => {
                                     options={stateData}
                                     placeholder="Select State"
                                     classNamePrefix="react-select"
-                                     className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px]"
-                                     styles={customStyles}
-                                     components={{
+                                    className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px]"
+                                    styles={customStyles}
+                                    components={{
                                       ClearIndicator,
                                       DropdownIndicator,
                                       IndicatorSeparator: null,
@@ -808,8 +824,8 @@ const MyProfile = () => {
                                     placeholder="Select City"
                                     classNamePrefix="react-select"
                                     className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px]"
-                                     styles={customStyles}
-                                     components={{
+                                    styles={customStyles}
+                                    components={{
                                       ClearIndicator,
                                       DropdownIndicator,
                                       IndicatorSeparator: null,
@@ -824,11 +840,27 @@ const MyProfile = () => {
                             <label className=" text-sm text-black font-semibold">
                               Pincode
                             </label>
-                            <input
-                              {...register("pincode")}
-                              type="text"
-                              placeholder="Enter pincode "
-                              className="border-[#e0e0e0] font-semibold text-[#777] w-full placeholder:text-[#777] placeholder:font-medium  mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-[44px]"
+                            <Controller
+                              name="pincode"
+                              control={control}
+                              render={({ field }) => (
+                                <input
+                                  {...field}
+                                  type="text"
+                                  placeholder="Enter pincode"
+                                  onChange={(e) => {
+                                    let value = e.target.value.replace(
+                                      /[^0-9]/g,
+                                      ""
+                                    );
+                                    if (value.length <= 6) {
+                                      field.onChange(value);
+                                    }
+                                  }}
+                                  value={field.value || ""}
+                                  className="border-[#e0e0e0] font-semibold text-[#777] w-full placeholder:text-[#777] placeholder:font-medium mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-[44px]"
+                                />
+                              )}
                             />
                           </div>
 

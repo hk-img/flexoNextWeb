@@ -229,7 +229,6 @@ const MyProfile = () => {
     },
   });
   const values = watch();
-  console.log({ values, errors }, "Rthrtyhrtyrty");
   const hasInitialized = useRef(false);
   const prevValues = useRef({
     billingCountry: "",

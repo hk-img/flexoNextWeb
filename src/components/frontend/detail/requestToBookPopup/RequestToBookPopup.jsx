@@ -103,7 +103,6 @@ const RequestToBookPopup = ({
   });
 
   const values = watch();
-  console.log(values, "Rthrthrth");
 
   const getTimeDateSlot = (selectedDate) => {
     if (!selectedDate) return [];

@@ -16,7 +16,6 @@ const BookingReviewPopup = ({ setIsOpen, bookingId }) => {
   const [errors, setErrors] = useState({
     rating: "",
   });
-  console.log({ formData, errors });
   const handleRadioChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => {

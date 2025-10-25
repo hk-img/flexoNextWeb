@@ -53,7 +53,6 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
     },
   });
   const values = watch();
-  console.log({ values }, "Wefweft");
 
   useEffect(() => {
     if (user) {

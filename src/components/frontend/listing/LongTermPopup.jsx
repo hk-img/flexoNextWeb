@@ -104,7 +104,6 @@ const LongTermPopup = ({ isOpen, setIsOpen, city }) => {
   });
 
   const onSubmit = (values) => {
-    console.log({ values }, "Rtyhrthyt");
     const country_code = values.country ? `+${values.country.dialCode}` : "";
     const dialCode = values.country ? values.country.dialCode : "";
     const mobile = values.mobile.replace(dialCode, "").replace(/^\+/, "");

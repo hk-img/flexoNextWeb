@@ -105,6 +105,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
                 {isShowMobile ? (
                   <LoginRegisterViaMobile
                     isLogin={isLogin}
+                    mobile={mobile}
                     setMobile={setMobile}
                     setIsShowOtp={setIsShowOtp}
                   />

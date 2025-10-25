@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { set, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -38,7 +38,7 @@ const loginRegisterSchema = z
     }
   });
 
-const LoginRegisterViaMobile = ({ isLogin, setMobile, setIsShowOtp }) => {
+const LoginRegisterViaMobile = ({ isLogin, mobile, setMobile, setIsShowOtp }) => {
   const {
     register,
     handleSubmit,
@@ -60,6 +60,15 @@ const LoginRegisterViaMobile = ({ isLogin, setMobile, setIsShowOtp }) => {
     },
   });
   const values = watch();
+  useEffect(()=>{
+    if(mobile){
+      setValue(
+        "mobile",
+        mobile?.mobile ? `${mobile.phone_code}${mobile.mobile}` : ""
+      );
+      setValue("country", { dialCode: mobile?.phone_code || "91" });
+    }
+  },[mobile])
   const { mutate: sendOtpMutationForRegister } = useMutation({
     mutationFn: async (payload) => {
       const response = await postAPI("user/loginWithMobile", payload);

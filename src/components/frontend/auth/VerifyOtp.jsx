@@ -358,6 +358,13 @@ const VerifyOtp = ({
               <span className="font-semibold text-black">{email}</span>
             )}
           </p>
+          {
+            isLogin && (
+              <div onClick={()=>{
+                setIsShowOtp(false);
+              }}>edit</div>
+            )
+          }
         </div>
         {/* OTP Inputs */}
         <div className="flex justify-center gap-5">

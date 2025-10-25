@@ -113,7 +113,7 @@ const LoginRegisterViaMobile = ({ isLogin, setMobile, setIsShowOtp }) => {
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="px-[15px]">
-          <label htmlFor="mobile" className="block min-[1400px]:text-base text-sm font-semibold mb-2">
+          <label htmlFor="mobile" className="block min-[1400px]:text-base text-sm font-semibold mb-1">
             Mobile <span className="text-[#f76900]">*</span>
           </label>
           <div>
@@ -133,7 +133,7 @@ const LoginRegisterViaMobile = ({ isLogin, setMobile, setIsShowOtp }) => {
                   enableSearch
                   countryCodeEditable={false} 
                   inputProps={{ name: "mobile" }}
-                  className="w-full [&_input]:!w-full [&_input]:!h-full h-[45px] [&_.country-list]:overflow-x-hidden"
+                  className="w-full [&_input]:!w-full [&_input]:!h-full h-[43px] [&_.country-list]:overflow-x-hidden"
                 />
               )}
             />
@@ -148,7 +148,7 @@ const LoginRegisterViaMobile = ({ isLogin, setMobile, setIsShowOtp }) => {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="cursor-pointer mt-10 w-full bg-[#f76900] min-[1400px]:text-base text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white py-[15px] rounded-[15px] font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px]"
+          className="cursor-pointer mt-8 w-full bg-[#f76900] min-[1400px]:text-base text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white py-[15px] rounded-[15px] font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px]"
         >
           {isSubmitting ? "Sending..." : "GET OTP"}
         </button>

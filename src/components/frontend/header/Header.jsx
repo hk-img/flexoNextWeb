@@ -47,6 +47,9 @@ const Header = () => {
 
   useEffect(() => {
     function handleClickOutside(event) {
+      if(event.target.closest(".userClass")){
+        return;
+      }
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setIsMenuOpen(false);
       }
@@ -144,7 +147,7 @@ const Header = () => {
                   <div className="relative group z-[9999]">
                     <label
                       onClick={() => setIsMenuOpen((prev) => !prev)}
-                      className="flex items-center justify-center border hover:bg-[#f76900] bg-[#001740] text-white 
+                      className="userClass flex items-center justify-center border hover:bg-[#f76900] bg-[#001740] text-white 
                                       w-[30px] h-[30px] rounded-full cursor-pointer transition"
                     >
                       <Svg name="user" className="size-[15px]" />
@@ -174,7 +177,7 @@ const Header = () => {
                 <Svg name="homePlus" className="size-[18px] text-black" />
               </Link>
               {token ? (
-                <button onClick={() => setIsMenuOpen((prev) => !prev)}>
+                <button className="cursor-pointer userClass" onClick={() => setIsMenuOpen((prev) => !prev)}>
                   <Svg
                     name="logOut"
                     className="size-[22px] text-black cursor-pointer"

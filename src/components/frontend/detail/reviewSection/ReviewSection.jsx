@@ -81,13 +81,17 @@ const ReviewSection = ({reviewData,rating=0,avgRating="5.0",setIsAuthOpen,setSho
                                     />
                                 ))}
                             </div>
-                            <p className="mt-1 text-base font-medium text-black flex items-center gap-1">
-                                <Svg
-                                name="checkTic"
-                                className="size-3 text-[#7f7f7f]"
-                                />
-                                Yes I would book again
-                            </p>
+                            {
+                              item?.book_again == 1 && (
+                                <p className="mt-1 text-base font-medium text-black flex items-center gap-1">
+                                  <Svg
+                                    name="checkTic"
+                                    className="size-3 text-[#7f7f7f]"
+                                  />
+                                  Yes I would book again
+                                </p>
+                              )
+                            }
                             </div>
                         </div>
 

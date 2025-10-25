@@ -180,7 +180,7 @@ const RequestToBookPopup = ({
           setSuccessScreen(true);
           setTimeout(() => {
             router.push(`/booking-detail/${data?.bookingId}`);
-          }, 1000);
+          }, 500);
         } else {
           toast.error(data?.message);
         }
@@ -238,7 +238,7 @@ const RequestToBookPopup = ({
           setSuccessScreen(true);
           setTimeout(() => {
             router.push(`/booking-detail/${data?.bookingRecord?.id}`);
-          }, 1000);
+          }, 500);
         }
       } else {
         toast.error(data?.message);

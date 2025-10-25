@@ -80,7 +80,7 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
           setSuccessScreen(true);
           setTimeout(() => {
             router.push(`/booking-detail/${data?.bookingId}`);
-          }, 1000);
+          }, 500);
         } else {
           toast.error(data?.message);
         }

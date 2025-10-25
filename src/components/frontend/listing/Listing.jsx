@@ -266,15 +266,17 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                 <div className="scrollMenus overflow-auto whitespace-nowrap pb-2 mb-4">
                   {
                     nearBySpacesData?.map((item, index) => (
-                      <Link
+                      <div
                         key={index}
                         className={`${item?.location_name?.split(" ")?.map(word => word.charAt(0).toLowerCase() + word.slice(1))?.join(" ") == locationNameSlug?.replace(/-/g, " ") ? "text-[#4343e8] border-[#7d9dd9] bg-[#e9e9ff]" : "text-[#9e9e9e] border-[#d4d4d4] bg-white"} inline-block text-center me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border max-w-[240px] w-[160px] whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]`}
-                        href={`/in/${slugGenerator(item?.spaceType || "")}/${citySlug}/${slugGenerator(item?.location_name || "")}`}
-                        target="_blank"
+                        onClick={()=>{
+                          const url = `/in/${slugGenerator(item?.spaceType || "")}/${citySlug}/${slugGenerator(item?.location_name || "")}`
+                          window.open(url, "_blank");
+                        }}
                       >
                         {" "}
                         {item?.location_name}
-                      </Link>
+                      </div>
                     ))
                   }
                 </div>

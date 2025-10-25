@@ -1,3 +1,4 @@
+import { HOST_BASE_URL } from '@/services/ApiService'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -25,7 +26,7 @@ const Banner = () => {
         <p className="text-white/90 text-lg leading-[1.5]">
           Showcase your space, set your pricing, and start receiving leads and bookings effortlessly.
         </p>
-        <Link href="https://staginghost.flexospaces.com/auth/register" target='_blank'  rel="noopener noreferrer" className="inline-block bg-[#f76900] mt-6 tracking-[1px] text-[15px] border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:px-7.5 px-5 md:py-[15px] py-[10px] rounded-[6px] font-semibold duration-500 transition uppercase">
+        <Link href={`${HOST_BASE_URL}/auth/register`} target='_blank'  rel="noopener noreferrer" className="inline-block bg-[#f76900] mt-6 tracking-[1px] text-[15px] border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:px-7.5 px-5 md:py-[15px] py-[10px] rounded-[6px] font-semibold duration-500 transition uppercase">
           BECOME A HOST
         </Link>
       </div>

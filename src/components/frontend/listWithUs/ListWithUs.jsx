@@ -4,6 +4,7 @@ import EmblaCarousel from "@/components/frontend/emblaCarousel/EmblaCarousel";
 import RequestCallback from '../home/RequestCallback';
 import ListFaqSection from './ListFaqSection';
 import Link from 'next/link';
+import { HOST_BASE_URL } from '@/services/ApiService';
 
 const ListWithUs = () => {
     const person = [
@@ -107,7 +108,7 @@ const ListWithUs = () => {
                         </li>
                       </ul>
                       <div className='mt-6 md:pl-4 pl-2'>
-                        <Link href="https://staginghost.flexospaces.com/auth/login" target="_blank" >
+                        <Link href={`${HOST_BASE_URL}/auth/login`} target="_blank" >
                         <div className="bg-[#f76900] min-[1400px]:text-base text-sm block text-white px-[30px] py-[15px] rounded-[3px] cursor-pointer font-medium duration-500 transition">
                           <span>Let's Get Started</span>
                         </div>

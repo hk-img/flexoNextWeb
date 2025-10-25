@@ -102,7 +102,7 @@ const Auth = ({ isOpen, setIsOpen }) => {
                 )}
               </>
             ) : (
-              <div className="py-5">
+              <div className="py-[25px]">
                 {isShowMobile ? (
                   <LoginRegisterViaMobile
                     isLogin={isLogin}

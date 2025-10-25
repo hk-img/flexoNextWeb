@@ -96,6 +96,7 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
                 alt="product image"
                 width={399}
                 height={320}
+                title="product image" 
                 className="w-full aspect-[399/320] object-cover rounded-t-md h-[320px]"
                 fallback="/images/default_image.webp"
               />

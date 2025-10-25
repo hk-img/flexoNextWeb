@@ -13,7 +13,7 @@ import { slugGenerator } from "@/services/Comman";
 
 const containerStyle = {
   width: "100%",
-  height: "600px",
+  height: "750px",
 };
 
 const calculateCenter = (markers) => {

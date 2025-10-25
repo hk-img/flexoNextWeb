@@ -600,7 +600,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                             </div>
                           </div>
                         )}
-                        {spaceData?.manage_office_price > 0 && (
+                        {spaceData?.customized_space_price > 0 && (
                           <div className=" bg-[#f7f7f7] rounded-[5px] px-5 py-[15px] ">
                             <div className="grid md:grid-cols-3 grid-cols-1 md:items-center md:gap-4 gap-2 justify-between">
                               <div className="md:col-span-2">
@@ -623,7 +623,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                                         className="size-[18px] text-[#f76900]"
                                       />
                                     </span>{" "}
-                                    {spaceData?.manage_office_price}
+                                    {spaceData?.customized_space_price}
                                   </h2>
                                   <span className=" text-[15px] leading-[30px] font-light">
                                     /seat/month

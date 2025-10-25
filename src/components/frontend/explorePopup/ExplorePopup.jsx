@@ -425,7 +425,7 @@ const ExplorePopup = ({
                             {selectedSpaceData?.privatecabin_price > 0 && (
                               <option value="Private Office">Private Office</option>
                             )}
-                            {selectedSpaceData?.manage_office_price > 0 && (
+                            {selectedSpaceData?.customized_space_price > 0 && (
                               <option value="Managed Office">Managed Office</option>
                             )}
                             {selectedSpaceData?.desks_price > 0 && (

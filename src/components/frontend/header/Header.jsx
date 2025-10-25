@@ -111,10 +111,10 @@ const Header = () => {
   return (
     <>
       <header
-        className={`fixed  top-0 z-50 w-full transition-transform duration-700 ${
+        className={`fixed z-50 w-full transition-transform duration-700 ${
           hidden
-            ? "-translate-y-full "
-            : "translate-y-0 shadow-[0_0_12px_0_#0000004d]"
+            ? "-translate-y-full -top-px"
+            : "translate-y-0 shadow-[0_0_12px_0_#0000004d] top-0"
         } bg-white`}
       >
         <div className="container relative w-full mx-auto group lg:py-5 sm:py-[20.5px] py-[17px]">

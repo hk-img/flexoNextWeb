@@ -8,11 +8,15 @@ import {
 import React from "react";
 
 const VisitItem = ({ item }) => {
-  const type = getTypeOfSpaceByWorkSpace(item?.spaceType);
-  const spaceTypeSlug = slugGenerator(item?.spaceType);
-  const locationNameSlug = slugGenerator(item?.location_name || "");
-  const cityNameSlug = slugGenerator(item?.contact_city_name || "");
-  const spaceId = item?.id;
+  const type = getTypeOfSpaceByWorkSpace(item?.spaceDetails?.spaceType);
+  const spaceTypeSlug = slugGenerator(item?.spaceDetails?.spaceType);
+  const locationNameSlug = slugGenerator(
+    item?.spaceDetails?.location_name || ""
+  );
+  const cityNameSlug = slugGenerator(
+    item?.spaceDetails?.contact_city_name || ""
+  );
+  const spaceId = item?.spaceDetails?.id;
   function convertTo12Hour(time) {
     if (!time) return "";
     const [hourStr, minuteStr] = time.split(":");
@@ -28,7 +32,7 @@ const VisitItem = ({ item }) => {
         onClick={() => {
           let url = "";
           if (type == "coworking") {
-            url = `/${item?.slug}`;
+            url = `/${item?.spaceDetails?.slug}`;
           } else {
             url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
           }
@@ -58,7 +62,18 @@ const VisitItem = ({ item }) => {
         )}
       </div>
       <div className="md:ml-[15px] space-y-[5px]">
-        <h2 className="2xl:text-xl text-lg font-semibold text-[#141414] underline">
+        <h2
+          onClick={() => {
+            let url = "";
+            if (type == "coworking") {
+              url = `/${item?.spaceDetails?.slug}`;
+            } else {
+              url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
+            }
+            window.open(`${url}`, "_blank");
+          }}
+          className="2xl:text-xl text-lg font-semibold text-[#141414] underline cursor-pointer"
+        >
           {item?.visitSpaceType == "longTerm"
             ? item?.spaceDetails?.spaceTitle
             : item?.spaceName}

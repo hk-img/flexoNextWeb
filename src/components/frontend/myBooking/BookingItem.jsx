@@ -1,35 +1,55 @@
 import Svg from "@/components/svg";
 import Link from "next/link";
 import React from "react";
-import { convertSlugToCapitalLetter } from "@/services/Comman";
+import {
+  convertSlugToCapitalLetter,
+  getTypeOfSpaceByWorkSpace,
+  slugGenerator,
+} from "@/services/Comman";
 import ImageWithFallback from "@/components/ImageWithFallback";
 import { getAPIAuthWithoutBearer } from "@/services/ApiService";
 import { useAuth } from "@/context/useAuth";
 import { toast } from "sonner";
 
-const bookingItem = ({ item,setShowReviewPopup,setBookingId }) => {
+const bookingItem = ({ item, setShowReviewPopup, setBookingId }) => {
   const { token } = useAuth();
+  const type = getTypeOfSpaceByWorkSpace(item?.spaceType);
+  const spaceTypeSlug = slugGenerator(item?.spaceType);
+  const locationNameSlug = slugGenerator(item?.location_name || "");
+  const cityNameSlug = slugGenerator(item?.contact_city_name || "");
+  const spaceId = item?.spaceId;
   const handleInvoiceClick = async () => {
-      try {
-        const res = await getAPIAuthWithoutBearer(
-          `user/downloadBookingInvoice/${item?.id}`,
-          token
-        );
-        const data = res.data;
-        if(data?.success){
-          const url = `${process.env.NEXT_PUBLIC_BASE_URL}/${data?.pdfFilePath}`;
-          window.open(url, "_blank");
-        }
-      } catch (error) {
-        toast.error(error.message);
+    try {
+      const res = await getAPIAuthWithoutBearer(
+        `user/downloadBookingInvoice/${item?.id}`,
+        token
+      );
+      const data = res.data;
+      if (data?.success) {
+        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/${data?.pdfFilePath}`;
+        window.open(url, "_blank");
       }
-    };
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
   return (
     <>
       <div className=" p-5 rounded-[10px] bg-white flex md:flex-row flex-col md:items-center items-start  justify-between ">
         <div className="flex flex-col md:flex-row md:items-center md:space-x-6 space-y-3 md:space-y-0 w-full">
           <div className="flex  md:flex-row flex-col gap-[15px] items-center w-full">
-            <div className="relative">
+            <div
+              onClick={() => {
+                let url = "";
+                if (type == "coworking") {
+                  url = `/${item?.slug}`;
+                } else {
+                  url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
+                }
+                window.open(`${url}`, "_blank");
+              }}
+              className="relative cursor-pointer"
+            >
               <div>
                 <ImageWithFallback
                   width={200}
@@ -51,7 +71,18 @@ const bookingItem = ({ item,setShowReviewPopup,setBookingId }) => {
             </div>
             <div>
               <div className="flex flex-col text-gray-500 text-sm space-y-[5px]">
-                <h2 className="text-black text-lg 2xl:text-xl font-semibold underline">
+                <h2
+                  onClick={() => {
+                    let url = "";
+                    if (type == "coworking") {
+                      url = `/${item?.slug}`;
+                    } else {
+                      url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
+                    }
+                    window.open(`${url}`, "_blank");
+                  }}
+                  className="cursor-pointer text-black text-lg 2xl:text-xl font-semibold underline"
+                >
                   {item?.spaceName}
                 </h2>
                 <div className="flex items-center gap-1 mb-[10px]">
@@ -115,7 +146,9 @@ const bookingItem = ({ item,setShowReviewPopup,setBookingId }) => {
                   <p className="font-medium text-sm 2xl:text-base">
                     Booking Status :{" "}
                   </p>
-                  {(item?.bookingStatus === "pending" || (item?.bookingStatus === "confirmed" && item?.paymentSuccess === 0)) && (
+                  {(item?.bookingStatus === "pending" ||
+                    (item?.bookingStatus === "confirmed" &&
+                      item?.paymentSuccess === 0)) && (
                     <div className="flex items-center gap-1">
                       <span>
                         <Svg
@@ -193,10 +226,13 @@ const bookingItem = ({ item,setShowReviewPopup,setBookingId }) => {
         <div className="flex flex-col space-y-2 md:mt-0 mt-4  max-md:w-full">
           {item?.bookingStatus == "confirmed" && (
             <>
-              <button onClick={() => {
-                setShowReviewPopup(true);
-                setBookingId(item?.id);
-                }} className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 text-nowrap uppercase tracking-[1px] px-10">
+              <button
+                onClick={() => {
+                  setShowReviewPopup(true);
+                  setBookingId(item?.id);
+                }}
+                className="cursor-pointer w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 text-nowrap uppercase tracking-[1px] px-10"
+              >
                 LEAVE A REVIEW
               </button>
               <button

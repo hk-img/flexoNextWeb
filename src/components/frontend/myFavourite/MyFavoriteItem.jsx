@@ -51,7 +51,18 @@ const MyFavoriteItem = ({ item, setIsRemovePopupOpen, setSpaceId }) => {
         </div>
         <div className="md:ml-[15px] space-y-2">
           <div className="flex justify-between items-center gap-2 mb-0">
-            <h2 className="text-lg font-semibold text-[#141414] underline">
+            <h2
+              onClick={() => {
+                let url = "";
+                if (type == "coworking") {
+                  url = `/${item?.spaceData?.slug}`;
+                } else {
+                  url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
+                }
+                window.open(`${url}`, "_blank");
+              }}
+              className="text-lg font-semibold text-[#141414] underline cursor-pointer"
+            >
               {item?.spaceData?.actual_name}
             </h2>
             <div

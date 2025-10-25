@@ -68,12 +68,12 @@ const Auth = ({ isOpen, setIsOpen }) => {
           <div className="relative w-full max-w-[600px] rounded-sm bg-white p-6 shadow-xl overflow-y-auto [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]  animate-scaleIn">
             <div className="px-5 py-4 border-b border-[#dbdbdb] flex items-center justify-between">
               {!isLogin ? (
-                <h2 className="min-[1400px]:text-[22px] text-xl font-medium">
+                <h2 className="min-[1400px]:text-[22px] text-xl font-medium leading-[1.6]">
                   Register/Create an
                   <span className="text-[#f76900]"> Account</span>
                 </h2>
               ) : (
-                <h2 className="text-xl font-medium">Login</h2>
+                <h2 className="min-[1400px]:text-[22px] text-xl font-medium leading-[1.6">Login</h2>
               )}
               <button
                 onClick={() => setIsOpen(false)}

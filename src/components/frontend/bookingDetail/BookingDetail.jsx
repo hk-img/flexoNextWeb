@@ -6,6 +6,7 @@ import { getAPIAuthWithoutBearer } from "@/services/ApiService";
 import {
   convertSlugToCapitalLetter,
   getTypeOfSpaceByWorkSpace,
+  slugGenerator,
 } from "@/services/Comman";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
@@ -33,6 +34,10 @@ const BookingDetail = ({ bookingId }) => {
     return bookingDetail?.booking?.booking?.[0] || [];
   }, [bookingDetail]);
   const type = getTypeOfSpaceByWorkSpace(bookingData?.spaceType || "");
+  const spaceTypeSlug = slugGenerator(bookingData?.spaceType);
+  const locationNameSlug = slugGenerator(bookingData?.location_name || "");
+  const cityNameSlug = slugGenerator(bookingData?.contact_city_name || "");
+  const spaceId = bookingData?.spaceId;
   console.log({ bookingData, type });
 
   function convertTo12Hour(time) {
@@ -202,17 +207,41 @@ const BookingDetail = ({ bookingId }) => {
                 )}
                 <div className="flex gap-6 mt-4.5 pb-5 border-b border-gray-200">
                   <div className="bg-white rounded-lg p-6 flex items-center w-full">
-                    <div className=" flex md:flex-row flex-col gap-4 w-full">
-                      <ImageWithFallback
-                        width={200}
-                        height={150}
-                        src={bookingData?.images?.[0]}
-                        alt="booking space image"
-                        className=" min-w-[165px] min-h-full max-h-[270px] rounded-lg"
-                        fallback="/images/default_image.webp"
-                      />
+                    <div className="flex md:flex-row flex-col gap-4 w-full">
+                      <div
+                        onClick={() => {
+                          let url = "";
+                          if (type == "coworking") {
+                            url = `/${bookingData?.slug}`;
+                          } else {
+                            url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
+                          }
+                          window.open(`${url}`, "_blank");
+                        }}
+                        className="cursor-pointer"
+                      >
+                        <ImageWithFallback
+                          width={200}
+                          height={150}
+                          src={bookingData?.images?.[0]}
+                          alt="booking space image"
+                          className=" min-w-[165px] min-h-full max-h-[270px] rounded-lg"
+                          fallback="/images/default_image.webp"
+                        />
+                      </div>
                       <div className="flex flex-col space-y-2 justify-center">
-                        <h3 className="text-[26px] font-medium text-black">
+                        <h3
+                          onClick={() => {
+                            let url = "";
+                            if (type == "coworking") {
+                              url = `/${bookingData?.slug}`;
+                            } else {
+                              url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
+                            }
+                            window.open(`${url}`, "_blank");
+                          }}
+                          className="cursor-pointer text-[26px] font-medium text-black underline"
+                        >
                           {bookingData?.spaceName}
                         </h3>
                         <p className="text-sm text-[#888888] 2xl:text-base">
@@ -439,7 +468,15 @@ const BookingDetail = ({ bookingId }) => {
                                   No of Hours
                                 </label>
                                 <div className="bg-white border border-[#ddd] rounded-[10px] py-[15px]  flex items-center justify-center text-sm 2xl:text-base font-medium text-black px-10">
-                                  {getDurationInHours(item?.startTime,item?.endTime) == 0 ? 24 : getDurationInHours(item?.startTime,item?.endTime)}
+                                  {getDurationInHours(
+                                    item?.startTime,
+                                    item?.endTime
+                                  ) == 0
+                                    ? 24
+                                    : getDurationInHours(
+                                        item?.startTime,
+                                        item?.endTime
+                                      )}
                                 </div>
                               </div>
                             </div>

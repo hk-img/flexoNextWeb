@@ -268,7 +268,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                     nearBySpacesData?.map((item, index) => (
                       <div
                         key={index}
-                        className={`${item?.location_name?.split(" ")?.map(word => word.charAt(0).toLowerCase() + word.slice(1))?.join(" ") == locationNameSlug?.replace(/-/g, " ") ? "text-[#4343e8] border-[#7d9dd9] bg-[#e9e9ff]" : "text-[#9e9e9e] border-[#d4d4d4] bg-white"} inline-block text-center me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border max-w-[240px] w-[160px] whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]`}
+                        className={`${item?.location_name?.split(" ")?.map(word => word.charAt(0).toLowerCase() + word.slice(1))?.join(" ") == locationNameSlug?.replace(/-/g, " ") ? "text-[#4343e8] border-[#7d9dd9] bg-[#e9e9ff]" : "text-[#9e9e9e] border-[#d4d4d4] bg-white"} inline-block text-center me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border max-w-full min-w-[160px] whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]`}
                         onClick={()=>{
                           const url = `/in/${slugGenerator(item?.spaceType || "")}/${citySlug}/${slugGenerator(item?.location_name || "")}`
                           window.open(url, "_blank");
@@ -281,7 +281,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                   }
                 </div>
 
-                <div className="filterRow w-full flex lg:flex-row flex-col items-center gap-4">
+                <div className="filterRow w-full flex lg:flex-row flex-col items-center gap-4 justify-between">
                   <div className="lg:w-2/3 w-full filters-buttons flex justify-between items-center pr-[15px]">
                     <div className="">
                       <nav className="block">
@@ -374,7 +374,18 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                       </label>
                     </div>
                   </div>
-                 
+                  <div className="items-start lg:flex lg:flex-row hidden flex-col lg:justify-end justify-start">
+                  <div className="text-right xs:text-left">
+                    <p className="text-sm text-[#777777] leading-10 min-[1400px]:text-[15px]">
+                      Showing{" "}
+                      <span className="font-medium text-[#f76900]">{start}–{end}</span>{" "}
+                      <span className="font-medium text-[#f76900]">
+                        of {allSpaces?.space_count}
+                      </span>{" "}
+                      Listings
+                    </p>
+                  </div>
+                </div>
                 </div>
                 
                 <div className="relative inline-block lg:hidden w-full">
@@ -506,6 +517,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                     </div>
                   )}
                 </div>
+                 
                 {/* {
                   mapToggle && (
                     <div className="map lg:w-2/5 w-full flex flex-col md:sticky md:top-10 mt-3 lg:mt-1 lg:hidden [&_.gm-style-iw-d]:!overflow-hidden [&_.gm-style-iw-d]:!max-w-[336px] [&_.gm-style-iw-d]:!max-h-full [&_.gm-style-iw-c]:!p-0 [&_.gm-style-iw-chr]:!hidden [&_.gm-style-iw]:!rounded-xl">
@@ -653,18 +665,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                   </div>
                 )}
               </div>
-              <div className=" w-full mt-4 items-start lg:flex lg:flex-row hidden flex-col lg:justify-end justify-start">
-                  <div className="text-right xs:text-left">
-                    <p className="text-sm text-[#777777] leading-10 min-[1400px]:text-[15px]">
-                      Showing{" "}
-                      <span className="font-medium text-[#f76900]">{start}–{end}</span>{" "}
-                      <span className="font-medium text-[#f76900]">
-                        of {allSpaces?.space_count}
-                      </span>{" "}
-                      Listings
-                    </p>
-                  </div>
-                </div>
+             
               <div className="spaces lg:mt-6 flex flex-row flex-wrap -mx-4">
                 {productData?.slice(0, 6)?.map((item, index) => (
                   <div
@@ -690,7 +691,11 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                   </div>
                 ))}
               </div>
-              <RequestCallback/>
+              {
+                productData?.length > 18 && (
+                  <RequestCallback/>
+                )
+              }
               <div className="spaces flex flex-row flex-wrap -mx-4">
                 {productData?.slice(18, 30)?.map((item, index) => (
                   <div
@@ -708,7 +713,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
             </div>
             {
               mapToggle && (
-                <div className={`${isPagination ? 'hidden':''} map lg:w-1/3 w-full flex flex-col md:sticky md:top-15 [&_.gm-style-iw-d]:!overflow-hidden [&_.gm-style-iw-d]:!max-w-[336px] [&_.gm-style-iw-d]:!max-h-full [&_.gm-style-iw-c]:!p-0 [&_.gm-style-iw-chr]:!hidden [&_.gm-style-iw]:!rounded-xl`}>
+                <div className={`${isPagination ? 'hidden':''} map lg:w-1/3 w-full flex flex-col md:sticky md:top-20 [&_.gm-style-iw-d]:!overflow-hidden [&_.gm-style-iw-d]:!max-w-[336px] [&_.gm-style-iw-d]:!max-h-full [&_.gm-style-iw-c]:!p-0 [&_.gm-style-iw-chr]:!hidden [&_.gm-style-iw]:!rounded-xl`}>
                   <MapWithPrices type={type} spaces={productData} hoveredSpaceId={hoveredSpaceId} />
                 </div>
               )

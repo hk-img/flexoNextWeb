@@ -2,11 +2,12 @@ import ImageWithFallback from "@/components/ImageWithFallback";
 import Svg from "@/components/svg";
 import { useAuth } from "@/context/useAuth";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { toast } from "sonner";
 
 const ReviewSection = ({reviewData,rating=0,avgRating="5.0",setIsAuthOpen,setShowReviewPopup,existingReview=null}) => {
   const {token} = useAuth();
+  const [visibleCount, setVisibleCount] = useState(5);
   const handleReview = () => {
     if(Object.values(existingReview || {})?.length > 0){
       return toast.error("You have already given review for this space.");
@@ -17,6 +18,12 @@ const ReviewSection = ({reviewData,rating=0,avgRating="5.0",setIsAuthOpen,setSho
       setShowReviewPopup(true);
     }
   }
+  const handleLoadMore = () => {
+    setVisibleCount((prev) => prev + 5);
+  };
+
+  const visibleReviews = reviewData?.slice(0, visibleCount) || [];
+  const hasMore = reviewData?.length > visibleCount;
   return (
     <>
       <div id="reviews" className="py-10">
@@ -54,7 +61,7 @@ const ReviewSection = ({reviewData,rating=0,avgRating="5.0",setIsAuthOpen,setSho
                 </div>
               </div>
               {
-                reviewData?.map((item,index)=>(
+                visibleReviews?.map((item,index)=>(
                     <div key={index} className="flex items-start gap-4">
                         <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center">
                           <ImageWithFallback
@@ -105,6 +112,16 @@ const ReviewSection = ({reviewData,rating=0,avgRating="5.0",setIsAuthOpen,setSho
                     </div>
                 ))
               }
+              {hasMore && (
+                <div className="pt-4 text-center">
+                  <button
+                    onClick={handleLoadMore}
+                    className="text-[#f76900] hover:text-[#ff7c52] text-sm font-semibold underline transition"
+                  >
+                    Load more reviews
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         ) : (

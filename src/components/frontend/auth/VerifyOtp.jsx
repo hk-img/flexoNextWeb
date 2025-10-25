@@ -348,16 +348,28 @@ const VerifyOtp = ({
           <h2 className="text-lg 2xl:text-xl font-medium text-center text-[#141414] mb-1">
             OTP Verification
           </h2>
-          <p className="text-center 2xl:text-base text-sm text-[#000000de]">
+          <div className="text-center flex items-center justify-center gap-2 2xl:text-base text-sm text-[#000000de]">
             Enter the OTP send to{" "}
             {mobile ? (
-              <span className="font-semibold text-black">
-                {mobile.phone_code} {mobile.mobile}
-              </span>
+              <>
+                <span className="font-semibold text-black">
+                  {mobile.phone_code} {mobile.mobile}
+                </span>
+                      {
+                    isLogin && (
+                      <span onClick={()=>{
+                        setIsShowOtp(false);
+                      }}>
+                        <Svg name="pencil" className="size-4 cursor-pointer" />
+                      </span>
+                    )
+                  }
+                </>
             ) : (
               <span className="font-semibold text-black">{email}</span>
             )}
-          </p>
+          </div>
+          
         </div>
         {/* OTP Inputs */}
         <div className="flex justify-center gap-5">

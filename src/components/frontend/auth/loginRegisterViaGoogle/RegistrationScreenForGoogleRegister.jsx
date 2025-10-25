@@ -150,7 +150,7 @@ const RegistrationScreenForGoogleRegister = ({ googleDetails,setIsOpen }) => {
               e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
             }}
             placeholder=" "
-            disabled
+            disabled={googleDetails?.last_name ? true : false}
           />
           <label
             for="last-name"

@@ -73,7 +73,6 @@ const MyFavourite = () => {
             <div className="flex flex-col gap-y-8">
               {favouriteData?.length > 0 ? (
                 favouriteData?.map((item, index) => {
-                  console.log(item?.spaceData, "Ergyerre");
                   return (
                     <MyFavoriteItem
                       key={index}

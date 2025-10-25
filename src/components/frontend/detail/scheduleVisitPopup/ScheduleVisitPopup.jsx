@@ -62,7 +62,6 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId,workingDays,spaceData,hos
     },
   });
   const values = watch();
-  console.log({ values }, "Rtghrhrhrtrt");
   const getTimeSlot = (selectedDate) => {
     // Agar date nahi hai, defaultTime return karo
     if (!selectedDate) return defaultTime;

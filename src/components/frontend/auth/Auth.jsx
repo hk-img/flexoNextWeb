@@ -23,7 +23,6 @@ const Auth = ({ isOpen, setIsOpen }) => {
   const [isShowForgotPasswordOtp, setShowForgotPasswordOtp] = useState(false);
   const [isResetPasswordScreen, setIsResetPasswordScreen] = useState(false);
   const [resetPasswordOtp, setResetPasswordOtp] = useState("");
-  console.log({ isShowOtp, isResetPasswordScreen, isLogin }, "Rthrthryhrt");
 
   if (!isOpen) return null;
 

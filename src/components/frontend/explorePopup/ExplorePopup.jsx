@@ -121,7 +121,6 @@ const ExplorePopup = ({
   type = "",
   selectedSpaceType=""
 }) => {
-  console.log({ selectedSpaceData,cityName,type });
   const selectedSchema = (type == "longterm")
     ? schemaForCity
     : (Object.values(selectedSpaceData || {})?.length > 0)
@@ -156,7 +155,6 @@ const ExplorePopup = ({
     },
   });
   const values = watch();
-  console.log({ values, errors, user });
 
   useEffect(() => {
     if (user) {
@@ -195,7 +193,6 @@ const ExplorePopup = ({
   });
 
   const onSubmit = (values) => {
-    console.log({ values }, "Rtyhrthyt");
     const country_code = values.country ? `+${values.country.dialCode}` : "";
     const dialCode = values.country ? values.country.dialCode : "";
     const mobile = values.mobile.replace(dialCode, "").replace(/^\+/, "");
@@ -233,7 +230,8 @@ const ExplorePopup = ({
   const { data: allCities } = useQuery({
     queryKey: ["all-spaces-cities"],
     queryFn: async () => {
-      const res = await getApi("spaces/getAllSpacesCities?spaceType=Longterm");
+      const typeWithFirstLetterCapital = type?.charAt(0)?.toUpperCase() + type?.slice(1);
+      const res = await getApi(`spaces/getAllSpacesCities?spaceType=${typeWithFirstLetterCapital || 'Longterm'}`);
       return res.data;
     },
   });
@@ -241,7 +239,6 @@ const ExplorePopup = ({
   const cityData = useMemo(() => {
     return allCities || [];
   }, [allCities]);
-  console.log({ cityData });
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center animate-fadeIn">

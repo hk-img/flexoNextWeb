@@ -6,7 +6,6 @@ import React from "react";
 import { toast } from "sonner";
 
 const ReviewSection = ({reviewData,rating=0,avgRating="5.0",setIsAuthOpen,setShowReviewPopup,existingReview=null}) => {
-  console.log({reviewData});
   const {token} = useAuth();
   const handleReview = () => {
     if(Object.values(existingReview || {})?.length > 0){

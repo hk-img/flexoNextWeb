@@ -74,8 +74,6 @@ const MyBooking = () => {
     );
   }, [allBooking]);
 
-  console.log({ bookingData });
-
   return (
     <>
       <div className="bg-[#f9f9f9]">

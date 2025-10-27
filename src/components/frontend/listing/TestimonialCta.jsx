@@ -44,14 +44,14 @@ const testimonials = [
 
 const TestimonialCta = ({setIsOpen,type}) => {
   return (
-    <section className="w-full relative  md:py-3 py-1 px-4 rounded-2xl items-center mt-6 mb-8 shadow-[0_4px_10px_#00000014] mx-auto bg-no-repeat bg-cover overflow-hidden bg-gradient-to-r from-[#000d544a] to-[#000d544a]">
+    <section className="w-full relative  md:py-3 py-1 px-4 rounded-2xl items-center mt-6 mb-8 shadow-[0_4px_10px_#00000014] mx-auto bg-no-repeat bg-cover overflow-hidden bg-gradient-to-r from-[#000d54a3] to-[#000d544a]">
         <div className="max-w-full xl:px-4 lg:px-4 md:px-3 px-4 mx-auto ">
           <div className="flex lg:flex-row flex-col items-center gap-4">
               <div className="lg:w-2/5 w-full">
-                <h3 className="text-2xl text-[#141414] font-bold mb-6"> Client's Testimonials</h3>
+                <h3 className="text-2xl text-white font-bold mb-6"> Client's Testimonials</h3>
                 <div className=" flex flex-col gap-y-2">
-                  <h4 className="text-sm/relaxed text-[#141414] font-semibold">Still Searching? Let Us Help.</h4>
-                  <h5 className="text-sm/relaxed text-[#141414] font-semibold">Leave the hassle to us. Connect with an expert workspace advisor today.</h5>
+                  <h4 className="text-sm/relaxed text-[#dfdfdf] font-semibold">Still Searching? Let Us Help.</h4>
+                  <h5 className="text-sm/relaxed text-[#dfdfdf] font-semibold">Leave the hassle to us. Connect with an expert workspace advisor today.</h5>
                   {
                     type !="shortterm" && (
                       <div onClick={() => {
@@ -94,7 +94,7 @@ const TestimonialCta = ({setIsOpen,type}) => {
                                   {t.designation}
                                 </span>
                               </h5>
-                              <p className="text-[13px] font-semibold text-[#000d54]">{t.company}</p>
+                              <p className="text-[13px] font-semibold text-white">{t.company}</p>
                               <div className="flex items-center mt-2 text-[#fbbf24]">
                                 {Array.from({ length: t.rating }).map((_, i) => (
                                   <Svg key={i} name="star" className="w-4.5 h-4.5" />
@@ -103,7 +103,7 @@ const TestimonialCta = ({setIsOpen,type}) => {
                             </div>
                           </div>
 
-                          <p className="text-[#303030] md:text-sm text-[13px] font-normal  leading-[1.6] line-clamp-5 transition-all duration-500 cursor-default">
+                          <p className="text-[#f0f0f0] md:text-sm text-[13px] font-normal  leading-[1.6] line-clamp-5 transition-all duration-500 cursor-default">
                             {t.review}
                           </p>
                         </div>

@@ -107,6 +107,10 @@ const HeroSection = ({ slug,isFavouriteSpace,spaceData,setIsAuthOpen,refetchDeta
                 <YouTubeEmbed
                   videoId={youtubeId}
                   className="!w-full !h-full  "
+                  title="Client testimonial video about Flexo workspace experience"
+                  aria-label="Embedded YouTube video: Client testimonial about Flexo workspace"
+                  role="region"
+                  aria-roledescription="video player"
                 />
               ) : (
                 <ImageWithFallback
@@ -129,8 +133,8 @@ const HeroSection = ({ slug,isFavouriteSpace,spaceData,setIsAuthOpen,refetchDeta
                       <ImageWithFallback
                         src={item}
                         alt="Space Image"
-                        width={0}
-                        height={0}
+                        width={359}
+                        height={239}
                         sizes="100vw"
                         className="w-full h-full object-cover"
                         fallback="/images/default_image.webp"

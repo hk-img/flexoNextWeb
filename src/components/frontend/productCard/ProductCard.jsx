@@ -126,7 +126,7 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
               <ImageWithFallback
                 src={image || "/images/default_image.webp"}
                 alt="product image"
-                width={399}
+                width={450}
                 height={320}
                 title="product image" 
                 className="w-full aspect-[399/320] object-cover rounded-t-md h-[320px]"

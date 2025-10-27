@@ -4,7 +4,7 @@ import Image from "next/image";
 import React, { useMemo } from "react";
 import { useEffect, useState } from "react";
 import EmblaCarousel from "../emblaCarousel/EmblaCarousel";
-import ProductCard from "../productCard/ProductCard";
+// import ProductCard from "../productCard/ProductCard";
 import ExplorePopup from "../explorePopup/ExplorePopup";
 import MapComponent from "./MapComponent";
 import HeroSection from "./heroSection/HeroSection";
@@ -26,6 +26,10 @@ import BottomBar from "../bottomBar/BottomBar";
 import BookingReviewPopup from "../bookingReviewPopup/BookingReviewPopup";
 import RequestToBookPopup from "./requestToBookPopup/RequestToBookPopup";
 import Script from "next/script";
+import dynamic from "next/dynamic";
+const ProductCard = dynamic(() => import("../productCard/ProductCard"), {
+  loading: () => <div className="h-[577px] bg-gray-100 animate-pulse rounded-lg" />,
+});
 
 const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
   const {token,user} = useAuth();

@@ -21,6 +21,7 @@ import { useLocation } from "@/context/useLocation";
 import dynamic from "next/dynamic";
 const ProductCard = dynamic(() => import("../productCard/ProductCard"), {
   loading: () => <div className="h-[577px] bg-gray-100 animate-pulse rounded-lg" />,
+  ssr: false,
 });
 const MapWithPrices = dynamic(
   () => import("./MapWithPrice"),

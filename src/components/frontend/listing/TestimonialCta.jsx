@@ -56,11 +56,11 @@ const TestimonialCta = ({setIsOpen,type}) => {
   <div className="max-w-full xl:px-4 lg:px-4 md:px-3 px-4 mx-auto relative z-10">
     <div className="flex lg:flex-row flex-col items-center gap-4">
       <div className="lg:w-2/5 w-full">
-        <h3 className="text-2xl text-black font-bold mb-6">Client's Testimonials</h3>
+        <h5 className="text-2xl text-black font-bold mb-6">Client's Testimonials</h5>
         <div className="flex flex-col gap-y-3">
-          <h4 className="text-sm/relaxed text-black">
+          <h5 className="text-sm/relaxed text-black">
             Still Searching? Let Us Help.
-          </h4>
+          </h5>
           <h5 className="text-sm/relaxed text-black">
             Leave the hassle to us. Connect with an expert workspace advisor today.
           </h5>
@@ -99,12 +99,12 @@ const TestimonialCta = ({setIsOpen,type}) => {
                       <span className="text-[#000d54] text-4xl font-bold mb-4 -mt-10 block">
                         <Svg name="quots" className="w-7 h-7 rotate-180" />
                       </span>
-                      <h5 className="text-base text-black font-semibold">
+                      <h6 className="text-base text-black font-semibold">
                         {t.name},
                         <span className="ms-1 text-base text-black font-semibold">
                           {t.designation}
                         </span>
-                      </h5>
+                      </h6>
                       <p className="text-[13px] font-semibold text-black">{t.company}</p>
                       <div className="flex items-center mt-2 text-[#fbbf24]">
                         {Array.from({ length: t.rating }).map((_, i) => (

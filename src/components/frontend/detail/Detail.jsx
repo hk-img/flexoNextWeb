@@ -227,9 +227,9 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                         {spaceData?.ratingsAvg}
                       </div>
                     </div>
-                    <h6 className="text-[#646464] text-sm">
+                    <span className="text-[#646464] text-sm">
                       {reviewData?.length} reviews
-                    </h6>
+                    </span>
                   </div>
                 )}
                 <div className="flex md:flex-row flex-col md:space-y-0 md:gap-y-0 gap-y-1 space-y-3 md:items-center lg:space-x-10 ">
@@ -405,17 +405,17 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                             >
                               <div className="pt-8 space-y-5">
                                 <div>
-                                  <h4 className="font-semibold text-[#000000de] leading-[20px] text-[17px] mb-2">
+                                  <h5 className="font-semibold text-[#000000de] leading-[20px] text-[17px] mb-2">
                                     Parking options
-                                  </h4>
+                                  </h5>
                                   <p className="text-[#646464] text-base leading-[1.8]">
                                     {spaceData?.parkingOptionsValue?.join(", ")}
                                   </p>
                                 </div>
                                 <div>
-                                  <h4 className="font-semibold text-[#000000de] leading-[20px] text-[17px] mb-2">
+                                  <h5 className="font-semibold text-[#000000de] leading-[20px] text-[17px] mb-2">
                                     Parking description
-                                  </h4>
+                                  </h5>
                                   <p className="text-[#646464] text-base leading-[1.8]">
                                     {spaceData?.parkingDescription}
                                   </p>

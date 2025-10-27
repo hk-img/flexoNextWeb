@@ -1,4 +1,5 @@
 import Svg from '@/components/svg'
+import Link from 'next/link'
 import React from 'react'
 
 const ChatBot = () => {
@@ -14,11 +15,11 @@ const ChatBot = () => {
             <span className="absolute right-[-3px] w-[9px] h-[9px] bg-[#276ad6] rotate-45 z-[-1]"></span>
           </div>
         </div>
-        <a href="https://api.whatsapp.com/send/?phone=919136153810&text=Hi&type=phone_number&app_absent=0" target='_blank'>
+        <Link aria-label='whatsapp number' href="https://api.whatsapp.com/send/?phone=919136153810&text=Hi&type=phone_number&app_absent=0" target='_blank'>
           <div className='bg-[#25d366] text-white w-[45px] h-[45px] flex items-center justify-center rounded-full'>
             <Svg name="whatsapp" className="size-6" />
           </div>
-        </a>
+        </Link>
       </div>
     </div>
   )

@@ -32,12 +32,12 @@ const TrustedCompaniesCta = ({setIsOpen,type}) => {
       
      <div className="relative lg:py-5.5 py-7 px-6 rounded-2xl items-center shadow-[0_4px_10px_#00000014] mx-auto overflow-hidden bg-[#f76900]">
   {/* Concentric Circles Background */}
-  <div className="absolute inset-0 -z-0 overflow-hidden md:block hidden">
-    <span className="absolute -right-[210px] top-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#f98b1b]"></span>
-    <span className="absolute -right-[180px] top-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#faa44d]"></span>
-    <span className="absolute -right-[150px] top-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-[#fbbd80]"></span>
-    <span className="absolute -right-[120px] top-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full bg-[#fcdab4]"></span>
-    <span className="absolute -right-[90px] top-1/2 -translate-y-1/2 w-[200px] h-[200px] rounded-full bg-[#fffaf28c]"></span>
+  <div className="absolute inset-0 -z-0 overflow-hidden ">
+    <span className="absolute md:-right-[210px] -right-[150px] top-1/2 -translate-y-1/2 md:w-[600px] md:h-[600px] w-[400px] h-[400px]  rounded-full bg-[#f98b1b]"></span>
+    <span className="absolute md:-right-[180px] -right-[120px] top-1/2 -translate-y-1/2 md:w-[500px] md:h-[500px] w-[300px] h-[300px] rounded-full bg-[#faa44d]"></span>
+    <span className="absolute md:-right-[150px] -right-[90px] top-1/2 -translate-y-1/2 md:w-[400px] md:h-[400px] w-[200px] h-[200px] rounded-full bg-[#fbbd80]"></span>
+    <span className="absolute md:-right-[120px] -right-[60px] top-1/2 -translate-y-1/2 md:w-[300px] md:h-[300px] w-[100px] h-[100px] rounded-full bg-[#fcdab4]"></span>
+    <span className="absolute md:-right-[90px] -right-[124px] top-1/2 -translate-y-1/2 md:w-[200px] md:h-[200px] w-[50px] h-[50px] rounded-full bg-[#fffaf28c]"></span>
   </div>
 
   <div className="container mx-auto text-center px-[15px] relative z-10">

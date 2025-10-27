@@ -4,9 +4,9 @@ import ImageWithFallback from "@/components/ImageWithFallback";
 import Svg from "@/components/svg";
 import ImagePopup from "./ImagePopup";
 import { useAuth } from "@/context/useAuth";
-import { toast } from "sonner";
 import { postAPIAuthWithoutBearer, WEBSITE_BASE_URL } from "@/services/ApiService";
 import { useMutation } from "@tanstack/react-query";
+import { ShowToast } from "@/utils/ShowToast";
 
 const HeroSection = ({ slug,isFavouriteSpace,spaceData,setIsAuthOpen,refetchDetail }) => {
   const {token} = useAuth();
@@ -20,13 +20,13 @@ const HeroSection = ({ slug,isFavouriteSpace,spaceData,setIsAuthOpen,refetchDeta
       return response.data;
     },
     onSuccess: (data, payload) => {
-      toast.success(data?.message);
+      ShowToast(data?.message,"success");
       // setIsFavourite((prev) => !prev);
       refetchDetail();
       localStorage.removeItem("isFavourite");
     },
     onError: (error) => {
-      toast.error(error.message);
+      ShowToast(error.message,"error");
     },
   });
 
@@ -230,7 +230,7 @@ const HeroSection = ({ slug,isFavouriteSpace,spaceData,setIsAuthOpen,refetchDeta
                     const url = slug.join("/")
                     const message = `${WEBSITE_BASE_URL}/${url}`
                     navigator.clipboard.writeText(message);
-                    toast.success("Link copied to clipboard");
+                    ShowToast("Link copied to clipboard","success");
                   }}
                   className="cursor-pointer bg-white w-[30px] h-[30px] border  flex items-center justify-center rounded-full shadow"
                 >
@@ -303,7 +303,7 @@ const HeroSection = ({ slug,isFavouriteSpace,spaceData,setIsAuthOpen,refetchDeta
                     const url = slug.join("/")
                     const message = `${WEBSITE_BASE_URL}/${url}`
                     navigator.clipboard.writeText(message);
-                    toast.success("Link copied to clipboard");
+                    ShowToast("Link copied to clipboard","success");
                   }}
                   className="cursor-pointer bg-white w-[30px] h-[30px] border  flex items-center justify-center rounded-full shadow"
                 >

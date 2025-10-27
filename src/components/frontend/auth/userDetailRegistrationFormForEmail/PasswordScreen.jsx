@@ -4,11 +4,11 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "sonner";
 import { postAPI } from "@/services/ApiService";
 import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/context/useAuth";
 import Svg from "@/components/svg";
+import { ShowToast } from "@/utils/ShowToast";
 
 const schema = z.object({
   newPassword: z.string().min(6, "Password must be at least 6 characters"),
@@ -44,15 +44,15 @@ export default function PasswordScreen({email,setIsOpen}) {
     },
     onSuccess: (data) => {
       if (data.success) {
-        toast.success(data.message);
+        ShowToast(data.message,"success");
         setToken(data?.data?.accessToken);
         setIsOpen(false);
       } else {
-        toast.error(data.message);
+        ShowToast(data.message,"error");
       }
     },
     onError: (error) => {
-      toast.error(error.message);
+      ShowToast(error.message,"error");
     },
   });
 

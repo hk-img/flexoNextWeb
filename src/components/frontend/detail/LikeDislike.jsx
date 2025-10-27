@@ -1,10 +1,9 @@
 import Svg from "@/components/svg";
 import { useAuth } from "@/context/useAuth";
 import { postAPIAuthWithoutBearer } from "@/services/ApiService";
+import { ShowToast } from "@/utils/ShowToast";
 import { useMutation } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
-import { toast } from "sonner";
-import { set } from "zod";
 
 const LikeDislike = ({ spaceData, setIsAuthOpen, existingVote }) => {
   const [upVoteCount, setUpVoteCount] = useState(0);
@@ -21,16 +20,16 @@ const LikeDislike = ({ spaceData, setIsAuthOpen, existingVote }) => {
     },
     onSuccess: (data, payload) => {
       if (data?.result?.success) {
-        toast.success(data?.result?.message);
+        ShowToast(data?.result?.message,"success");
         setVoteData(data?.result?.existingVote);
         setUpVoteCount(data?.result?.space?.upvote);
         localStorage.removeItem("voteData");
       } else {
-        toast.error(data.message || data?.result?.message);
+        ShowToast(data.message || data?.result?.message,"error");
       }
     },
     onError: (error) => {
-      toast.error(error.message);
+      ShowToast(error.message,"error");
     },
   });
   const handleUpvote = () => {
@@ -59,16 +58,16 @@ const LikeDislike = ({ spaceData, setIsAuthOpen, existingVote }) => {
     },
     onSuccess: (data, payload) => {
       if (data?.result?.success) {
-        toast.success(data?.result?.message);
+        ShowToast(data?.result?.message,"success");
         setVoteData(data?.result?.existingVote);
         setUpVoteCount(data?.result?.space?.upvote);
         localStorage.removeItem("voteData");
       } else {
-        toast.error(data?.message || data?.result?.message);
+        ShowToast(data?.message || data?.result?.message,"error");
       }
     },
     onError: (error) => {
-      toast.error(error.message);
+      ShowToast(error.message,"error");
     },
   });
   const handleDownvote = () => {

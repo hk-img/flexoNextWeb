@@ -5,11 +5,11 @@ import Image from "next/image";
 import Auth from "../auth/Auth";
 import Link from "next/link";
 import { useAuth } from "@/context/useAuth";
-import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 import { postAPIAuthWithoutBearer } from "@/services/ApiService";
 import { TOKEN_NAME } from "@/constant/constant";
 import { useRouter } from "next/navigation";
+import { ShowToast } from "@/utils/ShowToast";
 
 const Header = () => {
   const router = useRouter();
@@ -72,18 +72,18 @@ const Header = () => {
     },
     onSuccess: (data) => {
       if (data.success) {
-        toast.success(data.message);
+        ShowToast(data.message,"success");
         setToken("");
         setUser({});
         localStorage.removeItem(`${TOKEN_NAME}`);
         document.cookie = `${TOKEN_NAME}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
         window.location.reload();
       } else {
-        toast.error(data.message);
+        ShowToast(data.message,"error");
       }
     },
     onError: (error) => {
-      toast.error(error.message);
+      ShowToast(error.message,"error");
     },
   });
 

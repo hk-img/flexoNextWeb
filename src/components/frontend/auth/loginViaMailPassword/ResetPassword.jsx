@@ -1,11 +1,11 @@
 import Svg from "@/components/svg";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { email, z } from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "sonner";
 import { postAPI } from "@/services/ApiService";
 import { useMutation } from "@tanstack/react-query";
+import { ShowToast } from "@/utils/ShowToast";
 
 const schema = z.object({
   newPassword: z.string().min(6, "Password must be at least 6 characters"),
@@ -40,14 +40,14 @@ const ResetPassword = ({ setIsOpen, email, resetPasswordOtp }) => {
     },
     onSuccess: (data) => {
       if (data.success) {
-        toast.success(data.message);
+        ShowToast(data.message, "success");
         setIsOpen(false);
       } else {
-        toast.error(data.message);
+        ShowToast(data.message, "error");
       }
     },
     onError: (error) => {
-      toast.error(error.message);
+      ShowToast(error.message, "error");
     },
   });
   const onSubmit = async (values) => {

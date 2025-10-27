@@ -32,6 +32,7 @@ const FaqSection = () => {
             {faqs.map((faq, index) => (
                 <div key={index} className="md:px-5 py-[13px] px-2">
                     <button
+                        type="button"aria-label="FAQ Question"
                         onClick={() => toggleFAQ(index)}
                         className="flex items-center justify-between w-full text-left text-base font-medium text-[#141414]"
                     >

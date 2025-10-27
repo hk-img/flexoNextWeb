@@ -32,6 +32,7 @@ const WorkspaceOptionItem = ({ space,setIsOpen }) => {
                 </div>
               )}
               <button
+              aria-label="Explore Workspace"
                 onClick={() => setIsOpen(true)}
                 className="bg-[#00000096] text-[#f76900] px-[13px] py-[7px] rounded-full text-[13px] font-medium transition flex items-center  cursor-pointer"
               >

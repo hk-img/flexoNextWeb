@@ -30,42 +30,56 @@ const TrustedCompaniesCta = ({setIsOpen,type}) => {
   return (
     <section className="w-full relative ">
       
-      <div className="relative lg:py-5.5 py-7 px-6 rounded-2xl items-center shadow-[0_4px_10px_#00000014] mx-auto bg-no-repeat bg-cover overflow-hidden bg-gradient-to-r from-[#000d5469] to-[#000d5429]">
-        <div className="container mx-auto text-center px-[15px] before:absolute before:inset-0 before:w-full before:h-full before:opacity-50 before:-z-10 ">
-          <h2 className="sm:text-[32px] text-2xl font-medium text-center text-white leading-[1.2] pb-10">
-            Trusted By Leading Companies in India
-          </h2>
-            <EmblaCarousel options={{ loop: true, autoscroll: true, align: "start"}}>
-              {companies.map((s, i) => (
-                <div 
-                  key={i}
-                  className="embla__slide flex-[0_0_auto] basis-auto sm:px-4 px-4 flex items-center justify-center "
-                >
-                  <Image
-                    src={s.src}
-                    alt={s.alt}
-                    title={s.title}
-                    width={120}
-                    height={50}
-                    className="object-contain transition md:w-[120px] w-[105px] rounded-md overflow-hidden "
-                  />
-                </div>
-              ))}
-            </EmblaCarousel>
-            <p className="text-white lg:text-base text-sm lg:mb-8 my-4">
-              Over <span className="font-semibold ">250+ enterprises and startups</span> found their perfect office with Flexo.
-            </p>
-            {
-              type != "shortterm" && (
-                <div onClick = {()=>{
-                  setIsOpen((prev) => !prev);
-                }} className="flex justify-center items-center w-fit mx-auto bg-[#000d54] text-[12px] border border-[#000d54]   text-white py-3 px-7 rounded-2xl font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">
-                  Enquire Now
-                </div>
-              )
-            }
+     <div className="relative lg:py-5.5 py-7 px-6 rounded-2xl items-center shadow-[0_4px_10px_#00000014] mx-auto overflow-hidden bg-[#f76900]">
+  {/* Concentric Circles Background */}
+  <div className="absolute inset-0 -z-0 overflow-hidden md:block hidden">
+    <span className="absolute -right-[210px] top-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#f98b1b]"></span>
+    <span className="absolute -right-[180px] top-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#faa44d]"></span>
+    <span className="absolute -right-[150px] top-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-[#fbbd80]"></span>
+    <span className="absolute -right-[120px] top-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full bg-[#fcdab4]"></span>
+    <span className="absolute -right-[90px] top-1/2 -translate-y-1/2 w-[200px] h-[200px] rounded-full bg-[#fffaf28c]"></span>
+  </div>
+
+  <div className="container mx-auto text-center px-[15px] relative z-10">
+    <h2 className="sm:text-[32px] text-2xl font-medium text-center text-white leading-[1.2] pb-3">
+      Trusted By Leading Companies in India
+    </h2>
+
+    <EmblaCarousel options={{ loop: true, autoscroll: true, align: "start" }}>
+      {companies.map((s, i) => (
+        <div
+          key={i}
+          className="embla__slide  flex-[0_0_auto] basis-auto sm:px-4 p-4 flex items-center justify-center"
+        >
+          <div className="shadow-[0_0_12px_#f76900] rounded-md">
+            <Image
+              src={s.src}
+              alt={s.alt}
+              title={s.title}
+              width={120}
+              height={50}
+              className="object-contain transition md:w-[120px] w-[105px] rounded-md overflow-hidden"
+            />
+          </div>
         </div>
+      ))}
+    </EmblaCarousel>
+
+    <p className="text-white lg:text-base text-sm lg:mb-8 my-4">
+      Over <span className="font-semibold">250+ enterprises and startups</span> found their perfect office with Flexo.
+    </p>
+
+    {type != "shortterm" && (
+      <div
+        onClick={() => setIsOpen((prev) => !prev)}
+        className="flex justify-center items-center w-fit mx-auto bg-white text-[12px]  text-[#f76900] py-3 px-7 rounded-2xl font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer"
+      >
+        Enquire Now
       </div>
+    )}
+  </div>
+</div>
+
     </section>
     
   );

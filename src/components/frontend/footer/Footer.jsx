@@ -244,12 +244,13 @@ const Footer = () => {
 
               <div className="space-y-[10px] px-[15px] lg:mt-0 mt-6">
                 <div className="">
-                  <h4 className="font-medium mb-5 leading-[1.6] text-[#333] text-xl">
+                  <h6 className="font-medium mb-5 leading-[1.6] text-[#333] text-xl">
                     Follow us on
-                  </h4>
+                  </h6>
                 </div>
                 <div className="flex items-center gap-3.5">
                   <Link
+                    aria-label="facebook"
                     href="https://www.facebook.com/flexospaces/"
                     target="_blank"
                     className="text-[#f76900]"
@@ -257,6 +258,7 @@ const Footer = () => {
                     <Svg name="facebook" className="size-[22px]" />
                   </Link>
                   <Link
+                  aria-label="twitter"
                     href="https://x.com/flexospaces"
                     target="_blank"
                     className="text-[#f76900]"
@@ -264,6 +266,7 @@ const Footer = () => {
                     <Svg name="twitter" className="size-[22px]" />
                   </Link>
                   <Link
+                  aria-label="linkedin"
                     href="https://www.linkedin.com/company/flexospaces/"
                     target="_blank"
                     className="text-[#f76900]"
@@ -271,6 +274,7 @@ const Footer = () => {
                     <Svg name="linkedin" className="size-[22px]" />
                   </Link>
                   <Link
+                  aria-label="instagram"
                     href="https://www.instagram.com/flexospaces/"
                     target="_blank"
                     className="text-[#f76900]"

@@ -6,10 +6,14 @@ import {
   InfoWindow,
   useLoadScript,
 } from "@react-google-maps/api";
-import EmblaCarousel from "../emblaCarousel/EmblaCarousel";
+// import EmblaCarousel from "../emblaCarousel/EmblaCarousel";
 import ImageWithFallback from "@/components/ImageWithFallback";
 import Svg from "@/components/svg";
 import { slugGenerator } from "@/services/Comman";
+import dynamic from "next/dynamic";
+const EmblaCarousel = dynamic(() => import("../emblaCarousel/EmblaCarousel"), {
+  ssr: false,
+});
 
 const containerStyle = {
   width: "100%",

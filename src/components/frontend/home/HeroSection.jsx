@@ -274,6 +274,7 @@ export default function HeroSection({spaceCategoryData}) {
               </div>
  
               <button
+                aria-label="Search Workspaces"
                 onClick={()=>handleSearch(type,location)}
                 className="bg-[#f76900] px-5 text-white font-medium h-[46px] flex items-center justify-center rounded-xl w-full md:w-auto text-sm cursor-pointer"
               >

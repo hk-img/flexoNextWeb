@@ -32,7 +32,7 @@ const CoworkingSpaces = () => {
 
       <div className="md:mt-10 mt-6 flex flex-col md:flex-row gap-1">
         <div className="w-full md:w-1/3">
-          <Link href="/in/coworking/mumbai">
+          <Link href="/in/coworking/mumbai" aria-label="cities coworking Mumbai">
             <div className="relative rounded-sm overflow-hidden h-full">
               <div className="before:content-[''] before:w-full before:h-full before:absolute before:top-0 before:left-0 before:bg-[#0000002b]" />
               <div className="h-full">
@@ -67,7 +67,7 @@ const CoworkingSpaces = () => {
                     {cities
                       .slice(colIdx * 2, colIdx * 2 + 2)
                       .map((city, idx) => (
-                        <Link key={idx} href={city.link}>
+                        <Link aria-label="cities coworking " key={idx} href={city.link}>
                           <div
                             className="relative rounded-sm overflow-hidden shadow-md h-full"
                           >

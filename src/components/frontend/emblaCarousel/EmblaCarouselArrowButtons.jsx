@@ -40,6 +40,7 @@ export const PrevButton = (props) => {
 
   return (
     <button
+     aria-label="Previous Button"
       className="flex items-center justify-center rounded-full border-2 border-[#d0c2c2] bg-white text-[#d0c2c2] hover:border-[#f76900] hover:text-[#f76900] transition-all duration-300 ease-in-out cursor-pointer"
       type="button"
       {...restProps}
@@ -55,6 +56,7 @@ export const NextButton = (props) => {
 
   return (
     <button
+      aria-label="Next Button"
       className="flex items-center justify-center rounded-full border-2 border-[#d0c2c2] bg-white text-[#d0c2c2] hover:border-[#f76900] hover:text-[#f76900] transition-all duration-300 ease-in-out cursor-pointer"
       type="button"
       {...restProps}

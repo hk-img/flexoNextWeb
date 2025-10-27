@@ -117,7 +117,6 @@ const HeroSection = ({ slug,isFavouriteSpace,spaceData,setIsAuthOpen,refetchDeta
                   sizes="100vw"
                   className="w-full h-full object-cover"
                   fallback="/images/default_image.webp"
-                  priority
                 />
               )}
             </div>
@@ -134,7 +133,6 @@ const HeroSection = ({ slug,isFavouriteSpace,spaceData,setIsAuthOpen,refetchDeta
                         sizes="100vw"
                         className="w-full h-full object-cover"
                         fallback="/images/default_image.webp"
-                        priority
                       />
                     </div>
                   </div>

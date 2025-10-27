@@ -30,7 +30,7 @@ const TrustedCompaniesCta = ({setIsOpen,type}) => {
   return (
     <section className="w-full relative ">
       
-      <div className="relative lg:py-5.5 py-7 px-6 rounded-2xl items-center shadow-[0_4px_10px_#00000014] mx-auto bg-no-repeat bg-cover overflow-hidden bg-gradient-to-r from-[#000d54bd] to-[#000d544a]">
+      <div className="relative lg:py-5.5 py-7 px-6 rounded-2xl items-center shadow-[0_4px_10px_#00000014] mx-auto bg-no-repeat bg-cover overflow-hidden bg-gradient-to-r from-[#000d5469] to-[#000d5429]">
         <div className="container mx-auto text-center px-[15px] before:absolute before:inset-0 before:w-full before:h-full before:opacity-50 before:-z-10 ">
           <h2 className="sm:text-[32px] text-2xl font-medium text-center text-white leading-[1.2] pb-10">
             Trusted By Leading Companies in India
@@ -39,7 +39,7 @@ const TrustedCompaniesCta = ({setIsOpen,type}) => {
               {companies.map((s, i) => (
                 <div 
                   key={i}
-                  className="embla__slide flex-[0_0_auto] basis-auto sm:px-4 px-4 flex items-center justify-center"
+                  className="embla__slide flex-[0_0_auto] basis-auto sm:px-4 px-4 flex items-center justify-center "
                 >
                   <Image
                     src={s.src}
@@ -47,7 +47,7 @@ const TrustedCompaniesCta = ({setIsOpen,type}) => {
                     title={s.title}
                     width={120}
                     height={50}
-                    className="object-contain transition md:w-[120px] w-[105px]"
+                    className="object-contain transition md:w-[120px] w-[105px] rounded-md overflow-hidden "
                   />
                 </div>
               ))}

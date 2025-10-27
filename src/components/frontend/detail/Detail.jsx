@@ -14,7 +14,7 @@ import { getApi } from "@/services/ApiService";
 import Script from "next/script";
 import dynamic from "next/dynamic";
 const EmblaCarousel = dynamic(() => import("../emblaCarousel/EmblaCarousel"));
-const HeroSection = dynamic(() => import("./heroSection/HeroSection"), { ssr: false });
+const HeroSection = dynamic(() => import("./heroSection/HeroSection"));
 const ReviewSection = dynamic(() => import("./reviewSection/ReviewSection"));
 const LikeDislike = dynamic(() => import("./LikeDislike"));
 const ShowHtmlData = dynamic(() => import("../showHtmlData/ShowHtmlData"));

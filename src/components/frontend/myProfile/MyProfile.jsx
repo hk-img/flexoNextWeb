@@ -16,8 +16,8 @@ import {
   postAPIFormDataWithoutBearer,
 } from "@/services/ApiService";
 import dynamic from "next/dynamic";
-import { toast } from "sonner";
 import ImageWithFallback from "@/components/ImageWithFallback";
+import { ShowToast } from "@/utils/ShowToast";
 const Select = dynamic(() => import("react-select"), { ssr: false });
 
 const DropdownIndicator = (props) => {
@@ -371,13 +371,13 @@ const MyProfile = () => {
       },
       onSuccess: (data) => {
         if (data.success) {
-          toast.success(data.message);
+          ShowToast(data.message, "success");
         } else {
-          toast.error(data.message);
+          ShowToast(data.message,"error");
         }
       },
       onError: (error) => {
-        toast.error(error.message);
+        ShowToast(error.message,"error");
       },
     });
   const onSubmit = (values) => {
@@ -429,21 +429,21 @@ const MyProfile = () => {
       },
       onSuccess: (data) => {
         if (data.success) {
-          toast.success(data?.message);
+          ShowToast(data?.message,"success");
           setUser(data?.user);
         } else {
-          toast.error(data.message || "Something went wrong");
+          ShowToast(data.message || "Something went wrong","error");
         }
       },
       onError: (error) => {
-        toast.error(error.message || "Something went wrong");
+        ShowToast(error.message || "Something went wrong","error");
       },
     });
 
   const handleImageUpload = (e) => {
     const file = e.target.files?.[0];
     if (!file) {
-      toast.error("Please select an image!");
+      ShowToast("Please select an image!","error");
       return;
     }
     const maxSizeMB = 1; // 1 MB

@@ -28,12 +28,13 @@ const TrustedCompaniesCta = ({setIsOpen,type}) => {
     { src: "/images/trusted-logo12.webp", alt: "Triniti" , title: "Triniti" },
   ];
   return (
-    <section className="w-full relative pb-10">
-      <h2 className="sm:text-[32px] text-2xl font-medium text-center text-[#333] leading-[1.2] py-6">
+    <section className="w-full relative ">
+      
+      <div className="relative lg:py-5.5 py-7 px-6 rounded-2xl items-center shadow-[0_4px_10px_#00000014] mx-auto bg-no-repeat bg-cover overflow-hidden bg-gradient-to-r from-[#000d54bd] to-[#000d544a]">
+        <div className="container mx-auto text-center px-[15px] before:absolute before:inset-0 before:w-full before:h-full before:opacity-50 before:-z-10 ">
+          <h2 className="sm:text-[32px] text-2xl font-medium text-center text-white leading-[1.2] pb-10">
             Trusted By Leading Companies in India
           </h2>
-      <div className="relative lg:py-5.5 py-7 px-6 rounded-2xl items-center shadow-[0_4px_10px_#00000014] mx-auto bg-no-repeat bg-cover overflow-hidden bg-gradient-to-r from-[#ffd7ba] to-transparent">
-        <div className="container mx-auto text-center px-[15px] before:absolute before:inset-0 before:w-full before:h-full before:opacity-50 before:-z-10 ">
             <EmblaCarousel options={{ loop: true, autoscroll: true, align: "start"}}>
               {companies.map((s, i) => (
                 <div 
@@ -51,14 +52,14 @@ const TrustedCompaniesCta = ({setIsOpen,type}) => {
                 </div>
               ))}
             </EmblaCarousel>
-            <p className="text-[#141414] lg:text-base text-sm lg:mb-8 my-4">
+            <p className="text-white lg:text-base text-sm lg:mb-8 my-4">
               Over <span className="font-semibold ">250+ enterprises and startups</span> found their perfect office with Flexo.
             </p>
             {
               type != "shortterm" && (
                 <div onClick = {()=>{
                   setIsOpen((prev) => !prev);
-                }} className="flex justify-center items-center w-fit mx-auto bg-[#f76900] text-[12px] border border-[#f76900]  text-white py-3 px-7 rounded-2xl font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">
+                }} className="flex justify-center items-center w-fit mx-auto bg-[#000d54] text-[12px] border border-[#000d54]   text-white py-3 px-7 rounded-2xl font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">
                   Enquire Now
                 </div>
               )

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "@/context/useAuth";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
@@ -7,9 +7,8 @@ import {
   postAPIAuthWithoutBearer,
 } from "@/services/ApiService";
 import MyFavoriteItem from "./MyFavoriteItem";
-import Svg from "@/components/svg";
-import { toast } from "sonner";
 import Image from "next/image";
+import { ShowToast } from "@/utils/ShowToast";
 
 const MyFavourite = () => {
   const { token } = useAuth();
@@ -44,13 +43,13 @@ const MyFavourite = () => {
       return response.data;
     },
     onSuccess: (data, payload) => {
-      toast.success(data?.message);
+      ShowToast(data?.message,"success");
       setFavouriteData((prev)=>(prev.filter((item)=>item?.spaceData?.id !== payload?.spaceId)));
       setIsRemovePopupOpen(false);
       setSpaceId("");
     },
     onError: (error) => {
-      toast.error(error.message);
+      ShowToast(error.message,"error");
     },
   });
 

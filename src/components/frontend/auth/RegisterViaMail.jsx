@@ -1,10 +1,10 @@
 import React from "react";
-import { useForm, Controller } from "react-hook-form";
-import { email, z } from "zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { postAPI } from "@/services/ApiService";
-import { toast } from "sonner";
+import { ShowToast } from "@/utils/ShowToast";
 
 const RegisterSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email address"),
@@ -29,15 +29,15 @@ const RegisterViaMail = ({setEmail,setIsShowOtp}) => {
       },
       onSuccess: (data,payload) => {
         if(data?.newEmail){
-          toast.success(data.message);
+          ShowToast(data.message, "success");
           setEmail(payload.email);
           setIsShowOtp(true);
         }else{
-          toast.error(data.message);
+          ShowToast(data.message, "error");
         }
       },
       onError: (error) => {
-        toast.error(error.message);
+        ShowToast(error.message, "error");
       },
     });
 

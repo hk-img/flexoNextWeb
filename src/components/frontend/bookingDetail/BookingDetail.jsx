@@ -12,7 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import React, { useEffect, useMemo, useState } from "react";
 import BookingReviewPopup from "../bookingReviewPopup/BookingReviewPopup";
-import { toast } from "sonner";
+import { ShowToast } from "@/utils/ShowToast";
 
 const BookingDetail = ({ bookingId }) => {
   const { token } = useAuth();
@@ -62,7 +62,7 @@ const BookingDetail = ({ bookingId }) => {
         window.open(url, "_blank");
       }
     } catch (error) {
-      toast.error(error.message);
+      ShowToast(error.message,"error");
     }
   };
 

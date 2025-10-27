@@ -8,10 +8,10 @@ import ImageWithFallback from "@/components/ImageWithFallback";
 import { convertSlugToCapitalLetter } from "@/services/Comman";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { toast } from "sonner";
 import { postAPIAuthWithoutBearer } from "@/services/ApiService";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { ShowToast } from "@/utils/ShowToast";
 
 const schema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -81,11 +81,11 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
             router.push(`/booking-detail/${data?.bookingId}`);
           }, 500);
         } else {
-          toast.error(data?.message);
+          ShowToast(data?.message,"error");
         }
       },
       onError: (error) => {
-        toast.error(error?.message);
+        ShowToast(error?.message,"error");
       },
     });
 
@@ -124,7 +124,7 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
           modal: {
             ondismiss: function () {
               console.log("Payment cancelled by user");
-              toast.error("Payment Failed!");
+              ShowToast("Payment Failed!","error");
             },
           },
           theme: { color: "#f76900" },
@@ -132,11 +132,11 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
         const rzp = new window.Razorpay(options);
         rzp.open();
       } else {
-        toast.error(data?.message);
+        ShowToast(data?.message,"error");
       }
     },
     onError: (error) => {
-      toast.error(error.message);
+      ShowToast(error.message,"error");
     },
   });
   const onSubmit = (values) => {

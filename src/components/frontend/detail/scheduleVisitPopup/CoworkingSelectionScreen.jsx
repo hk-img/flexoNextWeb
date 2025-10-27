@@ -1,8 +1,8 @@
 import { useAuth } from "@/context/useAuth";
 import { postAPIAuthWithoutBearer } from "@/services/ApiService";
+import { ShowToast } from "@/utils/ShowToast";
 import { useMutation } from "@tanstack/react-query";
-import React, { useState } from "react";
-import { toast } from "sonner";
+import React from "react";
 
 const CoworkingSelectionScreen = ({spaceId,formData,setFormData,error,setError,values,setToggleScheduling,setSuccessScreen,spaceData}) => {
   const { token } = useAuth();
@@ -19,11 +19,11 @@ const CoworkingSelectionScreen = ({spaceId,formData,setFormData,error,setError,v
       if (data?.result?.success) {
         setSuccessScreen(true);
       } else {
-        toast.error(data?.result?.message);
+        ShowToast(data?.result?.message,"error");
       }
     },
     onError: (err) => {
-      toast.error(err.response?.data?.message || "Something went wrong");
+      ShowToast(err.response?.data?.message || "Something went wrong","error");
     },
   });
 

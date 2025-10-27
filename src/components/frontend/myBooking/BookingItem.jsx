@@ -9,7 +9,7 @@ import {
 import ImageWithFallback from "@/components/ImageWithFallback";
 import { getAPIAuthWithoutBearer } from "@/services/ApiService";
 import { useAuth } from "@/context/useAuth";
-import { toast } from "sonner";
+import { ShowToast } from "@/utils/ShowToast";
 
 const bookingItem = ({ item, setShowReviewPopup, setBookingId }) => {
   const { token } = useAuth();
@@ -30,7 +30,7 @@ const bookingItem = ({ item, setShowReviewPopup, setBookingId }) => {
         window.open(url, "_blank");
       }
     } catch (error) {
-      toast.error(error.message);
+      ShowToast(error.message,"error");
     }
   };
   return (

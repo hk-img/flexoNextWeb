@@ -2,7 +2,6 @@
 import Svg from "@/components/svg";
 import TrustedCompaniesCta from "./TrustedCompaniesCta";
 import TestimonialCta from "./TestimonialCta";
-import ProductCard from "../productCard/ProductCard";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import FilterPopup from "./filterPopup/FilterPopup";
 import { getApi, postAPI } from "@/services/ApiService";
@@ -10,7 +9,8 @@ import { useQuery } from "@tanstack/react-query";
 import Pagination from "../pagination/Pagination";
 import ExplorePopup from "../explorePopup/ExplorePopup";
 import { convertSlugToSmallLetter, getTypeOfSpaceByWorkSpace, slugGenerator,coworkingTypes } from "@/services/Comman";
-import MapWithPrices from "./MapWithPrice";
+// import ProductCard from "../productCard/ProductCard";
+// import MapWithPrices from "./MapWithPrice";
 import Faq from "./faq/Faq";
 import LongTermPopup from "./LongTermPopup";
 import RequestCallback from "./RequestCallback";
@@ -18,8 +18,21 @@ import Auth from "../auth/Auth";
 import { useAuth } from "@/context/useAuth";
 import BottomBar from "../bottomBar/BottomBar";
 import { useLocation } from "@/context/useLocation";
-import Link from "next/link";
-
+import dynamic from "next/dynamic";
+const ProductCard = dynamic(() => import("../productCard/ProductCard"), {
+  loading: () => <div className="h-[577px] bg-gray-100 animate-pulse rounded-lg" />,
+});
+const MapWithPrices = dynamic(
+  () => import("./MapWithPrice"),
+  {
+    ssr: false, 
+    loading: () => (
+      <div className="w-full h-[750px] flex items-center justify-center bg-gray-100 animate-pulse rounded-xl">
+        Loading map...
+      </div>
+    ),
+  }
+);
 const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, locationName, spaceCategoryData, locationData, nearBySpacesData,listingData }) => {
   const {user} = useAuth();
   const {coordinates} = useLocation();
@@ -167,6 +180,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
       return res.data;
     },
     keepPreviousData: true,
+    enabled: Array.isArray(selectedCheckboxes) && selectedCheckboxes?.length >= 0 && !!selectedLocation?.city,
     initialData: listingData
   });
   const productData = useMemo(() => {
@@ -488,14 +502,6 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                     </div>
                   )}
                 </div>
-                 
-                {/* {
-                  mapToggle && (
-                    <div className="map lg:w-2/5 w-full flex flex-col md:sticky md:top-10 mt-3 lg:mt-1 lg:hidden [&_.gm-style-iw-d]:!overflow-hidden [&_.gm-style-iw-d]:!max-w-[336px] [&_.gm-style-iw-d]:!max-h-full [&_.gm-style-iw-c]:!p-0 [&_.gm-style-iw-chr]:!hidden [&_.gm-style-iw]:!rounded-xl">
-                      <MapWithPrices type={type} spaces={productData} hoveredSpaceId={hoveredSpaceId} />
-                    </div>
-                  )
-                } */}
               </div>
               <div className="lg:w-2/5 w-full items-start flex lg:flex-row lg:hidden flex-col lg:justify-end justify-start lg:pt-2 pt-4">
                 <div className="text-right xs:text-left">

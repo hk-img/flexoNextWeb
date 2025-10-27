@@ -20,6 +20,7 @@ export default function ImageWithFallback({
       {...props}
       src={imgSrc || fallback}
       alt={alt}
+      loading="lazy"
       onError={() => setImgSrc(fallback)}
     />
   );

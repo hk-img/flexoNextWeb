@@ -1,5 +1,5 @@
 import Svg from "@/components/svg";
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import EmblaCarousel from "../emblaCarousel/EmblaCarousel";
 import ImageWithFallback from "@/components/ImageWithFallback";
 import AboutText from "./AboutText";
@@ -474,4 +474,4 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
   );
 };
 
-export default ProductCard;
+export default memo(ProductCard);

@@ -3,34 +3,42 @@ import Svg from "@/components/svg";
 import Image from "next/image";
 import React, { useMemo } from "react";
 import { useEffect, useState } from "react";
-import EmblaCarousel from "../emblaCarousel/EmblaCarousel";
-// import ProductCard from "../productCard/ProductCard";
-import ExplorePopup from "../explorePopup/ExplorePopup";
-import MapComponent from "./MapComponent";
-import HeroSection from "./heroSection/HeroSection";
-import ReviewSection from "./reviewSection/ReviewSection";
-import Auth from "../auth/Auth";
 import {
   convertSlugToCapitalLetter,
   Facilities,
   getTypeOfSpaceByWorkSpace,
 } from "@/services/Comman";
-import ShowHtmlData from "../showHtmlData/ShowHtmlData";
-import LikeDislike from "./LikeDislike";
-import ScheduleVisitPopup from "./scheduleVisitPopup/ScheduleVisitPopup";
 import { useAuth } from "@/context/useAuth";
-import BuyPassPopup from "./buyPassPopup/BuyPassPopup";
 import { useQuery } from "@tanstack/react-query";
 import { getApi } from "@/services/ApiService";
-import BottomBar from "../bottomBar/BottomBar";
-import BookingReviewPopup from "../bookingReviewPopup/BookingReviewPopup";
-import RequestToBookPopup from "./requestToBookPopup/RequestToBookPopup";
 import Script from "next/script";
 import dynamic from "next/dynamic";
+const EmblaCarousel = dynamic(() => import("../emblaCarousel/EmblaCarousel"));
+const HeroSection = dynamic(() => import("./heroSection/HeroSection"), { ssr: false });
+const ReviewSection = dynamic(() => import("./reviewSection/ReviewSection"));
+const LikeDislike = dynamic(() => import("./LikeDislike"));
+const ShowHtmlData = dynamic(() => import("../showHtmlData/ShowHtmlData"));
+const BottomBar = dynamic(() => import("../bottomBar/BottomBar"));
+const Auth = dynamic(() => import("../auth/Auth"), { ssr: false });
+const ExplorePopup = dynamic(() => import("../explorePopup/ExplorePopup"), { ssr: false });
+const ScheduleVisitPopup = dynamic(() => import("./scheduleVisitPopup/ScheduleVisitPopup"), { ssr: false });
+const BuyPassPopup = dynamic(() => import("./buyPassPopup/BuyPassPopup"), { ssr: false });
+const BookingReviewPopup = dynamic(() => import("../bookingReviewPopup/BookingReviewPopup"),
+  { ssr: false }
+)
+const RequestToBookPopup = dynamic(() => import("./requestToBookPopup/RequestToBookPopup"), { ssr: false });
 const ProductCard = dynamic(() => import("../productCard/ProductCard"), {
-  loading: () => <div className="h-[577px] bg-gray-100 animate-pulse rounded-lg" />,
+  loading: () => <div className="h-[500px] bg-gray-100 animate-pulse rounded-lg" />,
   ssr: false,
 });
+const MapComponent = dynamic(() => import("./MapComponent"), {
+  loading: () => (
+    <div className="w-full h-[750px] flex items-center justify-center bg-gray-100 animate-pulse rounded-xl">
+      Loading map...
+    </div>
+  ),
+  ssr: false,
+})
 
 const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
   const {token,user} = useAuth();

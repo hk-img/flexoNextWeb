@@ -180,7 +180,6 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
       return res.data;
     },
     keepPreviousData: true,
-    enabled: Array.isArray(selectedCheckboxes) && selectedCheckboxes?.length >= 0 && !!selectedLocation?.city,
     initialData: listingData
   });
   const productData = useMemo(() => {

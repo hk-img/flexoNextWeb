@@ -171,14 +171,14 @@ const Header = () => {
             </div>
 
             <div className="flex lg:hidden items-center gap-[15px] px-[15px]">
-              <Link href="tel:95133 92400">
+              <Link aria-label="call " href="tel:95133 92400">
                 <Svg name="call" className="size-[15px] text-black" />
               </Link>
-              <Link href="/list-with-us">
+              <Link aria-label="list with us" href="/list-with-us">
                 <Svg name="homePlus" className="size-[18px] text-black" />
               </Link>
               {token ? (
-                <button className="cursor-pointer userClass" onClick={() => setIsMenuOpen((prev) => !prev)}>
+                <button type="button" aria-label="user login" className="cursor-pointer userClass" onClick={() => setIsMenuOpen((prev) => !prev)}>
                   <Svg
                     name="logOut"
                     className="size-[22px] text-black cursor-pointer"

@@ -88,6 +88,7 @@ const BookWorkspace = () => {
 
                 <div className="mt-4">
                   <button
+                  aria-label="Connect with a Workspace Expert Today"
                     onClick={() => {
                       setIsOpen(true);
                     }}

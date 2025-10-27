@@ -41,9 +41,9 @@ const TrustedCompaniesCta = ({setIsOpen,type}) => {
   </div>
 
   <div className="container mx-auto text-center px-[15px] relative z-10">
-    <h2 className="sm:text-[32px] text-2xl font-medium text-center text-white leading-[1.2] pb-3">
+    <h3 className="sm:text-[32px] text-2xl font-medium text-center text-white leading-[1.2] pb-3">
       Trusted By Leading Companies in India
-    </h2>
+    </h3>
 
     <EmblaCarousel options={{ loop: true, autoscroll: true, align: "start" }}>
       {companies.map((s, i) => (

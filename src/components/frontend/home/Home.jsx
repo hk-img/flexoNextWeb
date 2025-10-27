@@ -1,17 +1,17 @@
 import React from 'react'
-import HeroSection from './HeroSection'
-import TrustedCompanies from './TrustedCompanies'
-import CoworkingSpaces from './CoworkingSpaces'
-import WorkspaceOptions from './workspaceOptions/WorkspaceOptions'
-import CoworkingBrands from './CoworkingBrands'
-import BookWorkspace from './BookWorkspace'
-import WhyChooseUs from './WhyChooseUs'
-import OfficeSearch from './OfficeSearch'
-import Testimonial from './Testimonial'
-import Banner from './Banner'
-import FaqSection from './FaqSection'
-import RequestCallback from './RequestCallback'
-
+import dynamic from "next/dynamic";
+const HeroSection = dynamic(() => import("./HeroSection"));
+const TrustedCompanies = dynamic(() => import("./TrustedCompanies"));
+const CoworkingSpaces = dynamic(() => import("./CoworkingSpaces"));
+const WorkspaceOptions = dynamic(() => import("./workspaceOptions/WorkspaceOptions"));
+const CoworkingBrands = dynamic(() => import("./CoworkingBrands"));
+const BookWorkspace = dynamic(() => import("./BookWorkspace"));
+const WhyChooseUs = dynamic(() => import("./WhyChooseUs"));
+const OfficeSearch = dynamic(() => import("./OfficeSearch"));
+const Testimonial = dynamic(() => import("./Testimonial"));
+const Banner = dynamic(() => import("./Banner"));
+const FaqSection = dynamic(() => import("./FaqSection"));
+const RequestCallback = dynamic(() => import("./RequestCallback"));
 
 const Home = ({spaceCategoryData}) => {
   

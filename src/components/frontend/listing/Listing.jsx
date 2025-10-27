@@ -1,26 +1,24 @@
 "use client";
 import Svg from "@/components/svg";
-import TrustedCompaniesCta from "./TrustedCompaniesCta";
-import TestimonialCta from "./TestimonialCta";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import FilterPopup from "./filterPopup/FilterPopup";
 import { getApi, postAPI } from "@/services/ApiService";
 import { useQuery } from "@tanstack/react-query";
-import Pagination from "../pagination/Pagination";
-import ExplorePopup from "../explorePopup/ExplorePopup";
 import { convertSlugToSmallLetter, getTypeOfSpaceByWorkSpace, slugGenerator,coworkingTypes } from "@/services/Comman";
-// import ProductCard from "../productCard/ProductCard";
-// import MapWithPrices from "./MapWithPrice";
-import Faq from "./faq/Faq";
-import LongTermPopup from "./LongTermPopup";
-import RequestCallback from "./RequestCallback";
-import Auth from "../auth/Auth";
 import { useAuth } from "@/context/useAuth";
-import BottomBar from "../bottomBar/BottomBar";
 import { useLocation } from "@/context/useLocation";
 import dynamic from "next/dynamic";
+const Pagination = dynamic(() => import("../pagination/Pagination"));
+const TestimonialCta = dynamic(() => import("./TestimonialCta"));
+const TrustedCompaniesCta = dynamic(() => import("./TrustedCompaniesCta"));
+const RequestCallback = dynamic(() => import("./RequestCallback"));
+const Faq = dynamic(() => import("./faq/Faq"));
+const BottomBar = dynamic(() => import("../bottomBar/BottomBar"));
+const FilterPopup = dynamic(() => import("./filterPopup/FilterPopup"), { ssr: false });
+const ExplorePopup = dynamic(() => import("../explorePopup/ExplorePopup"), { ssr: false });
+const LongTermPopup = dynamic(() => import("./LongTermPopup"), { ssr: false });
+const Auth = dynamic(() => import("../auth/Auth"), { ssr: false });
 const ProductCard = dynamic(() => import("../productCard/ProductCard"), {
-  loading: () => <div className="h-[577px] bg-gray-100 animate-pulse rounded-lg" />,
+  loading: () => <div className="h-[500px] bg-gray-100 animate-pulse rounded-lg" />,
   ssr: false,
 });
 const MapWithPrices = dynamic(

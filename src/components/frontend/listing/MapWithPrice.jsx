@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import {
   GoogleMap,
   Marker,
@@ -37,7 +37,7 @@ const calculateCenter = (markers) => {
   return { lat: centerLat, lng: centerLng };
 };
 
-export default function MapWithPrices({ type, spaces, hoveredSpaceId }) {
+const MapWithPrices = ({ type, spaces, hoveredSpaceId }) => {
   const [selectedSpace, setSelectedSpace] = useState(null);
   const [center, setCenter] = useState(null);
   const { isLoaded } = useLoadScript({
@@ -189,3 +189,5 @@ export default function MapWithPrices({ type, spaces, hoveredSpaceId }) {
     </GoogleMap>
   );
 }
+
+export default memo(MapWithPrices)

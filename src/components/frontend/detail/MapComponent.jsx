@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { memo } from "react";
 import { GoogleMap, Circle, useLoadScript } from "@react-google-maps/api";
 
 const containerStyle = {
@@ -40,4 +40,4 @@ const MapComponent = ({ spaceData }) => {
   );
 };
 
-export default MapComponent;
+export default memo(MapComponent);

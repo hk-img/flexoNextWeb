@@ -363,7 +363,7 @@ const MyProfile = () => {
     useMutation({
       mutationFn: async (payload) => {
         const res = await postAPIAuthWithoutBearer(
-          "user/updateProfilee",
+          "user/updateProfile",
           payload,
           token
         );

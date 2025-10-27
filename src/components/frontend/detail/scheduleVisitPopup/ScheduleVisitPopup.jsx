@@ -5,10 +5,10 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { postAPIAuthWithoutBearer } from "@/services/ApiService";
-import { toast } from "sonner";
 import CoworkingSelectionScreen from "./CoworkingSelectionScreen";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { ShowToast } from "@/utils/ShowToast";
 
 const defaultTime = [
   { label: "10:00 AM", value: "10:00", disabled: false },
@@ -119,11 +119,11 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId,workingDays,spaceData,hos
       if (data?.result?.success) {
         setSuccessScreen(true);
       } else {
-        toast.error(data?.result?.message);
+        ShowToast(data?.result?.message,"error");
       }
     },
     onError: (err) => {
-      toast.error(err.response?.data?.message || "Something went wrong");
+      ShowToast(err.response?.data?.message || "Something went wrong","error");
     },
   });
 

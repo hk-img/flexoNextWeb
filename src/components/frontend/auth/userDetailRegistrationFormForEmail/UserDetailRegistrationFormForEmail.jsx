@@ -4,13 +4,13 @@ import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "sonner";
 import { postAPI } from "@/services/ApiService";
 import { useMutation } from "@tanstack/react-query";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import PasswordScreen from "./PasswordScreen";
 import Svg from "@/components/svg";
+import { ShowToast } from "@/utils/ShowToast";
 
 const schema = z
   .object({
@@ -89,14 +89,14 @@ export default function UserDetailRegistrationFormForEmail({
     },
     onSuccess: (data) => {
       if (data.success) {
-        toast.success(data.message);
+        ShowToast(data.message,"success");
         setIsConfirmPasswordScreen(true);
       } else {
-        toast.error(data.message);
+        ShowToast(data.message,"error");
       }
     },
     onError: (error) => {
-      toast.error(error.message);
+      ShowToast(error.message,"error");
     },
   });
 

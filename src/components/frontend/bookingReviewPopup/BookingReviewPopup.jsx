@@ -1,10 +1,9 @@
 import Svg from "@/components/svg";
 import { useAuth } from "@/context/useAuth";
 import { postAPIAuthWithoutBearer } from "@/services/ApiService";
+import { ShowToast } from "@/utils/ShowToast";
 import { useMutation } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { toast } from "sonner";
-import { set } from "zod";
 
 const BookingReviewPopup = ({ setIsOpen, bookingId }) => {
   const { token } = useAuth();
@@ -37,14 +36,14 @@ const BookingReviewPopup = ({ setIsOpen, bookingId }) => {
     },
     onSuccess: (data) => {
       if (data?.result?.success) {
-        toast.success(data?.result?.message);
+        ShowToast(data?.result?.message,"success");
         setIsOpen(false);
       } else {
-        toast.error(data?.result?.message);
+        ShowToast(data?.result?.message,"error");
       }
     },
     onError: (error) => {
-      toast.error(error.message);
+      ShowToast(error.message,"error");
     },
   });
 

@@ -7,8 +7,8 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { useMutation } from "@tanstack/react-query";
 import { postAPI } from "@/services/ApiService";
-import { toast } from "sonner";
 import { useAuth } from "@/context/useAuth";
+import { ShowToast } from "@/utils/ShowToast";
 
 const registerSchema = z
   .object({
@@ -77,15 +77,15 @@ const RegistrationScreenForGoogleRegister = ({ googleDetails,setIsOpen }) => {
     },
     onSuccess: (data, payload) => {
       if (data.success) {
-        toast.success(data.message);
+        ShowToast(data.message, "success");
         setToken(data.result.accessToken);
         setIsOpen(false);
       } else {
-        toast.error(data.message);
+        ShowToast(data.message, "error");
       }
     },
     onError: (error) => {
-      toast.error(error.message);
+      ShowToast(error.message, "error");
     },
   });
 

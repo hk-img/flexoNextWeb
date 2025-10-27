@@ -1,10 +1,10 @@
 import React from "react";
 import { useGoogleLogin } from "@react-oauth/google";
-import { toast } from "sonner";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/context/useAuth";
 import { postAPI } from "@/services/ApiService";
+import { ShowToast } from "@/utils/ShowToast";
 
 const GoogleLoginButton = ({ setGoogleDetails, setIsOpen }) => {
   const { setToken } = useAuth();
@@ -15,7 +15,7 @@ const GoogleLoginButton = ({ setGoogleDetails, setIsOpen }) => {
     },
     onSuccess: (data, payload) => {
       if (data?.existsEmail) {
-        toast.success(data?.message || "Login Successfully");
+        ShowToast(data?.message || "Login Successfully", "success");
         setToken(data?.userdata?.accessToken);
         setIsOpen(false);
       } else {
@@ -23,7 +23,7 @@ const GoogleLoginButton = ({ setGoogleDetails, setIsOpen }) => {
       }
     },
     onError: (error) => {
-      toast.error(error.message);
+      ShowToast(error.message, "error");
     },
   });
   const handleLoginSuccess = async (credentialResponse) => {
@@ -46,13 +46,13 @@ const GoogleLoginButton = ({ setGoogleDetails, setIsOpen }) => {
       };
       checkGoogleAccountMutate(payload);
     } catch (error) {
-      toast.error("Somthing Went Wrong");
+      ShowToast(error?.message || "Somthing Went Wrong", "error");
     }
   };
   const login = useGoogleLogin({
     onSuccess: (tokenResponse) => handleLoginSuccess(tokenResponse),
     onError: () => {
-      toast.error("Somthing Went Wrong");
+      ShowToast("Somthing Went Wrong", "error");
     },
   });
   return (

@@ -10,8 +10,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useMutation } from "@tanstack/react-query";
 import { postAPIAuthWithoutBearer } from "@/services/ApiService";
 import { useAuth } from "@/context/useAuth";
-import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { ShowToast } from "@/utils/ShowToast";
 const defaultTime = [
   { label: "12:00 AM Midnight", value: "00:00", disabled: false },
   { label: "12:30 AM", value: "00:30", disabled: false },
@@ -181,11 +181,11 @@ const RequestToBookPopup = ({
             router.push(`/booking-detail/${data?.bookingId}`);
           }, 500);
         } else {
-          toast.error(data?.message);
+          ShowToast(data?.message,"error");
         }
       },
       onError: (error) => {
-        toast.error(error?.message);
+        ShowToast(error?.message,"error");
       },
     });
 
@@ -226,7 +226,7 @@ const RequestToBookPopup = ({
             modal: {
               ondismiss: function () {
                 console.log("Payment cancelled by user");
-                toast.error("Payment Failed!");
+                ShowToast("Payment Failed!","error");
               },
             },
             theme: { color: "#f76900" },
@@ -240,11 +240,11 @@ const RequestToBookPopup = ({
           }, 500);
         }
       } else {
-        toast.error(data?.message);
+        ShowToast(data?.message,"error");
       }
     },
     onError: (error) => {
-      toast.error(error.message);
+      ShowToast(error.message,"error");
     },
   });
 
@@ -277,9 +277,7 @@ const RequestToBookPopup = ({
       );
 
       if (isOverlap) {
-        toast.error(
-          `Slots on ${startDate} are overlapping. Please fix before submitting.`
-        );
+        ShowToast(`Slots on ${startDate} are overlapping. Please fix before submitting.`,"error");
         return;
       }
       dateMap[startDate].push({ startTime, endTime });
@@ -550,9 +548,7 @@ const RequestToBookPopup = ({
                                   value
                                 );
                                 if (duration < minHours) {
-                                  return toast.error(
-                                    `Time difference must be at least ${minHours} hours.`
-                                  );
+                                  return ShowToast(`Time difference must be at least ${minHours} hours.`,"error");
                                 }
                                 field.onChange(value);
                               };
@@ -637,9 +633,7 @@ const RequestToBookPopup = ({
                         );
 
                         if (isOverlap) {
-                          toast.error(
-                            `Slots on ${startDate} are overlapping. Please fix before submitting.`
-                          );
+                          ShowToast(`Slots on ${startDate} are overlapping. Please fix before submitting.`,"error");
                           return;
                         }
                         dateMap[startDate].push({ startTime, endTime });
@@ -654,9 +648,7 @@ const RequestToBookPopup = ({
                       ) {
                         append({ date: null, startTime: "", endTime: "" });
                       } else {
-                        toast.warning(
-                          "You can not overlap the time for the same date."
-                        );
+                        ShowToast("You can not overlap the time for the same date.","warning");
                       }
                     }}
                     className="cursor-pointer text-[#f76900] font-semibold mt-[37px]"

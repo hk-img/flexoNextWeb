@@ -4,11 +4,10 @@ import EmblaCarousel from "../emblaCarousel/EmblaCarousel";
 import ImageWithFallback from "@/components/ImageWithFallback";
 import AboutText from "./AboutText";
 import { convertSlugToCapitalLetter, getTypeOfSpaceByWorkSpace, slugGenerator } from "@/services/Comman";
-import { fa } from "zod/v4/locales";
 import { postAPIAuthWithoutBearer, WEBSITE_BASE_URL } from "@/services/ApiService";
 import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/context/useAuth";
-import { toast } from "sonner";
+import { ShowToast } from "@/utils/ShowToast";
 
 const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }) => {
   const {token} = useAuth();
@@ -25,12 +24,12 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
       return response.data;
     },
     onSuccess: (data, payload) => {
-      toast.success(data?.message);
+      ShowToast(data?.message,"success");
       setIsFavourite((prev) => !prev);
       localStorage.removeItem("isFavourite");
     },
     onError: (error) => {
-      toast.error(error.message);
+      ShowToast(error.message,"error");
     },
   });
 

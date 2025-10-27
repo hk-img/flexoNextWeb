@@ -1,16 +1,15 @@
 import ImageWithFallback from "@/components/ImageWithFallback";
 import Svg from "@/components/svg";
 import { useAuth } from "@/context/useAuth";
-import Image from "next/image";
+import { ShowToast } from "@/utils/ShowToast";
 import React, { useState } from "react";
-import { toast } from "sonner";
 
 const ReviewSection = ({reviewData,rating=0,avgRating="5.0",setIsAuthOpen,setShowReviewPopup,existingReview=null}) => {
   const {token} = useAuth();
   const [visibleCount, setVisibleCount] = useState(5);
   const handleReview = () => {
     if(Object.values(existingReview || {})?.length > 0){
-      return toast.error("You have already given review for this space.");
+      return ShowToast("You have already given review for this space.","error");
     }
     if(!token){
       setIsAuthOpen(true);

@@ -2,9 +2,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { postAPI } from "@/services/ApiService";
-import { toast } from "sonner";
 import { useAuth } from "@/context/useAuth";
 import Svg from "@/components/svg";
+import { ShowToast } from "@/utils/ShowToast";
 
 const VerifyOtp = ({
   mobile = null,
@@ -76,7 +76,7 @@ const VerifyOtp = ({
     onSuccess: (data) => {
       if (data?.success) {
         setErrorMsg("");
-        toast.success(data.message);
+        ShowToast(data.message, "success");
         setIsShowOtp(false);
         setIsShowUserDetailForm(true);
       } else {
@@ -84,7 +84,7 @@ const VerifyOtp = ({
       }
     },
     onError: (err) => {
-      toast.error(err.response?.data?.message || "Something went wrong");
+      ShowToast(err.response?.data?.message || "Something went wrong", "error");
     },
   });
 
@@ -105,7 +105,7 @@ const VerifyOtp = ({
     onSuccess: (data) => {
       if (data?.success) {
         setErrorMsg("");
-        toast.success(data.message);
+        ShowToast(data.message, "success");
         setIsShowOtp(false);
         setIsShowUserDetailForm(true);
       } else {
@@ -113,7 +113,7 @@ const VerifyOtp = ({
       }
     },
     onError: (err) => {
-      toast.error(err.response?.data?.message || "Something went wrong");
+      ShowToast(err.response?.data?.message || "Something went wrong", "error");
     },
   });
 
@@ -131,7 +131,7 @@ const VerifyOtp = ({
     onSuccess: (data) => {
       if (data?.success) {
         setErrorMsg("");
-        toast.success(data.message);
+        ShowToast(data.message, "success");
         setToken(data.user.accessToken);
         setIsOpen(false);
       } else {
@@ -139,7 +139,7 @@ const VerifyOtp = ({
       }
     },
     onError: (err) => {
-      toast.error(err.response?.data?.message || "Something went wrong");
+      ShowToast(err.response?.data?.message || "Something went wrong", "error");
     },
   });
 
@@ -160,7 +160,7 @@ const VerifyOtp = ({
     onSuccess: (data, payload) => {
       if (data?.success) {
         setErrorMsg("");
-        toast.success(data?.message);
+        ShowToast(data?.message, "success");
         setIsShowOtp(false);
         setIsResetPasswordScreen(true);
         setResetPasswordOtp(payload?.otp);
@@ -169,7 +169,7 @@ const VerifyOtp = ({
       }
     },
     onError: (err) => {
-      toast.error(err.response?.data?.message || "Something went wrong");
+      ShowToast(err.response?.data?.message || "Something went wrong", "error");
     },
   });
 
@@ -186,11 +186,11 @@ const VerifyOtp = ({
         setOtp(Array(4).fill(""));
         inputRefs.current[0]?.focus();
       } else {
-        toast.error(data.message);
+        ShowToast(data.message, "error");
       }
     },
     onError: (err) => {
-      toast.error(err.response?.data?.message || "Something went wrong");
+      ShowToast(err.response?.data?.message || "Something went wrong", "error");
     },
   });
 
@@ -206,11 +206,11 @@ const VerifyOtp = ({
         setOtp(Array(4).fill(""));
         inputRefs.current[0]?.focus();
       } else {
-        toast.error(data.message);
+        ShowToast(data.message, "error");
       }
     },
     onError: (err) => {
-      toast.error(err.response?.data?.message || "Something went wrong");
+      ShowToast(err.response?.data?.message || "Something went wrong", "error");
     },
   });
 
@@ -226,11 +226,11 @@ const VerifyOtp = ({
         setOtp(Array(4).fill(""));
         inputRefs.current[0]?.focus();
       } else {
-        toast.error(data.message);
+        ShowToast(data.message, "error");
       }
     },
     onError: (err) => {
-      toast.error(err.response?.data?.message || "Something went wrong");
+      ShowToast(err.response?.data?.message || "Something went wrong", "error");
     },
   });
 
@@ -246,11 +246,11 @@ const VerifyOtp = ({
         setOtp(Array(4).fill(""));
         inputRefs.current[0]?.focus();
       } else {
-        toast.error(data.message);
+        ShowToast(data.message, "error");
       }
     },
     onError: (err) => {
-      toast.error(err.response?.data?.message || "Something went wrong");
+      ShowToast(err.response?.data?.message || "Something went wrong", "error");
     },
   });
 

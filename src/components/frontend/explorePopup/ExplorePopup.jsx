@@ -8,10 +8,10 @@ import { useAuth } from "@/context/useAuth";
 import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getApi, postAPI } from "@/services/ApiService";
-import { toast } from "sonner";
 import {
   convertSlugToSmallLetter,
 } from "@/services/Comman";
+import { ShowToast } from "@/utils/ShowToast";
 
 const schema = z
   .object({
@@ -184,11 +184,11 @@ const ExplorePopup = ({
       if (data.result?.success) {
         setSuccessScreen(true);
       } else {
-        toast.error(data?.result.message);
+        ShowToast(data?.result.message,"error");
       }
     },
     onError: (error) => {
-      toast.error(error.message);
+      ShowToast(error.message,"error");
     },
   });
 

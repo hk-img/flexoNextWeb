@@ -8,7 +8,7 @@ import ForgetPassword from "./ForgetPassword";
 import { useMutation } from "@tanstack/react-query";
 import { postAPI } from "@/services/ApiService";
 import { useAuth } from "@/context/useAuth";
-import { toast } from "sonner";
+import { ShowToast } from "@/utils/ShowToast";
 
 const schema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email address"),
@@ -35,15 +35,15 @@ const LoginViaMailPassword = ({ setIsOpen, setIsShowMobile,setIsShowOtp,setShowF
     },
     onSuccess: (data) => {
       if (data.success) {
-        toast.success(data?.message || data?.msg);
+        ShowToast(data?.message || data?.msg, "success");
         setToken(data?.accessToken);
         setIsOpen(false);
       } else {
-        toast.error(data?.message || data?.msg);
+        ShowToast(data?.message || data?.msg, "error");
       }
     },
     onError: (error) => {
-      toast.error(error.message);
+      ShowToast(error.message, "error");
     },
   });
 

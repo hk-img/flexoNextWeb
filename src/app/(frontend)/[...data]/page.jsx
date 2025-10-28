@@ -9,6 +9,7 @@ import React from "react";
 
 export const revalidate = 3600;
 export const dynamic = "force-static";
+export const fetchCache = "force-cache";
 
 async function getSpaceDetails(spaceId) {
   try {

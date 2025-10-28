@@ -3,6 +3,9 @@ import { BASE_URL, WEBSITE_BASE_URL } from '@/services/ApiService';
 import { convertSlugToCapitalLetter, convertSlugToSmallLetter, getTypeOfSpaceByWorkSpace,coworkingTypes, convertSlugToAllCapitalLetter } from '@/services/Comman';
 import React from 'react'
 
+export const revalidate = 3600; 
+export const dynamic = "force-static";
+
 export async function generateMetadata({params}) {
   const data = await params;
   const slug = data?.data || [];
@@ -186,7 +189,10 @@ const page = async({params}) => {
   };
   return (
     <>
-      <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Listing spaceTypeSlug={spaceTypeSlug} citySlug={citySlug} locationNameSlug={locationNameSlug} spaceType={spaceType} city={city} locationName = {locationName}  spaceCategoryData={data1} locationData = {data2} nearBySpacesData={data3} listingData={listingData}/>
     </>
   )

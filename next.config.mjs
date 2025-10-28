@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    compress: true,
     images: {
         domains: ["s3.ap-south-1.amazonaws.com","worker-test-app.s3.ap-south-1.amazonaws.com","worker-app.s3.ap-south-1.amazonaws.com","flexospaces-images.s3.ap-south-1.amazonaws.com"],
     }

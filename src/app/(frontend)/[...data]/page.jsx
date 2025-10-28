@@ -7,6 +7,9 @@ import {
 import { notFound } from "next/navigation";
 import React from "react";
 
+export const revalidate = 3600; 
+export const dynamic = "force-static";
+
 async function getSpaceDetails(spaceId) {
   try{
     const res = await fetch(`${BASE_URL}/spaces/getSpaceDetails/${spaceId}`, {

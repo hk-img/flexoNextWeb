@@ -2,6 +2,9 @@ import Home from "@/components/frontend/home/Home";
 import { BASE_URL, WEBSITE_BASE_URL } from "@/services/ApiService";
 import React from "react";
 
+export const revalidate = 3600;
+export const dynamic = "force-static";
+
 export const metadata = {
   title: "Find Coworking & Office Spaces Across India | Flexo",
   description:

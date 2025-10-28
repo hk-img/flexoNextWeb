@@ -94,7 +94,7 @@ export async function generateMetadata({params}) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(payload),
-        next: { revalidate: 3600 },
+        cache: "no-store"
       });
       if (!res.ok) {
         console.error("API error", res.status, await res.text());
@@ -114,6 +114,7 @@ export async function generateMetadata({params}) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(payload),
+        cache: "no-store",
       });
       if (!res.ok) {
         console.error("API error", res.status, await res.text());

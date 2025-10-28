@@ -3,8 +3,9 @@ import { BASE_URL, WEBSITE_BASE_URL } from '@/services/ApiService';
 import { convertSlugToCapitalLetter, convertSlugToSmallLetter, getTypeOfSpaceByWorkSpace,coworkingTypes, convertSlugToAllCapitalLetter } from '@/services/Comman';
 import React from 'react'
 
-export const revalidate = 3600; 
+export const revalidate = 3600;
 export const dynamic = "force-static";
+export const fetchCache = "force-cache";
 
 export async function generateMetadata({params}) {
   const data = await params;

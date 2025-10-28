@@ -7,28 +7,37 @@ import {
 import { notFound } from "next/navigation";
 import React from "react";
 
+export const revalidate = 3600;
+export const dynamic = "force-static";
+
 async function getSpaceDetails(spaceId) {
-  try{
+  try {
     const res = await fetch(`${BASE_URL}/spaces/getSpaceDetails/${spaceId}`, {
-      cache: "no-store",
+      headers: {
+        Accept: "application/json",
+      },
+      next: { revalidate: 3600 },
     });
     if (!res.ok) {
       console.error("API error", res.status, await res.text());
       return [];
     }
     return await res.json();
-  }catch(error){
+  } catch (error) {
     console.log(error);
     return [];
   }
 }
 
 async function getDetailData(payload) {
-  try{
+  try {
     const res = await fetch(
       `${BASE_URL}/spaces/details?spaceId=${payload?.spaceId}&city=${payload?.city}&spaceType=${payload?.spaceType}&country=${payload?.country}`,
       {
-        cache: "no-store",
+        headers: {
+          Accept: "application/json",
+        },
+        next: { revalidate: 3600 },
       }
     );
     if (!res.ok) {
@@ -36,26 +45,29 @@ async function getDetailData(payload) {
       return [];
     }
     return await res.json();
-  }catch(error){
+  } catch (error) {
     console.log(error);
     return [];
   }
 }
 
 async function getReviewData(spaceId) {
-  try{
-     const res = await fetch(
+  try {
+    const res = await fetch(
       `${BASE_URL}/ratings/reviews/${spaceId}?sortBy=topRating`,
       {
-        cache: "no-store",
+        headers: {
+          Accept: "application/json",
+        },
+        next: { revalidate: 600 },
       }
     );
-     if (!res.ok) {
+    if (!res.ok) {
       console.error("API error", res.status, await res.text());
       return [];
     }
     return await res.json();
-  }catch(error){
+  } catch (error) {
     console.log(error);
     return [];
   }
@@ -67,7 +79,7 @@ const page = async ({ params }) => {
   const [spaceTypeSlug] = slug;
   const type = getTypeOfSpaceByWorkSpace(spaceTypeSlug || "");
   let spaceId = "";
-  if(slug?.length > 4){
+  if (slug?.length > 4) {
     return notFound();
   }
   if (type == "coworking") {
@@ -77,7 +89,10 @@ const page = async ({ params }) => {
     const [spaceTypeSlug, citySlug, locationSlug, spaceIdd] = slug;
     spaceId = spaceIdd;
   }
-  const [spaceDetails,reviews] = await Promise.all([getSpaceDetails(spaceId),getReviewData(spaceId)]);
+  const [spaceDetails, reviews] = await Promise.all([
+    getSpaceDetails(spaceId),
+    getReviewData(spaceId),
+  ]);
   const spaceDetailsData = spaceDetails?.spaceData;
   const payload = {
     spaceId: spaceId,
@@ -87,19 +102,27 @@ const page = async ({ params }) => {
   };
   let detailData = await getDetailData(payload);
   let reviewData = reviews?.data?.reviews || [];
-  const {spaceType,actual_name,contact_city_name,location_name,images,originalPrice,spaceStatus} = detailData?.data;
+  const {
+    spaceType,
+    actual_name,
+    contact_city_name,
+    location_name,
+    images,
+    originalPrice,
+    spaceStatus,
+  } = detailData?.data;
   const spaceTypeSmallLetter = convertSlugToSmallLetter(spaceType || "");
   const locationNameSmallLetter = convertSlugToSmallLetter(location_name || "");
   const actualNameSmallLetter = convertSlugToSmallLetter(actual_name || "");
   const spaceStatusSmallLetter = convertSlugToSmallLetter(spaceStatus || "");
-  let minPrice = ""
-  let maxPrice = ""
+  let minPrice = "";
+  let maxPrice = "";
   let detail = "";
-  if (type === 'coworking') {
-    minPrice = detailData?.data?.flexible_desk_price
+  if (type === "coworking") {
+    minPrice = detailData?.data?.flexible_desk_price;
     maxPrice = detailData?.data?.privatecabin_price;
     detail = `Book your workspace at ${actualNameSmallLetter}, a fully furnished coworking space in ${locationNameSmallLetter}, ${contact_city_name}. With flexible membership plans, premium facilities, and a collaborative environment, it's the perfect place for freelancers, startups, and teams.`;
-  } else if (type === 'shortterm') {
+  } else if (type === "shortterm") {
     minPrice = originalPrice;
     maxPrice = "none";
     detail = `Reserve this ${spaceTypeSmallLetter} at, located in ${locationNameSmallLetter}, ${contact_city_name}. Available by the hour, this space offers top-notch amenities, flexible bookings, and a professional setup perfect for your next project, event or activity.`;
@@ -108,30 +131,32 @@ const page = async ({ params }) => {
     maxPrice = "none";
     detail = `Rent your ${spaceTypeSmallLetter}, at ${locationNameSmallLetter}, ${contact_city_name}. This ${spaceStatusSmallLetter} office is listed at Rs. ${originalPrice}/month. Get in touch with Flexo now to schedule your visit`;
   }
- 
+
   let offer = "";
   if (maxPrice === "none") {
-    offer = "Offer"
+    offer = "Offer";
   } else {
-    offer = "AggregateOffer"
+    offer = "AggregateOffer";
   }
   let jsonLd = {
     "@context": "https://schema.org/",
     "@type": "Product",
-    "name": `${spaceTypeSmallLetter} in ${locationNameSmallLetter || 'an unknown location'}`,
-    "image": images?.[0],
-    "description": detail,
-    "brand": {
+    name: `${spaceTypeSmallLetter} in ${
+      locationNameSmallLetter || "an unknown location"
+    }`,
+    image: images?.[0],
+    description: detail,
+    brand: {
       "@type": "Brand",
-      "name": "Flexo"
+      name: "Flexo",
     },
-    "offers": {
+    offers: {
       "@type": offer,
-      "url": `${WEBSITE_BASE_URL}/${slug.join("/")}`,
-      "priceCurrency": "INR",
-      "availability": "https://schema.org/InStock",
-      "itemCondition": "https://schema.org/NewCondition"
-    }
+      url: `${WEBSITE_BASE_URL}/${slug.join("/")}`,
+      priceCurrency: "INR",
+      availability: "https://schema.org/InStock",
+      itemCondition: "https://schema.org/NewCondition",
+    },
   };
   if (maxPrice === "none") {
     jsonLd.offers.price = minPrice;
@@ -145,7 +170,13 @@ const page = async ({ params }) => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Detail slug={slug} spaceId={spaceId} spaceDetailsData={spaceDetailsData} detailData={detailData} reviewData={reviewData} />
+      <Detail
+        slug={slug}
+        spaceId={spaceId}
+        spaceDetailsData={spaceDetailsData}
+        detailData={detailData}
+        reviewData={reviewData}
+      />
     </>
   );
 };
@@ -174,13 +205,12 @@ export async function generateMetadata({ params }) {
     country: spaceDetailsData?.country,
   };
   let detailData = await getDetailData(payload);
-  const spaceType = spaceTypeSlug == "coworking" ? "coworking space" : convertSlugToSmallLetter(spaceTypeSlug || "");
-  const {
-    spaceTitle,
-    actual_name,
-    location_name,
-    contact_city_name,
-  } = detailData?.data || {};
+  const spaceType =
+    spaceTypeSlug == "coworking"
+      ? "coworking space"
+      : convertSlugToSmallLetter(spaceTypeSlug || "");
+  const { spaceTitle, actual_name, location_name, contact_city_name } =
+    detailData?.data || {};
   let title = "";
   let description = "";
   if (type == "coworking") {

@@ -3,7 +3,12 @@ import Svg from "@/components/svg";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { getApi, postAPI } from "@/services/ApiService";
 import { useQuery } from "@tanstack/react-query";
-import { convertSlugToSmallLetter, getTypeOfSpaceByWorkSpace, slugGenerator,coworkingTypes } from "@/services/Comman";
+import {
+  convertSlugToSmallLetter,
+  getTypeOfSpaceByWorkSpace,
+  slugGenerator,
+  coworkingTypes,
+} from "@/services/Comman";
 import { useAuth } from "@/context/useAuth";
 import { useLocation } from "@/context/useLocation";
 import dynamic from "next/dynamic";
@@ -13,38 +18,54 @@ const TrustedCompaniesCta = dynamic(() => import("./TrustedCompaniesCta"));
 const RequestCallback = dynamic(() => import("./RequestCallback"));
 const Faq = dynamic(() => import("./faq/Faq"));
 const BottomBar = dynamic(() => import("../bottomBar/BottomBar"));
-const FilterPopup = dynamic(() => import("./filterPopup/FilterPopup"), { ssr: false });
-const ExplorePopup = dynamic(() => import("../explorePopup/ExplorePopup"), { ssr: false });
+const FilterPopup = dynamic(() => import("./filterPopup/FilterPopup"), {
+  ssr: false,
+});
+const ExplorePopup = dynamic(() => import("../explorePopup/ExplorePopup"), {
+  ssr: false,
+});
 const LongTermPopup = dynamic(() => import("./LongTermPopup"), { ssr: false });
 const Auth = dynamic(() => import("../auth/Auth"), { ssr: false });
 const ProductCard = dynamic(() => import("../productCard/ProductCard"), {
-  loading: () => <div className="h-[500px] bg-gray-100 animate-pulse rounded-lg" />,
+  loading: () => (
+    <div className="h-[500px] bg-gray-100 animate-pulse rounded-lg" />
+  ),
   ssr: false,
 });
-const MapWithPrices = dynamic(
-  () => import("./MapWithPrice"),
-  {
-    ssr: false, 
-    loading: () => (
-      <div className="w-full h-[750px] flex items-center justify-center bg-gray-100 animate-pulse rounded-xl">
-        Loading map...
-      </div>
-    ),
-  }
-);
-const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, locationName, spaceCategoryData, locationData, nearBySpacesData,listingData }) => {
-  const {user} = useAuth();
-  const {coordinates} = useLocation();
+const MapWithPrices = dynamic(() => import("./MapWithPrice"), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-[750px] flex items-center justify-center bg-gray-100 animate-pulse rounded-xl">
+      Loading map...
+    </div>
+  ),
+});
+const Listing = ({
+  spaceTypeSlug,
+  citySlug,
+  locationNameSlug,
+  spaceType,
+  city,
+  locationName,
+  spaceCategoryData,
+  locationData,
+  nearBySpacesData,
+  listingData,
+}) => {
+  const { user } = useAuth();
+  const { coordinates } = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
-  const [type,setType] = useState("");
+  const [type, setType] = useState("");
   const [isLongTermPopupOpen, setIsLongTermPopupOpen] = useState(false);
   const spacesTypeRef = useRef(null);
   const locationRef = useRef(null);
   const [mapToggle, setMapToggle] = useState(true);
   const [toggleSpaceType, setToggleSpaceType] = useState(false);
   const [toggleSpace, setToggleSpace] = useState(false);
-  const [selectedRadio, setSelectedRadio] = useState(spaceCategoryData?.[0]?.spaceType);
+  const [selectedRadio, setSelectedRadio] = useState(
+    spaceCategoryData?.[0]?.spaceType
+  );
   const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
   const [toggleLocation, setToggleLocation] = useState(false);
   const [toggleLocationOptions, setToggleLocationOptions] = useState(false);
@@ -61,7 +82,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
   const [nearMeData, setNearMeData] = useState(null);
   const [page, setPage] = useState(1);
   const [hoveredSpaceId, setHoveredSpaceId] = useState(null);
-  const [selectedSpaceData,setSelectedSpaceData] = useState(null);
+  const [selectedSpaceData, setSelectedSpaceData] = useState(null);
   const perPage = 30;
 
   const handleRadioChange = (e) => {
@@ -74,12 +95,12 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
     }
     setSelectedRadio(value);
   };
-  useEffect(()=>{
-    if(selectedRadio){
+  useEffect(() => {
+    if (selectedRadio) {
       const type = getTypeOfSpaceByWorkSpace(selectedRadio || "");
       setType(type);
-    } 
-  },[selectedRadio])
+    }
+  }, [selectedRadio]);
   const handleCheckbox = (type) => {
     if (selectedCheckboxes.includes(type)) {
       setSelectedCheckboxes(selectedCheckboxes.filter((item) => item !== type));
@@ -123,20 +144,32 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
     const selectedSpaceType = spaceCategoryData?.find((item) => {
       const categorySpaceType = slugGenerator(item?.spaceType || "");
       if (categorySpaceType === spaceTypeSlug) {
-        return item
+        return item;
       }
     });
-    setSelectedRadio(selectedSpaceType?.spaceType)
+    setSelectedRadio(selectedSpaceType?.spaceType);
     if (selectedSpaceType?.spaceType === "Coworking Space") {
       setSelectedCheckboxes(coworkingTypes);
     } else {
-      const smallSpaceType = convertSlugToSmallLetter(selectedSpaceType?.spaceType || "");
+      const smallSpaceType = convertSlugToSmallLetter(
+        selectedSpaceType?.spaceType || ""
+      );
       setSelectedCheckboxes([smallSpaceType]);
     }
-  }, [spaceCategoryData, spaceTypeSlug])
+  }, [spaceCategoryData, spaceTypeSlug]);
 
   const { data: allSpaces, refetch: refetchSpaces } = useQuery({
-    queryKey: ["allSpaces", page, city,type,selectedCheckboxes,selectedLocation,nearMeData,appliedFilter,user?.id],
+    queryKey: [
+      "allSpaces",
+      page,
+      city,
+      type,
+      selectedCheckboxes,
+      selectedLocation,
+      nearMeData,
+      appliedFilter,
+      user?.id,
+    ],
     queryFn: async () => {
       let payload = {
         city_name: convertSlugToSmallLetter(city || ""),
@@ -149,15 +182,19 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
         amenities: [],
         city_lat: nearMeData?.lat || 0,
         city_long: nearMeData?.lng || 0,
-        page_no: page
-      }
-      if(!nearMeData){
-        payload.location_lat =  19.1121947;
+        page_no: page,
+      };
+      if (!nearMeData) {
+        payload.location_lat = 19.1121947;
         payload.location_longi = 72.8792898;
       }
       if (selectedLocation) {
-        payload.city_name = convertSlugToSmallLetter(selectedLocation?.city || "");
-        payload.location_name = convertSlugToSmallLetter(selectedLocation?.location_name || "");
+        payload.city_name = convertSlugToSmallLetter(
+          selectedLocation?.city || ""
+        );
+        payload.location_name = convertSlugToSmallLetter(
+          selectedLocation?.location_name || ""
+        );
       }
       if (
         appliedFilter?.priceRange?.min !== 500 ||
@@ -179,37 +216,41 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
       return res.data;
     },
     keepPreviousData: true,
-    initialData: listingData
+    initialData: listingData,
   });
   const productData = useMemo(() => {
-    return allSpaces?.data || []
+    return allSpaces?.data || [];
   }, [allSpaces]);
   const faqData = useMemo(() => {
-    return allSpaces?.faqs || []
+    return allSpaces?.faqs || [];
   }, [allSpaces]);
 
-  const {data: allLocations} = useQuery({
-    queryKey: ["allLocations",selectedRadio],
+  const { data: allLocations } = useQuery({
+    queryKey: ["allLocations", selectedRadio],
     queryFn: async () => {
-      const res = await getApi(`/user/getAllLocations?spaceType=${selectedRadio}`);
+      const res = await getApi(
+        `/user/getAllLocations?spaceType=${selectedRadio}`
+      );
       return res.data;
     },
     keepPreviousData: true,
     initialData: locationData,
-  })
+  });
 
   useEffect(() => {
     if (allLocations?.length > 0 && locationName) {
-      const smallLetterLocationName = convertSlugToSmallLetter(locationName || "");
+      const smallLetterLocationName = convertSlugToSmallLetter(
+        locationName || ""
+      );
       const selectedLocation = allLocations?.find((item) => {
         if (item?.location_name.toLowerCase() === smallLetterLocationName) {
-          return item
+          return item;
         }
-      })
+      });
       setQuery(selectedLocation?.label || "");
       setSelectedLocation(selectedLocation || null);
     }
-  }, [allLocations, locationName])
+  }, [allLocations, locationName]);
 
   const handleApply = () => {
     setAppliedFilter(filterData);
@@ -227,12 +268,12 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
     setAppliedFilter(resetFilters);
     setIsFilterOpen(false);
   };
-  const handleNearMe = ()=>{
+  const handleNearMe = () => {
     setNearMeData({
       lat: coordinates?.lat || 19.1121947,
       lng: coordinates?.lng || 72.8792898,
-    })
-  }
+    });
+  };
   const total = allSpaces?.space_count || 0;
   const start = total > 0 ? (page - 1) * perPage + 1 : 0;
   const end = total > 0 ? Math.min(page * perPage, total) : 0;
@@ -243,25 +284,41 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
           <div className="group/mainBox w-full flex flex-col lg:flex-row gap-6 items-start">
             <div className="lg:w-2/3 w-full flex grow flex-col justify-center lg:mt-8 mt-16">
               <h1 className="text-xl flex flex-wrap font-bold text-[#141414] mb-4">
-                {locationName ? `${spaceType} in ${locationName}, ${city}` : spaceTypeSlug == "coworking" ? `Coworking Space in ${city}` : `${spaceType} in ${city}`}
+                {locationName
+                  ? `${spaceType} in ${locationName}, ${city}`
+                  : spaceTypeSlug == "coworking"
+                  ? `Coworking Space in ${city}`
+                  : `${spaceType} in ${city}`}
               </h1>
               <div className="form-group filter-group">
                 <div className="scrollMenus overflow-auto whitespace-nowrap pb-2 mb-4">
-                  {
-                    nearBySpacesData?.map((item, index) => (
-                      <div
-                        key={index}
-                        className={`${item?.location_name?.split(" ")?.map(word => word.charAt(0).toLowerCase() + word.slice(1))?.join(" ") == locationNameSlug?.replace(/-/g, " ") ? "text-[#4343e8] border-[#7d9dd9] bg-[#e9e9ff]" : "text-[#9e9e9e] border-[#d4d4d4] bg-white"} inline-block text-center me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border max-w-full min-w-[160px] whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]`}
-                        onClick={()=>{
-                          const url = `/in/${slugGenerator(item?.spaceType || "")}/${citySlug}/${slugGenerator(item?.location_name || "")}`
-                          window.open(url, "_blank");
-                        }}
-                      >
-                        {" "}
-                        {item?.location_name}
-                      </div>
-                    ))
-                  }
+                  {nearBySpacesData?.map((item, index) => (
+                    <div
+                      key={index}
+                      className={`${
+                        item?.location_name
+                          ?.split(" ")
+                          ?.map(
+                            (word) =>
+                              word.charAt(0).toLowerCase() + word.slice(1)
+                          )
+                          ?.join(" ") == locationNameSlug?.replace(/-/g, " ")
+                          ? "text-[#4343e8] border-[#7d9dd9] bg-[#e9e9ff]"
+                          : "text-[#9e9e9e] border-[#d4d4d4] bg-white"
+                      } inline-block text-center me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border max-w-full min-w-[160px] whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]`}
+                      onClick={() => {
+                        const url = `/in/${slugGenerator(
+                          item?.spaceType || ""
+                        )}/${citySlug}/${slugGenerator(
+                          item?.location_name || ""
+                        )}`;
+                        window.open(url, "_blank");
+                      }}
+                    >
+                      {" "}
+                      {item?.location_name}
+                    </div>
+                  ))}
                 </div>
 
                 <div className="filterRow w-full flex lg:flex-row flex-col items-center gap-4 justify-between">
@@ -358,19 +415,21 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                     </div>
                   </div>
                   <div className="items-start lg:flex lg:flex-row hidden flex-col lg:justify-end justify-start">
-                  <div className="text-right xs:text-left">
-                    <p className="text-sm text-[#777777] leading-10 min-[1400px]:text-[15px]">
-                      Showing{" "}
-                      <span className="font-medium text-[#f76900]">{start}–{end}</span>{" "}
-                      <span className="font-medium text-[#f76900]">
-                        of {allSpaces?.space_count}
-                      </span>{" "}
-                      Listings
-                    </p>
+                    <div className="text-right xs:text-left">
+                      <p className="text-sm text-[#777777] leading-10 min-[1400px]:text-[15px]">
+                        Showing{" "}
+                        <span className="font-medium text-[#f76900]">
+                          {start}–{end}
+                        </span>{" "}
+                        <span className="font-medium text-[#f76900]">
+                          of {allSpaces?.space_count}
+                        </span>{" "}
+                        Listings
+                      </p>
+                    </div>
                   </div>
                 </div>
-                </div>
-                
+
                 <div className="relative inline-block lg:hidden w-full">
                   {toggleSpaceType && (
                     <>
@@ -389,43 +448,45 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                           ref={spacesTypeRef}
                           className="dropdown-menu-space-type scrollDropdown absolute top-[72px] left-0 md:w-[550px] w-full bg-white block shadow-lg z-20 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700"
                         >
-                          {
-                            spaceCategoryData?.map((item, index) => {
-                              return (
-                                <React.Fragment key={index}>
-                                  <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
-                                    <input
-                                      type="radio"
-                                      name="spaceType2"
-                                      value={item?.spaceType}
-                                      defaultChecked={selectedRadio === item?.spaceType}
-                                      onChange={handleRadioChange}
-                                      className="accent-[#26310b]"
-                                    />
-                                    {item?.spaceType}
-                                  </label>
-                                  {
-                                    item?.spaceType == "Coworking Space" && <div className="pl-6 space-y-2">
-                                      {coworkingTypes?.map((type) => (
-                                        <label
-                                          key={type}
-                                          className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light"
-                                        >
-                                          <input
-                                            type="checkbox"
-                                            checked={selectedCheckboxes.includes(type)}
-                                            onChange={() => handleCheckbox(type)}
-                                            className="accent-[#26310b]"
-                                          />
-                                          {type}
-                                        </label>
-                                      ))}
-                                    </div>
-                                  }
-                                </React.Fragment>
-                              )
-                            })
-                          }
+                          {spaceCategoryData?.map((item, index) => {
+                            return (
+                              <React.Fragment key={index}>
+                                <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
+                                  <input
+                                    type="radio"
+                                    name="spaceType2"
+                                    value={item?.spaceType}
+                                    defaultChecked={
+                                      selectedRadio === item?.spaceType
+                                    }
+                                    onChange={handleRadioChange}
+                                    className="accent-[#26310b]"
+                                  />
+                                  {item?.spaceType}
+                                </label>
+                                {item?.spaceType == "Coworking Space" && (
+                                  <div className="pl-6 space-y-2">
+                                    {coworkingTypes?.map((type) => (
+                                      <label
+                                        key={type}
+                                        className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light"
+                                      >
+                                        <input
+                                          type="checkbox"
+                                          checked={selectedCheckboxes.includes(
+                                            type
+                                          )}
+                                          onChange={() => handleCheckbox(type)}
+                                          className="accent-[#26310b]"
+                                        />
+                                        {type}
+                                      </label>
+                                    ))}
+                                  </div>
+                                )}
+                              </React.Fragment>
+                            );
+                          })}
                         </div>
                       )}
                     </>
@@ -463,7 +524,10 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                                   onChange={(e) => setQuery(e.target.value)}
                                 />
                               </div>
-                              <div onClick={handleNearMe} className="flex whitespace-nowrap text-[#777777] cursor-pointer">
+                              <div
+                                onClick={handleNearMe}
+                                className="flex whitespace-nowrap text-[#777777] cursor-pointer"
+                              >
                                 Near Me
                               </div>
                             </div>
@@ -479,7 +543,9 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                         >
                           {allLocations
                             .filter((loc) =>
-                              loc?.label?.toLowerCase()?.includes(query?.toLowerCase())
+                              loc?.label
+                                ?.toLowerCase()
+                                ?.includes(query?.toLowerCase())
                             )
                             .map((loc, idx) => (
                               <div
@@ -489,7 +555,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                                   setQuery(loc?.label);
                                   setSelectedLocation(loc);
                                   setToggleLocationOptions(false);
-                                  setNearMeData(null)
+                                  setNearMeData(null);
                                 }}
                               >
                                 {loc?.label}
@@ -505,8 +571,12 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                 <div className="text-right xs:text-left">
                   <p className="text-sm text-[#777777] leading-10 text-[15px]">
                     Showing{" "}
-                    <span className="font-medium text-[#f76900]">{start}–{end}</span>{" "}
-                    <span className="font-medium text-[#f76900]">of {allSpaces?.space_count}</span>{" "}
+                    <span className="font-medium text-[#f76900]">
+                      {start}–{end}
+                    </span>{" "}
+                    <span className="font-medium text-[#f76900]">
+                      of {allSpaces?.space_count}
+                    </span>{" "}
                     Listings
                   </p>
                 </div>
@@ -529,43 +599,45 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                         ref={spacesTypeRef}
                         className="dropdown-menu-space-type scrollDropdown absolute top-[72px] left-0 w-[550px] bg-white block shadow-lg z-20 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700"
                       >
-                        {
-                          spaceCategoryData?.map((item, index) => {
-                            return (
-                              <React.Fragment key={index}>
-                                <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
-                                  <input
-                                    type="radio"
-                                    name="spaceType"
-                                    value={item?.spaceType}
-                                    defaultChecked={selectedRadio === item?.spaceType}
-                                    onChange={handleRadioChange}
-                                    className="accent-[#26310b]"
-                                  />
-                                  {item?.spaceType}
-                                </label>
-                                {
-                                  item?.spaceType == "Coworking Space" && <div className="pl-6 space-y-2">
-                                    {coworkingTypes?.map((type) => (
-                                      <label
-                                        key={type}
-                                        className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light"
-                                      >
-                                        <input
-                                          type="checkbox"
-                                          checked={selectedCheckboxes.includes(type)}
-                                          onChange={() => handleCheckbox(type)}
-                                          className="accent-[#26310b]"
-                                        />
-                                        {type}
-                                      </label>
-                                    ))}
-                                  </div>
-                                }
-                              </React.Fragment>
-                            )
-                          })
-                        }
+                        {spaceCategoryData?.map((item, index) => {
+                          return (
+                            <React.Fragment key={index}>
+                              <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
+                                <input
+                                  type="radio"
+                                  name="spaceType"
+                                  value={item?.spaceType}
+                                  defaultChecked={
+                                    selectedRadio === item?.spaceType
+                                  }
+                                  onChange={handleRadioChange}
+                                  className="accent-[#26310b]"
+                                />
+                                {item?.spaceType}
+                              </label>
+                              {item?.spaceType == "Coworking Space" && (
+                                <div className="pl-6 space-y-2">
+                                  {coworkingTypes?.map((type) => (
+                                    <label
+                                      key={type}
+                                      className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light"
+                                    >
+                                      <input
+                                        type="checkbox"
+                                        checked={selectedCheckboxes.includes(
+                                          type
+                                        )}
+                                        onChange={() => handleCheckbox(type)}
+                                        className="accent-[#26310b]"
+                                      />
+                                      {type}
+                                    </label>
+                                  ))}
+                                </div>
+                              )}
+                            </React.Fragment>
+                          );
+                        })}
                       </div>
                     )}
                   </>
@@ -603,7 +675,10 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                                 onChange={(e) => setQuery(e.target.value)}
                               />
                             </div>
-                            <div onClick={handleNearMe} className="flex whitespace-nowrap text-[#777777] cursor-pointer">
+                            <div
+                              onClick={handleNearMe}
+                              className="flex whitespace-nowrap text-[#777777] cursor-pointer"
+                            >
                               Near Me
                             </div>
                           </div>
@@ -615,11 +690,13 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                     {toggleLocationOptions && (
                       <div
                         ref={locationRef}
-                        className="dropdown-menu-location scrollDropdown max-h-72 overflow-y-auto absolute top-[70px] left-4 w-[420px] bg-white shadow-lg z-20"
+                        className="dropdown-menu-location scrollDropdown max-h-72 overflow-y-auto absolute top-full left-4 w-[420px] bg-white shadow-lg z-20"
                       >
                         {allLocations
                           .filter((loc) =>
-                            loc?.label?.toLowerCase()?.includes(query?.toLowerCase())
+                            loc?.label
+                              ?.toLowerCase()
+                              ?.includes(query?.toLowerCase())
                           )
                           .map((loc, idx) => (
                             <div
@@ -640,7 +717,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                   </div>
                 )}
               </div>
-             
+
               <div className="spaces lg:mt-6 flex flex-row flex-wrap -mx-4">
                 {productData?.slice(0, 6)?.map((item, index) => (
                   <div
@@ -649,11 +726,16 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                     onMouseOver={() => setHoveredSpaceId(item?.id)}
                     onMouseLeave={() => setHoveredSpaceId(null)}
                   >
-                    <ProductCard item={item} setIsOpen={setIsOpen} setIsAuthOpen={setIsAuthOpen} setSelectedSpaceData={setSelectedSpaceData}/>
+                    <ProductCard
+                      item={item}
+                      setIsOpen={setIsOpen}
+                      setIsAuthOpen={setIsAuthOpen}
+                      setSelectedSpaceData={setSelectedSpaceData}
+                    />
                   </div>
                 ))}
               </div>
-              <TrustedCompaniesCta setIsOpen={setIsOpen} type={type}/>
+              <TrustedCompaniesCta setIsOpen={setIsOpen} type={type} />
               <div className="spaces flex flex-row flex-wrap -mx-4">
                 {productData?.slice(6, 18)?.map((item, index) => (
                   <div
@@ -662,13 +744,18 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                     onMouseOver={() => setHoveredSpaceId(item?.id)}
                     onMouseLeave={() => setHoveredSpaceId(null)}
                   >
-                    <ProductCard item={item} setIsOpen={setIsOpen} setIsAuthOpen={setIsAuthOpen} setSelectedSpaceData={setSelectedSpaceData}/>
+                    <ProductCard
+                      item={item}
+                      setIsOpen={setIsOpen}
+                      setIsAuthOpen={setIsAuthOpen}
+                      setSelectedSpaceData={setSelectedSpaceData}
+                    />
                   </div>
                 ))}
               </div>
               {
                 productData?.length > 18 && (
-                  <RequestCallback/>
+                  <RequestCallback setIsOpen={setIsOpen} type={type}/>
                 )
               }
               <div className="spaces flex flex-row flex-wrap -mx-4">
@@ -679,52 +766,76 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
                     onMouseOver={() => setHoveredSpaceId(item?.id)}
                     onMouseLeave={() => setHoveredSpaceId(null)}
                   >
-                    <ProductCard item={item} setIsOpen={setIsOpen} setIsAuthOpen={setIsAuthOpen} setSelectedSpaceData={setSelectedSpaceData}/>
+                    <ProductCard
+                      item={item}
+                      setIsOpen={setIsOpen}
+                      setIsAuthOpen={setIsAuthOpen}
+                      setSelectedSpaceData={setSelectedSpaceData}
+                    />
                   </div>
                 ))}
               </div>
-              <TestimonialCta setIsOpen={setIsOpen} type={type}/>
-              <Pagination currentPage={page} totalPages={Math.ceil(allSpaces?.space_count / perPage)} onPageChange={setPage}/>
+              <TestimonialCta setIsOpen={setIsOpen} type={type} />
+              <Pagination
+                currentPage={page}
+                totalPages={Math.ceil(allSpaces?.space_count / perPage)}
+                onPageChange={setPage}
+              />
             </div>
-            {
-              mapToggle && (
-                <div className="map lg:w-1/3 w-full flex flex-col md:sticky md:top-20 [&_.gm-style-iw-d]:!overflow-hidden [&_.gm-style-iw-d]:!max-w-[336px] [&_.gm-style-iw-d]:!max-h-full [&_.gm-style-iw-c]:!p-0 [&_.gm-style-iw-chr]:!hidden [&_.gm-style-iw]:!rounded-xl">
-                  <MapWithPrices type={type} spaces={productData} hoveredSpaceId={hoveredSpaceId} />
-                </div>
-              )
-            }
+            {mapToggle && (
+              <div className="map lg:w-1/3 w-full flex flex-col md:sticky md:top-0 [&_.gm-style-iw-d]:!overflow-hidden [&_.gm-style-iw-d]:!max-w-[336px] [&_.gm-style-iw-d]:!max-h-full [&_.gm-style-iw-c]:!p-0 [&_.gm-style-iw-chr]:!hidden [&_.gm-style-iw]:!rounded-xl">
+                <MapWithPrices
+                  type={type}
+                  spaces={productData}
+                  hoveredSpaceId={hoveredSpaceId}
+                />
+              </div>
+            )}
           </div>
         </div>
       </section>
-      {type != "shortterm" && <BottomBar type={type} city={city}/>}
-      {
-        type == "longterm" && (
-          <div className="fixed bottom-0 left-0 w-full lg:w-7/12  bg-white z-40">
-              <div className=" mx-auto flex md:flex-row flex-col md:gap-[30px] gap-1 items-center justify-between px-7 py-3">
-                <div className="flex md:flex-row flex-col w-full items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div>
-                      <Svg name="checkTic" className="size-3 text-[#f76900]"/>
-                    </div>
-                    <div className="text-sm font-light ">Our service is <span className="font-semibold ">FREE</span> </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div>
-                      <Svg name="checkTic" className="size-3 text-[#f76900]"/>
-                    </div>
-                    <div className="text-sm font-light">We help secure the <span className="font-semibold ">best deal</span> </div>
-                  </div>
+      {type != "shortterm" && <BottomBar type={type} city={city} />}
+      {type == "longterm" && (
+        <div className="fixed bottom-0 left-0 w-full lg:w-7/12  bg-white z-40">
+          <div className=" mx-auto flex md:flex-row flex-col md:gap-[30px] gap-1 items-center justify-between px-7 py-3">
+            <div className="flex md:flex-row flex-col w-full items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div>
+                  <Svg name="checkTic" className="size-3 text-[#f76900]" />
                 </div>
-                <div className="flex items-center gap-2">
-                  <button onClick={() => setIsLongTermPopupOpen((prev) => !prev)} className="cursor-pointer bg-[#f76900] text-white px-10 text-sm py-[15px] rounded-sm uppercase text-nowrap">FIND MY PERFECT OFFICE NOW</button>
+                <div className="text-sm font-light ">
+                  Our service is <span className="font-semibold ">FREE</span>{" "}
                 </div>
               </div>
+              <div className="flex items-center gap-2">
+                <div>
+                  <Svg name="checkTic" className="size-3 text-[#f76900]" />
+                </div>
+                <div className="text-sm font-light">
+                  We help secure the{" "}
+                  <span className="font-semibold ">best deal</span>{" "}
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setIsLongTermPopupOpen((prev) => !prev)}
+                className="cursor-pointer bg-[#f76900] text-white px-10 text-sm py-[15px] rounded-sm uppercase text-nowrap"
+              >
+                FIND MY PERFECT OFFICE NOW
+              </button>
+            </div>
           </div>
-        )
-      }
-      {
-        faqData?.length > 0 && <Faq spaceType={spaceType} city={city} locationName={locationName} faqData={faqData} />
-      }
+        </div>
+      )}
+      {faqData?.length > 0 && (
+        <Faq
+          spaceType={spaceType}
+          city={city}
+          locationName={locationName}
+          faqData={faqData}
+        />
+      )}
       {isFilterOpen && (
         <FilterPopup
           isFilterOpen={isFilterOpen}
@@ -735,10 +846,21 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
           handleClear={handleClear}
         />
       )}
-      {
-        isLongTermPopupOpen && <LongTermPopup isOpen={isLongTermPopupOpen} setIsOpen={setIsLongTermPopupOpen} city={city} />
-      }
-      {isOpen && <ExplorePopup isOpen={isOpen} setIsOpen={setIsOpen} selectedSpaceData={selectedSpaceData} type={type}/>}
+      {isLongTermPopupOpen && (
+        <LongTermPopup
+          isOpen={isLongTermPopupOpen}
+          setIsOpen={setIsLongTermPopupOpen}
+          city={city}
+        />
+      )}
+      {isOpen && (
+        <ExplorePopup
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          selectedSpaceData={selectedSpaceData}
+          type={type}
+        />
+      )}
       {isAuthOpen && <Auth isOpen={isAuthOpen} setIsOpen={setIsAuthOpen} />}
     </>
   );

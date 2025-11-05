@@ -429,143 +429,148 @@ const Listing = ({
                     </div>
                   </div>
                 </div>
-
-                <div className="relative inline-block lg:hidden w-full">
-                  {toggleSpaceType && (
-                    <>
-                      <div
-                        onClick={() => setToggleSpace(!toggleSpace)}
-                        className="toggle-space-type relative top-4 left-0 w-full md:w-[400px] lg:w-3/5 rounded-xl z-10"
-                      >
-                        <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center min-h-14 max-h-14 gap-5 p-[18px] rounded-[42px]">
-                          <div className="border-1 border-[#dee2e6] p-1 text-sm font-light">
-                            {selectedRadio}
+                {(toggleSpaceType || toggleLocation) && (
+                  <div className="relative inline-block w-full">
+                    {toggleSpaceType && (
+                      <>
+                        <div
+                          onClick={() => setToggleSpace(!toggleSpace)}
+                          className="toggle-space-type relative top-4 left-0 w-full md:w-[400px] lg:w-3/5 rounded-xl z-10"
+                        >
+                          <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center min-h-14 max-h-14 gap-5 p-[18px] rounded-[42px]">
+                            <div className="border-1 border-[#dee2e6] p-1 text-sm font-light">
+                              {selectedRadio}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      {toggleSpace && (
-                        <div
-                          ref={spacesTypeRef}
-                          className="dropdown-menu-space-type scrollDropdown absolute top-[72px] left-0 md:w-[550px] w-full bg-white block shadow-lg z-20 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700"
-                        >
-                          {spaceCategoryData?.map((item, index) => {
-                            return (
-                              <React.Fragment key={index}>
-                                <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
-                                  <input
-                                    type="radio"
-                                    name="spaceType2"
-                                    value={item?.spaceType}
-                                    defaultChecked={
-                                      selectedRadio === item?.spaceType
-                                    }
-                                    onChange={handleRadioChange}
-                                    className="accent-[#26310b]"
-                                  />
-                                  {item?.spaceType}
-                                </label>
-                                {item?.spaceType == "Coworking Space" && (
-                                  <div className="pl-6 space-y-2">
-                                    {coworkingTypes?.map((type) => (
-                                      <label
-                                        key={type}
-                                        className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light"
-                                      >
-                                        <input
-                                          type="checkbox"
-                                          checked={selectedCheckboxes.includes(
-                                            type
-                                          )}
-                                          onChange={() => handleCheckbox(type)}
-                                          className="accent-[#26310b]"
-                                        />
-                                        {type}
-                                      </label>
-                                    ))}
-                                  </div>
-                                )}
-                              </React.Fragment>
-                            );
-                          })}
-                        </div>
-                      )}
-                    </>
-                  )}
-                  {toggleLocation && (
-                    <div className="relative">
-                      {/* Search box */}
-                      <div className="relative top-6 -left-0 w-full md:w-[400px] lg:w-3/5 rounded-xl z-10 pb-7">
-                        <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center py-[9px] px-4 rounded-[42px]">
-                          <div className="w-full toggle-location">
-                            <div className="bg-white shadow-mb rounded-full h-10 w-full flex items-center justify-between">
-                              <div className="w-full flex justify-between items-center">
-                                <button className="text-[#777777] w-[15px] h-[15px]">
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    strokeWidth={3}
-                                    stroke="currentColor"
-                                    className="w-4 h-4"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z"
+                        {toggleSpace && (
+                          <div
+                            ref={spacesTypeRef}
+                            className="dropdown-menu-space-type scrollDropdown absolute top-[72px] left-0 md:w-[550px] w-full bg-white block shadow-lg z-20 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700"
+                          >
+                            {spaceCategoryData?.map((item, index) => {
+                              return (
+                                <React.Fragment key={index}>
+                                  <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
+                                    <input
+                                      type="radio"
+                                      name="spaceType2"
+                                      value={item?.spaceType}
+                                      defaultChecked={
+                                        selectedRadio === item?.spaceType
+                                      }
+                                      onChange={handleRadioChange}
+                                      className="accent-[#26310b]"
                                     />
-                                  </svg>
-                                </button>
-                                <input
-                                  type="text"
-                                  placeholder="Where are you looking for office space?"
-                                  className="border-0 bg-transparent w-full text-sm placeholder:font-normal transition-all duration-200 p-[10px] placeholder:text-[#333] focus:outline-none"
-                                  value={query}
-                                  onFocus={() => setToggleLocationOptions(true)}
-                                  onChange={(e) => setQuery(e.target.value)}
-                                />
-                              </div>
-                              <div
-                                onClick={handleNearMe}
-                                className="flex whitespace-nowrap text-[#777777] cursor-pointer"
-                              >
-                                Near Me
+                                    {item?.spaceType}
+                                  </label>
+                                  {item?.spaceType == "Coworking Space" && (
+                                    <div className="pl-6 space-y-2">
+                                      {coworkingTypes?.map((type) => (
+                                        <label
+                                          key={type}
+                                          className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light"
+                                        >
+                                          <input
+                                            type="checkbox"
+                                            checked={selectedCheckboxes.includes(
+                                              type
+                                            )}
+                                            onChange={() =>
+                                              handleCheckbox(type)
+                                            }
+                                            className="accent-[#26310b]"
+                                          />
+                                          {type}
+                                        </label>
+                                      ))}
+                                    </div>
+                                  )}
+                                </React.Fragment>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </>
+                    )}
+                    {toggleLocation && (
+                      <div className="relative">
+                        {/* Search box */}
+                        <div className="relative top-6 -left-0 w-full md:w-[400px] lg:w-3/5 rounded-xl z-10 pb-7">
+                          <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center py-[9px] px-4 rounded-[42px]">
+                            <div className="w-full toggle-location">
+                              <div className="bg-white shadow-mb rounded-full h-10 w-full flex items-center justify-between">
+                                <div className="w-full flex justify-between items-center">
+                                  <button className="text-[#777777] w-[15px] h-[15px]">
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      strokeWidth={3}
+                                      stroke="currentColor"
+                                      className="w-4 h-4"
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z"
+                                      />
+                                    </svg>
+                                  </button>
+                                  <input
+                                    type="text"
+                                    placeholder="Where are you looking for office space?"
+                                    className="border-0 bg-transparent w-full text-sm placeholder:font-normal transition-all duration-200 p-[10px] placeholder:text-[#333] focus:outline-none"
+                                    value={query}
+                                    onFocus={() =>
+                                      setToggleLocationOptions(true)
+                                    }
+                                    onChange={(e) => setQuery(e.target.value)}
+                                  />
+                                </div>
+                                <div
+                                  onClick={handleNearMe}
+                                  className="flex whitespace-nowrap text-[#777777] cursor-pointer"
+                                >
+                                  Near Me
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
 
-                      {/* Suggestion list */}
-                      {toggleLocationOptions && (
-                        <div
-                          ref={locationRef}
-                          className="dropdown-menu-location scrollDropdown max-h-72 overflow-y-auto absolute top-[70px] left-4  bg-white shadow-lg z-20"
-                        >
-                          {allLocations
-                            .filter((loc) =>
-                              loc?.label
-                                ?.toLowerCase()
-                                ?.includes(query?.toLowerCase())
-                            )
-                            .map((loc, idx) => (
-                              <div
-                                key={idx}
-                                className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
-                                onClick={() => {
-                                  setQuery(loc?.label);
-                                  setSelectedLocation(loc);
-                                  setToggleLocationOptions(false);
-                                  setNearMeData(null);
-                                }}
-                              >
-                                {loc?.label}
-                              </div>
-                            ))}
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
+                        {/* Suggestion list */}
+                        {toggleLocationOptions && (
+                          <div
+                            ref={locationRef}
+                            className="dropdown-menu-location scrollDropdown max-h-72 overflow-y-auto absolute top-[70px] left-4  bg-white shadow-lg z-20"
+                          >
+                            {allLocations
+                              .filter((loc) =>
+                                loc?.label
+                                  ?.toLowerCase()
+                                  ?.includes(query?.toLowerCase())
+                              )
+                              .map((loc, idx) => (
+                                <div
+                                  key={idx}
+                                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
+                                  onClick={() => {
+                                    setQuery(loc?.label);
+                                    setSelectedLocation(loc);
+                                    setToggleLocationOptions(false);
+                                    setNearMeData(null);
+                                  }}
+                                >
+                                  {loc?.label}
+                                </div>
+                              ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
               <div className="lg:w-2/5 w-full items-start flex lg:flex-row lg:hidden flex-col lg:justify-end justify-start lg:pt-2 pt-4">
                 <div className="text-right xs:text-left">
@@ -581,7 +586,7 @@ const Listing = ({
                   </p>
                 </div>
               </div>
-              <div className="relative lg:inline-block hidden w-full">
+              {/* <div className="relative lg:inline-block hidden w-full">
                 {toggleSpaceType && (
                   <>
                     <div
@@ -644,7 +649,7 @@ const Listing = ({
                 )}
                 {toggleLocation && (
                   <div className="relative">
-                    {/* Search box */}
+      
                     <div className="relative top-6 -left-0 w-full md:w-[400px] lg:w-3/5 rounded-xl z-10 pb-7">
                       <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center py-[9px] px-4 rounded-[42px]">
                         <div className="w-full">
@@ -686,7 +691,7 @@ const Listing = ({
                       </div>
                     </div>
 
-                    {/* Suggestion list */}
+         
                     {toggleLocationOptions && (
                       <div
                         ref={locationRef}
@@ -716,7 +721,7 @@ const Listing = ({
                     )}
                   </div>
                 )}
-              </div>
+              </div> */}
 
               <div className="spaces lg:mt-6 flex flex-row flex-wrap -mx-4">
                 {productData?.slice(0, 6)?.map((item, index) => (
@@ -753,11 +758,9 @@ const Listing = ({
                   </div>
                 ))}
               </div>
-              {
-                productData?.length > 18 && (
-                  <RequestCallback setIsOpen={setIsOpen} type={type}/>
-                )
-              }
+              {productData?.length > 18 && (
+                <RequestCallback setIsOpen={setIsOpen} type={type} />
+              )}
               <div className="spaces flex flex-row flex-wrap -mx-4">
                 {productData?.slice(18, 30)?.map((item, index) => (
                   <div

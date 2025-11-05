@@ -1,8 +1,8 @@
+"use client";
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 
-const RequestCallback = () => {
+const RequestCallback = ({setIsOpen,type}) => {
   return (
     <>
       <section className="w-full relative lg:py-8 md:py-6 py-4">
@@ -25,9 +25,11 @@ const RequestCallback = () => {
               We negotiate, you save. Our strong relationships with operators
               ensure you get the best terms—zero hassle, zero brokerage.
             </p>
-            <Link href="/contact" className="w-fit bg-[#141414] text-sm hover:bg-[#ff7c52] text-white py-4 px-6 rounded-[15px] font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">
-              Request call back
-            </Link>
+            {/* { type !== "shortterm" && (  */}
+              <div onClick={() => {setIsOpen(true)}} className="w-fit bg-[#141414] text-sm hover:bg-[#ff7c52] text-white py-4 px-6 rounded-[15px] font-semibold duration-500 transition text-center gap-2 uppercase tracking-[1px] cursor-pointer">
+                Request call back
+              </div>
+            {/* )} */}
           </div>
         </div>
       </section>

@@ -668,7 +668,7 @@ const Listing = ({ spaceTypeSlug, citySlug, locationNameSlug, spaceType, city, l
               </div>
               {
                 productData?.length > 18 && (
-                  <RequestCallback/>
+                  <RequestCallback setIsOpen={setIsOpen} type={type}/>
                 )
               }
               <div className="spaces flex flex-row flex-wrap -mx-4">

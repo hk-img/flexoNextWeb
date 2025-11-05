@@ -249,7 +249,7 @@ const Footer = () => {
                   </h6>
                 </div>
                 <div className="flex items-center gap-3.5">
-                  <Link
+                  {/* <Link
                     aria-label="facebook"
                     href="https://www.facebook.com/flexospaces/"
                     target="_blank"
@@ -264,7 +264,7 @@ const Footer = () => {
                     className="text-[#f76900]"
                   >
                     <Svg name="twitter" className="size-[22px]" />
-                  </Link>
+                  </Link> */}
                   <Link
                   aria-label="linkedin"
                     href="https://www.linkedin.com/company/flexospaces/"

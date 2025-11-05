@@ -266,7 +266,7 @@ const Footer = () => {
                     <Svg name="twitter" className="size-[22px]" />
                   </Link> */}
                   <Link
-                  aria-label="linkedin"
+                    aria-label="linkedin"
                     href="https://www.linkedin.com/company/flexospaces/"
                     target="_blank"
                     className="text-[#f76900]"
@@ -274,7 +274,7 @@ const Footer = () => {
                     <Svg name="linkedin" className="size-[22px]" />
                   </Link>
                   <Link
-                  aria-label="instagram"
+                    aria-label="instagram"
                     href="https://www.instagram.com/flexospaces/"
                     target="_blank"
                     className="text-[#f76900]"

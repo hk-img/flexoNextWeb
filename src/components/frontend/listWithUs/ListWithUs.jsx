@@ -322,7 +322,7 @@ const ListWithUs = () => {
               <h2 className="text-white text-[22px] md:text-[26px] font-medium leading-[1.6]">
                Ready to Earn with Flexo?
               </h2>
-              <Link href="/contact" className="inline-block bg-[#f76900] mt-6 tracking-[1px] min-[1400px]:text-base  text-[15px] border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:px-7.5 px-5 md:py-[15px] py-[10px] rounded-[6px] font-semibold duration-500 transition uppercase">
+              <Link href="" className="inline-block bg-[#f76900] mt-6 tracking-[1px] min-[1400px]:text-base  text-[15px] border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:px-7.5 px-5 md:py-[15px] py-[10px] rounded-[6px] font-semibold duration-500 transition uppercase">
                 List Your Space Now
               </Link>
             </div>

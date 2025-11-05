@@ -753,7 +753,11 @@ const Listing = ({
                   </div>
                 ))}
               </div>
-              {productData?.length > 18 && <RequestCallback />}
+              {
+                productData?.length > 18 && (
+                  <RequestCallback setIsOpen={setIsOpen} type={type}/>
+                )
+              }
               <div className="spaces flex flex-row flex-wrap -mx-4">
                 {productData?.slice(18, 30)?.map((item, index) => (
                   <div

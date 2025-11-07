@@ -7,12 +7,14 @@ import {
   convertSlugToCapitalLetter,
   Facilities,
   getTypeOfSpaceByWorkSpace,
+  slugGenerator,
 } from "@/services/Comman";
 import { useAuth } from "@/context/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { getApi } from "@/services/ApiService";
 import Script from "next/script";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 const EmblaCarousel = dynamic(() => import("../emblaCarousel/EmblaCarousel"));
 const EmblaCarousel2 = dynamic(() => import("./emblaCarousel2/EmblaCarousel"));
 const HeroSection = dynamic(() => import("./heroSection/HeroSection"));
@@ -61,6 +63,7 @@ const Detail = ({
   detailData,
   reviewData,
 }) => {
+  const router = useRouter();
   const { token, user } = useAuth();
   const [showAll, setShowAll] = useState(false);
   const [open, setOpen] = useState(null);
@@ -215,6 +218,25 @@ const Detail = ({
       setRequestToBookOpen(true);
     }
   }, [token]);
+
+  const handleCityBreadCumb = ()=>{
+    const typeSlug = slugGenerator(spaceData?.spaceType || "");
+    const citySlug = slugGenerator(spaceData?.contact_city_name || "");
+    if(typeSlug == "coworking-space"){
+      return router.push(`/in/coworking/${citySlug}`);
+    }
+    router.push(`/in/${typeSlug}/${citySlug}`);
+  }
+
+  const handleLocationBreadCumb = ()=>{
+    const typeSlug = slugGenerator(spaceData?.spaceType || "");
+    const citySlug = slugGenerator(spaceData?.contact_city_name || "");
+    const locationSlug = slugGenerator(spaceData?.location_name || "");
+    if(!locationSlug && typeSlug == "coworking-space" ){
+      return router.push(`/in/coworking/${citySlug}`);
+    }
+    router.push(`/in/${typeSlug}/${citySlug}/${locationSlug}`);
+  }
   return (
     <>
       <HeroSection
@@ -228,18 +250,18 @@ const Detail = ({
         <div className="flex flex-wrap">
           <div className="lg:w-2/3 md:pr-[15px] pr-0">
             <ol className="2xl:text-base text-sm leading-[30px] flex flex-wrap items-center gap-2 pb-px">
-              <li className="text-[#141414] hover:text-[#777]">
-                <a href="#">
+              <li className="text-[#141414] hover:text-[#777] cursor-pointer">
+                <div onClick={handleCityBreadCumb}>
                   {spaceData?.spaceType} In {spaceData?.contact_city_name}{" "}
-                </a>
+                </div>
               </li>
               <li>
                 <Svg name="rightArrow" className="size-2 text-gray-500" />
               </li>
-              <li className="text-[#141414] hover:text-[#777]">
-                <a href="#">
+              <li className="text-[#141414] hover:text-[#777] cursor-pointer">
+                <div onClick={handleLocationBreadCumb}>
                   {convertSlugToCapitalLetter(spaceData?.location_name || "")}{" "}
-                </a>
+                </div>
               </li>
             </ol>
             <div className="">

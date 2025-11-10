@@ -7,7 +7,6 @@ export default function ImageWithFallback({
   src,
   fallback = '/images/default_image.webp',
   alt,
-  priority = false,
   ...props
 }) {
   const [imgSrc, setImgSrc] = useState(src);
@@ -22,7 +21,6 @@ export default function ImageWithFallback({
       src={imgSrc || fallback}
       alt={alt}
       onError={() => setImgSrc(fallback)}
-      priority={priority}
     />
   );
 }

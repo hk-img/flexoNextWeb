@@ -144,7 +144,7 @@ const HeroSection = ({
                   sizes="100vw"
                   className="w-full h-full object-cover"
                   fallback="/images/default_image.webp"
-                  priority
+                  priority={true}
                 />
               )}
             </div>
@@ -164,7 +164,7 @@ const HeroSection = ({
                         sizes="100vw"
                         className="w-full h-full object-cover"
                         fallback="/images/default_image.webp"
-                        priority
+                        priority={true}
                       />
                     </div>
                   </div>
@@ -207,10 +207,6 @@ const HeroSection = ({
                     const url = slug.join("/");
                     const shareUrl = `${WEBSITE_BASE_URL}/${url}`;
                     sharePost("facebook", shareUrl);
-                    // window.open(
-                    //   `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
-                    //   "_blank"
-                    // );
                   }}
                   className="cursor-pointer bg-[#3b5998] w-[30px] h-[30px] flex border items-center justify-center rounded-full shadow"
                 >
@@ -221,10 +217,6 @@ const HeroSection = ({
                     const url = slug.join("/");
                     const shareUrl = `${WEBSITE_BASE_URL}/${url}`;
                     sharePost("linkedin", shareUrl);
-                    // window.open(
-                    //   `https://www.linkedin.com/feed/?shareActive=false&url=${shareUrl}`,
-                    //   "_blank"
-                    // );
                   }}
                   className="cursor-pointer bg-[#34aaf3] w-[30px] h-[30px] flex border items-center justify-center rounded-full shadow"
                 >
@@ -240,11 +232,6 @@ const HeroSection = ({
                       `Checkout this space on FLEXO\n${WEBSITE_BASE_URL}/${url}`
                     );
                     sharePost("whatsup", message);
-                    // const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-                    // const whatsappUrl = isMobile
-                    //   ? `whatsapp://send?text=${message}`
-                    //   : `https://web.whatsapp.com/send?text=${message}`;
-                    // window.open(whatsappUrl, "_blank");
                   }}
                   className="cursor-pointer bg-[#6ee777] w-[30px] h-[30px] flex border items-center justify-center rounded-full shadow"
                 >
@@ -257,7 +244,6 @@ const HeroSection = ({
                       `${WEBSITE_BASE_URL}/${url}`
                     );
                     sharePost("instagram", message);
-                    // window.open(`https://instagram.com?text=${message}`, "_blank");
                   }}
                   className="cursor-pointer bg-[radial-gradient(circle_at_30%_107%,_#fdf497_0%,_#fdf497_5%,_#fd5949_45%,#d6249f_60%,#285AEB_90%)] border w-[30px] h-[30px] flex items-center justify-center rounded-full shadow "
                 >
@@ -284,10 +270,6 @@ const HeroSection = ({
                     const url = slug.join("/");
                     const shareUrl = `${WEBSITE_BASE_URL}/${url}`;
                     sharePost("facebook", shareUrl);
-                    // window.open(
-                    //   `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
-                    //   "_blank"
-                    // );
                   }}
                   className="cursor-pointer bg-[#3b5998] w-[30px] h-[30px] flex border items-center justify-center rounded-full shadow"
                 >
@@ -298,10 +280,6 @@ const HeroSection = ({
                     const url = slug.join("/");
                     const shareUrl = `${WEBSITE_BASE_URL}/${url}`;
                     sharePost("linkedin", shareUrl);
-                    // window.open(
-                    //   `https://www.linkedin.com/feed/?shareActive=false&url=${shareUrl}`,
-                    //   "_blank"
-                    // );
                   }}
                   className="cursor-pointer bg-[#34aaf3] w-[30px] h-[30px] flex border items-center justify-center rounded-full shadow"
                 >
@@ -317,7 +295,6 @@ const HeroSection = ({
                       `Checkout this space on FLEXO\n${WEBSITE_BASE_URL}/${url}`
                     );
                     sharePost("whatsup", message);
-                    // window.open(`https://web.whatsapp.com/send?text=${message}`, "_blank");
                   }}
                   className="cursor-pointer bg-[#6ee777] w-[30px] h-[30px] flex border items-center justify-center rounded-full shadow"
                 >
@@ -330,7 +307,6 @@ const HeroSection = ({
                       `${WEBSITE_BASE_URL}/${url}`
                     );
                     sharePost("instagram", message);
-                    // window.open(`https://instagram.com?text=${message}`, "_blank");
                   }}
                   className="cursor-pointer bg-[radial-gradient(circle_at_30%_107%,_#fdf497_0%,_#fdf497_5%,_#fd5949_45%,#d6249f_60%,#285AEB_90%)] border w-[30px] h-[30px] flex items-center justify-center rounded-full shadow "
                 >

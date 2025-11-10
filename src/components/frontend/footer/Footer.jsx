@@ -312,7 +312,7 @@ const Footer = () => {
                       Privacy Policy
                     </Link>
                     <Link
-                      href="refund-policy"
+                      href="/refund-policy"
                       className="after:content-['|'] hover:text-black text-[#555] after:absolute relative me-6 after:-right-3 after:text-[#ccc] text-nowrap text-sm leading-[30px]"
                     >
                       Refund Policy

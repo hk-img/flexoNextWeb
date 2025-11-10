@@ -32,7 +32,7 @@ const MyFavoriteItem = ({ item, setIsRemovePopupOpen, setSpaceId }) => {
           className="cursor-pointer relative md:w-50 h-[150px] w-full rounded-lg shrink-0 overflow-hidden"
         >
           <ImageWithFallback
-            src={`${IMAGE_BASE_URL}/${item?.spaceData?.images?.[0]}`}
+            src={`${item?.spaceData?.images?.[0]}`}
             width="200"
             height="150"
             alt="Coworking Space"

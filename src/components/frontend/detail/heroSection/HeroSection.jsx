@@ -136,7 +136,7 @@ const HeroSection = ({
                   aria-roledescription="video player"
                 />
               ) : (
-                <div className="relative w-full aspect-[634/436] overflow-hidden">
+                <div className="relative w-full aspect-[634/436]">
                   <ImageWithFallback
                     src={spaceData?.images?.[0] || "/images/default_image.webp"}
                     alt="Space Image"

@@ -22,9 +22,7 @@ export default function ImageWithFallback({
       src={imgSrc || fallback}
       alt={alt}
       onError={() => setImgSrc(fallback)}
-      priority={priority} 
-      loading={priority ? undefined : 'lazy'} 
-      fetchPriority={priority ? 'high' : 'auto'} 
+      priority={priority}
     />
   );
 }

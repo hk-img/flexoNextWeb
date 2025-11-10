@@ -1,7 +1,5 @@
-import Svg from "@/components/svg";
 import React from "react";
 import EmblaCarousel from "../../emblaCarousel/EmblaCarousel";
-import Image from "next/image";
 import ImageWithFallback from "@/components/ImageWithFallback";
 
 const ImagePopup = ({ viewImagePopup, setViewImagePopup, images = [] }) => {

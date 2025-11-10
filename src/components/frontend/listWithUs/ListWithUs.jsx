@@ -83,13 +83,21 @@ const ListWithUs = () => {
     <>
       <section className="relative w-full lg:mt-[82px] sm:mt-[62px] mt-[63px]">
         <div className="flex items-center h-full justify-center py-[50px]">
-          <img
+          <Image
             src="/images/list_with_us_banner.webp"
             alt="List Your Space and Grow Your Earnings"
             width={1526}
             height={484}
             title="List Your Space and Grow Your Earnings"
-            className="absolute inset-0 w-full h-full lg:h-[484px] object-cover max-sm:object-left"
+            className="absolute inset-0 w-full h-full lg:h-[484px] object-cover md:block hidden"
+          />
+          <Image
+            src="/images/list_with_us_banner_mobile1.webp"
+            alt="List Your Space and Grow Your Earnings"
+            width={1526}
+            height={484}
+            title="List Your Space and Grow Your Earnings"
+            className="absolute inset-0 w-full h-full lg:h-[484px] object-cover object-left md:hidden block"
           />
           <div className="container mx-auto px-[15px] flex justify-end">
             <div className="flex flex-wrap mx-[-15px] justify-end">

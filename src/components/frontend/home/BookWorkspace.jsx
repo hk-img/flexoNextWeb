@@ -88,7 +88,7 @@ const BookWorkspace = () => {
 
                 <div className="mt-4">
                   <button
-                  aria-label="Connect with a Workspace Expert Today"
+                    aria-label="Connect with a Workspace Expert Today"
                     onClick={() => {
                       setIsOpen(true);
                     }}
@@ -122,39 +122,39 @@ const BookWorkspace = () => {
               </div>
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-[30px] gap-y-[23px] lg:py-[36px] sm:py-[64px] pt-12 pb-4 ">
                 <div className="text-center">
-                  <h2 className="text-[23px] lg:text-[40px] text-[#f76900] leading-[1.3] font-medium">
+                  <h3 className="text-[23px] lg:text-[40px] text-[#f76900] leading-[1.3] font-medium">
                     1800+
-                  </h2>
-                  <h5 className="text-[#141414] font-medium mt-[5px] 2xl:text-lg leading-[1.3] text-base">
+                  </h3>
+                  <div className="text-[#141414] font-medium mt-[5px] 2xl:text-lg leading-[1.3] text-base">
                     Partner Spaces
-                  </h5>
+                  </div>
                 </div>
 
                 <div className="text-center">
-                  <h2 className="text-[23px] lg:text-[40px] text-[#f76900] leading-[1.3] font-medium">
+                  <h3 className="text-[23px] lg:text-[40px] text-[#f76900] leading-[1.3] font-medium">
                     1000+
-                  </h2>
-                  <h5 className="text-[#141414] font-medium mt-[5px] 2xl:text-lg leading-[1.3] text-base">
+                  </h3>
+                  <div className="text-[#141414] font-medium mt-[5px] 2xl:text-lg leading-[1.3] text-base">
                     Clients Served
-                  </h5>
+                  </div>
                 </div>
 
                 <div className="text-center">
-                  <h2 className="text-[23px] lg:text-[40px] text-[#f76900] leading-[1.3] font-medium">
+                  <h3 className="text-[23px] lg:text-[40px] text-[#f76900] leading-[1.3] font-medium">
                     20+
-                  </h2>
-                  <h5 className="text-[#141414] font-medium mt-[5px] 2xl:text-lg leading-[1.3] text-base">
+                  </h3>
+                  <div className="text-[#141414] font-medium mt-[5px] 2xl:text-lg leading-[1.3] text-base">
                     Cities Across India
-                  </h5>
+                  </div>
                 </div>
 
                 <div className="text-center">
-                  <h2 className="text-[23px] lg:text-[40px] text-[#f76900] leading-[1.3] font-medium">
+                  <h3 className="text-[23px] lg:text-[40px] text-[#f76900] leading-[1.3] font-medium">
                     25 million+
-                  </h2>
-                  <h5 className="text-[#141414] font-medium mt-[5px] 2xl:text-lg leading-[1.3] text-base">
+                  </h3>
+                  <div className="text-[#141414] font-medium mt-[5px] 2xl:text-lg leading-[1.3] text-base">
                     Sqft of Office Space Options
-                  </h5>
+                  </div>
                 </div>
               </div>
             </div>

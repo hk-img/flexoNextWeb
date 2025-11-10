@@ -55,12 +55,18 @@ const Testimonial = () => {
       <div className="xl:mt-10 lg:mt-9 md:mt-15 mt-10 flex lg:flex-row flex-col gap-[6px]">
         <div className="w-full [&_.emblaarrows]:-left-9 [&_.emblaarrows]:h-[0px] [&_.emblaarrows]:-right-9 sm:[&_.emblaarrows]:flex [&_.emblaarrows]:hidden sm:[&_.embladots]:hidden [&_.embladots]:flex  [&_.emblaarrows_button]:w-10 [&_.emblaarrows_button]:h-10 [&_.emblaarrows_button_Svg]:size-[18px]">
           <EmblaCarousel
-            options={{ loop: true, autoplay: true, showButton: true, align: "start",showDots: true }}
+            options={{
+              loop: true,
+              autoplay: true,
+              showButton: true,
+              align: "start",
+              showDots: true,
+            }}
           >
             {testimonials.map((t, idx) => (
               <div
                 key={idx}
-                className="embla__slide shrink-0 lg:px-[15px] sm:px-[12px] px-1 basis-[100%] sm:basis-[50%] md:basis-[50%] lg:basis-[33.3%] xl:basis-[33.3%] py-3"
+                className="embla__slide group shrink-0 lg:px-[15px] sm:px-[12px] px-1 basis-[100%] sm:basis-[50%] md:basis-[50%] lg:basis-[33.3%] xl:basis-[33.3%] py-3"
               >
                 <div className=" group/info rounded-md shadow-[0_0_3px_#cbcbcb] p-6 relative bg-white md:hover:transform md:hover:translate-y-[-10px] transition-all duration-500 min-h-[280px]">
                   <span className="absolute top-3 right-3 text-[#f76900] text-4xl font-bold opacity-40">
@@ -80,14 +86,11 @@ const Testimonial = () => {
                         {t.name}
                         <br />
                         <span className="font-medium text-[15px] text-black">
-                        {t.designation}
-                      </span>
+                          {t.designation}
+                        </span>
                       </h5>
-                      
-                      <p
-                        className="text-xs font-bold text-[#cd854f]"
-                        
-                      >
+
+                      <p className="text-xs font-bold text-[#cd854f]">
                         {t.company}
                       </p>
                       <div className="flex items-center mt-2 text-[#fbbf24]">
@@ -98,11 +101,19 @@ const Testimonial = () => {
                     </div>
                   </div>
 
-                 <p
-                    className="text-[#777] text-sm 2xl:text-base line-clamp-5 group-hover/info:line-clamp-none transition-all duration-500 ease-in-out overflow-hidden cursor-default"
+                  <label
+                    htmlFor={`checkTest${idx}`}
+                    className="text-[#777] text-sm 2xl:text-base line-clamp-5 group-hover/info:line-clamp-none transition-all duration-500 ease-in-out overflow-hidden cursor-default max-lg:group-has-[:checked]:line-clamp-none"
                   >
                     {t.review}
-                  </p>
+                  </label>
+
+                  <input
+                    type="checkbox"
+                    name="testCheck"
+                    id={`checkTest${idx}`}
+                    className="hidden"
+                  />
                 </div>
               </div>
             ))}

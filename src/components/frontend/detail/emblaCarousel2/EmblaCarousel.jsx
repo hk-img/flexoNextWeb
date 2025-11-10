@@ -15,9 +15,7 @@ export default function EmblaCarousel({ children, options }) {
   const plugins = [];
 
   if (options?.autoplay) {
-    plugins.push(
-      Autoplay({ delay: 3000, stopOnMouseEnter: true, stopOnInteraction: true })
-    );
+    plugins.push(Autoplay({ delay: 3000, stopOnInteraction: false }));
   }
 
   if (options?.autoscroll) {
@@ -54,7 +52,7 @@ export default function EmblaCarousel({ children, options }) {
 
       {/* Buttons */}
       {options?.showButton && (
-        <div className="emblaarrows absolute top-1/2  flex justify-between -translate-y-1/2">
+        <div className="emblaarrows absolute top-1/2  flex justify-between -translate-y-1/2 -left-3 -right-3">
           <PrevButton
             onClick={(e) => {
               e.stopPropagation();

@@ -7,28 +7,44 @@ import {
   convertSlugToCapitalLetter,
   Facilities,
   getTypeOfSpaceByWorkSpace,
+  slugGenerator,
 } from "@/services/Comman";
 import { useAuth } from "@/context/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { getApi } from "@/services/ApiService";
 import Script from "next/script";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 const EmblaCarousel = dynamic(() => import("../emblaCarousel/EmblaCarousel"));
+const EmblaCarousel2 = dynamic(() => import("./emblaCarousel2/EmblaCarousel"));
 const HeroSection = dynamic(() => import("./heroSection/HeroSection"));
 const ReviewSection = dynamic(() => import("./reviewSection/ReviewSection"));
 const LikeDislike = dynamic(() => import("./LikeDislike"));
 const ShowHtmlData = dynamic(() => import("../showHtmlData/ShowHtmlData"));
 const BottomBar = dynamic(() => import("../bottomBar/BottomBar"));
 const Auth = dynamic(() => import("../auth/Auth"), { ssr: false });
-const ExplorePopup = dynamic(() => import("../explorePopup/ExplorePopup"), { ssr: false });
-const ScheduleVisitPopup = dynamic(() => import("./scheduleVisitPopup/ScheduleVisitPopup"), { ssr: false });
-const BuyPassPopup = dynamic(() => import("./buyPassPopup/BuyPassPopup"), { ssr: false });
-const BookingReviewPopup = dynamic(() => import("../bookingReviewPopup/BookingReviewPopup"),
+const ExplorePopup = dynamic(() => import("../explorePopup/ExplorePopup"), {
+  ssr: false,
+});
+const ScheduleVisitPopup = dynamic(
+  () => import("./scheduleVisitPopup/ScheduleVisitPopup"),
   { ssr: false }
-)
-const RequestToBookPopup = dynamic(() => import("./requestToBookPopup/RequestToBookPopup"), { ssr: false });
+);
+const BuyPassPopup = dynamic(() => import("./buyPassPopup/BuyPassPopup"), {
+  ssr: false,
+});
+const BookingReviewPopup = dynamic(
+  () => import("../bookingReviewPopup/BookingReviewPopup"),
+  { ssr: false }
+);
+const RequestToBookPopup = dynamic(
+  () => import("./requestToBookPopup/RequestToBookPopup"),
+  { ssr: false }
+);
 const ProductCard = dynamic(() => import("../productCard/ProductCard"), {
-  loading: () => <div className="h-[500px] bg-gray-100 animate-pulse rounded-lg" />,
+  loading: () => (
+    <div className="h-[500px] bg-gray-100 animate-pulse rounded-lg" />
+  ),
   ssr: false,
 });
 const MapComponent = dynamic(() => import("./MapComponent"), {
@@ -38,10 +54,17 @@ const MapComponent = dynamic(() => import("./MapComponent"), {
     </div>
   ),
   ssr: false,
-})
+});
 
-const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
-  const {token,user} = useAuth();
+const Detail = ({
+  slug,
+  spaceId,
+  spaceDetailsData,
+  detailData,
+  reviewData,
+}) => {
+  const router = useRouter();
+  const { token, user } = useAuth();
   const [showAll, setShowAll] = useState(false);
   const [open, setOpen] = useState(null);
   const [isFixed, setIsFixed] = useState(false);
@@ -49,10 +72,10 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isScheduleVisitOpen, setIsScheduleVisitOpen] = useState(false);
   const [isBuyPassOpen, setIsBuyPassOpen] = useState(false);
-  const [selectedSpaceData,setSelectedSpaceData] = useState(null);
+  const [selectedSpaceData, setSelectedSpaceData] = useState(null);
   const [selectedSpaceType, setSelectedSpaceType] = useState(null);
   const [showReviewPopup, setShowReviewPopup] = useState(false);
-  const [requestToBookOpen,setRequestToBookOpen] = useState(false);
+  const [requestToBookOpen, setRequestToBookOpen] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY >= 700) {
@@ -76,7 +99,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
     }
   };
   const toggle = (id) => {
-    setOpen(open === id ? null : id); 
+    setOpen(open === id ? null : id);
   };
 
   function convertTo12Hour(time) {
@@ -89,114 +112,163 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
     return `${hour}:${minute} ${ampm}`;
   }
 
-   const { data: spaceDeatil,refetch:refetchDetail } = useQuery({
-    queryKey: ["space-detail",spaceId,spaceDetailsData,user?.id],
+  const { data: spaceDeatil, refetch: refetchDetail } = useQuery({
+    queryKey: ["space-detail", spaceId, spaceDetailsData, user?.id],
     queryFn: async () => {
-      let query = ""
-      if(user?.id){
-        query = `&userId=${user?.id}`
+      let query = "";
+      if (user?.id) {
+        query = `&userId=${user?.id}`;
       }
-      const res = await getApi(`/spaces/details?spaceId=${spaceId}&city=${spaceDetailsData?.contact_city_name}&spaceType=${spaceDetailsData?.spaceType}&country=${spaceDetailsData?.country}${query}`);
+      const res = await getApi(
+        `/spaces/details?spaceId=${spaceId}&city=${spaceDetailsData?.contact_city_name}&spaceType=${spaceDetailsData?.spaceType}&country=${spaceDetailsData?.country}${query}`
+      );
       return res.data;
     },
     keepPreviousData: true,
-    initialData: detailData
+    initialData: detailData,
   });
 
-  const spaceData = useMemo(()=>{
+  const spaceData = useMemo(() => {
     return spaceDeatil?.data;
-  },[spaceDeatil]);
+  }, [spaceDeatil]);
 
   const type = getTypeOfSpaceByWorkSpace(spaceData?.spaceType || "");
   const displayedFacilities = showAll
     ? spaceData?.facilities
     : spaceData?.facilities?.slice(0, 3);
 
-  const handleScheduleVisit = ()=>{
-    if(!token){
-      localStorage.setItem("scheduleVisitOpenData",JSON.stringify({
-        spaceId:spaceData?.id,
-        scheduleVisitOpen:true
-      }));
+  const handleScheduleVisit = () => {
+    if (!token) {
+      localStorage.setItem(
+        "scheduleVisitOpenData",
+        JSON.stringify({
+          spaceId: spaceData?.id,
+          scheduleVisitOpen: true,
+        })
+      );
       setIsAuthOpen(true);
-    }else{
+    } else {
       setIsScheduleVisitOpen(true);
     }
-  }
-  const handleBuyPass = ()=>{
-    if(!token){
-      localStorage.setItem("buyPassOpenData",JSON.stringify({
-        spaceId:spaceData?.id,
-        buyPassOpen:true
-      }));
+  };
+  const handleBuyPass = () => {
+    if (!token) {
+      localStorage.setItem(
+        "buyPassOpenData",
+        JSON.stringify({
+          spaceId: spaceData?.id,
+          buyPassOpen: true,
+        })
+      );
       setIsAuthOpen(true);
-    }else{
+    } else {
       setIsBuyPassOpen(true);
     }
-  }
+  };
 
-  const handleRequestToBook = ()=>{
-    if(!token){
-      localStorage.setItem("requestToBookOpenData",JSON.stringify({
-        spaceId:spaceData?.id,
-        requestToBookOpen:true
-      }));
+  const handleRequestToBook = () => {
+    if (!token) {
+      localStorage.setItem(
+        "requestToBookOpenData",
+        JSON.stringify({
+          spaceId: spaceData?.id,
+          requestToBookOpen: true,
+        })
+      );
       setIsAuthOpen(true);
-    }else{
+    } else {
       setRequestToBookOpen(true);
     }
-  }
-  const handleGetQuote = ()=>{
+  };
+  const handleGetQuote = () => {
     setIsOpen(true);
     setSelectedSpaceData(spaceData);
     setSelectedSpaceType("");
-  }
+  };
 
-  useEffect(()=>{
+  useEffect(() => {
     const scheduleVisitOpenData = localStorage.getItem("scheduleVisitOpenData");
     const buyPassOpenData = localStorage.getItem("buyPassOpenData");
     const requestToBookOpenData = localStorage.getItem("requestToBookOpenData");
     const parsedScheduleVisitOpenData = JSON.parse(scheduleVisitOpenData);
     const parsedbuyPassOpenData = JSON.parse(buyPassOpenData);
     const parsedrequestToBookOpenData = JSON.parse(requestToBookOpenData);
-    if(parsedScheduleVisitOpenData?.spaceId == spaceData?.id && parsedScheduleVisitOpenData?.scheduleVisitOpen && token){
+    if (
+      parsedScheduleVisitOpenData?.spaceId == spaceData?.id &&
+      parsedScheduleVisitOpenData?.scheduleVisitOpen &&
+      token
+    ) {
       localStorage.removeItem("scheduleVisitOpenData");
       setIsScheduleVisitOpen(true);
     }
-    if(parsedbuyPassOpenData?.spaceId == spaceData?.id && parsedbuyPassOpenData?.buyPassOpen && token){
+    if (
+      parsedbuyPassOpenData?.spaceId == spaceData?.id &&
+      parsedbuyPassOpenData?.buyPassOpen &&
+      token
+    ) {
       localStorage.removeItem("buyPassOpenData");
       setIsBuyPassOpen(true);
     }
-    if(parsedrequestToBookOpenData?.spaceId == spaceData?.id && parsedrequestToBookOpenData?.requestToBookOpen && token){
+    if (
+      parsedrequestToBookOpenData?.spaceId == spaceData?.id &&
+      parsedrequestToBookOpenData?.requestToBookOpen &&
+      token
+    ) {
       localStorage.removeItem("requestToBookOpenData");
       setRequestToBookOpen(true);
     }
-  },[token])
+  }, [token]);
+
+  const handleCityBreadCrumb = ()=>{
+    const typeSlug = slugGenerator(spaceData?.spaceType || "");
+    const citySlug = slugGenerator(spaceData?.contact_city_name || "");
+    if(typeSlug == "coworking-space"){
+      return router.push(`/in/coworking/${citySlug}`);
+    }
+    router.push(`/in/${typeSlug}/${citySlug}`);
+  }
+
+  const handleLocationBreadCrumb = ()=>{
+    const typeSlug = slugGenerator(spaceData?.spaceType || "");
+    const citySlug = slugGenerator(spaceData?.contact_city_name || "");
+    const locationSlug = slugGenerator(spaceData?.location_name || "");
+    if(!locationSlug && typeSlug == "coworking-space" ){
+      return router.push(`/in/coworking/${citySlug}`);
+    }
+    router.push(`/in/${typeSlug}/${citySlug}/${locationSlug}`);
+  }
   return (
     <>
-      <HeroSection slug={slug} isFavouriteSpace={spaceDeatil?.existingfavorite?.favourite} spaceData={spaceData} setIsAuthOpen={setIsAuthOpen} refetchDetail={refetchDetail}/>
+      <HeroSection
+        slug={slug}
+        isFavouriteSpace={spaceDeatil?.existingfavorite?.favourite}
+        spaceData={spaceData}
+        setIsAuthOpen={setIsAuthOpen}
+        refetchDetail={refetchDetail}
+      />
       <section className="container px-[15px] mx-auto md:py-6 py-[18px]">
         <div className="flex flex-wrap">
           <div className="lg:w-2/3 md:pr-[15px] pr-0">
             <ol className="2xl:text-base text-sm leading-[30px] flex flex-wrap items-center gap-2 pb-px">
-              <li className="text-[#141414] hover:text-[#777]">
-                <a href="#">
+              <li className="text-[#141414] hover:text-[#777] cursor-pointer">
+                <div onClick={handleCityBreadCrumb}>
                   {spaceData?.spaceType} In {spaceData?.contact_city_name}{" "}
-                </a>
+                </div>
               </li>
               <li>
                 <Svg name="rightArrow" className="size-2 text-gray-500" />
               </li>
-              <li className="text-[#141414] hover:text-[#777]">
-                <a href="#">
+              <li className="text-[#141414] hover:text-[#777] cursor-pointer">
+                <div onClick={handleLocationBreadCrumb}>
                   {convertSlugToCapitalLetter(spaceData?.location_name || "")}{" "}
-                </a>
+                </div>
               </li>
             </ol>
             <div className="">
               {type == "coworking" && (
                 <h1 className="2xl:text-[30px] text-lg leading-[1.6] font-medium text-[#141414] mb-4">
-                  {spaceData?.actual_name || spaceData?.name} {spaceData?.location_name}
+                  {spaceData?.actual_name || spaceData?.name}{" "}
+                  {spaceData?.location_name}
                 </h1>
               )}
               {(type == "longterm" || type == "shortterm") && (
@@ -256,10 +328,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                     )}
                     {type == "shortterm" && (
                       <div className="flex gap-1 items-center">
-                        <Svg
-                          name="clock"
-                          className="size-5 text-[#7f7f7f]"
-                        />
+                        <Svg name="clock" className="size-5 text-[#7f7f7f]" />
                         <span>{spaceData?.minimum_hours / 60} hrs min</span>
                       </div>
                     )}
@@ -274,7 +343,11 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                     </div>
                   </div>
                   {type != "longterm" && (
-                    <LikeDislike spaceData={spaceData} setIsAuthOpen={setIsAuthOpen} existingVote={spaceDeatil?.existingVote}/>
+                    <LikeDislike
+                      spaceData={spaceData}
+                      setIsAuthOpen={setIsAuthOpen}
+                      existingVote={spaceDeatil?.existingVote}
+                    />
                   )}
                 </div>
               </div>
@@ -302,20 +375,18 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                   >
                     About the Space
                   </button>
-                  {
-                    type == "coworking" && (
-                      <button
-                        onClick={() => scrollToSection("pricing", 2)}
-                        className={`2xl:py-[25px] py-[10px] relative 2xl:text-base text-sm leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
-                          activeTab === 2
-                            ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]"
-                            : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
-                        }`}
-                      >
-                        Pricing
-                      </button>
-                    )
-                  }
+                  {type == "coworking" && (
+                    <button
+                      onClick={() => scrollToSection("pricing", 2)}
+                      className={`2xl:py-[25px] py-[10px] relative 2xl:text-base text-sm leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
+                        activeTab === 2
+                          ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]"
+                          : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
+                      }`}
+                    >
+                      Pricing
+                    </button>
+                  )}
 
                   <button
                     onClick={() => scrollToSection("location", 3)}
@@ -327,34 +398,30 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                   >
                     Location
                   </button>
-                    {
-                      type != "longterm" && (
-                        <button
-                          onClick={() => scrollToSection("hours", 4)}
-                          className={`2xl:py-[25px] py-[10px] relative 2xl:text-base text-sm leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
-                            activeTab === 4
-                              ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]"
-                              : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
-                          }`}
-                        >
-                          Business Hours
-                        </button>
-                      )
-                    }
-                    {
-                      type == "shortterm" && (
-                        <button
-                          onClick={() => scrollToSection("cancellation", 5)}
-                          className={`2xl:py-[25px] py-[10px] relative 2xl:text-base text-sm leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
-                            activeTab === 5
-                              ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]"
-                              : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
-                          }`}
-                        >
-                          Cancellation Policy
-                        </button>
-                      )
-                    }
+                  {type != "longterm" && (
+                    <button
+                      onClick={() => scrollToSection("hours", 4)}
+                      className={`2xl:py-[25px] py-[10px] relative 2xl:text-base text-sm leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
+                        activeTab === 4
+                          ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]"
+                          : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
+                      }`}
+                    >
+                      Business Hours
+                    </button>
+                  )}
+                  {type == "shortterm" && (
+                    <button
+                      onClick={() => scrollToSection("cancellation", 5)}
+                      className={`2xl:py-[25px] py-[10px] relative 2xl:text-base text-sm leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
+                        activeTab === 5
+                          ? "text-[#f76900] before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-[#f76900]"
+                          : "text-[#777] after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full"
+                      }`}
+                    >
+                      Cancellation Policy
+                    </button>
+                  )}
                   <button
                     onClick={() => scrollToSection("reviews", 6)}
                     className={`2xl:py-[25px] py-[10px] relative 2xl:text-base text-sm leading-[30px] transition after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-[#f76900] after:transition-all after:duration-500 hover:after:w-full ${
@@ -381,59 +448,66 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                     </div>
                     {spaceData?.parkingDescription && (
                       <div>
-                          <div>
-                            <button
-                              onClick={() => toggle("parking")}
-                              className="cursor-pointer flex w-full items-center justify-between border-b border-[#dbdbdb] py-5 px-1 hover:bg-[#0000000a]"
-                            >
-                              <div className="flex items-center gap-1">
-                                <Svg name="parking" className="size-7 text-[#f76900]" />
-                                <span className="font-medium text-lg">Parking</span>
-                              </div>
+                        <div>
+                          <button
+                            onClick={() => toggle("parking")}
+                            className="cursor-pointer flex w-full items-center justify-between border-b border-[#dbdbdb] py-5 px-1 hover:bg-[#0000000a]"
+                          >
+                            <div className="flex items-center gap-1">
                               <Svg
-                                name="leftArrow"
-                                className={`size-3.5 transition-transform duration-300 ${
-                                  open === "parking" ? "rotate-90" : "-rotate-90"
-                                }`}
+                                name="parking"
+                                className="size-7 text-[#f76900]"
                               />
-                            </button>
-
-                            <div
-                              className={`overflow-hidden transition-[max-height] duration-300 ease-in-out ${
-                                open === "parking" ? "max-h-[1000px]" : "max-h-0"
+                              <span className="font-medium text-lg">
+                                Parking
+                              </span>
+                            </div>
+                            <Svg
+                              name="leftArrow"
+                              className={`size-3.5 transition-transform duration-300 ${
+                                open === "parking" ? "rotate-90" : "-rotate-90"
                               }`}
-                            >
-                              <div className="pt-8 space-y-5">
-                                <div>
-                                  <h5 className="font-semibold text-[#000000de] leading-[20px] text-[17px] mb-2">
-                                    Parking options
-                                  </h5>
-                                  <p className="text-[#646464] text-base leading-[1.8]">
-                                    {spaceData?.parkingOptionsValue?.join(", ")}
-                                  </p>
-                                </div>
-                                <div>
-                                  <h5 className="font-semibold text-[#000000de] leading-[20px] text-[17px] mb-2">
-                                    Parking description
-                                  </h5>
-                                  <p className="text-[#646464] text-base leading-[1.8]">
-                                    {spaceData?.parkingDescription}
-                                  </p>
-                                </div>
+                            />
+                          </button>
+
+                          <div
+                            className={`overflow-hidden transition-[max-height] duration-300 ease-in-out ${
+                              open === "parking" ? "max-h-[1000px]" : "max-h-0"
+                            }`}
+                          >
+                            <div className="pt-8 space-y-5">
+                              <div>
+                                <h5 className="font-semibold text-[#000000de] leading-[20px] text-[17px] mb-2">
+                                  Parking options
+                                </h5>
+                                <p className="text-[#646464] text-base leading-[1.8]">
+                                  {spaceData?.parkingOptionsValue?.join(", ")}
+                                </p>
+                              </div>
+                              <div>
+                                <h5 className="font-semibold text-[#000000de] leading-[20px] text-[17px] mb-2">
+                                  Parking description
+                                </h5>
+                                <p className="text-[#646464] text-base leading-[1.8]">
+                                  {spaceData?.parkingDescription}
+                                </p>
                               </div>
                             </div>
                           </div>
                         </div>
+                      </div>
                     )}
                     {type != "coworking" && spaceData?.lightingDescription && (
-                     <div className="">
+                      <div className="">
                         <button
                           onClick={() => toggle("lighting")}
                           className="cursor-pointer flex w-full items-center justify-between border-b border-[#dbdbdb] py-5 px-1 hover:bg-[#0000000a]"
                         >
                           <div className="flex items-center gap-1">
                             <Svg name="sun" className="size-7 text-[#f76900]" />
-                            <span className="font-medium text-lg">Lighting</span>
+                            <span className="font-medium text-lg">
+                              Lighting
+                            </span>
                           </div>
                           <Svg
                             name="leftArrow"
@@ -462,7 +536,10 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                           className="cursor-pointer flex w-full items-center justify-between border-b border-[#dbdbdb] py-5 px-1 hover:bg-[#0000000a]"
                         >
                           <div className="flex items-center gap-1">
-                            <Svg name="sound" className="size-7 text-[#f76900]" />
+                            <Svg
+                              name="sound"
+                              className="size-7 text-[#f76900]"
+                            />
                             <span className="font-medium text-lg">Sound</span>
                           </div>
                           <Svg
@@ -492,8 +569,13 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                           className="cursor-pointer flex w-full items-center justify-between border-b border-[#dbdbdb] py-5 px-1 hover:bg-[#0000000a]"
                         >
                           <div className="flex items-center gap-1">
-                            <Svg name="fileMinus" className="size-7 text-[#f76900]" />
-                            <span className="font-medium text-lg">Host rules</span>
+                            <Svg
+                              name="fileMinus"
+                              className="size-7 text-[#f76900]"
+                            />
+                            <span className="font-medium text-lg">
+                              Host rules
+                            </span>
                           </div>
                           <Svg
                             name="leftArrow"
@@ -603,7 +685,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                               <button
                                 onClick={() => {
                                   setIsOpen(true);
-                                  setSelectedSpaceData(spaceData)
+                                  setSelectedSpaceData(spaceData);
                                   setSelectedSpaceType("Private Office");
                                 }}
                                 className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out"
@@ -648,7 +730,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                               <button
                                 onClick={() => {
                                   setIsOpen(true);
-                                  setSelectedSpaceData(spaceData)
+                                  setSelectedSpaceData(spaceData);
                                   setSelectedSpaceType("Managed Office");
                                 }}
                                 className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out"
@@ -693,7 +775,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                               <button
                                 onClick={() => {
                                   setIsOpen(true);
-                                  setSelectedSpaceData(spaceData)
+                                  setSelectedSpaceData(spaceData);
                                   setSelectedSpaceType("Dedicated Desk");
                                 }}
                                 className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out"
@@ -738,7 +820,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                               <button
                                 onClick={() => {
                                   setIsOpen(true);
-                                  setSelectedSpaceData(spaceData)
+                                  setSelectedSpaceData(spaceData);
                                   setSelectedSpaceType("Flexible Desk");
                                 }}
                                 className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out"
@@ -783,7 +865,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                               <button
                                 onClick={() => {
                                   setIsOpen(true);
-                                  setSelectedSpaceData(spaceData)
+                                  setSelectedSpaceData(spaceData);
                                   setSelectedSpaceType("Virtual Office");
                                 }}
                                 className="cursor-pointer md:mt-3 mt-2 bg-[#000e54] border border-[#000e54] text-white text-sm font-semibold px-[15px] py-2.5 rounded-[15px] tracking-[1px] hover:bg-[#1d37b5] hover:border-[#0723ab] transition-all duration-500 ease-in-out"
@@ -834,7 +916,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                                 </button>
                               </div>
                             </div>
-                        )}
+                          )}
                       </div>
                     </div>
                   )}
@@ -937,7 +1019,7 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                       </div>
                     </div>
                   )}
-                  
+
                   {type == "shortterm" &&
                     spaceData?.spaceServiceDetailsArray?.length > 0 && (
                       <div className=" md:py-14 py-7 border-b border-[#dbdbdb]">
@@ -972,7 +1054,10 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                       </div>
                     )}
                   {type == "shortterm" && (
-                    <div id="cancellation" className="py-10 border-b border-[#dbdbdb]">
+                    <div
+                      id="cancellation"
+                      className="py-10 border-b border-[#dbdbdb]"
+                    >
                       <h3 className="text-[#141414] text-xl font-medium pb-6">
                         Cancellation Policy
                       </h3>
@@ -1029,11 +1114,9 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                           spaceData?.originalPrice / spaceData?.spacesqft
                         )}
                         /Sqft
-                        {
-                          spaceData?.negociable_price == 1 && (
-                            <span className=" font-bold">(Negotiable)</span>
-                          )
-                        }
+                        {spaceData?.negociable_price == 1 && (
+                          <span className=" font-bold">(Negotiable)</span>
+                        )}
                       </p>
                     </div>
                     <p className="text-xs font-normal  leading-[1.5] text-[#777]">
@@ -1154,14 +1237,12 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
               <div className="w-full border border-[#dbdbdb]   rounded-sm md:sticky md:top-[90px]  bg-white">
                 <div className="border-b p-5 border-[#dbdbdb]">
                   <div className="flex items-center justify-center pt-[10px] ">
-                    {
-                      spaceData?.isInstant == 1 && (
-                        <Svg
-                          name="boltFull"
-                          className="size-[15px] text-[#ffbf00]"
-                        />
-                      )
-                    }
+                    {spaceData?.isInstant == 1 && (
+                      <Svg
+                        name="boltFull"
+                        className="size-[15px] text-[#ffbf00]"
+                      />
+                    )}
                     <Svg name="rupee" className="size-[18px] text-[#f76900]" />
                     <h3 className="text-[26px] font-bold text-center">
                       {spaceData?.originalPrice}{" "}
@@ -1175,13 +1256,19 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                 <div className="p-5">
                   {spaceData?.isInstant == 0 ? (
                     <>
-                    <button onClick={handleRequestToBook} className="cursor-pointer md:block hidden w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[15px]  md:rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">
-                      Request To Book
-                    </button>
+                      <button
+                        onClick={handleRequestToBook}
+                        className="cursor-pointer md:block hidden w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[15px]  md:rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]"
+                      >
+                        Request To Book
+                      </button>
                     </>
                   ) : (
                     <>
-                      <button onClick={handleRequestToBook} className="cursor-pointer md:block hidden w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]  mt-[10px]">
+                      <button
+                        onClick={handleRequestToBook}
+                        className="cursor-pointer md:block hidden w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]  mt-[10px]"
+                      >
                         Book Now
                       </button>
                       <div className="pt-5">
@@ -1203,8 +1290,11 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
                       </div>
                     </>
                   )}
-                  <button onClick={handleRequestToBook} className="cursor-pointer md:hidden block md:relative fixed bottom-0 left-0 w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[15px]  md:rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px] z-10">
-                    {spaceData?.isInstant == 1 ? "Book Now": "Request To Book"}
+                  <button
+                    onClick={handleRequestToBook}
+                    className="cursor-pointer md:hidden block md:relative fixed bottom-0 left-0 w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[15px]  md:rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px] z-10"
+                  >
+                    {spaceData?.isInstant == 1 ? "Book Now" : "Request To Book"}
                   </button>
                 </div>
               </div>
@@ -1212,44 +1302,93 @@ const Detail = ({ slug,spaceId,spaceDetailsData,detailData,reviewData }) => {
           )}
         </div>
       </section>
-      {
-        spaceData?.similar_spaces?.length > 0 && (
-          <section className="container px-[15px] mx-auto pb-[50px] pt-10">
-            <h2 className="text-2xl font-medium text-[#141414] mb-[3px] leading-[1.6] md:pl-3 pl-0">
-              Nearby{" "}
-              {spaceData?.spaceType == "Coworking spaces"
-                ? "Coworking Spaces"
-                : spaceData?.spaceType}
-            </h2>
-            <div>
-              <EmblaCarousel
-                options={{
-                  loop: true,
-                  autoplay: false,
-                  showDots: true,
-                  align: "start",
-                }}
-              >
-                {spaceData?.similar_spaces?.map((item, index) => (
-                  <div
-                    key={index}
-                    className="shrink-0 md:px-[9px] px-0 basis-[100%] sm:basis-[50%] md:basis-[50%] lg:basis-[33.3%] xl:basis-[33.3%] py-3"
-                  >
-                    <ProductCard item={item} setIsOpen={setIsOpen} setIsAuthOpen={setIsAuthOpen} setSelectedSpaceData={setSelectedSpaceData}/>
-                  </div>
-                ))}
-              </EmblaCarousel>
-            </div>
-          </section>
-        )
-      }
-      {type != "shortterm" && <BottomBar type={type} city={spaceData?.contact_city_name} spaceData={spaceData}/>}
-      {isOpen && <ExplorePopup isOpen={isOpen} setIsOpen={setIsOpen} selectedSpaceData={selectedSpaceData} type={type} selectedSpaceType={selectedSpaceType} cityName={spaceData?.contact_city_name}/>}
+      {spaceData?.similar_spaces?.length > 0 && (
+        <section className="container px-[15px] mx-auto pb-[50px] pt-10">
+          <h2 className="text-2xl font-medium text-[#141414] mb-[3px] leading-[1.6] md:pl-3 pl-0">
+            Nearby{" "}
+            {spaceData?.spaceType == "Coworking spaces"
+              ? "Coworking Spaces"
+              : spaceData?.spaceType}
+          </h2>
+          <div className="">
+            <EmblaCarousel2
+              options={{
+                loop: true,
+                autoplay: false,
+                showDots: true,
+                showButton: true,
+                align: "start",
+              }}
+            >
+              {spaceData?.similar_spaces?.map((item, index) => (
+                <div
+                  key={index}
+                  className="shrink-0 md:px-[9px] px-0 basis-[100%] sm:basis-[50%] md:basis-[50%] lg:basis-[33.3%] xl:basis-[33.3%] py-3"
+                >
+                  <ProductCard
+                    item={item}
+                    setIsOpen={setIsOpen}
+                    setIsAuthOpen={setIsAuthOpen}
+                    setSelectedSpaceData={setSelectedSpaceData}
+                  />
+                </div>
+              ))}
+            </EmblaCarousel2>
+          </div>
+        </section>
+      )}
+      {type != "shortterm" && (
+        <BottomBar
+          type={type}
+          city={spaceData?.contact_city_name}
+          spaceData={spaceData}
+        />
+      )}
+      {isOpen && (
+        <ExplorePopup
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          selectedSpaceData={selectedSpaceData}
+          type={type}
+          selectedSpaceType={selectedSpaceType}
+          cityName={spaceData?.contact_city_name}
+        />
+      )}
       {isAuthOpen && <Auth isOpen={isAuthOpen} setIsOpen={setIsAuthOpen} />}
-      {isScheduleVisitOpen &&<ScheduleVisitPopup isOpen={isScheduleVisitOpen} setIsOpen={setIsScheduleVisitOpen} type={type} spaceId={spaceData?.id} workingDays={spaceData?.working_time} spaceData={spaceData} hostHolidays={spaceDeatil?.hostHolidays}/>}
-      {isBuyPassOpen && <BuyPassPopup isOpen={isBuyPassOpen} setIsOpen={setIsBuyPassOpen} spaceData={spaceData}/>}
-      {requestToBookOpen && <RequestToBookPopup isOpen={requestToBookOpen} setIsOpen={setRequestToBookOpen} spaceData={spaceData} workingDays={spaceData?.working_time} hostHolidays={spaceDeatil?.hostHolidays}/>}
-      {showReviewPopup && <BookingReviewPopup setIsOpen={setShowReviewPopup} isOpen={showReviewPopup} bookingId={spaceData?.id}/>}
+      {isScheduleVisitOpen && (
+        <ScheduleVisitPopup
+          isOpen={isScheduleVisitOpen}
+          setIsOpen={setIsScheduleVisitOpen}
+          type={type}
+          spaceId={spaceData?.id}
+          workingDays={spaceData?.working_time}
+          spaceData={spaceData}
+          hostHolidays={spaceDeatil?.hostHolidays}
+        />
+      )}
+      {isBuyPassOpen && (
+        <BuyPassPopup
+          isOpen={isBuyPassOpen}
+          setIsOpen={setIsBuyPassOpen}
+          spaceData={spaceData}
+        />
+      )}
+      {requestToBookOpen && (
+        <RequestToBookPopup
+          isOpen={requestToBookOpen}
+          setIsOpen={setRequestToBookOpen}
+          spaceData={spaceData}
+          workingDays={spaceData?.working_time}
+          hostHolidays={spaceDeatil?.hostHolidays}
+        />
+      )}
+      {showReviewPopup && (
+        <BookingReviewPopup
+          setIsOpen={setShowReviewPopup}
+          isOpen={showReviewPopup}
+          bookingId={spaceData?.id}
+        />
+      )}
       <Script
         src="https://checkout.razorpay.com/v1/checkout.js"
         strategy="afterInteractive"

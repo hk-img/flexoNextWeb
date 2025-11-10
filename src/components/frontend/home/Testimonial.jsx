@@ -82,13 +82,13 @@ const Testimonial = () => {
                       className="w-[76px] h-[76px] rounded-full border-3 border-[#f76900] object-cover"
                     />
                     <div className="space-y-1">
-                      <h5 className="font-medium text-[17px] text-black">
+                      <h3 className="font-medium text-[17px] text-black">
                         {t.name}
                         <br />
                         <span className="font-medium text-[15px] text-black">
                           {t.designation}
                         </span>
-                      </h5>
+                      </h3>
 
                       <p className="text-xs font-bold text-[#cd854f]">
                         {t.company}

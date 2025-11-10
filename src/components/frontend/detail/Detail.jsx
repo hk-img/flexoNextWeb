@@ -219,7 +219,7 @@ const Detail = ({
     }
   }, [token]);
 
-  const handleCityBreadCumb = ()=>{
+  const handleCityBreadCrumb = ()=>{
     const typeSlug = slugGenerator(spaceData?.spaceType || "");
     const citySlug = slugGenerator(spaceData?.contact_city_name || "");
     if(typeSlug == "coworking-space"){
@@ -228,7 +228,7 @@ const Detail = ({
     router.push(`/in/${typeSlug}/${citySlug}`);
   }
 
-  const handleLocationBreadCumb = ()=>{
+  const handleLocationBreadCrumb = ()=>{
     const typeSlug = slugGenerator(spaceData?.spaceType || "");
     const citySlug = slugGenerator(spaceData?.contact_city_name || "");
     const locationSlug = slugGenerator(spaceData?.location_name || "");
@@ -251,7 +251,7 @@ const Detail = ({
           <div className="lg:w-2/3 md:pr-[15px] pr-0">
             <ol className="2xl:text-base text-sm leading-[30px] flex flex-wrap items-center gap-2 pb-px">
               <li className="text-[#141414] hover:text-[#777] cursor-pointer">
-                <div onClick={handleCityBreadCumb}>
+                <div onClick={handleCityBreadCrumb}>
                   {spaceData?.spaceType} In {spaceData?.contact_city_name}{" "}
                 </div>
               </li>
@@ -259,7 +259,7 @@ const Detail = ({
                 <Svg name="rightArrow" className="size-2 text-gray-500" />
               </li>
               <li className="text-[#141414] hover:text-[#777] cursor-pointer">
-                <div onClick={handleLocationBreadCumb}>
+                <div onClick={handleLocationBreadCrumb}>
                   {convertSlugToCapitalLetter(spaceData?.location_name || "")}{" "}
                 </div>
               </li>

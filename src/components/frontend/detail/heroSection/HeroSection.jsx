@@ -136,16 +136,17 @@ const HeroSection = ({
                   aria-roledescription="video player"
                 />
               ) : (
-                <ImageWithFallback
-                  src={spaceData?.images?.[0] || "/images/default_image.webp"}
-                  alt="Space Image"
-                  width={0}
-                  height={0}
-                  sizes="100vw"
-                  className="w-full h-full object-cover"
-                  fallback="/images/default_image.webp"
-                  priority={true}
-                />
+                <div className="relative w-full h-full min-h-[300px]">
+                  <ImageWithFallback
+                    src={spaceData?.images?.[0] || "/images/default_image.webp"}
+                    alt="Space Image"
+                    fill
+                    sizes="100vw"
+                    className="object-cover"
+                    fallback="/images/default_image.webp"
+                    priority
+                  />
+                </div>
               )}
             </div>
             <div>
@@ -155,16 +156,15 @@ const HeroSection = ({
                   : spaceData?.images?.slice(1, 5)
                 )?.map((item, index) => (
                   <div key={index}>
-                    <div>
+                    <div className="relative w-full aspect-[359/239]">
                       <ImageWithFallback
                         src={item}
                         alt="Space Image"
-                        width={359}
-                        height={239}
+                        fill
                         sizes="100vw"
-                        className="w-full h-full object-cover"
+                        className="object-cover"
                         fallback="/images/default_image.webp"
-                        priority={true}
+                        priority
                       />
                     </div>
                   </div>

@@ -1,12 +1,10 @@
 import ImageWithFallback from "@/components/ImageWithFallback";
 import Svg from "@/components/svg";
-import { IMAGE_BASE_URL } from "@/services/ApiService";
 import {
   convertSlugToCapitalLetter,
   getTypeOfSpaceByWorkSpace,
   slugGenerator,
 } from "@/services/Comman";
-import Link from "next/link";
 import React, { useState } from "react";
 
 const MyFavoriteItem = ({ item, setIsRemovePopupOpen, setSpaceId }) => {

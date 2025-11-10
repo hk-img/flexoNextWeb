@@ -103,7 +103,7 @@ const Testimonial = () => {
 
                   <label
                     htmlFor={`checkTest${idx}`}
-                    className="text-[#777] text-sm 2xl:text-base line-clamp-5 group-hover/info:line-clamp-none transition-all duration-500 ease-in-out overflow-hidden cursor-default max-sm:group-has-[:checked]:line-clamp-none"
+                    className="text-[#777] text-sm 2xl:text-base line-clamp-5 group-hover/info:line-clamp-none transition-all duration-500 ease-in-out overflow-hidden cursor-default max-lg:group-has-[:checked]:line-clamp-none"
                   >
                     {t.review}
                   </label>

@@ -543,7 +543,7 @@ const Listing = ({
                         {toggleLocationOptions && (
                           <div
                             ref={locationRef}
-                            className="dropdown-menu-location scrollDropdown max-h-72 overflow-y-auto absolute top-[70px] left-4  bg-white shadow-lg z-20"
+                            className="dropdown-menu-location scrollDropdown max-h-72 overflow-y-auto absolute top-[100%] left-0 md:w-[400px] lg:w-3/5  bg-white shadow-lg z-20"
                           >
                             {allLocations
                               .filter((loc) =>

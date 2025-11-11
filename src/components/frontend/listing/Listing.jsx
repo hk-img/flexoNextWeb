@@ -446,7 +446,7 @@ const Listing = ({
                         {toggleSpace && (
                           <div
                             ref={spacesTypeRef}
-                            className="dropdown-menu-space-type scrollDropdown absolute top-[72px] left-0 md:w-[550px] w-full bg-white block shadow-lg z-20 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700"
+                            className="dropdown-menu-space-type scrollDropdown absolute top-[72px] left-0 md:w-[400px] lg:w-3/5 w-full bg-white block shadow-lg z-30 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700"
                           >
                             {spaceCategoryData?.map((item, index) => {
                               return (
@@ -496,7 +496,7 @@ const Listing = ({
                     {toggleLocation && (
                       <div className="relative">
                         {/* Search box */}
-                        <div className="relative top-6 -left-0 w-full md:w-[400px] lg:w-3/5 rounded-xl z-10 pb-7">
+                        <div className="relative top-6 left-0 w-full md:w-[400px] lg:w-3/5 rounded-xl z-10 pb-7">
                           <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center py-[9px] px-4 rounded-[42px]">
                             <div className="w-full toggle-location">
                               <div className="bg-white shadow-mb rounded-full h-10 w-full flex items-center justify-between">
@@ -543,7 +543,7 @@ const Listing = ({
                         {toggleLocationOptions && (
                           <div
                             ref={locationRef}
-                            className="dropdown-menu-location scrollDropdown max-h-72 overflow-y-auto absolute top-[70px] left-4  bg-white shadow-lg z-20"
+                            className="dropdown-menu-location scrollDropdown max-h-72 overflow-y-auto absolute top-[100%] left-0 md:w-[400px] lg:w-3/5 w-full  bg-white shadow-lg z-10"
                           >
                             {allLocations
                               .filter((loc) =>

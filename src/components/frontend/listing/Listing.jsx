@@ -12,6 +12,7 @@ import {
 import { useAuth } from "@/context/useAuth";
 import { useLocation } from "@/context/useLocation";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 const Pagination = dynamic(() => import("../pagination/Pagination"));
 const TestimonialCta = dynamic(() => import("./TestimonialCta"));
 const TrustedCompaniesCta = dynamic(() => import("./TrustedCompaniesCta"));
@@ -52,6 +53,7 @@ const Listing = ({
   nearBySpacesData,
   listingData,
 }) => {
+  const router = useRouter();
   const { user } = useAuth();
   const { coordinates } = useLocation();
   const [isOpen, setIsOpen] = useState(false);
@@ -71,6 +73,7 @@ const Listing = ({
   const [toggleLocationOptions, setToggleLocationOptions] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedLocation, setSelectedLocation] = useState(null);
+  console.log({selectedLocation},"tyuhtrytruyty")
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filterData, setFilterData] = useState({
     priceRange: { min: 500, max: 50000 },
@@ -88,13 +91,20 @@ const Listing = ({
 
   const handleRadioChange = (e) => {
     const { value } = e.target;
-    if (value == "Coworking Space") {
-      setSelectedCheckboxes(coworkingTypes);
-    } else {
-      const smallSpaceType = convertSlugToSmallLetter(value || "");
-      setSelectedCheckboxes([smallSpaceType]);
+    // if (value == "Coworking Space") {
+    //   setSelectedCheckboxes(coworkingTypes);
+    // } else {
+    //   const smallSpaceType = convertSlugToSmallLetter(value || "");
+    //   setSelectedCheckboxes([smallSpaceType]);
+    // }
+    // setSelectedRadio(value);
+    const typeSlug = slugGenerator(value || "");
+    const citySlug = convertSlugToSmallLetter(selectedLocation?.city || "");
+    const locationSlug = convertSlugToSmallLetter(selectedLocation?.location_name || "");
+    if(!locationSlug && typeSlug == "coworking-space" ){
+      return router.push(`/in/coworking/${citySlug}`);
     }
-    setSelectedRadio(value);
+    router.push(`/in/${typeSlug}/${citySlug}/${locationSlug}`);
   };
   useEffect(() => {
     if (selectedRadio) {
@@ -230,7 +240,7 @@ const Listing = ({
     queryKey: ["allLocations", selectedRadio],
     queryFn: async () => {
       const res = await getApi(
-        `/user/getAllLocations?spaceType=${selectedRadio}`
+        `user/getAllLocations?spaceType=${selectedRadio}`
       );
       return res.data;
     },
@@ -557,10 +567,17 @@ const Listing = ({
                                   key={idx}
                                   className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
                                   onClick={() => {
-                                    setQuery(loc?.label);
-                                    setSelectedLocation(loc);
-                                    setToggleLocationOptions(false);
-                                    setNearMeData(null);
+                                    // setQuery(loc?.label);
+                                    // setSelectedLocation(loc);
+                                    // setToggleLocationOptions(false);
+                                    // setNearMeData(null);
+                                    const typeSlug = slugGenerator(selectedRadio);
+                                    const citySlug = convertSlugToSmallLetter(loc?.city || "");
+                                    const locationSlug = convertSlugToSmallLetter(loc?.location_name || "");
+                                    if(!locationSlug && typeSlug == "coworking-space" ){
+                                      return router.push(`/in/coworking/${citySlug}`);
+                                    }
+                                    router.push(`/in/${typeSlug}/${citySlug}/${locationSlug}`);
                                   }}
                                 >
                                   {loc?.label}
@@ -587,143 +604,6 @@ const Listing = ({
                   </p>
                 </div>
               </div>
-              {/* <div className="relative lg:inline-block hidden w-full">
-                {toggleSpaceType && (
-                  <>
-                    <div
-                      onClick={() => setToggleSpace(!toggleSpace)}
-                      className="toggle-space-type relative top-4 left-0 w-full md:w-[400px] lg:w-3/5 rounded-xl z-10"
-                    >
-                      <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center min-h-14 max-h-14 gap-5 p-[18px] rounded-[42px]">
-                        <div className="border-1 border-[#dee2e6] p-1 text-sm font-light">
-                          {selectedRadio}
-                        </div>
-                      </div>
-                    </div>
-                    {toggleSpace && (
-                      <div
-                        ref={spacesTypeRef}
-                        className="dropdown-menu-space-type scrollDropdown absolute top-[72px] left-0 w-[550px] bg-white block shadow-lg z-20 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700"
-                      >
-                        {spaceCategoryData?.map((item, index) => {
-                          return (
-                            <React.Fragment key={index}>
-                              <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
-                                <input
-                                  type="radio"
-                                  name="spaceType"
-                                  value={item?.spaceType}
-                                  defaultChecked={
-                                    selectedRadio === item?.spaceType
-                                  }
-                                  onChange={handleRadioChange}
-                                  className="accent-[#26310b]"
-                                />
-                                {item?.spaceType}
-                              </label>
-                              {item?.spaceType == "Coworking Space" && (
-                                <div className="pl-6 space-y-2">
-                                  {coworkingTypes?.map((type) => (
-                                    <label
-                                      key={type}
-                                      className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light"
-                                    >
-                                      <input
-                                        type="checkbox"
-                                        checked={selectedCheckboxes.includes(
-                                          type
-                                        )}
-                                        onChange={() => handleCheckbox(type)}
-                                        className="accent-[#26310b]"
-                                      />
-                                      {type}
-                                    </label>
-                                  ))}
-                                </div>
-                              )}
-                            </React.Fragment>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </>
-                )}
-                {toggleLocation && (
-                  <div className="relative">
-      
-                    <div className="relative top-6 -left-0 w-full md:w-[400px] lg:w-3/5 rounded-xl z-10 pb-7">
-                      <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center py-[9px] px-4 rounded-[42px]">
-                        <div className="w-full">
-                          <div className="bg-white shadow-mb rounded-full h-10 w-full flex items-center justify-between">
-                            <div className="w-full flex justify-between items-center toggle-location">
-                              <button className="text-[#777777] w-[15px] h-[15px]">
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  strokeWidth={3}
-                                  stroke="currentColor"
-                                  className="w-4 h-4"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z"
-                                  />
-                                </svg>
-                              </button>
-                              <input
-                                type="text"
-                                placeholder="Where are you looking for office space?"
-                                className="border-0 bg-transparent w-full text-sm placeholder:font-normal transition-all duration-200 p-[10px] placeholder:text-[#333] focus:outline-none"
-                                value={query}
-                                onFocus={() => setToggleLocationOptions(true)}
-                                onChange={(e) => setQuery(e.target.value)}
-                              />
-                            </div>
-                            <div
-                              onClick={handleNearMe}
-                              className="flex whitespace-nowrap text-[#777777] cursor-pointer"
-                            >
-                              Near Me
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-         
-                    {toggleLocationOptions && (
-                      <div
-                        ref={locationRef}
-                        className="dropdown-menu-location scrollDropdown max-h-72 overflow-y-auto absolute top-full left-4 w-[420px] bg-white shadow-lg z-20"
-                      >
-                        {allLocations
-                          .filter((loc) =>
-                            loc?.label
-                              ?.toLowerCase()
-                              ?.includes(query?.toLowerCase())
-                          )
-                          .map((loc, idx) => (
-                            <div
-                              key={idx}
-                              className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
-                              onClick={() => {
-                                setQuery(loc?.label);
-                                setSelectedLocation(loc);
-                                setToggleLocationOptions(false);
-                                setNearMeData(null);
-                              }}
-                            >
-                              {loc?.label}
-                            </div>
-                          ))}
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div> */}
-
               <div className="spaces lg:mt-6 flex flex-row flex-wrap -mx-4">
                 {productData?.slice(0, 6)?.map((item, index) => (
                   <div

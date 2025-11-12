@@ -8,9 +8,7 @@ import { useAuth } from "@/context/useAuth";
 import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getApi, postAPI } from "@/services/ApiService";
-import {
-  convertSlugToSmallLetter,
-} from "@/services/Comman";
+import { convertSlugToSmallLetter } from "@/services/Comman";
 import { ShowToast } from "@/utils/ShowToast";
 
 const schema = z
@@ -119,13 +117,14 @@ const ExplorePopup = ({
   selectedSpaceData = null,
   cityName = "",
   type = "",
-  selectedSpaceType=""
+  selectedSpaceType = "",
 }) => {
-  const selectedSchema = (type == "longterm")
-    ? schemaForCity
-    : (Object.values(selectedSpaceData || {})?.length > 0)
-    ? schemaForProductCard
-    : schema;
+  const selectedSchema =
+    type == "longterm"
+      ? schemaForCity
+      : Object.values(selectedSpaceData || {})?.length > 0
+      ? schemaForProductCard
+      : schema;
   const { user } = useAuth();
   const [successScreen, setSuccessScreen] = useState(false);
   const {
@@ -169,11 +168,11 @@ const ExplorePopup = ({
     }
   }, [user]);
 
-  useEffect(()=>{
-    if(selectedSpaceType){
+  useEffect(() => {
+    if (selectedSpaceType) {
       setValue("spaceType", selectedSpaceType);
     }
-  },[selectedSpaceType])
+  }, [selectedSpaceType]);
 
   const { mutate: submitMutate, isPending: submitLoading } = useMutation({
     mutationFn: async (payload) => {
@@ -184,11 +183,11 @@ const ExplorePopup = ({
       if (data.result?.success) {
         setSuccessScreen(true);
       } else {
-        ShowToast(data?.result.message,"error");
+        ShowToast(data?.result.message, "error");
       }
     },
     onError: (error) => {
-      ShowToast(error.message,"error");
+      ShowToast(error.message, "error");
     },
   });
 
@@ -197,10 +196,9 @@ const ExplorePopup = ({
     const dialCode = values.country ? values.country.dialCode : "";
     const mobile = values.mobile.replace(dialCode, "").replace(/^\+/, "");
     const city = values?.city;
-    const smallLetterCity = convertSlugToSmallLetter(
-      city || ""
-    );
-    const typeWithFirstLetterCapital = type?.charAt(0)?.toUpperCase() + type?.slice(1);
+    const smallLetterCity = convertSlugToSmallLetter(city || "");
+    const typeWithFirstLetterCapital =
+      type?.charAt(0)?.toUpperCase() + type?.slice(1);
     let payload = {
       firstName: values?.firstName,
       lastName: values?.lastName,
@@ -219,8 +217,8 @@ const ExplorePopup = ({
       payload.city = [smallLetterCity];
       payload.spaceType = values?.spaceType;
     }
-    if(selectedSpaceData?.id){
-      payload.spaceId = selectedSpaceData?.id
+    if (selectedSpaceData?.id) {
+      payload.spaceId = selectedSpaceData?.id;
     }
     submitMutate(payload);
   };
@@ -230,8 +228,13 @@ const ExplorePopup = ({
   const { data: allCities } = useQuery({
     queryKey: ["all-spaces-cities"],
     queryFn: async () => {
-      const typeWithFirstLetterCapital = type?.charAt(0)?.toUpperCase() + type?.slice(1);
-      const res = await getApi(`spaces/getAllSpacesCities?spaceType=${typeWithFirstLetterCapital || 'Longterm'}`);
+      const typeWithFirstLetterCapital =
+        type?.charAt(0)?.toUpperCase() + type?.slice(1);
+      const res = await getApi(
+        `spaces/getAllSpacesCities?spaceType=${
+          typeWithFirstLetterCapital || "Longterm"
+        }`
+      );
       return res.data;
     },
   });
@@ -266,24 +269,148 @@ const ExplorePopup = ({
       ) : (
         <div className="relative w-full lg:max-w-[55vw] mx-[12px] rounded-[11px] bg-white p-6 overflow-y-auto h-full md:h-auto [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]  animate-scaleIn">
           {/* Header */}
-          <div className="pb-[26px] flex items-center justify-between">
-            <h2 className="text-lg font-semibold">Get Quotes</h2>
+          <div className="md:pb-[26px] pb-[40px] flex items-center justify-center">
+            <h2 className="text-lg font-semibold uppercase">Get Quotes</h2>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-black cursor-pointer"
+              className="text-black cursor-pointer absolute top-6 right-6"
             >
               <Svg name="close" className="size-5" />
             </button>
           </div>
 
-          <div className="px-5 py-[10px] bg-[#f4f4f4] mb-6">
+          <div className="px-5 py-[10px] bg-[#f4f4f4] mb-6 md:block hidden">
             <p className="text-[#000000de] text-[13px]">
-              Our workspace advisor will get in touch to help you with your requirement.
+              Our workspace advisor will get in touch to help you with your
+              requirement.
             </p>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-[18.5px] gap-x-[30px]">
+            <div className="grid grid-cols-2 md:grid-cols-2 gap-y-[18.5px] md:gap-x-[30px] gap-[12px]">
+              {(!cityName || type != "longterm") && (
+                <>
+                  {Object?.values(selectedSpaceData || {})?.length > 0 ? (
+                    <>
+                      {!selectedSpaceType && (
+                        <div className="relative">
+                          <label className="block text-sm font-semibold mb-1">
+                            Space Type<span className="text-[#dc3545]">*</span>
+                          </label>
+                          <select
+                            {...register("spaceType")}
+                            className={`select-custom w-full rounded-sm placeholder:text-[#0000006B] border px-2 tracking-normal py-2.5
+                                border-[#dbdbdb] h-[45px] text-sm font-medium
+                                ${
+                                  errors.spaceType
+                                    ? "border-[#f44336] focus:border-[#f44336]"
+                                    : "hover:border-black focus:border-[#3f51b5] active:border-[#3f51b5]"
+                                }
+                              `}
+                          >
+                            <option value="" disabled selected hidden>
+                              Select
+                            </option>
+                            {selectedSpaceData?.privatecabin_price > 0 && (
+                              <option value="Private Office">
+                                Private Office
+                              </option>
+                            )}
+                            {selectedSpaceData?.customized_space_price > 0 && (
+                              <option value="Managed Office">
+                                Managed Office
+                              </option>
+                            )}
+                            {selectedSpaceData?.desks_price > 0 && (
+                              <option value="Dedicated Desk">
+                                Dedicated Desk
+                              </option>
+                            )}
+                            {selectedSpaceData?.flexible_desk_price > 0 && (
+                              <option value="Flexible Desk">
+                                Flexible Desk
+                              </option>
+                            )}
+                            {selectedSpaceData?.virtual_office_price > 0 && (
+                              <option value="Virtual Office">
+                                Virtual Office
+                              </option>
+                            )}
+                            <option value="Not Sure">Not Sure</option>
+                          </select>
+                          {errors.spaceType && (
+                            <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4">
+                              {errors.spaceType.message}
+                            </p>
+                          )}
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <div className="relative">
+                      <label className="block text-sm font-semibold mb-1">
+                        City<span className="text-[#dc3545]">*</span>
+                      </label>
+                      <select
+                        {...register("city")}
+                        className={`select-custom w-full rounded-sm placeholder:text-[#0000006B] border px-1 tracking-normal py-2.5
+                            border-[#dbdbdb] h-[45px] text-sm font-medium
+                            ${
+                              errors.city
+                                ? "border-[#f44336] focus:border-[#f44336]"
+                                : "hover:border-black focus:border-[#3f51b5] active:border-[#3f51b5]"
+                            }
+                          `}
+                      >
+                        <option value="" disabled selected hidden>
+                          Select
+                        </option>
+                        {cityData?.map((item) => (
+                          <option key={item.id} value={item.name}>
+                            {item.name}
+                          </option>
+                        ))}
+                      </select>
+                      {errors.city && (
+                        <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4">
+                          {errors.city.message}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                  <div className="relative">
+                    <label className="block text-sm font-semibold mb-1">
+                      No. of Seats<span className="text-[#dc3545]">*</span>
+                    </label>
+                    <select
+                      {...register("seats")}
+                      className={`select-custom w-full rounded-sm placeholder:text-[#0000006B] border px-1 tracking-normal py-2.5
+                            border-[#dbdbdb] h-[45px] text-sm font-medium
+                            ${
+                              errors.seats
+                                ? "border-[#f44336] focus:border-[#f44336]"
+                                : "hover:border-black focus:border-[#3f51b5] active:border-[#3f51b5]"
+                            }
+                          `}
+                    >
+                      <option value="" disabled selected hidden>
+                        Select
+                      </option>
+                      <option value="1-5">1–5</option>
+                      <option value="6-10">6–10</option>
+                      <option value="11-20">11-20</option>
+                      <option value="21-50">21-50</option>
+                      <option value="21-50">51-100</option>
+                      <option value="100+">100+</option>
+                    </select>
+                    {errors.seats && (
+                      <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4">
+                        {errors.seats.message}
+                      </p>
+                    )}
+                  </div>
+                </>
+              )}
               {/* First Name */}
               <div className="relative">
                 <label className="block text-sm font-semibold mb-1">
@@ -294,7 +421,10 @@ const ExplorePopup = ({
                     {...register("firstName", { required: true })}
                     placeholder="Enter First Name"
                     onChange={(e) => {
-                      e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
+                      e.target.value = e.target.value.replace(
+                        /[^A-Za-z\s]/g,
+                        ""
+                      );
                     }}
                     className={`w-full rounded-sm placeholder:text-[#0000006B] border px-2 tracking-normal py-2.5
                             border-[#dbdbdb] h-[45px] text-sm font-medium
@@ -323,7 +453,10 @@ const ExplorePopup = ({
                     {...register("lastName")}
                     placeholder="Enter Last Name"
                     onChange={(e) => {
-                      e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
+                      e.target.value = e.target.value.replace(
+                        /[^A-Za-z\s]/g,
+                        ""
+                      );
                     }}
                     className={`w-full rounded-sm placeholder:text-[#0000006B] border px-2 py-2.5
                               border-[#dbdbdb] h-[45px]  text-sm font-medium
@@ -343,7 +476,7 @@ const ExplorePopup = ({
               </div>
 
               {/* Email */}
-              <div className="relative">
+              <div className="relative md:col-span-1 col-span-2">
                 <label className="block text-sm font-semibold mb-1">
                   Email<span className="text-[#dc3545]">*</span>
                 </label>
@@ -368,7 +501,7 @@ const ExplorePopup = ({
               </div>
 
               {/* Mobile */}
-              <div className="relative">
+              <div className="relative md:col-span-1 col-span-2">
                 <label className="block text-sm font-semibold mb-1">
                   Mobile<span className="text-[#dc3545]">*</span>
                 </label>
@@ -397,115 +530,6 @@ const ExplorePopup = ({
                   </p>
                 )}
               </div>
-              {(!cityName || type != "longterm") && (
-                <>
-                  {Object?.values(selectedSpaceData || {})?.length > 0 ? (
-                    <>
-                    {
-                      !selectedSpaceType && (
-                        <div className="relative">
-                          <label className="block text-sm font-semibold mb-1">
-                            Space Type<span className="text-[#dc3545]">*</span>
-                          </label>
-                          <select
-                            {...register("spaceType")}
-                            className={`w-full rounded-sm placeholder:text-[#0000006B] border px-2 tracking-normal py-2.5
-                                border-[#dbdbdb] h-[45px] text-sm font-medium
-                                ${
-                                  errors.spaceType
-                                    ? "border-[#f44336] focus:border-[#f44336]"
-                                    : "hover:border-black focus:border-[#3f51b5] active:border-[#3f51b5]"
-                                }
-                              `}
-                          >
-                            <option value="">Select Space Type</option>
-                            {selectedSpaceData?.privatecabin_price > 0 && (
-                              <option value="Private Office">Private Office</option>
-                            )}
-                            {selectedSpaceData?.customized_space_price > 0 && (
-                              <option value="Managed Office">Managed Office</option>
-                            )}
-                            {selectedSpaceData?.desks_price > 0 && (
-                              <option value="Dedicated Desk">Dedicated Desk</option>
-                            )}
-                            {selectedSpaceData?.flexible_desk_price > 0 && (
-                              <option value="Flexible Desk">Flexible Desk</option>
-                            )}
-                            {selectedSpaceData?.virtual_office_price > 0 && (
-                              <option value="Virtual Office">Virtual Office</option>
-                            )}
-                            <option value="Not Sure">Not Sure</option>
-                          </select>
-                          {errors.spaceType && (
-                            <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4">
-                              {errors.spaceType.message}
-                            </p>
-                          )}
-                        </div>
-                      )
-                    }
-                    </>
-                  ) : (
-                    <div className="relative">
-                      <label className="block text-sm font-semibold mb-1">
-                        City<span className="text-[#dc3545]">*</span>
-                      </label>
-                      <select
-                        {...register("city")}
-                        className={`w-full rounded-sm placeholder:text-[#0000006B] border px-1 tracking-normal py-2.5
-                            border-[#dbdbdb] h-[45px] text-sm font-medium
-                            ${
-                              errors.city
-                                ? "border-[#f44336] focus:border-[#f44336]"
-                                : "hover:border-black focus:border-[#3f51b5] active:border-[#3f51b5]"
-                            }
-                          `}
-                      >
-                        <option value="">Select City</option>
-                        {cityData?.map((item) => (
-                          <option key={item.id} value={item.name}>
-                            {item.name}
-                          </option>
-                        ))}
-                      </select>
-                      {errors.city && (
-                        <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4">
-                          {errors.city.message}
-                        </p>
-                      )}
-                    </div>
-                  )}
-                  <div className="relative">
-                    <label className="block text-sm font-semibold mb-1">
-                      No. of Seats<span className="text-[#dc3545]">*</span>
-                    </label>
-                    <select
-                      {...register("seats")}
-                      className={`w-full rounded-sm placeholder:text-[#0000006B] border px-1 tracking-normal py-2.5
-                            border-[#dbdbdb] h-[45px] text-sm font-medium
-                            ${
-                              errors.seats
-                                ? "border-[#f44336] focus:border-[#f44336]"
-                                : "hover:border-black focus:border-[#3f51b5] active:border-[#3f51b5]"
-                            }
-                          `}
-                    >
-                      <option value="">Select No. of Seats</option>
-                      <option value="1-5">1–5</option>
-                      <option value="6-10">6–10</option>
-                      <option value="11-20">11-20</option>
-                      <option value="21-50">21-50</option>
-                      <option value="21-50">51-100</option>
-                      <option value="100+">100+</option>
-                    </select>
-                    {errors.seats && (
-                      <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4">
-                        {errors.seats.message}
-                      </p>
-                    )}
-                  </div>
-                </>
-              )}
             </div>
 
             <div className="border-b pb-4 border-[#dbdbdb]">
@@ -519,13 +543,16 @@ const ExplorePopup = ({
             </div>
           </form>
 
-          <p className="mt-4 pb-5 px-5 text-[11px] text-[#000000de] text-center">
+          <p className="mt-4 pb-5 text-[11px] text-[#000000de]  text-start text-justify">
             After you submit a workspace enquiry to us, we may share your
             details with workspace providers, who may contact you to follow up
-            on your enquiry." Please  read our{" "}
-            <span onClick={()=>{
-              window.open("/privacy-policy", "_blank")
-            }} className="cursor-pointer text-[#f76900]">
+            on your enquiry." Please read our{" "}
+            <span
+              onClick={() => {
+                window.open("/privacy-policy", "_blank");
+              }}
+              className="cursor-pointer text-[#f76900]"
+            >
               Privacy Policy
             </span>{" "}
             for details of how we process the information.

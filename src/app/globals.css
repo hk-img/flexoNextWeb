@@ -8,6 +8,15 @@
 .font-montserrat {
   font-family: Montserrat;
 }
+/* 🔹 For custom placeholder color */
+.select-custom {
+  color: #0000006b; /* when "Select" is showing */
+}
+
+/* 🔹 Normal option colors */
+.select-custom option {
+  color: #000000; /* dropdown options - black */
+}
 
 @theme inline {
   --color-background: var(--background);

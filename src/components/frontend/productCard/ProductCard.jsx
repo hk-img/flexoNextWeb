@@ -3,14 +3,27 @@ import React, { memo, useEffect, useState } from "react";
 import EmblaCarousel from "../emblaCarousel/EmblaCarousel";
 import ImageWithFallback from "@/components/ImageWithFallback";
 import AboutText from "./AboutText";
-import { convertSlugToCapitalLetter, getTypeOfSpaceByWorkSpace, slugGenerator } from "@/services/Comman";
-import { postAPIAuthWithoutBearer, WEBSITE_BASE_URL } from "@/services/ApiService";
+import {
+  convertSlugToCapitalLetter,
+  getTypeOfSpaceByWorkSpace,
+  slugGenerator,
+} from "@/services/Comman";
+import {
+  postAPIAuthWithoutBearer,
+  WEBSITE_BASE_URL,
+} from "@/services/ApiService";
 import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/context/useAuth";
 import { ShowToast } from "@/utils/ShowToast";
 
-const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData,setSelectedCityName }) => {
-  const {token} = useAuth();
+const ProductCard = ({
+  item = {},
+  setIsOpen,
+  setIsAuthOpen,
+  setSelectedSpaceData,
+  setSelectedCityName,
+}) => {
+  const { token } = useAuth();
   const [isFavourite, setIsFavourite] = useState(false);
   const type = getTypeOfSpaceByWorkSpace(item?.spaceType || "");
   const spaceTypeSlug = slugGenerator(item?.spaceType);
@@ -18,88 +31,104 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData,s
   const cityNameSlug = slugGenerator(item?.contact_city_name || "");
   const spaceId = item?.id;
 
-  const {mutate: favouriteMutate} = useMutation({
+  const { mutate: favouriteMutate } = useMutation({
     mutationFn: async (payload) => {
-      const response = await postAPIAuthWithoutBearer(`favorite/addToFavorite/${item?.id}`, payload,token);
+      const response = await postAPIAuthWithoutBearer(
+        `favorite/addToFavorite/${item?.id}`,
+        payload,
+        token
+      );
       return response.data;
     },
     onSuccess: (data, payload) => {
-      ShowToast(data?.message,"success");
+      ShowToast(data?.message, "success");
       setIsFavourite((prev) => !prev);
       localStorage.removeItem("isFavourite");
     },
     onError: (error) => {
-      ShowToast(error.message,"error");
+      ShowToast(error.message, "error");
     },
   });
 
-  const handleFavourite = ()=>{
-    if(!token){
-      localStorage.setItem("isFavourite",item?.id);
+  const handleFavourite = () => {
+    if (!token) {
+      localStorage.setItem("isFavourite", item?.id);
       setIsAuthOpen(true);
-    }else{
+    } else {
       const payload = {};
       favouriteMutate(payload);
     }
-  }
-  useEffect(()=>{
-    if(item?.existingfavorite?.favourite){
+  };
+  useEffect(() => {
+    if (item?.existingfavorite?.favourite) {
       setIsFavourite(true);
-    }else{
+    } else {
       setIsFavourite(false);
     }
-  },[item])
-  useEffect(()=>{
-    const favouriteSpaceId = localStorage.getItem("isFavourite")
-    if(favouriteSpaceId == item?.id && token){
-      const payload = {}
+  }, [item]);
+  useEffect(() => {
+    const favouriteSpaceId = localStorage.getItem("isFavourite");
+    if (favouriteSpaceId == item?.id && token) {
+      const payload = {};
       favouriteMutate(payload);
     }
-  },[token])
-  const sharePost = (type,url)=>{ 
-    if(type=='facebook'){
-      window.open( 
-        `https://www.facebook.com/sharer/sharer.php?u=${url}`, 
-          "_blank", "width=600, height=450"); 
-    }else if(type=='twitter'){
-      window.open( 
-        `https://twitter.com/intent/tweet?url=${url}`, 
-          "_blank", "width=600, height=450"); 
-    }else if(type=='linkedin'){
-      window.open( 
-        `https://www.linkedin.com/shareArticle?mini=true&url=${url}`, 
-          "_blank", "width=600, height=450"); 
-    }else if(type=='pinterest'){
-      window.open( 
-        `https://pinterest.com/pin/create/button/?url=${url}`, 
-          "_blank", "width=600, height=450"); 
+  }, [token]);
+  const sharePost = (type, url) => {
+    if (type == "facebook") {
+      window.open(
+        `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+        "_blank",
+        "width=600, height=450"
+      );
+    } else if (type == "twitter") {
+      window.open(
+        `https://twitter.com/intent/tweet?url=${url}`,
+        "_blank",
+        "width=600, height=450"
+      );
+    } else if (type == "linkedin") {
+      window.open(
+        `https://www.linkedin.com/shareArticle?mini=true&url=${url}`,
+        "_blank",
+        "width=600, height=450"
+      );
+    } else if (type == "pinterest") {
+      window.open(
+        `https://pinterest.com/pin/create/button/?url=${url}`,
+        "_blank",
+        "width=600, height=450"
+      );
+    } else if (type == "instagram") {
+      window.open(
+        `https://www.instagram.com/flexospaces/?url=${url}`,
+        "_blank",
+        "width=600, height=450"
+      );
+    } else if (type == "google") {
+      window.open(
+        `https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=&su=Propira&body=${url}`,
+        "_blank",
+        "width=600, height=450"
+      );
+    } else if (type == "whatsup") {
+      window.open(
+        `https://api.whatsapp.com/send?text=${url}`,
+        "_blank",
+        "width=600, height=450"
+      );
     }
-    else if(type=='instagram'){
-      window.open( 
-        `https://www.instagram.com/flexospaces/?url=${url}`, 
-          "_blank", "width=600, height=450"); 
-    }
-    else if(type=='google'){
-      window.open( 
-        `https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=&su=Propira&body=${url}`, 
-          "_blank", "width=600, height=450"); 
-    }else if(type=='whatsup'){
-      window.open( 
-        `https://api.whatsapp.com/send?text=${url}`, 
-          "_blank", "width=600, height=450"); 
-    }
-  }
+  };
   return (
     <>
       <div
-        onClick={() =>{
+        onClick={() => {
           let url = "";
-          if(type == "coworking"){
+          if (type == "coworking") {
             url = `/${item?.slug}`;
-          }else{ 
+          } else {
             url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
           }
-          window.open(`${url}`, "_blank")
+          window.open(`${url}`, "_blank");
         }}
         className="space-card relative [&_.emblaarrows]:left-3 [&_.emblaarrows]:right-3 [&_.emblaarrows_button]:w-[30px] [&_.emblaarrows_button]:h-[30px] [&_.emblaarrows_button_Svg]:size-[18px] [&_.emblaarrows_button]:!border-0 [&_.emblaarrows_button]:opacity-50 [&_.emblaarrows_button]:hover:opacity-100 [&_.emblaarrows_button_Svg]:!text-black w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col cursor-pointer"
       >
@@ -129,7 +158,7 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData,s
                 alt="product image"
                 width={450}
                 height={320}
-                title="product image" 
+                title="product image"
                 className="w-full aspect-[399/320] object-cover rounded-t-md h-[320px]"
                 fallback="/images/default_image.webp"
               />
@@ -143,12 +172,26 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData,s
               e.stopPropagation();
             }}
           >
-            <div onClick={handleFavourite} className="flex items-center justify-center rounded-full text-base bg-[#ece8e8] w-[34px] h-[34px] text-[#808080] cursor-pointer">
-              <Svg name={isFavourite ? "heart":"heartTransparent"} className={`size-[18px] ${isFavourite ? 'text-[#f76900]':'text-[#808080]'}`} />
+            <div
+              onClick={handleFavourite}
+              className="flex items-center justify-center rounded-full text-base bg-[#ece8e8] w-[34px] h-[34px] text-[#808080] cursor-pointer"
+            >
+              <Svg
+                name={isFavourite ? "heart" : "heartTransparent"}
+                className={`size-[18px] ${
+                  isFavourite ? "text-[#f76900]" : "text-[#808080]"
+                }`}
+              />
             </div>
           </div>
           <div className="shareBtn relative group">
-            <div onClick={(e) => { e.stopPropagation()}} tabIndex="0" className="flex relative peer items-center justify-center rounded-full text-base bg-[#ece8e8] w-[34px] h-[34px] text-[#808080] cursor-pointer focus:outline-none">
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              tabIndex="0"
+              className="flex relative peer items-center justify-center rounded-full text-base bg-[#ece8e8] w-[34px] h-[34px] text-[#808080] cursor-pointer focus:outline-none"
+            >
               <Svg name="share" className="size-[18px] text-[#808080]" />
             </div>
             <ul className="absolute top-[45px] right-[-6px] gap-1.5 hidden md:flex flex-row opacity-0 transition-all duration-500 ms-1 group-hover:opacity-100">
@@ -163,8 +206,8 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData,s
                     } else {
                       url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
                     }
-                    const shareUrl = `${WEBSITE_BASE_URL}${url}`
-                    sharePost("facebook",shareUrl)
+                    const shareUrl = `${WEBSITE_BASE_URL}${url}`;
+                    sharePost("facebook", shareUrl);
                     // window.open(
                     //   `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
                     //   "_blank"
@@ -178,23 +221,23 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData,s
 
               <li className="bg-[#34aaf3] items-center justify-center w-8 h-8 rounded-full inline-block border-1 border-[#000000] text-center text-[15px]">
                 <div
-                    onClick={(e) => {
-                      e.stopPropagation();
+                  onClick={(e) => {
+                    e.stopPropagation();
 
-                      let url = "";
-                      if (type === "coworking") {
-                        url = `/${item?.slug}`;
-                      } else {
-                        url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
-                      }
+                    let url = "";
+                    if (type === "coworking") {
+                      url = `/${item?.slug}`;
+                    } else {
+                      url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
+                    }
 
-                      const shareUrl = `${WEBSITE_BASE_URL}${url}`;
-                      sharePost("linkedin",shareUrl)
-                      // window.open(
-                      //   `https://www.linkedin.com/feed/?shareActive=false&url=${shareUrl}`,
-                      //   "_blank"
-                      // );
-                    }}
+                    const shareUrl = `${WEBSITE_BASE_URL}${url}`;
+                    sharePost("linkedin", shareUrl);
+                    // window.open(
+                    //   `https://www.linkedin.com/feed/?shareActive=false&url=${shareUrl}`,
+                    //   "_blank"
+                    // );
+                  }}
                   className="cursor-pointer share-button flex items-center justify-center w-full h-full"
                 >
                   <Svg name="linkedin2" className="text-white size-[15px]" />
@@ -206,15 +249,15 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData,s
                   onClick={(e) => {
                     e.stopPropagation();
                     let url = "";
-                    if(type == "coworking"){
+                    if (type == "coworking") {
                       url = `/${item?.slug}`;
-                    }else{ 
+                    } else {
                       url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
                     }
                     const message = encodeURIComponent(
                       `Checkout this space on FLEXO\n${WEBSITE_BASE_URL}${url}`
                     );
-                    sharePost("whatsup",message)
+                    sharePost("whatsup", message);
                     // window.open(`https://web.whatsapp.com/send?text=${message}`, "_blank");
                   }}
                   className="cursor-pointer share-button flex items-center justify-center w-full h-full"
@@ -223,7 +266,7 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData,s
                 </div>
               </li>
             </ul>
-             <ul className="absolute top-[45px] right-[-6px] gap-1.5 md:hidden flex flex-row opacity-0 transition-all duration-300 peer-focus:opacity-100 peer-focus:visible peer-active:opacity-100 z-50">
+            <ul className="absolute top-[45px] right-[-6px] gap-1.5 md:hidden flex flex-row opacity-0 transition-all duration-300 peer-focus:opacity-100 peer-focus:visible peer-active:opacity-100 z-50">
               <li className="bg-[#3b5998] items-center justify-center w-8 h-8 rounded-full inline-block border-1 border-[#000000] text-center text-[15px]">
                 <div
                   onClick={(e) => {
@@ -235,8 +278,8 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData,s
                     } else {
                       url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
                     }
-                    const shareUrl = `${WEBSITE_BASE_URL}${url}`
-                    sharePost("facebook",shareUrl)
+                    const shareUrl = `${WEBSITE_BASE_URL}${url}`;
+                    sharePost("facebook", shareUrl);
                     // window.open(
                     //   `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
                     //   "_blank"
@@ -250,23 +293,23 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData,s
 
               <li className="bg-[#34aaf3] items-center justify-center w-8 h-8 rounded-full inline-block border-1 border-[#000000] text-center text-[15px]">
                 <div
-                    onClick={(e) => {
-                      e.stopPropagation();
+                  onClick={(e) => {
+                    e.stopPropagation();
 
-                      let url = "";
-                      if (type === "coworking") {
-                        url = `/${item?.slug}`;
-                      } else {
-                        url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
-                      }
+                    let url = "";
+                    if (type === "coworking") {
+                      url = `/${item?.slug}`;
+                    } else {
+                      url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
+                    }
 
-                      const shareUrl = `${WEBSITE_BASE_URL}${url}`;
-                      sharePost("linkedin",shareUrl)
-                      // window.open(
-                      //   `https://www.linkedin.com/feed/?shareActive=false&url=${shareUrl}`,
-                      //   "_blank"
-                      // );
-                    }}
+                    const shareUrl = `${WEBSITE_BASE_URL}${url}`;
+                    sharePost("linkedin", shareUrl);
+                    // window.open(
+                    //   `https://www.linkedin.com/feed/?shareActive=false&url=${shareUrl}`,
+                    //   "_blank"
+                    // );
+                  }}
                   className="cursor-pointer share-button flex items-center justify-center w-full h-full"
                 >
                   <Svg name="linkedin2" className="text-white size-[15px]" />
@@ -286,7 +329,7 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData,s
                     const message = encodeURIComponent(
                       `Checkout this space on FLEXO\n${WEBSITE_BASE_URL}${url}`
                     );
-                    sharePost("whatsup",message)
+                    sharePost("whatsup", message);
                     // const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
                     // const whatsappUrl = isMobile
                     //   ? `whatsapp://send?text=${message}`
@@ -306,7 +349,7 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData,s
           <div className="flex flex-col justify-between items-start md:mb-2 mb-1">
             {type == "coworking" && (
               <h2 className="text-lg cursor-pointer font-medium text-[#141414] text-ellipsis line-clamp-1 break-all">
-                {item?.name} 
+                {item?.name}
               </h2>
             )}
             {(type == "shortterm" || type == "longterm") && (
@@ -348,8 +391,7 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData,s
                   Private Office from
                 </p>
                 <div className="w-1/2">
-                {
-                  item?.privatecabin_price ? (
+                  {item?.privatecabin_price ? (
                     <div className="lg:text-sm text-[13px] text-[#141414] m-0 p-0 font-medium">
                       <div className="flex items-center m-0">
                         <div className="flex items-center">
@@ -366,10 +408,9 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData,s
                         </span>
                       </div>
                     </div>
-                  ):(
+                  ) : (
                     "N/A"
-                  )
-                }
+                  )}
                 </div>
               </div>
               <div className="flex justify-between align-items-center lg:flex-nowrap flex-wrap m-0">
@@ -377,8 +418,7 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData,s
                   Desks from
                 </p>
                 <div className="w-1/2">
-                {
-                  (item?.desks_price || item?.flexible_desk_price) ? (
+                  {item?.desks_price || item?.flexible_desk_price ? (
                     <div className="lg:text-sm text-[13px] text-[#141414] m-0 p-0 font-medium">
                       <div className="flex items-center m-0">
                         <div className="flex items-center">
@@ -395,43 +435,34 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData,s
                         </span>
                       </div>
                     </div>
-                  ):(
+                  ) : (
                     "N/A"
-                  )
-                }
+                  )}
                 </div>
               </div>
             </>
           )}
           <div className="flex gap-[30px] items-center w-full mb-2">
-            {(type == "longterm" || type == "shortterm") && (
+            {type == "longterm" && (
               <>
-              <div className="bg-[#f76900] text-white w-fit flex items-center py-1.5 pr-1.5 m-0">
-                <div className="flex items-center">
-                  <Svg name="rupee" className="size-[15px]" />
-                  <span className="font-semibold text-sm">
-                    {item?.originalPrice}
-                  </span>
-                </div>
-                {type == "longterm" ? (
+                <div className="text-[#000] w-fit flex items-center py-1.5 pr-1.5 m-0">
+                  <div className="flex items-center">
+                    <Svg name="rupee2" className="size-[18px]" />
+                    <span className="font-bold text-[1.125rem]">
+                      {item?.originalPrice}
+                    </span>
+                  </div>
                   <span className="ps-1 text-sm font-normal !leading-4">
                     /month
                   </span>
-                ) : (
-                  <span className="ps-1 text-sm font-normal !leading-4">
-                    /hour
-                  </span>
-                )}
-              </div>
-              {
-                type == "longterm" && item?.spaceStatus === "Furnished" && (
-                <div className="flex gap-2 items-center bg-[#000080] rounded-sm">
-                  <span className="bg-[##000080] p-1 text-[13px] text-white ">
-                    {item?.spaceStatus}
-                  </span>
                 </div>
-                )
-              }
+                {item?.spaceStatus === "Furnished" && (
+                  <div className="flex gap-2 items-center bg-[#000080] rounded-sm">
+                    <span className="bg-[##000080] p-1 text-[13px] text-white ">
+                      {item?.spaceStatus}
+                    </span>
+                  </div>
+                )}
               </>
             )}
             {item?.isInstant == 1 ? (
@@ -456,9 +487,9 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData,s
                     e.stopPropagation();
                     setIsOpen(true);
                     setSelectedSpaceData(item);
-                    if(type == "longterm"){
+                    if (type == "longterm") {
                       setSelectedCityName(item?.contact_city_name);
-                    }else{
+                    } else {
                       setSelectedCityName(null);
                     }
                   }}
@@ -470,20 +501,31 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData,s
             </>
           )}
           {type == "shortterm" && (
-            <div className="offerBtn flex items-end justify-end">
+            <div className="offerBtn flex items-center justify-between">
+              <div className="text-[#000] w-fit flex items-center py-1.5 pr-1.5 m-0">
+                <div className="flex items-center">
+                  <Svg name="rupee2" className="size-[18px]" />
+                  <span className="font-bold text-[1.125rem]">
+                    {item?.originalPrice}
+                  </span>
+                </div>
+                <span className="ps-1 text-sm font-normal !leading-4">
+                  /hour
+                </span>
+              </div>
               <button
-                onClick={() =>{
+                onClick={() => {
                   let url = "";
-                  if(type == "coworking"){
+                  if (type == "coworking") {
                     url = `/${item?.slug}`;
-                  }else{ 
+                  } else {
                     url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
                   }
-                  window.open(`${url}`, "_blank")
+                  window.open(`${url}`, "_blank");
                 }}
-                className="w-fit bg-[#f76900] text-xs border border-[#f76900]  text-white py-1.5 px-3 rounded-sm font-semibold duration-500 transition text-center gap-2 uppercase cursor-pointer"
+                className="w-fit bg-[#f76900] text-xs border border-[#f76900]  text-white py-1.5 px-3 rounded-sm font-semibold duration-500 transition text-center gap-2  cursor-pointer"
               >
-                Get Detail
+                View Detail
               </button>
             </div>
           )}

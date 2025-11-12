@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-let DOMPurify; 
+let DOMPurify;
 
 const FaqAnswer = ({ answer }) => {
   const [sanitizedHtml, setSanitizedHtml] = useState("");
@@ -12,7 +12,12 @@ const FaqAnswer = ({ answer }) => {
     });
   }, [answer]);
 
-  return <div dangerouslySetInnerHTML={{ __html: sanitizedHtml }} />;
+  return (
+    <div
+      dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
+      className="font-montserrat"
+    />
+  );
 };
 
 export default FaqAnswer;

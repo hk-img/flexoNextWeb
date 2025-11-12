@@ -32,11 +32,10 @@ const Faq = ({ spaceType,city,locationName,faqData }) => {
                 <div key={idx}>
                   <div>
                     <p className="font-extrabold text-[#777] min-[1400px]:text-base text-sm">
-                      Q- {item.question}
+                      {item.question}
                     </p>
                   </div>
                   <div className="flex text-[#7b7b7b] min-[1400px]:text-base text-sm pt-1">
-                    <p>Ans-</p>
                     <FaqAnswer answer={item.answer} />
                   </div>
                 </div>

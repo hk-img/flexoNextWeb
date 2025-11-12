@@ -73,7 +73,7 @@ const Listing = ({
   const [toggleLocationOptions, setToggleLocationOptions] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedLocation, setSelectedLocation] = useState(null);
-  console.log({selectedLocation},"tyuhtrytruyty")
+  console.log({ selectedLocation }, "tyuhtrytruyty");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filterData, setFilterData] = useState({
     priceRange: { min: 500, max: 50000 },
@@ -86,7 +86,7 @@ const Listing = ({
   const [page, setPage] = useState(1);
   const [hoveredSpaceId, setHoveredSpaceId] = useState(null);
   const [selectedSpaceData, setSelectedSpaceData] = useState(null);
-  const [selectedCityName,setSelectedCityName] = useState(null);
+  const [selectedCityName, setSelectedCityName] = useState(null);
   const perPage = 30;
 
   const handleRadioChange = (e) => {
@@ -100,8 +100,10 @@ const Listing = ({
     // setSelectedRadio(value);
     const typeSlug = slugGenerator(value || "");
     const citySlug = convertSlugToSmallLetter(selectedLocation?.city || "");
-    const locationSlug = convertSlugToSmallLetter(selectedLocation?.location_name || "");
-    if(!locationSlug && typeSlug == "coworking-space" ){
+    const locationSlug = convertSlugToSmallLetter(
+      selectedLocation?.location_name || ""
+    );
+    if (!locationSlug && typeSlug == "coworking-space") {
       return router.push(`/in/coworking/${citySlug}`);
     }
     router.push(`/in/${typeSlug}/${citySlug}/${locationSlug}`);
@@ -425,6 +427,7 @@ const Listing = ({
                       </label>
                     </div>
                   </div>
+
                   <div className="items-start lg:flex lg:flex-row hidden flex-col lg:justify-end justify-start">
                     <div className="text-right xs:text-left">
                       <p className="text-sm text-[#777777] leading-10 min-[1400px]:text-[15px]">
@@ -554,7 +557,7 @@ const Listing = ({
                         {toggleLocationOptions && (
                           <div
                             ref={locationRef}
-                            className="dropdown-menu-location scrollDropdown max-h-72 overflow-y-auto absolute top-[100%] left-0 md:w-[400px] lg:w-3/5 w-full  bg-white shadow-lg z-10"
+                            className="dropdown-menu-location scrollDropdown max-h-72 overflow-y-auto absolute top-[100%] left-0 md:w-[400px] lg:w-3/5 w-full  bg-white shadow-lg z-20"
                           >
                             {allLocations
                               .filter((loc) =>
@@ -571,13 +574,26 @@ const Listing = ({
                                     // setSelectedLocation(loc);
                                     // setToggleLocationOptions(false);
                                     // setNearMeData(null);
-                                    const typeSlug = slugGenerator(selectedRadio);
-                                    const citySlug = convertSlugToSmallLetter(loc?.city || "");
-                                    const locationSlug = convertSlugToSmallLetter(loc?.location_name || "");
-                                    if(!locationSlug && typeSlug == "coworking-space" ){
-                                      return router.push(`/in/coworking/${citySlug}`);
+                                    const typeSlug =
+                                      slugGenerator(selectedRadio);
+                                    const citySlug = convertSlugToSmallLetter(
+                                      loc?.city || ""
+                                    );
+                                    const locationSlug =
+                                      convertSlugToSmallLetter(
+                                        loc?.location_name || ""
+                                      );
+                                    if (
+                                      !locationSlug &&
+                                      typeSlug == "coworking-space"
+                                    ) {
+                                      return router.push(
+                                        `/in/coworking/${citySlug}`
+                                      );
                                     }
-                                    router.push(`/in/${typeSlug}/${citySlug}/${locationSlug}`);
+                                    router.push(
+                                      `/in/${typeSlug}/${citySlug}/${locationSlug}`
+                                    );
                                   }}
                                 >
                                   {loc?.label}
@@ -590,6 +606,15 @@ const Listing = ({
                   </div>
                 )}
               </div>
+              {mapToggle && (
+                <div className="map lg:w-1/3 w-full md:hidden flex flex-col  mt-5 [&_.gm-style-iw-d]:!overflow-hidden [&_.gm-style-iw-d]:!max-w-[336px] [&_.gm-style-iw-d]:!max-h-full [&_.gm-style-iw-c]:!p-0 [&_.gm-style-iw-chr]:!hidden [&_.gm-style-iw]:!rounded-xl z-10">
+                  <MapWithPrices
+                    type={type}
+                    spaces={productData}
+                    hoveredSpaceId={hoveredSpaceId}
+                  />
+                </div>
+              )}
               <div className="lg:w-2/5 w-full items-start flex lg:flex-row lg:hidden flex-col lg:justify-end justify-start lg:pt-2 pt-4">
                 <div className="text-right xs:text-left">
                   <p className="text-sm text-[#777777] leading-10 text-[15px]">
@@ -670,7 +695,7 @@ const Listing = ({
               />
             </div>
             {mapToggle && (
-              <div className="map lg:w-1/3 w-full flex flex-col md:sticky md:top-0 [&_.gm-style-iw-d]:!overflow-hidden [&_.gm-style-iw-d]:!max-w-[336px] [&_.gm-style-iw-d]:!max-h-full [&_.gm-style-iw-c]:!p-0 [&_.gm-style-iw-chr]:!hidden [&_.gm-style-iw]:!rounded-xl">
+              <div className="map lg:w-1/3 w-full md:flex hidden flex-col md:sticky md:top-0 [&_.gm-style-iw-d]:!overflow-hidden [&_.gm-style-iw-d]:!max-w-[336px] [&_.gm-style-iw-d]:!max-h-full [&_.gm-style-iw-c]:!p-0 [&_.gm-style-iw-chr]:!hidden [&_.gm-style-iw]:!rounded-xl">
                 <MapWithPrices
                   type={type}
                   spaces={productData}
@@ -746,7 +771,7 @@ const Listing = ({
           setIsOpen={setIsOpen}
           selectedSpaceData={selectedSpaceData}
           type={type}
-          cityName = {selectedCityName}
+          cityName={selectedCityName}
         />
       )}
       {isAuthOpen && <Auth isOpen={isAuthOpen} setIsOpen={setIsAuthOpen} />}

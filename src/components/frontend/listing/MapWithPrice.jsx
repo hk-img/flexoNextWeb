@@ -54,13 +54,7 @@ const MapWithPrices = ({ type, spaces, hoveredSpaceId }) => {
   if (!isLoaded) return <div>Loading...</div>;
 
   return (
-    <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={15} options={{
-        zoomControl: true,
-        zoomControlOptions: {
-          position: window.google.maps.ControlPosition.TOP_RIGHT, 
-        },
-      }}
-    >
+    <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={12}>
       {spaces.map((space) => {
         const fillColor =
           space.id === hoveredSpaceId ? "%23000000" : "%23ffffff";
@@ -130,9 +124,9 @@ const MapWithPrices = ({ type, spaces, hoveredSpaceId }) => {
                           <Svg name="heart" className="size-4 text-[#808080]" />
                         </button>
                         <button
-                          onClick={(e) =>{ 
+                          onClick={(e) => {
                             e.stopPropagation();
-                            setSelectedSpace(null)
+                            setSelectedSpace(null);
                           }}
                           className="cursor-pointer absolute top-2 right-2 bg-white rounded-full w-[33px] h-[33px] shadow flex items-center justify-center z-10"
                         >
@@ -165,14 +159,14 @@ const MapWithPrices = ({ type, spaces, hoveredSpaceId }) => {
                       </EmblaCarousel>
                     </div>
                     <div className="p-3">
-                      {type == "coworking" && (
+                      {(type == "coworking" || type == "longterm") && (
                         <h2 className="2xl:text-lg !font-poppins text-base font-medium text-[#141414] truncate tracking-wide">
-                          {space?.name} 
+                          {space?.name} {space?.spaceTitle}
                         </h2>
                       )}
-                      {(type == "shortterm" || type == "longterm") && (
+                      {type == "shortterm" && (
                         <h2 className="2xl:text-lg font-poppins text-base font-medium text-[#141414] truncate tracking-wide">
-                          {space?.spaceTitle}
+                          {space?.name} {space?.about}
                         </h2>
                       )}
                       <p className="mt-2 text-orange-600 flex items-center gap-1">
@@ -194,6 +188,6 @@ const MapWithPrices = ({ type, spaces, hoveredSpaceId }) => {
       })}
     </GoogleMap>
   );
-}
+};
 
-export default memo(MapWithPrices)
+export default memo(MapWithPrices);

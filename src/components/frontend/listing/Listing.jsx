@@ -258,19 +258,24 @@ const Listing = ({
   });
 
   useEffect(() => {
-    if (allLocations?.length > 0 && locationName) {
+    if (allLocations?.length > 0 && (locationName || city)) {
       const smallLetterLocationName = convertSlugToSmallLetter(
         locationName || ""
       );
-      const selectedLocation = allLocations?.find((item) => {
-        if (item?.location_name.toLowerCase() === smallLetterLocationName) {
-          return item;
-        }
-      });
-      setQuery(selectedLocation?.label || "");
-      setSelectedLocation(selectedLocation || null);
+      const smallLetterCity = convertSlugToSmallLetter(
+        city || ""
+      );
+      if(smallLetterLocationName || smallLetterCity){
+        const selectedLocation = allLocations?.find((item) => {
+          if (item?.location_name.toLowerCase() === smallLetterLocationName && item?.city.toLowerCase() === smallLetterCity) {
+            return item;
+          }
+        });
+        setQuery(selectedLocation?.label || "");
+        setSelectedLocation(selectedLocation || null);
+      }
     }
-  }, [allLocations, locationName]);
+  }, [allLocations, locationName,city]);
 
   const handleApply = () => {
     setAppliedFilter(filterData);

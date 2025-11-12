@@ -13,6 +13,7 @@ import { useAuth } from "@/context/useAuth";
 import { useLocation } from "@/context/useLocation";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
+import { useIsMobile } from "@/hook/useIsMobile";
 const Pagination = dynamic(() => import("../pagination/Pagination"));
 const TestimonialCta = dynamic(() => import("./TestimonialCta"));
 const TrustedCompaniesCta = dynamic(() => import("./TrustedCompaniesCta"));
@@ -53,6 +54,7 @@ const Listing = ({
   nearBySpacesData,
   listingData,
 }) => {
+  const isMobile = useIsMobile();
   const router = useRouter();
   const { user } = useAuth();
   const { coordinates } = useLocation();
@@ -73,7 +75,6 @@ const Listing = ({
   const [toggleLocationOptions, setToggleLocationOptions] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedLocation, setSelectedLocation] = useState(null);
-  console.log({selectedLocation},"tyuhtrytruyty")
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filterData, setFilterData] = useState({
     priceRange: { min: 500, max: 50000 },
@@ -89,6 +90,14 @@ const Listing = ({
   const [selectedCityName,setSelectedCityName] = useState(null);
   const perPage = 30;
 
+  useEffect(()=>{
+    if(isMobile){
+      setMapToggle(false);
+    }else{
+      setMapToggle(true);
+    }
+  },[isMobile])
+
   const handleRadioChange = (e) => {
     const { value } = e.target;
     // if (value == "Coworking Space") {
@@ -99,8 +108,8 @@ const Listing = ({
     // }
     // setSelectedRadio(value);
     const typeSlug = slugGenerator(value || "");
-    const citySlug = convertSlugToSmallLetter(selectedLocation?.city || "");
-    const locationSlug = convertSlugToSmallLetter(selectedLocation?.location_name || "");
+    const citySlug = slugGenerator(selectedLocation?.city || "");
+    const locationSlug = slugGenerator(selectedLocation?.location_name || "");
     if(!locationSlug && typeSlug == "coworking-space" ){
       return router.push(`/in/coworking/${citySlug}`);
     }
@@ -572,8 +581,8 @@ const Listing = ({
                                     // setToggleLocationOptions(false);
                                     // setNearMeData(null);
                                     const typeSlug = slugGenerator(selectedRadio);
-                                    const citySlug = convertSlugToSmallLetter(loc?.city || "");
-                                    const locationSlug = convertSlugToSmallLetter(loc?.location_name || "");
+                                    const citySlug = slugGenerator(loc?.city || "");
+                                    const locationSlug = slugGenerator(loc?.location_name || "");
                                     if(!locationSlug && typeSlug == "coworking-space" ){
                                       return router.push(`/in/coworking/${citySlug}`);
                                     }

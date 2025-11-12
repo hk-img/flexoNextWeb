@@ -136,7 +136,7 @@ const HeroSection = ({
                   aria-roledescription="video player"
                 />
               ) : (
-                <div className="relative w-full aspect-[634/436]">
+                <div className="relative w-full aspect-[634/423]">
                   <ImageWithFallback
                     src={spaceData?.images?.[0] || "/images/default_image.webp"}
                     alt="Space Image"
@@ -156,7 +156,7 @@ const HeroSection = ({
                   : spaceData?.images?.slice(1, 5)
                 )?.map((item, index) => (
                   <div key={index}>
-                    <div className="relative w-full aspect-[359/239]">
+                    <div className="relative w-full aspect-[316/211]">
                       <ImageWithFallback
                         src={item}
                         alt="Space Image"

@@ -2,6 +2,7 @@ import React from "react";
 import FaqAnswer from "./FaqAnswer";
 
 const Faq = ({ spaceType,city,locationName,faqData }) => {
+  console.log({faqData},"Tyhtryhty")
   return (
     <>
       <section className=" mt-18 bg-[#f9f9f9]">
@@ -14,7 +15,20 @@ const Faq = ({ spaceType,city,locationName,faqData }) => {
           </div>
           <div className="md:w-10/12 w-full mx-auto mt-4">
             <div className="space-y-4">
-              {faqData?.map((item, idx) => (
+              {faqData?.filter((item) => item.type == 1)?.map((item, idx) => (
+                <div key={idx}>
+                  <div>
+                    <p className="font-extrabold text-[#777] min-[1400px]:text-base text-sm">
+                      Q- {item.question}
+                    </p>
+                  </div>
+                  <div className="flex text-[#7b7b7b] min-[1400px]:text-base text-sm pt-1">
+                    <p>Ans-</p>
+                    <FaqAnswer answer={item.answer} />
+                  </div>
+                </div>
+              ))}
+              {faqData?.filter((item) => item.type == 2)?.map((item, idx) => (
                 <div key={idx}>
                   <div>
                     <p className="font-extrabold text-[#777] min-[1400px]:text-base text-sm">

@@ -142,7 +142,7 @@ const HeroSection = ({
                     alt="Space Image"
                     width={634}
                     height={436}
-                    className="object-cover"
+                    className="object-cover size-full"
                     fallback="/images/default_image.webp"
                     priority
                   />
@@ -162,7 +162,7 @@ const HeroSection = ({
                         alt="Space Image"
                         width={316}
                         height={210}
-                        className="object-cover"
+                        className="object-cover size-full"
                         fallback="/images/default_image.webp"
                         priority
                       />

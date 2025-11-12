@@ -9,7 +9,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/context/useAuth";
 import { ShowToast } from "@/utils/ShowToast";
 
-const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }) => {
+const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData,setSelectedCityName }) => {
   const {token} = useAuth();
   const [isFavourite, setIsFavourite] = useState(false);
   const type = getTypeOfSpaceByWorkSpace(item?.spaceType || "");
@@ -447,27 +447,45 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
               <></>
             )}
           </div>
-          {}
           {(type == "coworking" || type == "longterm") && (
             <>
               <AboutText about={item?.about || ""} />
-              {
-                type != "longterm" && (
-                  <div className="offerBtn flex items-end justify-end">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setIsOpen(true);
-                        setSelectedSpaceData(item);
-                      }}
-                      className="w-fit bg-[#f76900] text-xs border border-[#f76900]  text-white py-1.5 px-3 rounded-sm font-semibold duration-500 transition text-center gap-2 uppercase cursor-pointer"
-                    >
-                      Get Offer{" "}
-                    </button>
-                  </div>
-                )
-              }
+              <div className="offerBtn flex items-end justify-end">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsOpen(true);
+                    setSelectedSpaceData(item);
+                    if(type == "longterm"){
+                      setSelectedCityName(item?.contact_city_name);
+                    }else{
+                      setSelectedCityName(null);
+                    }
+                  }}
+                  className="w-fit bg-[#f76900] text-xs border border-[#f76900]  text-white py-1.5 px-3 rounded-sm font-semibold duration-500 transition text-center gap-2 uppercase cursor-pointer"
+                >
+                  {type == "longterm" ? "Get Quote" : "Get Offer"}
+                </button>
+              </div>
             </>
+          )}
+          {type == "shortterm" && (
+            <div className="offerBtn flex items-end justify-end">
+              <button
+                onClick={() =>{
+                  let url = "";
+                  if(type == "coworking"){
+                    url = `/${item?.slug}`;
+                  }else{ 
+                    url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
+                  }
+                  window.open(`${url}`, "_blank")
+                }}
+                className="w-fit bg-[#f76900] text-xs border border-[#f76900]  text-white py-1.5 px-3 rounded-sm font-semibold duration-500 transition text-center gap-2 uppercase cursor-pointer"
+              >
+                Get Detail
+              </button>
+            </div>
           )}
         </div>
       </div>

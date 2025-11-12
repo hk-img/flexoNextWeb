@@ -76,6 +76,7 @@ const Detail = ({
   const [selectedSpaceType, setSelectedSpaceType] = useState(null);
   const [showReviewPopup, setShowReviewPopup] = useState(false);
   const [requestToBookOpen, setRequestToBookOpen] = useState(false);
+  const [selectedCityName, setSelectedCityName] = useState(null);
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY >= 700) {
@@ -1330,6 +1331,7 @@ const Detail = ({
                     setIsOpen={setIsOpen}
                     setIsAuthOpen={setIsAuthOpen}
                     setSelectedSpaceData={setSelectedSpaceData}
+                    setSelectedCityName={setSelectedCityName}
                   />
                 </div>
               ))}

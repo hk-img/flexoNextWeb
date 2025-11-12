@@ -83,6 +83,7 @@ const Listing = ({
   const [page, setPage] = useState(1);
   const [hoveredSpaceId, setHoveredSpaceId] = useState(null);
   const [selectedSpaceData, setSelectedSpaceData] = useState(null);
+  const [selectedCityName,setSelectedCityName] = useState(null);
   const perPage = 30;
 
   const handleRadioChange = (e) => {
@@ -736,6 +737,7 @@ const Listing = ({
                       setIsOpen={setIsOpen}
                       setIsAuthOpen={setIsAuthOpen}
                       setSelectedSpaceData={setSelectedSpaceData}
+                      setSelectedCityName={setSelectedCityName}
                     />
                   </div>
                 ))}
@@ -754,6 +756,7 @@ const Listing = ({
                       setIsOpen={setIsOpen}
                       setIsAuthOpen={setIsAuthOpen}
                       setSelectedSpaceData={setSelectedSpaceData}
+                      setSelectedCityName={setSelectedCityName}
                     />
                   </div>
                 ))}
@@ -774,6 +777,7 @@ const Listing = ({
                       setIsOpen={setIsOpen}
                       setIsAuthOpen={setIsAuthOpen}
                       setSelectedSpaceData={setSelectedSpaceData}
+                      setSelectedCityName={setSelectedCityName}
                     />
                   </div>
                 ))}
@@ -798,7 +802,7 @@ const Listing = ({
         </div>
       </section>
       {type != "shortterm" && <BottomBar type={type} city={city} />}
-      {type == "longterm" && (
+      {/* {type == "longterm" && (
         <div className="fixed bottom-0 left-0 w-full lg:w-7/12  bg-white z-40">
           <div className=" mx-auto flex md:flex-row flex-col md:gap-[30px] gap-1 items-center justify-between px-7 py-3">
             <div className="flex md:flex-row flex-col w-full items-center justify-between">
@@ -830,7 +834,7 @@ const Listing = ({
             </div>
           </div>
         </div>
-      )}
+      )} */}
       {faqData?.length > 0 && (
         <Faq
           spaceType={spaceType}
@@ -862,6 +866,7 @@ const Listing = ({
           setIsOpen={setIsOpen}
           selectedSpaceData={selectedSpaceData}
           type={type}
+          cityName = {selectedCityName}
         />
       )}
       {isAuthOpen && <Auth isOpen={isAuthOpen} setIsOpen={setIsAuthOpen} />}

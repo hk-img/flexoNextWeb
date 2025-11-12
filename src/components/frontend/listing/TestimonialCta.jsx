@@ -54,9 +54,12 @@ const TestimonialCta = ({ setIsOpen, type }) => {
       </div>
 
       <div className="max-w-full xl:px-4 lg:px-4 md:px-3 px-4 md:py-0 py-4 mx-auto relative z-10">
-        <div className="flex md:flex-row flex-col items-center gap-4">
+        <h5 className="text-2xl text-black font-bold  mb-8 md:hidden block text-center ">
+          Client's Testimonials
+        </h5>
+        <div className="flex md:flex-row flex-col items-center md:gap-4">
           <div className="md:w-2/5 w-full md:order-first order-last md:text-start text-center">
-            <h5 className="text-2xl text-black font-bold md:mb-6 mb-4">
+            <h5 className="text-2xl text-black font-bold md:mb-6 mb-4 md:block hidden">
               Client's Testimonials
             </h5>
             <div className="flex flex-col gap-y-3">

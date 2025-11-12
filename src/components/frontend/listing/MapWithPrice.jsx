@@ -11,14 +11,10 @@ import ImageWithFallback from "@/components/ImageWithFallback";
 import Svg from "@/components/svg";
 import { slugGenerator } from "@/services/Comman";
 import dynamic from "next/dynamic";
+import { useIsMobile } from "@/hook/useIsMobile";
 const EmblaCarousel = dynamic(() => import("../emblaCarousel/EmblaCarousel"), {
   ssr: false,
 });
-
-const containerStyle = {
-  width: "100%",
-  height: "750px",
-};
 
 const calculateCenter = (markers) => {
   if (markers.length === 0) return { lat: 0, lng: 0 };
@@ -38,11 +34,17 @@ const calculateCenter = (markers) => {
 };
 
 const MapWithPrices = ({ type, spaces, hoveredSpaceId }) => {
+  const isMobile = useIsMobile();
   const [selectedSpace, setSelectedSpace] = useState(null);
   const [center, setCenter] = useState(null);
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY,
   });
+
+  const containerStyle = {
+    width: "100%",
+    height: isMobile ? "400px" : "750px",
+  };
 
   useEffect(() => {
     if (spaces.length > 0) {
@@ -124,9 +126,9 @@ const MapWithPrices = ({ type, spaces, hoveredSpaceId }) => {
                           <Svg name="heart" className="size-4 text-[#808080]" />
                         </button>
                         <button
-                          onClick={(e) =>{ 
+                          onClick={(e) => {
                             e.stopPropagation();
-                            setSelectedSpace(null)
+                            setSelectedSpace(null);
                           }}
                           className="cursor-pointer absolute top-2 right-2 bg-white rounded-full w-[33px] h-[33px] shadow flex items-center justify-center z-10"
                         >
@@ -188,6 +190,6 @@ const MapWithPrices = ({ type, spaces, hoveredSpaceId }) => {
       })}
     </GoogleMap>
   );
-}
+};
 
-export default memo(MapWithPrices)
+export default memo(MapWithPrices);

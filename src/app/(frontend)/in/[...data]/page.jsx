@@ -1,6 +1,7 @@
 import Listing from '@/components/frontend/listing/Listing';
 import { BASE_URL, WEBSITE_BASE_URL } from '@/services/ApiService';
 import { convertSlugToCapitalLetter, convertSlugToSmallLetter, getTypeOfSpaceByWorkSpace,coworkingTypes, convertSlugToAllCapitalLetter } from '@/services/Comman';
+import { notFound } from 'next/navigation';
 import React from 'react'
 
 export const revalidate = 3600;
@@ -177,6 +178,7 @@ const page = async({params}) => {
     "location_name": convertSlugToSmallLetter(locationNameSlug || "") || null,
   }
   const [data1,data2,data3,listingData] = await Promise.all([fetchAPI1(),fetchAPI2(spaceType),fetchAPI3(payload),getListingData(listingPayload)]);
+  if(listingData?.length <= 0) return notFound();
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",

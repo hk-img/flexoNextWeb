@@ -9,7 +9,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/context/useAuth";
 import { ShowToast } from "@/utils/ShowToast";
 
-const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }) => {
+const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData,setSelectedCityName }) => {
   const {token} = useAuth();
   const [isFavourite, setIsFavourite] = useState(false);
   const type = getTypeOfSpaceByWorkSpace(item?.spaceType || "");
@@ -304,14 +304,14 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
         </div>
         <div className="lg:pt-2 lg:px-6 lg:pb-4 py-[22px] px-[14px] flex flex-col flex-grow">
           <div className="flex flex-col justify-between items-start md:mb-2 mb-1">
-            {(type == "coworking" || type == "longterm") && (
+            {type == "coworking" && (
               <h2 className="text-lg cursor-pointer font-medium text-[#141414] text-ellipsis line-clamp-1 break-all">
-                {item?.name} {item?.spaceTitle}
+                {item?.name} 
               </h2>
             )}
-            {type == "shortterm" && (
+            {(type == "shortterm" || type == "longterm") && (
               <h2 className="text-lg cursor-pointer font-medium text-[#141414] text-ellipsis line-clamp-1 break-all">
-                {item?.name} {item?.about}
+                {item?.spaceTitle}
               </h2>
             )}
             <span className="text-[15px] text-[#141414] bg-transparent flex items-center text-start font-normal -ms-[3px]">
@@ -447,27 +447,45 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
               <></>
             )}
           </div>
-          {}
           {(type == "coworking" || type == "longterm") && (
             <>
               <AboutText about={item?.about || ""} />
-              {
-                type != "longterm" && (
-                  <div className="offerBtn flex items-end justify-end">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setIsOpen(true);
-                        setSelectedSpaceData(item);
-                      }}
-                      className="w-fit bg-[#f76900] text-xs border border-[#f76900]  text-white py-1.5 px-3 rounded-sm font-semibold duration-500 transition text-center gap-2 uppercase cursor-pointer"
-                    >
-                      Get Offer{" "}
-                    </button>
-                  </div>
-                )
-              }
+              <div className="offerBtn flex items-end justify-end">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsOpen(true);
+                    setSelectedSpaceData(item);
+                    if(type == "longterm"){
+                      setSelectedCityName(item?.contact_city_name);
+                    }else{
+                      setSelectedCityName(null);
+                    }
+                  }}
+                  className="w-fit bg-[#f76900] text-xs border border-[#f76900]  text-white py-1.5 px-3 rounded-sm font-semibold duration-500 transition text-center gap-2 uppercase cursor-pointer"
+                >
+                  {type == "longterm" ? "Get Quote" : "Get Offer"}
+                </button>
+              </div>
             </>
+          )}
+          {type == "shortterm" && (
+            <div className="offerBtn flex items-end justify-end">
+              <button
+                onClick={() =>{
+                  let url = "";
+                  if(type == "coworking"){
+                    url = `/${item?.slug}`;
+                  }else{ 
+                    url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
+                  }
+                  window.open(`${url}`, "_blank")
+                }}
+                className="w-fit bg-[#f76900] text-xs border border-[#f76900]  text-white py-1.5 px-3 rounded-sm font-semibold duration-500 transition text-center gap-2 uppercase cursor-pointer"
+              >
+                Get Detail
+              </button>
+            </div>
           )}
         </div>
       </div>

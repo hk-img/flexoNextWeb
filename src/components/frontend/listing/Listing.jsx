@@ -12,6 +12,8 @@ import {
 import { useAuth } from "@/context/useAuth";
 import { useLocation } from "@/context/useLocation";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
+import { useIsMobile } from "@/hook/useIsMobile";
 const Pagination = dynamic(() => import("../pagination/Pagination"));
 const TestimonialCta = dynamic(() => import("./TestimonialCta"));
 const TrustedCompaniesCta = dynamic(() => import("./TrustedCompaniesCta"));
@@ -52,6 +54,8 @@ const Listing = ({
   nearBySpacesData,
   listingData,
 }) => {
+  const isMobile = useIsMobile();
+  const router = useRouter();
   const { user } = useAuth();
   const { coordinates } = useLocation();
   const [isOpen, setIsOpen] = useState(false);
@@ -83,17 +87,33 @@ const Listing = ({
   const [page, setPage] = useState(1);
   const [hoveredSpaceId, setHoveredSpaceId] = useState(null);
   const [selectedSpaceData, setSelectedSpaceData] = useState(null);
+  const [selectedCityName, setSelectedCityName] = useState(null);
   const perPage = 30;
+
+  useEffect(()=>{
+    if(isMobile){
+      setMapToggle(false);
+    }else{
+      setMapToggle(true);
+    }
+  },[isMobile])
 
   const handleRadioChange = (e) => {
     const { value } = e.target;
-    if (value == "Coworking Space") {
-      setSelectedCheckboxes(coworkingTypes);
-    } else {
-      const smallSpaceType = convertSlugToSmallLetter(value || "");
-      setSelectedCheckboxes([smallSpaceType]);
+    // if (value == "Coworking Space") {
+    //   setSelectedCheckboxes(coworkingTypes);
+    // } else {
+    //   const smallSpaceType = convertSlugToSmallLetter(value || "");
+    //   setSelectedCheckboxes([smallSpaceType]);
+    // }
+    // setSelectedRadio(value);
+    const typeSlug = slugGenerator(value || "");
+    const citySlug = slugGenerator(selectedLocation?.city || "");
+    const locationSlug = slugGenerator(selectedLocation?.location_name || "");
+    if(!locationSlug && typeSlug == "coworking-space" ){
+      return router.push(`/in/coworking/${citySlug}`);
     }
-    setSelectedRadio(value);
+    router.push(`/in/${typeSlug}/${citySlug}/${locationSlug}`);
   };
   useEffect(() => {
     if (selectedRadio) {
@@ -229,7 +249,7 @@ const Listing = ({
     queryKey: ["allLocations", selectedRadio],
     queryFn: async () => {
       const res = await getApi(
-        `/user/getAllLocations?spaceType=${selectedRadio}`
+        `user/getAllLocations?spaceType=${selectedRadio}`
       );
       return res.data;
     },
@@ -238,19 +258,24 @@ const Listing = ({
   });
 
   useEffect(() => {
-    if (allLocations?.length > 0 && locationName) {
+    if (allLocations?.length > 0 && (locationName || city)) {
       const smallLetterLocationName = convertSlugToSmallLetter(
         locationName || ""
       );
-      const selectedLocation = allLocations?.find((item) => {
-        if (item?.location_name.toLowerCase() === smallLetterLocationName) {
-          return item;
-        }
-      });
-      setQuery(selectedLocation?.label || "");
-      setSelectedLocation(selectedLocation || null);
+      const smallLetterCity = convertSlugToSmallLetter(
+        city || ""
+      );
+      if(smallLetterLocationName || smallLetterCity){
+        const selectedLocation = allLocations?.find((item) => {
+          if (item?.location_name.toLowerCase() === smallLetterLocationName && item?.city.toLowerCase() === smallLetterCity) {
+            return item;
+          }
+        });
+        setQuery(selectedLocation?.label || "");
+        setSelectedLocation(selectedLocation || null);
+      }
     }
-  }, [allLocations, locationName]);
+  }, [allLocations, locationName,city]);
 
   const handleApply = () => {
     setAppliedFilter(filterData);
@@ -414,6 +439,7 @@ const Listing = ({
                       </label>
                     </div>
                   </div>
+
                   <div className="items-start lg:flex lg:flex-row hidden flex-col lg:justify-end justify-start">
                     <div className="text-right xs:text-left">
                       <p className="text-sm text-[#777777] leading-10 min-[1400px]:text-[15px]">
@@ -543,7 +569,7 @@ const Listing = ({
                         {toggleLocationOptions && (
                           <div
                             ref={locationRef}
-                            className="dropdown-menu-location scrollDropdown max-h-72 overflow-y-auto absolute top-[100%] left-0 md:w-[400px] lg:w-3/5 w-full  bg-white shadow-lg z-10"
+                            className="dropdown-menu-location scrollDropdown max-h-72 overflow-y-auto absolute top-[100%] left-0 md:w-[400px] lg:w-3/5 w-full  bg-white shadow-lg z-20"
                           >
                             {allLocations
                               .filter((loc) =>
@@ -556,10 +582,19 @@ const Listing = ({
                                   key={idx}
                                   className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
                                   onClick={() => {
-                                    setQuery(loc?.label);
-                                    setSelectedLocation(loc);
-                                    setToggleLocationOptions(false);
-                                    setNearMeData(null);
+                                    // setQuery(loc?.label);
+                                    // setSelectedLocation(loc);
+                                    // setToggleLocationOptions(false);
+                                    // setNearMeData(null);
+                                    const typeSlug = slugGenerator(selectedRadio);
+                                    const citySlug = slugGenerator(loc?.city || "");
+                                    const locationSlug = slugGenerator(loc?.location_name || "");
+                                    if(!locationSlug && typeSlug == "coworking-space" ){
+                                      return router.push(`/in/coworking/${citySlug}`);
+                                    }
+                                    router.push(
+                                      `/in/${typeSlug}/${citySlug}/${locationSlug}`
+                                    );
                                   }}
                                 >
                                   {loc?.label}
@@ -572,6 +607,15 @@ const Listing = ({
                   </div>
                 )}
               </div>
+              {mapToggle && (
+                <div className="map lg:w-1/3 w-full md:hidden flex flex-col  mt-5 [&_.gm-style-iw-d]:!overflow-hidden [&_.gm-style-iw-d]:!max-w-[336px] [&_.gm-style-iw-d]:!max-h-full [&_.gm-style-iw-c]:!p-0 [&_.gm-style-iw-chr]:!hidden [&_.gm-style-iw]:!rounded-xl z-10">
+                  <MapWithPrices
+                    type={type}
+                    spaces={productData}
+                    hoveredSpaceId={hoveredSpaceId}
+                  />
+                </div>
+              )}
               <div className="lg:w-2/5 w-full items-start flex lg:flex-row lg:hidden flex-col lg:justify-end justify-start lg:pt-2 pt-4">
                 <div className="text-right xs:text-left">
                   <p className="text-sm text-[#777777] leading-10 text-[15px]">
@@ -586,143 +630,6 @@ const Listing = ({
                   </p>
                 </div>
               </div>
-              {/* <div className="relative lg:inline-block hidden w-full">
-                {toggleSpaceType && (
-                  <>
-                    <div
-                      onClick={() => setToggleSpace(!toggleSpace)}
-                      className="toggle-space-type relative top-4 left-0 w-full md:w-[400px] lg:w-3/5 rounded-xl z-10"
-                    >
-                      <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center min-h-14 max-h-14 gap-5 p-[18px] rounded-[42px]">
-                        <div className="border-1 border-[#dee2e6] p-1 text-sm font-light">
-                          {selectedRadio}
-                        </div>
-                      </div>
-                    </div>
-                    {toggleSpace && (
-                      <div
-                        ref={spacesTypeRef}
-                        className="dropdown-menu-space-type scrollDropdown absolute top-[72px] left-0 w-[550px] bg-white block shadow-lg z-20 max-h-72 overflow-y-auto p-5 space-y-2 text-sm border border-[#00000020] text-gray-700"
-                      >
-                        {spaceCategoryData?.map((item, index) => {
-                          return (
-                            <React.Fragment key={index}>
-                              <label className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light">
-                                <input
-                                  type="radio"
-                                  name="spaceType"
-                                  value={item?.spaceType}
-                                  defaultChecked={
-                                    selectedRadio === item?.spaceType
-                                  }
-                                  onChange={handleRadioChange}
-                                  className="accent-[#26310b]"
-                                />
-                                {item?.spaceType}
-                              </label>
-                              {item?.spaceType == "Coworking Space" && (
-                                <div className="pl-6 space-y-2">
-                                  {coworkingTypes?.map((type) => (
-                                    <label
-                                      key={type}
-                                      className="flex items-center gap-2 cursor-pointer text-sm text-[#777777] font-light"
-                                    >
-                                      <input
-                                        type="checkbox"
-                                        checked={selectedCheckboxes.includes(
-                                          type
-                                        )}
-                                        onChange={() => handleCheckbox(type)}
-                                        className="accent-[#26310b]"
-                                      />
-                                      {type}
-                                    </label>
-                                  ))}
-                                </div>
-                              )}
-                            </React.Fragment>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </>
-                )}
-                {toggleLocation && (
-                  <div className="relative">
-      
-                    <div className="relative top-6 -left-0 w-full md:w-[400px] lg:w-3/5 rounded-xl z-10 pb-7">
-                      <div className="text-sm text-[#333333] bg-white border-2 border-[#cccccc] flex items-center py-[9px] px-4 rounded-[42px]">
-                        <div className="w-full">
-                          <div className="bg-white shadow-mb rounded-full h-10 w-full flex items-center justify-between">
-                            <div className="w-full flex justify-between items-center toggle-location">
-                              <button className="text-[#777777] w-[15px] h-[15px]">
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  strokeWidth={3}
-                                  stroke="currentColor"
-                                  className="w-4 h-4"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z"
-                                  />
-                                </svg>
-                              </button>
-                              <input
-                                type="text"
-                                placeholder="Where are you looking for office space?"
-                                className="border-0 bg-transparent w-full text-sm placeholder:font-normal transition-all duration-200 p-[10px] placeholder:text-[#333] focus:outline-none"
-                                value={query}
-                                onFocus={() => setToggleLocationOptions(true)}
-                                onChange={(e) => setQuery(e.target.value)}
-                              />
-                            </div>
-                            <div
-                              onClick={handleNearMe}
-                              className="flex whitespace-nowrap text-[#777777] cursor-pointer"
-                            >
-                              Near Me
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-         
-                    {toggleLocationOptions && (
-                      <div
-                        ref={locationRef}
-                        className="dropdown-menu-location scrollDropdown max-h-72 overflow-y-auto absolute top-full left-4 w-[420px] bg-white shadow-lg z-20"
-                      >
-                        {allLocations
-                          .filter((loc) =>
-                            loc?.label
-                              ?.toLowerCase()
-                              ?.includes(query?.toLowerCase())
-                          )
-                          .map((loc, idx) => (
-                            <div
-                              key={idx}
-                              className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
-                              onClick={() => {
-                                setQuery(loc?.label);
-                                setSelectedLocation(loc);
-                                setToggleLocationOptions(false);
-                                setNearMeData(null);
-                              }}
-                            >
-                              {loc?.label}
-                            </div>
-                          ))}
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div> */}
-
               <div className="spaces lg:mt-6 flex flex-row flex-wrap -mx-4">
                 {productData?.slice(0, 6)?.map((item, index) => (
                   <div
@@ -736,6 +643,7 @@ const Listing = ({
                       setIsOpen={setIsOpen}
                       setIsAuthOpen={setIsAuthOpen}
                       setSelectedSpaceData={setSelectedSpaceData}
+                      setSelectedCityName={setSelectedCityName}
                     />
                   </div>
                 ))}
@@ -754,6 +662,7 @@ const Listing = ({
                       setIsOpen={setIsOpen}
                       setIsAuthOpen={setIsAuthOpen}
                       setSelectedSpaceData={setSelectedSpaceData}
+                      setSelectedCityName={setSelectedCityName}
                     />
                   </div>
                 ))}
@@ -774,6 +683,7 @@ const Listing = ({
                       setIsOpen={setIsOpen}
                       setIsAuthOpen={setIsAuthOpen}
                       setSelectedSpaceData={setSelectedSpaceData}
+                      setSelectedCityName={setSelectedCityName}
                     />
                   </div>
                 ))}
@@ -786,7 +696,7 @@ const Listing = ({
               />
             </div>
             {mapToggle && (
-              <div className="map lg:w-1/3 w-full flex flex-col md:sticky md:top-0 [&_.gm-style-iw-d]:!overflow-hidden [&_.gm-style-iw-d]:!max-w-[336px] [&_.gm-style-iw-d]:!max-h-full [&_.gm-style-iw-c]:!p-0 [&_.gm-style-iw-chr]:!hidden [&_.gm-style-iw]:!rounded-xl">
+              <div className="map lg:w-1/3 w-full md:flex hidden flex-col md:sticky md:top-0 [&_.gm-style-iw-d]:!overflow-hidden [&_.gm-style-iw-d]:!max-w-[336px] [&_.gm-style-iw-d]:!max-h-full [&_.gm-style-iw-c]:!p-0 [&_.gm-style-iw-chr]:!hidden [&_.gm-style-iw]:!rounded-xl">
                 <MapWithPrices
                   type={type}
                   spaces={productData}
@@ -798,7 +708,7 @@ const Listing = ({
         </div>
       </section>
       {type != "shortterm" && <BottomBar type={type} city={city} />}
-      {type == "longterm" && (
+      {/* {type == "longterm" && (
         <div className="fixed bottom-0 left-0 w-full lg:w-7/12  bg-white z-40">
           <div className=" mx-auto flex md:flex-row flex-col md:gap-[30px] gap-1 items-center justify-between px-7 py-3">
             <div className="flex md:flex-row flex-col w-full items-center justify-between">
@@ -830,7 +740,7 @@ const Listing = ({
             </div>
           </div>
         </div>
-      )}
+      )} */}
       {faqData?.length > 0 && (
         <Faq
           spaceType={spaceType}
@@ -862,6 +772,7 @@ const Listing = ({
           setIsOpen={setIsOpen}
           selectedSpaceData={selectedSpaceData}
           type={type}
+          cityName={selectedCityName}
         />
       )}
       {isAuthOpen && <Auth isOpen={isAuthOpen} setIsOpen={setIsAuthOpen} />}

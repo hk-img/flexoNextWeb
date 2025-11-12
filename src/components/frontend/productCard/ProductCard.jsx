@@ -304,14 +304,14 @@ const ProductCard = ({ item = {}, setIsOpen,setIsAuthOpen,setSelectedSpaceData }
         </div>
         <div className="lg:pt-2 lg:px-6 lg:pb-4 py-[22px] px-[14px] flex flex-col flex-grow">
           <div className="flex flex-col justify-between items-start md:mb-2 mb-1">
-            {(type == "coworking" || type == "longterm") && (
+            {type == "coworking" && (
               <h2 className="text-lg cursor-pointer font-medium text-[#141414] text-ellipsis line-clamp-1 break-all">
-                {item?.name} {item?.spaceTitle}
+                {item?.name} 
               </h2>
             )}
-            {type == "shortterm" && (
+            {(type == "shortterm" || type == "longterm") && (
               <h2 className="text-lg cursor-pointer font-medium text-[#141414] text-ellipsis line-clamp-1 break-all">
-                {item?.name} {item?.about}
+                {item?.spaceTitle}
               </h2>
             )}
             <span className="text-[15px] text-[#141414] bg-transparent flex items-center text-start font-normal -ms-[3px]">

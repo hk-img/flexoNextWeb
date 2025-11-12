@@ -102,6 +102,9 @@ const page = async ({ params }) => {
     country: spaceDetailsData?.country,
   };
   let detailData = await getDetailData(payload);
+  if(!detailData){
+    return notFound();
+  }
   let reviewData = reviews?.data?.reviews || [];
   const {
     spaceType,

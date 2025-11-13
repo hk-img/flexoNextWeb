@@ -56,12 +56,17 @@ const MapWithPrices = ({ type, spaces, hoveredSpaceId }) => {
   if (!isLoaded) return <div>Loading...</div>;
 
   return (
-    <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={15} options={{
-      zoomControl: true,
-      zoomControlOptions: {
-        position: window.google.maps.ControlPosition.TOP_RIGHT,
-      },
-    }}>
+    <GoogleMap
+      mapContainerStyle={containerStyle}
+      center={center}
+      zoom={14}
+      options={{
+        zoomControl: true,
+        zoomControlOptions: {
+          position: window.google.maps.ControlPosition.TOP_RIGHT,
+        },
+      }}
+    >
       {spaces.map((space) => {
         const fillColor =
           space.id === hoveredSpaceId ? "%23000000" : "%23ffffff";

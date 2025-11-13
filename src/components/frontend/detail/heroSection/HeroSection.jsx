@@ -119,11 +119,11 @@ const HeroSection = ({
     <>
       <section className="relative w-full lg:mt-[82px] sm:mt-[62px] mt-[63px] ">
         <div className="relative">
-          {spaceData?.ribbon && (
+          {/* {spaceData?.ribbon && (
             <div className="bg-black text-white font-medium text-sm px-[10px] py-2 rounded-sm absolute top-7 left-6  z-10">
               {spaceData?.ribbon}
             </div>
-          )}
+          )} */}
           <div className="grid md:grid-cols-2 grid-cols-1 gap-[2px]">
             <div className="[&_[data-ntpc]]:!h-full [&_[data-title]]:h-full [&_[data-title]]:!max-w-full">
               {youtubeId ? (

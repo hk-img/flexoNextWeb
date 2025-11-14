@@ -175,6 +175,7 @@ const MyBooking = () => {
                     >
                       <option value="">Select Booking Status</option>
                       <option value="confirmed">Confirmed</option>
+                      <option value="waiting">Waiting</option>
                       <option value="pending_Host_Confirmation">
                         Pending Host Confirmation
                       </option>

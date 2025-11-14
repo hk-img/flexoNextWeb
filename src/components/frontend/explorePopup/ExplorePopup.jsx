@@ -10,6 +10,117 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { getApi, postAPI } from "@/services/ApiService";
 import { convertSlugToSmallLetter } from "@/services/Comman";
 import { ShowToast } from "@/utils/ShowToast";
+import { components as RSComponents } from "react-select";
+import dynamic from "next/dynamic";
+const Select = dynamic(() => import("react-select"), { ssr: false });
+const DropdownIndicator = (props) => {
+  const { menuIsOpen } = props.selectProps;
+  return (
+    <RSComponents.DropdownIndicator {...props}>
+      <Svg
+        name="arrowDropDown"
+        className={`size-5 text-[#777] transition-transform duration-200 ${
+          menuIsOpen ? "rotate-180" : "rotate-0"
+        }`}
+      />
+    </RSComponents.DropdownIndicator>
+  );
+};
+
+const ClearIndicator = (props) => {
+  return (
+    <RSComponents.ClearIndicator {...props}>
+      <div className="cursor-pointer text-gray-500 hover:text-[#f76900] transition-colors duration-200">
+        ×
+      </div>
+    </RSComponents.ClearIndicator>
+  );
+};
+
+const customStyles = {
+  container: (base) => ({
+    ...base,
+    width: "260px",
+  }),
+  control: (base, state) => ({
+    ...base,
+    borderRadius: "15px",
+    backgroundColor: "transparent",
+    borderColor: "transparent",
+    minHeight: "44px",
+    height: "44px",
+    width: "100%",
+    boxShadow: "none",
+    outline: "none",
+    "&:hover": {
+      borderColor: "transparent",
+    },
+  }),
+  menu: (base) => ({
+    ...base,
+    marginTop: 0,
+    borderRadius: "12px",
+    backgroundColor: "#fff",
+    boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+    outline: "none",
+    overflow: "hidden",
+  }),
+  menuList: (base) => ({
+    ...base,
+    maxHeight: "160px",
+    overflowY: "auto",
+    paddingRight: "4px",
+    className:
+      " [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]",
+  }),
+  valueContainer: (base) => ({
+    ...base,
+    padding: "0 8px",
+  }),
+  placeholder: (base) => ({
+    ...base,
+    color: "black",
+    fontWeight: "600",
+    fontSize: "14px",
+  }),
+  singleValue: (base) => ({
+    ...base,
+    fontSize: "0.95rem",
+    color: "#333",
+  }),
+  option: (base, state) => ({
+    ...base,
+    padding: "10px 14px",
+    borderRadius: "11px",
+    backgroundColor: state.isSelected
+      ? "#ebf5ff"
+      : state.isFocused
+      ? "#f5faff"
+      : "#fff",
+    color: "#333",
+    width: "100%",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    fontSize: "14px",
+    fontWeight: state.isSelected ? "500" : "normal",
+    cursor: "pointer",
+    outline: "none",
+    boxShadow: "none",
+    ":active": {
+      backgroundColor: "#ebf5ff",
+    },
+  }),
+  dropdownIndicator: (base) => ({
+    ...base,
+    color: "#999",
+    padding: "0 8px",
+  }),
+  indicatorsContainer: (base) => ({
+    ...base,
+    // paddingRight: "4px",
+  }),
+};
 
 const schema = z
   .object({
@@ -240,7 +351,9 @@ const ExplorePopup = ({
   });
 
   const cityData = useMemo(() => {
-    return allCities || [];
+    return (
+      allCities?.map((item) => ({ label: item?.name, value: item?.id })) || []
+    );
   }, [allCities]);
 
   return (
@@ -347,7 +460,8 @@ const ExplorePopup = ({
                       )}
                     </>
                   ) : (
-                    <div className="relative">
+                    <>
+                    {/* <div className="relative">
                       <label className="block text-sm font-semibold mb-1">
                         City<span className="text-[#dc3545]">*</span>
                       </label>
@@ -376,7 +490,44 @@ const ExplorePopup = ({
                           {errors.city.message}
                         </p>
                       )}
-                    </div>
+                    </div> */}
+                      <div className="relative">
+                        <label className="block text-sm font-semibold mb-1">
+                          City<span className="text-[#dc3545]">*</span>
+                        </label>
+
+                        <Controller
+                          name="city"
+                          control={control}
+                          render={({ field }) => {
+                            const handleChange = (selectedOption) => {
+                              field.onChange(selectedOption?.label || "");
+                            };
+                            const selectedValue =
+                              cityData?.find(
+                                (option) => option.label === field.value
+                              ) || null;
+
+                            return (
+                              <Select
+                                value={selectedValue}
+                                onChange={handleChange}
+                                options={cityData}
+                                placeholder="Select City"
+                                classNamePrefix="react-select"
+                                className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px]"
+                                styles={customStyles}
+                                components={{
+                                  ClearIndicator,
+                                  DropdownIndicator,
+                                  IndicatorSeparator: null,
+                                }}
+                              />
+                            );
+                          }}
+                        />
+                      </div>
+                    </>
                   )}
                   <div className="relative">
                     <label className="block text-sm font-semibold mb-1">

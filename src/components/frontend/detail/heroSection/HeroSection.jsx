@@ -22,6 +22,16 @@ const HeroSection = ({
   const [isFavourite, setIsFavourite] = useState(false);
   const youtubeId = spaceData?.youtube_url?.split("/")?.pop();
   const [viewImagePopup, setViewImagePopup] = useState(false);
+  const defaultImage = "/images/default_image.webp";
+  const formattedImages = spaceData?.images?.map((img) =>
+    img.startsWith("http") || img.startsWith("/")
+      ? img
+      : `${WEBSITE_BASE_URL}/${img}`
+  );
+  const displayedImages = [...formattedImages.slice(0, 5)];
+  while (displayedImages.length < 5) {
+    displayedImages.push(defaultImage);
+  }
 
   const { mutate: favouriteMutate } = useMutation({
     mutationFn: async (payload) => {
@@ -129,8 +139,7 @@ const HeroSection = ({
               {youtubeId ? (
                 <YouTubeEmbed
                   videoId={youtubeId}
-                  className="!w-full !h-full  "
-                  // title="Client testimonial video about Flexo workspace experience"
+                  className="!w-full !h-full"
                   aria-label="Embedded YouTube video: Client testimonial about Flexo workspace"
                   role="region"
                   aria-roledescription="video player"
@@ -138,7 +147,7 @@ const HeroSection = ({
               ) : (
                 <div className="relative w-full aspect-[634/423]">
                   <ImageWithFallback
-                    src={spaceData?.images?.[0] || "/images/default_image.webp"}
+                    src={displayedImages?.[0] || "/images/default_image.webp"}
                     alt="Space Image"
                     width={634}
                     height={436}
@@ -152,8 +161,8 @@ const HeroSection = ({
             <div>
               <div className="grid md:grid-cols-2 grid-cols-4 gap-[2px]">
                 {(youtubeId
-                  ? spaceData?.images?.slice(0, 4)
-                  : spaceData?.images?.slice(1, 5)
+                  ? displayedImages?.slice(0, 4)
+                  : displayedImages?.slice(1, 5)
                 )?.map((item, index) => (
                   <div key={index}>
                     <div className="relative w-full aspect-[316/211]">
@@ -335,7 +344,7 @@ const HeroSection = ({
         <ImagePopup
           viewImagePopup={viewImagePopup}
           setViewImagePopup={setViewImagePopup}
-          images={spaceData?.images}
+          images={formattedImages}
         />
       )}
     </>

@@ -121,7 +121,7 @@ const BookingDetail = ({ bookingId }) => {
           <div className="container mx-auto px-[15px] py-10">
             <div className="flex flex-wrap">
               <div className="lg:w-2/3 w-full lg:pr-[15px] pr-0 pt-[10px]">
-                {bookingData?.bookingStatus === "pending" && (
+                {bookingData?.bookingStatus === "pending" && bookingData?.isInstant == "0" && (
                   <div className="bg-[#ecf5ef] rounded-[5px] p-5 flex items-center gap-2.5 ">
                     <div className="px-[15px]">
                       <div className=" text-white w-12 h-12 rounded-full  flex items-center justify-center text-2xl">
@@ -140,6 +140,26 @@ const BookingDetail = ({ bookingId }) => {
                         host accepts your booking request, you will receive a
                         payment link via email. If your requested date and time
                         cannot be accommodated, you will be promptly notified.
+                      </p>
+                    </div>
+                  </div>
+                )}
+                {bookingData?.bookingStatus === "pending" && bookingData?.isInstant == "1" && (
+                  <div className="bg-[#ecf5ef] rounded-[5px] p-5 flex items-center gap-2.5 ">
+                    <div className="px-[15px]">
+                      <div className=" text-white w-12 h-12 rounded-full  flex items-center justify-center text-2xl">
+                        <Svg
+                          name="clockFill"
+                          className="size-12 shrink-0 text-[#f76900]"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <h2 className="text-lg 2xl:text-xl font-bold text-[#343a40] ">
+                        Booking Pending. Awaiting Payment
+                      </h2>
+                      <p className="2xl:text-base text-sm leading-[1.2]">
+                        Your booking has been created successfully, but the payment is still pending. Please complete the payment to confirm your booking. If the payment is not completed, the booking may be cancelled automatically.
                       </p>
                     </div>
                   </div>

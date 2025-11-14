@@ -44,7 +44,7 @@ const BookingRequestItem = ({ item }) => {
                   after:block after:absolute after:bottom-0 after:right-[-10px] after:w-[10px] after:h-0 
                   after:border-b-[15px] after:!border-b-[#f76900] after:border-transparent after:border-l-0 after:border-r-[10px]"
         >
-          {item?.spaceDetail?.spaceType}
+          {item?.spaceDetail?.spaceType || "N/A"}
         </div>
       </div>
       <div className="md:ml-[15px] space-y-2 w-full">
@@ -57,14 +57,14 @@ const BookingRequestItem = ({ item }) => {
             }
             window.open(`${url}`, "_blank");
           }} className="2xl:text-xl text-lg font-semibold text-[#141414] cursor-pointer underline">
-          {item?.spaceDetail?.actual_name || item?.spaceDetail?.spaceTitle}
+          {item?.spaceDetail?.actual_name || item?.spaceDetail?.spaceTitle || "N/A"}
         </h2>
         <div className="text-[#141414] text-sm font-medium flex items-center space-x-1">
           <span>
             <Svg name="location2" className="size-4 text-[#f76900]" />
           </span>
           <span>
-            {convertSlugToCapitalLetter(item?.spaceDetail?.location_name || "")}
+            {convertSlugToCapitalLetter(item?.spaceDetail?.location_name || "") || "N/A"}
           </span>
         </div>
 

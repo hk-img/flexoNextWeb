@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Svg from "@/components/svg";
-import Image from "next/image";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -168,7 +167,7 @@ const profileSchema = z
       .refine((val) => !val || /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(val), {
         message: "Invalid PAN number format",
       }),
-    billingAddress1: z.string().min(1, "Billing address is required"),
+    billingAddress1: z.string().min(1, "Billing address 1 is required"),
     billingAddress2: z.string().optional(),
   })
   .superRefine((data, ctx) => {
@@ -907,7 +906,7 @@ const MyProfile = () => {
                               required: "Billing address 1 is required",
                             })}
                             type="text"
-                            placeholder="Enter Billing address "
+                            placeholder="Enter Billing address 1"
                             className={`border-[#e0e0e0] font-semibold w-full placeholder:text-[#777] placeholder:font-medium text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-[44px] ${
                               errors.billingAddress1
                                 ? "border-red-500 focus:ring-red-200"
@@ -924,7 +923,7 @@ const MyProfile = () => {
                         {/* Billing Address 2 */}
                         <div className="relative mt-6">
                           <label className="text-sm text-black font-semibold">
-                            Billing address{" "}
+                            Billing address 2{" "}
                           </label>
                           <input
                             {...register("billingAddress2")}

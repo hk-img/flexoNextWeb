@@ -269,9 +269,12 @@ const Detail = ({
               <div className="flex items-center gap-1 mb-4">
                 {spaceData?.ribbon && (
                   <div
-                    className="px-4 py-1 text-[0.6rem] font-bold text-white bg-[#f76900]
-   border-t-[0.5em]  border-l-[0.8em] border-l-transparent
-  [clip-path:polygon(0_100%,100%_100%,100%_0.5em,calc(100%-0.5em)_0,calc(100%-0.5em)_0.5em,0_0.5em,0.8em_calc(50%+0.25em))]"
+                    className="px-4 py-1 text-[0.6rem] font-bold text-white
+                    border-t-[0.5em]  border-l-[0.8em] border-l-transparent
+                    [clip-path:polygon(0_100%,100%_100%,100%_0.5em,calc(100%-0.5em)_0,calc(100%-0.5em)_0.5em,0_0.5em,0.8em_calc(50%+0.25em))]"
+                    style={{
+                      backgroundColor: spaceData?.ribbon_color,
+                    }}
                   >
                     {spaceData?.ribbon}
                   </div>

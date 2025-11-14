@@ -20,11 +20,16 @@ const BookingRequestItem = ({ item }) => {
           onClick={() => {
             let url = "";
             if (type == "coworking") {
-              url = `/${item?.spaceDetail?.slug}`;
+              if(item?.spaceDetail?.slug){
+                url = `/${item?.spaceDetail?.slug}`;
+                window.open(`${url}`, "_blank");
+              }
             } else {
-              url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
+              if(spaceTypeSlug && locationNameSlug && cityNameSlug && spaceId){
+                url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
+                window.open(`${url}`, "_blank");
+              }
             }
-            window.open(`${url}`, "_blank");
           }}
           className="cursor-pointer"
         >
@@ -48,14 +53,19 @@ const BookingRequestItem = ({ item }) => {
         </div>
       </div>
       <div className="md:ml-[15px] space-y-2 w-full">
-        <h2   onClick={() => {
+        <h2 onClick={() => {
             let url = "";
             if (type == "coworking") {
-              url = `/${item?.spaceDetail?.slug}`;
+              if(item?.spaceDetail?.slug){
+                url = `/${item?.spaceDetail?.slug}`;
+                window.open(`${url}`, "_blank");
+              }
             } else {
-              url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
+              if(spaceTypeSlug && locationNameSlug && cityNameSlug && spaceId){
+                url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
+                window.open(`${url}`, "_blank");
+              }
             }
-            window.open(`${url}`, "_blank");
           }} className="2xl:text-xl text-lg font-semibold text-[#141414] cursor-pointer underline">
           {item?.spaceDetail?.actual_name || item?.spaceDetail?.spaceTitle || "N/A"}
         </h2>

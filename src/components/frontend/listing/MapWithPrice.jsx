@@ -87,6 +87,19 @@ const MapWithPrices = ({ type, spaces, hoveredSpaceId }) => {
           price = space.originalPrice;
         }
 
+        console.log(String(price).length, "dfdfdfdfd");
+        const priceWidth = (price) => {
+          const length = String(price).length;
+          if (length <= 4) return 60;
+          if (length === 5) return 80;
+          if (length === 6) return 90;
+          if (length === 7) return 100;
+          if (length === 8) return 110;
+          if (length === 9) return 120;
+          if (length >= 10) return 130;
+          return 90;
+        };
+
         return (
           <Marker
             key={space.id}
@@ -94,8 +107,12 @@ const MapWithPrices = ({ type, spaces, hoveredSpaceId }) => {
             position={{ lat: space.lat, lng: space.longi }}
             icon={{
               url: `data:image/svg+xml;charset=UTF-8,
-              <svg xmlns="http://www.w3.org/2000/svg" width="80" height="30">
-                <rect x='0' y='0' rx='20' ry='20' width="80" height="30" fill="%23ff6600" />
+              <svg  xmlns="http://www.w3.org/2000/svg" width="${priceWidth(
+                price
+              )}" height="30">
+                <rect x='0' y='0' rx='20' ry='20' width="${priceWidth(
+                  price
+                )}" height="30" fill="%23ff6600" />
                 <text x="50%" y="55%" font-size="0.88rem" letter-spacing="1.2px" width="max-content" display="flex" align-items="center" justify-content="center" font-family="Roboto, Arial, sans-serif" font-weight="700" fill="${fillColor}" text-anchor="middle" alignment-baseline="middle">
                    ₹${Number(price).toLocaleString("en-IN")}
                 </text>
@@ -156,14 +173,14 @@ const MapWithPrices = ({ type, spaces, hoveredSpaceId }) => {
                         {space?.images?.map((image, index) => (
                           <div
                             key={index}
-                            className="embla__slide relative shrink-0 basis-full"
+                            className="embla__slide relative shrink-0 basis-full !w-full"
                           >
                             <ImageWithFallback
                               src={image || "/images/default_image.webp"}
                               alt="product image"
                               width={399}
                               height={320}
-                              className="w-full aspect-[399/320] object-cover rounded-t-md"
+                              className="!w-full aspect-[399/320] object-cover rounded-t-md"
                               fallback="/images/default_image.webp"
                             />
                           </div>

@@ -3,7 +3,7 @@ import Svg from "@/components/svg";
 import { useAuth } from "@/context/useAuth";
 import { getAPIAuthWithoutBearer } from "@/services/ApiService";
 import { useQuery } from "@tanstack/react-query";
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { workSpace } from "@/services/Comman";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -11,6 +11,7 @@ import BookingItem from "./BookingItem";
 import BookingReviewPopup from "../bookingReviewPopup/BookingReviewPopup";
 
 const MyBooking = () => {
+  const datePickerRef = useRef(null);
   const [activeTab, setActiveTab] = useState("allBooking");
   const [spaceType, setSpaceType] = useState("");
   const [bookingStatus, setBookingStatus] = useState("");
@@ -124,6 +125,7 @@ const MyBooking = () => {
                   <div className="bg-white rounded-[15px] w-full">
                     <div className="relative md:w-64 w-full">
                       <DatePicker
+                        ref={datePickerRef}
                         selected={date?.startDate}
                         onChange={(dates) => {
                           const [start, end] = dates;
@@ -141,8 +143,13 @@ const MyBooking = () => {
                         className="w-full h-12 px-3 focus:outline-none text-[#777] placeholder:text-[#777] text-sm font-semibold focus:ring-0 "
                       />
                       <Svg
+                        onClick={() => {
+                          if (datePickerRef.current) {
+                            datePickerRef.current.setOpen(true);
+                          } 
+                        }}
                         name="calender"
-                        className="absolute size-4 right-3 top-1/2 -translate-y-1/2 text-[#f76900] pointer-events-none"
+                        className="cursor-pointer absolute size-4 right-3 top-1/2 -translate-y-1/2 text-[#f76900]"
                       />
                     </div>
                   </div>
@@ -168,6 +175,7 @@ const MyBooking = () => {
                     >
                       <option value="">Select Booking Status</option>
                       <option value="confirmed">Confirmed</option>
+                      <option value="waiting">Waiting</option>
                       <option value="pending_Host_Confirmation">
                         Pending Host Confirmation
                       </option>

@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Svg from "@/components/svg";
-import Image from "next/image";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -168,7 +167,7 @@ const profileSchema = z
       .refine((val) => !val || /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(val), {
         message: "Invalid PAN number format",
       }),
-    billingAddress1: z.string().min(1, "Billing address is required"),
+    billingAddress1: z.string().min(1, "Billing address 1 is required"),
     billingAddress2: z.string().optional(),
   })
   .superRefine((data, ctx) => {
@@ -684,7 +683,7 @@ const MyProfile = () => {
                                     options={genderOptions}
                                     placeholder="Select Gender"
                                     classNamePrefix="react-select"
-                                    className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px]"
+                                    className="mt-1 text-sm font-semibold rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px] [&_.css-1lvlyd-placeholder]:!text-[#777] [&_.css-vksdqt-singleValue]:!text-[#777]"
                                     styles={customStyles}
                                     components={{
                                       ClearIndicator,
@@ -749,7 +748,7 @@ const MyProfile = () => {
                                     options={countryData}
                                     placeholder="Select Country"
                                     classNamePrefix="react-select"
-                                    className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px]"
+                                    className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px] [&_.css-1lvlyd-placeholder]:!text-[#777] [&_.css-vksdqt-singleValue]:!text-[#777]"
                                     styles={customStyles}
                                     components={{
                                       ClearIndicator,
@@ -785,7 +784,7 @@ const MyProfile = () => {
                                     options={stateData}
                                     placeholder="Select State"
                                     classNamePrefix="react-select"
-                                    className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px]"
+                                    className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px]  [&_.css-1lvlyd-placeholder]:!text-[#777] [&_.css-vksdqt-singleValue]:!text-[#777]"
                                     styles={customStyles}
                                     components={{
                                       ClearIndicator,
@@ -822,7 +821,7 @@ const MyProfile = () => {
                                     options={cityData}
                                     placeholder="Select City"
                                     classNamePrefix="react-select"
-                                    className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px]"
+                                    className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px]  [&_.css-1lvlyd-placeholder]:!text-[#777] [&_.css-vksdqt-singleValue]:!text-[#777]"
                                     styles={customStyles}
                                     components={{
                                       ClearIndicator,
@@ -907,7 +906,7 @@ const MyProfile = () => {
                               required: "Billing address 1 is required",
                             })}
                             type="text"
-                            placeholder="Enter Billing address "
+                            placeholder="Enter Billing address 1"
                             className={`border-[#e0e0e0] font-semibold w-full placeholder:text-[#777] placeholder:font-medium text-[#777] mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-[44px] ${
                               errors.billingAddress1
                                 ? "border-red-500 focus:ring-red-200"
@@ -924,7 +923,7 @@ const MyProfile = () => {
                         {/* Billing Address 2 */}
                         <div className="relative mt-6">
                           <label className="text-sm text-black font-semibold">
-                            Billing address{" "}
+                            Billing address 2{" "}
                           </label>
                           <input
                             {...register("billingAddress2")}

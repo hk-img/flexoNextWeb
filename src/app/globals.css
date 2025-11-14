@@ -18,6 +18,13 @@
   color: #000000; /* dropdown options - black */
 }
 
+.gm-style > div > div > div > div {
+  width: 130px !important;
+}
+.gm-style img {
+  width: auto !important;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

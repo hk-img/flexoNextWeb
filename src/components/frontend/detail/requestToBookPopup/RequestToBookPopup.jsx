@@ -1,5 +1,5 @@
 import Svg from "@/components/svg";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -79,6 +79,7 @@ const RequestToBookPopup = ({
   workingDays,
   hostHolidays,
 }) => {
+  const datePickerRef = useRef(null);
   const minHours = spaceData?.minimum_hours / 60;
   const router = useRouter();
   const { token, user } = useAuth();
@@ -422,6 +423,7 @@ const RequestToBookPopup = ({
                             <div className="relative border-b border-[#0000006b] pt-3 pb-1 focus-within:border-[#3f51b5] transition-all duration-200">
                               <DatePicker
                                 selected={field.value}
+                                ref={datePickerRef}
                                 onChange={(date) => field.onChange(date)}
                                 filterDate={(date) => !isDisabledDate(date)}
                                 dateFormat="dd-MM-yyyy"
@@ -450,7 +452,11 @@ const RequestToBookPopup = ({
                                 Choose a date
                               </label>
                               <div>
-                                <Svg name="calender" className="text-[#f76900] size-[14px] absolute right-2 top-3 "/>
+                                <Svg onClick={() =>{ 
+                                  if (datePickerRef.current) {
+                                    datePickerRef.current.setOpen(true);
+                                  }
+                                }} name="calender" className="cursor-pointer text-[#f76900] size-[14px] absolute right-2 top-3 "/>
                               </div>
                             </div>
                           )}

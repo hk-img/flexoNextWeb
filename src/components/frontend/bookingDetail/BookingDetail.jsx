@@ -38,7 +38,6 @@ const BookingDetail = ({ bookingId }) => {
   const locationNameSlug = slugGenerator(bookingData?.location_name || "");
   const cityNameSlug = slugGenerator(bookingData?.contact_city_name || "");
   const spaceId = bookingData?.spaceId;
-  console.log({ bookingData, type });
 
   function convertTo12Hour(time) {
     if (!time) return "";
@@ -97,7 +96,6 @@ const BookingDetail = ({ bookingId }) => {
   useEffect(() => {
     if (bookingDetail) {
       const paymentDetails = JSON.parse(bookingData?.payment_detail);
-      console.log({ paymentDetails });
       setPaymentDetails(paymentDetails);
     }
   }, [bookingData]);

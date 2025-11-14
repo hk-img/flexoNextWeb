@@ -5,6 +5,7 @@ import Svg from "@/components/svg";
 import ImagePopup from "./ImagePopup";
 import { useAuth } from "@/context/useAuth";
 import {
+  IMAGE_BASE_URL,
   postAPIAuthWithoutBearer,
   WEBSITE_BASE_URL,
 } from "@/services/ApiService";
@@ -26,7 +27,7 @@ const HeroSection = ({
   const formattedImages = spaceData?.images?.map((img) =>
     img.startsWith("http") || img.startsWith("/")
       ? img
-      : `${WEBSITE_BASE_URL}/${img}`
+      : `${IMAGE_BASE_URL}/${img}`
   );
   const displayedImages = [...formattedImages.slice(0, 5)];
   while (displayedImages.length < 5) {

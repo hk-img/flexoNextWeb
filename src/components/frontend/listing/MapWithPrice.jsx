@@ -173,14 +173,14 @@ const MapWithPrices = ({ type, spaces, hoveredSpaceId }) => {
                         {space?.images?.map((image, index) => (
                           <div
                             key={index}
-                            className="embla__slide relative shrink-0 basis-full"
+                            className="embla__slide relative shrink-0 basis-full !w-full"
                           >
                             <ImageWithFallback
                               src={image || "/images/default_image.webp"}
                               alt="product image"
                               width={399}
                               height={320}
-                              className="w-full aspect-[399/320] object-cover rounded-t-md"
+                              className="!w-full aspect-[399/320] object-cover rounded-t-md"
                               fallback="/images/default_image.webp"
                             />
                           </div>

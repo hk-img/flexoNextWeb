@@ -683,7 +683,7 @@ const MyProfile = () => {
                                     options={genderOptions}
                                     placeholder="Select Gender"
                                     classNamePrefix="react-select"
-                                    className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px]"
+                                    className="mt-1 text-sm font-semibold rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px] [&_.css-1lvlyd-placeholder]:!text-[#777] [&_.css-vksdqt-singleValue]:!text-[#777]"
                                     styles={customStyles}
                                     components={{
                                       ClearIndicator,
@@ -748,7 +748,7 @@ const MyProfile = () => {
                                     options={countryData}
                                     placeholder="Select Country"
                                     classNamePrefix="react-select"
-                                    className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px]"
+                                    className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px] [&_.css-1lvlyd-placeholder]:!text-[#777] [&_.css-vksdqt-singleValue]:!text-[#777]"
                                     styles={customStyles}
                                     components={{
                                       ClearIndicator,
@@ -784,7 +784,7 @@ const MyProfile = () => {
                                     options={stateData}
                                     placeholder="Select State"
                                     classNamePrefix="react-select"
-                                    className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px]"
+                                    className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px]  [&_.css-1lvlyd-placeholder]:!text-[#777] [&_.css-vksdqt-singleValue]:!text-[#777]"
                                     styles={customStyles}
                                     components={{
                                       ClearIndicator,
@@ -821,7 +821,7 @@ const MyProfile = () => {
                                     options={cityData}
                                     placeholder="Select City"
                                     classNamePrefix="react-select"
-                                    className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px]"
+                                    className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px]  [&_.css-1lvlyd-placeholder]:!text-[#777] [&_.css-vksdqt-singleValue]:!text-[#777]"
                                     styles={customStyles}
                                     components={{
                                       ClearIndicator,

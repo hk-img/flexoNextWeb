@@ -31,6 +31,17 @@ const ProductCard = ({
   const cityNameSlug = slugGenerator(item?.contact_city_name || "");
   const spaceId = item?.id;
 
+  const defaultImage = "/images/default_image.webp";
+  const formattedImages = item?.images?.map((img) =>
+    img.startsWith("http") || img.startsWith("/")
+      ? img
+      : `${IMAGE_BASE_URL}/${img}`
+  );
+  const displayedImages = [...formattedImages.slice(0, 5)];
+  while (displayedImages.length < 5) {
+    displayedImages.push(defaultImage);
+  }
+
   const { mutate: favouriteMutate } = useMutation({
     mutationFn: async (payload) => {
       const response = await postAPIAuthWithoutBearer(
@@ -148,7 +159,7 @@ const ProductCard = ({
             align: "start",
           }}
         >
-          {item?.images?.map((image, index) => (
+          {displayedImages?.map((image, index) => (
             <div
               key={index}
               className="embla__slide relative shrink-0 basis-full"

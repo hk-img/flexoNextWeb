@@ -460,74 +460,42 @@ const ExplorePopup = ({
                       )}
                     </>
                   ) : (
-                    <>
-                    {/* <div className="relative">
+                    <div className="relative">
                       <label className="block text-sm font-semibold mb-1">
                         City<span className="text-[#dc3545]">*</span>
                       </label>
-                      <select
-                        {...register("city")}
-                        className={`select-custom w-full rounded-sm placeholder:text-[#0000006B] border px-1 tracking-normal py-2.5
-                            border-[#dbdbdb] h-[45px] text-sm font-medium
-                            ${
-                              errors.city
-                                ? "border-[#f44336] focus:border-[#f44336]"
-                                : "hover:border-black focus:border-[#3f51b5] active:border-[#3f51b5]"
-                            }
-                          `}
-                      >
-                        <option value="" disabled selected hidden>
-                          Select
-                        </option>
-                        {cityData?.map((item) => (
-                          <option key={item.id} value={item.name}>
-                            {item.name}
-                          </option>
-                        ))}
-                      </select>
-                      {errors.city && (
-                        <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4">
-                          {errors.city.message}
-                        </p>
-                      )}
-                    </div> */}
-                      <div className="relative">
-                        <label className="block text-sm font-semibold mb-1">
-                          City<span className="text-[#dc3545]">*</span>
-                        </label>
 
-                        <Controller
-                          name="city"
-                          control={control}
-                          render={({ field }) => {
-                            const handleChange = (selectedOption) => {
-                              field.onChange(selectedOption?.label || "");
-                            };
-                            const selectedValue =
-                              cityData?.find(
-                                (option) => option.label === field.value
-                              ) || null;
+                      <Controller
+                        name="city"
+                        control={control}
+                        render={({ field }) => {
+                          const handleChange = (selectedOption) => {
+                            field.onChange(selectedOption?.label || "");
+                          };
+                          const selectedValue =
+                            cityData?.find(
+                              (option) => option.label === field.value
+                            ) || null;
 
-                            return (
-                              <Select
-                                value={selectedValue}
-                                onChange={handleChange}
-                                options={cityData}
-                                placeholder="Select City"
-                                classNamePrefix="react-select"
-                                className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px]"
-                                styles={customStyles}
-                                components={{
-                                  ClearIndicator,
-                                  DropdownIndicator,
-                                  IndicatorSeparator: null,
-                                }}
-                              />
-                            );
-                          }}
-                        />
-                      </div>
-                    </>
+                          return (
+                            <Select
+                              value={selectedValue}
+                              onChange={handleChange}
+                              options={cityData}
+                              placeholder="Select City"
+                              classNamePrefix="react-select"
+                              className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px]"
+                              styles={customStyles}
+                              components={{
+                                ClearIndicator,
+                                DropdownIndicator,
+                                IndicatorSeparator: null,
+                              }}
+                            />
+                          );
+                        }}
+                      />
+                    </div>
                   )}
                   <div className="relative">
                     <label className="block text-sm font-semibold mb-1">

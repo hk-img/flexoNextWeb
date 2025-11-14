@@ -482,9 +482,9 @@ const ExplorePopup = ({
                               value={selectedValue}
                               onChange={handleChange}
                               options={cityData}
-                              placeholder="Select City"
+                              placeholder="Select"
                               classNamePrefix="react-select"
-                              className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border  h-[44px] [&_.css-10a4w4m-control]:!h-[44px] [&_.css-1lvlyd-placeholder]:!text-[#0000006B] [&_.css-vksdqt-singleValue]:!text-[#0000006B] [&_.css-10a4w4m-control]:!h-[44px] [&_.css-1lvlyd-placeholder]:!font-medium [&_.css-vksdqt-singleValue]:!font-medium"
+                              className="mt-1 text-sm font-semibold hover:border-black rounded-sm !w-full border-[#e0e0e0] border h-[45px] [&_.css-10a4w4m-control]:!h-[45px] [&_.css-1lvlyd-placeholder]:!text-[#0000006B] [&_.css-vksdqt-singleValue]:!text-[#0000006B] [&_.css-10a4w4m-control]:!h-[45px] [&_.css-1lvlyd-placeholder]:!font-medium [&_.css-vksdqt-singleValue]:!font-medium"
                               styles={customStyles}
                               components={{
                                 ClearIndicator,

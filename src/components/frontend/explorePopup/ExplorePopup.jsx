@@ -495,6 +495,11 @@ const ExplorePopup = ({
                           );
                         }}
                       />
+                      {errors.city && (
+                        <p className="text-[#f44336] font-medium text-[11px] px-[10px] absolute -bottom-4">
+                          {errors.city.message}
+                        </p>
+                      )}
                     </div>
                   )}
                   <div className="relative">

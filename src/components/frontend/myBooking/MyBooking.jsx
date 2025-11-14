@@ -40,10 +40,10 @@ const MyBooking = () => {
       };
       let query = "";
       if (spaceType) {
-        query = `&spaceType=${spaceType}`;
+        query = query+`&spaceType=${spaceType}`;
       }
       if (bookingStatus) {
-        query = `&bookingStatus=${bookingStatus}`;
+        query = query+`&bookingStatus=${bookingStatus}`;
       }
       if(date?.startDate && date?.endDate) {
         const onlyStartDate = new Date(date.startDate);
@@ -54,7 +54,7 @@ const MyBooking = () => {
         onlyEndDate.setMinutes(onlyEndDate.getMinutes() - onlyEndDate.getTimezoneOffset());
         const onlyEndDateStr = onlyEndDate.toISOString().split("T")[0];
 
-        query = `&startDate=${onlyStartDateStr}&endDate=${onlyEndDateStr}`;
+        query = query+`&startDate=${onlyStartDateStr}&endDate=${onlyEndDateStr}`;
       }
       const res = await getAPIAuthWithoutBearer(
         `user/${endpointMap[activeTab]}?userId=${user?.id}${query}`,

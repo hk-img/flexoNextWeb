@@ -12,6 +12,7 @@ export async function generateMetadata({params}) {
   const data = await params;
   const slug = data?.data || [];
   const [spaceTypeSlug,citySlug,locationNameSlug] = slug;
+  if(!citySlug && !locationNameSlug) return notFound();
   const spaceType = spaceTypeSlug == "coworking" ? "coworking space" : convertSlugToSmallLetter(spaceTypeSlug || "");
   const city = convertSlugToAllCapitalLetter(citySlug || "");
   const locationName = convertSlugToAllCapitalLetter(locationNameSlug || "");
@@ -151,7 +152,8 @@ const page = async({params}) => {
   const data = await params;
   const slug = data?.data || [];
   const [spaceTypeSlug,citySlug,locationNameSlug] = slug;
-
+  console.log(spaceTypeSlug,citySlug,locationNameSlug,"Rthrtyhrtyhrtyrt");
+  if(!citySlug && !locationNameSlug) return notFound();
   const spaceType = convertSlugToCapitalLetter(spaceTypeSlug || "");
   const city = convertSlugToCapitalLetter(citySlug || "");
   const locationName = convertSlugToCapitalLetter(locationNameSlug || "");

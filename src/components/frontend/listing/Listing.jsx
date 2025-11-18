@@ -111,9 +111,9 @@ const Listing = ({
     const city_slug = slugGenerator(selectedLocation?.city || "");
     const location_slug = slugGenerator(selectedLocation?.location_name || "");
     if(!location_slug && type_slug == "coworking-space" ){
-      return router.push(`/in/coworking/${city_slug || citySlug}`);
+      return router.push(`/in/coworking/${city_slug || citySlug || ""}`);
     }
-    router.push(`/in/${type_slug}/${city_slug || citySlug }/${location_slug || locationNameSlug}`);
+    router.push(`/in/${type_slug}/${city_slug || citySlug || ""}/${location_slug || locationNameSlug || ""}`);
   };
   useEffect(() => {
     if (selectedRadio) {

@@ -107,13 +107,13 @@ const Listing = ({
     //   setSelectedCheckboxes([smallSpaceType]);
     // }
     // setSelectedRadio(value);
-    const typeSlug = slugGenerator(value || "");
-    const citySlug = slugGenerator(selectedLocation?.city || "");
-    const locationSlug = slugGenerator(selectedLocation?.location_name || "");
-    if(!locationSlug && typeSlug == "coworking-space" ){
-      return router.push(`/in/coworking/${citySlug}`);
+    const type_slug = slugGenerator(value || "");
+    const city_slug = slugGenerator(selectedLocation?.city || "");
+    const location_slug = slugGenerator(selectedLocation?.location_name || "");
+    if(!location_slug && type_slug == "coworking-space" ){
+      return router.push(`/in/coworking/${city_slug || citySlug}`);
     }
-    router.push(`/in/${typeSlug}/${citySlug}/${locationSlug}`);
+    router.push(`/in/${type_slug}/${city_slug || citySlug }/${location_slug || locationNameSlug}`);
   };
   useEffect(() => {
     if (selectedRadio) {

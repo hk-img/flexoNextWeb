@@ -2,7 +2,6 @@ import React from "react";
 import FaqAnswer from "./FaqAnswer";
 
 const Faq = ({ spaceType,city,locationName,faqData }) => {
-  console.log({faqData},"Tyhtryhty")
   return (
     <>
       <section className=" mt-18 bg-[#f9f9f9]">

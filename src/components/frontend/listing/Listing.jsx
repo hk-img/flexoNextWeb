@@ -204,8 +204,9 @@ const Listing = ({
         page_no: page,
       };
       if (!nearMeData) {
-        payload.location_lat = 19.1121947;
-        payload.location_longi = 72.8792898;
+        const selectedSpace = nearBySpacesData?.find((space) => space?.location_name?.toLowerCase() == locationName?.toLowerCase());
+        payload.location_lat = selectedSpace?.lat || 0;
+        payload.location_longi = selectedSpace?.longi || 0;
       }
       if (selectedLocation) {
         payload.city_name = convertSlugToSmallLetter(
@@ -320,13 +321,7 @@ const Listing = ({
                     <div
                       key={index}
                       className={`${
-                        item?.location_name
-                          ?.split(" ")
-                          ?.map(
-                            (word) =>
-                              word.charAt(0).toLowerCase() + word.slice(1)
-                          )
-                          ?.join(" ") == locationNameSlug?.replace(/-/g, " ")
+                          item?.location_name?.toLowerCase() == locationName?.toLowerCase()
                           ? "text-[#4343e8] border-[#7d9dd9] bg-[#e9e9ff]"
                           : "text-[#9e9e9e] border-[#d4d4d4] bg-white"
                       } inline-block text-center me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border max-w-full min-w-[160px] whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]`}

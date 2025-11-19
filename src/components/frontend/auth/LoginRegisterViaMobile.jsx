@@ -12,26 +12,36 @@ const loginRegisterSchema = z
   .object({
     mobile: z.string().optional(),
     country: z
-      .object({
-        dialCode: z.string().optional(),
-      })
-      .nullable()
-      .optional(),
+    .object({
+      dialCode: z.union([z.string(), z.number()]).optional(),
+    })
+    .nullable()
+    .optional(),
   })
   .superRefine((data, ctx) => {
-    if (!data.mobile) {
+    const code = data.country?.dialCode ? String(data.country.dialCode) : "";  
+    const numeric = data.mobile?.replace(/\D/g, "") || "";
+    if (!numeric) {
       ctx.addIssue({
         path: ["mobile"],
         message: "Mobile number is required",
         code: z.ZodIssueCode.custom,
       });
-    } else {
-      const code = data.country?.dialCode ?? "";
-      const numeric = data.mobile.replace(/\D/g, "");
-      if (numeric.length <= code.length) {
+      return;
+    }
+    if (numeric.length <= code.replace(/\D/g, "").length) {
+      ctx.addIssue({
+        path: ["mobile"],
+        message: "Mobile number is required",
+        code: z.ZodIssueCode.custom,
+      });
+      return;
+    }
+    if (code === "91") {
+      if (numeric.length !== 12) {
         ctx.addIssue({
           path: ["mobile"],
-          message: "Mobile number is required",
+          message: "Mobile number must be exactly 10 digits",
           code: z.ZodIssueCode.custom,
         });
       }

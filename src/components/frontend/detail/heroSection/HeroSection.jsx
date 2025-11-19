@@ -5,6 +5,7 @@ import Svg from "@/components/svg";
 import ImagePopup from "./ImagePopup";
 import { useAuth } from "@/context/useAuth";
 import {
+  IMAGE_BASE_URL,
   postAPIAuthWithoutBearer,
   WEBSITE_BASE_URL,
 } from "@/services/ApiService";
@@ -22,6 +23,16 @@ const HeroSection = ({
   const [isFavourite, setIsFavourite] = useState(false);
   const youtubeId = spaceData?.youtube_url?.split("/")?.pop();
   const [viewImagePopup, setViewImagePopup] = useState(false);
+  const defaultImage = "/images/default_image.webp";
+  const formattedImages = spaceData?.images?.map((img) =>
+    img.startsWith("http") || img.startsWith("/")
+      ? img
+      : `${IMAGE_BASE_URL}/${img}`
+  );
+  const displayedImages = [...formattedImages.slice(0, 5)];
+  while (displayedImages.length < 5) {
+    displayedImages.push(defaultImage);
+  }
 
   const { mutate: favouriteMutate } = useMutation({
     mutationFn: async (payload) => {
@@ -117,32 +128,31 @@ const HeroSection = ({
 
   return (
     <>
-      <section className="relative w-full lg:mt-[82px] sm:mt-[62px] mt-[63px] ">
+      <section className="relative w-full lg:mt-[82px]  sm:mt-[62px] mt-[63px] ">
         <div className="relative">
-          {spaceData?.ribbon && (
+          {/* {spaceData?.ribbon && (
             <div className="bg-black text-white font-medium text-sm px-[10px] py-2 rounded-sm absolute top-7 left-6  z-10">
               {spaceData?.ribbon}
             </div>
-          )}
+          )} */}
           <div className="grid md:grid-cols-2 grid-cols-1 gap-[2px]">
             <div className="[&_[data-ntpc]]:!h-full [&_[data-title]]:h-full [&_[data-title]]:!max-w-full">
               {youtubeId ? (
                 <YouTubeEmbed
                   videoId={youtubeId}
-                  className="!w-full !h-full  "
-                  // title="Client testimonial video about Flexo workspace experience"
+                  className="!w-full !h-full"
                   aria-label="Embedded YouTube video: Client testimonial about Flexo workspace"
                   role="region"
                   aria-roledescription="video player"
                 />
               ) : (
-                <div className="relative w-full aspect-[634/436]">
+                <div className="relative w-full aspect-[634/423]">
                   <ImageWithFallback
-                    src={spaceData?.images?.[0] || "/images/default_image.webp"}
+                    src={displayedImages?.[0] || "/images/default_image.webp"}
                     alt="Space Image"
                     width={634}
                     height={436}
-                    className="object-cover"
+                    className="object-cover size-full"
                     fallback="/images/default_image.webp"
                     priority
                   />
@@ -152,17 +162,17 @@ const HeroSection = ({
             <div>
               <div className="grid md:grid-cols-2 grid-cols-4 gap-[2px]">
                 {(youtubeId
-                  ? spaceData?.images?.slice(0, 4)
-                  : spaceData?.images?.slice(1, 5)
+                  ? displayedImages?.slice(0, 4)
+                  : displayedImages?.slice(1, 5)
                 )?.map((item, index) => (
                   <div key={index}>
-                    <div className="relative w-full aspect-[359/239]">
+                    <div className="relative w-full aspect-[316/211]">
                       <ImageWithFallback
                         src={item}
                         alt="Space Image"
                         width={316}
                         height={210}
-                        className="object-cover"
+                        className="object-cover size-full"
                         fallback="/images/default_image.webp"
                         priority
                       />
@@ -335,7 +345,7 @@ const HeroSection = ({
         <ImagePopup
           viewImagePopup={viewImagePopup}
           setViewImagePopup={setViewImagePopup}
-          images={spaceData?.images}
+          images={formattedImages}
         />
       )}
     </>

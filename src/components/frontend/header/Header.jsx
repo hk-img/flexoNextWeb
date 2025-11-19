@@ -226,7 +226,7 @@ const Header = () => {
                       My Bookings
                     </div>
                   </li>
-                  <li>
+                  {/* <li>
                     <div
                       onClick={() => {
                         setIsMenuOpen(false);
@@ -236,7 +236,7 @@ const Header = () => {
                     >
                       My Booking Requests
                     </div>
-                  </li>
+                  </li> */}
                   <li>
                     <div
                       onClick={() => {

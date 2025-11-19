@@ -1,6 +1,7 @@
 import Listing from '@/components/frontend/listing/Listing';
 import { BASE_URL, WEBSITE_BASE_URL } from '@/services/ApiService';
 import { convertSlugToCapitalLetter, convertSlugToSmallLetter, getTypeOfSpaceByWorkSpace,coworkingTypes, convertSlugToAllCapitalLetter } from '@/services/Comman';
+import { notFound } from 'next/navigation';
 import React from 'react'
 
 export const revalidate = 3600;
@@ -11,6 +12,7 @@ export async function generateMetadata({params}) {
   const data = await params;
   const slug = data?.data || [];
   const [spaceTypeSlug,citySlug,locationNameSlug] = slug;
+  if(!citySlug && !locationNameSlug) return notFound();
   const spaceType = spaceTypeSlug == "coworking" ? "coworking space" : convertSlugToSmallLetter(spaceTypeSlug || "");
   const city = convertSlugToAllCapitalLetter(citySlug || "");
   const locationName = convertSlugToAllCapitalLetter(locationNameSlug || "");
@@ -86,7 +88,7 @@ export async function generateMetadata({params}) {
       return [];
     }
   }
-  async function fetchAPI3(payload) {
+  async function getNearBySpaceData(payload) {
     try{
       const res = await fetch(`${BASE_URL}/spaces/getNearBySpacesByCityId`, {
         method: "POST",
@@ -150,7 +152,8 @@ const page = async({params}) => {
   const data = await params;
   const slug = data?.data || [];
   const [spaceTypeSlug,citySlug,locationNameSlug] = slug;
-
+  console.log(spaceTypeSlug,citySlug,locationNameSlug,"Rthrtyhrtyhrtyrt");
+  if(!citySlug && !locationNameSlug) return notFound();
   const spaceType = convertSlugToCapitalLetter(spaceTypeSlug || "");
   const city = convertSlugToCapitalLetter(citySlug || "");
   const locationName = convertSlugToCapitalLetter(locationNameSlug || "");
@@ -159,6 +162,8 @@ const page = async({params}) => {
     cityId: city,
     spaceType: spaceTypeSlug == "coworking" ? "coworking space" : spaceTypeSlug?.replace(/-/g, " ")
   }
+  const nearBySpacesData = await getNearBySpaceData(payload);
+  const selectedSpace = nearBySpacesData?.find((space) => space?.location_name?.toLowerCase() == locationName?.toLowerCase());
   const otherTypes = convertSlugToSmallLetter(spaceTypeSlug || "");
   const listingPayload = {
     city_name: convertSlugToSmallLetter(city || ""),
@@ -171,12 +176,13 @@ const page = async({params}) => {
     "amenities": [],
     "city_lat": 0,
     "city_long": 0,
-    "location_lat": 19.1121947,
-    "location_longi": 72.8792898,
+    "location_lat": selectedSpace?.lat || 0,
+    "location_longi": selectedSpace?.longi || 0,
     "page_no": 1,
     "location_name": convertSlugToSmallLetter(locationNameSlug || "") || null,
   }
-  const [data1,data2,data3,listingData] = await Promise.all([fetchAPI1(),fetchAPI2(spaceType),fetchAPI3(payload),getListingData(listingPayload)]);
+  const [data1,data2,listingData] = await Promise.all([fetchAPI1(),fetchAPI2(spaceType),getListingData(listingPayload)]);
+  if(listingData?.length <= 0) return notFound();
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -195,7 +201,7 @@ const page = async({params}) => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Listing spaceTypeSlug={spaceTypeSlug} citySlug={citySlug} locationNameSlug={locationNameSlug} spaceType={spaceType} city={city} locationName = {locationName}  spaceCategoryData={data1} locationData = {data2} nearBySpacesData={data3} listingData={listingData}/>
+      <Listing spaceTypeSlug={spaceTypeSlug} citySlug={citySlug} locationNameSlug={locationNameSlug} spaceType={spaceType} city={city} locationName = {locationName}  spaceCategoryData={data1} locationData = {data2} nearBySpacesData={nearBySpacesData} listingData={listingData}/>
     </>
   )
 }

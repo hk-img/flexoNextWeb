@@ -61,7 +61,7 @@ const MyFavoriteItem = ({ item, setIsRemovePopupOpen, setSpaceId }) => {
               }}
               className="text-lg font-semibold text-[#141414] underline cursor-pointer"
             >
-              {item?.spaceData?.actual_name}
+              {type == "coworking" ? item?.spaceData?.actual_name : item?.spaceData?.spaceTitle}
             </h2>
             <div
               onClick={() => {

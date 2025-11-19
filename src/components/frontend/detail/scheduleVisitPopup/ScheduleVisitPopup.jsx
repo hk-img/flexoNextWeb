@@ -1,5 +1,5 @@
 import Svg from "@/components/svg";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -37,6 +37,7 @@ const scheduleSchema = z.object({
 });
 
 const ScheduleVisitPopup = ({ type, setIsOpen, spaceId,workingDays,spaceData,hostHolidays }) => {
+  const datePickerRef = useRef(null);
   const [timeSlot, setTimeSlot] = useState(defaultTime);
   const [formData, setFormData] = useState({
     spaceType: "",
@@ -243,6 +244,7 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId,workingDays,spaceData,hos
                             render={({ field }) => (
                               <DatePicker
                                 selected={field.value}
+                                ref={datePickerRef}
                                 onChange={(date) => field.onChange(date)}
                                 minDate={new Date()}
                                 filterDate={(date) => !isDisabledDate(date)} 
@@ -273,8 +275,13 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId,workingDays,spaceData,hos
                             )}
                           />
                           <Svg
+                            onClick={() =>{
+                              if (datePickerRef.current) {
+                                datePickerRef.current.setOpen(true);
+                              }
+                            }} 
                             name="calender"
-                            className="absolute size-4 right-3 top-1/2 -translate-y-1/2 text-[#f76900] pointer-events-none"
+                            className="cursor-pointer absolute size-4 right-3 top-1/2 -translate-y-1/2 text-[#f76900]"
                           />
                           <label
                             htmlFor="preferedDate"

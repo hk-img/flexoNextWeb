@@ -76,6 +76,7 @@ const Detail = ({
   const [selectedSpaceType, setSelectedSpaceType] = useState(null);
   const [showReviewPopup, setShowReviewPopup] = useState(false);
   const [requestToBookOpen, setRequestToBookOpen] = useState(false);
+  const [selectedCityName, setSelectedCityName] = useState(null);
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY >= 700) {
@@ -219,24 +220,24 @@ const Detail = ({
     }
   }, [token]);
 
-  const handleCityBreadCrumb = ()=>{
+  const handleCityBreadCrumb = () => {
     const typeSlug = slugGenerator(spaceData?.spaceType || "");
     const citySlug = slugGenerator(spaceData?.contact_city_name || "");
-    if(typeSlug == "coworking-space"){
+    if (typeSlug == "coworking-space") {
       return router.push(`/in/coworking/${citySlug}`);
     }
     router.push(`/in/${typeSlug}/${citySlug}`);
-  }
+  };
 
-  const handleLocationBreadCrumb = ()=>{
+  const handleLocationBreadCrumb = () => {
     const typeSlug = slugGenerator(spaceData?.spaceType || "");
     const citySlug = slugGenerator(spaceData?.contact_city_name || "");
     const locationSlug = slugGenerator(spaceData?.location_name || "");
-    if(!locationSlug && typeSlug == "coworking-space" ){
+    if (!locationSlug && typeSlug == "coworking-space") {
       return router.push(`/in/coworking/${citySlug}`);
     }
     router.push(`/in/${typeSlug}/${citySlug}/${locationSlug}`);
-  }
+  };
   return (
     <>
       <HeroSection
@@ -265,17 +266,32 @@ const Detail = ({
               </li>
             </ol>
             <div className="">
-              {type == "coworking" && (
-                <h1 className="2xl:text-[30px] text-lg leading-[1.6] font-medium text-[#141414] mb-4">
-                  {spaceData?.actual_name || spaceData?.name}{" "}
-                  {spaceData?.location_name}
-                </h1>
-              )}
-              {(type == "longterm" || type == "shortterm") && (
-                <h1 className="2xl:text-[30px] text-lg leading-[1.6] font-medium text-[#141414] mb-4">
-                  {spaceData?.spaceTitle}
-                </h1>
-              )}
+              <div className="flex items-center gap-1 mb-4">
+                {spaceData?.ribbon && (
+                  <div
+                    className="px-4 py-1 text-[0.6rem] font-bold text-white
+                    border-t-[0.5em]  border-l-[0.8em] border-l-transparent
+                    [clip-path:polygon(0_100%,100%_100%,100%_0.5em,calc(100%-0.5em)_0,calc(100%-0.5em)_0.5em,0_0.5em,0.8em_calc(50%+0.25em))]"
+                    style={{
+                      backgroundColor: spaceData?.ribbon_color,
+                    }}
+                  >
+                    {spaceData?.ribbon}
+                  </div>
+                )}
+
+                {type == "coworking" && (
+                  <h1 className="2xl:text-[30px] text-lg leading-[1.6] font-medium text-[#141414]">
+                    {spaceData?.actual_name || spaceData?.name}{" "}
+                    {spaceData?.location_name}
+                  </h1>
+                )}
+                {(type == "longterm" || type == "shortterm") && (
+                  <h1 className="2xl:text-[30px] text-lg leading-[1.6] font-medium text-[#141414] mb-4">
+                    {spaceData?.spaceTitle}
+                  </h1>
+                )}
+              </div>
               <div className="flex items-center text-[#141414] 2xl:text-base text-sm mb-4.5">
                 <Svg name="location2" className="size-5 text-[#f76900]" />
                 <span>
@@ -1330,6 +1346,7 @@ const Detail = ({
                     setIsOpen={setIsOpen}
                     setIsAuthOpen={setIsAuthOpen}
                     setSelectedSpaceData={setSelectedSpaceData}
+                    setSelectedCityName={setSelectedCityName}
                   />
                 </div>
               ))}

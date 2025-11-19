@@ -127,7 +127,7 @@ const schema = z
     firstName: z.string().min(1, "First name is required"),
     lastName: z.string().min(1, "Last name is required"),
     email: z.string().email("Enter a valid email").min(1, "Email is required"),
-    mobile: z.string().min(1, "Mobile Number is required"),
+    mobile: z.string().optional(),
     country: z
       .object({
         dialCode: z.union([z.string(), z.number()]).optional(),
@@ -136,21 +136,30 @@ const schema = z
       .optional(),
     city: z.string().min(1, "City is required"),
     seats: z.string().min(1, "Seats is required"),
-  })
-  .superRefine((data, ctx) => {
-    if (!data.mobile) {
+  }).superRefine((data, ctx) => {
+    const code = data.country?.dialCode ? String(data.country.dialCode) : "";  
+    const numeric = data.mobile?.replace(/\D/g, "") || "";
+    if (!numeric) {
       ctx.addIssue({
         path: ["mobile"],
         message: "Mobile number is required",
         code: z.ZodIssueCode.custom,
       });
-    } else {
-      const code = data.country?.dialCode ?? "";
-      const numeric = data.mobile.replace(/\D/g, "");
-      if (numeric.length <= code.length) {
+      return;
+    }
+    if (numeric.length <= code.replace(/\D/g, "").length) {
+      ctx.addIssue({
+        path: ["mobile"],
+        message: "Mobile number is required",
+        code: z.ZodIssueCode.custom,
+      });
+      return;
+    }
+    if (code === "91") {
+      if (numeric.length !== 12) {
         ctx.addIssue({
           path: ["mobile"],
-          message: "Mobile number is required",
+          message: "Mobile number must be exactly 10 digits",
           code: z.ZodIssueCode.custom,
         });
       }
@@ -161,7 +170,7 @@ const schemaForProductCard = z
     firstName: z.string().min(1, "First name is required"),
     lastName: z.string().min(1, "Last name is required"),
     email: z.string().email("Enter a valid email").min(1, "Email is required"),
-    mobile: z.string().min(1, "Mobile Number is required"),
+    mobile: z.string().optional(),
     country: z
       .object({
         dialCode: z.union([z.string(), z.number()]).optional(),
@@ -170,21 +179,30 @@ const schemaForProductCard = z
       .optional(),
     spaceType: z.string().min(1, "Space Type is required"),
     seats: z.string().min(1, "Seats is required"),
-  })
-  .superRefine((data, ctx) => {
-    if (!data.mobile) {
+  }).superRefine((data, ctx) => {
+    const code = data.country?.dialCode ? String(data.country.dialCode) : "";    
+    const numeric = data.mobile?.replace(/\D/g, "") || "";
+    if (!numeric) {
       ctx.addIssue({
         path: ["mobile"],
         message: "Mobile number is required",
         code: z.ZodIssueCode.custom,
       });
-    } else {
-      const code = data.country?.dialCode ?? "";
-      const numeric = data.mobile.replace(/\D/g, "");
-      if (numeric.length <= code.length) {
+      return;
+    }
+    if (numeric.length <= code.replace(/\D/g, "").length) {
+      ctx.addIssue({
+        path: ["mobile"],
+        message: "Mobile number is required",
+        code: z.ZodIssueCode.custom,
+      });
+      return;
+    }
+    if (code === "91") {
+      if (numeric.length !== 12) {
         ctx.addIssue({
           path: ["mobile"],
-          message: "Mobile number is required",
+          message: "Mobile number must be exactly 10 digits",
           code: z.ZodIssueCode.custom,
         });
       }
@@ -195,28 +213,37 @@ const schemaForCity = z
     firstName: z.string().min(1, "First name is required"),
     lastName: z.string().min(1, "Last name is required"),
     email: z.string().email("Enter a valid email").min(1, "Email is required"),
-    mobile: z.string().min(1, "Mobile Number is required"),
+    mobile: z.string().optional(),
     country: z
       .object({
         dialCode: z.union([z.string(), z.number()]).optional(),
       })
       .nullable()
       .optional(),
-  })
-  .superRefine((data, ctx) => {
-    if (!data.mobile) {
+  }).superRefine((data, ctx) => {
+    const code = data.country?.dialCode ? String(data.country.dialCode) : "";  
+    const numeric = data.mobile?.replace(/\D/g, "") || "";
+    if (!numeric) {
       ctx.addIssue({
         path: ["mobile"],
         message: "Mobile number is required",
         code: z.ZodIssueCode.custom,
       });
-    } else {
-      const code = data.country?.dialCode ?? "";
-      const numeric = data.mobile.replace(/\D/g, "");
-      if (numeric.length <= code.length) {
+      return;
+    }
+    if (numeric.length <= code.replace(/\D/g, "").length) {
+      ctx.addIssue({
+        path: ["mobile"],
+        message: "Mobile number is required",
+        code: z.ZodIssueCode.custom,
+      });
+      return;
+    }
+    if (code === "91") {
+      if (numeric.length !== 12) {
         ctx.addIssue({
           path: ["mobile"],
-          message: "Mobile number is required",
+          message: "Mobile number must be exactly 10 digits",
           code: z.ZodIssueCode.custom,
         });
       }

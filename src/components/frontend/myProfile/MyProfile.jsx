@@ -138,13 +138,13 @@ const profileSchema = z
   .object({
     firstName: z.string().min(1, "First Name is required"),
     lastName: z.string().min(1, "Last Name is required"),
-    mobile: z.string().min(1, "Mobile Number is required"),
+    mobile: z.string().optional(),
     country: z
-      .object({
-        dialCode: z.union([z.string(), z.number()]).optional(),
-      })
-      .nullable()
-      .optional(),
+    .object({
+      dialCode: z.union([z.string(), z.number()]).optional(),
+    })
+    .nullable()
+    .optional(),
     companyName: z.string().optional(),
     email: z.string().min(1, "Email is required").email("Invalid email"),
     gender: z.string().optional(),
@@ -169,21 +169,40 @@ const profileSchema = z
       }),
     billingAddress1: z.string().min(1, "Billing address 1 is required"),
     billingAddress2: z.string().optional(),
-  })
-  .superRefine((data, ctx) => {
-    if (!data.mobile) {
+  }).superRefine((data, ctx) => {
+    const code = data.country?.dialCode ? String(data.country.dialCode) : "";  
+    const numeric = data.mobile?.replace(/\D/g, "") || "";
+    if (!numeric) {
       ctx.addIssue({
         path: ["mobile"],
         message: "Mobile number is required",
         code: z.ZodIssueCode.custom,
       });
-    } else {
-      const code = data.country?.dialCode ?? "";
-      const numeric = data.mobile.replace(/\D/g, "");
-      if (numeric.length <= code.length) {
+      return;
+    }
+    if (numeric.length <= code.replace(/\D/g, "").length) {
+      ctx.addIssue({
+        path: ["mobile"],
+        message: "Mobile number is required",
+        code: z.ZodIssueCode.custom,
+      });
+      return;
+    }
+    if (code === "91") {
+      if (numeric.length !== 12) {
         ctx.addIssue({
           path: ["mobile"],
-          message: "Mobile number is required",
+          message: "Mobile number must be exactly 10 digits",
+          code: z.ZodIssueCode.custom,
+        });
+      }
+    }
+    if ((code === "91") && data.pincode) {
+      const pin = data?.pincode?.replace(/\D/g, "");
+      if (pin.length !== 6) {
+        ctx.addIssue({
+          path: ["pincode"],
+          message: "Pincode must be exactly 6 digits",
           code: z.ZodIssueCode.custom,
         });
       }
@@ -851,15 +870,18 @@ const MyProfile = () => {
                                       /[^0-9]/g,
                                       ""
                                     );
-                                    if (value.length <= 6) {
-                                      field.onChange(value);
-                                    }
+                                    field.onChange(value);
                                   }}
                                   value={field.value || ""}
                                   className="border-[#e0e0e0] font-semibold text-[#777] w-full placeholder:text-[#777] placeholder:font-medium mt-1 text-sm border focus:border-[#3f51b5] rounded-sm focus:outline-none px-2 h-[44px]"
                                 />
                               )}
                             />
+                            {errors.pincode && (
+                              <p className="text-red-500 text-[10px] absolute -bottom-4">
+                                {errors.pincode.message}
+                              </p>
+                            )}
                           </div>
 
                           <div className="relative">

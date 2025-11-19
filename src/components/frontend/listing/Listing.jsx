@@ -110,10 +110,15 @@ const Listing = ({
     const type_slug = slugGenerator(value || "");
     const city_slug = slugGenerator(selectedLocation?.city || "");
     const location_slug = slugGenerator(selectedLocation?.location_name || "");
-    if(!location_slug && type_slug == "coworking-space" ){
-      return router.push(`/in/coworking/${city_slug || citySlug || ""}`);
+    if(!city_slug && !location_slug && !locationNameSlug && citySlug && type_slug == "coworking-space" ){
+      return router.push(`/in/coworking/${citySlug || ""}`);
+    }else if(!city_slug && !location_slug && locationNameSlug && citySlug){
+      router.push(`/in/${type_slug}/${citySlug || ""}/${locationNameSlug || ""}`);
+    }else if(city_slug && !location_slug && type_slug == "coworking-space"){
+      return router.push(`/in/coworking/${city_slug || ""}`);
+    }else{
+      router.push(`/in/${type_slug}/${city_slug || ""}/${location_slug || ""}`);
     }
-    router.push(`/in/${type_slug}/${city_slug || citySlug || ""}/${location_slug || locationNameSlug || ""}`);
   };
   useEffect(() => {
     if (selectedRadio) {

@@ -59,7 +59,7 @@ const MapWithPrices = ({ type, spaces, hoveredSpaceId }) => {
     <GoogleMap
       mapContainerStyle={containerStyle}
       center={center}
-      zoom={12}
+      zoom={14}
       options={{
         zoomControl: true,
         zoomControlOptions: {

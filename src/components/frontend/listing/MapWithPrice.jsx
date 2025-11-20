@@ -117,8 +117,8 @@ const MapWithPrices = ({ type, spaces, hoveredSpaceId }) => {
                    ₹${Number(price).toLocaleString("en-IN")}
                 </text>
               </svg>`,
-              scaledSize: new window.google.maps.Size(80, 30),
-              anchor: new window.google.maps.Point(40, 0),
+              scaledSize: new window.google.maps.Size(priceWidth(price), 30),
+              // anchor: new window.google.maps.Point(40, 0),
             }}
           >
             {selectedSpace?.id === space.id && (

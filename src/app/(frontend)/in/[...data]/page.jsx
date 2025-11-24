@@ -195,11 +195,67 @@ const page = async({params}) => {
       }
     }) || [])
   };
+  let detail = "";
+  if(type == "coworking"){
+    detail = `Book coworking spaces in ${locationName}, ${city} that offer fully serviced offices with flexible terms, high-speed internet, and community-driven workspaces. Enjoy a productive environment with a range of coworking options on Flexo, from open desks to private cabins.`
+  }else if(type == "shortterm"){
+    detail = `Book the best ${spaceType} in ${locationName}, ${city} with premium equipments and modern amenities. Find spaces available for reservation by the hour with a variety of setups for your needs. Create, collaborate and celebrate with Flexo.`
+  }else{
+    detail = `Explore ${spaceType} for rent in ${locationName}, ${city} with options ranging from furnished and unfurnished offices to managed spaces. Expert advise and local knowledge make it easy to find your perfect office.`
+  }
+  const flexiblePrices = listingData?.data
+    ?.map(item => item?.flexible_desk_price)
+    .filter(price => price !== null && price !== 0);
+
+  const privateCabinPrices = listingData?.data
+    ?.map(item => item?.privatecabin_price)
+    .filter(price => price !== null && price !== 0);
+
+  const minPrice = flexiblePrices?.length ? Math.min(...flexiblePrices) : 0;
+  const maxPrice = privateCabinPrices?.length ? Math.max(...privateCabinPrices) : 0;
+
+  const jsonLd2 = {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": locationName
+      ? `${spaceType} in ${locationName}, ${city}`
+      : `${spaceType} in ${city}`,
+    "image": listingData?.data?.[0]?.images?.[0],
+    "description": detail,
+    "brand": {
+      "@type": "Brand",
+      "name": "Flexo"
+    },
+    "offers": {
+      "@type": "AggregateOffer",
+      "url": `${WEBSITE_BASE_URL}/in/${slug.join("/")}`,
+      "priceCurrency": "INR",
+      "lowPrice": minPrice,
+      "highPrice": maxPrice,
+      "availability": "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition"
+    }
+  };
+  const schemaData = {
+    "@context": "http://schema.org",
+    "@type": `${spaceType == "coworking" ? "Coworking Spaces" : spaceType}`,
+    name: `${spaceType == "coworking" ? "Coworking Spaces" : spaceType} in ${locationName ? locationName : " "} ${city}`,
+    telephone: "Call +91 95133 92400",
+    url:`${WEBSITE_BASE_URL}/in/${slug.join("/")}`,
+  };
   return (
     <>
       <script
         type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+      />
+      <script
+        type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd2) }}
       />
       <Listing spaceTypeSlug={spaceTypeSlug} citySlug={citySlug} locationNameSlug={locationNameSlug} spaceType={spaceType} city={city} locationName = {locationName}  spaceCategoryData={data1} locationData = {data2} nearBySpacesData={nearBySpacesData} listingData={listingData}/>
     </>

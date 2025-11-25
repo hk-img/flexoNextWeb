@@ -229,13 +229,13 @@ const page = async ({ params }) => {
   if (type == "coworking") {
     const flexiblePrices = listingData?.data
       ?.map((item) => item?.flexible_desk_price)
-      .filter((price) => price !== null && price !== 0);
+      .filter((price) => price !== null && price !== 0).reduce((a, b) => (a < b ? a : b));;
     const privateCabinPrices = listingData?.data
       ?.map((item) => item?.privatecabin_price)
-      .filter((price) => price !== null);
+      .filter((price) => price !== null).reduce((a, b) => (a > b ? a : b));;
     console.log({flexiblePrices, privateCabinPrices});
-    minPrice = flexiblePrices?.length ? Math.min(...flexiblePrices) : 0;
-    maxPrice = privateCabinPrices?.length ? Math.max(...privateCabinPrices) : 0;
+    minPrice = flexiblePrices
+    maxPrice = privateCabinPrices
     detail = `Book coworking spaces in ${locationName}, ${city} that offer fully serviced offices with flexible terms, high-speed internet, and community-driven workspaces. Enjoy a productive environment with a range of coworking options on Flexo, from open desks to private cabins.`;
   } else if (type == "shortterm") {
     const min = listingData?.data

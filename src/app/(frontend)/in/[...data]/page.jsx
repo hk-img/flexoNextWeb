@@ -225,9 +225,17 @@ const page = async ({ params }) => {
   let detail = "";
   let minPrice = 0;
   let maxPrice = 0;
+  let flexibleData = [];
   let flexiblePrices = [];
   let privateCabinPrices = [];
   if (type == "coworking") {
+    flexibleData = listingData?.data
+      ?.map((item) => {
+        if(item?.flexible_desk_price > 0) return {
+          id: item?.id,
+          flexible_desk_price: Number(item?.flexible_desk_price),
+        };
+      })?.filter((price) => price?.flexible_desk_price && !isNaN(price?.flexible_desk_price));
     flexiblePrices = listingData?.data
       ?.map((item) => Number(item?.flexible_desk_price))
       ?.filter((price) => price && !isNaN(price));
@@ -309,6 +317,7 @@ const page = async ({ params }) => {
         locationData={data2}
         nearBySpacesData={nearBySpacesData}
         listingData={listingData}
+        flexibleData={flexibleData}
         flexiblePrices={flexiblePrices}
         privateCabinPrices={privateCabinPrices}
       />

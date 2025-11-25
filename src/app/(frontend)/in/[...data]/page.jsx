@@ -235,28 +235,33 @@ const page = async ({ params }) => {
       ?.filter((price) => !isNaN(price) && price !== null && price > 0);
     minPrice = flexiblePrices?.length ? Math.min(...flexiblePrices) : 0;
     maxPrice = privateCabinPrices?.length ? Math.max(...privateCabinPrices) : 0;
-    detail = `Book coworking spaces in ${locationName}, ${city} that offer fully serviced offices with flexible terms, high-speed internet, and community-driven workspaces. Enjoy a productive environment with a range of coworking options on Flexo, from open desks to private cabins.`;
+    detail = locationName ? 
+    `Book coworking spaces in ${locationName}, ${city} that offer fully serviced offices with flexible terms, high-speed internet, and community-driven workspaces. Enjoy a productive environment with a range of coworking options on Flexo, from open desks to private cabins.`:
+    `Book premium ${spaceType == "Coworking" ? "Coworking Spaces" : spaceType} in ${city} with flexible pricing options, prime locations, and modern amenities. Explore top coworking brands on Flexo for shared offices, private cabins, and collaborative work environments designed for businesses of all sizes.`;
   } else if (type == "shortterm") {
     const orignalPrices = listingData?.data
       ?.map((item) => Number(item?.originalPrice))
       ?.filter((price) => !isNaN(price) && price !== null && price > 0);
     minPrice = orignalPrices?.length ? Math.min(...orignalPrices) : 0;
     maxPrice = orignalPrices?.length ? Math.max(...orignalPrices) : 0;
-    detail = `Book the best ${spaceType} in ${locationName}, ${city} with premium equipments and modern amenities. Find spaces available for reservation by the hour with a variety of setups for your needs. Create, collaborate and celebrate with Flexo.`;
+    detail = locationName ? 
+    `Book the best ${spaceType == "Coworking" ? "Coworking Spaces" : spaceType} in ${locationName}, ${city} with premium equipments and modern amenities. Find spaces available for reservation by the hour with a variety of setups for your needs. Create, collaborate and celebrate with Flexo.`:
+    `Book the best ${spaceType == "Coworking" ? "Coworking Spaces" : spaceType} in ${city} with premium equipments and modern amenities. Find spaces available for reservation by the hour with a variety of setups for your needs. Create, collaborate and celebrate with Flexo.`;
   } else {
     const orignalPrices = listingData?.data
       ?.map((item) => Number(item?.originalPrice))
       ?.filter((price) => !isNaN(price) && price !== null && price > 0);
     minPrice = orignalPrices?.length ? Math.min(...orignalPrices) : 0;
     maxPrice = orignalPrices?.length ? Math.max(...orignalPrices) : 0;
-    detail = `Explore ${spaceType} for rent in ${locationName}, ${city} with options ranging from furnished and unfurnished offices to managed spaces. Expert advise and local knowledge make it easy to find your perfect office.`;
+    detail = locationName ? `Explore ${spaceType == "Coworking" ? "Coworking Spaces" : spaceType} for rent in ${locationName}, ${city} with options ranging from furnished and unfurnished offices to managed spaces. Expert advise and local knowledge make it easy to find your perfect office.`:
+    `Explore a variety of ${spaceType == "Coworking" ? "Coworking Spaces" : spaceType} for rent in ${city}. Choose from fully furnished, unfurnished, or built-to-suit options designed to accommodate growing businesses. Find the perfect office with Flexo today.`;
   }
   const jsonLd2 = {
     "@context": "https://schema.org/",
     "@type": "Product",
     name: locationName
-      ? `${spaceType} in ${locationName}, ${city}`
-      : `${spaceType} in ${city}`,
+      ? `${spaceType == "Coworking" ? "Coworking Spaces" : spaceType} in ${locationName}, ${city}`
+      : `${spaceType == "Coworking" ? "Coworking Spaces" : spaceType} in ${city}`,
     image: listingData?.data?.[0]?.images?.[0],
     description: detail,
     brand: {
@@ -275,10 +280,8 @@ const page = async ({ params }) => {
   };
   const schemaData = {
     "@context": "http://schema.org",
-    "@type": `${spaceType == "coworking" ? "Coworking Spaces" : spaceType}`,
-    name: `${spaceType == "coworking" ? "Coworking Spaces" : spaceType} in ${
-      locationName ? locationName : " "
-    } ${city}`,
+    "@type": `${spaceType == "Coworking" ? "Coworking Spaces" : spaceType}`,
+    name: `${spaceType === "Coworking" ? "Coworking Spaces" : spaceType} in ${locationName ? locationName + " " : ""}${city}`,
     telephone: "Call +91 95133 92400",
     url: `${WEBSITE_BASE_URL}/in/${slug.join("/")}`,
   };

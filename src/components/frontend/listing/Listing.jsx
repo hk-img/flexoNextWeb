@@ -53,7 +53,10 @@ const Listing = ({
   locationData,
   nearBySpacesData,
   listingData,
+  flexiblePrices,
+  privateCabinPrices
 }) => {
+  console.log({flexiblePrices, privateCabinPrices},"Rtyhrtyrtyrtyrty");
   const isMobile = useIsMobile();
   const router = useRouter();
   const { user } = useAuth();

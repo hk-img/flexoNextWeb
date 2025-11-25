@@ -225,17 +225,18 @@ const page = async ({ params }) => {
   let detail = "";
   let minPrice = 0;
   let maxPrice = 0;
-  console.log({type},"rthgryrtytyrtyrtyrtyrt")
+  let flexiblePrices = [];
+  let privateCabinPrices = [];
   if (type == "coworking") {
-    const flexiblePrices = listingData?.data
+    flexiblePrices = listingData?.data
       ?.map((item) => item?.flexible_desk_price)
-      .filter((price) => price !== null && price !== 0).reduce((a, b) => (a < b ? a : b));;
-    const privateCabinPrices = listingData?.data
+      .filter((price) => price !== null && price !== 0);
+
+    privateCabinPrices = listingData?.data
       ?.map((item) => item?.privatecabin_price)
-      .filter((price) => price !== null).reduce((a, b) => (a > b ? a : b));;
-    console.log({flexiblePrices, privateCabinPrices});
-    minPrice = flexiblePrices
-    maxPrice = privateCabinPrices
+      .filter((price) => price !== null);
+    minPrice = flexiblePrices?.length ? Math.min(...flexiblePrices) : 0;
+    maxPrice = privateCabinPrices?.length ? Math.max(...privateCabinPrices) : 0;
     detail = `Book coworking spaces in ${locationName}, ${city} that offer fully serviced offices with flexible terms, high-speed internet, and community-driven workspaces. Enjoy a productive environment with a range of coworking options on Flexo, from open desks to private cabins.`;
   } else if (type == "shortterm") {
     const min = listingData?.data
@@ -316,6 +317,8 @@ const page = async ({ params }) => {
         locationData={data2}
         nearBySpacesData={nearBySpacesData}
         listingData={listingData}
+        flexiblePrices={flexiblePrices}
+        privateCabinPrices={privateCabinPrices}
       />
     </>
   );

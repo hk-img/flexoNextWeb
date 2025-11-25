@@ -229,36 +229,28 @@ const page = async ({ params }) => {
   let privateCabinPrices = [];
   if (type == "coworking") {
     flexiblePrices = listingData?.data
-      ?.map((item) => item?.flexible_desk_price)
-      .filter((price) => price !== null && price !== 0);
+      ?.map((item) => Number(item?.flexible_desk_price))
+      ?.filter((price) => price && !isNaN(price));
 
     privateCabinPrices = listingData?.data
-      ?.map((item) => item?.privatecabin_price)
-      .filter((price) => price !== null);
+      ?.map((item) => Number(item?.privatecabin_price))
+      ?.filter((price) => price && !isNaN(price));
     minPrice = flexiblePrices?.length ? Math.min(...flexiblePrices) : 0;
     maxPrice = privateCabinPrices?.length ? Math.max(...privateCabinPrices) : 0;
     detail = `Book coworking spaces in ${locationName}, ${city} that offer fully serviced offices with flexible terms, high-speed internet, and community-driven workspaces. Enjoy a productive environment with a range of coworking options on Flexo, from open desks to private cabins.`;
   } else if (type == "shortterm") {
-    const min = listingData?.data
-      ?.map((item) => item?.originalPrice)
-      .filter((price) => price !== null);
-
-    const max = listingData?.data
-      ?.map((item) => item?.originalPrice)
-      .filter((price) => price !== null);
-    minPrice = min?.length ? Math.min(...min) : 0;
-    maxPrice = max?.length ? Math.max(...max) : 0;
+    const orignalPrices = listingData?.data
+      ?.map((item) => Number(item?.originalPrice))
+      ?.filter((price) => price && !isNaN(price));
+    minPrice = orignalPrices?.length ? Math.min(...orignalPrices) : 0;
+    maxPrice = orignalPrices?.length ? Math.max(...orignalPrices) : 0;
     detail = `Book the best ${spaceType} in ${locationName}, ${city} with premium equipments and modern amenities. Find spaces available for reservation by the hour with a variety of setups for your needs. Create, collaborate and celebrate with Flexo.`;
   } else {
-    const min = listingData?.data
-      ?.map((item) => item?.originalPrice)
-      .filter((price) => price !== null);
-
-    const max = listingData?.data
-      ?.map((item) => item?.originalPrice)
-      .filter((price) => price !== null);
-    minPrice = min?.length ? Math.min(...min) : 0;
-    maxPrice = max?.length ? Math.max(...max) : 0;
+    const orignalPrices = listingData?.data
+      ?.map((item) => Number(item?.originalPrice))
+      ?.filter((price) => price && !isNaN(price));
+    minPrice = orignalPrices?.length ? Math.min(...orignalPrices) : 0;
+    maxPrice = orignalPrices?.length ? Math.max(...orignalPrices) : 0;
     detail = `Explore ${spaceType} for rent in ${locationName}, ${city} with options ranging from furnished and unfurnished offices to managed spaces. Expert advise and local knowledge make it easy to find your perfect office.`;
   }
   const jsonLd2 = {

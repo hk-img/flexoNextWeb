@@ -58,18 +58,18 @@ const TestimonialCta = ({ setIsOpen, type }) => {
           Client's Testimonials
         </h5>
         <div className="flex md:flex-row flex-col items-center md:gap-4">
-          <div className="md:w-2/5 w-full md:order-first order-last md:text-start text-center">
-            <h5 className="text-2xl text-black font-bold md:mb-6 mb-4 md:block hidden">
+          <div className="md:w-2/5 w-full order-last md:text-start text-center">
+            <h5 className="text-2xl text-black font-bold mb-3 md:block hidden">
               Client's Testimonials
             </h5>
-            <div className="flex flex-col gap-y-3">
-              <h5 className="text-sm/relaxed text-black">
+            <div className="flex flex-col gap-y-4">
+              <h5 className="text-sm/relaxed text-black font-bold">
                 Still Searching? Let Us Help.
               </h5>
-              <h5 className="text-sm/relaxed text-black">
+              {/* <h5 className="text-sm/relaxed text-black">
                 Leave the hassle to us. Connect with an expert workspace advisor
                 today.
-              </h5>
+              </h5> */}
               {type !== "shortterm" && (
                 <div
                   onClick={() => setIsOpen(true)}

@@ -21,7 +21,9 @@ const HeroSection = ({
 }) => {
   const { token } = useAuth();
   const [isFavourite, setIsFavourite] = useState(false);
-  const youtubeId = spaceData?.youtube_url?.split("/")?.pop();
+  const youtubeUrl = spaceData?.youtube_url || "";
+  const lastPart = youtubeUrl.split("/").pop();
+  const youtubeId = lastPart.split("?")[0];  
   const [viewImagePopup, setViewImagePopup] = useState(false);
   const defaultImage = "/images/default_image.webp";
   const formattedImages = spaceData?.images?.map((img) =>

@@ -171,7 +171,7 @@ const bookingItem = ({ item, setShowReviewPopup, setBookingId }) => {
                       {item?.bookingStatus === "pending" &&
                         item?.isInstant === "1" && (
                           <h6 className="text-[#0085ff] text-sm 2xl:text-base font-semibold">
-                            Waiting
+                            Payment Pending
                           </h6>
                         )}
                     </div>

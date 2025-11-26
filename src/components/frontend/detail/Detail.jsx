@@ -326,7 +326,7 @@ const Detail = ({
                           className="size-[15px] text-[#7f7f7f]"
                         />
                         <span className="2xl:text-base text-sm">
-                          {spaceData?.howManyPeopleInYourSpace} people
+                          {spaceData?.howManyPeopleInYourSpace && Number(spaceData?.howManyPeopleInYourSpace)?.toLocaleString("en-IN")} people
                         </span>
                       </div>
                     )}
@@ -351,7 +351,7 @@ const Detail = ({
                         className="size-[15px] text-[#7f7f7f]"
                       />
                       <span className="2xl:text-base text-sm">
-                        {spaceData?.spacesqft} sqft
+                        {spaceData?.spacesqft && Number(spaceData?.spacesqft)?.toLocaleString("en-IN")} sqft
                       </span>
                     </div>
                   </div>
@@ -686,7 +686,7 @@ const Detail = ({
                                         className="size-[18px] text-[#f76900]"
                                       />
                                     </span>{" "}
-                                    {spaceData?.privatecabin_price}
+                                    {Number(spaceData?.privatecabin_price)?.toLocaleString("en-IN")}
                                   </h2>
                                   <span className=" text-[15px] leading-[30px] font-light">
                                     /seat/month
@@ -731,7 +731,7 @@ const Detail = ({
                                         className="size-[18px] text-[#f76900]"
                                       />
                                     </span>{" "}
-                                    {spaceData?.customized_space_price}
+                                    {Number(spaceData?.customized_space_price)?.toLocaleString("en-IN")}
                                   </h2>
                                   <span className=" text-[15px] leading-[30px] font-light">
                                     /seat/month
@@ -776,7 +776,7 @@ const Detail = ({
                                         className="size-[18px] text-[#f76900]"
                                       />
                                     </span>{" "}
-                                    {spaceData?.desks_price}
+                                    {Number(spaceData?.desks_price)?.toLocaleString("en-IN")}
                                   </h2>
                                   <span className=" text-[15px] leading-[30px] font-light">
                                     /seat/month
@@ -821,7 +821,7 @@ const Detail = ({
                                         className="size-[18px] text-[#f76900]"
                                       />
                                     </span>{" "}
-                                    {spaceData?.flexible_desk_price}
+                                    {Number(spaceData?.flexible_desk_price)?.toLocaleString("en-IN")}
                                   </h2>
                                   <span className=" text-[15px] leading-[30px] font-light">
                                     /seat/month
@@ -866,7 +866,7 @@ const Detail = ({
                                         className="size-[18px] text-[#f76900]"
                                       />
                                     </span>{" "}
-                                    {spaceData?.virtual_office_price}
+                                    {Number(spaceData?.virtual_office_price)?.toLocaleString("en-IN")}
                                   </h2>
                                   <span className=" text-[15px] leading-[30px] font-light">
                                     /seat/month
@@ -912,7 +912,7 @@ const Detail = ({
                                           className="size-[18px] text-[#f76900]"
                                         />
                                       </span>{" "}
-                                      {spaceData?.originalPrice}
+                                      {Number(spaceData?.originalPrice)?.toLocaleString("en-IN")}
                                     </h2>
                                     <span className=" text-[15px] leading-[30px] font-light">
                                       /seat/day
@@ -1114,7 +1114,7 @@ const Detail = ({
                         className="size-[18px] text-[#f76900]"
                       />
                       <h2 className="text-[26px] font-bold">
-                        {spaceData?.originalPrice}
+                        {Number(spaceData?.originalPrice)?.toLocaleString("en-IN")}
                       </h2>
                     </div>
                     <div className="text-xs font-normal  leading-[1.5] text-[#777] flex items-center justify-center mb-2">
@@ -1125,7 +1125,7 @@ const Detail = ({
                       <p>
                         {Math.round(
                           spaceData?.originalPrice / spaceData?.spacesqft
-                        )}
+                        )?.toLocaleString("en-IN")}
                         /Sqft
                         {spaceData?.negociable_price == 1 && (
                           <span className=" font-bold">(Negotiable)</span>
@@ -1134,7 +1134,7 @@ const Detail = ({
                     </div>
                     <p className="text-xs font-normal  leading-[1.5] text-[#777]">
                       <span className="font-bold">Carpet Area:</span>{" "}
-                      {spaceData?.spacesqft} sq. ft. |{" "}
+                      {Number(spaceData?.spacesqft)?.toLocaleString("en-IN")} sq. ft. |{" "}
                       <span className="font-bold">
                         {spaceData?.spaceStatus}
                       </span>
@@ -1258,7 +1258,7 @@ const Detail = ({
                     )}
                     <Svg name="rupee" className="size-[18px] text-[#f76900]" />
                     <h3 className="text-[26px] font-bold text-center">
-                      {spaceData?.originalPrice}{" "}
+                      {Number(spaceData?.originalPrice)?.toLocaleString("en-IN")}{" "}
                       <span className="text-base"> /hr</span>
                     </h3>
                   </div>

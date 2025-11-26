@@ -73,14 +73,14 @@ const MapWithPrices = ({ type, spaces, hoveredSpaceId }) => {
 
         let price = 0;
         if (type === "coworking") {
-          if (!space.flexible_desk_price) {
+          if (!(space?.desks_price || space?.flexible_desk_price)) {
             price = space.privatecabin_price;
           } else if (!space.privatecabin_price) {
-            price = space.flexible_desk_price;
+            price = space?.desks_price || space.flexible_desk_price;
           } else {
             price =
-              space.privatecabin_price > space.flexible_desk_price
-                ? space.flexible_desk_price
+              space.privatecabin_price > (space?.desks_price || space?.flexible_desk_price)
+                ? space?.desks_price || space.flexible_desk_price
                 : space.privatecabin_price;
           }
         } else {
@@ -118,13 +118,16 @@ const MapWithPrices = ({ type, spaces, hoveredSpaceId }) => {
                 </text>
               </svg>`,
               scaledSize: new window.google.maps.Size(priceWidth(price), 30),
-              // anchor: new window.google.maps.Point(40, 0),
+              // anchor: new window.google.maps.Point(priceWidth(price) / 2, 15)
             }}
           >
             {selectedSpace?.id === space.id && (
               <div>
                 <InfoWindow
                   position={{ lat: space.lat, lng: space.longi }}
+                  options={{
+                    pixelOffset: new window.google.maps.Size(0, -30), // FIX
+                  }}
                   onCloseClick={() => setSelectedSpace(null)}
                 >
                   <div

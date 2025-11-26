@@ -17,7 +17,7 @@ const Faq = ({ spaceType,city,locationName,faqData }) => {
               {faqData?.filter((item) => item.type == 1)?.map((item, idx) => (
                 <div key={idx}>
                   <div>
-                    <p className="font-extrabold text-[#777] min-[1400px]:text-base text-sm">
+                    <p className="font-extrabold text-[#777] min-[1400px]:text-base text-sm mb-[30px]">
                       Q- {item.question}
                     </p>
                   </div>
@@ -30,7 +30,7 @@ const Faq = ({ spaceType,city,locationName,faqData }) => {
               {faqData?.filter((item) => item.type == 2)?.map((item, idx) => (
                 <div key={idx}>
                   <div>
-                    <p className="font-montserrat font-extrabold text-[#777] min-[1400px]:text-base text-[15px]">
+                    <p className="font-montserrat font-extrabold text-[#777] min-[1400px]:text-base text-[15px] ">
                       {item.question}
                     </p>
                   </div>

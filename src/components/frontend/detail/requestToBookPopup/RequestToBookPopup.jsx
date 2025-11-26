@@ -182,11 +182,11 @@ const RequestToBookPopup = ({
             router.push(`/booking-detail/${data?.bookingId}`);
           }, 500);
         } else {
-          ShowToast(data?.message,"error");
+          ShowToast(data?.message, "error");
         }
       },
       onError: (error) => {
-        ShowToast(error?.message,"error");
+        ShowToast(error?.message, "error");
       },
     });
 
@@ -227,7 +227,7 @@ const RequestToBookPopup = ({
             modal: {
               ondismiss: function () {
                 console.log("Payment cancelled by user");
-                ShowToast("Payment Failed!","error");
+                ShowToast("Payment Failed!", "error");
               },
             },
             theme: { color: "#f76900" },
@@ -241,11 +241,11 @@ const RequestToBookPopup = ({
           }, 500);
         }
       } else {
-        ShowToast(data?.message,"error");
+        ShowToast(data?.message, "error");
       }
     },
     onError: (error) => {
-      ShowToast(error.message,"error");
+      ShowToast(error.message, "error");
     },
   });
 
@@ -278,7 +278,10 @@ const RequestToBookPopup = ({
       );
 
       if (isOverlap) {
-        ShowToast(`Slots on ${startDate} are overlapping. Please fix before submitting.`,"error");
+        ShowToast(
+          `Slots on ${startDate} are overlapping. Please fix before submitting.`,
+          "error"
+        );
         return;
       }
       dateMap[startDate].push({ startTime, endTime });
@@ -360,12 +363,14 @@ const RequestToBookPopup = ({
               <Svg name="checkCircle" className="size-[75px] text-[#05ac34]" />
             </div>
             <p className="text-lg font-medium text-[#212529] text-center">
-              {spaceData?.isInstant == 1 ? "Thank You For Your Booking!":"Thank You For Your Booking Request!"}
+              {spaceData?.isInstant == 1
+                ? "Thank You For Your Booking!"
+                : "Thank You For Your Booking Request!"}
             </p>
             <div className="text-center font-normal text-base">
-              {
-                spaceData?.isInstant == 1 ? "Your Booking Is Confirmed! You will receive details about the space via email and whatsapp.":"Your booking request has been sent to the host. Once the host accepts your booking request, you will receive a payment link via email. If your requested date and time cannot be accommodated, you will be promptly notified."
-              }
+              {spaceData?.isInstant == 1
+                ? "Your Booking Is Confirmed! You will receive details about the space via email and whatsapp."
+                : "Your booking request has been sent to the host. Once the host accepts your booking request, you will receive a payment link via email. If your requested date and time cannot be accommodated, you will be promptly notified."}
             </div>
             <button
               onClick={() => setIsOpen(false)}
@@ -405,14 +410,13 @@ const RequestToBookPopup = ({
                       key={item.id}
                       className=" [&_.react-datepicker-wrapper]:w-full pr-0 md:pr-2 py-2"
                     >
-                      
                       {fields.length > 1 && (
                         <button
                           type="button"
                           onClick={() => remove(index)}
                           className=" flex justify-end w-full cursor-pointer"
                         >
-                        <Svg name="close" className="size-6"/>
+                          <Svg name="close" className="size-6" />
                         </button>
                       )}
                       <div className="relative">
@@ -430,7 +434,10 @@ const RequestToBookPopup = ({
                                 renderDayContents={(day, date) => {
                                   const title = getHolidayTitle(date);
                                   return (
-                                    <span title={title} className={title ? "font-semibold" : ""}>
+                                    <span
+                                      title={title}
+                                      className={title ? "font-semibold" : ""}
+                                    >
                                       {day}
                                     </span>
                                   );
@@ -452,11 +459,15 @@ const RequestToBookPopup = ({
                                 Choose a date
                               </label>
                               <div>
-                                <Svg onClick={() =>{ 
-                                  if (datePickerRef.current) {
-                                    datePickerRef.current.setOpen(true);
-                                  }
-                                }} name="calender" className="cursor-pointer text-[#f76900] size-[14px] absolute right-2 top-3 "/>
+                                <Svg
+                                  onClick={() => {
+                                    if (datePickerRef.current) {
+                                      datePickerRef.current.setOpen(true);
+                                    }
+                                  }}
+                                  name="calender"
+                                  className="cursor-pointer text-[#f76900] size-[14px] absolute right-2 top-3 "
+                                />
                               </div>
                             </div>
                           )}
@@ -469,14 +480,15 @@ const RequestToBookPopup = ({
                         )}
                       </div>
 
-
                       <div className="flex gap-[30px] mt-5">
                         <div className="flex-1 relative">
                           <Controller
                             control={control}
                             name={`slots.${index}.startTime`}
                             render={({ field }) => {
-                              const options = getTimeDateSlot(watch(`slots.${index}.date`));
+                              const options = getTimeDateSlot(
+                                watch(`slots.${index}.date`)
+                              );
 
                               return (
                                 <div className="relative border-b border-[#0000006b] pt-3 pb-1 focus-within:border-[#3f51b5] transition-all duration-200">
@@ -485,11 +497,13 @@ const RequestToBookPopup = ({
                                     placeholder=""
                                     className="w-full bg-transparent text-sm text-[#111] outline-none border-none  focus:ring-0"
                                   >
-                                    <option value="" disabled hidden>
-                                      
-                                    </option>
+                                    <option value="" disabled hidden></option>
                                     {options?.map((t, i) => (
-                                      <option key={i} value={t.value} disabled={t.disabled}>
+                                      <option
+                                        key={i}
+                                        value={t.value}
+                                        disabled={t.disabled}
+                                      >
                                         {t.label}
                                       </option>
                                     ))}
@@ -508,7 +522,6 @@ const RequestToBookPopup = ({
                                   </label>
 
                                   {/* Custom Dropdown Icon */}
-                                  
                                 </div>
                               );
                             }}
@@ -526,7 +539,9 @@ const RequestToBookPopup = ({
                             control={control}
                             name={`slots.${index}.endTime`}
                             render={({ field }) => {
-                              const options = getTimeDateSlot(watch(`slots.${index}.date`));
+                              const options = getTimeDateSlot(
+                                watch(`slots.${index}.date`)
+                              );
 
                               const handleChange = (e) => {
                                 const value = e.target.value;
@@ -536,13 +551,15 @@ const RequestToBookPopup = ({
                                 }
 
                                 const existsDate = values.slots?.filter(
-                                  (item) => item.time == values.slots?.[index]?.time
+                                  (item) =>
+                                    item.time == values.slots?.[index]?.time
                                 );
                                 if (existsDate?.length > 1) {
                                 }
 
                                 if (
-                                  values?.slots?.[index]?.startTime == "00:00" &&
+                                  values?.slots?.[index]?.startTime ==
+                                    "00:00" &&
                                   value == "00:00"
                                 ) {
                                   field.onChange(value);
@@ -554,7 +571,10 @@ const RequestToBookPopup = ({
                                   value
                                 );
                                 if (duration < minHours) {
-                                  return ShowToast(`Time difference must be at least ${minHours} hours.`,"error");
+                                  return ShowToast(
+                                    `Time difference must be at least ${minHours} hours.`,
+                                    "error"
+                                  );
                                 }
                                 field.onChange(value);
                               };
@@ -566,11 +586,13 @@ const RequestToBookPopup = ({
                                     onChange={handleChange}
                                     className="w-full bg-transparent text-sm text-[#111] outline-none border-none  focus:ring-0"
                                   >
-                                    <option value="" disabled hidden>
-                                      
-                                    </option>
+                                    <option value="" disabled hidden></option>
                                     {options?.map((t, i) => (
-                                      <option key={i} value={t.value} disabled={t.disabled}>
+                                      <option
+                                        key={i}
+                                        value={t.value}
+                                        disabled={t.disabled}
+                                      >
                                         {t.label}
                                       </option>
                                     ))}
@@ -598,14 +620,14 @@ const RequestToBookPopup = ({
                             </p>
                           )}
                         </div>
-
                       </div>
-
                     </div>
                   ))}
 
                   {errors?.slots?.message && (
-                    <p className="text-red-500 text-xs">{errors.slots.message}</p>
+                    <p className="text-red-500 text-xs">
+                      {errors.slots.message}
+                    </p>
                   )}
 
                   <button
@@ -635,11 +657,15 @@ const RequestToBookPopup = ({
                           dateMap[startDate] = [];
                         }
                         const isOverlap = dateMap[startDate].some(
-                          (s) => !(endTime < s.startTime || startTime > s.endTime)
+                          (s) =>
+                            !(endTime < s.startTime || startTime > s.endTime)
                         );
 
                         if (isOverlap) {
-                          ShowToast(`Slots on ${startDate} are overlapping. Please fix before submitting.`,"error");
+                          ShowToast(
+                            `Slots on ${startDate} are overlapping. Please fix before submitting.`,
+                            "error"
+                          );
                           return;
                         }
                         dateMap[startDate].push({ startTime, endTime });
@@ -654,7 +680,10 @@ const RequestToBookPopup = ({
                       ) {
                         append({ date: null, startTime: "", endTime: "" });
                       } else {
-                        ShowToast("You can not overlap the time for the same date.","warning");
+                        ShowToast(
+                          "You can not overlap the time for the same date.",
+                          "warning"
+                        );
                       }
                     }}
                     className="cursor-pointer text-[#f76900] font-semibold mt-[37px]"
@@ -665,7 +694,7 @@ const RequestToBookPopup = ({
                 <button
                   disabled={isSubmitPending}
                   type="submit"
-                  className="cursor-pointer w-fit px-5 bg-[#f76900] hover:bg-[#ff7c52] text-white rounded-[15px] font-semibold uppercase tracking-[1px] py-[10px] mt-4"
+                  className="md:block hidden cursor-pointer w-fit px-5 bg-[#f76900] hover:bg-[#ff7c52] text-white rounded-[15px] font-semibold uppercase tracking-[1px] py-[10px] mt-4"
                 >
                   {isSubmitPending
                     ? "Please wait..."
@@ -675,7 +704,9 @@ const RequestToBookPopup = ({
                 </button>
 
                 <p className="text-xs min-[1400px]:text-sm leading-[1.5] text-[#000000de] mt-2">
-                  You will not be charged yet. Your booking request will be sent to the host. Once the host accepts your booking request, you will receive a link to make the payment.
+                  You will not be charged yet. Your booking request will be sent
+                  to the host. Once the host accepts your booking request, you
+                  will receive a link to make the payment.
                 </p>
               </form>
             </div>
@@ -705,28 +736,29 @@ const RequestToBookPopup = ({
                         spaceData?.location_name || ""
                       )}
                     </span>
-                    {
-                      spaceData?.rating > 0 && (
-                        <div className="flex items-center gap-1">
-                          {[...Array(5)].map((_, i) => (
-                            <Svg
-                              key={i}
-                              name={i < spaceData?.rating ? "star" : "emptyStar"}
-                              className="size-4 shrink-0 text-[#f76900]"
-                            />
-                          ))}
-                        </div>
-                      )
-                    }
+                    {spaceData?.rating > 0 && (
+                      <div className="flex items-center gap-1">
+                        {[...Array(5)].map((_, i) => (
+                          <Svg
+                            key={i}
+                            name={i < spaceData?.rating ? "star" : "emptyStar"}
+                            className="size-4 shrink-0 text-[#f76900]"
+                          />
+                        ))}
+                      </div>
+                    )}
                     <div className="flex items-center gap-2">
-                    <p className="text-black  text-sm font-bold">
-                      <Svg
-                        name="rupee"
-                        className="size-4 text-[#f76900] inline"
-                      />{" "}
-                      {Number(spaceData?.originalPrice)?.toLocaleString("en-IN")} / hr
-                    </p>
-                    <p>{minHours} hr minimum</p>
+                      <p className="text-black  text-sm font-bold">
+                        <Svg
+                          name="rupee"
+                          className="size-4 text-[#f76900] inline"
+                        />{" "}
+                        {Number(spaceData?.originalPrice)?.toLocaleString(
+                          "en-IN"
+                        )}{" "}
+                        / hr
+                      </p>
+                      <p>{minHours} hr minimum</p>
                     </div>
                   </div>
                 </div>
@@ -746,37 +778,40 @@ const RequestToBookPopup = ({
                 <div className="">
                   <div className="space-y-2 border-b py-2  max-h-[200px] overflow-y-auto border-[#DBDBDB] [&::-webkit-scrollbar]:w-[7px] [&::-webkit-scrollbar-thumb]:bg-[#f76900] [&::-webkit-scrollbar-track]:bg-[#f1f1f1] pr-2">
                     {values?.slots?.map((slot, i) => (
-                      <div
-                        key={i}
-                        className="flex justify-between "
-                      >
+                      <div key={i} className="flex justify-between ">
                         <div className="text-sm 2xl:text-base flex items-center gap-1">
                           <span>
                             {slot?.date
-                              ? new Date(slot.date).toLocaleDateString("en-US", {
-                                  weekday: "short",
-                                  year: "numeric",
-                                  month: "short",
-                                  day: "numeric",
-                                })
-                                
+                              ? new Date(slot.date).toLocaleDateString(
+                                  "en-US",
+                                  {
+                                    weekday: "short",
+                                    year: "numeric",
+                                    month: "short",
+                                    day: "numeric",
+                                  }
+                                )
                               : "No date selected"}
-                            </span>
+                          </span>
                           <span className="flex items-center gap-1 ">
                             <Svg
                               name="rupee"
                               className="size-3 text-[#f76900] inline"
                             />
-                            {Number(spaceData?.originalPrice)?.toLocaleString("en-IN")}
+                            {Number(spaceData?.originalPrice)?.toLocaleString(
+                              "en-IN"
+                            )}
                           </span>
                           <span>
-                          {getDurationInHours(slot?.startTime, slot?.endTime) !=
-                            0 &&
-                            `X ${getDurationInHours(
+                            {getDurationInHours(
                               slot?.startTime,
                               slot?.endTime
-                            )} hours`}{" "}
-                            </span>
+                            ) != 0 &&
+                              `X ${getDurationInHours(
+                                slot?.startTime,
+                                slot?.endTime
+                              )} hours`}{" "}
+                          </span>
                         </div>
                         <span className="flex items-center gap-1 min-[1400px]:text-base text-sm">
                           <Svg
@@ -827,6 +862,17 @@ const RequestToBookPopup = ({
                 </div>
               </div>
             </div>
+            <button
+              disabled={isSubmitPending}
+              type="submit"
+              className="md:hidden block cursor-pointer w-fit px-5 bg-[#f76900] hover:bg-[#ff7c52] text-white rounded-[15px] font-semibold uppercase tracking-[1px] py-[10px] my-4 mx-auto"
+            >
+              {isSubmitPending
+                ? "Please wait..."
+                : spaceData?.isInstant == 1
+                ? "Book Now"
+                : "Submit Request"}
+            </button>
           </div>
         </div>
       )}

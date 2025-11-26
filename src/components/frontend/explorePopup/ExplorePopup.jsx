@@ -700,7 +700,7 @@ const ExplorePopup = ({
           <p className="mt-4 pb-5 text-[10px] text-[#000000de]  text-start text-justify">
             After you submit a workspace enquiry to us, we may share your
             details with workspace providers, who may contact you to follow up
-            on your enquiry." Please read our{" "}
+            on your enquiry. Please read our{" "}
             <span
               onClick={() => {
                 window.open("/privacy-policy", "_blank");

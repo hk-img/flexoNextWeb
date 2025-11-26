@@ -47,7 +47,7 @@ const Testimonial = () => {
     <div className="container px-[15px] mx-auto xl:pt-[90px] xl:pb-[94px] py-12">
       <div className="max-w-[800px] mx-auto">
         <h2 className="md:text-[32px] text-2xl font-medium text-center text-[#333] leading-[1.2] ">
-          Trusted by Teams,{" "}
+          Trusted by Teams,
           <span className="text-[#f76900]">Loved by Leaders</span>
         </h2>
       </div>

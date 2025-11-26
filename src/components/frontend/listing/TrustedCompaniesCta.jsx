@@ -24,11 +24,8 @@ const TrustedCompaniesCta = ({ setIsOpen, type }) => {
       alt: "Beer biceps",
       title: "Beer biceps",
     },
-    {
-      src: "/images/trusted-logo2.webp",
-      alt: "Arnold Holdings Ltd.",
-      title: "Arnold Holdings Ltd.",
-    },
+    { src: "/images/teslaLogoWhite.webp", alt: "tesla", title: "tesla" },
+
     { src: "/images/trusted-logo20.webp", alt: "Eicher", title: "Eicher" },
     { src: "/images/trusted-logo15.webp", alt: "InMobi", title: "InMobi" },
     { src: "/images/trusted-logo21.webp", alt: "JTB", title: "JTB" },
@@ -62,7 +59,11 @@ const TrustedCompaniesCta = ({ setIsOpen, type }) => {
     },
     { src: "/images/trusted-logo11.webp", alt: "Tlc", title: "Tlc" },
     { src: "/images/trusted-logo12.webp", alt: "Triniti", title: "Triniti" },
-    { src: "/images/teslaLogoWhite.webp", alt: "tesla", title: "tesla" },
+    {
+      src: "/images/trusted-logo2.webp",
+      alt: "Arnold Holdings Ltd.",
+      title: "Arnold Holdings Ltd.",
+    },
   ];
   return (
     <section className="w-full relative ">

@@ -398,20 +398,26 @@ const ListWithUs = () => {
                               src={person.image}
                               alt={person.name}
                               title={person.name}
-                              width={1080}
-                              height={970}
+                              width={250}
+                              height={250}
                               loading="lazy"
-                              className="lg:w-[317px] lg:h-[400px] w-full h-auto aspect-[317/400] object-cover"
+                              className="lg:w-[250px] lg:h-[250px] w-full h-auto aspect-square object-cover md:object-top"
                             />
                           </div>
                           <div className="lg:w-7/12 md:w-7/12 w-full flex flex-col items-start ps-4 md:mt-0 mt-4">
-                            <div className="quoteMark mb-6">
+                            {/* <div className="quoteMark mb-6">
                               <Svg
                                 name="quoteMark"
                                 className="text-[#7f7f7f] size-[55px]"
                               />
-                            </div>
-                            <div className="mb-6">
+                            </div> */}
+                            <h5 className="text-base/relaxed min-[1400px]:text-lg  text-[#141414] font-medium mb-1">
+                              {person.name}
+                            </h5>
+                            <p className="text-sm min-[1400px]:text-base text-[#777777] font-normal">
+                              {person.designation}
+                            </p>
+                            <div className="mt-6">
                               <p
                                 className={`text-base text-[#777777] overflow-hidden transition-all duration-500 ease-in-out ${
                                   expanded ? "max-h-[1000px]" : "max-h-[6rem]"
@@ -429,12 +435,6 @@ const ListWithUs = () => {
                                 {expanded ? "See less" : "See more"}
                               </button>
                             </div>
-                            <h5 className="text-base/relaxed min-[1400px]:text-lg  text-[#141414] font-medium mb-1">
-                              {person.name}
-                            </h5>
-                            <p className="text-sm min-[1400px]:text-base text-[#777777] font-normal">
-                              {person.designation}
-                            </p>
                           </div>
                         </div>
                       </div>

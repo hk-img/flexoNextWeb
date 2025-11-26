@@ -266,20 +266,7 @@ const Detail = ({
               </li>
             </ol>
             <div className="">
-              <div className="flex items-center gap-1 mb-4">
-                {spaceData?.ribbon && (
-                  <div
-                    className="px-4 py-1 text-[0.6rem] font-bold text-white
-                    border-t-[0.5em]  border-l-[0.8em] border-l-transparent
-                    [clip-path:polygon(0_100%,100%_100%,100%_0.5em,calc(100%-0.5em)_0,calc(100%-0.5em)_0.5em,0_0.5em,0.8em_calc(50%+0.25em))]"
-                    style={{
-                      backgroundColor: spaceData?.ribbon_color,
-                    }}
-                  >
-                    {spaceData?.ribbon}
-                  </div>
-                )}
-
+              <div className="flex items-center gap-2 mb-4">
                 {type == "coworking" && (
                   <h1 className="2xl:text-[30px] text-lg leading-[1.6] font-medium text-[#141414]">
                     {spaceData?.actual_name || spaceData?.name}{" "}
@@ -290,6 +277,16 @@ const Detail = ({
                   <h1 className="2xl:text-[30px] text-lg leading-[1.6] font-medium text-[#141414] mb-4">
                     {spaceData?.spaceTitle}
                   </h1>
+                )}
+                {spaceData?.ribbon && (
+                  <div
+                    className="pl-2 pr-4 py-1 ribbon text-[0.688rem] font-bold text-white border-y-[0.5em] border-transparent leading-[1.8] [--r:0.8em] [clip-path:polygon(100%_0,0_0,0_100%,100%_100%,100%_calc(100%-0.25em),calc(100%-var(--r))_50%,100%_0.25em)] [background:radial-gradient(0.2em_50%_at_left,#000a,#0000)_border-box,#FF6B6B_padding-box]"
+                    style={{
+                      backgroundColor: spaceData?.ribbon_color,
+                    }}
+                  >
+                    {spaceData?.ribbon}
+                  </div>
                 )}
               </div>
               <div className="flex items-center text-[#141414] 2xl:text-base text-sm mb-4.5">

@@ -23,8 +23,9 @@ const schema = z
       })
       .nullable()
       .optional(),
-  }).superRefine((data, ctx) => {
-    const code = data.country?.dialCode ? String(data.country.dialCode) : "";  
+  })
+  .superRefine((data, ctx) => {
+    const code = data.country?.dialCode ? String(data.country.dialCode) : "";
     const numeric = data.mobile?.replace(/\D/g, "") || "";
     if (!numeric) {
       ctx.addIssue({
@@ -104,11 +105,11 @@ const LongTermPopup = ({ isOpen, setIsOpen, city }) => {
       if (data.result?.success) {
         setSuccessScreen(true);
       } else {
-        ShowToast(data?.result.message,"error");
+        ShowToast(data?.result.message, "error");
       }
     },
     onError: (error) => {
-      ShowToast(error.message,"error");
+      ShowToast(error.message, "error");
     },
   });
 
@@ -155,7 +156,7 @@ const LongTermPopup = ({ isOpen, setIsOpen, city }) => {
           </div>
         </div>
       ) : (
-        <div className="relative w-full lg:max-w-[55vw] mx-[12px] rounded-[11px] bg-white p-6 overflow-y-auto h-full md:h-auto [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]  animate-scaleIn">
+        <div className="relative w-full lg:max-w-[55vw] mx-[12px] rounded-[11px] bg-white p-6 overflow-y-auto h-auto [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]  animate-scaleIn">
           <div className="pb-6 flex items-center justify-between">
             <h2 className="text-lg font-semibold">Get Quotes</h2>
             <button
@@ -185,7 +186,10 @@ const LongTermPopup = ({ isOpen, setIsOpen, city }) => {
                     {...register("firstName", { required: true })}
                     placeholder="Enter First Name"
                     onChange={(e) => {
-                      e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
+                      e.target.value = e.target.value.replace(
+                        /[^A-Za-z\s]/g,
+                        ""
+                      );
                     }}
                     className={`w-full rounded-sm border-2 px-3 py-2.5
                       border-[#dbdbdb] h-12
@@ -212,7 +216,10 @@ const LongTermPopup = ({ isOpen, setIsOpen, city }) => {
                     {...register("lastName")}
                     placeholder="Enter Last Name"
                     onChange={(e) => {
-                      e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
+                      e.target.value = e.target.value.replace(
+                        /[^A-Za-z\s]/g,
+                        ""
+                      );
                     }}
                     className={`w-full rounded-sm border-2 px-3 py-2.5
                         border-[#dbdbdb] h-12

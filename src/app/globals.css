@@ -198,3 +198,13 @@
     display: none !important;
   }
 }
+
+.faq-style h1,
+.faq-style h2,
+.faq-style h3,
+.faq-style h4,
+.faq-style strong,
+.faq-style b,
+.faq-style a{
+  font-weight: 600 !important;
+}

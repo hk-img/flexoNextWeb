@@ -381,7 +381,7 @@ const ProductCard = ({
             {(type == "coworking" || type == "shortterm") && (
               <div className="flex gap-1 items-center">
                 <Svg name="user" className="size-[12px] text-[#f76900]" />
-                <span>{item?.howManyPeopleInYourSpace} people</span>
+                <span>{item?.howManyPeopleInYourSpace && Number(item?.howManyPeopleInYourSpace)?.toLocaleString("en-IN")} people</span>
               </div>
             )}
             {item?.spaceStatus && (
@@ -392,7 +392,7 @@ const ProductCard = ({
             )}
             <div className="flex gap-1 items-center">
               <Svg name="scaleRuler" className="size-[12px] text-[#f76900]" />
-              <span>{item?.spacesqft} sqft</span>
+              <span>{item?.spacesqft && Number(item?.spacesqft)?.toLocaleString("en-IN")} sqft</span>
             </div>
           </div>
           {type == "coworking" && (
@@ -411,7 +411,7 @@ const ProductCard = ({
                             className="text-[#7f7f7f] size-[15px]"
                           />
                           <span className="text-black font-semibold min-[1400]:text-[17px] text-sm">
-                            {item?.privatecabin_price}
+                            {Number(item?.privatecabin_price)?.toLocaleString("en-IN")}
                           </span>
                         </div>
                         <span className="ps-1 min-[1400px]:text-[13px] text-[11px] font-normal !leading-4">
@@ -438,7 +438,7 @@ const ProductCard = ({
                             className="text-[#7f7f7f] size-[15px]"
                           />
                           <span className="text-black font-semibold  min-[1400]:text-[17px] text-sm">
-                            {item?.desks_price || item?.flexible_desk_price}
+                            {item?.desks_price ? Number(item?.desks_price)?.toLocaleString("en-IN") : Number(item?.flexible_desk_price)?.toLocaleString("en-IN")}
                           </span>
                         </div>
                         <span className="ps-1 min-[1400px]:text-[13px] text-[11px] font-normal !leading-4">
@@ -460,7 +460,7 @@ const ProductCard = ({
                   <div className="flex items-center">
                     <Svg name="rupee2" className="size-[18px]" />
                     <span className="font-bold text-[1.125rem]">
-                      {item?.originalPrice}
+                      {Number(item?.originalPrice)?.toLocaleString("en-IN")}
                     </span>
                   </div>
                   <span className="ps-1 text-sm font-normal !leading-4">
@@ -517,7 +517,7 @@ const ProductCard = ({
                 <div className="flex items-center">
                   <Svg name="rupee2" className="size-[18px]" />
                   <span className="font-bold text-[1.125rem]">
-                    {item?.originalPrice}
+                    {Number(item?.originalPrice)?.toLocaleString("en-IN")}
                   </span>
                 </div>
                 <span className="ps-1 text-sm font-normal !leading-4">

@@ -55,13 +55,13 @@ export const BottomBar = ({
   };
 
   const clickZohoChatButton = () => {
-    const chatBtn = document.querySelector("#zsiq_float"); 
+    const chatBtn = document.querySelector("#zsiq_float");
     if (chatBtn) chatBtn.click();
   };
 
   return (
     <>
-      <div className="fixed bottom-0 bg-[#f76900] w-full md:hidden block z-50">
+      <div className="fixed bottom-0 inset-x-0 bg-[#f76900] w-full md:hidden block z-50 pb-[env(safe-area-inset-bottom)]">
         <div className="flex items-center justify-between p-4">
           <div>
             <div
@@ -97,7 +97,10 @@ export const BottomBar = ({
             </div>
           </div>
           <div>
-            <Link href="tel:95133 92400" className="flex flex-col items-center cursor-pointer">
+            <Link
+              href="tel:95133 92400"
+              className="flex flex-col items-center cursor-pointer"
+            >
               <Svg name="phoneCall" className="size-5 text-white" />
               <span className="uppercase text-white text-[11px]/normal font-medium ">
                 Call

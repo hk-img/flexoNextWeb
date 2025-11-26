@@ -90,13 +90,13 @@ const Listing = ({
   const [selectedCityName, setSelectedCityName] = useState(null);
   const perPage = 30;
 
-  useEffect(()=>{
-    if(isMobile){
+  useEffect(() => {
+    if (isMobile) {
       setMapToggle(false);
-    }else{
+    } else {
       setMapToggle(true);
     }
-  },[isMobile])
+  }, [isMobile]);
 
   const handleRadioChange = (e) => {
     const { value } = e.target;
@@ -108,10 +108,12 @@ const Listing = ({
     // }
     // setSelectedRadio(value);
     const type_slug = slugGenerator(value || "");
-    if(!locationNameSlug && type_slug == "coworking-space" ){
+    if (!locationNameSlug && type_slug == "coworking-space") {
       return router.push(`/in/coworking/${citySlug || ""}`);
-    }else{
-      router.push(`/in/${type_slug}/${citySlug || ""}/${locationNameSlug || ""}`);
+    } else {
+      router.push(
+        `/in/${type_slug}/${citySlug || ""}/${locationNameSlug || ""}`
+      );
     }
   };
   useEffect(() => {
@@ -204,7 +206,10 @@ const Listing = ({
         page_no: page,
       };
       if (!nearMeData) {
-        const selectedSpace = nearBySpacesData?.find((space) => space?.location_name?.toLowerCase() == locationName?.toLowerCase());
+        const selectedSpace = nearBySpacesData?.find(
+          (space) =>
+            space?.location_name?.toLowerCase() == locationName?.toLowerCase()
+        );
         payload.location_lat = selectedSpace?.lat || 0;
         payload.location_longi = selectedSpace?.longi || 0;
       }
@@ -262,12 +267,13 @@ const Listing = ({
       const smallLetterLocationName = convertSlugToSmallLetter(
         locationName || ""
       );
-      const smallLetterCity = convertSlugToSmallLetter(
-        city || ""
-      );
-      if(smallLetterLocationName || smallLetterCity){
+      const smallLetterCity = convertSlugToSmallLetter(city || "");
+      if (smallLetterLocationName || smallLetterCity) {
         const selectedLocation = allLocations?.find((item) => {
-          if (item?.location_name.toLowerCase() === smallLetterLocationName && item?.city.toLowerCase() === smallLetterCity) {
+          if (
+            item?.location_name.toLowerCase() === smallLetterLocationName &&
+            item?.city.toLowerCase() === smallLetterCity
+          ) {
             return item;
           }
         });
@@ -275,7 +281,7 @@ const Listing = ({
         setSelectedLocation(selectedLocation || null);
       }
     }
-  }, [allLocations, locationName,city]);
+  }, [allLocations, locationName, city]);
 
   const handleApply = () => {
     setAppliedFilter(filterData);
@@ -321,7 +327,8 @@ const Listing = ({
                     <div
                       key={index}
                       className={`${
-                          item?.location_name?.toLowerCase() == locationName?.toLowerCase()
+                        item?.location_name?.toLowerCase() ==
+                        locationName?.toLowerCase()
                           ? "text-[#4343e8] border-[#7d9dd9] bg-[#e9e9ff]"
                           : "text-[#9e9e9e] border-[#d4d4d4] bg-white"
                       } inline-block text-center me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border max-w-full min-w-[160px] whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]`}
@@ -384,11 +391,11 @@ const Listing = ({
                               }}
                               className="flex items-center cursor-pointer font-medium text-[#777777] text-sm"
                             >
+                              Location
                               <Svg
                                 name="pencil"
-                                className="text-[#777777] size-[15px] me-1"
+                                className="text-[#777777] size-[15px] ms-1"
                               />
-                              Location
                             </div>
                           </li>
                         </ul>
@@ -401,11 +408,11 @@ const Listing = ({
                             onClick={() => setIsFilterOpen(!isFilterOpen)}
                             className="flex items-center cursor-pointer font-medium text-[#777777] text-sm"
                           >
+                            Filters
                             <Svg
                               name="filter"
-                              className="text-[#777777] size-[18px] me-1"
+                              className="text-[#777777] size-[18px] ms-1"
                             />
-                            Filters
                           </div>
                         </li>
                       </ul>
@@ -418,6 +425,9 @@ const Listing = ({
                           checked={mapToggle}
                           onChange={(e) => setMapToggle(e.target.checked)}
                         />
+                        <span className="lg:me-3 me-1 text-sm font-normal text-[#777777]">
+                          Map
+                        </span>
                         <div
                           className="w-[36px] h-[14px] shrink-0 bg-[#00000061] rounded-lg 
                             peer-checked:bg-[#f76900] 
@@ -427,9 +437,6 @@ const Listing = ({
                             after:duration-500 after:shadow-[0px_2px_1px_-1px_rgba(0,0,0,0.2),0px_1px_1px_0px_rgba(0,0,0,0.14),0px_1px_3px_0px_rgba(0,0,0,0.12)] peer-checked:after:translate-x-6 peer-checked:after:bg-[#f76900] 
                             peer-checked:after:border-[#fafafa]"
                         ></div>
-                        <span className="lg:ms-3 ms-1 text-sm font-normal text-[#777777]">
-                          Map
-                        </span>
                       </label>
                     </div>
                   </div>
@@ -580,11 +587,21 @@ const Listing = ({
                                     // setSelectedLocation(loc);
                                     // setToggleLocationOptions(false);
                                     // setNearMeData(null);
-                                    const typeSlug = slugGenerator(selectedRadio);
-                                    const citySlug = slugGenerator(loc?.city || "");
-                                    const locationSlug = slugGenerator(loc?.location_name || "");
-                                    if(!locationSlug && typeSlug == "coworking-space" ){
-                                      return router.push(`/in/coworking/${citySlug}`);
+                                    const typeSlug =
+                                      slugGenerator(selectedRadio);
+                                    const citySlug = slugGenerator(
+                                      loc?.city || ""
+                                    );
+                                    const locationSlug = slugGenerator(
+                                      loc?.location_name || ""
+                                    );
+                                    if (
+                                      !locationSlug &&
+                                      typeSlug == "coworking-space"
+                                    ) {
+                                      return router.push(
+                                        `/in/coworking/${citySlug}`
+                                      );
                                     }
                                     router.push(
                                       `/in/${typeSlug}/${citySlug}/${locationSlug}`

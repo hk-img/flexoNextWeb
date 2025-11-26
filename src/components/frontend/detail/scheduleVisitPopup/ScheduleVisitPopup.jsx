@@ -36,7 +36,14 @@ const scheduleSchema = z.object({
   preferredTime: z.string().min(1, "Please select a preferred time"),
 });
 
-const ScheduleVisitPopup = ({ type, setIsOpen, spaceId,workingDays,spaceData,hostHolidays }) => {
+const ScheduleVisitPopup = ({
+  type,
+  setIsOpen,
+  spaceId,
+  workingDays,
+  spaceData,
+  hostHolidays,
+}) => {
   const datePickerRef = useRef(null);
   const [timeSlot, setTimeSlot] = useState(defaultTime);
   const [formData, setFormData] = useState({
@@ -120,11 +127,11 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId,workingDays,spaceData,hos
       if (data?.result?.success) {
         setSuccessScreen(true);
       } else {
-        ShowToast(data?.result?.message,"error");
+        ShowToast(data?.result?.message, "error");
       }
     },
     onError: (err) => {
-      ShowToast(err.response?.data?.message || "Something went wrong","error");
+      ShowToast(err.response?.data?.message || "Something went wrong", "error");
     },
   });
 
@@ -133,7 +140,9 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId,workingDays,spaceData,hos
       setToggleScheduling(true);
     } else if (type == "longterm") {
       const onlyStartDate = new Date(values?.preferedDate);
-      onlyStartDate.setMinutes(onlyStartDate.getMinutes() - onlyStartDate.getTimezoneOffset());
+      onlyStartDate.setMinutes(
+        onlyStartDate.getMinutes() - onlyStartDate.getTimezoneOffset()
+      );
       const onlyStartDateStr = onlyStartDate.toISOString().split("T")[0];
       const payload = {
         visitDate: onlyStartDateStr,
@@ -178,7 +187,6 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId,workingDays,spaceData,hos
     return found ? found.holidayTitle : "Closed";
   };
 
-
   return (
     <div className="fixed inset-0 z-100 flex items-center justify-center animate-fadeIn px-[1.5px]">
       <div
@@ -195,13 +203,20 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId,workingDays,spaceData,hos
               Visit scheduled successfully. Our team will get back to you
               shortly.
             </p>
-            <button onClick={() => setIsOpen(false)} className="cursor-pointer w-fit px-[35px] mt-1.5 bg-[#f76900] text-lg border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]">
+            <button
+              onClick={() => setIsOpen(false)}
+              className="cursor-pointer w-fit px-[35px] mt-1.5 bg-[#f76900] text-lg border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]"
+            >
               OK
             </button>
           </div>
         </div>
       ) : (
-        <div className={`relative w-full ${toggleScheduling ? "lg:max-w-[80%]" : "lg:max-w-[65%] max-h-[85vh]"} md:h-auto  h-full  rounded-md bg-white animate-scaleIn overflow-hidden`}>
+        <div
+          className={`relative w-full ${
+            toggleScheduling ? "lg:max-w-[80%]" : "lg:max-w-[65%] max-h-[85vh]"
+          } md:h-auto  h-full  rounded-md bg-white animate-scaleIn overflow-hidden`}
+        >
           <div className="p-5 flex items-center justify-between">
             <h2 className="min-[1400px]:text-xl text-lg font-medium leading-[1.6] text-[#141414]">
               {toggleScheduling ? "Visit Scheduling" : "Schedule Visit"}
@@ -222,7 +237,17 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId,workingDays,spaceData,hos
               </p>
             </div>
             {toggleScheduling ? (
-              <CoworkingSelectionScreen spaceId={spaceId} formData={formData} setFormData={setFormData} error={error} setError={setError} values={values} setToggleScheduling={setToggleScheduling} setSuccessScreen={setSuccessScreen} spaceData={spaceData}/>
+              <CoworkingSelectionScreen
+                spaceId={spaceId}
+                formData={formData}
+                setFormData={setFormData}
+                error={error}
+                setError={setError}
+                values={values}
+                setToggleScheduling={setToggleScheduling}
+                setSuccessScreen={setSuccessScreen}
+                spaceData={spaceData}
+              />
             ) : (
               <>
                 <div className="overflow-y-auto h-[calc(100%-99px)] [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]">
@@ -236,65 +261,62 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId,workingDays,spaceData,hos
                       onSubmit={handleSubmit(onSubmit)}
                       className="px-5 pb-4 pt-2 space-y-5"
                     >
-                        <div className="relative [&_.react-datepicker-wrapper]:!w-full">
-                          <Controller
-                            name="preferedDate"
-                            control={control}
-                            rules={{ required: "Preferred view date is required" }}
-                            render={({ field }) => (
-                              <DatePicker
-                                selected={field.value}
-                                ref={datePickerRef}
-                                onChange={(date) => field.onChange(date)}
-                                minDate={new Date()}
-                                filterDate={(date) => !isDisabledDate(date)} 
-                                placeholderText="Prefered View Date*"
-                                dateFormat="dd-MM-yyyy"
-                                renderDayContents={(day, date) => {
-                                  const title = getHolidayTitle(date);
-                                  return (
-                                    <span
-                                      title={title} 
-                                      className={
-                                        title
-                                          ? "font-semibold" 
-                                          : ""
-                                      }
-                                    >
-                                      {day}
-                                    </span>
-                                  );
-                                }}
-                                className={`block h-[58px] px-2.5 py-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border ${
-                                  errors.preferedDate
-                                    ? "border-red-500"
-                                    : "border-gray-300 hover:border-black"
-                                } appearance-none focus:outline-none focus:ring-0 focus:border-[#3f51b5] peer`}
-                              />
-                              
-                            )}
-                          />
-                          <Svg
-                            onClick={() =>{
-                              if (datePickerRef.current) {
-                                datePickerRef.current.setOpen(true);
-                              }
-                            }} 
-                            name="calender"
-                            className="cursor-pointer absolute size-4 right-3 top-1/2 -translate-y-1/2 text-[#f76900]"
-                          />
-                          <label
-                            htmlFor="preferedDate"
-                            className="absolute text-sm font-semibold text-[#00000099] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:text-[#3f51b5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1"
-                          >
-                            Prefered View Date*
-                          </label>
-                          {errors.preferedDate && (
-                            <p className="text-red-500 text-xs mt-1">
-                              {errors.preferedDate.message}
-                            </p>
+                      <div className="relative [&_.react-datepicker-wrapper]:!w-full">
+                        <Controller
+                          name="preferedDate"
+                          control={control}
+                          rules={{
+                            required: "Preferred view date is required",
+                          }}
+                          render={({ field }) => (
+                            <DatePicker
+                              selected={field.value}
+                              ref={datePickerRef}
+                              onChange={(date) => field.onChange(date)}
+                              minDate={new Date()}
+                              filterDate={(date) => !isDisabledDate(date)}
+                              placeholderText="Prefered View Date*"
+                              dateFormat="dd-MM-yyyy"
+                              renderDayContents={(day, date) => {
+                                const title = getHolidayTitle(date);
+                                return (
+                                  <span
+                                    title={title}
+                                    className={title ? "font-semibold" : ""}
+                                  >
+                                    {day}
+                                  </span>
+                                );
+                              }}
+                              className={`block h-[58px] px-2.5 py-2.5 w-full text-sm text-gray-900 bg-transparent rounded-lg border ${
+                                errors.preferedDate
+                                  ? "border-red-500"
+                                  : "border-gray-300 hover:border-black"
+                              } appearance-none focus:outline-none focus:ring-0 focus:border-[#3f51b5] peer`}
+                            />
                           )}
-                        </div>
+                        />
+                        <Svg
+                          onClick={() => {
+                            if (datePickerRef.current) {
+                              datePickerRef.current.setOpen(true);
+                            }
+                          }}
+                          name="calender"
+                          className="cursor-pointer absolute size-4 right-3 top-1/2 -translate-y-1/2 text-[#f76900]"
+                        />
+                        <label
+                          htmlFor="preferedDate"
+                          className="absolute text-sm font-semibold text-[#00000099] duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:text-[#3f51b5] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 start-1"
+                        >
+                          Prefered View Date*
+                        </label>
+                        {errors.preferedDate && (
+                          <p className="text-red-500 text-xs mt-1">
+                            {errors.preferedDate.message}
+                          </p>
+                        )}
+                      </div>
                       <div className="relative">
                         <Controller
                           name="preferredTime"
@@ -353,13 +375,16 @@ const ScheduleVisitPopup = ({ type, setIsOpen, spaceId,workingDays,spaceData,hos
                     </form>
                   </div>
                   <div className="border-t m-5 mt-0 pt-4  border-[#0000001a]">
-                    <p className="text-[#777] text-[11px]">
+                    <p className="text-[#777] text-[10px]">
                       After you submit a workspace enquiry to us, we may share
                       your details with workspace providers, who may contact you
                       to follow up on your enquiry. Please read our{" "}
-                      <span onClick={()=>{
-                        window.open("/privacy-policy", "_blank")
-                      }} className="text-[#f76900] cursor-pointer">
+                      <span
+                        onClick={() => {
+                          window.open("/privacy-policy", "_blank");
+                        }}
+                        className="text-[#f76900] cursor-pointer"
+                      >
                         Privacy Policy
                       </span>{" "}
                       for details of how we process the information.

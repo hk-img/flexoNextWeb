@@ -555,12 +555,12 @@ const Listing = ({
                                     onChange={(e) => setQuery(e.target.value)}
                                   />
                                 </div>
-                                <div
+                                {/* <div
                                   onClick={handleNearMe}
                                   className="flex whitespace-nowrap text-[#777] cursor-pointer font-medium"
                                 >
                                   Near Me
-                                </div>
+                                </div> */}
                               </div>
                             </div>
                           </div>

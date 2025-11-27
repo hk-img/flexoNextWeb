@@ -33,7 +33,7 @@ const calculateCenter = (markers) => {
   return { lat: centerLat, lng: centerLng };
 };
 
-const MapWithPrices = ({ type, spaces, hoveredSpaceId }) => {
+const MapWithPrices = ({ type, spaces, hoveredSpaceId, locationName }) => {
   const isMobile = useIsMobile();
   const [selectedSpace, setSelectedSpace] = useState(null);
   const [center, setCenter] = useState(null);
@@ -59,7 +59,7 @@ const MapWithPrices = ({ type, spaces, hoveredSpaceId }) => {
     <GoogleMap
       mapContainerStyle={containerStyle}
       center={center}
-      zoom={14}
+      zoom={locationName ? 13: 12}
       options={{
         zoomControl: true,
         zoomControlOptions: {

@@ -574,9 +574,7 @@ const Listing = ({
                           >
                             {allLocations
                               .filter((loc) =>
-                                loc?.label
-                                  ?.toLowerCase()
-                                  ?.includes(query?.toLowerCase())
+                                loc?.label?.toLowerCase().startsWith(query?.toLowerCase() || "")
                               )
                               .map((loc, idx) => (
                                 <div
@@ -624,6 +622,7 @@ const Listing = ({
                     type={type}
                     spaces={productData}
                     hoveredSpaceId={hoveredSpaceId}
+                    locationName= {locationName}
                   />
                 </div>
               )}
@@ -712,6 +711,7 @@ const Listing = ({
                   type={type}
                   spaces={productData}
                   hoveredSpaceId={hoveredSpaceId}
+                  locationName= {locationName}
                 />
               </div>
             )}

@@ -136,8 +136,9 @@ const schema = z
       .optional(),
     city: z.string().min(1, "City is required"),
     seats: z.string().min(1, "Seats is required"),
-  }).superRefine((data, ctx) => {
-    const code = data.country?.dialCode ? String(data.country.dialCode) : "";  
+  })
+  .superRefine((data, ctx) => {
+    const code = data.country?.dialCode ? String(data.country.dialCode) : "";
     const numeric = data.mobile?.replace(/\D/g, "") || "";
     if (!numeric) {
       ctx.addIssue({
@@ -179,8 +180,9 @@ const schemaForProductCard = z
       .optional(),
     spaceType: z.string().min(1, "Space Type is required"),
     seats: z.string().min(1, "Seats is required"),
-  }).superRefine((data, ctx) => {
-    const code = data.country?.dialCode ? String(data.country.dialCode) : "";    
+  })
+  .superRefine((data, ctx) => {
+    const code = data.country?.dialCode ? String(data.country.dialCode) : "";
     const numeric = data.mobile?.replace(/\D/g, "") || "";
     if (!numeric) {
       ctx.addIssue({
@@ -220,8 +222,9 @@ const schemaForCity = z
       })
       .nullable()
       .optional(),
-  }).superRefine((data, ctx) => {
-    const code = data.country?.dialCode ? String(data.country.dialCode) : "";  
+  })
+  .superRefine((data, ctx) => {
+    const code = data.country?.dialCode ? String(data.country.dialCode) : "";
     const numeric = data.mobile?.replace(/\D/g, "") || "";
     if (!numeric) {
       ctx.addIssue({
@@ -407,7 +410,7 @@ const ExplorePopup = ({
           </div>
         </div>
       ) : (
-        <div className="relative w-full lg:max-w-[55vw] mx-[12px] rounded-[11px] bg-white p-6 overflow-y-auto h-full md:h-auto [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]  animate-scaleIn">
+        <div className="relative w-full lg:max-w-[55vw] mx-[12px] rounded-[11px] bg-white p-6 overflow-y-auto h-auto [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]  animate-scaleIn">
           {/* Header */}
           <div className="md:pb-[26px] pb-[40px] flex items-center justify-center">
             <h2 className="text-lg font-semibold uppercase">Get Quotes</h2>
@@ -694,7 +697,7 @@ const ExplorePopup = ({
             </div>
           </form>
 
-          <p className="mt-4 pb-5 text-[11px] text-[#000000de]  text-start text-justify">
+          <p className="mt-4 pb-5 text-[10px] text-[#000000de]  text-start text-justify">
             After you submit a workspace enquiry to us, we may share your
             details with workspace providers, who may contact you to follow up
             on your enquiry." Please read our{" "}

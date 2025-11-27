@@ -44,7 +44,7 @@ const testimonials = [
 
 const TestimonialCta = ({ setIsOpen, type }) => {
   return (
-    <section className="w-full relative md:py-3 py-1 px-4 rounded-2xl items-center mt-6 mb-8 shadow-[0_4px_10px_#00000014] mx-auto bg-no-repeat bg-cover overflow-hidden ">
+    <section className="w-full relative md:py-3 py-1 px-4 rounded-2xl items-center mt-6 mb-8 shadow-[0_4px_10px_#00000014] mx-auto bg-no-repeat bg-cover overflow-hidden h-full">
       {/* === Blob Backgrounds === */}
       <div className="absolute inset-0 -z-0 overflow-hidden">
         {/* Orange Blob */}
@@ -54,22 +54,25 @@ const TestimonialCta = ({ setIsOpen, type }) => {
       </div>
 
       <div className="max-w-full xl:px-4 lg:px-4 md:px-3 px-4 md:py-0 py-4 mx-auto relative z-10">
-        <h5 className="text-2xl text-black font-bold  mb-8 md:hidden block text-center ">
+        <h2 className="text-2xl text-black font-bold mb-2 md:hidden block text-center ">
           Client's Testimonials
-        </h5>
+        </h2>
         <div className="flex md:flex-row flex-col items-center md:gap-4">
-          <div className="md:w-2/5 w-full md:order-first order-last md:text-start text-center">
-            <h5 className="text-2xl text-black font-bold md:mb-6 mb-4 md:block hidden">
-              Client's Testimonials
-            </h5>
-            <div className="flex flex-col gap-y-3">
-              <h5 className="text-sm/relaxed text-black">
+          <div className="md:w-2/5 w-full order-last md:text-start text-center">
+            <div className="flex flex-col gap-y-4">
+              <span className="text-[#000d54] text-4xl font-bold md:block hidden">
+                <Svg name="quots" className="w-5 h-5 rotate-180" />
+              </span>
+              <h2 className="text-2xl text-black font-bold  md:block hidden">
+                Client's Testimonials
+              </h2>
+              <h5 className="text-sm/relaxed text-black font-bold">
                 Still Searching? Let Us Help.
               </h5>
-              <h5 className="text-sm/relaxed text-black">
+              {/* <h5 className="text-sm/relaxed text-black">
                 Leave the hassle to us. Connect with an expert workspace advisor
                 today.
-              </h5>
+              </h5> */}
               {type !== "shortterm" && (
                 <div
                   onClick={() => setIsOpen(true)}
@@ -107,9 +110,6 @@ const TestimonialCta = ({ setIsOpen, type }) => {
                         />
 
                         <div>
-                          <span className="text-[#000d54] text-4xl font-bold mb-4 -mt-10 block">
-                            <Svg name="quots" className="w-7 h-7 rotate-180" />
-                          </span>
                           <h6 className="text-base text-black font-semibold">
                             {t.name},
                             <span className="ms-1 text-base text-black font-semibold">

@@ -4,7 +4,17 @@ import { ShowToast } from "@/utils/ShowToast";
 import { useMutation } from "@tanstack/react-query";
 import React from "react";
 
-const CoworkingSelectionScreen = ({spaceId,formData,setFormData,error,setError,values,setToggleScheduling,setSuccessScreen,spaceData}) => {
+const CoworkingSelectionScreen = ({
+  spaceId,
+  formData,
+  setFormData,
+  error,
+  setError,
+  values,
+  setToggleScheduling,
+  setSuccessScreen,
+  spaceData,
+}) => {
   const { token } = useAuth();
   const { mutate: coworkingSubmitMutate } = useMutation({
     mutationFn: async (payload) => {
@@ -19,11 +29,11 @@ const CoworkingSelectionScreen = ({spaceId,formData,setFormData,error,setError,v
       if (data?.result?.success) {
         setSuccessScreen(true);
       } else {
-        ShowToast(data?.result?.message,"error");
+        ShowToast(data?.result?.message, "error");
       }
     },
     onError: (err) => {
-      ShowToast(err.response?.data?.message || "Something went wrong","error");
+      ShowToast(err.response?.data?.message || "Something went wrong", "error");
     },
   });
 
@@ -38,7 +48,9 @@ const CoworkingSelectionScreen = ({spaceId,formData,setFormData,error,setError,v
     setError(error);
     if (Object.keys(error).length === 0) {
       const onlyStartDate = new Date(values?.preferedDate);
-      onlyStartDate.setMinutes(onlyStartDate.getMinutes() - onlyStartDate.getTimezoneOffset());
+      onlyStartDate.setMinutes(
+        onlyStartDate.getMinutes() - onlyStartDate.getTimezoneOffset()
+      );
       const onlyStartDateStr = onlyStartDate.toISOString().split("T")[0];
       const payload = {
         visitDate: onlyStartDateStr,
@@ -68,142 +80,130 @@ const CoworkingSelectionScreen = ({spaceId,formData,setFormData,error,setError,v
             What type of space are you looking for?
           </h2>
           <div className="flex justify-center max-md:space-y-2 flex-wrap gap-x-3 gap-y-6.5 items-center">
-          {
-            spaceData?.privatecabin_price > 0 && (
-                <label className="cursor-pointer block">
-                    <input
-                    type="radio"
-                    name="spaceType"
-                    value="Private Office"
-                    className="hidden peer"
-                    onChange={handleChange}
-                    />
-                    <span
-                    className="rounded-[5px] px-5 py-2 border peer-checked:border-2 peer-checked:border-[#F76900] text-sm text-[#141414] border-gray-300  
+            {spaceData?.privatecabin_price > 0 && (
+              <label className="cursor-pointer block">
+                <input
+                  type="radio"
+                  name="spaceType"
+                  value="Private Office"
+                  className="hidden peer"
+                  onChange={handleChange}
+                />
+                <span
+                  className="rounded-[5px] px-5 py-2 border peer-checked:border-2 peer-checked:border-[#F76900] text-sm text-[#141414] border-gray-300  
                                     peer-checked:shadow-[5px_5px_15px_#0000004d]  
                                     hover:shadow-[5px_5px_15px_#0000004d] transition"
-                    >
-                    Private Office
-                    </span>
-                </label>
-            )
-          }
-          {
-            spaceData?.customized_space_price > 0 && (
-                <label className="cursor-pointer block">
-                    <input
-                    type="radio"
-                    name="spaceType"
-                    value="Managed Office"
-                    className="hidden peer"
-                    onChange={handleChange}
-                    />
-                    <span
-                    className="rounded-[5px] px-5 py-2 border peer-checked:border-2 peer-checked:border-[#F76900] text-sm text-[#141414] border-gray-300  
+                >
+                  Private Office
+                </span>
+              </label>
+            )}
+            {spaceData?.customized_space_price > 0 && (
+              <label className="cursor-pointer block">
+                <input
+                  type="radio"
+                  name="spaceType"
+                  value="Managed Office"
+                  className="hidden peer"
+                  onChange={handleChange}
+                />
+                <span
+                  className="rounded-[5px] px-5 py-2 border peer-checked:border-2 peer-checked:border-[#F76900] text-sm text-[#141414] border-gray-300  
                                     peer-checked:shadow-[5px_5px_15px_#0000004d]  
                                     hover:shadow-[5px_5px_15px_#0000004d] transition"
-                    >
-                    Managed Office
-                    </span>
-                </label>
-            )
-          }
-          {
-            spaceData?.desks_price > 0 && (
-                <label className="cursor-pointer block">
-                    <input
-                    type="radio"
-                    name="spaceType"
-                    value="Dedicated Desk"
-                    className="hidden peer"
-                    onChange={handleChange}
-                    />
-                    <span
-                    className="rounded-[5px] px-5 py-2 border peer-checked:border-2 peer-checked:border-[#F76900] text-sm text-[#141414] border-gray-300  
+                >
+                  Managed Office
+                </span>
+              </label>
+            )}
+            {spaceData?.desks_price > 0 && (
+              <label className="cursor-pointer block">
+                <input
+                  type="radio"
+                  name="spaceType"
+                  value="Dedicated Desk"
+                  className="hidden peer"
+                  onChange={handleChange}
+                />
+                <span
+                  className="rounded-[5px] px-5 py-2 border peer-checked:border-2 peer-checked:border-[#F76900] text-sm text-[#141414] border-gray-300  
                                     peer-checked:shadow-[5px_5px_15px_#0000004d]  
                                     hover:shadow-[5px_5px_15px_#0000004d] transition"
-                    >
-                     Dedicated Desk
-                    </span>
-                </label>
-            )
-          }
-          {
-            spaceData?.flexible_desk_price > 0 && (
-                <label className="cursor-pointer block">
-                    <input
-                    type="radio"
-                    name="spaceType"
-                    value="Flexible Desk"
-                    className="hidden peer"
-                    onChange={handleChange}
-                    />
-                    <span
-                    className="rounded-[5px] px-5 py-2 border peer-checked:border-2 peer-checked:border-[#F76900] text-sm text-[#141414] border-gray-300  
+                >
+                  Dedicated Desk
+                </span>
+              </label>
+            )}
+            {spaceData?.flexible_desk_price > 0 && (
+              <label className="cursor-pointer block">
+                <input
+                  type="radio"
+                  name="spaceType"
+                  value="Flexible Desk"
+                  className="hidden peer"
+                  onChange={handleChange}
+                />
+                <span
+                  className="rounded-[5px] px-5 py-2 border peer-checked:border-2 peer-checked:border-[#F76900] text-sm text-[#141414] border-gray-300  
                                     peer-checked:shadow-[5px_5px_15px_#0000004d]  
                                     hover:shadow-[5px_5px_15px_#0000004d] transition"
-                    >
-                    Flexible Desk
-                    </span>
-                </label>
-            )
-          }
-          {
-            spaceData?.virtual_office_price > 0 && (
-                <label className="cursor-pointer block">
-                    <input
-                    type="radio"
-                    name="spaceType"
-                    value="Virtual Office"
-                    className="hidden peer"
-                    onChange={handleChange}
-                    />
-                    <span
-                    className="rounded-[5px] px-5 py-2 border peer-checked:border-2 peer-checked:border-[#F76900] text-sm text-[#141414] border-gray-300  
+                >
+                  Flexible Desk
+                </span>
+              </label>
+            )}
+            {spaceData?.virtual_office_price > 0 && (
+              <label className="cursor-pointer block">
+                <input
+                  type="radio"
+                  name="spaceType"
+                  value="Virtual Office"
+                  className="hidden peer"
+                  onChange={handleChange}
+                />
+                <span
+                  className="rounded-[5px] px-5 py-2 border peer-checked:border-2 peer-checked:border-[#F76900] text-sm text-[#141414] border-gray-300  
                                     peer-checked:shadow-[5px_5px_15px_#0000004d]  
                                     hover:shadow-[5px_5px_15px_#0000004d] transition"
-                    >
-                     Virtual Office
-                    </span>
-                </label>
-            )
-          }
-          {
-            spaceData?.originalPrice > 0 && (
-                <label className="cursor-pointer block">
-                    <input
-                    type="radio"
-                    name="spaceType"
-                    value="Day Pass"
-                    className="hidden peer"
-                    onChange={handleChange}
-                    />
-                    <span
-                    className="rounded-[5px] px-5 py-2 border peer-checked:border-2 peer-checked:border-[#F76900] text-sm text-[#141414] border-gray-300  
+                >
+                  Virtual Office
+                </span>
+              </label>
+            )}
+            {spaceData?.originalPrice > 0 && (
+              <label className="cursor-pointer block">
+                <input
+                  type="radio"
+                  name="spaceType"
+                  value="Day Pass"
+                  className="hidden peer"
+                  onChange={handleChange}
+                />
+                <span
+                  className="rounded-[5px] px-5 py-2 border peer-checked:border-2 peer-checked:border-[#F76900] text-sm text-[#141414] border-gray-300  
                                     peer-checked:shadow-[5px_5px_15px_#0000004d]  
                                     hover:shadow-[5px_5px_15px_#0000004d] transition"
-                    >
-                     Day Pass
-                    </span>
-                </label>
-            )
-          }
-          <label className="cursor-pointer block">
-            <input
-              type="radio"
-              name="spaceType"
-              value="Not sure"
-              className="hidden peer"
-              onChange={handleChange}
-            />
-            <span
-              className="rounded-[5px] px-5 py-2 border peer-checked:border-2 peer-checked:border-[#F76900] text-sm text-[#141414] border-gray-300  
+                >
+                  Day Pass
+                </span>
+              </label>
+            )}
+            <label className="cursor-pointer block">
+              <input
+                type="radio"
+                name="spaceType"
+                value="Not sure"
+                className="hidden peer"
+                onChange={handleChange}
+              />
+              <span
+                className="rounded-[5px] px-5 py-2 border peer-checked:border-2 peer-checked:border-[#F76900] text-sm text-[#141414] border-gray-300  
                             peer-checked:shadow-[5px_5px_15px_#0000004d]  
                             hover:shadow-[5px_5px_15px_#0000004d] transition"
-            >
-              Not sure
-            </span>
-          </label>
+              >
+                Not sure
+              </span>
+            </label>
           </div>
           {error?.spaceType && (
             <span className="text-red-500">{error.spaceType}</span>
@@ -604,7 +604,7 @@ const CoworkingSelectionScreen = ({spaceId,formData,setFormData,error,setError,v
           </div>
         </div>
         <div className="m-5 mb-0 border-t border-[#0000001a]">
-          <p className="text-[#777]  font-light text-[11px] text-center py-4">
+          <p className="text-[#777]  font-light text-[10px] text-center py-4">
             After you submit a workspace enquiry to us, we may share your
             enquiry details (including contact details) with workspace providers
             and our commercial broker partners, who may contact you to follow up

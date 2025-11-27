@@ -724,7 +724,7 @@ const RequestToBookPopup = ({
                         name="rupee"
                         className="size-4 text-[#f76900] inline"
                       />{" "}
-                      {spaceData?.originalPrice} / hr
+                      {Number(spaceData?.originalPrice)?.toLocaleString("en-IN")} / hr
                     </p>
                     <p>{minHours} hr minimum</p>
                     </div>
@@ -767,7 +767,7 @@ const RequestToBookPopup = ({
                               name="rupee"
                               className="size-3 text-[#f76900] inline"
                             />
-                            {spaceData?.originalPrice}
+                            {Number(spaceData?.originalPrice)?.toLocaleString("en-IN")}
                           </span>
                           <span>
                           {getDurationInHours(slot?.startTime, slot?.endTime) !=

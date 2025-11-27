@@ -557,7 +557,7 @@ const Listing = ({
                                 </div>
                                 <div
                                   onClick={handleNearMe}
-                                  className="flex whitespace-nowrap text-[#777777] cursor-pointer"
+                                  className="flex whitespace-nowrap text-[#777] cursor-pointer font-medium"
                                 >
                                   Near Me
                                 </div>

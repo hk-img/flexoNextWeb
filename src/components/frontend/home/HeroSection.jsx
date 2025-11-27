@@ -247,6 +247,7 @@ export default function HeroSection({ spaceCategoryData }) {
                   }}
                   noOptionsMessage={() => "Space not found"}
                 />
+                
                 <Select
                   options={locationData}
                   placeholder="Where?"

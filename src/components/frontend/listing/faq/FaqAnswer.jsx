@@ -15,7 +15,7 @@ const FaqAnswer = ({ answer }) => {
   return (
     <div
       dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
-      className="font-montserrat faq-style"
+      className="font-montserrat"
     />
   );
 };

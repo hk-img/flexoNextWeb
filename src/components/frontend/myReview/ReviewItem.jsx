@@ -1,13 +1,13 @@
 import ImageWithFallback from "@/components/ImageWithFallback";
 import Svg from "@/components/svg";
 import { getTypeOfSpaceByWorkSpace, slugGenerator } from "@/services/Comman";
-import React from "react";
+import React, { useMemo } from "react";
 
 const ReviewItem = ({ item }) => {
-  const type = getTypeOfSpaceByWorkSpace(item?.spaceType);
-  const spaceTypeSlug = slugGenerator(item?.spaceType);
-  const locationNameSlug = slugGenerator(item?.spaceLocationName || "");
-  const cityNameSlug = slugGenerator(item?.space_contact_city_name || "");
+  const type = useMemo(() => getTypeOfSpaceByWorkSpace(item?.spaceType || ""), [item]);
+  const spaceTypeSlug = useMemo(() => slugGenerator(item?.spaceType), [item]);
+  const locationNameSlug = useMemo(() => slugGenerator(item?.spaceLocationName || ""), [item]);
+  const cityNameSlug = useMemo(() => slugGenerator(item?.space_contact_city_name || ""), [item]);
   const spaceId = item?.spaceId;
   return (
     <>

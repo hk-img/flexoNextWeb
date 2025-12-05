@@ -15,8 +15,12 @@ import { getApi } from "@/services/ApiService";
 import Script from "next/script";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-const EmblaCarousel = dynamic(() => import("../emblaCarousel/EmblaCarousel"));
-const EmblaCarousel2 = dynamic(() => import("./emblaCarousel2/EmblaCarousel"));
+const EmblaCarousel2 = dynamic(() => import("./emblaCarousel2/EmblaCarousel"),{ 
+  ssr: false,
+  loading: () => (
+    <div className="h-[500px] bg-gray-100 animate-pulse rounded-lg" />
+  ),
+});
 const HeroSection = dynamic(() => import("./heroSection/HeroSection"));
 const ReviewSection = dynamic(() => import("./reviewSection/ReviewSection"));
 const LikeDislike = dynamic(() => import("./LikeDislike"));

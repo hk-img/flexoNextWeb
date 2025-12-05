@@ -1,6 +1,9 @@
 import React from "react";
-import EmblaCarousel from "../../emblaCarousel/EmblaCarousel";
 import ImageWithFallback from "@/components/ImageWithFallback";
+import dynamic from "next/dynamic";
+const EmblaCarousel = dynamic(() => import("../../emblaCarousel/EmblaCarousel"), { 
+  ssr: false
+});
 
 const ImagePopup = ({ viewImagePopup, setViewImagePopup, images = [] }) => {
   return (

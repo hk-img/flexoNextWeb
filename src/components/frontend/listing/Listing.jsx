@@ -60,7 +60,6 @@ const Listing = ({
   const { coordinates } = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
-  const [type, setType] = useState("");
   const [isLongTermPopupOpen, setIsLongTermPopupOpen] = useState(false);
   const spacesTypeRef = useRef(null);
   const locationRef = useRef(null);
@@ -116,12 +115,12 @@ const Listing = ({
       );
     }
   };
-  useEffect(() => {
-    if (selectedRadio) {
-      const type = getTypeOfSpaceByWorkSpace(selectedRadio || "");
-      setType(type);
-    }
+
+  const type = useMemo(() => {
+    const type = getTypeOfSpaceByWorkSpace(selectedRadio || "")
+    return type;
   }, [selectedRadio]);
+
   const handleCheckbox = (type) => {
     if (selectedCheckboxes.includes(type)) {
       setSelectedCheckboxes(selectedCheckboxes.filter((item) => item !== type));
@@ -304,6 +303,7 @@ const Listing = ({
       lat: coordinates?.lat || 19.1121947,
       lng: coordinates?.lng || 72.8792898,
     });
+    refetchSpaces();
   };
   const total = allSpaces?.space_count || 0;
   const start = total > 0 ? (page - 1) * perPage + 1 : 0;

@@ -1,8 +1,6 @@
 import Svg from "@/components/svg";
-import React, { memo, useEffect, useState } from "react";
-import EmblaCarousel from "../emblaCarousel/EmblaCarousel";
+import React, { memo, useEffect, useMemo, useState } from "react";
 import ImageWithFallback from "@/components/ImageWithFallback";
-import AboutText from "./AboutText";
 import {
   convertSlugToCapitalLetter,
   getTypeOfSpaceByWorkSpace,
@@ -15,6 +13,12 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/context/useAuth";
 import { ShowToast } from "@/utils/ShowToast";
+import dynamic from "next/dynamic";
+const EmblaCarousel = dynamic(() => import("../emblaCarousel/EmblaCarousel"), { 
+  ssr: false,
+  loading: () => <div className="w-full h-[320px] bg-gray-200 animate-pulse rounded-md" />,
+});
+const AboutText = dynamic(() => import("./AboutText"), { ssr: false });
 
 const ProductCard = ({
   item = {},
@@ -25,10 +29,10 @@ const ProductCard = ({
 }) => {
   const { token } = useAuth();
   const [isFavourite, setIsFavourite] = useState(false);
-  const type = getTypeOfSpaceByWorkSpace(item?.spaceType || "");
-  const spaceTypeSlug = slugGenerator(item?.spaceType);
-  const locationNameSlug = slugGenerator(item?.location_name || "");
-  const cityNameSlug = slugGenerator(item?.contact_city_name || "");
+  const type = useMemo(() => getTypeOfSpaceByWorkSpace(item?.spaceType || ""), [item]);
+  const spaceTypeSlug = useMemo(() => slugGenerator(item?.spaceType), [item]);
+  const locationNameSlug = useMemo(() => slugGenerator(item?.location_name || ""), [item]);
+  const cityNameSlug = useMemo(() => slugGenerator(item?.contact_city_name || ""), [item]);
   const spaceId = item?.id;
 
   const defaultImage = "/images/default_image.webp";
@@ -172,6 +176,7 @@ const ProductCard = ({
                 title="product image"
                 className="w-full aspect-[399/320] object-cover rounded-t-md h-[320px]"
                 fallback="/images/default_image.webp"
+                priority={index === 0}
               />
             </div>
           ))}

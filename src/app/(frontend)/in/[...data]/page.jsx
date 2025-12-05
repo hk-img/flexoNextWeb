@@ -111,7 +111,7 @@ async function getNearBySpaceData(payload) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(payload),
-      cache: "no-store",
+      next: { revalidate: 300 }
     });
     if (!res.ok) {
       console.error("API error", res.status, await res.text());
@@ -131,7 +131,7 @@ const getListingData = async (payload) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(payload),
-      cache: "no-store",
+      next: { revalidate: 300 }
     });
     if (!res.ok) {
       console.error("API error", res.status, await res.text());

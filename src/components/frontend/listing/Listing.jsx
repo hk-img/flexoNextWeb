@@ -239,8 +239,6 @@ const Listing = ({
     },
     keepPreviousData: true,
     initialData: listingData,
-    staleTime: 1000 * 60 * 5,
-    cacheTime: 1000 * 60 * 10,
   });
   const productData = useMemo(() => {
     return allSpaces?.data || [];

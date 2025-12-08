@@ -1,6 +1,6 @@
 "use client";
 import Svg from "@/components/svg";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getApi, postAPI } from "@/services/ApiService";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -97,37 +97,36 @@ const Listing = ({
     }
   }, [isMobile]);
 
-  const handleRadioChange = (e) => {
-    const { value } = e.target;
-    // if (value == "Coworking Space") {
-    //   setSelectedCheckboxes(coworkingTypes);
-    // } else {
-    //   const smallSpaceType = convertSlugToSmallLetter(value || "");
-    //   setSelectedCheckboxes([smallSpaceType]);
-    // }
-    // setSelectedRadio(value);
-    const type_slug = slugGenerator(value || "");
-    if (!locationNameSlug && type_slug == "coworking-space") {
-      return router.push(`/in/coworking/${citySlug || ""}`);
-    } else {
-      router.push(
-        `/in/${type_slug}/${citySlug || ""}/${locationNameSlug || ""}`
-      );
-    }
-  };
+  const handleRadioChange = useCallback(
+    (e) => {
+      const { value } = e.target;
+      // if (value == "Coworking Space") {
+      //   setSelectedCheckboxes(coworkingTypes);
+      // } else {
+      //   const smallSpaceType = convertSlugToSmallLetter(value || "");
+      //   setSelectedCheckboxes([smallSpaceType]);
+      // }
+      // setSelectedRadio(value);
+      const type_slug = slugGenerator(value || "");
+      if (!locationNameSlug && type_slug === "coworking-space") {
+        return router.push(`/in/coworking/${citySlug || ""}`);
+      } else {
+        router.push(`/in/${type_slug}/${citySlug || ""}/${locationNameSlug || ""}`);
+      }
+    },
+    [locationNameSlug, citySlug, router]
+  );
 
   const type = useMemo(() => {
     const type = getTypeOfSpaceByWorkSpace(selectedRadio || "")
     return type;
   }, [selectedRadio]);
 
-  const handleCheckbox = (type) => {
-    if (selectedCheckboxes.includes(type)) {
-      setSelectedCheckboxes(selectedCheckboxes.filter((item) => item !== type));
-    } else {
-      setSelectedCheckboxes([...selectedCheckboxes, type]);
-    }
-  };
+  const handleCheckbox = useCallback((type) => {
+    setSelectedCheckboxes((prev) =>
+      prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
+    );
+  }, []);
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -180,7 +179,6 @@ const Listing = ({
 
   const { data: allSpaces, refetch: refetchSpaces } = useQuery({
     queryKey: [
-      "allSpaces",
       page,
       city,
       type,
@@ -241,6 +239,8 @@ const Listing = ({
     },
     keepPreviousData: true,
     initialData: listingData,
+    staleTime: 1000 * 60 * 5,
+    cacheTime: 1000 * 60 * 10,
   });
   const productData = useMemo(() => {
     return allSpaces?.data || [];
@@ -259,6 +259,7 @@ const Listing = ({
     },
     keepPreviousData: true,
     initialData: locationData,
+    staleTime: 1000 * 60 * 10,
   });
 
   useEffect(() => {
@@ -282,32 +283,34 @@ const Listing = ({
     }
   }, [allLocations, locationName, city]);
 
-  const handleApply = () => {
+  const handleApply = useCallback(() => {
     setAppliedFilter(filterData);
     setIsFilterOpen(false);
-  };
+  }, [filterData]);
 
-  const handleClear = () => {
-    const resetFilters = {
-      priceRange: { min: 500, max: 50000 },
-      distance: 0,
-      sortBy: "",
-      amenities: [],
-    };
+  const handleClear = useCallback(() => {
+    const resetFilters = { priceRange: { min: 500, max: 50000 }, distance: 0, sortBy: "", amenities: [] };
     setFilterData(resetFilters);
     setAppliedFilter(resetFilters);
     setIsFilterOpen(false);
-  };
+  }, []);
   const handleNearMe = () => {
-    setNearMeData({
-      lat: coordinates?.lat || 19.1121947,
-      lng: coordinates?.lng || 72.8792898,
-    });
-    refetchSpaces();
+    if(!nearMeData){
+      setNearMeData({
+        lat: coordinates?.lat || 19.1121947,
+        lng: coordinates?.lng || 72.8792898,
+      });
+    }else{
+      refetchSpaces();
+    }
   };
   const total = allSpaces?.space_count || 0;
   const start = total > 0 ? (page - 1) * perPage + 1 : 0;
   const end = total > 0 ? Math.min(page * perPage, total) : 0;
+
+  const firstSlice = useMemo(() => productData.slice(0, 6), [productData]);
+  const secondSlice = useMemo(() => productData.slice(6, 18), [productData]);
+  const thirdSlice = useMemo(() => productData.slice(18, 30), [productData]);
   return (
     <>
       <section className="w-full relative lg:pt-16 bg-white">
@@ -641,7 +644,7 @@ const Listing = ({
                 </div>
               </div>
               <div className="spaces lg:mt-6 flex flex-row flex-wrap -mx-4">
-                {productData?.slice(0, 6)?.map((item, index) => (
+                {firstSlice?.map((item, index) => (
                   <div
                     key={`product-${index}`}
                     className="spaceCard relative lg:w-1/3 md:w-1/3 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:xl:w-1/2 group-has-[.map]/mainBox:md:w-1/2 w-full p-4"
@@ -660,7 +663,7 @@ const Listing = ({
               </div>
               <TrustedCompaniesCta setIsOpen={setIsOpen} type={type} />
               <div className="spaces flex flex-row flex-wrap -mx-4">
-                {productData?.slice(6, 18)?.map((item, index) => (
+                {secondSlice?.map((item, index) => (
                   <div
                     key={`product-${index + 6}`}
                     className="spaceCard relative lg:w-1/3 md:w-1/3 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:xl:w-1/2 group-has-[.map]/mainBox:md:w-1/2 w-full p-4"
@@ -681,7 +684,7 @@ const Listing = ({
                 <RequestCallback setIsOpen={setIsOpen} type={type} />
               )}
               <div className="spaces flex flex-row flex-wrap -mx-4">
-                {productData?.slice(18, 30)?.map((item, index) => (
+                {thirdSlice?.map((item, index) => (
                   <div
                     key={`product-${index + 18}`}
                     className="spaceCard lg:w-1/3 md:w-1/3 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:xl:w-1/2 group-has-[.map]/mainBox:md:w-1/2 w-full p-4"

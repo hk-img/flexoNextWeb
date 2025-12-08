@@ -89,13 +89,13 @@ const Listing = ({
   const [selectedCityName, setSelectedCityName] = useState(null);
   const perPage = 30;
 
-  // useEffect(() => {
-  //   if (isMobile) {
-  //     setMapToggle(false);
-  //   } else {
-  //     setMapToggle(true);
-  //   }
-  // }, [isMobile]);
+  useEffect(() => {
+    if (isMobile) {
+      setMapToggle(false);
+    } else {
+      setMapToggle(true);
+    }
+  }, [isMobile]);
 
   const handleRadioChange = useCallback(
     (e) => {

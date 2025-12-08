@@ -224,10 +224,6 @@ const ProductCard = ({
                     }
                     const shareUrl = `${WEBSITE_BASE_URL}${url}`;
                     sharePost("facebook", shareUrl);
-                    // window.open(
-                    //   `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
-                    //   "_blank"
-                    // );
                   }}
                   className="cursor-pointer share-button flex items-center justify-center w-full h-full"
                 >
@@ -249,10 +245,6 @@ const ProductCard = ({
 
                     const shareUrl = `${WEBSITE_BASE_URL}${url}`;
                     sharePost("linkedin", shareUrl);
-                    // window.open(
-                    //   `https://www.linkedin.com/feed/?shareActive=false&url=${shareUrl}`,
-                    //   "_blank"
-                    // );
                   }}
                   className="cursor-pointer share-button flex items-center justify-center w-full h-full"
                 >
@@ -274,7 +266,6 @@ const ProductCard = ({
                       `Checkout this space on FLEXO\n${WEBSITE_BASE_URL}${url}`
                     );
                     sharePost("whatsup", message);
-                    // window.open(`https://web.whatsapp.com/send?text=${message}`, "_blank");
                   }}
                   className="cursor-pointer share-button flex items-center justify-center w-full h-full"
                 >
@@ -296,10 +287,6 @@ const ProductCard = ({
                     }
                     const shareUrl = `${WEBSITE_BASE_URL}${url}`;
                     sharePost("facebook", shareUrl);
-                    // window.open(
-                    //   `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`,
-                    //   "_blank"
-                    // );
                   }}
                   className="cursor-pointer share-button flex items-center justify-center w-full h-full"
                 >
@@ -321,10 +308,6 @@ const ProductCard = ({
 
                     const shareUrl = `${WEBSITE_BASE_URL}${url}`;
                     sharePost("linkedin", shareUrl);
-                    // window.open(
-                    //   `https://www.linkedin.com/feed/?shareActive=false&url=${shareUrl}`,
-                    //   "_blank"
-                    // );
                   }}
                   className="cursor-pointer share-button flex items-center justify-center w-full h-full"
                 >
@@ -346,12 +329,6 @@ const ProductCard = ({
                       `Checkout this space on FLEXO\n${WEBSITE_BASE_URL}${url}`
                     );
                     sharePost("whatsup", message);
-                    // const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-                    // const whatsappUrl = isMobile
-                    //   ? `whatsapp://send?text=${message}`
-                    //   : `https://web.whatsapp.com/send?text=${message}`;
-
-                    // window.open(whatsappUrl, "_blank");
                   }}
                   className="cursor-pointer share-button flex items-center justify-center w-full h-full"
                 >

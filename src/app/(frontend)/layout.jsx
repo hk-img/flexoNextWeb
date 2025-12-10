@@ -9,6 +9,12 @@ import Script from "next/script";
 export default function RootLayout({ children }) {
   return (
     <>
+      {/* Preconnect to external domains for faster loading */}
+      <link rel="preconnect" href="https://salesiq.zoho.in" />
+      <link rel="dns-prefetch" href="https://salesiq.zoho.in" />
+      <link rel="preconnect" href="https://s3.ap-south-1.amazonaws.com" />
+      <link rel="dns-prefetch" href="https://s3.ap-south-1.amazonaws.com" />
+      
       <FrontendProvider>
         <Header />
         <ScrollToTop/>
@@ -16,7 +22,11 @@ export default function RootLayout({ children }) {
         {children}
         <ChatBot />
         <Footer />
-        <Script id="zoho-salesiq" strategy="afterInteractive">
+        {/* Zoho script - lazy load strategy for better performance */}
+        <Script 
+          id="zoho-salesiq" 
+          strategy="lazyOnload"
+        >
           {`
             var $zoho = $zoho || {};
             $zoho.salesiq = $zoho.salesiq || {

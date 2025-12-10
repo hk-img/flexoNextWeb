@@ -72,12 +72,18 @@ async function fetchAPI1() {
       next: { revalidate: 3600 },
     });
     if (!res.ok) {
-      console.error("API error", res.status, await res.text());
+      // Only log in development
+      if (process.env.NODE_ENV === 'development') {
+        console.error("API error", res.status, await res.text());
+      }
       return [];
     }
     return await res.json();
   } catch (error) {
-    console.log(error);
+    // Only log in development
+    if (process.env.NODE_ENV === 'development') {
+      console.error("Fetch error:", error);
+    }
     return [];
   }
 }
@@ -93,12 +99,18 @@ async function fetchAPI2(spaceType) {
       }
     );
     if (!res.ok) {
-      console.error("API error", res.status, await res.text());
+      // Only log in development
+      if (process.env.NODE_ENV === 'development') {
+        console.error("API error", res.status, await res.text());
+      }
       return [];
     }
     return await res.json();
   } catch (error) {
-    console.log(error);
+    // Only log in development
+    if (process.env.NODE_ENV === 'development') {
+      console.error("Fetch error:", error);
+    }
     return [];
   }
 }
@@ -114,12 +126,18 @@ async function getNearBySpaceData(payload) {
       next: { revalidate: 300 }
     });
     if (!res.ok) {
-      console.error("API error", res.status, await res.text());
+      // Only log in development
+      if (process.env.NODE_ENV === 'development') {
+        console.error("API error", res.status, await res.text());
+      }
       return [];
     }
     return await res.json();
   } catch (error) {
-    console.log(error);
+    // Only log in development
+    if (process.env.NODE_ENV === 'development') {
+      console.error("Fetch error:", error);
+    }
     return [];
   }
 }
@@ -134,12 +152,18 @@ const getListingData = async (payload) => {
       next: { revalidate: 300 }
     });
     if (!res.ok) {
-      console.error("API error", res.status, await res.text());
+      // Only log in development
+      if (process.env.NODE_ENV === 'development') {
+        console.error("API error", res.status, await res.text());
+      }
       return [];
     }
     return await res.json();
   } catch (error) {
-    console.log(error);
+    // Only log in development
+    if (process.env.NODE_ENV === 'development') {
+      console.error("Fetch error:", error);
+    }
     return [];
   }
 };

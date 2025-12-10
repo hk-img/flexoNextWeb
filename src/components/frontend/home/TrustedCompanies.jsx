@@ -1,6 +1,6 @@
 import React from "react";
 import EmblaCarousel from "../emblaCarousel/EmblaCarousel";
-import Image from "next/image";
+import ImageWithFallback from "@/components/ImageWithFallback";
 
 const TrustedCompanies = () => {
   const companies = [
@@ -78,13 +78,14 @@ const TrustedCompanies = () => {
               key={i}
               className="embla__slide flex-[0_0_auto] basis-auto sm:px-4 px-4 flex items-center justify-center"
             >
-              <Image
+              <ImageWithFallback
                 src={s.src}
                 alt={s.alt}
                 title={s.title}
                 width={120}
                 height={50}
                 className="object-contain transition md:w-[165px] w-[105px]"
+                fallback="/images/default_image.webp"
               />
             </div>
           ))}

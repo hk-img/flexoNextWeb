@@ -20,12 +20,18 @@ async function getSpaceDetails(spaceId) {
       next: { revalidate: 3600 },
     });
     if (!res.ok) {
-      console.error("API error", res.status, await res.text());
+      // Only log in development
+      if (process.env.NODE_ENV === 'development') {
+        console.error("API error", res.status, await res.text());
+      }
       return [];
     }
     return await res.json();
   } catch (error) {
-    console.log(error);
+    // Only log in development
+    if (process.env.NODE_ENV === 'development') {
+      console.error("Fetch error:", error);
+    }
     return [];
   }
 }
@@ -42,12 +48,18 @@ async function getDetailData(payload) {
       }
     );
     if (!res.ok) {
-      console.error("API error", res.status, await res.text());
+      // Only log in development
+      if (process.env.NODE_ENV === 'development') {
+        console.error("API error", res.status, await res.text());
+      }
       return [];
     }
     return await res.json();
   } catch (error) {
-    console.log(error);
+    // Only log in development
+    if (process.env.NODE_ENV === 'development') {
+      console.error("Fetch error:", error);
+    }
     return [];
   }
 }
@@ -64,12 +76,18 @@ async function getReviewData(spaceId) {
       }
     );
     if (!res.ok) {
-      console.error("API error", res.status, await res.text());
+      // Only log in development
+      if (process.env.NODE_ENV === 'development') {
+        console.error("API error", res.status, await res.text());
+      }
       return [];
     }
     return await res.json();
   } catch (error) {
-    console.log(error);
+    // Only log in development
+    if (process.env.NODE_ENV === 'development') {
+      console.error("Fetch error:", error);
+    }
     return [];
   }
 }

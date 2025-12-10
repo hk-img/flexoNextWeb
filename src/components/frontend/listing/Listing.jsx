@@ -63,7 +63,7 @@ const Listing = ({
   const [isLongTermPopupOpen, setIsLongTermPopupOpen] = useState(false);
   const spacesTypeRef = useRef(null);
   const locationRef = useRef(null);
-  const [mapToggle, setMapToggle] = useState(true);
+  const [mapToggle, setMapToggle] = useState(false);
   const [toggleSpaceType, setToggleSpaceType] = useState(false);
   const [toggleSpace, setToggleSpace] = useState(false);
   const [selectedRadio, setSelectedRadio] = useState(
@@ -89,12 +89,9 @@ const Listing = ({
   const [selectedCityName, setSelectedCityName] = useState(null);
   const perPage = 30;
 
+  // Keep map hidden by default; user can toggle on
   useEffect(() => {
-    if (isMobile) {
-      setMapToggle(false);
-    } else {
-      setMapToggle(true);
-    }
+    setMapToggle(false);
   }, [isMobile]);
 
   const handleRadioChange = useCallback(
@@ -239,6 +236,7 @@ const Listing = ({
     },
     keepPreviousData: true,
     initialData: listingData,
+    staleTime: 1000 * 60 * 5, // cache listing for 5 minutes to reduce refetch
   });
   const productData = useMemo(() => {
     return allSpaces?.data || [];

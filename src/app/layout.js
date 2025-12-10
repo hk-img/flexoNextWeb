@@ -1,4 +1,4 @@
-import { Poppins , Roboto } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 import { Toaster } from "sonner";
@@ -16,10 +16,8 @@ const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-poppins",
-});
-const roboto = Roboto({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
+  display: "swap", // Font loading optimization - swap strategy
+  preload: true, // Preload font for faster rendering
 });
 
 export const metadata = {

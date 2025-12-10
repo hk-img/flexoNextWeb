@@ -226,7 +226,6 @@ const RequestToBookPopup = ({
             },
             modal: {
               ondismiss: function () {
-                console.log("Payment cancelled by user");
                 ShowToast("Payment Failed!", "error");
               },
             },

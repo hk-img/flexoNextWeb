@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import Svg from "@/components/svg";
-import Image from "next/image";
+import ImageWithFallback from "@/components/ImageWithFallback";
 import Auth from "../auth/Auth";
 import Link from "next/link";
 import { useAuth } from "@/context/useAuth";
@@ -121,7 +121,7 @@ const Header = () => {
           <div className="flex justify-between items-center">
             <div className="px-[15px]">
               <Link href="/">
-                <Image
+                <ImageWithFallback
                   src="/images/logo.webp"
                   alt="logo"
                   title="logo"
@@ -129,6 +129,7 @@ const Header = () => {
                   width={130}
                   height={37}
                   priority
+                  fallback="/images/default_image.webp"
                 />
               </Link>
             </div>

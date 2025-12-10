@@ -1,5 +1,5 @@
 import Svg from "@/components/svg";
-import React, { memo, useEffect, useMemo, useState } from "react";
+import React, { memo, useEffect, useMemo, useRef, useState } from "react";
 import ImageWithFallback from "@/components/ImageWithFallback";
 import {
   convertSlugToCapitalLetter,
@@ -26,7 +26,10 @@ const ProductCard = ({
   setIsAuthOpen,
   setSelectedSpaceData,
   setSelectedCityName,
+  isLcp = false, // first above-the-fold card
 }) => {
+  const cardRef = useRef(null);
+  const [isInView, setIsInView] = useState(false);
   const { token } = useAuth();
   const [isFavourite, setIsFavourite] = useState(false);
   const type = useMemo(() => getTypeOfSpaceByWorkSpace(item?.spaceType || ""), [item]);
@@ -45,6 +48,7 @@ const ProductCard = ({
   while (displayedImages.length < 5) {
     displayedImages.push(defaultImage);
   }
+  const firstImage = displayedImages?.[0] || defaultImage;
 
   const { mutate: favouriteMutate } = useMutation({
     mutationFn: async (payload) => {
@@ -88,6 +92,25 @@ const ProductCard = ({
       favouriteMutate(payload);
     }
   }, [token]);
+
+  // Lazy-mount carousel: observe when card enters viewport
+  useEffect(() => {
+    if (isInView) return;
+    if (!cardRef.current) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsInView(true);
+            observer.disconnect();
+          }
+        });
+      },
+      { rootMargin: "200px", threshold: 0.1 }
+    );
+    observer.observe(cardRef.current);
+    return () => observer.disconnect();
+  }, [isInView]);
   const sharePost = (type, url) => {
     if (type == "facebook") {
       window.open(
@@ -145,6 +168,7 @@ const ProductCard = ({
           }
           window.open(`${url}`, "_blank");
         }}
+        ref={cardRef}
         className="space-card relative [&_.emblaarrows]:left-3 [&_.emblaarrows]:right-3 [&_.emblaarrows_button]:w-[30px] [&_.emblaarrows_button]:h-[30px] [&_.emblaarrows_button_Svg]:size-[18px] [&_.emblaarrows_button]:!border-0 [&_.emblaarrows_button]:opacity-50 [&_.emblaarrows_button]:hover:opacity-100 [&_.emblaarrows_button_Svg]:!text-black w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col cursor-pointer"
       >
         {item?.ribbon_name && (
@@ -155,32 +179,52 @@ const ProductCard = ({
             {item?.ribbon_name}
           </div>
         )}
-        <EmblaCarousel
-          options={{
-            loop: true,
-            autoplay: false,
-            showButton: true,
-            align: "start",
-          }}
-        >
-          {displayedImages?.map((image, index) => (
-            <div
-              key={index}
-              className="embla__slide relative shrink-0 basis-full"
-            >
-              <ImageWithFallback
-                src={image || "/images/default_image.webp"}
-                alt="product image"
-                width={450}
-                height={320}
-                title="product image"
-                className="w-full aspect-[399/320] object-cover rounded-t-md h-[320px]"
-                fallback="/images/default_image.webp"
-                priority={index === 0}
-              />
-            </div>
-          ))}
-        </EmblaCarousel>
+        {isInView ? (
+          <EmblaCarousel
+            options={{
+              loop: true,
+              autoplay: false,
+              showButton: true,
+              align: "start",
+            }}
+          >
+            {displayedImages?.map((image, index) => (
+              <div
+                key={index}
+                className="embla__slide relative shrink-0 basis-full"
+              >
+                <ImageWithFallback
+                  src={image || "/images/default_image.webp"}
+                  alt="product image"
+                  width={450}
+                  height={320}
+                  title="product image"
+                  className="w-full aspect-[399/320] object-cover rounded-t-md h-[320px]"
+                  fallback="/images/default_image.webp"
+                  priority={isLcp && index === 0}
+                  fetchPriority={isLcp && index === 0 ? "high" : undefined}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                />
+              </div>
+            ))}
+          </EmblaCarousel>
+        ) : (
+          <div className="embla__slide relative shrink-0 basis-full">
+            <ImageWithFallback
+              src={firstImage}
+              alt="product image"
+              width={450}
+              height={320}
+              title="product image"
+              className="w-full aspect-[399/320] object-cover rounded-t-md h-[320px]"
+              fallback="/images/default_image.webp"
+              priority={isLcp}
+              fetchPriority={isLcp ? "high" : undefined}
+              loading={isLcp ? undefined : "lazy"}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            />
+          </div>
+        )}
         <div className="shortlistIcon absolute top-[3px] z-1 right-[2px] gap-[10px] flex p-[10px]">
           <div
             className="shareBtn relative"
@@ -494,7 +538,7 @@ const ProductCard = ({
             </>
           )}
           {type == "shortterm" && (
-            <div className="offerBtn flex items-center justify-between">
+            <div className="offerBtn flex items-center justify-between min-h-[44px]">
               <div className="text-[#000] w-fit flex items-center py-1.5 pr-1.5 m-0">
                 <div className="flex items-center">
                   <Svg name="rupee2" className="size-[18px]" />

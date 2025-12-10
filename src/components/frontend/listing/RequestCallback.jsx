@@ -14,9 +14,9 @@ const RequestCallback = ({ setIsOpen, type }) => {
           className="rounded-lg absolute inset-0 object-cover w-full h-full "
         />
         <div className="md:w-4/5 w-full flex flex-col gap-y-3 relative z-30">
-          <h4 className="text-xl font-semibold text-[#010101] ">
+          <h2 className="text-xl font-semibold text-[#010101] ">
             Winner of Best Flex Space Aggregator of the Year
-          </h4>
+          </h2>
           <p className="lg:w-4/5 w-full text-sm pe-4 text-[#272828] lg:mb-4 mb-2">
             This recognition reflects our commitment to trust, transparency, and
             results. You get the best office options and the best terms.

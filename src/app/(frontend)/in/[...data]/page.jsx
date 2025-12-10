@@ -190,7 +190,6 @@ const page = async ({ params }) => {
   const data = await params;
   const slug = data?.data || [];
   const [spaceTypeSlug, citySlug, locationNameSlug] = slug;
-  console.log(spaceTypeSlug, citySlug, locationNameSlug, "Rthrtyhrtyhrtyrt");
   if (!citySlug && !locationNameSlug) return notFound();
   const spaceType = convertSlugToCapitalLetter(spaceTypeSlug || "");
   const city = convertSlugToCapitalLetter(citySlug || "");

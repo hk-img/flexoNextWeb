@@ -29,7 +29,7 @@ function ImageWithFallback({
       loading={loadingProp}
       priority={priority}
       onError={() => setImgSrc(fallback)}
-      quality={props.quality || 85} // Default quality 85 for better performance
+      quality={props.quality} // Use caller-provided quality; default falls back to Next.js
     />
   );
 }

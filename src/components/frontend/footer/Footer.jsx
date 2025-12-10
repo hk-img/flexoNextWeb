@@ -1,23 +1,12 @@
-"use client";
 import React from "react";
 import Svg from "@/components/svg";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 const Footer = () => {
-  const pathname = usePathname();
-  const route = [
-    "/contact",
-    "/terms-conditions",
-    "/privacy-policy",
-    "/refund-policy",
-    "/host-terms-conditions",
-  ];
   return (
     <>
-      {!route?.includes(pathname) && (
-        <footer className="bg-[#f5f6f7] md:pb-0 pb-15">
+        <footer className="bg-[#f5f6f7] md:pb-0 pb-15 min-h-[400px]">
           <div className="container mx-auto pt-[50px] pb-13">
             <div className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-3 ">
               <ul className="space-y-[10px] px-[15px]">
@@ -244,9 +233,9 @@ const Footer = () => {
 
               <div className="space-y-[10px] px-[15px] lg:mt-0 mt-6">
                 <div className="">
-                  <h6 className="font-medium mb-5 leading-[1.6] text-[#333] text-xl">
+                  <h3 className="font-medium mb-5 leading-[1.6] text-[#333] text-xl">
                     Follow us on
-                  </h6>
+                  </h3>
                 </div>
                 <div className="flex items-center gap-3.5">
                   {/* <Link
@@ -285,16 +274,18 @@ const Footer = () => {
               </div>
             </div>
           </div>
-          <div className="border-t border-[#5c716a21] py-[25px]">
+          <div className="border-t border-[#5c716a21] py-[25px] min-h-[160px]">
             <div className="container px-[15px] mx-auto">
               <div className="flex flex-col md:flex-row justify-between md:items-center text-[15px] text-gray-500">
                 <div className="mb-4 md:mb-0">
                   <Image
                     src="/images/logo.webp"
                     alt="Flexo Logo"
-                    className="w-[115px]"
                     width={137}
                     height={32}
+                    priority
+                    sizes="137px"
+                    style={{ width: 137, height: 32 }}
                   />
                 </div>
                 <div className="flex flex-col md:items-end">
@@ -332,7 +323,6 @@ const Footer = () => {
             </div>
           </div>
         </footer>
-      )}
     </>
   );
 };

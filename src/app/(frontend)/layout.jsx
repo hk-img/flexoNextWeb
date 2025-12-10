@@ -9,12 +9,6 @@ import Script from "next/script";
 export default function RootLayout({ children }) {
   return (
     <>
-      {/* Preconnect to external domains for faster loading */}
-      <link rel="preconnect" href="https://salesiq.zoho.in" />
-      <link rel="dns-prefetch" href="https://salesiq.zoho.in" />
-      <link rel="preconnect" href="https://s3.ap-south-1.amazonaws.com" />
-      <link rel="dns-prefetch" href="https://s3.ap-south-1.amazonaws.com" />
-      
       <FrontendProvider>
         <Header />
         <ScrollToTop/>

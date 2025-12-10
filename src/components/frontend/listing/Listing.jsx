@@ -640,7 +640,7 @@ const Listing = ({
                 </div>
               </div>
               <div className="spaces lg:mt-6 flex flex-row flex-wrap -mx-4">
-                {firstSlice?.map((item, index) => (
+              {firstSlice?.map((item, index) => (
                   <div
                     key={`product-${index}`}
                     className="spaceCard relative lg:w-1/3 md:w-1/3 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:xl:w-1/2 group-has-[.map]/mainBox:md:w-1/2 w-full p-4"
@@ -653,6 +653,7 @@ const Listing = ({
                       setIsAuthOpen={setIsAuthOpen}
                       setSelectedSpaceData={setSelectedSpaceData}
                       setSelectedCityName={setSelectedCityName}
+                    isLcp={page === 1 && index === 0}
                     />
                   </div>
                 ))}

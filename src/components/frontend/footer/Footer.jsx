@@ -276,8 +276,7 @@ const Footer = memo(() => {
                   alt="Flexo Logo"
                   width={137}
                   height={32}
-                  priority
-                  className="md:w-[8.563rem] w-auto h-[2rem] object-contain"
+                  className="l:w-[130px] lg:w-[114px] md:w-[74px] w-[100px] h-auto aspect-[130/37]"
                 />
               </div>
               <div className="flex flex-col lg:gap-1 gap-2 md:items-end">

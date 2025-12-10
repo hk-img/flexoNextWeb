@@ -8,7 +8,7 @@ import { notFound } from "next/navigation";
 import React from "react";
 
 export const revalidate = 3600;
-export const dynamic = "force-static";
+// force-static ko remove kiya - ISR use karega jo better hai
 export const fetchCache = "force-cache";
 
 async function getSpaceDetails(spaceId) {

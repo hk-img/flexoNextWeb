@@ -125,7 +125,7 @@ const Header = () => {
                   src="/images/logo.webp"
                   alt="logo"
                   title="logo"
-                  className="xl:w-[130px] lg:w-[114px] md:w-[74px] w-[100px] h-auto"
+                  className="xl:w-[130px] lg:w-[114px] md:w-[74px] w-[100px] h-auto aspect-[130/37]"
                   width={130}
                   height={37}
                   priority

@@ -382,7 +382,7 @@ const ProductCard = ({
             </ul>
           </div>
         </div>
-        <div className="lg:pt-2 lg:px-6 lg:pb-4 py-[22px] px-[14px] flex flex-col flex-grow">
+        <div className="lg:pt-2 lg:px-6 lg:pb-4 py-[22px] px-[14px] flex flex-col flex-grow min-h-[265.64px]">
           <div className="flex flex-col justify-between items-start md:mb-2 mb-1">
             {type == "coworking" && (
               <h2 className="text-lg cursor-pointer font-medium text-[#141414] text-ellipsis line-clamp-1 break-all">

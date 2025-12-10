@@ -6,10 +6,10 @@ import Link from "next/link";
 const Footer = () => {
   return (
     <>
-        <footer className="bg-[#f5f6f7] md:pb-0 pb-15 min-h-[400px]">
+        {/* <footer className="bg-[#f5f6f7] md:pb-0 pb-15 min-h-[608px]">
           <div className="container mx-auto pt-[50px] pb-13">
             <div className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-3 ">
-              <ul className="space-y-[10px] px-[15px]">
+              <ul className="space-y-[10px] px-[15px] min-h-[346px]">
                 <li className="relative w-fit before:absolute before:left-0 before:top-full  before:h-[1px] before:w-0 before:bg-[#555] before:opacity-0 before:transition-all before:duration-400  hover:before:w-full hover:before:opacity-100 text-[#555] ">
                   <Link
                     href="/enterprise"
@@ -49,7 +49,7 @@ const Footer = () => {
                 </li>
               </ul>
 
-              <ul className="space-y-[10px] px-[15px]">
+              <ul className="space-y-[10px] px-[15px] min-h-[346px]">
                 <li className="relative w-fit before:absolute before:left-0 before:top-full before:h-[1px] before:w-0 before:bg-[#555] before:opacity-0 before:transition-all before:duration-400 hover:before:w-full hover:before:opacity-100 text-[#555]">
                   <Link
                     href="/in/coworking/mumbai"
@@ -140,7 +140,7 @@ const Footer = () => {
                 </li>
               </ul>
 
-              <ul className="space-y-[10px] px-[15px]">
+              <ul className="space-y-[10px] px-[15px] min-h-[346px]">
                 <li className="relative before:absolute before:left-0 before:top-full before:h-[1px] before:w-0 before:bg-[#555] before:opacity-0 before:transition-all before:duration-400 hover:before:w-full hover:before:opacity-100 text-[#555]">
                   <Link
                     href="/in/coworking/ahemdabad"
@@ -231,29 +231,13 @@ const Footer = () => {
                 </li>
               </ul>
 
-              <div className="space-y-[10px] px-[15px] lg:mt-0 mt-6">
+              <div className="space-y-[10px] px-[15px] min-h-[346px] lg:mt-0 mt-6">
                 <div className="">
                   <h3 className="font-medium mb-5 leading-[1.6] text-[#333] text-xl">
                     Follow us on
                   </h3>
                 </div>
                 <div className="flex items-center gap-3.5">
-                  {/* <Link
-                    aria-label="facebook"
-                    href="https://www.facebook.com/flexospaces/"
-                    target="_blank"
-                    className="text-[#f76900]"
-                  >
-                    <Svg name="facebook" className="size-[22px]" />
-                  </Link>
-                  <Link
-                  aria-label="twitter"
-                    href="https://x.com/flexospaces"
-                    target="_blank"
-                    className="text-[#f76900]"
-                  >
-                    <Svg name="twitter" className="size-[22px]" />
-                  </Link> */}
                   <Link
                     aria-label="linkedin"
                     href="https://www.linkedin.com/company/flexospaces/"
@@ -281,11 +265,11 @@ const Footer = () => {
                   <Image
                     src="/images/logo.webp"
                     alt="Flexo Logo"
-                    width={137}
-                    height={32}
-                    priority
-                    sizes="137px"
-                    style={{ width: 137, height: 32 }}
+                    className="xl:w-[137px] lg:w-[114px] md:w-[74px] w-[100px] h-auto aspect-[130/37]"
+                    width={130}
+                    height={37}
+                    priority  
+                    fallback="/images/default_image.webp"
                   />
                 </div>
                 <div className="flex flex-col md:items-end">
@@ -322,7 +306,7 @@ const Footer = () => {
               </div>
             </div>
           </div>
-        </footer>
+        </footer> */}
     </>
   );
 };

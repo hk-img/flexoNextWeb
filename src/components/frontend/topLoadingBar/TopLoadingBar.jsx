@@ -12,17 +12,25 @@ export default function TopLoadingBar() {
   const router = useRouter();
   const pathname = usePathname();
   const prevPathname = useRef(pathname);
+  const isNavigatingRef = useRef(false);
 
   useEffect(() => {
     const originalPush = router.push;
+    
     router.push = async (...args) => {
       const targetUrl = args[0];
       if (targetUrl === pathname) return originalPush(...args);
-      NProgress.start();
+      
+      // Only start if not already navigating (prevent double start)
+      if (!isNavigatingRef.current) {
+        isNavigatingRef.current = true;
+        NProgress.start();
+      }
+      
       try {
         await originalPush(...args);
       } finally {
-        // wait for pathname change
+        // Navigation complete will be handled by pathname change
       }
     };
 
@@ -31,7 +39,10 @@ export default function TopLoadingBar() {
       if (target && target.href && target.origin === window.location.origin) {
         const targetPath = target.pathname;
         if (targetPath === pathname) return;
-        NProgress.start();
+        
+        // REMOVED: NProgress.start() from here
+        // router.push will handle it, preventing double loading bar
+        // This was causing loader to show 2 times
       }
     };
 
@@ -40,11 +51,14 @@ export default function TopLoadingBar() {
     return () => {
       router.push = originalPush;
       document.removeEventListener("click", handleClick);
+      isNavigatingRef.current = false;
     };
   }, [router, pathname]);
 
   useEffect(() => {
     if (prevPathname.current !== pathname) {
+      // Navigation complete - hide loading bar and reset flag
+      isNavigatingRef.current = false;
       NProgress.done();
       prevPathname.current = pathname;
     }

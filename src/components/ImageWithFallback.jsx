@@ -30,6 +30,7 @@ function ImageWithFallback({
       priority={priority}
       onError={() => setImgSrc(fallback)}
       quality={props.quality} // Use caller-provided quality; default falls back to Next.js
+      decoding={priority ? "sync" : "async"} // Sync decoding for priority images to reduce render delay
     />
   );
 }

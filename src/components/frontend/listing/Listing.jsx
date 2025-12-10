@@ -32,7 +32,7 @@ const ProductCard = dynamic(() => import("../productCard/ProductCard"), {
   loading: () => (
     <div className="h-[500px] bg-gray-100 animate-pulse rounded-lg" />
   ),
-  ssr: false,
+  // SSR enabled - ProductCard ko server pe render karo for better initial load
 });
 const MapWithPrices = dynamic(() => import("./MapWithPrice"), {
   ssr: false,
@@ -174,6 +174,21 @@ const Listing = ({
     }
   }, [spaceCategoryData, spaceTypeSlug]);
 
+  // Check if we should refetch on mount - agar initial data hai aur default filters hain to refetch mat karo
+  const shouldRefetchOnMount = useMemo(() => {
+    // Page 1 pe default filters ke saath refetch mat karo (server-side data already hai)
+    if (page === 1 && listingData && !selectedLocation && !nearMeData) {
+      const hasDefaultFilters = 
+        appliedFilter?.priceRange?.min === 500 && 
+        appliedFilter?.priceRange?.max === 50000 &&
+        appliedFilter?.distance === 0 &&
+        !appliedFilter?.sortBy &&
+        appliedFilter?.amenities?.length === 0;
+      return !hasDefaultFilters; // Default filters hain to refetch mat karo
+    }
+    return true; // Baaki cases mein refetch karo
+  }, [page, listingData, selectedLocation, nearMeData, appliedFilter]);
+
   const { data: allSpaces, refetch: refetchSpaces } = useQuery({
     queryKey: [
       page,
@@ -234,9 +249,12 @@ const Listing = ({
       const res = await postAPI("spaces/getSpacesByCity", payload);
       return res.data;
     },
-    keepPreviousData: true,
+    // Server-side fetched data ko initialData ke roop mein use karo
     initialData: listingData,
+    // Agar initial data hai aur default filters hain to refetch mat karo
+    refetchOnMount: shouldRefetchOnMount,
     staleTime: 1000 * 60 * 5, // cache listing for 5 minutes to reduce refetch
+    gcTime: 1000 * 60 * 10, // 10 minutes cache time
   });
   const productData = useMemo(() => {
     return allSpaces?.data || [];

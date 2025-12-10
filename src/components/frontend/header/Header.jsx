@@ -23,25 +23,36 @@ const Header = () => {
   const navbarHeight = 75;
 
   useEffect(() => {
+    // Throttle scroll handler to reduce blocking
+    let ticking = false;
     const handleScroll = () => {
-      const st = window.scrollY;
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const st = window.scrollY;
 
-      if (Math.abs(lastScrollTop - st) <= delta) return;
+          if (Math.abs(lastScrollTop - st) <= delta) {
+            ticking = false;
+            return;
+          }
 
-      if (st > lastScrollTop && st > navbarHeight) {
-        // scrolling down → hide
-        setHidden(true);
-      } else {
-        // scrolling up → show
-        if (st + window.innerHeight < document.body.scrollHeight) {
-          setHidden(false);
-        }
+          if (st > lastScrollTop && st > navbarHeight) {
+            // scrolling down → hide
+            setHidden(true);
+          } else {
+            // scrolling up → show
+            if (st + window.innerHeight < document.body.scrollHeight) {
+              setHidden(false);
+            }
+          }
+
+          setLastScrollTop(st);
+          ticking = false;
+        });
+        ticking = true;
       }
-
-      setLastScrollTop(st);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollTop]);
 

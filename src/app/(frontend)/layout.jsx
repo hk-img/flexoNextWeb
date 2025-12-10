@@ -1,22 +1,17 @@
-import Footer from "@/components/frontend/footer/Footer";
-import Header from "@/components/frontend/header/Header";
-import ChatBot from "@/components/frontend/icons/ChatBot";
-import ScrollToTop from "@/components/frontend/scrollToTop/ScrollToTop";
-import TopLoadingBar from "@/components/frontend/topLoadingBar/TopLoadingBar";
 import FrontendProvider from "@/providers/FrontendProvider";
-import ZohoLoader from "@/components/frontend/ZohoLoader";
+import Header from "@/components/frontend/header/Header";
+import LazyComponents from "@/components/frontend/layout/LazyComponents";
+
+// Header ko direct import karo (SSR needed for SEO)
+// Non-critical components ko LazyComponents wrapper mein rakho (client component)
 
 export default function RootLayout({ children }) {
   return (
     <>
       <FrontendProvider>
         <Header />
-        <ScrollToTop/>
-        <TopLoadingBar />
         {children}
-        <ChatBot />
-        <Footer />
-        <ZohoLoader />
+        <LazyComponents />
       </FrontendProvider>
     </>
   );

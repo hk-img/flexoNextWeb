@@ -193,36 +193,40 @@ const ProductCard = ({
                 key={index}
                 className="embla__slide relative shrink-0 basis-full"
               >
-                <ImageWithFallback
-                  src={image || "/images/default_image.webp"}
-                  alt="product image"
-                  width={450}
-                  height={320}
-                  title="product image"
-                  className="w-full aspect-[399/320] object-cover rounded-t-md h-[320px]"
-                  fallback="/images/default_image.webp"
-                  priority={isLcp && index === 0}
-                  fetchPriority={isLcp && index === 0 ? "high" : undefined}
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                />
+                <div className="w-full aspect-[399/320] relative overflow-hidden rounded-t-md">
+                  <ImageWithFallback
+                    src={image || "/images/default_image.webp"}
+                    alt="product image"
+                    width={450}
+                    height={320}
+                    title="product image"
+                    className="w-full h-full object-cover"
+                    fallback="/images/default_image.webp"
+                    priority={isLcp && index === 0}
+                    fetchPriority={isLcp && index === 0 ? "high" : undefined}
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                </div>
               </div>
             ))}
           </EmblaCarousel>
         ) : (
           <div className="embla__slide relative shrink-0 basis-full">
-            <ImageWithFallback
-              src={firstImage}
-              alt="product image"
-              width={450}
-              height={320}
-              title="product image"
-              className="w-full aspect-[399/320] object-cover rounded-t-md h-[320px]"
-              fallback="/images/default_image.webp"
-              priority={isLcp}
-              fetchPriority={isLcp ? "high" : undefined}
-              loading={isLcp ? undefined : "lazy"}
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            />
+            <div className="w-full aspect-[399/320] relative overflow-hidden rounded-t-md">
+              <ImageWithFallback
+                src={firstImage}
+                alt="product image"
+                width={450}
+                height={320}
+                title="product image"
+                className="w-full h-full object-cover"
+                fallback="/images/default_image.webp"
+                priority={isLcp}
+                fetchPriority={isLcp ? "high" : undefined}
+                loading={isLcp ? undefined : "lazy"}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              />
+            </div>
           </div>
         )}
         <div className="shortlistIcon absolute top-[3px] z-1 right-[2px] gap-[10px] flex p-[10px]">

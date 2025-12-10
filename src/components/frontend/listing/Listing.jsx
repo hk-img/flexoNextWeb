@@ -151,26 +151,37 @@ const Listing = ({
     };
   }, []);
 
+  // Defer non-critical initialization to reduce TBT (Total Blocking Time)
   useEffect(() => {
-    if (spaceTypeSlug === "coworking") {
-      setSelectedRadio("Coworking Space");
-      setSelectedCheckboxes(coworkingTypes);
-      return;
-    }
-    const selectedSpaceType = spaceCategoryData?.find((item) => {
-      const categorySpaceType = slugGenerator(item?.spaceType || "");
-      if (categorySpaceType === spaceTypeSlug) {
-        return item;
+    // Use requestIdleCallback to defer non-critical work
+    const initSpaceType = () => {
+      if (spaceTypeSlug === "coworking") {
+        setSelectedRadio("Coworking Space");
+        setSelectedCheckboxes(coworkingTypes);
+        return;
       }
-    });
-    setSelectedRadio(selectedSpaceType?.spaceType);
-    if (selectedSpaceType?.spaceType === "Coworking Space") {
-      setSelectedCheckboxes(coworkingTypes);
+      const selectedSpaceType = spaceCategoryData?.find((item) => {
+        const categorySpaceType = slugGenerator(item?.spaceType || "");
+        if (categorySpaceType === spaceTypeSlug) {
+          return item;
+        }
+      });
+      setSelectedRadio(selectedSpaceType?.spaceType);
+      if (selectedSpaceType?.spaceType === "Coworking Space") {
+        setSelectedCheckboxes(coworkingTypes);
+      } else {
+        const smallSpaceType = convertSlugToSmallLetter(
+          selectedSpaceType?.spaceType || ""
+        );
+        setSelectedCheckboxes([smallSpaceType]);
+      }
+    };
+
+    // Defer to next tick to reduce blocking
+    if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+      requestIdleCallback(initSpaceType, { timeout: 100 });
     } else {
-      const smallSpaceType = convertSlugToSmallLetter(
-        selectedSpaceType?.spaceType || ""
-      );
-      setSelectedCheckboxes([smallSpaceType]);
+      setTimeout(initSpaceType, 0);
     }
   }, [spaceCategoryData, spaceTypeSlug]);
 
@@ -276,23 +287,33 @@ const Listing = ({
     staleTime: 1000 * 60 * 10,
   });
 
+  // Defer location matching to reduce TBT
   useEffect(() => {
     if (allLocations?.length > 0 && (locationName || city)) {
-      const smallLetterLocationName = convertSlugToSmallLetter(
-        locationName || ""
-      );
-      const smallLetterCity = convertSlugToSmallLetter(city || "");
-      if (smallLetterLocationName || smallLetterCity) {
-        const selectedLocation = allLocations?.find((item) => {
-          if (
-            item?.location_name.toLowerCase() === smallLetterLocationName &&
-            item?.city.toLowerCase() === smallLetterCity
-          ) {
-            return item;
-          }
-        });
-        setQuery(selectedLocation?.label || "");
-        setSelectedLocation(selectedLocation || null);
+      const matchLocation = () => {
+        const smallLetterLocationName = convertSlugToSmallLetter(
+          locationName || ""
+        );
+        const smallLetterCity = convertSlugToSmallLetter(city || "");
+        if (smallLetterLocationName || smallLetterCity) {
+          const selectedLocation = allLocations?.find((item) => {
+            if (
+              item?.location_name.toLowerCase() === smallLetterLocationName &&
+              item?.city.toLowerCase() === smallLetterCity
+            ) {
+              return item;
+            }
+          });
+          setQuery(selectedLocation?.label || "");
+          setSelectedLocation(selectedLocation || null);
+        }
+      };
+
+      // Defer to reduce blocking
+      if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+        requestIdleCallback(matchLocation, { timeout: 100 });
+      } else {
+        setTimeout(matchLocation, 0);
       }
     }
   }, [allLocations, locationName, city]);
@@ -322,9 +343,51 @@ const Listing = ({
   const start = total > 0 ? (page - 1) * perPage + 1 : 0;
   const end = total > 0 ? Math.min(page * perPage, total) : 0;
 
-  const firstSlice = useMemo(() => productData.slice(0, 6), [productData]);
-  const secondSlice = useMemo(() => productData.slice(6, 18), [productData]);
-  const thirdSlice = useMemo(() => productData.slice(18, 30), [productData]);
+  // Reduce initial render - only render first 6 cards immediately
+  // Rest will load when user scrolls (lazy loading)
+  const [visibleCount, setVisibleCount] = useState(6);
+  const loadMoreRef = useRef(null);
+
+  // Reset visibleCount when page changes
+  useEffect(() => {
+    setVisibleCount(6);
+  }, [page]);
+
+  // Intersection Observer for lazy loading more cards
+  useEffect(() => {
+    if (!productData || !Array.isArray(productData) || visibleCount >= productData.length || !loadMoreRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && visibleCount < productData.length) {
+          setVisibleCount((prev) => Math.min(prev + 6, productData.length));
+        }
+      },
+      { rootMargin: "200px" }
+    );
+
+    const currentRef = loadMoreRef.current;
+    observer.observe(currentRef);
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, [visibleCount, productData]);
+
+  const firstSlice = useMemo(() => {
+    if (!productData || !Array.isArray(productData)) return [];
+    return productData.slice(0, Math.min(6, visibleCount));
+  }, [productData, visibleCount]);
+  const secondSlice = useMemo(() => {
+    if (!productData || !Array.isArray(productData) || visibleCount <= 6) return [];
+    return productData.slice(6, Math.min(18, visibleCount));
+  }, [productData, visibleCount]);
+  const thirdSlice = useMemo(() => {
+    if (!productData || !Array.isArray(productData) || visibleCount <= 18) return [];
+    return productData.slice(18, Math.min(30, visibleCount));
+  }, [productData, visibleCount]);
   return (
     <>
       <section className="w-full relative lg:pt-16 bg-white">
@@ -695,27 +758,35 @@ const Listing = ({
                   </div>
                 ))}
               </div>
-              {productData?.length > 18 && (
+              {productData?.length > 18 && visibleCount > 18 && (
                 <RequestCallback setIsOpen={setIsOpen} type={type} />
               )}
-              <div className="spaces flex flex-row flex-wrap -mx-4">
-                {thirdSlice?.map((item, index) => (
-                  <div
-                    key={`product-${index + 18}`}
-                    className="spaceCard lg:w-1/3 md:w-1/3 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:xl:w-1/2 group-has-[.map]/mainBox:md:w-1/2 w-full p-4"
-                    onMouseOver={() => setHoveredSpaceId(item?.id)}
-                    onMouseLeave={() => setHoveredSpaceId(null)}
-                  >
-                    <ProductCard
-                      item={item}
-                      setIsOpen={setIsOpen}
-                      setIsAuthOpen={setIsAuthOpen}
-                      setSelectedSpaceData={setSelectedSpaceData}
-                      setSelectedCityName={setSelectedCityName}
-                    />
-                  </div>
-                ))}
-              </div>
+              {thirdSlice.length > 0 && (
+                <div className="spaces flex flex-row flex-wrap -mx-4">
+                  {thirdSlice?.map((item, index) => (
+                    <div
+                      key={`product-${index + 18}`}
+                      className="spaceCard lg:w-1/3 md:w-1/3 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:xl:w-1/2 group-has-[.map]/mainBox:md:w-1/2 w-full p-4"
+                      onMouseOver={() => setHoveredSpaceId(item?.id)}
+                      onMouseLeave={() => setHoveredSpaceId(null)}
+                    >
+                      <ProductCard
+                        item={item}
+                        setIsOpen={setIsOpen}
+                        setIsAuthOpen={setIsAuthOpen}
+                        setSelectedSpaceData={setSelectedSpaceData}
+                        setSelectedCityName={setSelectedCityName}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+              {/* Intersection Observer trigger for lazy loading */}
+              {productData && Array.isArray(productData) && visibleCount < productData.length && (
+                <div ref={loadMoreRef} className="h-20 flex items-center justify-center">
+                  <div className="animate-pulse text-gray-400">Loading more...</div>
+                </div>
+              )}
               <TestimonialCta setIsOpen={setIsOpen} type={type} />
               <Pagination
                 currentPage={page}

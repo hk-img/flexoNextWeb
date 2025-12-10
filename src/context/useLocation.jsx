@@ -11,18 +11,28 @@ export const LocationProvider = ({ children }) => {
     if (typeof window === "undefined") return;
     if (!("geolocation" in navigator)) return;
 
-    navigator.geolocation.getCurrentPosition(
-      ({ coords }) => {
-        setCoordinates({ lat: coords.latitude, lng: coords.longitude });
-      },
-      (err) => {
-        // Silently ignore geolocation errors in production to avoid console noise
-        if (process.env.NODE_ENV === "development") {
-          console.warn("Location error:", err);
-        }
-      },
-      GEO_OPTS
-    );
+    // Defer geolocation to reduce initial blocking - it's not critical for initial render
+    const getLocation = () => {
+      navigator.geolocation.getCurrentPosition(
+        ({ coords }) => {
+          setCoordinates({ lat: coords.latitude, lng: coords.longitude });
+        },
+        (err) => {
+          // Silently ignore geolocation errors in production to avoid console noise
+          if (process.env.NODE_ENV === "development") {
+            console.warn("Location error:", err);
+          }
+        },
+        GEO_OPTS
+      );
+    };
+
+    // Defer geolocation call - not critical for initial render
+    if ("requestIdleCallback" in window) {
+      requestIdleCallback(getLocation, { timeout: 2000 });
+    } else {
+      setTimeout(getLocation, 1000);
+    }
   }, []);
   return (
     <LocationContext.Provider

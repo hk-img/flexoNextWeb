@@ -1,0 +1,10 @@
+# Modern browser targets to avoid legacy polyfills
+Chrome >= 100
+Edge >= 100
+Firefox >= 100
+Safari >= 15.4
+iOS >= 15.4
+# Exclude old/embedded browsers
+not IE 11
+not dead
+

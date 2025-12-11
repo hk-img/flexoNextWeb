@@ -197,14 +197,15 @@ const ProductCard = ({
                   <ImageWithFallback
                     src={image || "/images/default_image.webp"}
                     alt="product image"
-                    width={450}
-                    height={320}
+                    width={571}
+                    height={381}
                     title="product image"
                     className="w-full h-full object-cover"
                     fallback="/images/default_image.webp"
                     priority={isLcp && index === 0}
                     fetchPriority={isLcp && index === 0 ? "high" : undefined}
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    quality={75}
                   />
                 </div>
               </div>
@@ -216,8 +217,8 @@ const ProductCard = ({
               <ImageWithFallback
                 src={firstImage}
                 alt="product image"
-                width={450}
-                height={320}
+                width={571}
+                height={381}
                 title="product image"
                 className="w-full h-full object-cover"
                 fallback="/images/default_image.webp"
@@ -225,6 +226,7 @@ const ProductCard = ({
                 fetchPriority={isLcp ? "high" : undefined}
                 loading={isLcp ? undefined : "lazy"}
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                quality={75}
               />
             </div>
           </div>
@@ -386,19 +388,19 @@ const ProductCard = ({
             </ul>
           </div>
         </div>
-        <div className="lg:pt-2 lg:px-6 lg:pb-4 py-[22px] px-[14px] flex flex-col flex-grow min-h-[265.64px]">
-          <div className="flex flex-col justify-between items-start md:mb-2 mb-1">
+        <div className="lg:pt-2 lg:px-6 lg:pb-4 py-[22px] px-[14px] flex flex-col flex-grow min-h-[273.09px]">
+          <div className="flex flex-col justify-between items-start md:mb-2 mb-1 min-h-[50.5px]">
             {type == "coworking" && (
-              <h2 className="text-lg cursor-pointer font-medium text-[#141414] text-ellipsis line-clamp-1 break-all">
+              <h2 className="text-lg cursor-pointer font-medium text-[#141414] text-ellipsis line-clamp-1 break-all min-h-[28px]">
                 {item?.name}
               </h2>
             )}
             {(type == "shortterm" || type == "longterm") && (
-              <h2 className="text-lg cursor-pointer font-medium text-[#141414] text-ellipsis line-clamp-1 break-all">
+              <h2 className="text-lg cursor-pointer font-medium text-[#141414] text-ellipsis line-clamp-1 break-all min-h-[28px]">
                 {item?.spaceTitle}
               </h2>
             )}
-            <span className="text-[15px] text-[#141414] bg-transparent flex items-center text-start font-normal -ms-[3px]">
+            <span className="text-[15px] text-[#141414] bg-transparent flex items-center text-start font-normal -ms-[3px] min-h-[22.5px]">
               <Svg
                 name="location2"
                 className="text-[#f76900] size-[15px] me-1"
@@ -407,7 +409,7 @@ const ProductCard = ({
               {item?.contact_city_name}
             </span>
           </div>
-          <div className="flex items-center space-x-2 text-sm text-[#777777] mb-1 font-light">
+          <div className="flex items-center space-x-2 text-sm text-[#777777] mb-1 font-light min-h-[20px]">
             {(type == "coworking" || type == "shortterm") && (
               <div className="flex gap-1 items-center">
                 <Svg name="user" className="size-[12px] text-[#f76900]" />
@@ -427,7 +429,7 @@ const ProductCard = ({
           </div>
           {type == "coworking" && (
             <>
-              <div className="flex justify-between align-items-center lg:flex-nowrap flex-wrap m-0">
+              <div className="flex justify-between align-items-center lg:flex-nowrap flex-wrap m-0 min-h-[20px]">
                 <p className="w-1/2 min-[1400px]:text-base text-sm text-[#141414] m-0 p-0 font-normal">
                   Private Office from
                 </p>
@@ -454,7 +456,7 @@ const ProductCard = ({
                   )}
                 </div>
               </div>
-              <div className="flex justify-between align-items-center lg:flex-nowrap flex-wrap m-0">
+              <div className="flex justify-between align-items-center lg:flex-nowrap flex-wrap m-0 min-h-[20px]">
                 <p className="w-1/2 min-[1400px]:text-base text-sm text-[#141414] m-0 p-0 font-normal">
                   Desks from
                 </p>
@@ -483,7 +485,7 @@ const ProductCard = ({
               </div>
             </>
           )}
-          <div className="flex gap-[30px] items-center w-full mb-2">
+          <div className="flex gap-[30px] items-center w-full mb-2 empty:hidden">
             {type == "longterm" && (
               <>
                 <div className="text-[#000] w-fit flex items-center py-1.5 pr-1.5 m-0">
@@ -522,7 +524,7 @@ const ProductCard = ({
           {(type == "coworking" || type == "longterm") && (
             <>
               <AboutText about={item?.about || ""} />
-              <div className="offerBtn flex items-end justify-end">
+              <div className="offerBtn flex items-end justify-end min-h-[29.59px]">
                 <button
                   onClick={(e) => {
                     e.stopPropagation();

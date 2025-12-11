@@ -4,7 +4,7 @@ const AboutText = ({ about }) => {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div className="mt-2 w-full flex items-start">
+    <div className="mt-2 w-full flex items-start min-h-[65px]">
       <div className="text-sm text-[#141414] !leading-[21px] text-start">
         <div
           className={`overflow-hidden transition-all duration-500 ease-in-out ${

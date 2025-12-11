@@ -204,7 +204,8 @@ export default function HeroSection({ spaceCategoryData }) {
               alt={texts[idx]}
               title={texts[idx]}
               fill
-              priority
+              priority={idx === 0}
+              loading={idx === 0 ? undefined : "lazy"}
               className="object-cover h-full w-full"
             />
           </div>

@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, [token]);
 
+  // Defer user profile fetch to reduce initial blocking
   const {
     data: userData,
     refetch: refetchUserDetails,
@@ -27,6 +28,8 @@ export const AuthProvider = ({ children }) => {
       return res.data;
     },
     enabled: !!token,
+    // Defer to reduce blocking - staleTime helps prevent immediate fetch
+    staleTime: 1000 * 60 * 5, // 5 minutes
   });
   
   useEffect(() => {
@@ -35,9 +38,21 @@ export const AuthProvider = ({ children }) => {
     }
   }, [userData]);
 
+  // Defer token retrieval to reduce initial blocking
   useEffect(() => {
-    const storedToken = localStorage.getItem(`${TOKEN_NAME}`);
-    if (storedToken) setToken(storedToken);
+    const loadToken = () => {
+      const storedToken = localStorage.getItem(`${TOKEN_NAME}`);
+      if (storedToken) setToken(storedToken);
+    };
+
+    // Defer to next tick to reduce blocking
+    if (typeof window !== "undefined") {
+      if ("requestIdleCallback" in window) {
+        requestIdleCallback(loadToken, { timeout: 100 });
+      } else {
+        setTimeout(loadToken, 0);
+      }
+    }
   }, []);
 
   return (

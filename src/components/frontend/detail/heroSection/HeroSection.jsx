@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { YouTubeEmbed } from "@next/third-parties/google";
 import ImageWithFallback from "@/components/ImageWithFallback";
 import Svg from "@/components/svg";
-import ImagePopup from "./ImagePopup";
 import { useAuth } from "@/context/useAuth";
 import {
   IMAGE_BASE_URL,
@@ -11,6 +10,10 @@ import {
 } from "@/services/ApiService";
 import { useMutation } from "@tanstack/react-query";
 import { ShowToast } from "@/utils/ShowToast";
+import dynamic from "next/dynamic";
+const ImagePopup = dynamic(() => import("./ImagePopup"),{ 
+  ssr: false
+});
 
 const HeroSection = ({
   slug,
@@ -176,7 +179,7 @@ const HeroSection = ({
                         height={210}
                         className="object-cover size-full"
                         fallback="/images/default_image.webp"
-                        priority
+                        priority={index === 0 && !youtubeId}
                       />
                     </div>
                   </div>

@@ -5,14 +5,14 @@ import {
   getTypeOfSpaceByWorkSpace,
   slugGenerator,
 } from "@/services/Comman";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 
 const MyFavoriteItem = ({ item, setIsRemovePopupOpen, setSpaceId }) => {
   const [expanded, setExpanded] = useState(false);
-  const type = getTypeOfSpaceByWorkSpace(item?.spaceData?.spaceType);
-  const spaceTypeSlug = slugGenerator(item?.spaceData?.spaceType);
-  const locationNameSlug = slugGenerator(item?.spaceData?.location_name || "");
-  const cityNameSlug = slugGenerator(item?.spaceData?.contact_city_name || "");
+  const type = useMemo(() => getTypeOfSpaceByWorkSpace(item?.spaceData?.spaceType || ""), [item]);
+  const spaceTypeSlug = useMemo(() => slugGenerator(item?.spaceData?.spaceType), [item]);
+  const locationNameSlug = useMemo(() => slugGenerator(item?.spaceData?.location_name || ""), [item]);
+  const cityNameSlug = useMemo(() => slugGenerator(item?.spaceData?.contact_city_name || ""), [item]);
   const spaceId = item?.spaceData?.id;
   return (
     <>

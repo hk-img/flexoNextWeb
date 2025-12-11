@@ -35,6 +35,19 @@ const calculateCenter = (markers) => {
 
 const MapWithPrices = ({ type, spaces, hoveredSpaceId, locationName }) => {
   const isMobile = useIsMobile();
+
+  return (
+    <MapWithPricesInner
+      type={type}
+      spaces={spaces}
+      hoveredSpaceId={hoveredSpaceId}
+      locationName={locationName}
+      isMobile={isMobile}
+    />
+  );
+};
+
+const MapWithPricesInner = ({ type, spaces, hoveredSpaceId, locationName, isMobile }) => {
   const [selectedSpace, setSelectedSpace] = useState(null);
   const [center, setCenter] = useState(null);
   const { isLoaded } = useLoadScript({
@@ -47,13 +60,13 @@ const MapWithPrices = ({ type, spaces, hoveredSpaceId, locationName }) => {
   };
 
   useEffect(() => {
-    if (spaces.length > 0) {
+    if ((spaces || []).length > 0) {
       const center = calculateCenter(spaces || []);
       setCenter(center);
     }
   }, [spaces]);
 
-  if (!isLoaded) return <div>Loading...</div>;
+  if (!isLoaded) return <div className="w-full h-[320px] md:h-[400px] lg:h-[500px] xl:h-[750px] bg-gray-100 rounded-xl" />;
 
   return (
     <GoogleMap
@@ -87,7 +100,6 @@ const MapWithPrices = ({ type, spaces, hoveredSpaceId, locationName }) => {
           price = space.originalPrice;
         }
 
-        console.log(String(price).length, "dfdfdfdfd");
         const priceWidth = (price) => {
           const length = String(price).length;
           if (length <= 4) return 60;

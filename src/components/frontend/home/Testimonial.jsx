@@ -1,6 +1,6 @@
 import React from "react";
 import EmblaCarousel from "../emblaCarousel/EmblaCarousel";
-import Image from "next/image";
+import ImageWithFallback from "@/components/ImageWithFallback";
 import Svg from "@/components/svg";
 
 const testimonials = [
@@ -74,12 +74,13 @@ const Testimonial = () => {
                   </span>
 
                   <div className="flex items-center gap-4 mb-4">
-                    <Image
+                    <ImageWithFallback
                       src={t.img}
                       alt={t.name}
                       width={76}
                       height={76}
                       className="w-[76px] h-[76px] rounded-full border-3 border-[#f76900] object-cover"
+                      fallback="/images/default_image.webp"
                     />
                     <div className="space-y-1">
                       <h3 className="font-medium text-[17px] text-black">

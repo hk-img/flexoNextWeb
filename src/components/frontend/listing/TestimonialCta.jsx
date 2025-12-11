@@ -66,9 +66,9 @@ const TestimonialCta = ({ setIsOpen, type }) => {
               <h2 className="text-2xl text-black font-bold  md:block hidden">
                 Client's Testimonials
               </h2>
-              <h5 className="text-sm/relaxed text-black font-bold">
+              <h3 className="text-sm/relaxed text-black font-bold">
                 Still Searching? Let Us Help.
-              </h5>
+              </h3>
               {/* <h5 className="text-sm/relaxed text-black">
                 Leave the hassle to us. Connect with an expert workspace advisor
                 today.
@@ -110,12 +110,12 @@ const TestimonialCta = ({ setIsOpen, type }) => {
                         />
 
                         <div>
-                          <h6 className="text-base text-black font-semibold">
+                          <h4 className="text-base text-black font-semibold">
                             {t.name},
                             <span className="ms-1 text-base text-black font-semibold">
                               {t.designation}
                             </span>
-                          </h6>
+                          </h4>
                           <p className="text-[13px] font-semibold text-black">
                             {t.company}
                           </p>

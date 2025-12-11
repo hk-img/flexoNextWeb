@@ -5,17 +5,13 @@ import {
   getTypeOfSpaceByWorkSpace,
   slugGenerator,
 } from "@/services/Comman";
-import React from "react";
+import React, { useMemo } from "react";
 
 const VisitItem = ({ item }) => {
-  const type = getTypeOfSpaceByWorkSpace(item?.spaceDetails?.spaceType);
-  const spaceTypeSlug = slugGenerator(item?.spaceDetails?.spaceType);
-  const locationNameSlug = slugGenerator(
-    item?.spaceDetails?.location_name || ""
-  );
-  const cityNameSlug = slugGenerator(
-    item?.spaceDetails?.contact_city_name || ""
-  );
+  const type = useMemo(() => getTypeOfSpaceByWorkSpace(item?.spaceDetails?.spaceType || ""), [item]);
+  const spaceTypeSlug = useMemo(() => slugGenerator(item?.spaceDetails?.spaceType || ""), [item]);
+  const locationNameSlug = useMemo(() => slugGenerator(item?.spaceDetails?.location_name || ""), [item]);
+  const cityNameSlug = useMemo(() => slugGenerator(item?.spaceDetails?.contact_city_name || ""), [item]);
   const spaceId = item?.spaceDetails?.id;
   function convertTo12Hour(time) {
     if (!time) return "";

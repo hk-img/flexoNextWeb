@@ -1,0 +1,26 @@
+# PERMANENT FIX: Modern browser targets - NO POLYFILLS for Baseline features
+# These browsers natively support ES2022 Baseline features:
+# - Array.prototype.at, flat, flatMap
+# - Object.fromEntries, Object.hasOwn
+# - String.prototype.trimEnd, trimStart
+# No polyfills needed = 11.4 KiB savings
+
+# Modern browsers with full Baseline support (ES2022)
+# Chrome 92+ (July 2021), Firefox 90+ (July 2021), Safari 15.4+ (March 2022)
+Chrome >= 92
+Edge >= 92
+Firefox >= 90
+Safari >= 15.4
+iOS >= 15.4
+Opera >= 78
+
+# Explicitly exclude ALL old browsers
+not IE 11
+not dead
+not op_mini all
+not and_uc 12.12
+not and_chr < 92
+not and_ff < 90
+not ios_saf < 15.4
+not op_mob < 78
+

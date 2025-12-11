@@ -1,6 +1,6 @@
 import React from "react";
-import FaqAnswer from "./FaqAnswer";
-
+import dynamic from "next/dynamic";
+const FaqAnswer = dynamic(() => import("./FaqAnswer"), { ssr: false });
 const Faq = ({ spaceType,city,locationName,faqData }) => {
   return (
     <>

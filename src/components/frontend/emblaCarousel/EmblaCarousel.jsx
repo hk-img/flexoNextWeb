@@ -48,7 +48,7 @@ export default function EmblaCarousel({ children, options }) {
   return (
     <section className="relative">
       {/* Carousel */}
-      <div className="overflow-hidden h-full" ref={emblaRef}>
+      <div className="overflow-hidden h-full w-full" ref={emblaRef}>
         <div className="flex h-full">{children}</div>
       </div>
 

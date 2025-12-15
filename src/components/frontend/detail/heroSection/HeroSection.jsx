@@ -179,7 +179,7 @@ const HeroSection = ({
                         height={210}
                         className="object-cover size-full"
                         fallback="/images/default_image.webp"
-                        priority
+                        priority={index === 0 && !youtubeId}
                       />
                     </div>
                   </div>

@@ -32,7 +32,7 @@ const ProductCard = dynamic(() => import("../productCard/ProductCard"), {
   loading: () => (
     <div className="h-[500px] bg-gray-100 animate-pulse rounded-lg" />
   ),
-  ssr: false,
+  // SSR enabled - ProductCard ko server pe render karo for better initial load
 });
 const MapWithPrices = dynamic(() => import("./MapWithPrice"), {
   ssr: false,
@@ -63,7 +63,7 @@ const Listing = ({
   const [isLongTermPopupOpen, setIsLongTermPopupOpen] = useState(false);
   const spacesTypeRef = useRef(null);
   const locationRef = useRef(null);
-  const [mapToggle, setMapToggle] = useState(true);
+  const [mapToggle, setMapToggle] = useState(false);
   const [toggleSpaceType, setToggleSpaceType] = useState(false);
   const [toggleSpace, setToggleSpace] = useState(false);
   const [selectedRadio, setSelectedRadio] = useState(
@@ -89,12 +89,9 @@ const Listing = ({
   const [selectedCityName, setSelectedCityName] = useState(null);
   const perPage = 30;
 
+  // Keep map hidden by default; user can toggle on
   useEffect(() => {
-    if (isMobile) {
-      setMapToggle(false);
-    } else {
-      setMapToggle(true);
-    }
+    setMapToggle(false);
   }, [isMobile]);
 
   const handleRadioChange = useCallback(
@@ -154,28 +151,54 @@ const Listing = ({
     };
   }, []);
 
+  // Defer non-critical initialization to reduce TBT (Total Blocking Time)
   useEffect(() => {
-    if (spaceTypeSlug === "coworking") {
-      setSelectedRadio("Coworking Space");
-      setSelectedCheckboxes(coworkingTypes);
-      return;
-    }
-    const selectedSpaceType = spaceCategoryData?.find((item) => {
-      const categorySpaceType = slugGenerator(item?.spaceType || "");
-      if (categorySpaceType === spaceTypeSlug) {
-        return item;
+    // Use requestIdleCallback to defer non-critical work
+    const initSpaceType = () => {
+      if (spaceTypeSlug === "coworking") {
+        setSelectedRadio("Coworking Space");
+        setSelectedCheckboxes(coworkingTypes);
+        return;
       }
-    });
-    setSelectedRadio(selectedSpaceType?.spaceType);
-    if (selectedSpaceType?.spaceType === "Coworking Space") {
-      setSelectedCheckboxes(coworkingTypes);
+      const selectedSpaceType = spaceCategoryData?.find((item) => {
+        const categorySpaceType = slugGenerator(item?.spaceType || "");
+        if (categorySpaceType === spaceTypeSlug) {
+          return item;
+        }
+      });
+      setSelectedRadio(selectedSpaceType?.spaceType);
+      if (selectedSpaceType?.spaceType === "Coworking Space") {
+        setSelectedCheckboxes(coworkingTypes);
+      } else {
+        const smallSpaceType = convertSlugToSmallLetter(
+          selectedSpaceType?.spaceType || ""
+        );
+        setSelectedCheckboxes([smallSpaceType]);
+      }
+    };
+
+    // Defer to next tick to reduce blocking
+    if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+      requestIdleCallback(initSpaceType, { timeout: 100 });
     } else {
-      const smallSpaceType = convertSlugToSmallLetter(
-        selectedSpaceType?.spaceType || ""
-      );
-      setSelectedCheckboxes([smallSpaceType]);
+      setTimeout(initSpaceType, 0);
     }
   }, [spaceCategoryData, spaceTypeSlug]);
+
+  // Check if we should refetch on mount - agar initial data hai aur default filters hain to refetch mat karo
+  const shouldRefetchOnMount = useMemo(() => {
+    // Page 1 pe default filters ke saath refetch mat karo (server-side data already hai)
+    if (page === 1 && listingData && !selectedLocation && !nearMeData) {
+      const hasDefaultFilters = 
+        appliedFilter?.priceRange?.min === 500 && 
+        appliedFilter?.priceRange?.max === 50000 &&
+        appliedFilter?.distance === 0 &&
+        !appliedFilter?.sortBy &&
+        appliedFilter?.amenities?.length === 0;
+      return !hasDefaultFilters; // Default filters hain to refetch mat karo
+    }
+    return true; // Baaki cases mein refetch karo
+  }, [page, listingData, selectedLocation, nearMeData, appliedFilter]);
 
   const { data: allSpaces, refetch: refetchSpaces } = useQuery({
     queryKey: [
@@ -237,8 +260,12 @@ const Listing = ({
       const res = await postAPI("spaces/getSpacesByCity", payload);
       return res.data;
     },
-    keepPreviousData: true,
+    // Server-side fetched data ko initialData ke roop mein use karo
     initialData: listingData,
+    // Agar initial data hai aur default filters hain to refetch mat karo
+    refetchOnMount: shouldRefetchOnMount,
+    staleTime: 1000 * 60 * 5, // cache listing for 5 minutes to reduce refetch
+    gcTime: 1000 * 60 * 10, // 10 minutes cache time
   });
   const productData = useMemo(() => {
     return allSpaces?.data || [];
@@ -260,23 +287,33 @@ const Listing = ({
     staleTime: 1000 * 60 * 10,
   });
 
+  // Defer location matching to reduce TBT
   useEffect(() => {
     if (allLocations?.length > 0 && (locationName || city)) {
-      const smallLetterLocationName = convertSlugToSmallLetter(
-        locationName || ""
-      );
-      const smallLetterCity = convertSlugToSmallLetter(city || "");
-      if (smallLetterLocationName || smallLetterCity) {
-        const selectedLocation = allLocations?.find((item) => {
-          if (
-            item?.location_name.toLowerCase() === smallLetterLocationName &&
-            item?.city.toLowerCase() === smallLetterCity
-          ) {
-            return item;
-          }
-        });
-        setQuery(selectedLocation?.label || "");
-        setSelectedLocation(selectedLocation || null);
+      const matchLocation = () => {
+        const smallLetterLocationName = convertSlugToSmallLetter(
+          locationName || ""
+        );
+        const smallLetterCity = convertSlugToSmallLetter(city || "");
+        if (smallLetterLocationName || smallLetterCity) {
+          const selectedLocation = allLocations?.find((item) => {
+            if (
+              item?.location_name.toLowerCase() === smallLetterLocationName &&
+              item?.city.toLowerCase() === smallLetterCity
+            ) {
+              return item;
+            }
+          });
+          setQuery(selectedLocation?.label || "");
+          setSelectedLocation(selectedLocation || null);
+        }
+      };
+
+      // Defer to reduce blocking
+      if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+        requestIdleCallback(matchLocation, { timeout: 100 });
+      } else {
+        setTimeout(matchLocation, 0);
       }
     }
   }, [allLocations, locationName, city]);
@@ -306,9 +343,51 @@ const Listing = ({
   const start = total > 0 ? (page - 1) * perPage + 1 : 0;
   const end = total > 0 ? Math.min(page * perPage, total) : 0;
 
-  const firstSlice = useMemo(() => productData.slice(0, 6), [productData]);
-  const secondSlice = useMemo(() => productData.slice(6, 18), [productData]);
-  const thirdSlice = useMemo(() => productData.slice(18, 30), [productData]);
+  // Reduce initial render - only render first 6 cards immediately
+  // Rest will load when user scrolls (lazy loading)
+  const [visibleCount, setVisibleCount] = useState(6);
+  const loadMoreRef = useRef(null);
+
+  // Reset visibleCount when page changes
+  useEffect(() => {
+    setVisibleCount(6);
+  }, [page]);
+
+  // Intersection Observer for lazy loading more cards
+  useEffect(() => {
+    if (!productData || !Array.isArray(productData) || visibleCount >= productData.length || !loadMoreRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && visibleCount < productData.length) {
+          setVisibleCount((prev) => Math.min(prev + 6, productData.length));
+        }
+      },
+      { rootMargin: "200px" }
+    );
+
+    const currentRef = loadMoreRef.current;
+    observer.observe(currentRef);
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, [visibleCount, productData]);
+
+  const firstSlice = useMemo(() => {
+    if (!productData || !Array.isArray(productData)) return [];
+    return productData.slice(0, Math.min(6, visibleCount));
+  }, [productData, visibleCount]);
+  const secondSlice = useMemo(() => {
+    if (!productData || !Array.isArray(productData) || visibleCount <= 6) return [];
+    return productData.slice(6, Math.min(18, visibleCount));
+  }, [productData, visibleCount]);
+  const thirdSlice = useMemo(() => {
+    if (!productData || !Array.isArray(productData) || visibleCount <= 18) return [];
+    return productData.slice(18, Math.min(30, visibleCount));
+  }, [productData, visibleCount]);
   return (
     <>
       <section className="w-full relative lg:pt-16 bg-white">
@@ -642,7 +721,7 @@ const Listing = ({
                 </div>
               </div>
               <div className="spaces lg:mt-6 flex flex-row flex-wrap -mx-4">
-                {firstSlice?.map((item, index) => (
+              {firstSlice?.map((item, index) => (
                   <div
                     key={`product-${index}`}
                     className="spaceCard relative lg:w-1/3 md:w-1/3 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:xl:w-1/2 group-has-[.map]/mainBox:md:w-1/2 w-full p-4"
@@ -655,6 +734,7 @@ const Listing = ({
                       setIsAuthOpen={setIsAuthOpen}
                       setSelectedSpaceData={setSelectedSpaceData}
                       setSelectedCityName={setSelectedCityName}
+                    isLcp={page === 1 && index === 0}
                     />
                   </div>
                 ))}
@@ -678,27 +758,35 @@ const Listing = ({
                   </div>
                 ))}
               </div>
-              {productData?.length > 18 && (
+              {productData?.length > 18 && visibleCount > 18 && (
                 <RequestCallback setIsOpen={setIsOpen} type={type} />
               )}
-              <div className="spaces flex flex-row flex-wrap -mx-4">
-                {thirdSlice?.map((item, index) => (
-                  <div
-                    key={`product-${index + 18}`}
-                    className="spaceCard lg:w-1/3 md:w-1/3 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:xl:w-1/2 group-has-[.map]/mainBox:md:w-1/2 w-full p-4"
-                    onMouseOver={() => setHoveredSpaceId(item?.id)}
-                    onMouseLeave={() => setHoveredSpaceId(null)}
-                  >
-                    <ProductCard
-                      item={item}
-                      setIsOpen={setIsOpen}
-                      setIsAuthOpen={setIsAuthOpen}
-                      setSelectedSpaceData={setSelectedSpaceData}
-                      setSelectedCityName={setSelectedCityName}
-                    />
-                  </div>
-                ))}
-              </div>
+              {thirdSlice.length > 0 && (
+                <div className="spaces flex flex-row flex-wrap -mx-4">
+                  {thirdSlice?.map((item, index) => (
+                    <div
+                      key={`product-${index + 18}`}
+                      className="spaceCard lg:w-1/3 md:w-1/3 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:xl:w-1/2 group-has-[.map]/mainBox:md:w-1/2 w-full p-4"
+                      onMouseOver={() => setHoveredSpaceId(item?.id)}
+                      onMouseLeave={() => setHoveredSpaceId(null)}
+                    >
+                      <ProductCard
+                        item={item}
+                        setIsOpen={setIsOpen}
+                        setIsAuthOpen={setIsAuthOpen}
+                        setSelectedSpaceData={setSelectedSpaceData}
+                        setSelectedCityName={setSelectedCityName}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+              {/* Intersection Observer trigger for lazy loading */}
+              {productData && Array.isArray(productData) && visibleCount < productData.length && (
+                <div ref={loadMoreRef} className="h-20 flex items-center justify-center">
+                  <div className="animate-pulse text-gray-400">Loading more...</div>
+                </div>
+              )}
               <TestimonialCta setIsOpen={setIsOpen} type={type} />
               <Pagination
                 currentPage={page}

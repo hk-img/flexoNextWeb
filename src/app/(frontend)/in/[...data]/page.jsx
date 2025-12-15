@@ -1,5 +1,5 @@
 import Listing from "@/components/frontend/listing/Listing";
-import { BASE_URL, WEBSITE_BASE_URL } from "@/services/ApiService";
+import { BASE_URL, WEBSITE_BASE_URL, IMAGE_BASE_URL } from "@/services/ApiService";
 import {
   convertSlugToCapitalLetter,
   convertSlugToSmallLetter,
@@ -11,7 +11,8 @@ import { notFound } from "next/navigation";
 import React from "react";
 
 export const revalidate = 3600;
-export const dynamic = "force-static";
+// force-static ko remove kiya - ISR use karega jo better hai
+// dynamic content ke liye force-static problematic ho sakta hai
 export const fetchCache = "force-cache";
 
 export async function generateMetadata({ params }) {
@@ -72,12 +73,18 @@ async function fetchAPI1() {
       next: { revalidate: 3600 },
     });
     if (!res.ok) {
-      console.error("API error", res.status, await res.text());
+      // Only log in development
+      if (process.env.NODE_ENV === 'development') {
+        console.error("API error", res.status, await res.text());
+      }
       return [];
     }
     return await res.json();
   } catch (error) {
-    console.log(error);
+    // Only log in development
+    if (process.env.NODE_ENV === 'development') {
+      console.error("Fetch error:", error);
+    }
     return [];
   }
 }
@@ -93,12 +100,18 @@ async function fetchAPI2(spaceType) {
       }
     );
     if (!res.ok) {
-      console.error("API error", res.status, await res.text());
+      // Only log in development
+      if (process.env.NODE_ENV === 'development') {
+        console.error("API error", res.status, await res.text());
+      }
       return [];
     }
     return await res.json();
   } catch (error) {
-    console.log(error);
+    // Only log in development
+    if (process.env.NODE_ENV === 'development') {
+      console.error("Fetch error:", error);
+    }
     return [];
   }
 }
@@ -114,12 +127,18 @@ async function getNearBySpaceData(payload) {
       next: { revalidate: 300 }
     });
     if (!res.ok) {
-      console.error("API error", res.status, await res.text());
+      // Only log in development
+      if (process.env.NODE_ENV === 'development') {
+        console.error("API error", res.status, await res.text());
+      }
       return [];
     }
     return await res.json();
   } catch (error) {
-    console.log(error);
+    // Only log in development
+    if (process.env.NODE_ENV === 'development') {
+      console.error("Fetch error:", error);
+    }
     return [];
   }
 }
@@ -134,12 +153,18 @@ const getListingData = async (payload) => {
       next: { revalidate: 300 }
     });
     if (!res.ok) {
-      console.error("API error", res.status, await res.text());
+      // Only log in development
+      if (process.env.NODE_ENV === 'development') {
+        console.error("API error", res.status, await res.text());
+      }
       return [];
     }
     return await res.json();
   } catch (error) {
-    console.log(error);
+    // Only log in development
+    if (process.env.NODE_ENV === 'development') {
+      console.error("Fetch error:", error);
+    }
     return [];
   }
 };
@@ -166,7 +191,6 @@ const page = async ({ params }) => {
   const data = await params;
   const slug = data?.data || [];
   const [spaceTypeSlug, citySlug, locationNameSlug] = slug;
-  console.log(spaceTypeSlug, citySlug, locationNameSlug, "Rthrtyhrtyhrtyrt");
   if (!citySlug && !locationNameSlug) return notFound();
   const spaceType = convertSlugToCapitalLetter(spaceTypeSlug || "");
   const city = convertSlugToCapitalLetter(citySlug || "");
@@ -285,8 +309,25 @@ const page = async ({ params }) => {
     telephone: "Call +91 95133 92400",
     url: `${WEBSITE_BASE_URL}/in/${slug.join("/")}`,
   };
+  // Preload LCP image for faster rendering - reduce element render delay
+  const lcpImage = listingData?.data?.[0]?.images?.[0];
+  const lcpImageUrl = lcpImage?.startsWith("http") || lcpImage?.startsWith("/")
+    ? lcpImage
+    : lcpImage
+    ? `${IMAGE_BASE_URL}/${lcpImage}`
+    : null;
+
   return (
     <>
+      {/* Preload LCP image to reduce element render delay (currently 520ms) */}
+      {lcpImageUrl && (
+        <link
+          rel="preload"
+          as="image"
+          href={lcpImageUrl}
+          fetchPriority="high"
+        />
+      )}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}

@@ -1,6 +1,6 @@
 import React from "react"
 import EmblaCarousel from "../emblaCarousel/EmblaCarousel"
-import Image from "next/image"
+import ImageWithFallback from "@/components/ImageWithFallback"
 import Link from "next/link"
 
 const CoworkingSpaces = () => {
@@ -36,14 +36,14 @@ const CoworkingSpaces = () => {
             <div className="relative rounded-sm overflow-hidden h-full">
               <div className="before:content-[''] before:w-full before:h-full before:absolute before:top-0 before:left-0 before:bg-[#0000002b]" />
               <div className="h-full">
-                <Image
+                <ImageWithFallback
                   width={379}
                   height={405}
                   src="/images/Mumbai.webp"
                   alt="mumbai coworking"
                   title="mumbai coworking"
                   className=" xl:h-[405px] sm:h-full w-full object-cover"
-                  loading="lazy"
+                  fallback="/images/default_image.webp"
                 />
               </div>
               <div className="absolute bottom-0 left-0 text-start text-white font-semibold md:text-2xl text-xl pt-[50px] pr-[50px] pb-[5px] pl-[10px] bg-[linear-gradient(18deg,_#000000c4,_transparent,_transparent)] w-full rounded-md">
@@ -72,14 +72,14 @@ const CoworkingSpaces = () => {
                             className="relative rounded-sm overflow-hidden shadow-md h-full"
                           >
                             <div className="before:content-[''] before:w-full before:h-full before:absolute before:top-0 before:left-0 before:bg-[#0000002b]" />
-                            <Image
+                            <ImageWithFallback
                               width={248}
                               height={200}
                               src={city.image}
                               alt={city.name}
                               title={city.name}
                               className="w-full h-[160px] md:h-[180px] lg:h-[200px] object-cover"
-                              loading="lazy"
+                              fallback="/images/default_image.webp"
                             />
                             
                             <div className="absolute bottom-0 text-start left-0 text-white font-medium md:text-2xl text-xl pt-[50px] pr-[50px] pb-[5px] pl-[10px] rounded-md bg-[linear-gradient(18deg,_#000000c4,_transparent,_transparent)] w-full">

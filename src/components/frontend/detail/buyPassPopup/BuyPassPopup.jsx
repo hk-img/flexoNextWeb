@@ -123,7 +123,6 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
           },
           modal: {
             ondismiss: function () {
-              console.log("Payment cancelled by user");
               ShowToast("Payment Failed!","error");
             },
           },

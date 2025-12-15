@@ -230,7 +230,7 @@ const page = async ({ params }) => {
     fetchAPI2(spaceType),
     getListingData(listingPayload),
   ]);
-  if (listingData?.length <= 0) return notFound();
+  // if (listingData?.data?.length <= 0) return notFound();
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",

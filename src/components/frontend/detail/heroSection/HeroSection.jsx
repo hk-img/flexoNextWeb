@@ -11,6 +11,9 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { ShowToast } from "@/utils/ShowToast";
 import dynamic from "next/dynamic";
+const YoutubeVideo = dynamic(() => import("./YoutubeVideo"), {
+  ssr: false,
+});
 const ImagePopup = dynamic(() => import("./ImagePopup"),{ 
   ssr: false
 });
@@ -143,13 +146,16 @@ const HeroSection = ({
           <div className="grid md:grid-cols-2 grid-cols-1 gap-[2px]">
             <div className="[&_[data-ntpc]]:!h-full [&_[data-title]]:h-full [&_[data-title]]:!max-w-full">
               {youtubeId ? (
-                <YouTubeEmbed
+                <>
+                {/* <YouTubeEmbed
                   videoId={youtubeId}
                   className="!w-full !h-full"
                   aria-label="Embedded YouTube video: Client testimonial about Flexo workspace"
                   role="region"
                   aria-roledescription="video player"
-                />
+                /> */}
+                <YoutubeVideo youtubeId={youtubeId} />
+                </>
               ) : (
                 <div className="relative w-full aspect-[634/423]">
                   <ImageWithFallback

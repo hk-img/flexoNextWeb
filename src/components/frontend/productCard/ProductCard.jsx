@@ -14,9 +14,11 @@ import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/context/useAuth";
 import { ShowToast } from "@/utils/ShowToast";
 import dynamic from "next/dynamic";
-const EmblaCarousel = dynamic(() => import("../emblaCarousel/EmblaCarousel"), { 
+const EmblaCarousel = dynamic(() => import("../emblaCarousel/EmblaCarousel"), {
   ssr: false,
-  loading: () => <div className="w-full h-[320px] bg-gray-200 animate-pulse rounded-md" />,
+  loading: () => (
+    <div className="w-full h-[320px] bg-gray-200 animate-pulse rounded-md" />
+  ),
 });
 const AboutText = dynamic(() => import("./AboutText"), { ssr: false });
 
@@ -32,11 +34,29 @@ const ProductCard = ({
   const [isInView, setIsInView] = useState(false);
   const { token } = useAuth();
   const [isFavourite, setIsFavourite] = useState(false);
-  const type = useMemo(() => getTypeOfSpaceByWorkSpace(item?.spaceType || ""), [item]);
+  const type = useMemo(
+    () => getTypeOfSpaceByWorkSpace(item?.spaceType || ""),
+    [item]
+  );
   const spaceTypeSlug = useMemo(() => slugGenerator(item?.spaceType), [item]);
-  const locationNameSlug = useMemo(() => slugGenerator(item?.location_name || ""), [item]);
-  const cityNameSlug = useMemo(() => slugGenerator(item?.contact_city_name || ""), [item]);
+  const locationNameSlug = useMemo(
+    () => slugGenerator(item?.location_name || ""),
+    [item]
+  );
+  const cityNameSlug = useMemo(
+    () => slugGenerator(item?.contact_city_name || ""),
+    [item]
+  );
   const spaceId = item?.id;
+  const url = useMemo(() => {
+    let url = "";
+    if (type == "coworking") {
+      url = `/${item?.slug}`;
+    } else {
+      url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
+    }
+    return url;
+  }, [type, item, spaceTypeSlug, locationNameSlug, cityNameSlug, spaceId]);
 
   const defaultImage = "/images/default_image.webp";
   const formattedImages = item?.images?.map((img) =>
@@ -160,12 +180,6 @@ const ProductCard = ({
     <>
       <div
         onClick={() => {
-          let url = "";
-          if (type == "coworking") {
-            url = `/${item?.slug}`;
-          } else {
-            url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
-          }
           window.open(`${url}`, "_blank");
         }}
         ref={cardRef}
@@ -191,6 +205,10 @@ const ProductCard = ({
             {displayedImages?.map((image, index) => (
               <div
                 key={index}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.open(`${url}`, "_blank");
+                }}
                 className="embla__slide relative shrink-0 basis-full"
               >
                 <div className="w-full aspect-[399/320] relative overflow-hidden rounded-t-md">
@@ -213,7 +231,13 @@ const ProductCard = ({
           </EmblaCarousel>
         ) : (
           <div className="embla__slide relative shrink-0 basis-full">
-            <div className="w-full aspect-[399/320] relative overflow-hidden rounded-t-md">
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                window.open(`${url}`, "_blank");
+              }}
+              className="w-full aspect-[399/320] relative overflow-hidden rounded-t-md"
+            >
               <ImageWithFallback
                 src={firstImage}
                 alt="product image"
@@ -265,13 +289,6 @@ const ProductCard = ({
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
-
-                    let url = "";
-                    if (type === "coworking") {
-                      url = `/${item?.slug}`;
-                    } else {
-                      url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
-                    }
                     const shareUrl = `${WEBSITE_BASE_URL}${url}`;
                     sharePost("facebook", shareUrl);
                   }}
@@ -285,14 +302,6 @@ const ProductCard = ({
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
-
-                    let url = "";
-                    if (type === "coworking") {
-                      url = `/${item?.slug}`;
-                    } else {
-                      url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
-                    }
-
                     const shareUrl = `${WEBSITE_BASE_URL}${url}`;
                     sharePost("linkedin", shareUrl);
                   }}
@@ -306,12 +315,6 @@ const ProductCard = ({
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
-                    let url = "";
-                    if (type == "coworking") {
-                      url = `/${item?.slug}`;
-                    } else {
-                      url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
-                    }
                     const message = encodeURIComponent(
                       `Checkout this space on FLEXO\n${WEBSITE_BASE_URL}${url}`
                     );
@@ -328,13 +331,6 @@ const ProductCard = ({
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
-
-                    let url = "";
-                    if (type === "coworking") {
-                      url = `/${item?.slug}`;
-                    } else {
-                      url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
-                    }
                     const shareUrl = `${WEBSITE_BASE_URL}${url}`;
                     sharePost("facebook", shareUrl);
                   }}
@@ -348,14 +344,6 @@ const ProductCard = ({
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
-
-                    let url = "";
-                    if (type === "coworking") {
-                      url = `/${item?.slug}`;
-                    } else {
-                      url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
-                    }
-
                     const shareUrl = `${WEBSITE_BASE_URL}${url}`;
                     sharePost("linkedin", shareUrl);
                   }}
@@ -369,12 +357,6 @@ const ProductCard = ({
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
-                    let url = "";
-                    if (type === "coworking") {
-                      url = `/${item?.slug}`;
-                    } else {
-                      url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
-                    }
                     const message = encodeURIComponent(
                       `Checkout this space on FLEXO\n${WEBSITE_BASE_URL}${url}`
                     );
@@ -413,7 +395,13 @@ const ProductCard = ({
             {(type == "coworking" || type == "shortterm") && (
               <div className="flex gap-1 items-center">
                 <Svg name="user" className="size-[12px] text-[#f76900]" />
-                <span>{item?.howManyPeopleInYourSpace && Number(item?.howManyPeopleInYourSpace)?.toLocaleString("en-IN")} people</span>
+                <span>
+                  {item?.howManyPeopleInYourSpace &&
+                    Number(item?.howManyPeopleInYourSpace)?.toLocaleString(
+                      "en-IN"
+                    )}{" "}
+                  people
+                </span>
               </div>
             )}
             {item?.spaceStatus && (
@@ -424,7 +412,11 @@ const ProductCard = ({
             )}
             <div className="flex gap-1 items-center">
               <Svg name="scaleRuler" className="size-[12px] text-[#f76900]" />
-              <span>{item?.spacesqft && Number(item?.spacesqft)?.toLocaleString("en-IN")} sqft</span>
+              <span>
+                {item?.spacesqft &&
+                  Number(item?.spacesqft)?.toLocaleString("en-IN")}{" "}
+                sqft
+              </span>
             </div>
           </div>
           {type == "coworking" && (
@@ -443,7 +435,9 @@ const ProductCard = ({
                             className="text-[#7f7f7f] size-[15px]"
                           />
                           <span className="text-black font-semibold min-[1400]:text-[17px] text-sm">
-                            {Number(item?.privatecabin_price)?.toLocaleString("en-IN")}
+                            {Number(item?.privatecabin_price)?.toLocaleString(
+                              "en-IN"
+                            )}
                           </span>
                         </div>
                         <span className="ps-1 min-[1400px]:text-[13px] text-[11px] font-normal !leading-4">
@@ -470,7 +464,13 @@ const ProductCard = ({
                             className="text-[#7f7f7f] size-[15px]"
                           />
                           <span className="text-black font-semibold  min-[1400]:text-[17px] text-sm">
-                            {item?.desks_price ? Number(item?.desks_price)?.toLocaleString("en-IN") : Number(item?.flexible_desk_price)?.toLocaleString("en-IN")}
+                            {item?.desks_price
+                              ? Number(item?.desks_price)?.toLocaleString(
+                                  "en-IN"
+                                )
+                              : Number(
+                                  item?.flexible_desk_price
+                                )?.toLocaleString("en-IN")}
                           </span>
                         </div>
                         <span className="ps-1 min-[1400px]:text-[13px] text-[11px] font-normal !leading-4">
@@ -557,13 +557,8 @@ const ProductCard = ({
                 </span>
               </div>
               <button
-                onClick={() => {
-                  let url = "";
-                  if (type == "coworking") {
-                    url = `/${item?.slug}`;
-                  } else {
-                    url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
-                  }
+                onClick={(e) => {
+                  e.stopPropagation();
                   window.open(`${url}`, "_blank");
                 }}
                 className="w-fit bg-[#f76900] text-xs border border-[#f76900]  text-white py-1.5 px-3 rounded-sm font-semibold duration-500 transition text-center gap-2  cursor-pointer"

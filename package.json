@@ -21,6 +21,7 @@
     "embla-carousel-auto-scroll": "^8.6.0",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
+    "lite-youtube-embed": "^0.3.4",
     "next": "^15.5.3",
     "nprogress": "^0.2.0",
     "react": "19.1.0",

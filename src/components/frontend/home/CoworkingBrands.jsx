@@ -1,6 +1,6 @@
 import React from "react";
 import EmblaCarousel from "../emblaCarousel/EmblaCarousel";
-import Image from "next/image";
+import ImageWithFallback from "@/components/ImageWithFallback";
 
 const brandLogos = [
   { src: "/images/brand-logo-1.webp", name: "WeWork" },
@@ -46,14 +46,14 @@ const CoworkingBrands = () => {
                     md:py-6 md:px-12 py-4 px-6 bg-[#fafafa] cursor-pointer flex items-center justify-center 
                     md:hover:shadow-[5px_5px_20px_#0000001a] transition-all duration-500 ease-in-out"
                   >
-                    <Image
+                    <ImageWithFallback
                       width={144}
                       height={40}
                       src={logo.src}
                       alt={`${logo.name} Logo`}
                       title={logo.name}
                       className="h-10 w-full object-contain transition-transform duration-500 ease-in-out md:group-hover:scale-110"
-                      loading="lazy"
+                      fallback="/images/default_image.webp"
                     />
                   </div>
                 ))}

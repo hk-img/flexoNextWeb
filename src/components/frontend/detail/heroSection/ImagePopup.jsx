@@ -1,6 +1,9 @@
 import React from "react";
-import EmblaCarousel from "../../emblaCarousel/EmblaCarousel";
 import ImageWithFallback from "@/components/ImageWithFallback";
+import dynamic from "next/dynamic";
+const EmblaCarousel = dynamic(() => import("../../emblaCarousel/EmblaCarousel"), { 
+  ssr: false
+});
 
 const ImagePopup = ({ viewImagePopup, setViewImagePopup, images = [] }) => {
   return (
@@ -14,12 +17,16 @@ const ImagePopup = ({ viewImagePopup, setViewImagePopup, images = [] }) => {
         <div className="flex items-center justify-between h-full">
           <div className="w-full h-full md:[&_.emblaarrows]:-left-9 md:[&_.emblaarrows]:-right-9 [&_.emblaarrows]:-left-3 [&_.emblaarrows]:-right-3 [&_.emblaarrows_button]:w-[35px] [&_.emblaarrows_button]:h-[35px] [&_.emblaarrows_button_Svg]:size-[18px] [&_section]:h-full sm:p-4 sm:pb-8">
             <EmblaCarousel
-              options={{ loop: true, autoplay: false, showButton: true, showDots: true, align: "start" }} >
+              options={{
+                loop: true,
+                autoplay: false,
+                showButton: true,
+                showDots: true,
+                align: "start",
+              }}
+            >
               {images.map((imgSrc, index) => (
-                <div
-                  key={index}
-                  className="embla__slide shrink-0 h-full basis-full "
-                >
+                <div key={index} className="embla__slide shrink-0  basis-full ">
                   <div className="relative rounded-sm overflow-hidden shadow-md h-full">
                     <div className="before:content-[''] before:w-full before:h-full before:absolute before:top-0 before:left-0 before:bg-[#0000002b]" />
                     <ImageWithFallback

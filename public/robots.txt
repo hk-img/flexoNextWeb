@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Sitemaps (add real URLs if available)
+# Sitemap: https://www.flexospaces.com/sitemap.xml
+
+

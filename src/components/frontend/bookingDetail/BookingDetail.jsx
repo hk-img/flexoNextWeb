@@ -33,10 +33,10 @@ const BookingDetail = ({ bookingId }) => {
   const bookingData = useMemo(() => {
     return bookingDetail?.booking?.booking?.[0] || [];
   }, [bookingDetail]);
-  const type = getTypeOfSpaceByWorkSpace(bookingData?.spaceType || "");
-  const spaceTypeSlug = slugGenerator(bookingData?.spaceType);
-  const locationNameSlug = slugGenerator(bookingData?.location_name || "");
-  const cityNameSlug = slugGenerator(bookingData?.contact_city_name || "");
+  const type = useMemo(() => getTypeOfSpaceByWorkSpace(bookingData?.spaceType || ""), [bookingData]);
+  const spaceTypeSlug = useMemo(() => slugGenerator(bookingData?.spaceType), [bookingData]);
+  const locationNameSlug = useMemo(() => slugGenerator(bookingData?.location_name || ""), [bookingData]);
+  const cityNameSlug = useMemo(() => slugGenerator(bookingData?.contact_city_name || ""), [bookingData]);
   const spaceId = bookingData?.spaceId;
 
   function convertTo12Hour(time) {

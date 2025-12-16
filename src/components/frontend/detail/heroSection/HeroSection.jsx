@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { YouTubeEmbed } from "@next/third-parties/google";
 import ImageWithFallback from "@/components/ImageWithFallback";
 import Svg from "@/components/svg";
-import ImagePopup from "./ImagePopup";
 import { useAuth } from "@/context/useAuth";
 import {
   IMAGE_BASE_URL,
@@ -11,6 +10,13 @@ import {
 } from "@/services/ApiService";
 import { useMutation } from "@tanstack/react-query";
 import { ShowToast } from "@/utils/ShowToast";
+import dynamic from "next/dynamic";
+const YoutubeVideo = dynamic(() => import("./YoutubeVideo"), {
+  ssr: false,
+});
+const ImagePopup = dynamic(() => import("./ImagePopup"),{ 
+  ssr: false
+});
 
 const HeroSection = ({
   slug,
@@ -21,7 +27,9 @@ const HeroSection = ({
 }) => {
   const { token } = useAuth();
   const [isFavourite, setIsFavourite] = useState(false);
-  const youtubeId = spaceData?.youtube_url?.split("/")?.pop();
+  const youtubeUrl = spaceData?.youtube_url || "";
+  const lastPart = youtubeUrl.split("/").pop();
+  const youtubeId = lastPart.split("?")[0];  
   const [viewImagePopup, setViewImagePopup] = useState(false);
   const defaultImage = "/images/default_image.webp";
   const formattedImages = spaceData?.images?.map((img) =>
@@ -138,13 +146,16 @@ const HeroSection = ({
           <div className="grid md:grid-cols-2 grid-cols-1 gap-[2px]">
             <div className="[&_[data-ntpc]]:!h-full [&_[data-title]]:h-full [&_[data-title]]:!max-w-full">
               {youtubeId ? (
-                <YouTubeEmbed
+                <>
+                {/* <YouTubeEmbed
                   videoId={youtubeId}
                   className="!w-full !h-full"
                   aria-label="Embedded YouTube video: Client testimonial about Flexo workspace"
                   role="region"
                   aria-roledescription="video player"
-                />
+                /> */}
+                <YoutubeVideo youtubeId={youtubeId} />
+                </>
               ) : (
                 <div className="relative w-full aspect-[634/423]">
                   <ImageWithFallback
@@ -174,7 +185,7 @@ const HeroSection = ({
                         height={210}
                         className="object-cover size-full"
                         fallback="/images/default_image.webp"
-                        priority
+                        priority={index === 0 && !youtubeId}
                       />
                     </div>
                   </div>

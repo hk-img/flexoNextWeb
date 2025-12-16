@@ -33,8 +33,21 @@ const calculateCenter = (markers) => {
   return { lat: centerLat, lng: centerLng };
 };
 
-const MapWithPrices = ({ type, spaces, hoveredSpaceId }) => {
+const MapWithPrices = ({ type, spaces, hoveredSpaceId, locationName }) => {
   const isMobile = useIsMobile();
+
+  return (
+    <MapWithPricesInner
+      type={type}
+      spaces={spaces}
+      hoveredSpaceId={hoveredSpaceId}
+      locationName={locationName}
+      isMobile={isMobile}
+    />
+  );
+};
+
+const MapWithPricesInner = ({ type, spaces, hoveredSpaceId, locationName, isMobile }) => {
   const [selectedSpace, setSelectedSpace] = useState(null);
   const [center, setCenter] = useState(null);
   const { isLoaded } = useLoadScript({
@@ -47,19 +60,19 @@ const MapWithPrices = ({ type, spaces, hoveredSpaceId }) => {
   };
 
   useEffect(() => {
-    if (spaces.length > 0) {
+    if ((spaces || []).length > 0) {
       const center = calculateCenter(spaces || []);
       setCenter(center);
     }
   }, [spaces]);
 
-  if (!isLoaded) return <div>Loading...</div>;
+  if (!isLoaded) return <div className="w-full h-[320px] md:h-[400px] lg:h-[500px] xl:h-[750px] bg-gray-100 rounded-xl" />;
 
   return (
     <GoogleMap
       mapContainerStyle={containerStyle}
       center={center}
-      zoom={14}
+      zoom={locationName ? 13: 12}
       options={{
         zoomControl: true,
         zoomControlOptions: {
@@ -73,21 +86,20 @@ const MapWithPrices = ({ type, spaces, hoveredSpaceId }) => {
 
         let price = 0;
         if (type === "coworking") {
-          if (!space.flexible_desk_price) {
+          if (!(space?.desks_price || space?.flexible_desk_price)) {
             price = space.privatecabin_price;
           } else if (!space.privatecabin_price) {
-            price = space.flexible_desk_price;
+            price = space?.desks_price || space.flexible_desk_price;
           } else {
             price =
-              space.privatecabin_price > space.flexible_desk_price
-                ? space.flexible_desk_price
+              space.privatecabin_price > (space?.desks_price || space?.flexible_desk_price)
+                ? space?.desks_price || space.flexible_desk_price
                 : space.privatecabin_price;
           }
         } else {
           price = space.originalPrice;
         }
 
-        console.log(String(price).length, "dfdfdfdfd");
         const priceWidth = (price) => {
           const length = String(price).length;
           if (length <= 4) return 60;
@@ -114,17 +126,20 @@ const MapWithPrices = ({ type, spaces, hoveredSpaceId }) => {
                   price
                 )}" height="30" fill="%23ff6600" />
                 <text x="50%" y="55%" font-size="0.88rem" letter-spacing="1.2px" width="max-content" display="flex" align-items="center" justify-content="center" font-family="Roboto, Arial, sans-serif" font-weight="700" fill="${fillColor}" text-anchor="middle" alignment-baseline="middle">
-                   ₹${Number(price).toLocaleString("en-IN")}
+                   ₹${Number(price)?.toLocaleString("en-IN")}
                 </text>
               </svg>`,
-              scaledSize: new window.google.maps.Size(80, 30),
-              anchor: new window.google.maps.Point(40, 0),
+              scaledSize: new window.google.maps.Size(priceWidth(price), 30),
+              // anchor: new window.google.maps.Point(priceWidth(price) / 2, 15)
             }}
           >
             {selectedSpace?.id === space.id && (
               <div>
                 <InfoWindow
                   position={{ lat: space.lat, lng: space.longi }}
+                  options={{
+                    pixelOffset: new window.google.maps.Size(0, -30), // FIX
+                  }}
                   onCloseClick={() => setSelectedSpace(null)}
                 >
                   <div
@@ -145,7 +160,7 @@ const MapWithPrices = ({ type, spaces, hoveredSpaceId }) => {
                       }
                       window.open(`${url}`, "_blank");
                     }}
-                    className="max-w-70 bg-white rounded-lg shadow-xl overflow-hidden z-50 [&_.emblaarrows]:left-3 [&_.emblaarrows]:right-3 [&_.emblaarrows_button]:w-[30px] [&_.emblaarrows_button]:h-[30px] [&_.emblaarrows_button_Svg]:size-[18px] [&_.emblaarrows_button]:!border-0 [&_.emblaarrows_button]:opacity-50 [&_.emblaarrows_button]:hover:opacity-100 [&_.emblaarrows_button_Svg]:!text-black"
+                    className="cursor-pointer max-w-70 bg-white rounded-lg shadow-xl overflow-hidden z-50 [&_.emblaarrows]:left-3 [&_.emblaarrows]:right-3 [&_.emblaarrows_button]:w-[30px] [&_.emblaarrows_button]:h-[30px] [&_.emblaarrows_button_Svg]:size-[18px] [&_.emblaarrows_button]:!border-0 [&_.emblaarrows_button]:opacity-50 [&_.emblaarrows_button]:hover:opacity-100 [&_.emblaarrows_button_Svg]:!text-black"
                   >
                     <div className="relative">
                       <div>

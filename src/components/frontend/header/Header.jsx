@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import Svg from "@/components/svg";
-import Image from "next/image";
+import ImageWithFallback from "@/components/ImageWithFallback";
 import Auth from "../auth/Auth";
 import Link from "next/link";
 import { useAuth } from "@/context/useAuth";
@@ -23,25 +23,36 @@ const Header = () => {
   const navbarHeight = 75;
 
   useEffect(() => {
+    // Throttle scroll handler to reduce blocking
+    let ticking = false;
     const handleScroll = () => {
-      const st = window.scrollY;
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const st = window.scrollY;
 
-      if (Math.abs(lastScrollTop - st) <= delta) return;
+          if (Math.abs(lastScrollTop - st) <= delta) {
+            ticking = false;
+            return;
+          }
 
-      if (st > lastScrollTop && st > navbarHeight) {
-        // scrolling down → hide
-        setHidden(true);
-      } else {
-        // scrolling up → show
-        if (st + window.innerHeight < document.body.scrollHeight) {
-          setHidden(false);
-        }
+          if (st > lastScrollTop && st > navbarHeight) {
+            // scrolling down → hide
+            setHidden(true);
+          } else {
+            // scrolling up → show
+            if (st + window.innerHeight < document.body.scrollHeight) {
+              setHidden(false);
+            }
+          }
+
+          setLastScrollTop(st);
+          ticking = false;
+        });
+        ticking = true;
       }
-
-      setLastScrollTop(st);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollTop]);
 
@@ -121,14 +132,15 @@ const Header = () => {
           <div className="flex justify-between items-center">
             <div className="px-[15px]">
               <Link href="/">
-                <Image
+                <ImageWithFallback
                   src="/images/logo.webp"
                   alt="logo"
                   title="logo"
-                  className="xl:w-[130px] lg:w-[114px] md:w-[74px] w-[100px] h-auto"
+                  className="xl:w-[130px] lg:w-[114px] md:w-[74px] w-[100px] h-auto aspect-[130/37]"
                   width={130}
                   height={37}
                   priority
+                  fallback="/images/default_image.webp"
                 />
               </Link>
             </div>

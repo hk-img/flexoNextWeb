@@ -5,13 +5,13 @@ import {
   getTypeOfSpaceByWorkSpace,
   slugGenerator,
 } from "@/services/Comman";
-import React from "react";
+import React, { useMemo } from "react";
 
 const BookingRequestItem = ({ item }) => {
-  const type = getTypeOfSpaceByWorkSpace(item?.spaceDetail?.spaceType);
-  const spaceTypeSlug = slugGenerator(item?.spaceDetail?.spaceType);
-  const locationNameSlug = slugGenerator(item?.spaceDetail?.location_name || "");
-  const cityNameSlug = slugGenerator(item?.spaceDetail?.contact_city_name || "");
+  const type = useMemo(() => getTypeOfSpaceByWorkSpace(item?.spaceData?.spaceType || ""), [item]);
+  const spaceTypeSlug = useMemo(() => slugGenerator(item?.spaceData?.spaceType), [item]);
+  const locationNameSlug = useMemo(() => slugGenerator(item?.spaceData?.location_name || ""), [item]);
+  const cityNameSlug = useMemo(() => slugGenerator(item?.spaceData?.contact_city_name || ""), [item]);
   const spaceId = item?.spaceDetail?.id;
   return (
     <div className="w-full flex md:flex-row flex-col items-center gap-y-4 justify-start bg-white p-5 rounded-xl ">

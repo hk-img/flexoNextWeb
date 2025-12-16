@@ -126,7 +126,10 @@ const Enterprise = () => {
                     <li className=' leading-[30px] items-start text-[#777]'>
                         <Svg name="smallDot" className="size-[15px] text-[#6c757d] inline"/>
                         <span className='ps-1'>
-                          Give back to society and the environment. Learn more about Flexo’s  <a href="" className='text-[#0000ff]'>Joy Of Giving initiative here.</a>
+                          Give back to society and the environment. Learn more about Flexo’s{" "}
+                          <a href="https://www.flexospaces.com/joy-of-giving" className='text-[#0000ff]'>
+                            Joy Of Giving initiative
+                          </a>.
                         </span>
                     </li>
 

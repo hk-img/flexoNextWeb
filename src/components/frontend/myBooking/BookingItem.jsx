@@ -1,6 +1,6 @@
 import Svg from "@/components/svg";
 import Link from "next/link";
-import React from "react";
+import React, { useMemo } from "react";
 import {
   convertSlugToCapitalLetter,
   getTypeOfSpaceByWorkSpace,
@@ -13,10 +13,10 @@ import { ShowToast } from "@/utils/ShowToast";
 
 const bookingItem = ({ item, setShowReviewPopup, setBookingId }) => {
   const { token } = useAuth();
-  const type = getTypeOfSpaceByWorkSpace(item?.spaceType);
-  const spaceTypeSlug = slugGenerator(item?.spaceType);
-  const locationNameSlug = slugGenerator(item?.location_name || "");
-  const cityNameSlug = slugGenerator(item?.contact_city_name || "");
+  const type = useMemo(() => getTypeOfSpaceByWorkSpace(item?.spaceType || ""), [item]);
+  const spaceTypeSlug = useMemo(() => slugGenerator(item?.spaceType), [item]);
+  const locationNameSlug = useMemo(() => slugGenerator(item?.location_name || ""), [item]);
+  const cityNameSlug = useMemo(() => slugGenerator(item?.contact_city_name || ""), [item]);
   const spaceId = item?.spaceId;
   const handleInvoiceClick = async () => {
     try {
@@ -171,7 +171,7 @@ const bookingItem = ({ item, setShowReviewPopup, setBookingId }) => {
                       {item?.bookingStatus === "pending" &&
                         item?.isInstant === "1" && (
                           <h6 className="text-[#0085ff] text-sm 2xl:text-base font-semibold">
-                            Waiting
+                            Payment Pending
                           </h6>
                         )}
                     </div>

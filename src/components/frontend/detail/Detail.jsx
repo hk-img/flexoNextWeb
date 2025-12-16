@@ -15,8 +15,12 @@ import { getApi } from "@/services/ApiService";
 import Script from "next/script";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-const EmblaCarousel = dynamic(() => import("../emblaCarousel/EmblaCarousel"));
-const EmblaCarousel2 = dynamic(() => import("./emblaCarousel2/EmblaCarousel"));
+const EmblaCarousel2 = dynamic(() => import("./emblaCarousel2/EmblaCarousel"),{ 
+  ssr: false,
+  loading: () => (
+    <div className="h-[500px] bg-gray-100 animate-pulse rounded-lg" />
+  ),
+});
 const HeroSection = dynamic(() => import("./heroSection/HeroSection"));
 const ReviewSection = dynamic(() => import("./reviewSection/ReviewSection"));
 const LikeDislike = dynamic(() => import("./LikeDislike"));
@@ -127,6 +131,8 @@ const Detail = ({
     },
     keepPreviousData: true,
     initialData: detailData,
+    staleTime: 0,
+    gcTime: 1000 * 60 * 10,
   });
 
   const spaceData = useMemo(() => {
@@ -266,20 +272,7 @@ const Detail = ({
               </li>
             </ol>
             <div className="">
-              <div className="flex items-center gap-1 mb-4">
-                {spaceData?.ribbon && (
-                  <div
-                    className="px-4 py-1 text-[0.6rem] font-bold text-white
-                    border-t-[0.5em]  border-l-[0.8em] border-l-transparent
-                    [clip-path:polygon(0_100%,100%_100%,100%_0.5em,calc(100%-0.5em)_0,calc(100%-0.5em)_0.5em,0_0.5em,0.8em_calc(50%+0.25em))]"
-                    style={{
-                      backgroundColor: spaceData?.ribbon_color,
-                    }}
-                  >
-                    {spaceData?.ribbon}
-                  </div>
-                )}
-
+              <div className="flex items-center gap-2 mb-4">
                 {type == "coworking" && (
                   <h1 className="2xl:text-[30px] text-lg leading-[1.6] font-medium text-[#141414]">
                     {spaceData?.actual_name || spaceData?.name}{" "}
@@ -290,6 +283,16 @@ const Detail = ({
                   <h1 className="2xl:text-[30px] text-lg leading-[1.6] font-medium text-[#141414] mb-4">
                     {spaceData?.spaceTitle}
                   </h1>
+                )}
+                {spaceData?.ribbon && (
+                  <div
+                    className="pl-2 pr-4 py-1 ribbon text-[0.688rem] font-bold text-white border-y-[0.5em] border-transparent leading-[1.8] [--r:0.8em] [clip-path:polygon(100%_0,0_0,0_100%,100%_100%,100%_calc(100%-0.25em),calc(100%-var(--r))_50%,100%_0.25em)] [background:radial-gradient(0.2em_50%_at_left,#000a,#0000)_border-box,#FF6B6B_padding-box]"
+                    style={{
+                      backgroundColor: spaceData?.ribbon_color,
+                    }}
+                  >
+                    {spaceData?.ribbon}
+                  </div>
                 )}
               </div>
               <div className="flex items-center text-[#141414] 2xl:text-base text-sm mb-4.5">
@@ -329,7 +332,7 @@ const Detail = ({
                           className="size-[15px] text-[#7f7f7f]"
                         />
                         <span className="2xl:text-base text-sm">
-                          {spaceData?.howManyPeopleInYourSpace} people
+                          {spaceData?.howManyPeopleInYourSpace && Number(spaceData?.howManyPeopleInYourSpace)?.toLocaleString("en-IN")} people
                         </span>
                       </div>
                     )}
@@ -354,7 +357,7 @@ const Detail = ({
                         className="size-[15px] text-[#7f7f7f]"
                       />
                       <span className="2xl:text-base text-sm">
-                        {spaceData?.spacesqft} sqft
+                        {spaceData?.spacesqft && Number(spaceData?.spacesqft)?.toLocaleString("en-IN")} sqft
                       </span>
                     </div>
                   </div>
@@ -362,7 +365,8 @@ const Detail = ({
                     <LikeDislike
                       spaceData={spaceData}
                       setIsAuthOpen={setIsAuthOpen}
-                      existingVote={spaceDeatil?.existingVote}
+                      voteData={spaceDeatil?.existingVote}
+                      refetchDetail={refetchDetail}
                     />
                   )}
                 </div>
@@ -689,7 +693,7 @@ const Detail = ({
                                         className="size-[18px] text-[#f76900]"
                                       />
                                     </span>{" "}
-                                    {spaceData?.privatecabin_price}
+                                    {Number(spaceData?.privatecabin_price)?.toLocaleString("en-IN")}
                                   </h2>
                                   <span className=" text-[15px] leading-[30px] font-light">
                                     /seat/month
@@ -734,7 +738,7 @@ const Detail = ({
                                         className="size-[18px] text-[#f76900]"
                                       />
                                     </span>{" "}
-                                    {spaceData?.customized_space_price}
+                                    {Number(spaceData?.customized_space_price)?.toLocaleString("en-IN")}
                                   </h2>
                                   <span className=" text-[15px] leading-[30px] font-light">
                                     /seat/month
@@ -779,7 +783,7 @@ const Detail = ({
                                         className="size-[18px] text-[#f76900]"
                                       />
                                     </span>{" "}
-                                    {spaceData?.desks_price}
+                                    {Number(spaceData?.desks_price)?.toLocaleString("en-IN")}
                                   </h2>
                                   <span className=" text-[15px] leading-[30px] font-light">
                                     /seat/month
@@ -824,7 +828,7 @@ const Detail = ({
                                         className="size-[18px] text-[#f76900]"
                                       />
                                     </span>{" "}
-                                    {spaceData?.flexible_desk_price}
+                                    {Number(spaceData?.flexible_desk_price)?.toLocaleString("en-IN")}
                                   </h2>
                                   <span className=" text-[15px] leading-[30px] font-light">
                                     /seat/month
@@ -869,7 +873,7 @@ const Detail = ({
                                         className="size-[18px] text-[#f76900]"
                                       />
                                     </span>{" "}
-                                    {spaceData?.virtual_office_price}
+                                    {Number(spaceData?.virtual_office_price)?.toLocaleString("en-IN")}
                                   </h2>
                                   <span className=" text-[15px] leading-[30px] font-light">
                                     /seat/month
@@ -915,7 +919,7 @@ const Detail = ({
                                           className="size-[18px] text-[#f76900]"
                                         />
                                       </span>{" "}
-                                      {spaceData?.originalPrice}
+                                      {Number(spaceData?.originalPrice)?.toLocaleString("en-IN")}
                                     </h2>
                                     <span className=" text-[15px] leading-[30px] font-light">
                                       /seat/day
@@ -1117,7 +1121,7 @@ const Detail = ({
                         className="size-[18px] text-[#f76900]"
                       />
                       <h2 className="text-[26px] font-bold">
-                        {spaceData?.originalPrice}
+                        {Number(spaceData?.originalPrice)?.toLocaleString("en-IN")}
                       </h2>
                     </div>
                     <div className="text-xs font-normal  leading-[1.5] text-[#777] flex items-center justify-center mb-2">
@@ -1128,7 +1132,7 @@ const Detail = ({
                       <p>
                         {Math.round(
                           spaceData?.originalPrice / spaceData?.spacesqft
-                        )}
+                        )?.toLocaleString("en-IN")}
                         /Sqft
                         {spaceData?.negociable_price == 1 && (
                           <span className=" font-bold">(Negotiable)</span>
@@ -1137,7 +1141,7 @@ const Detail = ({
                     </div>
                     <p className="text-xs font-normal  leading-[1.5] text-[#777]">
                       <span className="font-bold">Carpet Area:</span>{" "}
-                      {spaceData?.spacesqft} sq. ft. |{" "}
+                      {Number(spaceData?.spacesqft)?.toLocaleString("en-IN")} sq. ft. |{" "}
                       <span className="font-bold">
                         {spaceData?.spaceStatus}
                       </span>
@@ -1261,7 +1265,7 @@ const Detail = ({
                     )}
                     <Svg name="rupee" className="size-[18px] text-[#f76900]" />
                     <h3 className="text-[26px] font-bold text-center">
-                      {spaceData?.originalPrice}{" "}
+                      {Number(spaceData?.originalPrice)?.toLocaleString("en-IN")}{" "}
                       <span className="text-base"> /hr</span>
                     </h3>
                   </div>

@@ -1,6 +1,6 @@
 "use client";
 import Svg from "@/components/svg";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getApi, postAPI } from "@/services/ApiService";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -32,7 +32,7 @@ const ProductCard = dynamic(() => import("../productCard/ProductCard"), {
   loading: () => (
     <div className="h-[500px] bg-gray-100 animate-pulse rounded-lg" />
   ),
-  ssr: false,
+  // SSR enabled - ProductCard ko server pe render karo for better initial load
 });
 const MapWithPrices = dynamic(() => import("./MapWithPrice"), {
   ssr: false,
@@ -60,11 +60,10 @@ const Listing = ({
   const { coordinates } = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
-  const [type, setType] = useState("");
   const [isLongTermPopupOpen, setIsLongTermPopupOpen] = useState(false);
   const spacesTypeRef = useRef(null);
   const locationRef = useRef(null);
-  const [mapToggle, setMapToggle] = useState(true);
+  const [mapToggle, setMapToggle] = useState(false);
   const [toggleSpaceType, setToggleSpaceType] = useState(false);
   const [toggleSpace, setToggleSpace] = useState(false);
   const [selectedRadio, setSelectedRadio] = useState(
@@ -90,43 +89,43 @@ const Listing = ({
   const [selectedCityName, setSelectedCityName] = useState(null);
   const perPage = 30;
 
-  useEffect(()=>{
+  // Keep map hidden by default; user can toggle on
+  useEffect(() => {
     if(isMobile){
       setMapToggle(false);
-    }else{
-      setMapToggle(true);
     }
-  },[isMobile])
+  }, [isMobile]);
 
-  const handleRadioChange = (e) => {
-    const { value } = e.target;
-    // if (value == "Coworking Space") {
-    //   setSelectedCheckboxes(coworkingTypes);
-    // } else {
-    //   const smallSpaceType = convertSlugToSmallLetter(value || "");
-    //   setSelectedCheckboxes([smallSpaceType]);
-    // }
-    // setSelectedRadio(value);
-    const type_slug = slugGenerator(value || "");
-    if(!locationNameSlug && type_slug == "coworking-space" ){
-      return router.push(`/in/coworking/${citySlug || ""}`);
-    }else{
-      router.push(`/in/${type_slug}/${citySlug || ""}/${locationNameSlug || ""}`);
-    }
-  };
-  useEffect(() => {
-    if (selectedRadio) {
-      const type = getTypeOfSpaceByWorkSpace(selectedRadio || "");
-      setType(type);
-    }
+  const handleRadioChange = useCallback(
+    (e) => {
+      const { value } = e.target;
+      // if (value == "Coworking Space") {
+      //   setSelectedCheckboxes(coworkingTypes);
+      // } else {
+      //   const smallSpaceType = convertSlugToSmallLetter(value || "");
+      //   setSelectedCheckboxes([smallSpaceType]);
+      // }
+      // setSelectedRadio(value);
+      const type_slug = slugGenerator(value || "");
+      if (!locationNameSlug && type_slug === "coworking-space") {
+        return router.push(`/in/coworking/${citySlug || ""}`);
+      } else {
+        router.push(`/in/${type_slug}/${citySlug || ""}/${locationNameSlug || ""}`);
+      }
+    },
+    [locationNameSlug, citySlug, router]
+  );
+
+  const type = useMemo(() => {
+    const type = getTypeOfSpaceByWorkSpace(selectedRadio || "")
+    return type;
   }, [selectedRadio]);
-  const handleCheckbox = (type) => {
-    if (selectedCheckboxes.includes(type)) {
-      setSelectedCheckboxes(selectedCheckboxes.filter((item) => item !== type));
-    } else {
-      setSelectedCheckboxes([...selectedCheckboxes, type]);
-    }
-  };
+
+  const handleCheckbox = useCallback((type) => {
+    setSelectedCheckboxes((prev) =>
+      prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
+    );
+  }, []);
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -154,32 +153,57 @@ const Listing = ({
     };
   }, []);
 
+  // Defer non-critical initialization to reduce TBT (Total Blocking Time)
   useEffect(() => {
-    if (spaceTypeSlug === "coworking") {
-      setSelectedRadio("Coworking Space");
-      setSelectedCheckboxes(coworkingTypes);
-      return;
-    }
-    const selectedSpaceType = spaceCategoryData?.find((item) => {
-      const categorySpaceType = slugGenerator(item?.spaceType || "");
-      if (categorySpaceType === spaceTypeSlug) {
-        return item;
+    // Use requestIdleCallback to defer non-critical work
+    const initSpaceType = () => {
+      if (spaceTypeSlug === "coworking") {
+        setSelectedRadio("Coworking Space");
+        setSelectedCheckboxes(coworkingTypes);
+        return;
       }
-    });
-    setSelectedRadio(selectedSpaceType?.spaceType);
-    if (selectedSpaceType?.spaceType === "Coworking Space") {
-      setSelectedCheckboxes(coworkingTypes);
+      const selectedSpaceType = spaceCategoryData?.find((item) => {
+        const categorySpaceType = slugGenerator(item?.spaceType || "");
+        if (categorySpaceType === spaceTypeSlug) {
+          return item;
+        }
+      });
+      setSelectedRadio(selectedSpaceType?.spaceType);
+      if (selectedSpaceType?.spaceType === "Coworking Space") {
+        setSelectedCheckboxes(coworkingTypes);
+      } else {
+        const smallSpaceType = convertSlugToSmallLetter(
+          selectedSpaceType?.spaceType || ""
+        );
+        setSelectedCheckboxes([smallSpaceType]);
+      }
+    };
+
+    // Defer to next tick to reduce blocking
+    if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+      requestIdleCallback(initSpaceType, { timeout: 100 });
     } else {
-      const smallSpaceType = convertSlugToSmallLetter(
-        selectedSpaceType?.spaceType || ""
-      );
-      setSelectedCheckboxes([smallSpaceType]);
+      setTimeout(initSpaceType, 0);
     }
   }, [spaceCategoryData, spaceTypeSlug]);
 
+  // Check if we should refetch on mount - agar initial data hai aur default filters hain to refetch mat karo
+  const shouldRefetchOnMount = useMemo(() => {
+    // Page 1 pe default filters ke saath refetch mat karo (server-side data already hai)
+    if (page === 1 && listingData && !selectedLocation && !nearMeData) {
+      const hasDefaultFilters = 
+        appliedFilter?.priceRange?.min === 500 && 
+        appliedFilter?.priceRange?.max === 50000 &&
+        appliedFilter?.distance === 0 &&
+        !appliedFilter?.sortBy &&
+        appliedFilter?.amenities?.length === 0;
+      return !hasDefaultFilters; // Default filters hain to refetch mat karo
+    }
+    return true; // Baaki cases mein refetch karo
+  }, [page, listingData, selectedLocation, nearMeData, appliedFilter]);
+
   const { data: allSpaces, refetch: refetchSpaces } = useQuery({
     queryKey: [
-      "allSpaces",
       page,
       city,
       type,
@@ -204,7 +228,10 @@ const Listing = ({
         page_no: page,
       };
       if (!nearMeData) {
-        const selectedSpace = nearBySpacesData?.find((space) => space?.location_name?.toLowerCase() == locationName?.toLowerCase());
+        const selectedSpace = nearBySpacesData?.find(
+          (space) =>
+            space?.location_name?.toLowerCase() == locationName?.toLowerCase()
+        );
         payload.location_lat = selectedSpace?.lat || 0;
         payload.location_longi = selectedSpace?.longi || 0;
       }
@@ -235,8 +262,12 @@ const Listing = ({
       const res = await postAPI("spaces/getSpacesByCity", payload);
       return res.data;
     },
-    keepPreviousData: true,
+    // Server-side fetched data ko initialData ke roop mein use karo
     initialData: listingData,
+    // Agar initial data hai aur default filters hain to refetch mat karo
+    refetchOnMount: shouldRefetchOnMount,
+    staleTime: 0,
+    gcTime: 1000 * 60 * 10, // 10 minutes cache time
   });
   const productData = useMemo(() => {
     return allSpaces?.data || [];
@@ -255,53 +286,110 @@ const Listing = ({
     },
     keepPreviousData: true,
     initialData: locationData,
+    staleTime: 1000 * 60 * 10,
   });
 
+  // Defer location matching to reduce TBT
   useEffect(() => {
     if (allLocations?.length > 0 && (locationName || city)) {
-      const smallLetterLocationName = convertSlugToSmallLetter(
-        locationName || ""
-      );
-      const smallLetterCity = convertSlugToSmallLetter(
-        city || ""
-      );
-      if(smallLetterLocationName || smallLetterCity){
-        const selectedLocation = allLocations?.find((item) => {
-          if (item?.location_name.toLowerCase() === smallLetterLocationName && item?.city.toLowerCase() === smallLetterCity) {
-            return item;
-          }
-        });
-        setQuery(selectedLocation?.label || "");
-        setSelectedLocation(selectedLocation || null);
+      const matchLocation = () => {
+        const smallLetterLocationName = convertSlugToSmallLetter(
+          locationName || ""
+        );
+        const smallLetterCity = convertSlugToSmallLetter(city || "");
+        if (smallLetterLocationName || smallLetterCity) {
+          const selectedLocation = allLocations?.find((item) => {
+            if (
+              item?.location_name.toLowerCase() === smallLetterLocationName &&
+              item?.city.toLowerCase() === smallLetterCity
+            ) {
+              return item;
+            }
+          });
+          setQuery(selectedLocation?.label || "");
+          setSelectedLocation(selectedLocation || null);
+        }
+      };
+
+      // Defer to reduce blocking
+      if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+        requestIdleCallback(matchLocation, { timeout: 100 });
+      } else {
+        setTimeout(matchLocation, 0);
       }
     }
-  }, [allLocations, locationName,city]);
+  }, [allLocations, locationName, city]);
 
-  const handleApply = () => {
+  const handleApply = useCallback(() => {
     setAppliedFilter(filterData);
     setIsFilterOpen(false);
-  };
+  }, [filterData]);
 
-  const handleClear = () => {
-    const resetFilters = {
-      priceRange: { min: 500, max: 50000 },
-      distance: 0,
-      sortBy: "",
-      amenities: [],
-    };
+  const handleClear = useCallback(() => {
+    const resetFilters = { priceRange: { min: 500, max: 50000 }, distance: 0, sortBy: "", amenities: [] };
     setFilterData(resetFilters);
     setAppliedFilter(resetFilters);
     setIsFilterOpen(false);
-  };
+  }, []);
   const handleNearMe = () => {
-    setNearMeData({
-      lat: coordinates?.lat || 19.1121947,
-      lng: coordinates?.lng || 72.8792898,
-    });
+    if(!nearMeData){
+      setNearMeData({
+        lat: coordinates?.lat || 19.1121947,
+        lng: coordinates?.lng || 72.8792898,
+      });
+    }else{
+      refetchSpaces();
+    }
   };
   const total = allSpaces?.space_count || 0;
   const start = total > 0 ? (page - 1) * perPage + 1 : 0;
   const end = total > 0 ? Math.min(page * perPage, total) : 0;
+
+  // Reduce initial render - only render first 6 cards immediately
+  // Rest will load when user scrolls (lazy loading)
+  const [visibleCount, setVisibleCount] = useState(6);
+  const loadMoreRef = useRef(null);
+
+  // Reset visibleCount when page changes
+  useEffect(() => {
+    setVisibleCount(6);
+  }, [page]);
+
+  // Intersection Observer for lazy loading more cards
+  useEffect(() => {
+    if (!productData || !Array.isArray(productData) || visibleCount >= productData.length || !loadMoreRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && visibleCount < productData.length) {
+          setVisibleCount((prev) => Math.min(prev + 6, productData.length));
+        }
+      },
+      { rootMargin: "200px" }
+    );
+
+    const currentRef = loadMoreRef.current;
+    observer.observe(currentRef);
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, [visibleCount, productData]);
+
+  const firstSlice = useMemo(() => {
+    if (!productData || !Array.isArray(productData)) return [];
+    return productData.slice(0, Math.min(6, visibleCount));
+  }, [productData, visibleCount]);
+  const secondSlice = useMemo(() => {
+    if (!productData || !Array.isArray(productData) || visibleCount <= 6) return [];
+    return productData.slice(6, Math.min(18, visibleCount));
+  }, [productData, visibleCount]);
+  const thirdSlice = useMemo(() => {
+    if (!productData || !Array.isArray(productData) || visibleCount <= 18) return [];
+    return productData.slice(18, Math.min(30, visibleCount));
+  }, [productData, visibleCount]);
   return (
     <>
       <section className="w-full relative lg:pt-16 bg-white">
@@ -321,7 +409,8 @@ const Listing = ({
                     <div
                       key={index}
                       className={`${
-                          item?.location_name?.toLowerCase() == locationName?.toLowerCase()
+                        item?.location_name?.toLowerCase() ==
+                        locationName?.toLowerCase()
                           ? "text-[#4343e8] border-[#7d9dd9] bg-[#e9e9ff]"
                           : "text-[#9e9e9e] border-[#d4d4d4] bg-white"
                       } inline-block text-center me-1.5 cursor-pointer rounded-[3px] py-1 px-[10px] text-[12px] font-normal text-[#9e9e9e] border max-w-full min-w-[160px] whitespace-pre-wrap overflow-hidden text-ellipsis md:hover:bg-[#e9e9ff] md:hover:border-[#7d9dd9] md:hover:text-[#4343e8]`}
@@ -384,11 +473,11 @@ const Listing = ({
                               }}
                               className="flex items-center cursor-pointer font-medium text-[#777777] text-sm"
                             >
+                              Location
                               <Svg
                                 name="pencil"
-                                className="text-[#777777] size-[15px] me-1"
+                                className="text-[#777777] size-[15px] ms-1"
                               />
-                              Location
                             </div>
                           </li>
                         </ul>
@@ -401,11 +490,11 @@ const Listing = ({
                             onClick={() => setIsFilterOpen(!isFilterOpen)}
                             className="flex items-center cursor-pointer font-medium text-[#777777] text-sm"
                           >
+                            Filters
                             <Svg
                               name="filter"
-                              className="text-[#777777] size-[18px] me-1"
+                              className="text-[#777777] size-[18px] ms-1"
                             />
-                            Filters
                           </div>
                         </li>
                       </ul>
@@ -418,6 +507,9 @@ const Listing = ({
                           checked={mapToggle}
                           onChange={(e) => setMapToggle(e.target.checked)}
                         />
+                        <span className="lg:me-3 me-1 text-sm font-normal text-[#777777]">
+                          Map
+                        </span>
                         <div
                           className="w-[36px] h-[14px] shrink-0 bg-[#00000061] rounded-lg 
                             peer-checked:bg-[#f76900] 
@@ -427,9 +519,6 @@ const Listing = ({
                             after:duration-500 after:shadow-[0px_2px_1px_-1px_rgba(0,0,0,0.2),0px_1px_1px_0px_rgba(0,0,0,0.14),0px_1px_3px_0px_rgba(0,0,0,0.12)] peer-checked:after:translate-x-6 peer-checked:after:bg-[#f76900] 
                             peer-checked:after:border-[#fafafa]"
                         ></div>
-                        <span className="lg:ms-3 ms-1 text-sm font-normal text-[#777777]">
-                          Map
-                        </span>
                       </label>
                     </div>
                   </div>
@@ -548,12 +637,12 @@ const Listing = ({
                                     onChange={(e) => setQuery(e.target.value)}
                                   />
                                 </div>
-                                <div
+                                {/* <div
                                   onClick={handleNearMe}
-                                  className="flex whitespace-nowrap text-[#777777] cursor-pointer"
+                                  className="flex whitespace-nowrap text-[#777] cursor-pointer font-medium"
                                 >
                                   Near Me
-                                </div>
+                                </div> */}
                               </div>
                             </div>
                           </div>
@@ -567,9 +656,7 @@ const Listing = ({
                           >
                             {allLocations
                               .filter((loc) =>
-                                loc?.label
-                                  ?.toLowerCase()
-                                  ?.includes(query?.toLowerCase())
+                                loc?.label?.toLowerCase().startsWith(query?.toLowerCase() || "")
                               )
                               .map((loc, idx) => (
                                 <div
@@ -580,11 +667,21 @@ const Listing = ({
                                     // setSelectedLocation(loc);
                                     // setToggleLocationOptions(false);
                                     // setNearMeData(null);
-                                    const typeSlug = slugGenerator(selectedRadio);
-                                    const citySlug = slugGenerator(loc?.city || "");
-                                    const locationSlug = slugGenerator(loc?.location_name || "");
-                                    if(!locationSlug && typeSlug == "coworking-space" ){
-                                      return router.push(`/in/coworking/${citySlug}`);
+                                    const typeSlug =
+                                      slugGenerator(selectedRadio);
+                                    const citySlug = slugGenerator(
+                                      loc?.city || ""
+                                    );
+                                    const locationSlug = slugGenerator(
+                                      loc?.location_name || ""
+                                    );
+                                    if (
+                                      !locationSlug &&
+                                      typeSlug == "coworking-space"
+                                    ) {
+                                      return router.push(
+                                        `/in/coworking/${citySlug}`
+                                      );
                                     }
                                     router.push(
                                       `/in/${typeSlug}/${citySlug}/${locationSlug}`
@@ -607,6 +704,7 @@ const Listing = ({
                     type={type}
                     spaces={productData}
                     hoveredSpaceId={hoveredSpaceId}
+                    locationName= {locationName}
                   />
                 </div>
               )}
@@ -625,7 +723,7 @@ const Listing = ({
                 </div>
               </div>
               <div className="spaces lg:mt-6 flex flex-row flex-wrap -mx-4">
-                {productData?.slice(0, 6)?.map((item, index) => (
+              {firstSlice?.map((item, index) => (
                   <div
                     key={`product-${index}`}
                     className="spaceCard relative lg:w-1/3 md:w-1/3 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:xl:w-1/2 group-has-[.map]/mainBox:md:w-1/2 w-full p-4"
@@ -638,13 +736,14 @@ const Listing = ({
                       setIsAuthOpen={setIsAuthOpen}
                       setSelectedSpaceData={setSelectedSpaceData}
                       setSelectedCityName={setSelectedCityName}
+                      isLcp={page === 1 && index === 0}
                     />
                   </div>
                 ))}
               </div>
               <TrustedCompaniesCta setIsOpen={setIsOpen} type={type} />
               <div className="spaces flex flex-row flex-wrap -mx-4">
-                {productData?.slice(6, 18)?.map((item, index) => (
+                {secondSlice?.map((item, index) => (
                   <div
                     key={`product-${index + 6}`}
                     className="spaceCard relative lg:w-1/3 md:w-1/3 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:xl:w-1/2 group-has-[.map]/mainBox:md:w-1/2 w-full p-4"
@@ -661,27 +760,35 @@ const Listing = ({
                   </div>
                 ))}
               </div>
-              {productData?.length > 18 && (
+              {productData?.length > 18 && visibleCount > 18 && (
                 <RequestCallback setIsOpen={setIsOpen} type={type} />
               )}
-              <div className="spaces flex flex-row flex-wrap -mx-4">
-                {productData?.slice(18, 30)?.map((item, index) => (
-                  <div
-                    key={`product-${index + 18}`}
-                    className="spaceCard lg:w-1/3 md:w-1/3 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:xl:w-1/2 group-has-[.map]/mainBox:md:w-1/2 w-full p-4"
-                    onMouseOver={() => setHoveredSpaceId(item?.id)}
-                    onMouseLeave={() => setHoveredSpaceId(null)}
-                  >
-                    <ProductCard
-                      item={item}
-                      setIsOpen={setIsOpen}
-                      setIsAuthOpen={setIsAuthOpen}
-                      setSelectedSpaceData={setSelectedSpaceData}
-                      setSelectedCityName={setSelectedCityName}
-                    />
-                  </div>
-                ))}
-              </div>
+              {thirdSlice.length > 0 && (
+                <div className="spaces flex flex-row flex-wrap -mx-4">
+                  {thirdSlice?.map((item, index) => (
+                    <div
+                      key={`product-${index + 18}`}
+                      className="spaceCard lg:w-1/3 md:w-1/3 group-has-[.map]/mainBox:lg:w-1/2 group-has-[.map]/mainBox:xl:w-1/2 group-has-[.map]/mainBox:md:w-1/2 w-full p-4"
+                      onMouseOver={() => setHoveredSpaceId(item?.id)}
+                      onMouseLeave={() => setHoveredSpaceId(null)}
+                    >
+                      <ProductCard
+                        item={item}
+                        setIsOpen={setIsOpen}
+                        setIsAuthOpen={setIsAuthOpen}
+                        setSelectedSpaceData={setSelectedSpaceData}
+                        setSelectedCityName={setSelectedCityName}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+              {/* Intersection Observer trigger for lazy loading */}
+              {productData && Array.isArray(productData) && visibleCount < productData.length && (
+                <div ref={loadMoreRef} className="h-20 flex items-center justify-center">
+                  <div className="animate-pulse text-gray-400">Loading more...</div>
+                </div>
+              )}
               <TestimonialCta setIsOpen={setIsOpen} type={type} />
               <Pagination
                 currentPage={page}
@@ -690,11 +797,12 @@ const Listing = ({
               />
             </div>
             {mapToggle && (
-              <div className="map lg:w-1/3 w-full md:flex hidden flex-col md:sticky md:top-0 [&_.gm-style-iw-d]:!overflow-hidden [&_.gm-style-iw-d]:!max-w-[336px] [&_.gm-style-iw-d]:!max-h-full [&_.gm-style-iw-c]:!p-0 [&_.gm-style-iw-chr]:!hidden [&_.gm-style-iw]:!rounded-xl">
+              <div className="map lg:w-1/3 w-full md:flex hidden flex-col md:sticky md:top-0 [&_.gm-style-iw-d]:!overflow-hidden h-dvh [&_.gm-style-iw-d]:!max-w-[336px] [&_.gm-style-iw-d]:!max-h-full [&_.gm-style-iw-c]:!p-0 [&_.gm-style-iw-chr]:!hidden [&_.gm-style-iw]:!rounded-xl">
                 <MapWithPrices
                   type={type}
                   spaces={productData}
                   hoveredSpaceId={hoveredSpaceId}
+                  locationName= {locationName}
                 />
               </div>
             )}

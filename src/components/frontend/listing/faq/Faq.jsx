@@ -1,10 +1,10 @@
 import React from "react";
-import FaqAnswer from "./FaqAnswer";
-
+import dynamic from "next/dynamic";
+const FaqAnswer = dynamic(() => import("./FaqAnswer"), { ssr: false });
 const Faq = ({ spaceType,city,locationName,faqData }) => {
   return (
     <>
-      <section className=" mt-18 bg-[#f9f9f9]">
+      <section className="mt-18 bg-[#f9f9f9]">
         <div className="container mx-auto md:px-0 px-[15px] pt-10 md:pb-20 pb-10">
           <div>
             <h2 className="text-[#141414] font-medium leading-[1.6] md:text-[26px] text-xl">
@@ -21,7 +21,7 @@ const Faq = ({ spaceType,city,locationName,faqData }) => {
                       Q- {item.question}
                     </p>
                   </div>
-                  <div className="flex text-[#7b7b7b] min-[1400px]:text-base text-sm pt-1">
+                  <div className="flex text-[#7b7b7b] min-[1400px]:text-base text-sm pt-1 ck-content">
                     <p>Ans-</p>
                     <FaqAnswer answer={item.answer} />
                   </div>
@@ -30,11 +30,11 @@ const Faq = ({ spaceType,city,locationName,faqData }) => {
               {faqData?.filter((item) => item.type == 2)?.map((item, idx) => (
                 <div key={idx}>
                   <div>
-                    <p className="font-extrabold text-[#777] min-[1400px]:text-base text-sm">
+                    <p className="font-montserrat font-extrabold text-[#777] min-[1400px]:text-base text-[15px] mb-[30px]">
                       {item.question}
                     </p>
                   </div>
-                  <div className="flex text-[#7b7b7b] min-[1400px]:text-base text-sm pt-1">
+                  <div className="flex text-[#7b7b7b] min-[1400px]:text-base text-sm pt-1 ck-content">
                     <FaqAnswer answer={item.answer} />
                   </div>
                 </div>

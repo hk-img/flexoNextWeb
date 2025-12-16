@@ -8,7 +8,7 @@ import { notFound } from "next/navigation";
 import React from "react";
 
 export const revalidate = 3600;
-export const dynamic = "force-static";
+// force-static ko remove kiya - ISR use karega jo better hai
 export const fetchCache = "force-cache";
 
 async function getSpaceDetails(spaceId) {
@@ -20,12 +20,18 @@ async function getSpaceDetails(spaceId) {
       next: { revalidate: 3600 },
     });
     if (!res.ok) {
-      console.error("API error", res.status, await res.text());
+      // Only log in development
+      if (process.env.NODE_ENV === 'development') {
+        console.error("API error", res.status, await res.text());
+      }
       return [];
     }
     return await res.json();
   } catch (error) {
-    console.log(error);
+    // Only log in development
+    if (process.env.NODE_ENV === 'development') {
+      console.error("Fetch error:", error);
+    }
     return [];
   }
 }
@@ -42,12 +48,18 @@ async function getDetailData(payload) {
       }
     );
     if (!res.ok) {
-      console.error("API error", res.status, await res.text());
+      // Only log in development
+      if (process.env.NODE_ENV === 'development') {
+        console.error("API error", res.status, await res.text());
+      }
       return [];
     }
     return await res.json();
   } catch (error) {
-    console.log(error);
+    // Only log in development
+    if (process.env.NODE_ENV === 'development') {
+      console.error("Fetch error:", error);
+    }
     return [];
   }
 }
@@ -64,12 +76,18 @@ async function getReviewData(spaceId) {
       }
     );
     if (!res.ok) {
-      console.error("API error", res.status, await res.text());
+      // Only log in development
+      if (process.env.NODE_ENV === 'development') {
+        console.error("API error", res.status, await res.text());
+      }
       return [];
     }
     return await res.json();
   } catch (error) {
-    console.log(error);
+    // Only log in development
+    if (process.env.NODE_ENV === 'development') {
+      console.error("Fetch error:", error);
+    }
     return [];
   }
 }
@@ -102,7 +120,7 @@ const page = async ({ params }) => {
     country: spaceDetailsData?.country,
   };
   let detailData = await getDetailData(payload);
-  if(!detailData?.success){
+  if (!detailData?.success) {
     return notFound();
   }
   let reviewData = reviews?.data?.reviews || [];
@@ -114,6 +132,12 @@ const page = async ({ params }) => {
     images,
     originalPrice,
     spaceStatus,
+    days_open_string,
+    mon_friday_opening_time,
+    saturday_opening_time,
+    mon_friday_closing_time,
+    saturday_closing_time,
+    privatecabin_price
   } = detailData?.data;
   const spaceTypeSmallLetter = convertSlugToSmallLetter(spaceType || "");
   const locationNameSmallLetter = convertSlugToSmallLetter(location_name || "");
@@ -168,12 +192,51 @@ const page = async ({ params }) => {
     jsonLd.offers.lowPrice = minPrice;
     jsonLd.offers.highPrice = maxPrice;
   }
+  const schema = {
+    "@context": "http://schema.org",
+    "@type": "Coworking Spaces",
+    name: `${actual_name} ${location_name}`,
+    telephone: `Call +91 95133 92400`,
+    url: `${WEBSITE_BASE_URL}/${slug.join("/")}`,
+    // image: `${images?.[0]}`,
+    address: {
+      "@type": "Address",
+      location: `${location_name}`,
+    },
+    openingHoursSpecification: {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: {
+        "@type": "DayOfWeek",
+        name: `${days_open_string}`,
+      },
+      opens: {
+        "Mon - Fri": `${mon_friday_opening_time}`,
+        Sat: `${saturday_opening_time}`,
+      },
+      close: {
+        "Mon - Fri": `${mon_friday_closing_time}`,
+        Sat: `${saturday_closing_time}`,
+      },
+    },
+    offers: {
+      "@type": "AggregateOffer",
+      price: `Rs. ${privatecabin_price}`,
+    },
+  };
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      {
+        type == "coworking" && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          />
+        )
+      }
       <Detail
         slug={slug}
         spaceId={spaceId}
@@ -209,7 +272,7 @@ export async function generateMetadata({ params }) {
     country: spaceDetailsData?.country,
   };
   let detailData = await getDetailData(payload);
-  if(!detailData?.success){
+  if (!detailData?.success) {
     return notFound();
   }
   const spaceType =

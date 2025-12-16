@@ -2,7 +2,7 @@
 import React from 'react';
 
 const Loading = () => {
-   const letters = ["F", "L", "E", "X", "O"];
+  const letters = ["F", "L", "E", "X", "O"];
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-white">
       <div className="flex space-x-1">

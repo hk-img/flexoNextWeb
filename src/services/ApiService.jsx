@@ -15,7 +15,10 @@ export const getApi = async (url) => {
     });
     return response;
   } catch (error) {
-    console.log("error?.response?.status", error);
+    // Only log errors in development
+    if (process.env.NODE_ENV === 'development') {
+      console.error("API Error:", error?.response?.status || error?.status, error);
+    }
 
     if (
       error?.status === 401 || error?.response?.data?.status === 401 || 
@@ -39,7 +42,9 @@ export const getAPIAuth = async (url, tokenInit) => {
     });
     return response;
   } catch (error) {
-    console.log("error?.response?.status", error);
+    if (process.env.NODE_ENV === "development") {
+      console.error("API Error:", error?.response?.status || error?.status, error);
+    }
 
     if (
       error?.status === 401 || error?.response?.data?.status === 401 ||
@@ -64,7 +69,9 @@ export const getAPIAuthWithoutBearer = async (url, tokenInit) => {
     });
     return response;
   } catch (error) {
-    console.log("error?.response?.status", error);
+    if (process.env.NODE_ENV === "development") {
+      console.error("API Error:", error?.response?.status || error?.status, error);
+    }
 
     if (
       error?.status === 401 || error?.response?.data?.status === 401 ||
@@ -90,7 +97,9 @@ export const deleteAPIAuth = async (url, tokenInit) => {
     });
     return response;
   } catch (error) {
-    console.log("error?.response?.status", error);
+    if (process.env.NODE_ENV === "development") {
+      console.error("API Error:", error?.response?.status || error?.status, error);
+    }
 
     if (
       error?.status === 401 || error?.response?.data?.status === 401 ||
@@ -114,7 +123,9 @@ export const postAPIFormData = async (url, params, token) => {
     });
     return response;
   } catch (error) {
-    console.log("error?.response?.status", error);
+    if (process.env.NODE_ENV === "development") {
+      console.error("API Error:", error?.response?.status || error?.status, error);
+    }
 
     if (
       error?.status === 401 || error?.response?.data?.status === 401 ||
@@ -138,7 +149,9 @@ export const postAPIFormDataWithoutBearer = async (url, params, token) => {
     });
     return response;
   } catch (error) {
-    console.log("error?.response?.status", error);
+    if (process.env.NODE_ENV === "development") {
+      console.error("API Error:", error?.response?.status || error?.status, error);
+    }
 
     if (
       error?.status === 401 || error?.response?.data?.status === 401 ||
@@ -162,7 +175,9 @@ export const postAPI = async (url, params) => {
     });
     return response;
   } catch (error) {
-    console.log("error?.response?.status", error);
+    if (process.env.NODE_ENV === "development") {
+      console.error("API Error:", error?.response?.status || error?.status, error);
+    }
 
     if (
       error?.status === 401 || error?.response?.data?.status === 401 ||
@@ -188,7 +203,9 @@ export const postAPIAuth = async (url, params, tokenInit) => {
     });
     return response;
   } catch (error) {
-    console.log("error?.response?.status", error);
+    if (process.env.NODE_ENV === "development") {
+      console.error("API Error:", error?.response?.status || error?.status, error);
+    }
 
     if (
       error?.status === 401 || error?.response?.data?.status === 401 ||
@@ -214,7 +231,9 @@ export const postAPIAuthWithoutBearer = async (url, params, tokenInit) => {
     });
     return response;
   } catch (error) {
-    console.log("error?.response?.status", error);
+    if (process.env.NODE_ENV === "development") {
+      console.error("API Error:", error?.response?.status || error?.status, error);
+    }
 
     if (
       error?.status === 401 || error?.response?.data?.status === 401 ||
@@ -240,7 +259,9 @@ export const patchAPIAuth = async (url, params, tokenInit) => {
     });
     return response;
   } catch (error) {
-    console.log("error?.response?.status", error);
+    if (process.env.NODE_ENV === "development") {
+      console.error("API Error:", error?.response?.status || error?.status, error);
+    }
 
     if (
       error?.status === 401 || error?.response?.data?.status === 401 ||

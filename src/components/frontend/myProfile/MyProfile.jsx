@@ -140,11 +140,11 @@ const profileSchema = z
     lastName: z.string().min(1, "Last Name is required"),
     mobile: z.string().optional(),
     country: z
-    .object({
-      dialCode: z.union([z.string(), z.number()]).optional(),
-    })
-    .nullable()
-    .optional(),
+      .object({
+        dialCode: z.union([z.string(), z.number()]).optional(),
+      })
+      .nullable()
+      .optional(),
     companyName: z.string().optional(),
     email: z.string().min(1, "Email is required").email("Invalid email"),
     gender: z.string().optional(),
@@ -169,8 +169,9 @@ const profileSchema = z
       }),
     billingAddress1: z.string().min(1, "Billing address 1 is required"),
     billingAddress2: z.string().optional(),
-  }).superRefine((data, ctx) => {
-    const code = data.country?.dialCode ? String(data.country.dialCode) : "";  
+  })
+  .superRefine((data, ctx) => {
+    const code = data.country?.dialCode ? String(data.country.dialCode) : "";
     const numeric = data.mobile?.replace(/\D/g, "") || "";
     if (!numeric) {
       ctx.addIssue({
@@ -197,7 +198,7 @@ const profileSchema = z
         });
       }
     }
-    if ((code === "91") && data.pincode) {
+    if (code === "91" && data.pincode) {
       const pin = data?.pincode?.replace(/\D/g, "");
       if (pin.length !== 6) {
         ctx.addIssue({
@@ -391,11 +392,11 @@ const MyProfile = () => {
         if (data.success) {
           ShowToast(data.message, "success");
         } else {
-          ShowToast(data.message,"error");
+          ShowToast(data.message, "error");
         }
       },
       onError: (error) => {
-        ShowToast(error.message,"error");
+        ShowToast(error.message, "error");
       },
     });
   const onSubmit = (values) => {
@@ -447,21 +448,21 @@ const MyProfile = () => {
       },
       onSuccess: (data) => {
         if (data.success) {
-          ShowToast(data?.message,"success");
+          ShowToast(data?.message, "success");
           setUser(data?.user);
         } else {
-          ShowToast(data.message || "Something went wrong","error");
+          ShowToast(data.message || "Something went wrong", "error");
         }
       },
       onError: (error) => {
-        ShowToast(error.message || "Something went wrong","error");
+        ShowToast(error.message || "Something went wrong", "error");
       },
     });
 
   const handleImageUpload = (e) => {
     const file = e.target.files?.[0];
     if (!file) {
-      ShowToast("Please select an image!","error");
+      ShowToast("Please select an image!", "error");
       return;
     }
     const maxSizeMB = 1; // 1 MB
@@ -489,11 +490,11 @@ const MyProfile = () => {
               <div className="mt-20">
                 <div className=" flex flex-col items-center justify-center">
                   <div className="relative">
-                    <div className="w-[125px] h-[125px]">
+                    <div className="w-[125px] h-[125px] rounded-full border-1 border-[#000]">
                       <ImageWithFallback
                         width={125}
                         height={125}
-                        className="w-full h-full rounded-full"
+                        className="size-full rounded-full object-cover"
                         src={
                           profileImage
                             ? profileImage

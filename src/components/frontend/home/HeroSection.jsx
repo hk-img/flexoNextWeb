@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getApi } from "@/services/ApiService";
 import { useRouter } from "next/navigation";
 import { slugGenerator } from "@/services/Comman";
+import { toast } from "sonner";
 
 const Select = dynamic(() => import("react-select"), { ssr: false });
 
@@ -34,6 +35,7 @@ export default function HeroSection({ spaceCategoryData }) {
   const router = useRouter();
   const [type, setType] = useState(null);
   const [location, setLocation] = useState(null);
+  console.log({type,location},"rtyhrtyryrtyrt");
 
   const DropdownIndicator = (props) => {
     const { menuIsOpen } = props.selectProps;
@@ -186,6 +188,9 @@ export default function HeroSection({ spaceCategoryData }) {
     if (!locationSlug && typeSlug == "coworking-space") {
       return router.push(`/in/coworking/${citySlug}`);
     }
+    if(type?.label == "Coworking Café/Restaurant"){
+      return router.push(`/in/coworking-cafe/${citySlug}/${locationSlug}`);
+    }
     router.push(`/in/${typeSlug}/${citySlug}/${locationSlug}`);
   };
 
@@ -204,7 +209,8 @@ export default function HeroSection({ spaceCategoryData }) {
               alt={texts[idx]}
               title={texts[idx]}
               fill
-              priority
+              priority={idx === 0}
+              loading={idx === 0 ? undefined : "lazy"}
               className="object-cover h-full w-full"
             />
           </div>
@@ -226,7 +232,17 @@ export default function HeroSection({ spaceCategoryData }) {
                 {texts[currentText]}
               </div>
             </div>
-            <div className="flex md:flex-row flex-col md:bg-transparent bg-white md:px-0 md:py-0 px-[15px] md:pr-[5px] pt-5 pb-4 rounded-[15px] items-center gap-y-5 gap-x-4 sm:mt-9 mt-17 sm:mb-0 mb-4 w-full lg:w-10/12">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (!type || !location) {
+                  toast.error("Please select space type and location");
+                  return;
+                }
+                handleSearch(type, location);
+              }}
+              className="flex md:flex-row flex-col md:bg-transparent bg-white md:px-0 md:py-0 px-[15px] md:pr-[5px] pt-5 pb-4 rounded-[15px] items-center gap-y-5 gap-x-4 sm:mt-9 mt-17 sm:mb-0 mb-4 w-full lg:w-10/12"
+            >
               <div className="flex gap-y-5 md:flex-row flex-col bg-white md:rounded-[15px] overflow-hidden w-full md:w-8/12 lg:w-7/12 px-[7px]">
                 <Select
                   options={spaceCategoryData}
@@ -247,6 +263,7 @@ export default function HeroSection({ spaceCategoryData }) {
                   }}
                   noOptionsMessage={() => "Space not found"}
                 />
+
                 <Select
                   options={locationData}
                   placeholder="Where?"
@@ -274,15 +291,14 @@ export default function HeroSection({ spaceCategoryData }) {
                   noOptionsMessage={() => "Location not found"}
                 />
               </div>
-
               <button
+                type="submit"
                 aria-label="Search Workspaces"
-                onClick={() => handleSearch(type, location)}
                 className="bg-[#f76900] px-5 text-white font-medium h-[46px] flex items-center justify-center rounded-xl w-full md:w-auto text-sm cursor-pointer"
               >
                 Search
               </button>
-            </div>
+            </form>
           </div>
         </div>
       </div>

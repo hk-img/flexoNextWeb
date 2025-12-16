@@ -1,4 +1,4 @@
-import { Poppins , Roboto } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 import { Toaster } from "sonner";
@@ -16,22 +16,36 @@ const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-poppins",
-});
-const roboto = Roboto({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
+  display: "swap", // Font loading optimization - swap strategy
+  // preload: false - Don't block render for fonts, use swap instead
+  // Font will load asynchronously and swap when ready
+  adjustFontFallback: true, // Better font fallback to prevent layout shift
 });
 
 export const metadata = {
   title: "Find Coworking & Office Spaces Across India | Flexo",
   description: "Discover top coworking spaces, managed offices, and commercial properties. Find your perfect office with Flexo. Trusted by leading companies - Flexo",
+  other: {
+    // Resource hints for faster CSS/font loading - reduce render blocking
+    'dns-prefetch': 'https://fonts.googleapis.com',
+  },
 };
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  // interactiveWidget: 'resizes-visual', // optional
+}
+ 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, shrink-to-fit=no" />
+        {/* Resource hints for faster CSS/font loading - reduce render blocking (610ms) */}
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body
         className={`${poppins.className} antialiased overflow-x-hidden font-poppins [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]`}

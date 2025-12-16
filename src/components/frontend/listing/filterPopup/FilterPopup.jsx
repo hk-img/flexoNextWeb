@@ -81,7 +81,7 @@ const FilterPopup = ({
                       })
                     }
                   />
-                  <p className="text-base font-extralight mt-5">Distance</p>
+                  {/* <p className="text-base font-extralight mt-5">Distance</p>
                   <SingleRangeSlider
                     min={0}
                     max={50}
@@ -93,7 +93,7 @@ const FilterPopup = ({
                         distance: val, // directly number
                       })
                     }
-                  />
+                  /> */}
                   {/* <div className="relative">
                       <div className="">
                         <p className="">Price</p>

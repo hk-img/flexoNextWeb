@@ -91,7 +91,9 @@ const Listing = ({
 
   // Keep map hidden by default; user can toggle on
   useEffect(() => {
-    setMapToggle(false);
+    if(isMobile){
+      setMapToggle(false);
+    }
   }, [isMobile]);
 
   const handleRadioChange = useCallback(
@@ -264,7 +266,7 @@ const Listing = ({
     initialData: listingData,
     // Agar initial data hai aur default filters hain to refetch mat karo
     refetchOnMount: shouldRefetchOnMount,
-    staleTime: 1000 * 60 * 5, // cache listing for 5 minutes to reduce refetch
+    staleTime: 0,
     gcTime: 1000 * 60 * 10, // 10 minutes cache time
   });
   const productData = useMemo(() => {
@@ -734,7 +736,7 @@ const Listing = ({
                       setIsAuthOpen={setIsAuthOpen}
                       setSelectedSpaceData={setSelectedSpaceData}
                       setSelectedCityName={setSelectedCityName}
-                    isLcp={page === 1 && index === 0}
+                      isLcp={page === 1 && index === 0}
                     />
                   </div>
                 ))}

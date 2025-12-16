@@ -287,21 +287,21 @@ const Footer = memo(() => {
                   >
                     Terms Of Use
                   </Link>
-                  <span class="text-[#ccc]">|</span>
+                  <span className="text-[#ccc]">|</span>
                   <Link
                     href="/privacy-policy"
                     className="hover:text-black text-[#555] relative text-nowrap text-sm"
                   >
                     Privacy Policy
                   </Link>
-                  <span class="text-[#ccc]">|</span>
+                  <span className="text-[#ccc]">|</span>
                   <Link
                     href="/refund-policy"
                     className="hover:text-black text-[#555] relative text-nowrap text-sm"
                   >
                     Refund Policy
                   </Link>
-                  <span class="text-[#ccc]">|</span>
+                  <span className="text-[#ccc]">|</span>
                   <Link
                     href="/host-terms-conditions"
                     className="hover:text-black text-[#555] relative text-nowrap text-sm"

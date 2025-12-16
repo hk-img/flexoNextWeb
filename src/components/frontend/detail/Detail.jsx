@@ -131,6 +131,8 @@ const Detail = ({
     },
     keepPreviousData: true,
     initialData: detailData,
+    staleTime: 0,
+    gcTime: 1000 * 60 * 10,
   });
 
   const spaceData = useMemo(() => {
@@ -363,7 +365,8 @@ const Detail = ({
                     <LikeDislike
                       spaceData={spaceData}
                       setIsAuthOpen={setIsAuthOpen}
-                      existingVote={spaceDeatil?.existingVote}
+                      voteData={spaceDeatil?.existingVote}
+                      refetchDetail={refetchDetail}
                     />
                   )}
                 </div>

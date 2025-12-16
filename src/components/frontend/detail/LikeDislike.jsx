@@ -5,9 +5,7 @@ import { ShowToast } from "@/utils/ShowToast";
 import { useMutation } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 
-const LikeDislike = ({ spaceData, setIsAuthOpen, existingVote }) => {
-  const [upVoteCount, setUpVoteCount] = useState(0);
-  const [voteData, setVoteData] = useState(null);
+const LikeDislike = ({ spaceData, setIsAuthOpen, voteData,refetchDetail }) => {
   const { token } = useAuth();
   const { mutate: upVoteMutate } = useMutation({
     mutationFn: async (payload) => {
@@ -21,8 +19,7 @@ const LikeDislike = ({ spaceData, setIsAuthOpen, existingVote }) => {
     onSuccess: (data, payload) => {
       if (data?.result?.success) {
         ShowToast(data?.result?.message,"success");
-        setVoteData(data?.result?.existingVote);
-        setUpVoteCount(data?.result?.space?.upvote);
+        refetchDetail();
         localStorage.removeItem("voteData");
       } else {
         ShowToast(data.message || data?.result?.message,"error");
@@ -59,8 +56,7 @@ const LikeDislike = ({ spaceData, setIsAuthOpen, existingVote }) => {
     onSuccess: (data, payload) => {
       if (data?.result?.success) {
         ShowToast(data?.result?.message,"success");
-        setVoteData(data?.result?.existingVote);
-        setUpVoteCount(data?.result?.space?.upvote);
+        refetchDetail();
         localStorage.removeItem("voteData");
       } else {
         ShowToast(data?.message || data?.result?.message,"error");
@@ -85,18 +81,6 @@ const LikeDislike = ({ spaceData, setIsAuthOpen, existingVote }) => {
     };
     downVoteMutate(payload);
   };
-
-  useEffect(() => {
-    if (existingVote) {
-      setVoteData(existingVote);
-    }
-  }, [existingVote]);
-
-  useEffect(() => {
-    if (spaceData) {
-      setUpVoteCount(spaceData?.upvote);
-    }
-  }, [spaceData]);
 
   useEffect(()=>{
     const voteData = localStorage.getItem("voteData");
@@ -124,7 +108,7 @@ const LikeDislike = ({ spaceData, setIsAuthOpen, existingVote }) => {
             }`}
           />
           {spaceData?.upvote > 0 && (
-            <span className="text-[15px]">{upVoteCount}</span>
+            <span className="text-[15px]">{spaceData?.upvote}</span>
           )}
         </div>
 
@@ -138,6 +122,9 @@ const LikeDislike = ({ spaceData, setIsAuthOpen, existingVote }) => {
               voteData?.downvote == 1 ? "text-[#f76900]" : "text-black"
             }`}
           />
+          {spaceData?.downvote > 0 && (
+            <span className="text-[15px]">{spaceData?.downvote}</span>
+          )}
         </div>
       </div>
     </>

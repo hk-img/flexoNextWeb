@@ -89,6 +89,12 @@ const Listing = ({
   const [selectedCityName, setSelectedCityName] = useState(null);
   const perPage = 30;
 
+  useEffect(() => {
+    if(page > 1){
+      window.scrollTo(0, 0);
+    }
+  }, [page]); 
+
   // Keep map hidden by default; user can toggle on
   useEffect(() => {
     if(isMobile){
@@ -760,7 +766,7 @@ const Listing = ({
                   </div>
                 ))}
               </div>
-              {productData?.length > 18 && visibleCount > 18 && (
+              {productData?.length > 18 && (
                 <RequestCallback setIsOpen={setIsOpen} type={type} />
               )}
               {thirdSlice.length > 0 && (

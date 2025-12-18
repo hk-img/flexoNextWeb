@@ -189,7 +189,7 @@ export default function HeroSection({ spaceCategoryData }) {
       return router.push(`/in/coworking/${citySlug}`);
     }
     if(type?.label == "Coworking Café/Restaurant"){
-      return router.push(`/in/coworking-cafe/${citySlug}/${locationSlug}`);
+      return router.push(`/in/coworking-café-restaurant/${citySlug}/${locationSlug}`);
     }
     router.push(`/in/${typeSlug}/${citySlug}/${locationSlug}`);
   };

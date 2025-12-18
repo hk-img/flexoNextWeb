@@ -69,6 +69,7 @@ const Listing = ({
   const [selectedRadio, setSelectedRadio] = useState(
     spaceCategoryData?.[0]?.spaceType
   );
+  console.log({selectedRadio},"rtryrtyrtyrty")
   const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
   const [toggleLocation, setToggleLocation] = useState(false);
   const [toggleLocationOptions, setToggleLocationOptions] = useState(false);
@@ -90,9 +91,7 @@ const Listing = ({
   const perPage = 30;
 
   useEffect(() => {
-    if(page > 1){
-      window.scrollTo(0, 0);
-    }
+    window.scrollTo(0, 0);
   }, [page]); 
 
   // Keep map hidden by default; user can toggle on
@@ -123,7 +122,7 @@ const Listing = ({
   );
 
   const type = useMemo(() => {
-    const type = getTypeOfSpaceByWorkSpace(selectedRadio || "")
+    const type = selectedRadio == "Coworking Café/Restaurant" ? "shortterm" : getTypeOfSpaceByWorkSpace(selectedRadio || "")
     return type;
   }, [selectedRadio]);
 
@@ -166,6 +165,11 @@ const Listing = ({
       if (spaceTypeSlug === "coworking") {
         setSelectedRadio("Coworking Space");
         setSelectedCheckboxes(coworkingTypes);
+        return;
+      }
+      if(spaceTypeSlug == "coworking-café-restaurant"){
+        setSelectedRadio("Coworking Café/Restaurant");
+        setSelectedCheckboxes(["coworking café restaurant"]);
         return;
       }
       const selectedSpaceType = spaceCategoryData?.find((item) => {

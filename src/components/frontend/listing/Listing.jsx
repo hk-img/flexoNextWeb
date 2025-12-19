@@ -69,6 +69,7 @@ const Listing = ({
   const [selectedRadio, setSelectedRadio] = useState(
     spaceCategoryData?.[0]?.spaceType
   );
+  console.log({selectedRadio},"rtryrtyrtyrty")
   const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
   const [toggleLocation, setToggleLocation] = useState(false);
   const [toggleLocationOptions, setToggleLocationOptions] = useState(false);
@@ -88,6 +89,10 @@ const Listing = ({
   const [selectedSpaceData, setSelectedSpaceData] = useState(null);
   const [selectedCityName, setSelectedCityName] = useState(null);
   const perPage = 30;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [page]); 
 
   // Keep map hidden by default; user can toggle on
   useEffect(() => {
@@ -117,7 +122,7 @@ const Listing = ({
   );
 
   const type = useMemo(() => {
-    const type = getTypeOfSpaceByWorkSpace(selectedRadio || "")
+    const type = selectedRadio == "Coworking Café/Restaurant" ? "shortterm" : getTypeOfSpaceByWorkSpace(selectedRadio || "")
     return type;
   }, [selectedRadio]);
 
@@ -160,6 +165,11 @@ const Listing = ({
       if (spaceTypeSlug === "coworking") {
         setSelectedRadio("Coworking Space");
         setSelectedCheckboxes(coworkingTypes);
+        return;
+      }
+      if(spaceTypeSlug == "coworking-café-restaurant"){
+        setSelectedRadio("Coworking Café/Restaurant");
+        setSelectedCheckboxes(["coworking café restaurant"]);
         return;
       }
       const selectedSpaceType = spaceCategoryData?.find((item) => {
@@ -760,7 +770,7 @@ const Listing = ({
                   </div>
                 ))}
               </div>
-              {productData?.length > 18 && visibleCount > 18 && (
+              {productData?.length > 18 && (
                 <RequestCallback setIsOpen={setIsOpen} type={type} />
               )}
               {thirdSlice.length > 0 && (

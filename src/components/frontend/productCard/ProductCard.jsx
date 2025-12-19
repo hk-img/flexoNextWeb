@@ -440,7 +440,7 @@ const ProductCard = ({
                             )}
                           </span>
                         </div>
-                        <span className="ps-1 min-[1400px]:text-[13px] text-[11px] font-normal !leading-4">
+                        <span className="ps-1 min-[1400px]:text-[13px] text-[11px] font-normal !leading-4 whitespace-nowrap">
                           per seat/month
                         </span>
                       </div>

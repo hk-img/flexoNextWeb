@@ -138,7 +138,7 @@ const Detail = ({
   const spaceData = useMemo(() => {
     return spaceDeatil?.data;
   }, [spaceDeatil]);
-  
+
   const type = useMemo(
     () => spaceData?.spaceType == "Coworking Café/Restaurant" ? "shortterm" : getTypeOfSpaceByWorkSpace(spaceData?.spaceType || ""),
     [spaceData]
@@ -230,7 +230,7 @@ const Detail = ({
   }, [token]);
 
   const handleCityBreadCrumb = () => {
-    const typeSlug = slugGenerator(spaceData?.spaceType || "");
+    const typeSlug = spaceData?.spaceType == "Coworking Café/Restaurant" ? "coworking-café-restaurant" : slugGenerator(spaceData?.spaceType || "");
     const citySlug = slugGenerator(spaceData?.contact_city_name || "");
     if (typeSlug == "coworking-space") {
       return router.push(`/in/coworking/${citySlug}`);
@@ -239,7 +239,7 @@ const Detail = ({
   };
 
   const handleLocationBreadCrumb = () => {
-    const typeSlug = slugGenerator(spaceData?.spaceType || "");
+    const typeSlug = spaceData?.spaceType == "Coworking Café/Restaurant" ? "coworking-café-restaurant" : slugGenerator(spaceData?.spaceType || "");
     const citySlug = slugGenerator(spaceData?.contact_city_name || "");
     const locationSlug = slugGenerator(spaceData?.location_name || "");
     if (!locationSlug && typeSlug == "coworking-space") {

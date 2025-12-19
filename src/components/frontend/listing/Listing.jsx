@@ -108,7 +108,9 @@ const Listing = ({
       const { value } = e.target;
       // if (value == "Coworking Space") {
       //   setSelectedCheckboxes(coworkingTypes);
-      // } else {
+      // } else if(value == "Coworking Café Restaurant"){
+      //   setSelectedCheckboxes(["Coworking Café/Restaurant"]);
+      // }else {
       //   const smallSpaceType = convertSlugToSmallLetter(value || "");
       //   setSelectedCheckboxes([smallSpaceType]);
       // }
@@ -298,7 +300,7 @@ const Listing = ({
     },
     keepPreviousData: true,
     initialData: locationData,
-    staleTime: 1000 * 60 * 10,
+    staleTime: 0,
   });
 
   // Defer location matching to reduce TBT
@@ -680,7 +682,7 @@ const Listing = ({
                                     // setToggleLocationOptions(false);
                                     // setNearMeData(null);
                                     const typeSlug =
-                                      slugGenerator(selectedRadio);
+                                      selectedRadio == "Coworking Café/Restaurant" ? "coworking-café-restaurant" : slugGenerator(selectedRadio);
                                     const citySlug = slugGenerator(
                                       loc?.city || ""
                                     );

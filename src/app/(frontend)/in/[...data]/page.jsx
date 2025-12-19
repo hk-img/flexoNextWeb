@@ -198,7 +198,6 @@ const page = async ({ params }) => {
   const city = convertSlugToCapitalLetter(citySlug || "");
   const locationName = convertSlugToCapitalLetter(locationNameSlug || "");
   const type = decodedSlug == "coworking-café-restaurant" ? "shortterm" : getTypeOfSpaceByWorkSpace(decodedSlug || "");
-  console.log({decodedSlug,type},"r4tyrtyryrty")
   const payload = {
     cityId: city,
     spaceType:

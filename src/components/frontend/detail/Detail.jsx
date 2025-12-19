@@ -138,8 +138,11 @@ const Detail = ({
   const spaceData = useMemo(() => {
     return spaceDeatil?.data;
   }, [spaceDeatil]);
-
-  const type = getTypeOfSpaceByWorkSpace(spaceData?.spaceType || "");
+  
+  const type = useMemo(
+    () => spaceData?.spaceType == "Coworking Café/Restaurant" ? "shortterm" : getTypeOfSpaceByWorkSpace(spaceData?.spaceType || ""),
+    [spaceData]
+  );
   const displayedFacilities = showAll
     ? spaceData?.facilities
     : spaceData?.facilities?.slice(0, 3);

@@ -13,10 +13,28 @@ import { ShowToast } from "@/utils/ShowToast";
 
 const bookingItem = ({ item, setShowReviewPopup, setBookingId }) => {
   const { token } = useAuth();
-  const type = useMemo(() => getTypeOfSpaceByWorkSpace(item?.spaceType || ""), [item]);
-  const spaceTypeSlug = useMemo(() => slugGenerator(item?.spaceType), [item]);
-  const locationNameSlug = useMemo(() => slugGenerator(item?.location_name || ""), [item]);
-  const cityNameSlug = useMemo(() => slugGenerator(item?.contact_city_name || ""), [item]);
+  const spaceTypeSlug = useMemo(
+    () =>
+      item?.spaceType == "Coworking Café/Restaurant"
+        ? "coworking-café-restaurant"
+        : slugGenerator(item?.spaceType),
+    [item]
+  );
+  const type = useMemo(
+    () =>
+      item?.spaceType == "Coworking Café/Restaurant"
+        ? "shortterm"
+        : getTypeOfSpaceByWorkSpace(item?.spaceType || ""),
+    [item]
+  );
+  const locationNameSlug = useMemo(
+    () => slugGenerator(item?.location_name || ""),
+    [item]
+  );
+  const cityNameSlug = useMemo(
+    () => slugGenerator(item?.contact_city_name || ""),
+    [item]
+  );
   const spaceId = item?.spaceId;
   const handleInvoiceClick = async () => {
     try {
@@ -30,7 +48,7 @@ const bookingItem = ({ item, setShowReviewPopup, setBookingId }) => {
         window.open(url, "_blank");
       }
     } catch (error) {
-      ShowToast(error.message,"error");
+      ShowToast(error.message, "error");
     }
   };
   return (

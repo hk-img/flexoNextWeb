@@ -54,6 +54,7 @@ const Listing = ({
   nearBySpacesData,
   listingData,
 }) => {
+  const decodedLocationName = decodeURIComponent(locationName || "");
   const isMobile = useIsMobile();
   const router = useRouter();
   const { user } = useAuth();
@@ -71,6 +72,7 @@ const Listing = ({
   );
   console.log({selectedRadio},"rtryrtyrtyrty")
   const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
+  console.log({selectedCheckboxes},"fgfgfgfgfgfgfg")
   const [toggleLocation, setToggleLocation] = useState(false);
   const [toggleLocationOptions, setToggleLocationOptions] = useState(false);
   const [query, setQuery] = useState("");
@@ -169,7 +171,7 @@ const Listing = ({
       }
       if(spaceTypeSlug == "coworking-café-restaurant"){
         setSelectedRadio("Coworking Café/Restaurant");
-        setSelectedCheckboxes(["coworking café restaurant"]);
+        setSelectedCheckboxes(["Coworking Café/Restaurant"]);
         return;
       }
       const selectedSpaceType = spaceCategoryData?.find((item) => {
@@ -408,7 +410,7 @@ const Listing = ({
             <div className="lg:w-2/3 w-full flex grow flex-col justify-center lg:mt-8 mt-16">
               <h1 className="text-xl flex flex-wrap font-bold text-[#141414] mb-4">
                 {locationName
-                  ? `${spaceType} in ${locationName}, ${city}`
+                  ? `${spaceType} in ${decodedLocationName}, ${city}`
                   : spaceTypeSlug == "coworking"
                   ? `Coworking Space in ${city}`
                   : `${spaceType} in ${city}`}

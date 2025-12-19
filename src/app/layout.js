@@ -25,6 +25,10 @@ const poppins = Poppins({
 export const metadata = {
   title: "Find Coworking & Office Spaces Across India | Flexo",
   description: "Discover top coworking spaces, managed offices, and commercial properties. Find your perfect office with Flexo. Trusted by leading companies - Flexo",
+  robots: {
+    index: true,
+    follow: true,
+  },
   other: {
     // Resource hints for faster CSS/font loading - reduce render blocking
     'dns-prefetch': 'https://fonts.googleapis.com',

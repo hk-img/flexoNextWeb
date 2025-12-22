@@ -222,6 +222,7 @@ const ProductCard = ({
                     fallback="/images/default_image.webp"
                     priority={isLcp && index === 0}
                     fetchPriority={isLcp && index === 0 ? "high" : undefined}
+                    watermark = {item?.spaceType == "Private Office" ? true : false}
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     quality={75}
                   />

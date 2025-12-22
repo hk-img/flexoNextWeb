@@ -165,6 +165,7 @@ const HeroSection = ({
                     height={436}
                     className="object-cover size-full"
                     fallback="/images/default_image.webp"
+                    watermark = {spaceData?.spaceType == "Private Office" ? true : false}
                     priority
                   />
                 </div>
@@ -185,6 +186,7 @@ const HeroSection = ({
                         height={210}
                         className="object-cover size-full"
                         fallback="/images/default_image.webp"
+                        watermark = {spaceData?.spaceType == "Private Office" ? true : false}
                         priority={index === 0 && !youtubeId}
                       />
                     </div>
@@ -357,6 +359,7 @@ const HeroSection = ({
           viewImagePopup={viewImagePopup}
           setViewImagePopup={setViewImagePopup}
           images={formattedImages}
+          spaceData = {spaceData}
         />
       )}
     </>

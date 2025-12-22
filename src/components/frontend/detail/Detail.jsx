@@ -1349,10 +1349,7 @@ const Detail = ({
                   )}
                   <button
                     onClick={handleRequestToBook}
-                    className="cursor-pointer md:hidden block md:relative fixed bottom-0 left-0 w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[15px]  md:rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px] z-10  transform
-    [transform:translate3d(0,0,0)]
-    [backface-visibility:hidden]
-    [-webkit-backface-visibility:hidden]"
+                    className="cursor-pointer md:hidden block md:relative fixed bottom-0 left-0 w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[15px]  md:rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px] z-10  h-auto will-change-transform [transform:translateZ(0)] [-webkit-transform:translateZ(0)] [backface-visibility:hidden] [-webkit-backface-visibility:hidden]"
                   >
                     {spaceData?.isInstant == 1 ? "Book Now" : "Request To Book"}
                   </button>

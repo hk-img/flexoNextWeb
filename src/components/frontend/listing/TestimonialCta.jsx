@@ -44,7 +44,12 @@ const testimonials = [
 
 const TestimonialCta = ({ setIsOpen, type }) => {
   return (
-    <section className="w-full relative md:py-3 py-1 px-4 rounded-2xl items-center mt-6 mb-8 shadow-[0_4px_10px_#00000014] mx-auto bg-no-repeat bg-cover overflow-hidden h-full">
+    <section
+      className="w-full relative md:py-3 py-1 px-4 rounded-2xl items-center mt-6 mb-8 shadow-[0_4px_10px_#00000014] mx-auto bg-no-repeat bg-cover overflow-hidden h-full  [transform:translate3d(0,0,0)]
+    [-webkit-transform:translate3d(0,0,0)]
+    [backface-visibility:hidden]
+    [-webkit-backface-visibility:hidden]"
+    >
       {/* === Blob Backgrounds === */}
       <div className="absolute inset-0 -z-0 overflow-hidden">
         {/* Orange Blob */}

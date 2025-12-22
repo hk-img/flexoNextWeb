@@ -66,10 +66,20 @@ const TrustedCompaniesCta = ({ setIsOpen, type }) => {
     },
   ];
   return (
-    <section className="w-full relative ">
+    <section
+      className="w-full relative
+    [transform:translate3d(0,0,0)]
+    [-webkit-transform:translate3d(0,0,0)]
+    [backface-visibility:hidden]
+    [-webkit-backface-visibility:hidden]"
+    >
       <div className="relative lg:py-5.5 py-7 px-6 rounded-2xl items-center shadow-[0_4px_10px_#00000014] mx-auto overflow-hidden bg-[#f76900]">
         {/* Concentric Circles Background */}
-        <div className="absolute inset-0 -z-0 overflow-hidden ">
+        <div
+          className="absolute inset-0 -z-0 overflow-hidden pointer-events-none
+    [will-change:transform]
+    [transform:translateZ(0)]"
+        >
           <span className="absolute md:-right-[210px] -right-[150px] top-1/2 -translate-y-1/2 md:w-[600px] md:h-[600px] w-[400px] h-[400px]  rounded-full bg-[#f98b1b]"></span>
           <span className="absolute md:-right-[180px] -right-[120px] top-1/2 -translate-y-1/2 md:w-[500px] md:h-[500px] w-[300px] h-[300px] rounded-full bg-[#faa44d]"></span>
           <span className="absolute md:-right-[150px] -right-[90px] top-1/2 -translate-y-1/2 md:w-[400px] md:h-[400px] w-[200px] h-[200px] rounded-full bg-[#fbbd80]"></span>

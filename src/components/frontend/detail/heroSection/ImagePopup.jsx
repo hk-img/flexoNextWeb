@@ -13,9 +13,9 @@ const ImagePopup = ({ viewImagePopup, setViewImagePopup, images = [],spaceData }
         onClick={() => setViewImagePopup(false)}
       />
 
-      <div className="relative w-full h-auto  sm:h-full lg:max-w-[830] mx-[12px] rounded-[11px] bg-white p-6 overflow-hidden animate-scaleIn">
-        <div className="flex items-center justify-between h-full">
-          <div className="w-full h-full md:[&_.emblaarrows]:-left-9 md:[&_.emblaarrows]:-right-9 [&_.emblaarrows]:-left-3 [&_.emblaarrows]:-right-3 [&_.emblaarrows_button]:w-[35px] [&_.emblaarrows_button]:h-[35px] [&_.emblaarrows_button_Svg]:size-[18px] [&_section]:h-full sm:p-4 sm:pb-8">
+      <div className="relative w-full h-auto sm:h-full lg:max-w-[830] mx-[12px] rounded-[11px] bg-white p-6 overflow-hidden animate-scaleIn">
+        <div className="flex items-center justify-between">
+          <div className="w-full md:[&_.emblaarrows]:-left-9 md:[&_.emblaarrows]:-right-9 [&_.emblaarrows]:-left-3 [&_.emblaarrows]:-right-3 [&_.emblaarrows_button]:w-[35px] [&_.emblaarrows_button]:h-[35px] [&_.emblaarrows_button_Svg]:size-[18px] [&_section]:h-full sm:p-4 sm:pb-8">
             <EmblaCarousel
               options={{
                 loop: true,
@@ -26,16 +26,16 @@ const ImagePopup = ({ viewImagePopup, setViewImagePopup, images = [],spaceData }
               }}
             >
               {images.map((imgSrc, index) => (
-                <div key={index} className="embla__slide shrink-0  basis-full ">
-                  <div className="relative rounded-sm overflow-hidden shadow-md h-full">
-                    <div className="before:content-[''] before:w-full before:h-full before:absolute before:top-0 before:left-0 before:bg-[#0000002b]" />
+                <div key={index} className="embla__slide shrink-0 basis-full">
+                  <div className="relative rounded-sm overflow-hidden shadow-md">
+                    <div className="before:content-[''] before:aspect-[640/427] before:w-full before:h-full before:absolute before:top-0 before:left-0 before:bg-[#0000002b]" />
                     <ImageWithFallback
                       width={200}
                       height={200}
                       src={imgSrc}
                       alt={`image-${index}`}
                       title={`image-${index}`}
-                      className="w-full h-full object-cover"
+                      className="w-full h-auto aspect-[640/427] object-cover"
                       watermark = {spaceData?.spaceType == "Private Office" ? true : false}
                       fallback="/images/default_image.webp"
                     />

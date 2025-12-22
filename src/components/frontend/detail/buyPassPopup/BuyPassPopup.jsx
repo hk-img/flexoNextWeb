@@ -540,42 +540,42 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
                         {spaceData?.originalPrice}
                       </p>
                       <span className="font-semibold">
-                        {(values?.guests * spaceData?.originalPrice)?.toLocaleString("en-IN")}{" "}
                         <Svg
                           name="rupee"
                           className="size-[18px] text-[#f76900] inline"
-                        />
+                        />{" "}
+                        {(values?.guests * spaceData?.originalPrice)?.toLocaleString("en-IN")}
                       </span>
                     </div>
                   ))}
                   <div className="flex justify-between text-[#f76900] border-b py-1 border-[#DBDBDB]">
                     <span className="text-sm 2xl:text-base">Subtotal</span>
                     <span className="font-semibold">
-                      {subtotal?.toLocaleString("en-IN")}{" "}
                       <Svg
                         name="rupee"
                         className="size-[18px] text-[#f76900] inline"
-                      />
+                      />{" "}
+                      {subtotal?.toLocaleString("en-IN")}
                     </span>
                   </div>
                   <div className="flex justify-between text-[#f76900]  border-b py-1 border-[#DBDBDB]">
                     <span className="text-sm 2xl:text-base">GST(18%)</span>
                     <span className="font-semibold">
-                      {gst?.toLocaleString("en-IN")}{" "}
                       <Svg
                         name="rupee"
                         className="size-[18px] text-[#f76900] inline"
-                      />
+                      />{" "}
+                      {gst?.toLocaleString("en-IN")}
                     </span>
                   </div>
                   <div className="flex justify-between text-[#f76900] font-semibold">
                     <span>Payable Now</span>
                     <span className="font-semibold">
-                      {total?.toLocaleString("en-IN")}{" "}
                       <Svg
                         name="rupee"
                         className="size-[18px] text-[#f76900] inline"
-                      />
+                      />{" "}
+                      {total?.toLocaleString("en-IN")}
                     </span>
                   </div>
                 </div>

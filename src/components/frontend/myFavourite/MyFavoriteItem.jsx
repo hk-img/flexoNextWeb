@@ -9,8 +9,8 @@ import React, { useMemo, useState } from "react";
 
 const MyFavoriteItem = ({ item, setIsRemovePopupOpen, setSpaceId }) => {
   const [expanded, setExpanded] = useState(false);
-  const type = useMemo(() => getTypeOfSpaceByWorkSpace(item?.spaceData?.spaceType || ""), [item]);
-  const spaceTypeSlug = useMemo(() => slugGenerator(item?.spaceData?.spaceType), [item]);
+  const type = useMemo(() => item?.spaceData?.spaceType == "Coworking Café/Restaurant" ? "shortterm" : getTypeOfSpaceByWorkSpace(item?.spaceData?.spaceType || ""), [item]);
+  const spaceTypeSlug = useMemo(() => item?.spaceData?.spaceType == "Coworking Café/Restaurant" ? "coworking-café-restaurant" : slugGenerator(item?.spaceData?.spaceType), [item]);
   const locationNameSlug = useMemo(() => slugGenerator(item?.spaceData?.location_name || ""), [item]);
   const cityNameSlug = useMemo(() => slugGenerator(item?.spaceData?.contact_city_name || ""), [item]);
   const spaceId = item?.spaceData?.id;

@@ -35,10 +35,10 @@ const ProductCard = ({
   const { token } = useAuth();
   const [isFavourite, setIsFavourite] = useState(false);
   const type = useMemo(
-    () => getTypeOfSpaceByWorkSpace(item?.spaceType || ""),
+    () => item?.spaceType == "Coworking Café/Restaurant" ? "shortterm" : getTypeOfSpaceByWorkSpace(item?.spaceType || ""),
     [item]
   );
-  const spaceTypeSlug = useMemo(() => slugGenerator(item?.spaceType), [item]);
+  const spaceTypeSlug = useMemo(() => item?.spaceType == "Coworking Café/Restaurant" ? "coworking-café-restaurant" : slugGenerator(item?.spaceType), [item]);
   const locationNameSlug = useMemo(
     () => slugGenerator(item?.location_name || ""),
     [item]
@@ -222,6 +222,7 @@ const ProductCard = ({
                     fallback="/images/default_image.webp"
                     priority={isLcp && index === 0}
                     fetchPriority={isLcp && index === 0 ? "high" : undefined}
+                    watermark = {item?.spaceType == "Private Office" ? true : false}
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     quality={75}
                   />

@@ -1,37 +1,113 @@
-'use client';
+"use client";
 
-import { memo, useEffect, useState } from 'react';
-import Image from 'next/image';
+import { memo, useEffect, useRef, useState } from "react";
+import Image from "next/image";
+
+const WATERMARK_TEXT = "FLEXO";
 
 function ImageWithFallback({
   src,
-  fallback = '/images/default_image.webp',
+  fallback = "/images/default_image.webp",
   alt,
   loading,
   priority,
+  watermark = false,   // 👈 BOOLEAN FLAG
+  width,
+  height,
+  quality,
   ...props
 }) {
   const [imgSrc, setImgSrc] = useState(src);
+  const [canvasUrl, setCanvasUrl] = useState(null);
+  const [isOriginalLoaded, setIsOriginalLoaded] = useState(false);
+  const canvasRef = useRef(null);
 
   useEffect(() => {
     setImgSrc(src);
+    setIsOriginalLoaded(false);
   }, [src]);
 
-  // If priority is set, don't use loading prop (they conflict)
-  // Otherwise, default to lazy loading for better performance
-  const loadingProp = priority ? undefined : (loading || 'lazy');
+  /* ===== CANVAS WATERMARK (ONLY WHEN watermark === true) ===== */
+  useEffect(() => {
+    if (
+      !watermark ||
+      !width ||
+      !height ||
+      !isOriginalLoaded ||
+      imgSrc === fallback
+    ) {
+      setCanvasUrl(null);
+      return;
+    }
+
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const image = new window.Image();
+    image.crossOrigin = "anonymous";
+    image.src = imgSrc;
+
+    image.onload = () => {
+      canvas.width = width;
+      canvas.height = height;
+
+      ctx.clearRect(0, 0, width, height);
+      ctx.drawImage(image, 0, 0, width, height);
+
+      ctx.font = `12px Sans-Serif`;
+      ctx.fillStyle = "rgba(253, 244, 244, 0.6)";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(WATERMARK_TEXT, width / 2, height / 2);
+
+      setCanvasUrl(canvas.toDataURL("image/png"));
+    };
+  }, [imgSrc, watermark, width, height, isOriginalLoaded, fallback]);
+
+  const loadingProp = priority ? undefined : loading || "lazy";
 
   return (
-    <Image
-      {...props}
-      src={imgSrc || fallback}
-      alt={alt || 'Image'}
-      loading={loadingProp}
-      priority={priority}
-      onError={() => setImgSrc(fallback)}
-      quality={props.quality} // Use caller-provided quality; default falls back to Next.js
-      decoding={priority ? "sync" : "async"} // Sync decoding for priority images to reduce render delay
-    />
+    <>
+      <canvas ref={canvasRef} style={{ display: "none" }} />
+
+      {/* ===== WATERMARK IMAGE ===== */}
+      {watermark && canvasUrl && isOriginalLoaded ? (
+        <Image
+          {...props}
+          src={canvasUrl}
+          alt={alt || "Watermarked Image"}
+          width={width}
+          height={height}
+          priority={priority}
+          loading={loadingProp}
+          quality={quality}
+          decoding={priority ? "sync" : "async"}
+          unoptimized
+        />
+      ) : (
+        /* ===== NORMAL IMAGE ===== */
+        <Image
+          {...props}
+          src={imgSrc || fallback}
+          alt={alt || "Image"}
+          width={width}
+          height={height}
+          fill={!width || !height}
+          priority={priority}
+          loading={loadingProp}
+          quality={quality}
+          decoding={priority ? "sync" : "async"}
+          onLoad={() => setIsOriginalLoaded(true)}
+          onError={() => {
+            setImgSrc(fallback);
+            setIsOriginalLoaded(false);
+          }}
+        />
+      )}
+    </>
   );
 }
 

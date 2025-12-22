@@ -4,8 +4,11 @@ import { getTypeOfSpaceByWorkSpace, slugGenerator } from "@/services/Comman";
 import React, { useMemo } from "react";
 
 const ReviewItem = ({ item }) => {
-  const type = useMemo(() => getTypeOfSpaceByWorkSpace(item?.spaceType || ""), [item]);
-  const spaceTypeSlug = useMemo(() => slugGenerator(item?.spaceType), [item]);
+  const type = useMemo(
+    () => item?.spaceType == "Coworking Café/Restaurant" ? "shortterm" : getTypeOfSpaceByWorkSpace(item?.spaceType || ""),
+    [item]
+  );
+  const spaceTypeSlug = useMemo(() => item?.spaceType == "Coworking Café/Restaurant" ? "coworking-café-restaurant" : slugGenerator(item?.spaceType), [item]);
   const locationNameSlug = useMemo(() => slugGenerator(item?.spaceLocationName || ""), [item]);
   const cityNameSlug = useMemo(() => slugGenerator(item?.space_contact_city_name || ""), [item]);
   const spaceId = item?.spaceId;

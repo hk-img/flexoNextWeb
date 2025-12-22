@@ -703,9 +703,9 @@ const RequestToBookPopup = ({
                 </button>
 
                 <p className="text-xs min-[1400px]:text-sm leading-[1.5] text-[#000000de] mt-2">
-                  You will not be charged yet. Your booking request will be sent
-                  to the host. Once the host accepts your booking request, you
-                  will receive a link to make the payment.
+                  {
+                    spaceData?.isInstant == 1 ? "After payment, your booking will be instantly confirmed." : "You will not be charged yet. Your booking request will be sent to the host. Once the host accepts your booking request, you will receive a link to make the payment."
+                  }
                 </p>
               </form>
             </div>
@@ -829,33 +829,33 @@ const RequestToBookPopup = ({
                   <div className="flex justify-between text-[#f76900] border-b py-1.5 border-[#DBDBDB]">
                     <span className="text-sm 2xl:text-base">Subtotal</span>
                     <span className="">
-                      {subtotal?.toLocaleString("en-IN")}{" "}
                       <Svg
                         name="rupee"
                         className="size-3.5 text-[#f76900] inline"
-                      />
+                      />{" "}
+                      {subtotal?.toLocaleString("en-IN")}
                     </span>
                   </div>
 
                   <div className="flex justify-between text-[#f76900] border-b py-1.5 border-[#DBDBDB]">
                     <span className="text-sm 2xl:text-base">GST (18%)</span>
                     <span className="">
-                      {gst?.toLocaleString("en-IN")}{" "}
                       <Svg
                         name="rupee"
                         className="size-3.5 text-[#f76900] inline"
-                      />
+                      />{" "}
+                      {gst?.toLocaleString("en-IN")}
                     </span>
                   </div>
 
                   <div className="flex justify-between text-[#f76900] py-1.5">
                     <span className="font-medium">Total</span>
                     <span className="">
-                      {total?.toLocaleString("en-IN")}{" "}
                       <Svg
                         name="rupee"
                         className="size-3.5 text-[#f76900] inline"
-                      />
+                      />{" "}
+                      {total?.toLocaleString("en-IN")}
                     </span>
                   </div>
                 </div>
@@ -863,7 +863,8 @@ const RequestToBookPopup = ({
             </div>
             <button
               disabled={isSubmitPending}
-              type="submit"
+              type="button"
+              onClick={handleSubmit(onSubmit)}
               className="md:hidden block cursor-pointer w-fit px-5 bg-[#f76900] hover:bg-[#ff7c52] text-white rounded-[15px] font-semibold uppercase tracking-[1px] py-[10px] my-4 mx-auto"
             >
               {isSubmitPending

@@ -5,7 +5,7 @@ const EmblaCarousel = dynamic(() => import("../../emblaCarousel/EmblaCarousel"),
   ssr: false
 });
 
-const ImagePopup = ({ viewImagePopup, setViewImagePopup, images = [] }) => {
+const ImagePopup = ({ viewImagePopup, setViewImagePopup, images = [],spaceData }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center animate-fadeIn p-4">
       <div
@@ -36,6 +36,7 @@ const ImagePopup = ({ viewImagePopup, setViewImagePopup, images = [] }) => {
                       alt={`image-${index}`}
                       title={`image-${index}`}
                       className="w-full h-full object-cover"
+                      watermark = {spaceData?.spaceType == "Private Office" ? true : false}
                       fallback="/images/default_image.webp"
                     />
                   </div>

@@ -245,7 +245,7 @@ const Footer = memo(() => {
                 <h3 className="font-medium leading-[1.6] text-[#333] text-xl">
                   Follow us on
                 </h3>
-                <div className="flex items-center gap-3.5 pt-2">
+                <div className="flex items-center justify-center w-[120px] gap-3.5 pt-2">
                   <Link
                     aria-label="linkedin"
                     href="https://www.linkedin.com/company/flexospaces/"

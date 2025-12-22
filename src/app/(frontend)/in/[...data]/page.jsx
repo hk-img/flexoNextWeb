@@ -202,7 +202,6 @@ const page = async ({ params }) => {
   const city = convertSlugToCapitalLetter(citySlug || "");
   const locationName = convertSlugToCapitalLetter(locationNameSlug || "");
   const type = decodedSlug == "coworking-café-restaurant" ? "shortterm" : getTypeOfSpaceByWorkSpace(decodedSlug || "");
-  console.log({decodedSlug,type},"r4tyrtyryrty")
   const payload = {
     cityId: city,
     spaceType:
@@ -215,8 +214,7 @@ const page = async ({ params }) => {
     (space) =>
       space?.location_name?.toLowerCase() == locationName?.toLowerCase()
   );
-  const otherTypes = decodedSlug == "coworking-café-restaurant" ? "coworking café restaurant" : convertSlugToSmallLetter(decodedSlug || "");
-  console.log({ otherTypes },"rtyhrtyhrtyrt");
+  const otherTypes = decodedSlug == "coworking-café-restaurant" ? "Coworking Café/Restaurant" : convertSlugToSmallLetter(decodedSlug || "");
   const listingPayload = {
     city_name: convertSlugToSmallLetter(city || ""),
     spaceType: type == "coworking" ? coworkingTypes : [otherTypes],
@@ -238,8 +236,6 @@ const page = async ({ params }) => {
     fetchAPI2(spaceType),
     getListingData(listingPayload),
   ]);
-  console.log({spaceType,listingPayload},"rtyhrtyhdfddruuuuuuuuuutyrt");
-  console.log({ data1,data2,listingData },"rtyhrtyhruuuuuuuuuutyrt");
   // if (listingData?.data?.length <= 0) return notFound();
   const jsonLd = {
     "@context": "https://schema.org",

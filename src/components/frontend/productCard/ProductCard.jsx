@@ -14,6 +14,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/context/useAuth";
 import { ShowToast } from "@/utils/ShowToast";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 const EmblaCarousel = dynamic(() => import("../emblaCarousel/EmblaCarousel"), {
   ssr: false,
   loading: () => (
@@ -35,10 +36,19 @@ const ProductCard = ({
   const { token } = useAuth();
   const [isFavourite, setIsFavourite] = useState(false);
   const type = useMemo(
-    () => item?.spaceType == "Coworking Café/Restaurant" ? "shortterm" : getTypeOfSpaceByWorkSpace(item?.spaceType || ""),
+    () =>
+      item?.spaceType == "Coworking Café/Restaurant"
+        ? "shortterm"
+        : getTypeOfSpaceByWorkSpace(item?.spaceType || ""),
     [item]
   );
-  const spaceTypeSlug = useMemo(() => item?.spaceType == "Coworking Café/Restaurant" ? "coworking-café-restaurant" : slugGenerator(item?.spaceType), [item]);
+  const spaceTypeSlug = useMemo(
+    () =>
+      item?.spaceType == "Coworking Café/Restaurant"
+        ? "coworking-café-restaurant"
+        : slugGenerator(item?.spaceType),
+    [item]
+  );
   const locationNameSlug = useMemo(
     () => slugGenerator(item?.location_name || ""),
     [item]
@@ -178,12 +188,15 @@ const ProductCard = ({
   };
   return (
     <>
-      <div
-        onClick={() => {
-          window.open(`${url}`, "_blank");
-        }}
+      <Link
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        // onClick={() => {
+        //   window.open(`${url}`, "_blank");
+        // }}
         ref={cardRef}
-        className="space-card relative [&_.emblaarrows]:left-3 [&_.emblaarrows]:right-3 [&_.emblaarrows_button]:w-[30px] [&_.emblaarrows_button]:h-[30px] [&_.emblaarrows_button_Svg]:size-[18px] [&_.emblaarrows_button]:!border-0 [&_.emblaarrows_button]:opacity-50 [&_.emblaarrows_button]:hover:opacity-100 [&_.emblaarrows_button_Svg]:!text-black w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col cursor-pointer"
+        className="space-card relative [&_.emblaarrows]:left-3 [&_.emblaarrows]:right-3 [&_.emblaarrows_button]:w-[30px] [&_.emblaarrows_button]:h-[30px] [&_.emblaarrows_button_Svg]:size-[18px] [&_.emblaarrows_button]:!border-0 [&_.emblaarrows_button]:opacity-50 [&_.emblaarrows_button]:hover:opacity-100 [&_.emblaarrows_button_Svg]:!text-black w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col cursor-pointer touch-manipulation"
       >
         {item?.ribbon_name && (
           <div
@@ -205,10 +218,10 @@ const ProductCard = ({
             {displayedImages?.map((image, index) => (
               <div
                 key={index}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  window.open(`${url}`, "_blank");
-                }}
+                // onClick={(e) => {
+                //   e.stopPropagation();
+                //   window.open(`${url}`, "_blank");
+                // }}
                 className="embla__slide relative shrink-0 basis-full"
               >
                 <div className="w-full aspect-[399/320] relative overflow-hidden rounded-t-md">
@@ -222,7 +235,9 @@ const ProductCard = ({
                     fallback="/images/default_image.webp"
                     priority={isLcp && index === 0}
                     fetchPriority={isLcp && index === 0 ? "high" : undefined}
-                    watermark = {item?.spaceType == "Private Office" ? true : false}
+                    watermark={
+                      item?.spaceType == "Private Office" ? true : false
+                    }
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     quality={75}
                   />
@@ -233,10 +248,10 @@ const ProductCard = ({
         ) : (
           <div className="embla__slide relative shrink-0 basis-full">
             <div
-              onClick={(e) => {
-                e.stopPropagation();
-                window.open(`${url}`, "_blank");
-              }}
+              // onClick={(e) => {
+              //   e.stopPropagation();
+              //   window.open(`${url}`, "_blank");
+              // }}
               className="w-full aspect-[399/320] relative overflow-hidden rounded-t-md"
             >
               <ImageWithFallback
@@ -558,10 +573,10 @@ const ProductCard = ({
                 </span>
               </div>
               <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  window.open(`${url}`, "_blank");
-                }}
+                // onClick={(e) => {
+                //   e.stopPropagation();
+                //   window.open(`${url}`, "_blank");
+                // }}
                 className="w-fit bg-[#f76900] text-xs border border-[#f76900]  text-white py-1.5 px-3 rounded-sm font-semibold duration-500 transition text-center gap-2  cursor-pointer"
               >
                 View Detail
@@ -569,7 +584,7 @@ const ProductCard = ({
             </div>
           )}
         </div>
-      </div>
+      </Link>
     </>
   );
 };

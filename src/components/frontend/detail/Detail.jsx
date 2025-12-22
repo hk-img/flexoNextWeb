@@ -15,7 +15,7 @@ import { getApi } from "@/services/ApiService";
 import Script from "next/script";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-const EmblaCarousel2 = dynamic(() => import("./emblaCarousel2/EmblaCarousel"),{ 
+const EmblaCarousel2 = dynamic(() => import("./emblaCarousel2/EmblaCarousel"), {
   ssr: false,
   loading: () => (
     <div className="h-[500px] bg-gray-100 animate-pulse rounded-lg" />
@@ -140,7 +140,10 @@ const Detail = ({
   }, [spaceDeatil]);
 
   const type = useMemo(
-    () => spaceData?.spaceType == "Coworking Café/Restaurant" ? "shortterm" : getTypeOfSpaceByWorkSpace(spaceData?.spaceType || ""),
+    () =>
+      spaceData?.spaceType == "Coworking Café/Restaurant"
+        ? "shortterm"
+        : getTypeOfSpaceByWorkSpace(spaceData?.spaceType || ""),
     [spaceData]
   );
   const displayedFacilities = showAll
@@ -230,7 +233,10 @@ const Detail = ({
   }, [token]);
 
   const handleCityBreadCrumb = () => {
-    const typeSlug = spaceData?.spaceType == "Coworking Café/Restaurant" ? "coworking-café-restaurant" : slugGenerator(spaceData?.spaceType || "");
+    const typeSlug =
+      spaceData?.spaceType == "Coworking Café/Restaurant"
+        ? "coworking-café-restaurant"
+        : slugGenerator(spaceData?.spaceType || "");
     const citySlug = slugGenerator(spaceData?.contact_city_name || "");
     if (typeSlug == "coworking-space") {
       return router.push(`/in/coworking/${citySlug}`);
@@ -239,7 +245,10 @@ const Detail = ({
   };
 
   const handleLocationBreadCrumb = () => {
-    const typeSlug = spaceData?.spaceType == "Coworking Café/Restaurant" ? "coworking-café-restaurant" : slugGenerator(spaceData?.spaceType || "");
+    const typeSlug =
+      spaceData?.spaceType == "Coworking Café/Restaurant"
+        ? "coworking-café-restaurant"
+        : slugGenerator(spaceData?.spaceType || "");
     const citySlug = slugGenerator(spaceData?.contact_city_name || "");
     const locationSlug = slugGenerator(spaceData?.location_name || "");
     if (!locationSlug && typeSlug == "coworking-space") {
@@ -335,7 +344,11 @@ const Detail = ({
                           className="size-[15px] text-[#7f7f7f]"
                         />
                         <span className="2xl:text-base text-sm">
-                          {spaceData?.howManyPeopleInYourSpace && Number(spaceData?.howManyPeopleInYourSpace)?.toLocaleString("en-IN")} people
+                          {spaceData?.howManyPeopleInYourSpace &&
+                            Number(
+                              spaceData?.howManyPeopleInYourSpace
+                            )?.toLocaleString("en-IN")}{" "}
+                          people
                         </span>
                       </div>
                     )}
@@ -360,7 +373,11 @@ const Detail = ({
                         className="size-[15px] text-[#7f7f7f]"
                       />
                       <span className="2xl:text-base text-sm">
-                        {spaceData?.spacesqft && Number(spaceData?.spacesqft)?.toLocaleString("en-IN")} sqft
+                        {spaceData?.spacesqft &&
+                          Number(spaceData?.spacesqft)?.toLocaleString(
+                            "en-IN"
+                          )}{" "}
+                        sqft
                       </span>
                     </div>
                   </div>
@@ -696,7 +713,9 @@ const Detail = ({
                                         className="size-[18px] text-[#f76900]"
                                       />
                                     </span>{" "}
-                                    {Number(spaceData?.privatecabin_price)?.toLocaleString("en-IN")}
+                                    {Number(
+                                      spaceData?.privatecabin_price
+                                    )?.toLocaleString("en-IN")}
                                   </h2>
                                   <span className=" text-[15px] leading-[30px] font-light">
                                     /seat/month
@@ -741,7 +760,9 @@ const Detail = ({
                                         className="size-[18px] text-[#f76900]"
                                       />
                                     </span>{" "}
-                                    {Number(spaceData?.customized_space_price)?.toLocaleString("en-IN")}
+                                    {Number(
+                                      spaceData?.customized_space_price
+                                    )?.toLocaleString("en-IN")}
                                   </h2>
                                   <span className=" text-[15px] leading-[30px] font-light">
                                     /seat/month
@@ -786,7 +807,9 @@ const Detail = ({
                                         className="size-[18px] text-[#f76900]"
                                       />
                                     </span>{" "}
-                                    {Number(spaceData?.desks_price)?.toLocaleString("en-IN")}
+                                    {Number(
+                                      spaceData?.desks_price
+                                    )?.toLocaleString("en-IN")}
                                   </h2>
                                   <span className=" text-[15px] leading-[30px] font-light">
                                     /seat/month
@@ -831,7 +854,9 @@ const Detail = ({
                                         className="size-[18px] text-[#f76900]"
                                       />
                                     </span>{" "}
-                                    {Number(spaceData?.flexible_desk_price)?.toLocaleString("en-IN")}
+                                    {Number(
+                                      spaceData?.flexible_desk_price
+                                    )?.toLocaleString("en-IN")}
                                   </h2>
                                   <span className=" text-[15px] leading-[30px] font-light">
                                     /seat/month
@@ -876,7 +901,9 @@ const Detail = ({
                                         className="size-[18px] text-[#f76900]"
                                       />
                                     </span>{" "}
-                                    {Number(spaceData?.virtual_office_price)?.toLocaleString("en-IN")}
+                                    {Number(
+                                      spaceData?.virtual_office_price
+                                    )?.toLocaleString("en-IN")}
                                   </h2>
                                   <span className=" text-[15px] leading-[30px] font-light">
                                     /seat/month
@@ -922,7 +949,9 @@ const Detail = ({
                                           className="size-[18px] text-[#f76900]"
                                         />
                                       </span>{" "}
-                                      {Number(spaceData?.originalPrice)?.toLocaleString("en-IN")}
+                                      {Number(
+                                        spaceData?.originalPrice
+                                      )?.toLocaleString("en-IN")}
                                     </h2>
                                     <span className=" text-[15px] leading-[30px] font-light">
                                       /seat/day
@@ -1124,7 +1153,9 @@ const Detail = ({
                         className="size-[18px] text-[#f76900]"
                       />
                       <h2 className="text-[26px] font-bold">
-                        {Number(spaceData?.originalPrice)?.toLocaleString("en-IN")}
+                        {Number(spaceData?.originalPrice)?.toLocaleString(
+                          "en-IN"
+                        )}
                       </h2>
                     </div>
                     <div className="text-xs font-normal  leading-[1.5] text-[#777] flex items-center justify-center mb-2">
@@ -1144,7 +1175,8 @@ const Detail = ({
                     </div>
                     <p className="text-xs font-normal  leading-[1.5] text-[#777]">
                       <span className="font-bold">Carpet Area:</span>{" "}
-                      {Number(spaceData?.spacesqft)?.toLocaleString("en-IN")} sq. ft. |{" "}
+                      {Number(spaceData?.spacesqft)?.toLocaleString("en-IN")}{" "}
+                      sq. ft. |{" "}
                       <span className="font-bold">
                         {spaceData?.spaceStatus}
                       </span>
@@ -1268,7 +1300,9 @@ const Detail = ({
                     )}
                     <Svg name="rupee" className="size-[18px] text-[#f76900]" />
                     <h3 className="text-[26px] font-bold text-center">
-                      {Number(spaceData?.originalPrice)?.toLocaleString("en-IN")}{" "}
+                      {Number(spaceData?.originalPrice)?.toLocaleString(
+                        "en-IN"
+                      )}{" "}
                       <span className="text-base"> /hr</span>
                     </h3>
                   </div>
@@ -1315,7 +1349,10 @@ const Detail = ({
                   )}
                   <button
                     onClick={handleRequestToBook}
-                    className="cursor-pointer md:hidden block md:relative fixed bottom-0 left-0 w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[15px]  md:rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px] z-10"
+                    className="cursor-pointer md:hidden block md:relative fixed bottom-0 left-0 w-full bg-[#f76900] 2xl:text-[15px] text-sm border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[15px]  md:rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px] z-10  transform
+    [transform:translate3d(0,0,0)]
+    [backface-visibility:hidden]
+    [-webkit-backface-visibility:hidden]"
                   >
                     {spaceData?.isInstant == 1 ? "Book Now" : "Request To Book"}
                   </button>

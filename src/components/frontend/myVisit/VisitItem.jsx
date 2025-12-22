@@ -8,8 +8,8 @@ import {
 import React, { useMemo } from "react";
 
 const VisitItem = ({ item }) => {
-  const type = useMemo(() => getTypeOfSpaceByWorkSpace(item?.spaceDetails?.spaceType || ""), [item]);
-  const spaceTypeSlug = useMemo(() => slugGenerator(item?.spaceDetails?.spaceType || ""), [item]);
+  const type = useMemo(() => item?.spaceDetails?.spaceType == "Coworking Café/Restaurant" ? "shortterm" : getTypeOfSpaceByWorkSpace(item?.spaceDetails?.spaceType || ""), [item]);
+  const spaceTypeSlug = useMemo(() => slugGenerator(item?.spaceDetails?.spaceType == "Coworking Café/Restaurant" ? "coworking-café-restaurant" : item?.spaceDetails?.spaceType || ""), [item]);
   const locationNameSlug = useMemo(() => slugGenerator(item?.spaceDetails?.location_name || ""), [item]);
   const cityNameSlug = useMemo(() => slugGenerator(item?.spaceDetails?.contact_city_name || ""), [item]);
   const spaceId = item?.spaceDetails?.id;

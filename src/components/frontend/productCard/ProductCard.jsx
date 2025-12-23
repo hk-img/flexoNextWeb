@@ -198,11 +198,11 @@ const ProductCard = ({
         <Link
           href={url}
           target="_blank"
-          onTouchEnd={(e) => {
-            e.preventDefault();
-            window.location.href = url;
-          }}
-          className="absolute inset-0 z-10"
+          className="absolute inset-0 z-10  touch-manipulation
+  select-none
+  [-webkit-touch-callout:none]
+  [-webkit-user-select:none]
+  [-webkit-tap-highlight-color:transparent]"
         />
         {item?.ribbon_name && (
           <div

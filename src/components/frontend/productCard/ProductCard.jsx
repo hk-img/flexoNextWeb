@@ -32,6 +32,7 @@ const ProductCard = ({
   isLcp = false, // first above-the-fold card
 }) => {
   const cardRef = useRef(null);
+  const isDragging = useRef(false);
   const [isInView, setIsInView] = useState(false);
   const { token } = useAuth();
   const [isFavourite, setIsFavourite] = useState(false);
@@ -186,6 +187,7 @@ const ProductCard = ({
       );
     }
   };
+
   return (
     <>
       <div
@@ -197,6 +199,17 @@ const ProductCard = ({
       >
         <Link
           href={url}
+          onPointerDown={() => {
+            isDragging.current = false;
+          }}
+          onPointerMove={() => {
+            isDragging.current = true; // scrolling
+          }}
+          onPointerUp={(e) => {
+            if (!isDragging.current) {
+              window.location.href = url; // single tap only
+            }
+          }}
           target="_blank"
           className="absolute inset-0 z-10  touch-manipulation
   select-none

@@ -197,7 +197,7 @@ const ProductCard = ({
         ref={cardRef}
         className="space-card relative [&_.emblaarrows]:left-3 [&_.emblaarrows]:right-3 [&_.emblaarrows_button]:w-[30px] [&_.emblaarrows_button]:h-[30px] [&_.emblaarrows_button_Svg]:size-[18px] [&_.emblaarrows_button]:!border-0 [&_.emblaarrows_button]:opacity-50 [&_.emblaarrows_button]:hover:opacity-100 [&_.emblaarrows_button_Svg]:!text-black w-full h-full shadow-[0_0_17px_0_rgba(0,0,0,0.1)] mb-[30px]rounded-md flex flex-col cursor-pointer touch-manipulation"
       >
-        <Link
+        {/* <Link
           href={url}
           onPointerDown={() => {
             isDragging.current = false;
@@ -216,7 +216,7 @@ const ProductCard = ({
   [-webkit-touch-callout:none]
   [-webkit-user-select:none]
   [-webkit-tap-highlight-color:transparent]"
-        />
+        /> */}
         {item?.ribbon_name && (
           <div
             style={{ backgroundColor: item?.ribbon_color }}
@@ -235,12 +235,10 @@ const ProductCard = ({
             }}
           >
             {displayedImages?.map((image, index) => (
-              <div
+              <Link
                 key={index}
-                // onClick={(e) => {
-                //   e.stopPropagation();
-                //   window.open(`${url}`, "_blank");
-                // }}
+                href = {url}
+                target="_blank"
                 className="embla__slide relative shrink-0 basis-full"
               >
                 <div className="w-full aspect-[399/320] relative overflow-hidden rounded-t-md">
@@ -261,16 +259,12 @@ const ProductCard = ({
                     quality={75}
                   />
                 </div>
-              </div>
+              </Link>
             ))}
           </EmblaCarousel>
         ) : (
           <div className="embla__slide relative shrink-0 basis-full">
             <div
-              // onClick={(e) => {
-              //   e.stopPropagation();
-              //   window.open(`${url}`, "_blank");
-              // }}
               className="w-full aspect-[399/320] relative overflow-hidden rounded-t-md"
             >
               <ImageWithFallback
@@ -406,7 +400,7 @@ const ProductCard = ({
           </div>
         </div>
         <div className="lg:pt-2 lg:px-6 lg:pb-4 py-[22px] px-[14px] flex flex-col flex-grow min-h-[273.09px]">
-          <div className="flex flex-col justify-between items-start md:mb-2 mb-1 min-h-[50.5px]">
+          <Link href={url} target="_blank" className="flex flex-col justify-between items-start md:mb-2 mb-1 min-h-[50.5px]">
             {type == "coworking" && (
               <h2 className="text-lg cursor-pointer font-medium text-[#141414] text-ellipsis line-clamp-1 break-all min-h-[28px]">
                 {item?.name}
@@ -425,8 +419,8 @@ const ProductCard = ({
               {convertSlugToCapitalLetter(item?.location_name || "")},{" "}
               {item?.contact_city_name}
             </span>
-          </div>
-          <div className="flex items-center space-x-2 text-sm text-[#777777] mb-1 font-light min-h-[20px]">
+          </Link>
+          <Link href={url} target="_blank" className="flex items-center space-x-2 text-sm text-[#777777] mb-1 font-light min-h-[20px]">
             {(type == "coworking" || type == "shortterm") && (
               <div className="flex gap-1 items-center">
                 <Svg name="user" className="size-[12px] text-[#f76900]" />
@@ -453,7 +447,7 @@ const ProductCard = ({
                 sqft
               </span>
             </div>
-          </div>
+          </Link>
           {type == "coworking" && (
             <>
               <div className="flex justify-between align-items-center lg:flex-nowrap flex-wrap m-0 min-h-[20px]">
@@ -591,15 +585,13 @@ const ProductCard = ({
                   /hour
                 </span>
               </div>
-              <button
-                // onClick={(e) => {
-                //   e.stopPropagation();
-                //   window.open(`${url}`, "_blank");
-                // }}
+              <Link 
+                href={url} 
+                target="_blank"
                 className="w-fit bg-[#f76900] text-xs border border-[#f76900]  text-white py-1.5 px-3 rounded-sm font-semibold duration-500 transition text-center gap-2  cursor-pointer"
               >
                 View Detail
-              </button>
+              </Link>
             </div>
           )}
         </div>

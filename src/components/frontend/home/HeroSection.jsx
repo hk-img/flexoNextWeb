@@ -8,7 +8,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getApi } from "@/services/ApiService";
 import { useRouter } from "next/navigation";
 import { slugGenerator } from "@/services/Comman";
-import { toast } from "sonner";
+import { ShowToast } from "@/utils/ShowToast";
+import { success } from "zod";
 
 const Select = dynamic(() => import("react-select"), { ssr: false });
 
@@ -35,7 +36,6 @@ export default function HeroSection({ spaceCategoryData }) {
   const router = useRouter();
   const [type, setType] = useState(null);
   const [location, setLocation] = useState(null);
-  console.log({type,location},"rtyhrtyryrtyrt");
 
   const DropdownIndicator = (props) => {
     const { menuIsOpen } = props.selectProps;
@@ -189,7 +189,7 @@ export default function HeroSection({ spaceCategoryData }) {
       return router.push(`/in/coworking/${citySlug}`);
     }
     if(type?.label == "Coworking Café/Restaurant"){
-      return router.push(`/in/coworking-cafe/${citySlug}/${locationSlug}`);
+      return router.push(`/in/coworking-café-restaurant/${citySlug}/${locationSlug}`);
     }
     router.push(`/in/${typeSlug}/${citySlug}/${locationSlug}`);
   };
@@ -236,7 +236,7 @@ export default function HeroSection({ spaceCategoryData }) {
               onSubmit={(e) => {
                 e.preventDefault();
                 if (!type || !location) {
-                  toast.error("Please select space type and location");
+                  ShowToast("Please select space type and location","error");
                   return;
                 }
                 handleSearch(type, location);

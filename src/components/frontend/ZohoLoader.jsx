@@ -28,11 +28,11 @@ export default function ZohoLoader() {
 
     const timer = setTimeout(() => {
       if ("requestIdleCallback" in window) {
-        requestIdleCallback(loadZoho, { timeout: 3000 });
+        requestIdleCallback(loadZoho, { timeout: 2000 });
       } else {
         loadZoho();
       }
-    }, 4000); // delay load to reduce initial blocking
+    }, 2000); // delay load to reduce initial blocking
 
     return () => clearTimeout(timer);
   }, []);

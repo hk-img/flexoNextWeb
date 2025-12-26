@@ -8,10 +8,28 @@ import {
 import React, { useMemo } from "react";
 
 const BookingRequestItem = ({ item }) => {
-  const type = useMemo(() => getTypeOfSpaceByWorkSpace(item?.spaceData?.spaceType || ""), [item]);
-  const spaceTypeSlug = useMemo(() => slugGenerator(item?.spaceData?.spaceType), [item]);
-  const locationNameSlug = useMemo(() => slugGenerator(item?.spaceData?.location_name || ""), [item]);
-  const cityNameSlug = useMemo(() => slugGenerator(item?.spaceData?.contact_city_name || ""), [item]);
+  const type = useMemo(
+    () =>
+      item?.spaceData?.spaceType == "Coworking Café/Restaurant"
+        ? "shortterm"
+        : getTypeOfSpaceByWorkSpace(item?.spaceData?.spaceType || ""),
+    [item]
+  );
+  const spaceTypeSlug = useMemo(
+    () =>
+      item?.spaceData?.spaceType == "Coworking Café/Restaurant"
+        ? "coworking-café-restaurant"
+        : slugGenerator(item?.spaceData?.spaceType),
+    [item]
+  );
+  const locationNameSlug = useMemo(
+    () => slugGenerator(item?.spaceData?.location_name || ""),
+    [item]
+  );
+  const cityNameSlug = useMemo(
+    () => slugGenerator(item?.spaceData?.contact_city_name || ""),
+    [item]
+  );
   const spaceId = item?.spaceDetail?.id;
   return (
     <div className="w-full flex md:flex-row flex-col items-center gap-y-4 justify-start bg-white p-5 rounded-xl ">
@@ -20,12 +38,17 @@ const BookingRequestItem = ({ item }) => {
           onClick={() => {
             let url = "";
             if (type == "coworking") {
-              if(item?.spaceDetail?.slug){
+              if (item?.spaceDetail?.slug) {
                 url = `/${item?.spaceDetail?.slug}`;
                 window.open(`${url}`, "_blank");
               }
             } else {
-              if(spaceTypeSlug && locationNameSlug && cityNameSlug && spaceId){
+              if (
+                spaceTypeSlug &&
+                locationNameSlug &&
+                cityNameSlug &&
+                spaceId
+              ) {
                 url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
                 window.open(`${url}`, "_blank");
               }
@@ -53,28 +76,40 @@ const BookingRequestItem = ({ item }) => {
         </div>
       </div>
       <div className="md:ml-[15px] space-y-2 w-full">
-        <h2 onClick={() => {
+        <h2
+          onClick={() => {
             let url = "";
             if (type == "coworking") {
-              if(item?.spaceDetail?.slug){
+              if (item?.spaceDetail?.slug) {
                 url = `/${item?.spaceDetail?.slug}`;
                 window.open(`${url}`, "_blank");
               }
             } else {
-              if(spaceTypeSlug && locationNameSlug && cityNameSlug && spaceId){
+              if (
+                spaceTypeSlug &&
+                locationNameSlug &&
+                cityNameSlug &&
+                spaceId
+              ) {
                 url = `/${spaceTypeSlug}/${locationNameSlug}/${cityNameSlug}/${spaceId}`;
                 window.open(`${url}`, "_blank");
               }
             }
-          }} className="2xl:text-xl text-lg font-semibold text-[#141414] cursor-pointer underline">
-          {item?.spaceDetail?.actual_name || item?.spaceDetail?.spaceTitle || "N/A"}
+          }}
+          className="2xl:text-xl text-lg font-semibold text-[#141414] cursor-pointer underline"
+        >
+          {item?.spaceDetail?.actual_name ||
+            item?.spaceDetail?.spaceTitle ||
+            "N/A"}
         </h2>
         <div className="text-[#141414] text-sm font-medium flex items-center space-x-1">
           <span>
             <Svg name="location2" className="size-4 text-[#f76900]" />
           </span>
           <span>
-            {convertSlugToCapitalLetter(item?.spaceDetail?.location_name || "") || "N/A"}
+            {convertSlugToCapitalLetter(
+              item?.spaceDetail?.location_name || ""
+            ) || "N/A"}
           </span>
         </div>
 

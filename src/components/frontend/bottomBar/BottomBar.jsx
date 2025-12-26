@@ -61,7 +61,7 @@ export const BottomBar = ({
 
   return (
     <>
-      <div className="fixed bottom-0 inset-x-0 bg-[#f76900] w-full md:hidden block z-50 pb-[env(safe-area-inset-bottom)]">
+      <div className="fixed  bg-[#f76900] bottom-0 md:hidden block left-0 right-0 w-full z-50 h-auto  will-change-transform [transform:translateZ(0)] [-webkit-transform:translateZ(0)] [backface-visibility:hidden] [-webkit-backface-visibility:hidden]">
         <div className="flex items-center justify-between p-4">
           <div>
             <div

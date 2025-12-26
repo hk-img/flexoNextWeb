@@ -19,14 +19,15 @@ export async function generateMetadata({ params }) {
   const data = await params;
   const slug = data?.data || [];
   const [spaceTypeSlug, citySlug, locationNameSlug] = slug;
+  const decodedSlug = decodeURIComponent(spaceTypeSlug || "");
   if (!citySlug && !locationNameSlug) return notFound();
   const spaceType =
-    spaceTypeSlug == "coworking"
+      decodedSlug == "coworking"
       ? "coworking space"
-      : convertSlugToSmallLetter(spaceTypeSlug || "");
+      : decodedSlug == "coworking-café-restaurant" ? "coworking café restaurant" : convertSlugToSmallLetter(decodedSlug || "");
   const city = convertSlugToAllCapitalLetter(citySlug || "");
   const locationName = convertSlugToAllCapitalLetter(locationNameSlug || "");
-  const type = getTypeOfSpaceByWorkSpace(spaceTypeSlug || "");
+  const type = decodedSlug == "coworking-café-restaurant" ? "shortterm" : getTypeOfSpaceByWorkSpace(decodedSlug || "");
   let title = "";
   let description = "";
   if (locationNameSlug) {
@@ -58,6 +59,10 @@ export async function generateMetadata({ params }) {
   return {
     title: title,
     description: description,
+    robots: {
+      index: true,
+      follow: true,
+    },
     alternates: {
       canonical: canonicalUrl,
     },
@@ -191,24 +196,25 @@ const page = async ({ params }) => {
   const data = await params;
   const slug = data?.data || [];
   const [spaceTypeSlug, citySlug, locationNameSlug] = slug;
+  const decodedSlug = decodeURIComponent(spaceTypeSlug || "");
   if (!citySlug && !locationNameSlug) return notFound();
-  const spaceType = convertSlugToCapitalLetter(spaceTypeSlug || "");
+  const spaceType = decodedSlug == "coworking-café-restaurant" ? "Coworking Café Restaurant" : convertSlugToCapitalLetter(decodedSlug || "");
   const city = convertSlugToCapitalLetter(citySlug || "");
   const locationName = convertSlugToCapitalLetter(locationNameSlug || "");
-  const type = getTypeOfSpaceByWorkSpace(spaceTypeSlug || "");
+  const type = decodedSlug == "coworking-café-restaurant" ? "shortterm" : getTypeOfSpaceByWorkSpace(decodedSlug || "");
   const payload = {
     cityId: city,
     spaceType:
-      spaceTypeSlug == "coworking"
+      decodedSlug == "coworking"
         ? "coworking space"
-        : spaceTypeSlug?.replace(/-/g, " "),
+        : decodedSlug == "coworking-café-restaurant" ? "coworking café restaurant" : decodedSlug?.replace(/-/g, " "),
   };
   const nearBySpacesData = await getNearBySpaceData(payload);
   const selectedSpace = nearBySpacesData?.find(
     (space) =>
       space?.location_name?.toLowerCase() == locationName?.toLowerCase()
   );
-  const otherTypes = convertSlugToSmallLetter(spaceTypeSlug || "");
+  const otherTypes = decodedSlug == "coworking-café-restaurant" ? "Coworking Café/Restaurant" : convertSlugToSmallLetter(decodedSlug || "");
   const listingPayload = {
     city_name: convertSlugToSmallLetter(city || ""),
     spaceType: type == "coworking" ? coworkingTypes : [otherTypes],
@@ -341,7 +347,7 @@ const page = async ({ params }) => {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd2) }}
       />
       <Listing
-        spaceTypeSlug={spaceTypeSlug}
+        spaceTypeSlug={decodedSlug}
         citySlug={citySlug}
         locationNameSlug={locationNameSlug}
         spaceType={spaceType}

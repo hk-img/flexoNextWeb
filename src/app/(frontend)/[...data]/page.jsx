@@ -96,7 +96,8 @@ const page = async ({ params }) => {
   const data = await params;
   const slug = data?.data || [];
   const [spaceTypeSlug] = slug;
-  const type = getTypeOfSpaceByWorkSpace(spaceTypeSlug || "");
+  const decodedSlug = decodeURIComponent(spaceTypeSlug || "");
+  const type = decodedSlug == "coworking-café-restaurant" ? "shortterm" :getTypeOfSpaceByWorkSpace(decodedSlug || "");
   let spaceId = "";
   if (slug?.length > 4) {
     return notFound();
@@ -254,7 +255,8 @@ export async function generateMetadata({ params }) {
   const data = await params;
   const slug = data?.data || [];
   const [spaceTypeSlug] = slug;
-  const type = getTypeOfSpaceByWorkSpace(spaceTypeSlug || "");
+  const decodedSlug = decodeURIComponent(spaceTypeSlug || "");
+  const type = decodedSlug == "coworking-café-restaurant" ? "shortterm" :getTypeOfSpaceByWorkSpace(decodedSlug || "");
   let spaceId = "";
   if (type == "coworking") {
     const [spaceTypeSlug, spaceSlug] = slug;
@@ -297,6 +299,10 @@ export async function generateMetadata({ params }) {
   return {
     title: title,
     description: description,
+    robots: {
+      index: true,
+      follow: true,
+    },
     alternates: {
       canonical: canonicalUrl,
     },

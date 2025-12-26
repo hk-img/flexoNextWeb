@@ -54,7 +54,7 @@ export default function EmblaCarousel({ children, options }) {
 
       {/* Buttons */}
       {options?.showButton && (
-        <div className="emblaarrows absolute top-1/2  flex justify-between -translate-y-1/2">
+        <div className="emblaarrows absolute top-1/2  flex justify-between -translate-y-1/2 !h-0 -mt-3.5">
           <PrevButton
             onClick={(e) => {
               e.stopPropagation();

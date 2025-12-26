@@ -885,7 +885,7 @@ const Listing = ({
       {isOpen && (
         <ExplorePopup
           isOpen={isOpen}
-          setIsOpen={()=>{
+          onClose={()=>{
             setIsOpen(false);
             setSelectedSpaceData(null);
           }}

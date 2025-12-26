@@ -121,12 +121,12 @@ const HeroSection = ({
       // );
       if (navigator.share) {
         await navigator.share({
-          title: "Check this space",
+          title: "Checkout this space on FLEXO",
           url,
         });
       } else {
         navigator.clipboard.writeText(url);
-        alert("Link copied! Paste it in Instagram");
+        ShowToast("Link copied! Paste it in Instagram");
       }
     } else if (type == "google") {
       window.open(

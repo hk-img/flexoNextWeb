@@ -88,7 +88,7 @@ const HeroSection = ({
     }
   }, [token]);
 
-  const sharePost = (type, url) => {
+  const sharePost = async(type, url) => {
     if (type == "facebook") {
       window.open(
         `https://www.facebook.com/sharer/sharer.php?u=${url}`,
@@ -114,11 +114,20 @@ const HeroSection = ({
         "width=600, height=450"
       );
     } else if (type == "instagram") {
-      window.open(
-        `https://www.instagram.com/flexospaces/?url=${url}`,
-        "_blank",
-        "width=600, height=450"
-      );
+      // window.open(
+      //   `https://www.instagram.com/flexospaces/?url=${url}`,
+      //   "_blank",
+      //   "width=600, height=450"
+      // );
+      if (navigator.share) {
+        await navigator.share({
+          title: "Check this space",
+          url,
+        });
+      } else {
+        navigator.clipboard.writeText(url);
+        alert("Link copied! Paste it in Instagram");
+      }
     } else if (type == "google") {
       window.open(
         `https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=&su=Propira&body=${url}`,

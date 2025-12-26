@@ -21,7 +21,7 @@ const RequestCallback = ({ setIsOpen, type }) => {
             This recognition reflects our commitment to trust, transparency, and
             results. You get the best office options and the best terms.
           </p>
-          {/* { type !== "shortterm" && (  */}
+          { type !== "shortterm" && ( 
           <div
             onClick={() => {
               setIsOpen(true);
@@ -30,7 +30,7 @@ const RequestCallback = ({ setIsOpen, type }) => {
           >
             Request call back
           </div>
-          {/* )} */}
+          )} 
         </div>
       </section>
     </>

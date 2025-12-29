@@ -161,7 +161,14 @@ const BookWorkspace = () => {
           </div>
         </div>
       </section>
-      {isOpen && <ExplorePopup isOpen={isOpen} setIsOpen={setIsOpen} />}
+      {isOpen && (
+        <ExplorePopup
+          isOpen={isOpen}
+          onClose={() => {
+            setIsOpen(false);
+          }}
+        />
+      )}
     </>
   );
 };

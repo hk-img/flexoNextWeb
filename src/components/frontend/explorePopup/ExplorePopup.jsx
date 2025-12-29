@@ -254,7 +254,7 @@ const schemaForCity = z
   });
 const ExplorePopup = ({
   isOpen,
-  setIsOpen,
+  onClose,
   selectedSpaceData = null,
   cityName = "",
   type = "",
@@ -390,7 +390,7 @@ const ExplorePopup = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center animate-fadeIn">
       <div
         className="absolute inset-0 bg-black/40"
-        onClick={() => setIsOpen(false)}
+        onClick={() => onClose()}
       />
       {successScreen ? (
         <div className="relative w-full max-w-[500px] p-6 mx-[12px] rounded-sm placeholder:text-[#0000006B] bg-white animate-scaleIn overflow-hidden">
@@ -402,7 +402,7 @@ const ExplorePopup = ({
               Inquiry sent successfully. Our team will get back to you shortly.
             </p>
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={() => onClose()}
               className="cursor-pointer w-fit px-[35px] mt-1.5 bg-[#f76900] text-lg border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]"
             >
               OK
@@ -415,7 +415,7 @@ const ExplorePopup = ({
           <div className="md:pb-[26px] pb-[40px] flex items-center justify-center">
             <h2 className="text-lg font-semibold uppercase">Get Quotes</h2>
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={() => onClose()}
               className="text-black cursor-pointer absolute top-6 right-6"
             >
               <Svg name="close" className="size-5" />

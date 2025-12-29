@@ -112,7 +112,9 @@ export const BottomBar = ({
       {isOpen && (
         <ExplorePopup
           isOpen={isOpen}
-          setIsOpen={setIsOpen}
+          onClose={()=>{
+            setIsOpen(false);
+          }}
           selectedSpaceData={spaceData}
           type={type}
           cityName={city}

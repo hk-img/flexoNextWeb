@@ -30,10 +30,28 @@ export const metadata = {
     index: true,
     follow: true,
   },
-  other: {
-    // Resource hints for faster CSS/font loading - reduce render blocking
-    "dns-prefetch": "https://fonts.googleapis.com",
+  appleWebApp: {
+    title: 'Find Coworking & Office Spaces Across India | Flexo',
+    statusBarStyle: 'black-translucent',
+    startupImage: [
+      '/images/6_110330.webp',
+      {
+        url: '/images/6_110330.webp',
+        media: '(device-width: 768px) and (device-height: 1024px)',
+      },
+    ],
   },
+  other: [
+    {
+      rel: 'dns-prefetch',
+      url: 'https://fonts.googleapis.com',
+    },
+    {
+      rel: 'preconnect',
+      href: 'https://fonts.gstatic.com',
+      crossOrigin: 'anonymous',
+    },
+  ]
 };
 
 export const viewport = {
@@ -47,17 +65,6 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <head>
-        {/* Resource hints for faster CSS/font loading - reduce render blocking (610ms) */}
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-      </head>
       <body
         className={`${poppins.className} antialiased overflow-x-hidden font-poppins [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]`}
       >

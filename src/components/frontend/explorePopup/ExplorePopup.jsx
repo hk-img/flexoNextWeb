@@ -336,8 +336,9 @@ const ExplorePopup = ({
     // document.body.style.position = 'fixed';
     // document.body.style.top = `-${currentScrollY}px`;
     document.body.style.width = '100%';
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden !important';
     document.body.style.pointerEvents = 'none';
+    document.body.style.position = 'relative !important';
 
     return () => {
       // Restore scroll position

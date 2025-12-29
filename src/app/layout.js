@@ -2,6 +2,9 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 import { Toaster } from "sonner";
+import FrontendProvider from "@/providers/FrontendProvider";
+import Header from "@/components/frontend/header/Header";
+import LazyComponents from "@/components/frontend/layout/LazyComponents";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -64,25 +67,29 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className="[scroll-behavior:auto]">
       <body
         className={`${poppins.className} antialiased overflow-x-hidden font-poppins [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]`}
       >
         <ReactQueryProvider>
-          <main id="main-content">{children}</main>
-          <Toaster
-            position="top-right"
-            richColors
-            theme="system"
-            toastOptions={{
-              style: {
-                borderRadius: "10px",
-                padding: "14px 16px",
-                fontSize: "14px",
-                fontWeight: 500,
-              },
-            }}
-          />
+          <FrontendProvider>
+            <Header />
+            <main id="main-content">{children}</main>
+            <LazyComponents />
+            <Toaster
+              position="top-right"
+              richColors
+              theme="system"
+              toastOptions={{
+                style: {
+                  borderRadius: "10px",
+                  padding: "14px 16px",
+                  fontSize: "14px",
+                  fontWeight: 500,
+                },
+              }}
+            />
+          </FrontendProvider>
         </ReactQueryProvider>
       </body>
     </html>

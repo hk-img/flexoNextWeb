@@ -1,7 +1,8 @@
 "use client";
 import Svg from "@/components/svg";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import ExplorePopup from "../explorePopup/ExplorePopup";
 
 export const BottomBar = ({
@@ -10,6 +11,12 @@ export const BottomBar = ({
   spaceData = { name: "Dummy Data" },
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
 
   const loadZohoScript = () => {
     const existingScript = document.getElementById("zoho-salesiq");
@@ -59,7 +66,9 @@ export const BottomBar = ({
     if (chatBtn) chatBtn.click();
   };
 
-  return (
+  if (!mounted) return null;
+
+  const bottomBarContent = (
     <>
       <div className="fixed  bg-[#f76900] bottom-0 md:hidden block left-0 right-0 w-full z-50 h-auto  will-change-transform [transform:translateZ(0)] [-webkit-transform:translateZ(0)] [backface-visibility:hidden] [-webkit-backface-visibility:hidden]">
         <div className="flex items-center justify-between p-4">
@@ -120,6 +129,8 @@ export const BottomBar = ({
       )}
     </>
   );
+
+  return createPortal(bottomBarContent, document.body);
 };
 
 export default BottomBar;

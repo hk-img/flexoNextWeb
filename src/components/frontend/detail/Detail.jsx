@@ -1405,7 +1405,9 @@ const Detail = ({
       {isOpen && (
         <ExplorePopup
           isOpen={isOpen}
-          setIsOpen={setIsOpen}
+          onClose={()=>{
+            setIsOpen(false);
+          }}
           selectedSpaceData={selectedSpaceData}
           type={type}
           selectedSpaceType={selectedSpaceType}

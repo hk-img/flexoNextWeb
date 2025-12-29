@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { useAuth } from "@/context/useAuth";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getApi, postAPI } from "@/services/ApiService";
 import { convertSlugToSmallLetter } from "@/services/Comman";
@@ -254,7 +254,7 @@ const schemaForCity = z
   });
 const ExplorePopup = ({
   isOpen,
-  setIsOpen,
+  onClose,
   selectedSpaceData = null,
   cityName = "",
   type = "",
@@ -268,6 +268,8 @@ const ExplorePopup = ({
       : schema;
   const { user } = useAuth();
   const [successScreen, setSuccessScreen] = useState(false);
+  const popupRef = useRef(null);
+  const formRef = useRef(null);
   const {
     register,
     handleSubmit,
@@ -314,6 +316,106 @@ const ExplorePopup = ({
       setValue("spaceType", selectedSpaceType);
     }
   }, [selectedSpaceType]);
+
+  // Lock body scroll when popup is open (iOS fix)
+  useEffect(() => {
+    if (isOpen) {
+      const originalStyle = window.getComputedStyle(document.body).overflow;
+      const originalPosition = window.getComputedStyle(document.body).position;
+      const scrollY = window.scrollY;
+      
+      // Lock body scroll
+      document.body.style.overflow = "hidden";
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = "100%";
+      
+      // iOS specific: prevent viewport resize issues
+      const viewport = window.visualViewport;
+      if (viewport) {
+        const handleResize = () => {
+          if (popupRef.current) {
+            // Adjust popup position when keyboard opens/closes
+            const viewportHeight = viewport.height;
+            const windowHeight = window.innerHeight;
+            const offset = windowHeight - viewportHeight;
+            
+            if (offset > 0) {
+              // Keyboard is open
+              popupRef.current.style.transform = `translateY(-${offset / 2}px)`;
+            } else {
+              popupRef.current.style.transform = "translateY(0)";
+            }
+          }
+        };
+        
+        viewport.addEventListener("resize", handleResize);
+        
+        return () => {
+          viewport.removeEventListener("resize", handleResize);
+        };
+      }
+      
+      return () => {
+        // Restore body scroll
+        document.body.style.overflow = originalStyle;
+        document.body.style.position = originalPosition;
+        document.body.style.top = "";
+        document.body.style.width = "";
+        window.scrollTo(0, scrollY);
+      };
+    }
+  }, [isOpen]);
+
+  // Handle input focus on iOS - scroll input into view properly
+  useEffect(() => {
+    if (!isOpen) return;
+    
+    const handleFocus = (e) => {
+      const input = e.target;
+      if (input && (input.tagName === "INPUT" || input.tagName === "SELECT" || input.tagName === "TEXTAREA")) {
+        // Use setTimeout to ensure keyboard is fully open
+        setTimeout(() => {
+          if (formRef.current && input) {
+            // Scroll the input into view within the form container
+            input.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+              inline: "nearest",
+            });
+            
+            // Additional iOS fix: ensure the form container scrolls
+            if (formRef.current) {
+              const inputRect = input.getBoundingClientRect();
+              const formRect = formRef.current.getBoundingClientRect();
+              const viewportHeight = window.visualViewport?.height || window.innerHeight;
+              
+              // If input is below the visible area (keyboard is covering it)
+              if (inputRect.bottom > viewportHeight - 50) {
+                const scrollOffset = inputRect.bottom - (viewportHeight - 50);
+                formRef.current.scrollTop += scrollOffset;
+              }
+            }
+          }
+        }, 300); // Wait for keyboard animation
+      }
+    };
+    
+    // Add focus listeners to all inputs
+    const form = formRef.current;
+    if (form) {
+      const inputs = form.querySelectorAll("input, select, textarea");
+      inputs.forEach((input) => {
+        input.addEventListener("focus", handleFocus, { passive: true });
+      });
+      
+      return () => {
+        inputs.forEach((input) => {
+          input.removeEventListener("focus", handleFocus);
+        });
+      };
+    }
+  }, [isOpen]);
 
   const { mutate: submitMutate, isPending: submitLoading } = useMutation({
     mutationFn: async (payload) => {
@@ -387,10 +489,21 @@ const ExplorePopup = ({
   }, [allCities]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center animate-fadeIn">
+    <div 
+      ref={popupRef}
+      className="fixed inset-0 z-50 flex items-center justify-center animate-fadeIn"
+      style={{
+        // iOS fix: use safe area and proper positioning
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+      }}
+    >
       <div
         className="absolute inset-0 bg-black/40"
-        onClick={() => setIsOpen(false)}
+        onClick={() => onClose()}
       />
       {successScreen ? (
         <div className="relative w-full max-w-[500px] p-6 mx-[12px] rounded-sm placeholder:text-[#0000006B] bg-white animate-scaleIn overflow-hidden">
@@ -402,7 +515,7 @@ const ExplorePopup = ({
               Inquiry sent successfully. Our team will get back to you shortly.
             </p>
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={() => onClose()}
               className="cursor-pointer w-fit px-[35px] mt-1.5 bg-[#f76900] text-lg border border-[#f76900] hover:border-white hover:bg-[#ff7c52] text-white md:py-[15px] py-[10px] rounded-[15px] font-semibold leading-[1.5] duration-500 transition text-center gap-2 uppercase tracking-[1px]"
             >
               OK
@@ -410,12 +523,22 @@ const ExplorePopup = ({
           </div>
         </div>
       ) : (
-        <div className="relative w-full lg:max-w-[55vw] mx-[12px] rounded-[11px] bg-white p-6 overflow-y-auto h-auto [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]  animate-scaleIn">
+        <div 
+          ref={formRef}
+          className="relative w-full lg:max-w-[55vw] mx-[12px] rounded-[11px] bg-white p-6 overflow-y-auto h-auto [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]  animate-scaleIn"
+          style={{
+            // iOS fix: ensure proper scrolling behavior
+            maxHeight: "90vh",
+            WebkitOverflowScrolling: "touch",
+            // Prevent iOS from adjusting scroll position incorrectly
+            overscrollBehavior: "contain",
+          }}
+        >
           {/* Header */}
           <div className="md:pb-[26px] pb-[40px] flex items-center justify-center">
             <h2 className="text-lg font-semibold uppercase">Get Quotes</h2>
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={() => onClose()}
               className="text-black cursor-pointer absolute top-6 right-6"
             >
               <Svg name="close" className="size-5" />
@@ -429,7 +552,13 @@ const ExplorePopup = ({
             </p>
           </div>
 
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form 
+            onSubmit={handleSubmit(onSubmit)}
+            style={{
+              // iOS fix: ensure form doesn't cause viewport issues
+              position: "relative",
+            }}
+          >
             <div className="grid grid-cols-2 md:grid-cols-2 gap-y-[18.5px] md:gap-x-[30px] gap-[12px]">
               {(!cityName || type != "longterm") && (
                 <>

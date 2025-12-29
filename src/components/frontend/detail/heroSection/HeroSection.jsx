@@ -88,7 +88,7 @@ const HeroSection = ({
     }
   }, [token]);
 
-  const sharePost = (type, url) => {
+  const sharePost = async(type, url) => {
     if (type == "facebook") {
       window.open(
         `https://www.facebook.com/sharer/sharer.php?u=${url}`,
@@ -119,6 +119,15 @@ const HeroSection = ({
         "_blank",
         "width=600, height=450"
       );
+      // if (navigator.share) {
+      //   await navigator.share({
+      //     title: "Checkout this space on FLEXO",
+      //     url,
+      //   });
+      // } else {
+      //   navigator.clipboard.writeText(url);
+      //   ShowToast("Link copied! Paste it in Instagram");
+      // }
     } else if (type == "google") {
       window.open(
         `https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=&su=Propira&body=${url}`,

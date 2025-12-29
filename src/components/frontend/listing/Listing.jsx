@@ -70,9 +70,7 @@ const Listing = ({
   const [selectedRadio, setSelectedRadio] = useState(
     spaceCategoryData?.[0]?.spaceType
   );
-  console.log({selectedRadio},"rtryrtyrtyrty")
   const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
-  console.log({selectedCheckboxes},"fgfgfgfgfgfgfg")
   const [toggleLocation, setToggleLocation] = useState(false);
   const [toggleLocationOptions, setToggleLocationOptions] = useState(false);
   const [query, setQuery] = useState("");

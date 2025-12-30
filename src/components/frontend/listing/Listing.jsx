@@ -525,11 +525,11 @@ const Listing = ({
                         <div
                           className="w-[36px] h-[14px] shrink-0 bg-[#00000061] rounded-lg 
                             peer-checked:bg-[#f76900] 
-                            relative after:absolute after:top-[-4px] after:left-[-7px] 
+                            relative after:absolute after:top-[-4px] after:left-[0px] 
                             after:bg-[#fafafa] after:border after:border-[#fafafa] 
                             after:rounded-full after:h-5 after:w-5 after:transition-all 
                             after:duration-500 after:shadow-[0px_2px_1px_-1px_rgba(0,0,0,0.2),0px_1px_1px_0px_rgba(0,0,0,0.14),0px_1px_3px_0px_rgba(0,0,0,0.12)] peer-checked:after:translate-x-6 peer-checked:after:bg-[#f76900] 
-                            peer-checked:after:border-[#fafafa]"
+                            peer-checked:after:border-[#fafafa] peer-checked:after:left-[-7px]"
                         ></div>
                       </label>
                     </div>

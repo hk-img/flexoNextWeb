@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { YouTubeEmbed } from "@next/third-parties/google";
 import ImageWithFallback from "@/components/ImageWithFallback";
 import Svg from "@/components/svg";
@@ -27,6 +27,8 @@ const HeroSection = ({
 }) => {
   const { token } = useAuth();
   const [isFavourite, setIsFavourite] = useState(false);
+  const [isShareMenuOpen, setIsShareMenuOpen] = useState(false);
+  const shareMenuRef = useRef(null);
   const youtubeUrl = spaceData?.youtube_url || "";
   const lastPart = youtubeUrl.split("/").pop();
   const youtubeId = lastPart.split("?")[0];  
@@ -87,6 +89,29 @@ const HeroSection = ({
       favouriteMutate(payload);
     }
   }, [token]);
+
+  // Close share menu when clicking outside (for mobile/iOS)
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        shareMenuRef.current &&
+        !shareMenuRef.current.contains(event.target) &&
+        isShareMenuOpen
+      ) {
+        setIsShareMenuOpen(false);
+      }
+    };
+
+    if (isShareMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("touchstart", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, [isShareMenuOpen]);
 
   const sharePost = async(type, url) => {
     if (type == "facebook") {
@@ -226,13 +251,19 @@ const HeroSection = ({
                 />
               </div>
             </div>
-            <div className="relative group">
+            <div className="relative group" ref={shareMenuRef}>
               <div
+                onClick={(e) => {
+                  e.stopPropagation();
+                  // Toggle share menu on click for mobile/iOS
+                  setIsShareMenuOpen((prev) => !prev);
+                }}
                 tabIndex="0"
                 className="bg-white peer w-[34px] h-[34px] flex items-center justify-center rounded-full cursor-pointer shadow"
               >
                 <Svg name="share" className="size-[18px] text-[#343a40]" />
               </div>
+              {/* Desktop: Hover to show (md:flex) */}
               <ul className="absolute -right-25 -translate-x-1/2 mt-2 md:flex hidden items-center gap-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
                 <li
                   onClick={() => {
@@ -296,12 +327,20 @@ const HeroSection = ({
                   <Svg name="copy" className="size-[15px] text-[#343a40]" />
                 </li>
               </ul>
-              <ul className="absolute -right-25 -translate-x-1/2 mt-2 md:hidden flex items-center gap-2 opacity-0 transition-all duration-300 peer-focus:opacity-100 peer-focus:visible peer-active:opacity-100 z-50">
+              {/* Mobile/iOS: Click to show (md:hidden) */}
+              <ul
+                className={`absolute -right-25 -translate-x-1/2 mt-2 md:hidden flex items-center gap-2 transition-all duration-300 z-50 ${
+                  isShareMenuOpen
+                    ? "opacity-100 visible translate-y-0"
+                    : "opacity-0 invisible translate-y-2"
+                }`}
+              >
                 <li
                   onClick={() => {
                     const url = slug.join("/");
                     const shareUrl = `${WEBSITE_BASE_URL}/${url}`;
                     sharePost("facebook", shareUrl);
+                    setIsShareMenuOpen(false);
                   }}
                   className="cursor-pointer bg-[#3b5998] w-[30px] h-[30px] flex border items-center justify-center rounded-full shadow"
                 >
@@ -312,6 +351,7 @@ const HeroSection = ({
                     const url = slug.join("/");
                     const shareUrl = `${WEBSITE_BASE_URL}/${url}`;
                     sharePost("linkedin", shareUrl);
+                    setIsShareMenuOpen(false);
                   }}
                   className="cursor-pointer bg-[#34aaf3] w-[30px] h-[30px] flex border items-center justify-center rounded-full shadow"
                 >
@@ -327,6 +367,7 @@ const HeroSection = ({
                       `Checkout this space on FLEXO\n${WEBSITE_BASE_URL}/${url}`
                     );
                     sharePost("whatsup", message);
+                    setIsShareMenuOpen(false);
                   }}
                   className="cursor-pointer bg-[#6ee777] w-[30px] h-[30px] flex border items-center justify-center rounded-full shadow"
                 >
@@ -339,6 +380,7 @@ const HeroSection = ({
                       `${WEBSITE_BASE_URL}/${url}`
                     );
                     sharePost("instagram", message);
+                    setIsShareMenuOpen(false);
                   }}
                   className="cursor-pointer bg-[radial-gradient(circle_at_30%_107%,_#fdf497_0%,_#fdf497_5%,_#fd5949_45%,#d6249f_60%,#285AEB_90%)] border w-[30px] h-[30px] flex items-center justify-center rounded-full shadow "
                 >
@@ -353,6 +395,7 @@ const HeroSection = ({
                     const message = `${WEBSITE_BASE_URL}/${url}`;
                     navigator.clipboard.writeText(message);
                     ShowToast("Link copied to clipboard", "success");
+                    setIsShareMenuOpen(false);
                   }}
                   className="cursor-pointer bg-white w-[30px] h-[30px] border  flex items-center justify-center rounded-full shadow"
                 >

@@ -27,7 +27,7 @@ const schema = z.object({
   message: z.string().optional(),
 });
 
-const BuyPassPopup = ({ setIsOpen, spaceData }) => {
+const BuyPassPopup = ({ setIsOpen, spaceData,setIsUpdateAddressOpen }) => {
   const router = useRouter();
   const { user, token } = useAuth();
   const [open, setOpen] = useState(false);
@@ -139,6 +139,10 @@ const BuyPassPopup = ({ setIsOpen, spaceData }) => {
     },
   });
   const onSubmit = (values) => {
+    if(!user?.billingAddress){
+      setIsUpdateAddressOpen(true);
+      return ;
+    }
     const dates = values.dates.map((date) => {
       const d = new Date(date);
       d.setMinutes(d.getMinutes() - d.getTimezoneOffset());

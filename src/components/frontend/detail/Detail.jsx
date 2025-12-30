@@ -15,6 +15,7 @@ import { getApi } from "@/services/ApiService";
 import Script from "next/script";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
+import UpdateAddressPopup from "./updateAddressPopup/UpdateAddressPopup";
 const EmblaCarousel2 = dynamic(() => import("./emblaCarousel2/EmblaCarousel"), {
   ssr: false,
   loading: () => (
@@ -76,6 +77,7 @@ const Detail = ({
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isScheduleVisitOpen, setIsScheduleVisitOpen] = useState(false);
   const [isBuyPassOpen, setIsBuyPassOpen] = useState(false);
+  const [isUpdateAddressOpen,setIsUpdateAddressOpen] = useState(false);
   const [selectedSpaceData, setSelectedSpaceData] = useState(null);
   const [selectedSpaceType, setSelectedSpaceType] = useState(null);
   const [showReviewPopup, setShowReviewPopup] = useState(false);
@@ -1431,6 +1433,7 @@ const Detail = ({
           isOpen={isBuyPassOpen}
           setIsOpen={setIsBuyPassOpen}
           spaceData={spaceData}
+          setIsUpdateAddressOpen={setIsUpdateAddressOpen}
         />
       )}
       {requestToBookOpen && (
@@ -1440,6 +1443,7 @@ const Detail = ({
           spaceData={spaceData}
           workingDays={spaceData?.working_time}
           hostHolidays={spaceDeatil?.hostHolidays}
+          setIsUpdateAddressOpen={setIsUpdateAddressOpen}
         />
       )}
       {showReviewPopup && (
@@ -1449,6 +1453,13 @@ const Detail = ({
           bookingId={spaceData?.id}
         />
       )}
+      {
+        isUpdateAddressOpen && (
+          <UpdateAddressPopup
+            setIsOpen = {setIsUpdateAddressOpen}
+          />
+        )
+      }
       <Script
         src="https://checkout.razorpay.com/v1/checkout.js"
         strategy="afterInteractive"

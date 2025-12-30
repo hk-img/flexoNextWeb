@@ -78,6 +78,7 @@ const RequestToBookPopup = ({
   spaceData,
   workingDays,
   hostHolidays,
+  setIsUpdateAddressOpen
 }) => {
   const datePickerRef = useRef(null);
   const minHours = spaceData?.minimum_hours / 60;
@@ -249,6 +250,10 @@ const RequestToBookPopup = ({
   });
 
   const onSubmit = (values) => {
+    if(!user?.billingAddress){
+      setIsUpdateAddressOpen(true);
+      return ;
+    }
     const slots = values.slots.map((item) => {
       const d = new Date(item?.date);
       d.setMinutes(d.getMinutes() - d.getTimezoneOffset());

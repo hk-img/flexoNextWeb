@@ -69,7 +69,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="[scroll-behavior:auto]">
       <body
-        className={`${poppins.className} antialiased overflow-x-hidden font-poppins [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1]`}
+        className={`${poppins.className} antialiased overflow-x-hidden font-poppins [&::-webkit-scrollbar]:w-[10px] [&::-webkit-scrollbar-thumb]:bg-[#c5c4c4] [&::-webkit-scrollbar-track]:bg-[#f1f1f1] has-[.uniqueBottomBar]:[&_.uniqueFooter]:pb-28`}
       >
         <ReactQueryProvider>
           <FrontendProvider>

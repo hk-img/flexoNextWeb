@@ -267,7 +267,7 @@ const Footer = memo(() => {
             </div>
           </div>
         </div>
-        <div className="border-t border-[#5c716a21] py-[1.563rem]">
+        <div className="border-t border-[#5c716a21] py-[1.563rem] uniqueFooter">
           <div className="container mx-auto md:px-0 px-[0.938rem]">
             <div className="flex md:flex-row flex-col justify-between md:items-center text-[0.938rem] text-gray-500">
               <div className="md:mb-0 mb-4">

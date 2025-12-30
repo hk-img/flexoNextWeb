@@ -36,6 +36,8 @@ const ProductCard = ({
   const [isInView, setIsInView] = useState(false);
   const { token } = useAuth();
   const [isFavourite, setIsFavourite] = useState(false);
+  const [isShareMenuOpen, setIsShareMenuOpen] = useState(false);
+  const shareMenuRef = useRef(null);
   const type = useMemo(
     () =>
       item?.spaceType == "Coworking Café/Restaurant"
@@ -142,6 +144,29 @@ const ProductCard = ({
     observer.observe(cardRef.current);
     return () => observer.disconnect();
   }, [isInView]);
+
+  // Close share menu when clicking outside (for mobile/iOS)
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        shareMenuRef.current &&
+        !shareMenuRef.current.contains(event.target) &&
+        isShareMenuOpen
+      ) {
+        setIsShareMenuOpen(false);
+      }
+    };
+
+    if (isShareMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("touchstart", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, [isShareMenuOpen]);
   const sharePost = (type, url) => {
     if (type == "facebook") {
       window.open(
@@ -312,16 +337,19 @@ const ProductCard = ({
               />
             </div>
           </div>
-          <div className="shareBtn relative group">
+          <div className="shareBtn relative group" ref={shareMenuRef}>
             <div
               onClick={(e) => {
                 e.stopPropagation();
+                // Toggle share menu on click for mobile/iOS
+                setIsShareMenuOpen((prev) => !prev);
               }}
               tabIndex="0"
               className="flex relative peer items-center justify-center rounded-full text-base bg-[#ece8e8] w-[34px] h-[34px] text-[#808080] cursor-pointer focus:outline-none"
             >
               <Svg name="share" className="size-[18px] text-[#808080]" />
             </div>
+            {/* Desktop: Hover to show (md:flex) */}
             <ul className="absolute top-[45px] right-[-6px] gap-1.5 hidden md:flex flex-row opacity-0 transition-all duration-500 ms-1 group-hover:opacity-100">
               <li className="bg-[#3b5998] items-center justify-center w-8 h-8 rounded-full inline-block border-1 border-[#000000] text-center text-[15px] ">
                 <div
@@ -364,13 +392,21 @@ const ProductCard = ({
                 </div>
               </li>
             </ul>
-            <ul className="absolute top-[45px] right-[-6px] gap-1.5 md:hidden flex flex-row opacity-0 transition-all duration-300 peer-focus:opacity-100 peer-focus:visible peer-active:opacity-100 z-50">
+            {/* Mobile/iOS: Click to show (md:hidden) */}
+            <ul
+              className={`absolute top-[45px] right-[-6px] gap-1.5 md:hidden flex flex-row transition-all duration-300 z-50 ${
+                isShareMenuOpen
+                  ? "opacity-100 visible"
+                  : "opacity-0 invisible"
+              }`}
+            >
               <li className="bg-[#3b5998] items-center justify-center w-8 h-8 rounded-full inline-block border-1 border-[#000000] text-center text-[15px]">
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
                     const shareUrl = `${WEBSITE_BASE_URL}${url}`;
                     sharePost("facebook", shareUrl);
+                    setIsShareMenuOpen(false);
                   }}
                   className="cursor-pointer share-button flex items-center justify-center w-full h-full"
                 >
@@ -384,6 +420,7 @@ const ProductCard = ({
                     e.stopPropagation();
                     const shareUrl = `${WEBSITE_BASE_URL}${url}`;
                     sharePost("linkedin", shareUrl);
+                    setIsShareMenuOpen(false);
                   }}
                   className="cursor-pointer share-button flex items-center justify-center w-full h-full"
                 >
@@ -399,6 +436,7 @@ const ProductCard = ({
                       `Checkout this space on FLEXO\n${WEBSITE_BASE_URL}${url}`
                     );
                     sharePost("whatsup", message);
+                    setIsShareMenuOpen(false);
                   }}
                   className="cursor-pointer share-button flex items-center justify-center w-full h-full"
                 >

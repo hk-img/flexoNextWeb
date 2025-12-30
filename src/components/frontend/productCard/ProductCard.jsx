@@ -237,7 +237,18 @@ const ProductCard = ({
             {displayedImages?.map((image, index) => (
               <Link
                 key={index}
-                href = {url}
+                href={url}
+                onPointerDown={() => {
+                  isDragging.current = false;
+                }}
+                onPointerMove={() => {
+                  isDragging.current = true; // scrolling
+                }}
+                onPointerUp={(e) => {
+                  if (!isDragging.current) {
+                    window.open(`${url}`, "_blank");
+                  }
+                }}
                 target="_blank"
                 className="embla__slide relative shrink-0 basis-full"
               >
@@ -264,9 +275,7 @@ const ProductCard = ({
           </EmblaCarousel>
         ) : (
           <div className="embla__slide relative shrink-0 basis-full">
-            <div
-              className="w-full aspect-[399/320] relative overflow-hidden rounded-t-md"
-            >
+            <div className="w-full aspect-[399/320] relative overflow-hidden rounded-t-md">
               <ImageWithFallback
                 src={firstImage}
                 alt="product image"
@@ -400,7 +409,22 @@ const ProductCard = ({
           </div>
         </div>
         <div className="lg:pt-2 lg:px-6 lg:pb-4 py-[22px] px-[14px] flex flex-col flex-grow min-h-[273.09px]">
-          <Link href={url} target="_blank" className="flex flex-col justify-between items-start md:mb-2 mb-1 min-h-[50.5px]">
+          <Link
+            href={url}
+            onPointerDown={() => {
+              isDragging.current = false;
+            }}
+            onPointerMove={() => {
+              isDragging.current = true; // scrolling
+            }}
+            onPointerUp={(e) => {
+              if (!isDragging.current) {
+                window.open(`${url}`, "_blank");
+              }
+            }}
+            target="_blank"
+            className="flex flex-col justify-between items-start md:mb-2 mb-1 min-h-[50.5px]"
+          >
             {type == "coworking" && (
               <h2 className="text-lg cursor-pointer font-medium text-[#141414] text-ellipsis line-clamp-1 break-all min-h-[28px]">
                 {item?.name}
@@ -420,7 +444,22 @@ const ProductCard = ({
               {item?.contact_city_name}
             </span>
           </Link>
-          <Link href={url} target="_blank" className="flex items-center space-x-2 text-sm text-[#777777] mb-1 font-light min-h-[20px]">
+          <Link
+            href={url}
+            onPointerDown={() => {
+              isDragging.current = false;
+            }}
+            onPointerMove={() => {
+              isDragging.current = true; // scrolling
+            }}
+            onPointerUp={(e) => {
+              if (!isDragging.current) {
+                window.open(`${url}`, "_blank");
+              }
+            }}
+            target="_blank"
+            className="flex items-center space-x-2 text-sm text-[#777777] mb-1 font-light min-h-[20px]"
+          >
             {(type == "coworking" || type == "shortterm") && (
               <div className="flex gap-1 items-center">
                 <Svg name="user" className="size-[12px] text-[#f76900]" />
@@ -585,8 +624,19 @@ const ProductCard = ({
                   /hour
                 </span>
               </div>
-              <Link 
-                href={url} 
+              <Link
+                href={url}
+                onPointerDown={() => {
+                  isDragging.current = false;
+                }}
+                onPointerMove={() => {
+                  isDragging.current = true; // scrolling
+                }}
+                onPointerUp={(e) => {
+                  if (!isDragging.current) {
+                    window.open(`${url}`, "_blank");
+                  }
+                }}
                 target="_blank"
                 className="w-fit bg-[#f76900] text-xs border border-[#f76900]  text-white py-1.5 px-3 rounded-sm font-semibold duration-500 transition text-center gap-2  cursor-pointer"
               >

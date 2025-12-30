@@ -7,7 +7,7 @@ import { TOKEN_NAME } from "@/constant/constant";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(null);
   const [user, setUser] = useState({});
 
   useEffect(() => {
@@ -42,7 +42,11 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const loadToken = () => {
       const storedToken = localStorage.getItem(`${TOKEN_NAME}`);
-      if (storedToken) setToken(storedToken);
+      if (storedToken) {
+        setToken(storedToken);
+      }else{
+        setToken("")
+      }
     };
 
     // Defer to next tick to reduce blocking

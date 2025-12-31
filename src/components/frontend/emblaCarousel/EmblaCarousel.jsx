@@ -16,7 +16,7 @@ export default function EmblaCarousel({ children, options }) {
 
   if (options?.autoplay) {
     plugins.push(
-      Autoplay({ delay: 3000, stopOnMouseEnter: true, stopOnInteraction: true })
+      Autoplay({ delay: options?.autoplayDelay || 3000, stopOnMouseEnter: true, stopOnInteraction: true })
     );
   }
 

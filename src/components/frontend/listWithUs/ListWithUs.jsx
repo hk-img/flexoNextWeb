@@ -375,12 +375,13 @@ const ListWithUs = () => {
               Host Success Stories
             </h2>
           </div>
-          <div className=" px-4 [&_.emblaarrows]:hidden md:[&_.emblaarrows]:-left-6 md:[&_.emblaarrows]:-right-5 [&_.emblaarrows]:-left-3 [&_.emblaarrows]:-right-3 [&_.emblaarrows_button]:w-10 [&_.emblaarrows_button]:h-10 [&_.emblaarrows_button_Svg]:size-[18px]">
+          <div className=" px-4 md:[&_.emblaarrows]:-left-6 md:[&_.emblaarrows]:-right-5 [&_.emblaarrows]:-left-3 [&_.emblaarrows]:-right-3 [&_.emblaarrows_button]:w-10 [&_.emblaarrows_button]:h-10 [&_.emblaarrows_button_Svg]:size-[18px]">
             <div>
               <EmblaCarousel
                 options={{
                   loop: true,
                   autoplay: true,
+                  autoplayDelay: 5000,
                   showButton: true,
                   align: "start",
                 }}
@@ -393,7 +394,7 @@ const ListWithUs = () => {
                     <div className="lg:p-6 p-2 shadow-[0_0_3px_#b3b3b3] rounded-[5px] mb-2 h-full">
                       <div>
                         <div className="flex lg:flex-row flex-col h-full items-center">
-                          <div className="lg:w-1/3 md:w-2/5 w-full flex flex-col items-center">
+                          <div className="lg:w-1/3 md:w-2/5 w-1/2 flex flex-col items-center">
                             <Image
                               src={person.image}
                               alt={person.name}

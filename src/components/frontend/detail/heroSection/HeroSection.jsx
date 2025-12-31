@@ -24,6 +24,7 @@ const HeroSection = ({
   spaceData,
   setIsAuthOpen,
   refetchDetail,
+  type
 }) => {
   const { token } = useAuth();
   const [isFavourite, setIsFavourite] = useState(false);
@@ -188,7 +189,7 @@ const HeroSection = ({
                   role="region"
                   aria-roledescription="video player"
                 /> */}
-                <YoutubeVideo youtubeId={youtubeId} />
+                <YoutubeVideo youtubeId={youtubeId} type={type} spaceData={spaceData}/>
                 </>
               ) : (
                 <div className="relative w-full aspect-[634/423]">

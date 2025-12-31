@@ -266,6 +266,7 @@ const Detail = ({
         spaceData={spaceData}
         setIsAuthOpen={setIsAuthOpen}
         refetchDetail={refetchDetail}
+        type={type}
       />
       <section className="container px-[15px] mx-auto md:py-6 py-[18px]">
         <div className="flex flex-wrap">

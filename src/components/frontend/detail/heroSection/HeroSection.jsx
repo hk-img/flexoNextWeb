@@ -14,8 +14,8 @@ import dynamic from "next/dynamic";
 const YoutubeVideo = dynamic(() => import("./YoutubeVideo"), {
   ssr: false,
 });
-const ImagePopup = dynamic(() => import("./ImagePopup"),{ 
-  ssr: false
+const ImagePopup = dynamic(() => import("./ImagePopup"), {
+  ssr: false,
 });
 
 const HeroSection = ({
@@ -24,7 +24,7 @@ const HeroSection = ({
   spaceData,
   setIsAuthOpen,
   refetchDetail,
-  type
+  type,
 }) => {
   const { token } = useAuth();
   const [isFavourite, setIsFavourite] = useState(false);
@@ -32,7 +32,7 @@ const HeroSection = ({
   const shareMenuRef = useRef(null);
   const youtubeUrl = spaceData?.youtube_url || "";
   const lastPart = youtubeUrl.split("/").pop();
-  const youtubeId = lastPart.split("?")[0];  
+  const youtubeId = lastPart.split("?")[0];
   const [viewImagePopup, setViewImagePopup] = useState(false);
   const defaultImage = "/images/default_image.webp";
   const formattedImages = spaceData?.images?.map((img) =>
@@ -114,7 +114,7 @@ const HeroSection = ({
     };
   }, [isShareMenuOpen]);
 
-  const sharePost = async(type, url) => {
+  const sharePost = async (type, url) => {
     if (type == "facebook") {
       window.open(
         `https://www.facebook.com/sharer/sharer.php?u=${url}`,
@@ -182,14 +182,18 @@ const HeroSection = ({
             <div className="[&_[data-ntpc]]:!h-full [&_[data-title]]:h-full [&_[data-title]]:!max-w-full">
               {youtubeId ? (
                 <>
-                {/* <YouTubeEmbed
+                  {/* <YouTubeEmbed
                   videoId={youtubeId}
                   className="!w-full !h-full"
                   aria-label="Embedded YouTube video: Client testimonial about Flexo workspace"
                   role="region"
                   aria-roledescription="video player"
                 /> */}
-                <YoutubeVideo youtubeId={youtubeId} type={type} spaceData={spaceData}/>
+                  <YoutubeVideo
+                    youtubeId={youtubeId}
+                    type={type}
+                    spaceData={spaceData}
+                  />
                 </>
               ) : (
                 <div className="relative w-full aspect-[634/423]">
@@ -200,7 +204,13 @@ const HeroSection = ({
                     height={436}
                     className="object-cover size-full"
                     fallback="/images/default_image.webp"
-                    watermark = {spaceData?.spaceType == "Private Office" ? true : false}
+                    watermark={
+                      spaceData?.spaceType == "Private Office" &&
+                      new Date(spaceData?.createdAt) <=
+                      new Date("2025-12-31T23:59:59Z")
+                        ? true
+                        : false
+                    }
                     priority
                   />
                 </div>
@@ -221,7 +231,13 @@ const HeroSection = ({
                         height={210}
                         className="object-cover size-full"
                         fallback="/images/default_image.webp"
-                        watermark = {spaceData?.spaceType == "Private Office" ? true : false}
+                        watermark={
+                          spaceData?.spaceType == "Private Office" &&
+                          new Date(spaceData?.createdAt) <=
+                          new Date("2025-12-31T23:59:59Z")
+                            ? true
+                            : false
+                        }
                         priority={index === 0 && !youtubeId}
                       />
                     </div>
@@ -412,7 +428,7 @@ const HeroSection = ({
           viewImagePopup={viewImagePopup}
           setViewImagePopup={setViewImagePopup}
           images={formattedImages}
-          spaceData = {spaceData}
+          spaceData={spaceData}
         />
       )}
     </>

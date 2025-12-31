@@ -262,6 +262,14 @@ const Footer = memo(() => {
                   >
                     <Svg name="instagram" className="size-[1.375rem]" />
                   </Link>
+                  <Link
+                    aria-label="youtube"
+                    href="https://www.youtube.com/@flexospaces"
+                    target="_blank"
+                    className="text-[#f76900]"
+                  >
+                    <Svg name="youtube" className="size-[1.375rem]" />
+                  </Link>
                 </div>
               </div>
             </div>

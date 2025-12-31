@@ -707,7 +707,7 @@ const RequestToBookPopup = ({
                     : "Submit Request"}
                 </button>
 
-                <p className="text-xs min-[1400px]:text-sm leading-[1.5] text-[#000000de] mt-2">
+                <p className="text-xs min-[1400px]:text-sm leading-[1.5] text-[#000000de] mt-2 max-md:hidden">
                   {
                     spaceData?.isInstant == 1 ? "After payment, your booking will be instantly confirmed." : "You will not be charged yet. Your booking request will be sent to the host. Once the host accepts your booking request, you will receive a link to make the payment."
                   }
@@ -878,6 +878,12 @@ const RequestToBookPopup = ({
                 ? "Book Now"
                 : "Submit Request"}
             </button>
+            
+            <p className="text-xs min-[1400px]:text-sm leading-[1.5] text-[#000000de] mt-2 mb-6 text-center md:hidden">
+                  {
+                    spaceData?.isInstant == 1 ? "After payment, your booking will be instantly confirmed." : "You will not be charged yet. Your booking request will be sent to the host. Once the host accepts your booking request, you will receive a link to make the payment."
+                  }
+                </p>
           </div>
         </div>
       )}

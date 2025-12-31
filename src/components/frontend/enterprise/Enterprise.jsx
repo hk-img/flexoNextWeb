@@ -11,7 +11,7 @@ const Enterprise = () => {
           <div className='w-full md:h-[452px]'>
             <Image width="1356" height="452" className="w-full h-full" src="/images/enterprise_banner.webp" alt="" />
           </div>
-          <div className='absolute left-[12%] bottom-[10%]'>
+          <div className='absolute sm:left-[12%] bottom-[10%] right-3 max-sm:[zoom:0.8] max-sm:hidden'>
             <Link href="https://docs.google.com/forms/d/e/1FAIpQLScCNsY3akGSEpVwWDb-KyhlZ0dYdlvbs1IxiHHXlOZNvPrVJQ/viewform" target="_blank" className='inline-block md:text-xl text-base  cursor-pointer bg-[#f76900] text-white p-[10px] font-medium text-center gap-2 uppercase md:min-w-[285px] px-7 rounded-sm'>ENQUIRE NOW</Link>
           </div>
         </div>
@@ -20,6 +20,9 @@ const Enterprise = () => {
             <div>
               <h2 className='md:text-[30px] text-xl font-bold text-center leading-[1.6]'>Adapt to the New Normal</h2>
               
+              <div className='sm:hidden pt-5 flex justify-center'>
+                <Link href="https://docs.google.com/forms/d/e/1FAIpQLScCNsY3akGSEpVwWDb-KyhlZ0dYdlvbs1IxiHHXlOZNvPrVJQ/viewform" target="_blank" className='inline-block md:text-xl text-base  cursor-pointer bg-[#f76900] text-white p-[10px] font-medium text-center gap-2 uppercase md:min-w-[285px] px-7 rounded-sm'>ENQUIRE NOW</Link>
+              </div>
             </div> 
             <div className='max-w-[816.91px] mx-auto mt-[35px]'>
               <p className='md:text-[17px] text-base text-[#777]'>Make informed decisions on your workplace strategy with Flexo. We help you with more than just options because your business deserves to save more and grow more. We provide tailor-made workplace solutions that match your exact needs.</p>

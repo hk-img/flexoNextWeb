@@ -11,7 +11,7 @@ function ImageWithFallback({
   alt,
   loading,
   priority,
-  watermark = false,   // 👈 BOOLEAN FLAG
+  watermark = false,
   width,
   height,
   quality,
@@ -27,7 +27,6 @@ function ImageWithFallback({
     setIsOriginalLoaded(false);
   }, [src]);
 
-  /* ===== CANVAS WATERMARK (ONLY WHEN watermark === true) ===== */
   useEffect(() => {
     if (
       !watermark ||
@@ -57,11 +56,15 @@ function ImageWithFallback({
       ctx.clearRect(0, 0, width, height);
       ctx.drawImage(image, 0, 0, width, height);
 
-      ctx.font = `12px Sans-Serif`;
+      // ✅ WATERMARK STYLE
+      ctx.font = "12px Sans-Serif";
       ctx.fillStyle = "rgba(253, 244, 244, 0.6)";
       ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.fillText(WATERMARK_TEXT, width / 2, height / 2);
+      ctx.textBaseline = "bottom";
+
+      // 👇 little more up from bottom
+      const paddingBottom = 50;
+      ctx.fillText(WATERMARK_TEXT, width / 2, height - paddingBottom);
 
       setCanvasUrl(canvas.toDataURL("image/png"));
     };
@@ -73,12 +76,11 @@ function ImageWithFallback({
     <>
       <canvas ref={canvasRef} style={{ display: "none" }} />
 
-      {/* ===== WATERMARK IMAGE ===== */}
       {watermark && canvasUrl && isOriginalLoaded ? (
         <Image
           {...props}
           src={canvasUrl}
-          alt={alt || "Watermarked Image"}
+          alt={alt || "Image"}
           width={width}
           height={height}
           priority={priority}
@@ -88,7 +90,6 @@ function ImageWithFallback({
           unoptimized
         />
       ) : (
-        /* ===== NORMAL IMAGE ===== */
         <Image
           {...props}
           src={imgSrc || fallback}

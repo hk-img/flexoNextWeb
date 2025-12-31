@@ -1,11 +1,19 @@
 import React from "react";
 import ImageWithFallback from "@/components/ImageWithFallback";
 import dynamic from "next/dynamic";
-const EmblaCarousel = dynamic(() => import("../../emblaCarousel/EmblaCarousel"), { 
-  ssr: false
-});
+const EmblaCarousel = dynamic(
+  () => import("../../emblaCarousel/EmblaCarousel"),
+  {
+    ssr: false,
+  }
+);
 
-const ImagePopup = ({ viewImagePopup, setViewImagePopup, images = [],spaceData }) => {
+const ImagePopup = ({
+  viewImagePopup,
+  setViewImagePopup,
+  images = [],
+  spaceData,
+}) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center animate-fadeIn p-4">
       <div
@@ -36,7 +44,13 @@ const ImagePopup = ({ viewImagePopup, setViewImagePopup, images = [],spaceData }
                       alt={`image-${index}`}
                       title={`image-${index}`}
                       className="w-full h-auto aspect-[640/427] object-cover"
-                      watermark = {spaceData?.spaceType == "Private Office" ? true : false}
+                      watermark={
+                        spaceData?.spaceType == "Private Office" &&
+                        new Date(spaceData?.createdAt) <=
+                         new Date("2025-12-31T23:59:59Z")
+                          ? true
+                          : false
+                      }
                       fallback="/images/default_image.webp"
                     />
                   </div>

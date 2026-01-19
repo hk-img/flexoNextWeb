@@ -23,8 +23,8 @@ export async function generateMetadata({ params }) {
   if (!citySlug && !locationNameSlug) return notFound();
   const spaceType =
       decodedSlug == "coworking"
-      ? "coworking space"
-      : decodedSlug == "coworking-café-restaurant" ? "coworking café restaurant" : convertSlugToSmallLetter(decodedSlug || "");
+      ? "Coworking Space"
+      : decodedSlug == "coworking-café-restaurant" ? "Coworking Café Restaurant" : convertSlugToCapitalLetter(decodedSlug || "");
   const city = convertSlugToAllCapitalLetter(citySlug || "");
   const locationName = convertSlugToAllCapitalLetter(locationNameSlug || "");
   const type = decodedSlug == "coworking-café-restaurant" ? "shortterm" : getTypeOfSpaceByWorkSpace(decodedSlug || "");
@@ -33,7 +33,7 @@ export async function generateMetadata({ params }) {
   if (locationNameSlug) {
     if (type == "coworking") {
       title = `Best Coworking Space in ${locationName} | Book A Shared Office`;
-      description = `Book coworking spaces in ${locationName}, ${city}.Compare prices and amenities of coworking spaces and get quotes. Free, fast and easy!`;
+      description = `Book Coworking Spaces in ${locationName}, ${city}.Compare prices and amenities of Coworking Spaces and get quotes. Free, fast and easy!`;
     } else if (type == "shortterm") {
       title = `${spaceType} in ${locationName} | Book Now`;
       description = `Book ${spaceType} in ${convertSlugToSmallLetter(
@@ -46,13 +46,13 @@ export async function generateMetadata({ params }) {
   } else {
     if (type == "coworking") {
       title = `Best Coworking Space in ${city} (${new Date().getFullYear()}) | Compare & Book`;
-      description = `Book coworking spaces in ${city} with flexible pricing and premium amenities at prime locations. Find your shared office fast and FREE with Flexo.`;
+      description = `Book Coworking Spaces in ${city} with flexible pricing and premium amenities at prime locations. Find your shared office fast and FREE with Flexo.`;
     } else if (type == "shortterm") {
       title = `Book ${spaceType} in ${city} from Rs.20000 /hour`;
       description = `Book ${spaceType} in ${city} starting from Rs.20000 /hour. View images, amenities, pricing to find the best fit.Explore and book now!.`;
     } else {
       title = `Office Space for Rent in ${city} | Managed Offices`;
-      description = `Explore offices for rent in ${city}. Choose from a wide range of furnished, unfurnished, built-to-suit and managed office options.`;
+      description = `Explore offices for rent in ${city}. Choose from a wide range of furnished, unfurnished, built-to-suit and Managed Office options.`;
     }
   }
   const canonicalUrl = `${WEBSITE_BASE_URL}/in/${slug.join("/")}`;

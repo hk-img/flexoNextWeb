@@ -79,21 +79,11 @@ export const BottomBar = ({
             >
               <Svg name="fileProtector" className="size-5 text-white" />
               <span className="uppercase text-white text-[11px]/normal font-medium ">
-                Quotes
+                GET Quote
               </span>
             </div>
           </div>
-          <div>
-            <Link
-              href="https://api.whatsapp.com/send/?phone=919136153810&text=Hi&type=phone_number&app_absent=0"
-              className="flex flex-col items-center"
-            >
-              <Svg name="whatsapp" className="size-5 text-white" />
-              <span className="uppercase text-white text-[11px]/normal font-medium ">
-                Whatsapp
-              </span>
-            </Link>
-          </div>
+
           <div>
             <div
               onClick={loadZohoScript}
@@ -105,6 +95,19 @@ export const BottomBar = ({
               </span>
             </div>
           </div>
+          
+          <div>
+            <Link
+              href="https://api.whatsapp.com/send/?phone=919136153810&text=Hi&type=phone_number&app_absent=0"
+              className="flex flex-col items-center"
+            >
+              <Svg name="whatsapp" className="size-5 text-white" />
+              <span className="uppercase text-white text-[11px]/normal font-medium ">
+                Whatsapp
+              </span>
+            </Link>
+          </div>
+          
           <div>
             <Link
               href="tel:95133 92400"

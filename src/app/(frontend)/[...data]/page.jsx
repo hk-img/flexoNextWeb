@@ -1,6 +1,7 @@
 import Detail from "@/components/frontend/detail/Detail";
 import { BASE_URL, WEBSITE_BASE_URL } from "@/services/ApiService";
 import {
+  convertSlugToCapitalLetter,
   convertSlugToSmallLetter,
   getTypeOfSpaceByWorkSpace,
 } from "@/services/Comman";
@@ -279,15 +280,15 @@ export async function generateMetadata({ params }) {
   }
   const spaceType =
     spaceTypeSlug == "coworking"
-      ? "coworking space"
-      : convertSlugToSmallLetter(spaceTypeSlug || "");
+      ? "Coworking Space" 
+      : convertSlugToCapitalLetter(spaceTypeSlug || "");
   const { spaceTitle, actual_name, location_name, contact_city_name } =
     detailData?.data || {};
   let title = "";
   let description = "";
   if (type == "coworking") {
     title = `${actual_name} ${location_name} - ${spaceType} | Pricing - FLEXO`;
-    description = `Discover ${actual_name}, ${location_name}, a coworking space with modern amenities and great pricing, Get customised quotes today!`;
+    description = `Discover ${actual_name}, ${location_name}, a Coworking Space with modern amenities and great pricing, Get customised quotes today!`;
   } else if (type == "shortterm") {
     title = `${spaceTitle} at ${location_name}, ${contact_city_name}`;
     description = `Book ${spaceTitle} at ${location_name}, ${contact_city_name} for Rs.2000 /hour on FLEXO.`;

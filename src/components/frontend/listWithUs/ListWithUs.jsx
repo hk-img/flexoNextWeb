@@ -375,7 +375,7 @@ const ListWithUs = () => {
               Host Success Stories
             </h2>
           </div>
-          <div className=" px-4 md:[&_.emblaarrows]:-left-6 md:[&_.emblaarrows]:-right-5 [&_.emblaarrows]:-left-3 [&_.emblaarrows]:-right-3 [&_.emblaarrows_button]:w-10 [&_.emblaarrows_button]:h-10 [&_.emblaarrows_button_Svg]:size-[18px]">
+          <div className=" px-4 md:[&_.emblaarrows]:-left-1 md:[&_.emblaarrows]:-right-1 [&_.emblaarrows]:-left-2 [&_.emblaarrows]:-right-2 [&_.emblaarrows_button]:w-10 [&_.emblaarrows_button]:h-10 [&_.emblaarrows_button_Svg]:size-[18px]">
             <div>
               <EmblaCarousel
                 options={{
